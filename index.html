@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A modern, feature-rich screen reader for the Linux desktop, built in Rust.
+">
+        <meta name="author" content="The Yggdrasil contributors">
+        <link rel="canonical" href="https://yggdrasil-sr.github.io/">
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Yggdrasil Screen Reader</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">Yggdrasil Screen Reader</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/yggdrasil-sr/site/edit/master/docs/index.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#the-yggdrasil-screen-reader-project" class="nav-link">The Yggdrasil Screen Reader Project</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#what-is-yggdrasil" class="nav-link">What is Yggdrasil?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#why-the-name" class="nav-link">Why the Name?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#under-active-development" class="nav-link">Under Active Development</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="the-yggdrasil-screen-reader-project">The Yggdrasil Screen Reader Project<a class="headerlink" href="#the-yggdrasil-screen-reader-project" title="Permanent link">&para;</a></h1>
+<h2 id="what-is-yggdrasil">What is Yggdrasil?<a class="headerlink" href="#what-is-yggdrasil" title="Permanent link">&para;</a></h2>
+<p>Accessibility on Linux has historically been under-developed, under-maintained, and, therefore, has gained a
+reputation for being quite painful to use as a daily driver among disabled people. We want to change that.</p>
+<p>Yggdrasil is a new project that aims to create a better Linux screen reader, written in <a href="https://rust-lang.org/">Rust</a>. Through
+this project, we aim to provide a better screen reading experience than the one we currently have in <a href="https://wiki.gnome.org/Projects/Orca">Orca</a>.
+A screen reader with all the modern features a Windows or macOS user would expect from their computers, including:</p>
+<ul>
+<li>Object navigation</li>
+<li>ocr</li>
+<li>customisable navigation commands</li>
+<li>a powerful add-on mechanism</li>
+<li>and more.</li>
+</ul>
+<h2 id="why-the-name">Why the Name?<a class="headerlink" href="#why-the-name" title="Permanent link">&para;</a></h2>
+<p>In viking mythology, <a href="https://en.wikipedia.org/wiki/Yggdrasil">yggdrasil</a> is a huge tree around which the nine worlds gravitate. It&rsquo;s seen as a
+unifyer of everything, since its roots reach to the center of the earth. It&rsquo;s so large that parts of it exist in
+other universes.</p>
+<p>We believe accessibility should unify people from across the globe to enjoy a product, with disability no longer
+being an impediment to the person efficiently using it. They should be able to use technology as well as, if not
+better than a non-disabled individual.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<dl>
+<dt>First-class addon support</dt>
+<dd>
+<p>We want our users to be able to do anything they wish with our screen reader. Improving support for specific
+programs should ideally be doable without needing to modify yggdrasil&rsquo;s core code.</p>
+<p>We plan to make it easy to write addons primarily in <a href="https://www.lua.org/">Lua</a>, with the option to use other languages such as
+<a href="https://rust-lang.org/">Rust</a> in the future for higher performance.</p>
+</dd>
+<dt>Flexible input and gesture system</dt>
+<dd>
+<p>Likewise, adding new functionality such as new keyboard commands should be easy enough, without needing to
+tinker with the source code of the screen reader. Manual editing of the configuration files as well as an
+intuitive grafical program to modify gestures and define new actions will be available.</p>
+</dd>
+<dt>Modern navigation patterns</dt>
+<dd>
+<p>In a perfect world, apps would just be accessible automatically,
+However, that&rsquo;s almost never the case. Therefore, visually impaired people rely on additional tools provided by
+their screen reader, such as object navigation, a way to explore the accessibility tree of an app without relying
+on focus, being then able to discover unfocusable elements that have important information nevertheless. We
+have this in <a href="https://www.nvaccess.org/">NVDA</a> and other screen readers, but not in Orca and as such, not in linux. Yggdrasil will
+address that.</p>
+</dd>
+</dl>
+<h2 id="under-active-development">Under Active Development<a class="headerlink" href="#under-active-development" title="Permanent link">&para;</a></h2>
+<p>This website as well as the software itself is under active development, please check back at a later stage to
+see more exciting news and documentation!</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright © 2021 the Yggdrasil contributors</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.2.2
+Build Date UTC : 2021-09-06 16:54:57.416545+00:00
+-->

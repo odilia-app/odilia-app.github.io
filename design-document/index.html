@@ -80,6 +80,30 @@
             
             <li class="nav-item" data-level="1"><a href="#design-of-the-yggdrasil-screen-reader" class="nav-link">design of the yggdrasil screen reader</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#event-based-design" class="nav-link">event based design</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#speech" class="nav-link">speech</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#object-navigation" class="nav-link">object navigation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#addons" class="nav-link">addons</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ocr" class="nav-link">ocr</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#gesture-system" class="nav-link">gesture system</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#links-to-currently-available-documentation" class="nav-link">links to currently available documentation</a>
               <ul class="nav flex-column">
               </ul>
@@ -92,22 +116,85 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="design-of-the-yggdrasil-screen-reader">design of the yggdrasil screen reader<a class="headerlink" href="#design-of-the-yggdrasil-screen-reader" title="Permanent link">&para;</a></h1>
+<h2 id="event-based-design">event based design<a class="headerlink" href="#event-based-design" title="Permanent link">&para;</a></h2>
+<p>Since <a href="https://nodejs.org/en/">node.js</a> was introduced to the market, the internet enjoyed more scalable and responsive systems, that&rsquo;s because of its endorsing of an event driven development, where every system is loosly coupled to one another, where asyncronous programming, events and messages govern the program flow, therefore making traditional performance bottlenecks like disk i/o, database access and others nearly insignificant, since access to such resources is properly managed and interested parties are notified whenever such a resource is free to use.<br />
+Inspired by this design, we decided to make the screen reader as much event based as possible. Eventually the goal is to be able to abstract away the event sources in interfaces implementable by other components, therefore paving the way for alternative input methods.<br />
+For this to be doable, we&rsquo;d need roughly the following to be implemented:</p>
+<dl>
+<dt>an event manager(runs on the main thread)</dt>
+<dd>
+<p>this is the central hub for events. From here, events are received by system services like at-spi, atk and so on, then propagated to the components interested in that particular event. Note: Each component should register with the hub for every event it wants to recieve.<br />
+The event hub should also have a direct reference to the at-spi registry, as well as it should register for all the events the entire screen reader needs, then propagate them to the appropriate components. Running on another thread should not only be discouraged, but actively prohibited, for example by not implementing send and sync.</p>
+</dd>
+<dt>component protocol(can run on multiple threads)</dt>
+<dd>
+<p>this is the protocol every component should adhere to. It should include methods for sending and receiving events. Basically, every component should be thread-safe, the only way they communicate to the event hub being through a channel, for example rust&rsquo;s mpsc. The hub holds all the events in an array of data structures that, among other things, include the sending half of an mpsc channel for each of the registered components.</p>
+</dd>
+<dt>keyboard/alternative input method component, UI component, speech component, etc</dt>
+<dd>
+<p>specific implementations of the component protocol. Each component should deal with one, and only one, subsystem of the screen reader, sending proper events to the event hub for further propagation and handling by other systems if needed, for example the keyboard handler sends insert+q&gt;goes to hub&gt;goes to gesture manager&gt;goes to quit&gt;resource cleanup and quit program.</p>
+</dd>
+</dl>
+<h2 id="speech">speech<a class="headerlink" href="#speech" title="Permanent link">&para;</a></h2>
+<p>As we want to make sure our screen reader integrates with the linux ecosystem and the existing tools as much as possible, we decided we will use speech dispatcher as the speech platform.<br />
+Each speech related setting will be saved on a per screen reader basis, per user basis by default. However, we will include a utility to allow modification of the speech dispatcher configuration files. Note however, such a program would require root privileges.<br />
+Also, though the default speech system would be speech dispatcher, we will try to make it possible to allow addons to define their own speech systems, though this would require special intitlements in the manifest.</p>
+<h2 id="object-navigation">object navigation<a class="headerlink" href="#object-navigation" title="Permanent link">&para;</a></h2>
+<p>object navigation, like in the nvda screen reader for windows, should follow the accessibility hierarchy as much as possible. This should be done in the way users of screen readers with such features expect it to be done, a left/right command to navigate to the previous/next ansester of the object in focus, up to go to the parent object(if any), down to go to the children of an object(if any).</p>
+<h2 id="addons">addons<a class="headerlink" href="#addons" title="Permanent link">&para;</a></h2>
+<dl>
+<dt>Note: This section needs improvement and more discussion, however these are the common guidelines so far  </dt>
+<dt>Disclaimer: This section of the design document has concepts from the android app format(.apk.), as I think it&rsquo;s briliantly designed  </dt>
+<dt>an addon, before installation, is a zip archive that&rsquo;s digitally signed to verify the author&rsquo;s authenticity. Also, it&rsquo;s composed of the following:  </dt>
+<dt>a manifest file, named always manifest.json</dt>
+<dd>
+<p>This defines the name of the addon, version, author, minimal ygdrassil version, capabilities, programming language(when applicable), documentation links or local documentation, etc.</p>
+</dd>
+<dt>the addon bundle</dt>
+<dd>
+<p>this is the code of the addon itself.<br />
+depending on the language declared in the manifest, the addon will be searched in the following locations within the archive:  </p>
+</dd>
+</dl>
+<ul>
+<li>for lua addons, it will be searched in lib/$addon_name.lua. The addon will be loaded through the lua module mechanism, a.k.a require.  </li>
+<li>for C or rust addons, it will be searched in lib/$target_tripple/lib$addon_name.so. This will be loaded through the dynamic linkage procedures in linux.</li>
+</ul>
+<h2 id="ocr">ocr<a class="headerlink" href="#ocr" title="Permanent link">&para;</a></h2>
+<dl>
+<dt>The ocr system will have two modes:  </dt>
+<dt>nvda stile ocr</dt>
+<dd>
+<p>The ocr results open in a different window, the user being able to click pieces of text for the mouse to perform a click at the desired location in the real window. This would also be the fastest way to perform even arbitrary ocr, as the ocr info is available to addons, so the window doesn&rsquo;t necesarily need to pop open, exactly like nvda.</p>
+</dd>
+</dl>
+<p><strong>this is under discussions, if it&rsquo;s indeed possible to do such things with the current open source technologies we have</strong></p>
+<dl>
+<dt>innovative ocr</dt>
+<dd>
+<p>This mode doesn&rsquo;t attempt to open a new window, instead it overlays the ocr within the current one.<br />
+Based on the control&rsquo;s shape, position and probably color, yggdrasil will try to make an accessible tree for that window, recognising the controll type and using the captured text as the controll text if applicable. Of course, because of the error probability being so high, there would be a possibility for the user to define controlls manually based on the mouse position and providing the text, or make improvements to the already generated ocr result, then saving it as a file that can be distributed. Of course such tweeks will be resolution dependent, but probably the utility will try to correct it as much as possible to fit the application by finding the greattest similarity to both the text and coords and controll type from the provided database in the ocred text.</p>
+</dd>
+</dl>
+<h2 id="gesture-system">gesture system<a class="headerlink" href="#gesture-system" title="Permanent link">&para;</a></h2>
+<p>The system needs to be as flexible as possible, so the gesture system will be an event component implementing the above mentioned protocol.<br />
+First, it takes all the raw user actions as events from the hub, registering for them all, like key presses, touch gestures and other user-generated commands through alternative input methods. Then, it reads the gestures configuration file, or maybe database. When it finds the gesture corresponding to the event it got from the hub, it reads the action for that, constructs the appropriate event, sending it to the event hub to be processed and dispatched to the correct component.</p>
 <h2 id="links-to-currently-available-documentation">links to currently available documentation<a class="headerlink" href="#links-to-currently-available-documentation" title="Permanent link">&para;</a></h2>
 <ul>
 <li>at-spi API documentation<br />
-https://www.manpagez.com/html/libatspi/libatspi-2.10.1/ch01.php</li>
+<a href="https://www.manpagez.com/html/libatspi/libatspi-2.10.1/ch01.php">https://www.manpagez.com/html/libatspi/libatspi-2.10.1/ch01.php</a></li>
 <li>at-spi general overview, with several links<br />
-https://www.freedesktop.org/wiki/Accessibility/AT-SPI2/</li>
+<a href="https://www.freedesktop.org/wiki/Accessibility/AT-SPI2/">https://www.freedesktop.org/wiki/Accessibility/AT-SPI2/</a></li>
 <li>at-spi examples, including javascript, C and python<br />
-https://github.com/infapi00/at-spi2-examples</li>
+<a href="https://github.com/infapi00/at-spi2-examples">https://github.com/infapi00/at-spi2-examples</a></li>
 <li>examples using exclusively py-atspi2, the human-generated bindings, not the ones generated via object introspection<br />
-https://www.freedesktop.org/wiki/Accessibility/PyAtSpi2Example/</li>
+<a href="https://www.freedesktop.org/wiki/Accessibility/PyAtSpi2Example/">https://www.freedesktop.org/wiki/Accessibility/PyAtSpi2Example/</a></li>
 <li>rust bindings for at-spi<br />
-https://github.com/mcb2003/atspi-rs</li>
+<a href="https://github.com/mcb2003/atspi-rs">https://github.com/mcb2003/atspi-rs</a></li>
 <li>rust bindings to speech dispatcher, speech-dispatcher-sys. Bindings autogenerated with rust-bindgen, written by nolan<br />
-https://crates.io/crates/speech-dispatcher-sys/0.5.2</li>
+<a href="https://crates.io/crates/speech-dispatcher-sys/0.5.2">https://crates.io/crates/speech-dispatcher-sys/0.5.2</a></li>
 <li>liblouis bindings for rust, for braille tables and multiple braille codes, including those for the majority of languages<br />
-https://github.com/whentze/liblouis-rust</li>
+<a href="https://github.com/whentze/liblouis-rust">https://github.com/whentze/liblouis-rust</a></li>
 </ul></div>
             </div>
         </div>

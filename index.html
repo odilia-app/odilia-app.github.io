@@ -158,6 +158,36 @@ keys, and getting and setting voice parameters such as rate, pitch, and volume.<
 <div class="codehilite"><pre><span></span><code>[tts-rs]: https://github.com/ndarilek/tts-rs
 </code></pre></div>
 
+<h3 id="the-first-prototype-has-been-released">the first prototype has been released!<a class="headerlink" href="#the-first-prototype-has-been-released" title="Permanent link">&para;</a></h3>
+<p>We know it has been a long time, however we are delited to inform you that the first yggdrasil prototype is up on github, with a very early alpha stage build for anyone curious enough to try it out.<br />
+the screen reader can&rsquo;t do much at the moment, however this is what it can do so far</p>
+<ul>
+<li>
+<p>like any normal screen reader, it can read most components exposed by the linux accessibility interface, such as buttons, checkboxes, radio buttons, etc.<br />
+an exception to this is the webview controll and interacting with text boxes, though the latter might be implemented around the end of the week, if everything goes well.</p>
+</li>
+<li>
+<p>some web elements can be navigated through and interacted with, for example links, buttons, checkboxes, forms, etc, even though text inside the webview and quick navigation doesn&rsquo;t work yet.</p>
+</li>
+</ul>
+<p>As we all know, this is the first release of an alpha quality software, so feel free to report bugs by opening issues against the repository. However, here are some known issues that we will attempt to fix in the next couple releases, so no need to report those</p>
+<ul>
+<li>
+<p>sometimes, the name or text of a controll might not be announced, the speech saying something like &ldquo;:button&rdquo;, mark the punctuation.<br />
+This is most likely caused by at-spi sending events to yggdrasil before the controlls actually finished loading, so the controll names and other attributes might not be filled in by the time yggdrasil gets the event, though they aren&rsquo;t null since the data exists somewhere, just didn&rsquo;t exist then.</p>
+</li>
+<li>
+<p>if a controll uses something else than name or text to label itself, for example tooltips, yggdrasil won&rsquo;t pick those as valid ways of labeling, so it will either speak the same as described above, or it could even say unlabeled in some cases</p>
+</li>
+<li>
+<p>currently, there&rsquo;s no other way to quit the screen reader but by sending it a keyboard interrupt sygnal, or killing the process in another way. This is so because of the binding generators we work with, they make stuff more complicated, so no keyboard handlers in this release.</p>
+</li>
+<li>
+<p>on some machines, it&rsquo;s reported that the screen reader doesn&rsquo;t read window titles when cycling between them with alt+tab. Currently, we don&rsquo;t know why this is, but we&rsquo;re investigating still.</p>
+</li>
+</ul>
+<p>The road to here was a very rough one indeed, however we are excited we could bring this to you, as demo quality as this is. This means much to us, it proves progress is being done, against all odds.<br />
+If you want to see more content from us, consider visiting our website more often, this way you won&rsquo;t lose anything. Furthermore, you will get information from the source of the project, so you can confirm its authenticity for yourself</p>
 <h2 id="under-active-development">Under Active Development<a class="headerlink" href="#under-active-development" title="Permanent link">&para;</a></h2>
 <p>This website as well as the software itself is under active development, please check back at a later stage to
 see more exciting news and documentation!</p>
@@ -249,6 +279,6 @@ Free Documentation License&rdquo;</a>.</p></div>
 </html>
 
 <!--
-MkDocs version : 1.2.2
-Build Date UTC : 2021-09-23 12:56:00.336244+00:00
+MkDocs version : 1.2.3
+Build Date UTC : 2021-10-26 19:46:31.080165+00:00
 -->

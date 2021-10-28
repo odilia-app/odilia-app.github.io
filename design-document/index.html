@@ -99,7 +99,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#ocr" class="nav-link">ocr</a>
+            <li class="nav-item" data-level="2"><a href="#ocr" class="nav-link">OCR</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -124,13 +124,13 @@
 
 <h1 id="design-of-the-yggdrasil-screen-reader">Design of the Yggdrasil Screen Reader<a class="headerlink" href="#design-of-the-yggdrasil-screen-reader" title="Permanent link">&para;</a></h1>
 <h2 id="event-based-design">Event Based Design<a class="headerlink" href="#event-based-design" title="Permanent link">&para;</a></h2>
-<p>Since <a href="https://nodejs.org/en/">node.js</a> was introduced to the market, the web space has enjoyed more scalable and responsive systems, due to Node&rsquo;s event driven architecture, where every system is loosly coupled to one another, where asyncronous programming, events and messages govern the program flow, therefore making traditional performance bottlenecks like disk i/o, database access and others nearly insignificant, since access to such resources is properly managed and interested parties are notified whenever such a resource is free to use.<br />
+<p>Since <a href="https://nodejs.org/en/">node.js</a> was introduced to the market, the web space has enjoyed more scalable and responsive systems, due to Node&rsquo;s event driven architecture, where every system is loosely coupled to one another, where asynchronous programming, events and messages govern the program flow, therefore making traditional performance bottlenecks like disk i/o, database access and others nearly insignificant, since access to such resources is properly managed and interested parties are notified whenever such a resource is free to use.<br />
 Inspired by this design, we decided to make the screen reader as event based as possible. Eventually the goal is to be able to abstract away the event sources in interfaces implementable by other components, therefore paving the way for alternative input methods.
 For this to be doable, we&rsquo;d need roughly the following to be implemented:</p>
 <dl>
 <dt>An event manager(runs on the main thread)</dt>
 <dd>
-<p>this is the central hub for events. From here, events are received by system services like at-spi, atk and so on, then propagated to the components interested in that particular event. Note: Each component should register with the hub for every event it wants to recieve.<br />
+<p>this is the central hub for events. From here, events are received by system services like at-spi, atk and so on, then propagated to the components interested in that particular event. Note: Each component should register with the hub for every event it wants to receive.<br />
 The event hub should also reference the at-spi registry, and should register all the events the entire screen reader needs, then propagate them to the appropriate components. Running on another thread should not only be discouraged, but actively prohibited, for example by not implementing send and sync.</p>
 </dd>
 <dt>Component protocol(can run on multiple threads)</dt>
@@ -143,7 +143,7 @@ The event hub should also reference the at-spi registry, and should register all
 </dd>
 </dl>
 <h2 id="speech">Speech<a class="headerlink" href="#speech" title="Permanent link">&para;</a></h2>
-<p>As we want to make sure our screen reader integrates with the linux ecosystem and the existing tools as much as possible, we decided we will use speech dispatcher as the speech platform</p>
+<p>As we want to make sure our screen reader integrates with the Linux ecosystem and the existing tools as much as possible, we decided we will use speech dispatcher as the speech platform</p>
 <p>Each speech related setting will be saved on a per screen reader, per user basis by default. However, we consider the possibility to include a utility that allows modification of the global speech dispatcher configuration. Whether this is achievable depends on how stable the speech-dispatcher config format is, and if we can reverse engineer it or find some kind of formal spec. We can use the <a href="https://crates.io/crates/nom">nom crate</a> to parse it.</p>
 <p>Though the default speech system will be speech dispatcher, we will try to make it possible to allow addons to define their own speech systems, though this is certainly lower priority, as writing a speech-dispatcher module is very easy and allows the synth to be used with other Linux tools.</p>
 <h2 id="object-navigation">Object Navigation<a class="headerlink" href="#object-navigation" title="Permanent link">&para;</a></h2>
@@ -151,8 +151,8 @@ The event hub should also reference the at-spi registry, and should register all
 This should be done in the way users of screen readers with such features expect, a left/right command to navigate to the previous/next sibling of the object in focus, up to go to the parent object(if any), down to go to the children of an object(if any).</p>
 <h2 id="addons">Addons<a class="headerlink" href="#addons" title="Permanent link">&para;</a></h2>
 <p><strong>Note:</strong> This section needs improvement and more discussion, however these are the ideas and plans so far</p>
-<p>This section of the design document has concepts from the android app format(.apk.), as I think it&rsquo;s briliantly designed</p>
-<p>an addon, before installation, is a zip archive that&rsquo;s digitally signed to verify the author&rsquo;s authenticity. It is composed of the following:</p>
+<p>This section of the design document has concepts from the android app format(.apk.), as I think it&rsquo;s brilliantly designed;
+an addon, before installation, is a zip archive that&rsquo;s digitally signed to verify the author&rsquo;s authenticity. It is composed of the following:</p>
 <dl>
 <dt>A manifest file, named always manifest.json</dt>
 <dd>
@@ -164,36 +164,36 @@ This should be done in the way users of screen readers with such features expect
 depending on the language declared in the manifest, the addon will be searched in the following locations within the archive</p>
 <ul>
 <li>for lua addons, it will be searched in lib/$addon_name.lua. The addon will be loaded through the lua module mechanism, a.k.a require.</li>
-<li>for C or rust addons, it will be searched in lib/$target_tripple/lib$addon_name.so. This will be loaded through the dynamic linkage procedures in linux.</li>
+<li>for C or rust addons, it will be searched in lib/$target_tripple/lib$addon_name.so. This will be loaded through the dynamic linkage procedures in Linux.</li>
 </ul>
 </dd>
 </dl>
-<p><strong>Note:</strong> We may allow addons to be written in other languages, such as C, using a custom addon subsystem that could be installed as an addon itself. However, installing such addons will warn the user that they could cause Yggdrasil to become unstable due to things like memory leaks or segmentation faults, and that we are not responsible for these crashes, which should be reported to the addon developers. This arrises from the fact that addons run in the same process as Yggdrasil, so if one crashes, it could bring Yggdrasil down with it. Languages that are memory safe, such as Rust, or garbage collected languages like Lua, won&rsquo;t produce a warning, as the risk of them crashing the entire screen reader are much lower, if not zero.</p>
+<p><strong>Note:</strong> We may allow addons to be written in other languages, such as C, using a custom addon subsystem that could be installed as an addon itself. However, installing such addons will warn the user that they could cause Yggdrasil to become unstable due to things like memory leaks or segmentation faults, and that we are not responsible for these crashes, which should be reported to the addon developers. This arises from the fact that addons run in the same process as Yggdrasil, so if one crashes, it could bring Yggdrasil down with it. Languages that are memory safe, such as Rust, or garbage collected languages like Lua, won&rsquo;t produce a warning, as the risk of them crashing the entire screen reader are much lower, if not zero.</p>
 <h3 id="addon-distribution">Addon Distribution<a class="headerlink" href="#addon-distribution" title="Permanent link">&para;</a></h3>
 <p>We intend to provide a central distribution platform for addons, for easy installation and discovery by the users.<br />
 Like any extension store, features like searching, filtering and so on will be available, as well as automatic updating upon the users choice.<br />
 Since this is a public addon platform, we will have to make sure our users don&rsquo;t get infected due to the addons distributed through it, therefore</p>
 <ul>
 <li>In order to be published on the store, an addon needs to be digitally signed with a certificate that uniquely identifies the entity or organisation responsible for its development and distribution.</li>
-<li>a static analysis of the archive would comense whenever a new version is uploaded. This could include scanning of the manifest file for dubious sets of intitlements, a submition of the binary files to virustotal, etc.</li>
-<li>Of course, we will encourage developers to make use of unit testing, and down the road could provide a unit testing framework that simulates the Yggdrasil addon API that can be used to programatically test addon functionality.</li>
+<li>a static analysis of the archive would commence whenever a new version is uploaded. This could include scanning of the manifest file for dubious sets of entitlements, a submission of the binary files to virustotal, etc.</li>
+<li>Of course, we will encourage developers to make use of unit testing, and down the road could provide a unit testing framework that simulates the Yggdrasil addon API that can be used to programmatically test addon functionality.</li>
 </ul>
 <p>However, with a specific setting in the screen reader, the user can allow the installation of extensions not distributed through the store. Then, the addon manager would allow browsing to an addon file and install it.</p>
 <h3 id="included-addons">Included Addons<a class="headerlink" href="#included-addons" title="Permanent link">&para;</a></h3>
-<p>In the spirit of modularity and collaboration potential, and because we want our addon api to be as bulletprufe, efficient to use and clearly documented as possible, most of the not strictly needed but useful components as comodity features(what is strictly not necesary to operate the core) will be included with the distribution as addons. Per the users choices, some of those can be disabled or even uninstalled, cutting down on the installed size.</p>
-<h2 id="ocr">ocr<a class="headerlink" href="#ocr" title="Permanent link">&para;</a></h2>
-<p>The ocr system will have two modes:</p>
+<p>In the spirit of modularity and collaboration potential, and because we want our addon api to be as bullet-proof, efficient to use and clearly documented as possible, most of the not strictly needed but useful components as commodity features(what is strictly not necessary to operate the core) will be included with the distribution as addons. Per the users choices, some of those can be disabled or even uninstalled, cutting down on the installed size.</p>
+<h2 id="ocr">OCR<a class="headerlink" href="#ocr" title="Permanent link">&para;</a></h2>
+<p>The OCR system will have two modes:</p>
 <h3 id="nvda-style-ocr">NVDA Style OCR<a class="headerlink" href="#nvda-style-ocr" title="Permanent link">&para;</a></h3>
-<p>The ocr results open in a different window, the user being able to click pieces of text for the mouse to perform a click at the desired location in the real window. This would also be the fastest way to perform even arbitrary ocr, as the ocr info is available to addons, so the window doesn&rsquo;t necesarily need to pop open, exactly like nvda.<br />
+<p>The ocr results open in a different window, the user being able to click pieces of text for the mouse to perform a click at the desired location in the real window. This would also be the fastest way to perform even arbitrary ocr, as the ocr info is available to addons, so the window doesn&rsquo;t necessarily need to pop open, exactly like nvda.<br />
 <strong>this is under discussion, if it&rsquo;s indeed possible to do such things with the current open source accessibility stack we have.</strong></p>
 <h3 id="innovative-ocr">Innovative OCR<a class="headerlink" href="#innovative-ocr" title="Permanent link">&para;</a></h3>
 <p>This mode doesn&rsquo;t attempt to open a new window, instead it overlays the ocr within the current one.<br />
-Based on the control&rsquo;s shape, position and color, yggdrasil will try to make an accessible tree for that window, recognising the controll type and using the captured text as the controll text if applicable. Of course, because of the error probability being so high, there would be a possibility for the user to define controlls manually based on the mouse position and providing the text, or make improvements to the already generated ocr result, then saving it as a file that can be distributed. Of course such tweeks will be resolution dependent, but probably the utility will try to correct it as much as possible to fit the application by finding the greattest similarity to both the text and coords and controll type from the provided database in the ocred text.</p>
+Based on the control&rsquo;s shape, position and color, Yggdrasil will try to make an accessible tree for that window, recognising the control type and using the captured text as the control text if applicable. Of course, because of the error probability being so high, there would be a possibility for the user to define controls manually based on the mouse position and providing the text, or make improvements to the already generated OCR result, then saving it as a file that can be distributed. Of course such tweaks will be resolution dependent, but probably the utility will try to correct it as much as possible to fit the application by finding the greatest similarity to both the text and cords and control type from the provided database in the OCRed text.</p>
 <h2 id="sound-themes-earcons">Sound Themes (Earcons)<a class="headerlink" href="#sound-themes-earcons" title="Permanent link">&para;</a></h2>
-<p>For a long time, mobile device users have had earcons, a sound representation of each control and element type on the current interface. Due to that, such users don&rsquo;t need to wait for the speech to arrive to the controll type, as it&rsquo;s obvious what it is based on the specific sound.
-NVDA uses an addon called <a href="https://addons.nvda-project.org/addons/AudioThemes.en.html">audio themes</a> together with unspoken to deliver this functionality which, while not perfect and can lag sometimes, at least tryes to accomplish the same level of efficiency as the mobile experience and manages for the most part.<br />
-While proliminary support for audio has been implemented in Orca, it hasn&rsquo;t been expanded on since, and as far as we know, the only thing that uses it is progress bar beeps.
-Yggdrasil will implement this as an addon that&rsquo;s part of the distribution, since its another unnecesary feature for the functioning of the screen reader, even though it increases productivity.
+<p>For a long time, mobile device users have had earcons, a sound representation of each control and element type on the current interface. Due to that, such users don&rsquo;t need to wait for the speech to arrive to the control type, as it&rsquo;s obvious what it is based on the specific sound.
+NVDA uses an addon called <a href="https://addons.nvda-project.org/addons/AudioThemes.en.html">audio themes</a> together with unspoken to deliver this functionality which, while not perfect and can lag sometimes, at least tries to accomplish the same level of efficiency as the mobile experience and manages for the most part.<br />
+While preliminary support for audio has been implemented in Orca, it hasn&rsquo;t been expanded on since, and as far as we know, the only thing that uses it is progress bar beeps.
+Yggdrasil will implement this as an addon that&rsquo;s part of the distribution, since its another unnecessary feature for the functioning of the screen reader, even though it increases productivity.
 Eventually, it would also be nice to support positional audio for earcons, so the user knows where the control they&rsquo;re interacting is on screen.</p>
 <h2 id="gesture-system">Gesture System<a class="headerlink" href="#gesture-system" title="Permanent link">&para;</a></h2>
 <p>The system needs to be as flexible as possible, so the gesture system will be an event component implementing the above mentioned protocol.<br />
@@ -207,7 +207,7 @@ When it finds the gesture corresponding to the event it got from the hub, it rea
 <li><a href="https://github.com/infapi00/at-spi2-examples">at-spi examples</a>, including Javascript, C and Python.</li>
 <li><a href="https://www.freedesktop.org/wiki/Accessibility/PyAtSpi2Example/">Examples using exclusively py-atspi2</a>, the human-generated bindings, not the ones generated via object introspection.</li>
 <li><a href="https://github.com/mcb2003/atspi-rs">Rust bindings for at-spi</a></li>
-<li><a href="https://crates.io/crates/speech-dispatcher-sys/0.5.2">Rust bindings to speech dispatcher, speech-dispatcher-sys</a>. Bindings autogenerated with rust-bindgen, written by nolan</li>
+<li><a href="https://crates.io/crates/speech-dispatcher-sys/0.5.2">Rust bindings to speech dispatcher, speech-dispatcher-sys</a>. Bindings auto-generated with rust-bindgen, written by nolan</li>
 <li><a href="http://htmlpreview.github.io/?https://github.com/brailcom/speechd/blob/master/doc/speech-dispatcher.html">speech-dispatcher library documentation</a>.</li>
 <li><a href="http://htmlpreview.github.io/?https://github.com/brailcom/speechd/blob/master/doc/ssip.html">The Speech Synthesis Interface Protocol (SSIP) API documentation</a>.</li>
 <li><a href="https://github.com/whentze/liblouis-rust">Liblouis bindings for rust</a>, for braille tables and multiple braille codes, including those for the majority of languages</li>

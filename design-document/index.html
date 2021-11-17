@@ -81,7 +81,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#design-of-the-yggdrasil-screen-reader" class="nav-link">Design of the Yggdrasil Screen Reader</a>
+            <li class="nav-item" data-level="1"><a href="#design-of-the-odilia-screen-reader" class="nav-link">Design of the Odilia Screen Reader</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#event-based-design" class="nav-link">Event Based Design</a>
               <ul class="nav flex-column">
@@ -122,7 +122,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="design-of-the-yggdrasil-screen-reader">Design of the Yggdrasil Screen Reader<a class="headerlink" href="#design-of-the-yggdrasil-screen-reader" title="Permanent link">&para;</a></h1>
+<h1 id="design-of-the-odilia-screen-reader">Design of the Odilia Screen Reader<a class="headerlink" href="#design-of-the-odilia-screen-reader" title="Permanent link">&para;</a></h1>
 <h2 id="event-based-design">Event Based Design<a class="headerlink" href="#event-based-design" title="Permanent link">&para;</a></h2>
 <p>Since <a href="https://nodejs.org/en/">Node.js</a> was introduced to the market, the web space has enjoyed more scalable and responsive systems, due to Node&rsquo;s event driven architecture, where every system is loosely coupled to one another, where asynchronous programming, events and messages govern the program flow, therefore making traditional performance bottlenecks like disk i/o, database access and others nearly insignificant, since access to such resources is properly managed and interested parties are notified whenever such a resource is free to use.<br />
 Inspired by this design, we decided to make the screen reader as event based as possible. Eventually the goal is to be able to abstract away the event sources in interfaces implementable by other components, therefore paving the way for alternative input methods.
@@ -158,7 +158,7 @@ an addon, before installation, is a zip archive that&rsquo;s digitally signed to
 <dl>
 <dt>A manifest file, always named &ldquo;manifest.json&rdquo;</dt>
 <dd>
-<p>Defines metadata about the add-on, such as its name, version, author, minimal Yggdrasil version, capabilities, programming language, documentation links or local documentation, etc.</p>
+<p>Defines metadata about the add-on, such as its name, version, author, minimal Odilia version, capabilities, programming language, documentation links or local documentation, etc.</p>
 </dd>
 <dt>The add-on bundle</dt>
 <dd>
@@ -170,7 +170,7 @@ depending on the language declared in the manifest, the addon will be searched i
 </ul>
 </dd>
 </dl>
-<p><strong>Note:</strong> We may allow addons to be written in other languages, such as C, using a custom add-on subsystem that could be installed as an addon itself. However, installing such add-ons will warn the user that they could cause Yggdrasil to become unstable due to things like memory leaks or segmentation faults, and that we are not responsible for these crashes, which should be reported to the add-on developers. This arises from the fact that add-ons run in the same process as Yggdrasil, so if one crashes, it could bring Yggdrasil down with it. Languages that are memory safe, such as Rust, or garbage collected languages like Lua, won&rsquo;t produce a warning, as the risk of them crashing the entire screen reader is much lower, if not impossible.</p>
+<p><strong>Note:</strong> We may allow addons to be written in other languages, such as C, using a custom add-on subsystem that could be installed as an addon itself. However, installing such add-ons will warn the user that they could cause Odilia to become unstable due to things like memory leaks or segmentation faults, and that we are not responsible for these crashes, which should be reported to the add-on developers. This arises from the fact that add-ons run in the same process as Odilia, so if one crashes, it could bring Odilia down with it. Languages that are memory safe, such as Rust, or garbage collected languages like Lua, won&rsquo;t produce a warning, as the risk of them crashing the entire screen reader is much lower, if not impossible.</p>
 <h3 id="add-on-distribution">Add-on Distribution<a class="headerlink" href="#add-on-distribution" title="Permanent link">&para;</a></h3>
 <p>We intend to provide a central distribution platform for add-ons, for easy installation and discovery by the users.  </p>
 <p>Like any extension store, features like searching, filtering and so on will be available, as well as automatic updating upon the users choice.  </p>
@@ -178,7 +178,7 @@ depending on the language declared in the manifest, the addon will be searched i
 <ul>
 <li>In order to be published on the store, an add-on needs to be digitally signed with a certificate that uniquely identifies the entity or organisation responsible for its development and distribution.</li>
 <li>a static analysis of the archive would commence whenever a new version is uploaded. This could include scanning of the manifest file for dubious sets of entitlements, a submission of the binary files to virustotal, etc.</li>
-<li>Of course, we will encourage developers to make use of unit testing, and down the road could provide a unit testing framework that simulates the Yggdrasil addon API that can be used to programmatically test addon functionality.</li>
+<li>Of course, we will encourage developers to make use of unit testing, and down the road could provide a unit testing framework that simulates the Odilia addon API that can be used to programmatically test addon functionality.</li>
 </ul>
 <p>However, with a specific setting in the screen reader, the user can allow the installation of extensions not distributed through the store. Then, the addon manager would allow browsing to an addon file and install it.</p>
 <h3 id="included-addons">Included Addons<a class="headerlink" href="#included-addons" title="Permanent link">&para;</a></h3>
@@ -190,12 +190,12 @@ depending on the language declared in the manifest, the addon will be searched i
 <strong>this is under discussion, if it&rsquo;s indeed possible to do such things with the current open source accessibility stack we have.</strong></p>
 <h3 id="innovative-ocr">Innovative OCR<a class="headerlink" href="#innovative-ocr" title="Permanent link">&para;</a></h3>
 <p>This mode doesn&rsquo;t attempt to open a new window, instead it overlays the OCR within the current one.  </p>
-<p>Based on the control&rsquo;s shape, position and color, Yggdrasil will try to make an accessible tree for that window, recognising the control type and using the captured text as the control text if applicable. Of course, because of the error probability being so high, there would be a possibility for the user to define controls manually based on the mouse position and providing the text, or make improvements to the already generated OCR result, then saving it as a file that can be distributed. Of course such tweaks will be resolution dependent, but probably the utility will try to correct it as much as possible to fit the application by finding the greatest similarity to both the text and cords and control type from the provided database in the OCRed text.</p>
+<p>Based on the control&rsquo;s shape, position and color, Odilia will try to make an accessible tree for that window, recognising the control type and using the captured text as the control text if applicable. Of course, because of the error probability being so high, there would be a possibility for the user to define controls manually based on the mouse position and providing the text, or make improvements to the already generated OCR result, then saving it as a file that can be distributed. Of course such tweaks will be resolution dependent, but probably the utility will try to correct it as much as possible to fit the application by finding the greatest similarity to both the text and cords and control type from the provided database in the OCRed text.</p>
 <h2 id="sound-themes-earcons">Sound Themes (Earcons)<a class="headerlink" href="#sound-themes-earcons" title="Permanent link">&para;</a></h2>
 <p>For a long time, mobile device users have had earcons, a sound representation of each control and element type on the current interface. Due to that, such users don&rsquo;t need to wait for the speech to arrive to the control type, as it&rsquo;s obvious what it is based on the specific sound.</p>
 <p>NVDA uses an addon called <a href="https://addons.nvda-project.org/addons/AudioThemes.en.html">audio themes</a> together with unspoken to deliver this functionality which, while not perfect and can lag sometimes, at least tries to accomplish the same level of efficiency as the mobile experience and manages for the most part.  </p>
 <p>While preliminary support for audio has been implemented in Orca, it hasn&rsquo;t been expanded on since, and as far as we know, the only thing that uses it is progress bar beeps.</p>
-<p>Yggdrasil will implement this as an add-on that&rsquo;s part of the distribution, since its another unnecessary feature for the functioning of the screen reader, even though it increases productivity.</p>
+<p>Odilia will implement this as an add-on that&rsquo;s part of the distribution, since its another unnecessary feature for the functioning of the screen reader, even though it increases productivity.</p>
 <p>(Eventually), it would also be nice to support positional audio for earcons, so the user knows where the control they&rsquo;re interacting is on screen.</p>
 <h2 id="gesture-system">Gesture System<a class="headerlink" href="#gesture-system" title="Permanent link">&para;</a></h2>
 <p>This system needs to be as flexible as possible, so the gesture system will be an event component implementing the above mentioned protocol.  </p>

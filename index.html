@@ -125,7 +125,7 @@ A screen reader with all the modern features a Windows or macOS user would expec
 <ul>
 <li>Object navigation</li>
 <li>OCR</li>
-<li>Customisable navigation commands</li>
+<li>Customizable navigation commands</li>
 <li>A powerful add-on mechanism</li>
 <li>And more.</li>
 </ul>
@@ -142,21 +142,21 @@ intuitive graphical program to modify gestures and define new actions will be av
 <h3 id="modern-navigation-patterns">Modern navigation patterns<a class="headerlink" href="#modern-navigation-patterns" title="Permanent link">&para;</a></h3>
 <p>In a perfect world, apps would just be accessible automatically, However, that&rsquo;s almost never the case. Therefore, visually impaired people rely on additional tools provided by
 their screen reader, such as object navigation, a way to explore the accessibility tree of an app without relying
-on focus, being then able to discover unfocusable elements that have important information nevertheless. We
+on focus, being then able to discover unfocusable elements that have important information, nevertheless. We
 have this in <a href="https://www.nvaccess.org/">NVDA</a> and other screen readers, but not in Orca and as such, not in Linux. Odilia will
 address that.</p>
 <h2 id="why-the-name">Why the Name?<a class="headerlink" href="#why-the-name" title="Permanent link">&para;</a></h2>
 <p><a href="odilia">Odilia of Alsace</a> is the patroness saint of good vision in the Catholic and Eastern Orthodox churches.
-Every person on this project has a different relgiion, but we mostly agreed it was a good name.</p>
+Every person on this project has a different religion, but we mostly agreed it was a good name.</p>
 <p>Spelling: <code>O D I L I A</code></p>
-<p>Pronounciation: oh-dill-ee-ah</p>
+<p>Pronunciation: oh-dill-ee-ah</p>
 <h2 id="announcements-and-news">Announcements and News<a class="headerlink" href="#announcements-and-news" title="Permanent link">&para;</a></h2>
 <p>Important announcements and news about Odilia&rsquo;s development will be published here.</p>
 <h3 id="minimal-speech-dispatcher-bindings-completed">Minimal Speech-dispatcher Bindings Completed<a class="headerlink" href="#minimal-speech-dispatcher-bindings-completed" title="Permanent link">&para;</a></h3>
 <p>As of a few days ago, a <a href="https://github.com/yggdrasil-sr/tts_subsystem">minimal binding to Speech-dispatcher</a> (the TTS system for Linux) was created, which
 wraps the C functions provided by <a href="https://github.com/ndarilek/speech-dispatcher-sys">Nolan&rsquo;s <code>Speech-dispatcher-sys</code> crate</a> in a safe Rust API. That means the
 speech component of Odilia can now be implemented after the At-spi components are completed, as well as in other Rust
-projects that need Linux-only TTS, or want more control than the <a href="https://github.com/ndarilek/tts-rs">TTS crate</a> gives them.</p>
+projects that need Linux-only TTS or want more control than the <a href="https://github.com/ndarilek/tts-rs">TTS crate</a> gives them.</p>
 <p>These bindings are far from complete, but do provide the essential functionality, such as speaking text, characters and
 keys, and getting and setting voice parameters such as rate, pitch, and volume.</p>
 <p>In our view, that means one step closer to the first Odilia prototype!</p>
@@ -164,28 +164,28 @@ keys, and getting and setting voice parameters such as rate, pitch, and volume.<
 <p>We know it has been a long time, however we are delighted to inform you that the first Odilia prototype is up on GitHub, with a very early alpha stage build for anyone curious enough to try it out.  </p>
 <p>If you want to try it out, the link is here:</p>
 <p><a href="https://github.com/yggdrasil-sr/yggdrasil-prototype/releases/">https://github.com/yggdrasil-sr/yggdrasil-prototype/releases/</a></p>
-<p>the screen reader can&rsquo;t do much at the moment, however this is what it can do so far</p>
+<p>the screen reader can&rsquo;t do much now, however this is what it can do so far:</p>
 <ul>
 <li>
-<p>like any normal screen reader, it can read most components exposed by the Linux accessibility interface, such as buttons, checkboxes, radio buttons, etc.<br />
+<p>Like any normal screen reader, it can read most components exposed by the Linux accessibility interface, such as buttons, checkboxes, radio buttons, etc.<br />
 An exception to this is the WebView control and interacting with text boxes, though the latter might be implemented around the end of the week, if everything goes well.</p>
 </li>
 <li>
-<p>some web elements can be navigated through and interacted with, for example links, buttons, checkboxes, forms, etc, even though text inside the webview and quick navigation doesn&rsquo;t work yet.
-As we all know, this is the first release of an alpha quality software, so feel free to report bugs by opening issues against the repository. However, here are some known issues that we will attempt to fix in the next couple releases, so no need to report those</p>
+<p>Some web elements can be navigated through and interacted with, for example links, buttons, checkboxes, forms, etc., even though text inside the WebView and quick navigation doesn&rsquo;t work yet.
+As we all know, this is the first release of an alpha quality software, so feel free to report bugs by opening issues against the repository. However, here are some known issues that we will attempt to fix in the next couple releases, so no need to report those:</p>
 </li>
 <li>
-<p>sometimes, the name or text of a control might not be announced, the speech saying something like &ldquo;:button&rdquo;, mark the punctuation.<br />
+<p>Sometimes, the name or text of a control might not be announced, the speech saying something like &ldquo;:button&rdquo;, mark the punctuation.<br />
 This is most likely caused by at-spi sending events to Odilia before the controls actually finished loading, so the control names and other attributes might not be filled in by the time Odilia gets the event, though they aren&rsquo;t null since the data exists somewhere, just didn&rsquo;t exist then.</p>
 </li>
 <li>
-<p>if a control uses something else than name or text to label itself, for example tooltips, Odilia won&rsquo;t pick those as valid ways of labeling, so it will either speak the same as described above, or it could even say unlabeled in some cases</p>
+<p>If a control uses something else than name or text to label itself, for example tooltips, Odilia won&rsquo;t pick those as valid ways of labeling, so it will either speak the same as described above, or it could even say unlabeled in some cases</p>
 </li>
 <li>
-<p>currently, there&rsquo;s no other way to quit the screen reader other than sending it a keyboard interrupt signal, or killing the process in another way. This is because the binding generators we work with make stuff more complicated, so no keyboard handlers in this release.</p>
+<p>Currently, there&rsquo;s no other way to quit the screen reader other than sending it a keyboard interrupt signal or killing the process in another way. This is because the binding generators we work with make stuff more complicated, so no keyboard handlers in this release.</p>
 </li>
 <li>
-<p>on some machines, it&rsquo;s reported that the screen reader doesn&rsquo;t read window titles when cycling between them with alt+tab. Currently, we don&rsquo;t know why this is, but we&rsquo;re investigating still.</p>
+<p>On some machines, it&rsquo;s reported that the screen reader doesn&rsquo;t read window titles when cycling between them with Alt+Tab. Currently, we don&rsquo;t know why this is, but we&rsquo;re investigating still.</p>
 </li>
 </ul>
 <p>The road to here was a very rough one indeed, however we are excited we could bring this to you, as demo quality as this is. This means much to us, it proves progress is being done, against all odds.  </p>
@@ -282,5 +282,5 @@ Free Documentation License&rdquo;</a>.</p></div>
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2021-11-20 17:36:55.645713+00:00
+Build Date UTC : 2022-01-07 18:54:53.925075+00:00
 -->

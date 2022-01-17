@@ -1,286 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A modern, feature-rich screen reader for the Linux desktop, built in Rust.
+<!doctype html><html lang=en>
+<head>
+<meta name=generator content="Hugo 0.89.4">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="
+Welcome to Odilia!
+
+Accessibility on Linux has historically been under-developed,
+under-maintained, and therefore not up to modern standards for many blind
+people. We’re hear to help with that!
+
+Odilia is a new screen reader for the Linux desktop. It’s written in Rust, for maximum performance and
+stability.
+
 ">
-        <meta name="author" content="The Odilia contributors">
-        <link rel="canonical" href="https://yggdrasil-sr.github.io/">
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Odilia Screen Reader</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
-
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
-
-    <body class="homepage">
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href=".">Odilia Screen Reader</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem active">
-                                <a href="." class="nav-link">Home</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="design-document/" class="nav-link">Design</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="https://github.com/yggdrasil-sr" class="nav-link">Code</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="design-document/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://github.com/yggdrasil-sr/site/edit/main/docs/index.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#the-odilia-screen-reader-project" class="nav-link">The Odilia Screen Reader Project</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#what-is-odilia" class="nav-link">What is Odilia?</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#features" class="nav-link">Features</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#why-the-name" class="nav-link">Why the Name?</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#announcements-and-news" class="nav-link">Announcements and News</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#under-active-development" class="nav-link">Under Active Development</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#website-documentation-license" class="nav-link">Website / Documentation License</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
-</div></div>
-                    <div class="col-md-9" role="main">
-
-<h1 id="the-odilia-screen-reader-project">The Odilia Screen Reader Project<a class="headerlink" href="#the-odilia-screen-reader-project" title="Permanent link">&para;</a></h1>
-<h2 id="what-is-odilia">What is Odilia?<a class="headerlink" href="#what-is-odilia" title="Permanent link">&para;</a></h2>
-<p>Accessibility on Linux has historically been under-developed, under-maintained, and, therefore, gained a
-reputation of being quite painful to use as a daily driver among disabled people. We want to change that.</p>
-<p>Odilia is a new project that aims to create a better Linux screen reader, written in <a href="https://rust-lang.org/">Rust</a>. Through
-this project, we aim to provide a better screen reading experience than the one we currently have in <a href="https://wiki.gnome.org/Projects/Orca">Orca</a>.
-A screen reader with all the modern features a Windows or macOS user would expect from their computers, some of which are outlined below.</p>
-<ul>
-<li>Object navigation</li>
-<li>OCR</li>
-<li>Customizable navigation commands</li>
-<li>A powerful add-on mechanism</li>
-<li>And more.</li>
-</ul>
-<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
-<h3 id="first-class-addon-support">First-class addon support<a class="headerlink" href="#first-class-addon-support" title="Permanent link">&para;</a></h3>
-<p>We want our users to be able to do anything they wish with our screen reader. Improving support for specific
-programs should ideally be doable without needing to modify Odilia&rsquo;s core code.</p>
-<p>We plan to make it easy to write add-ons (primarily in <a href="https://www.lua.org/">Lua</a>), with the option to use other languages such as
-<a href="https://rust-lang.org/">Rust</a> in the future for higher performance.</p>
-<h3 id="flexible-input-and-gesture-system">Flexible input and gesture system<a class="headerlink" href="#flexible-input-and-gesture-system" title="Permanent link">&para;</a></h3>
-<p>Likewise, adding new functionality such as new keyboard commands should be easy enough, without needing to
-tinker with the source code of the screen reader. Manual editing of the configuration files as well as an
-intuitive graphical program to modify gestures and define new actions will be available.</p>
-<h3 id="modern-navigation-patterns">Modern navigation patterns<a class="headerlink" href="#modern-navigation-patterns" title="Permanent link">&para;</a></h3>
-<p>In a perfect world, apps would just be accessible automatically, However, that&rsquo;s almost never the case. Therefore, visually impaired people rely on additional tools provided by
-their screen reader, such as object navigation, a way to explore the accessibility tree of an app without relying
-on focus, being then able to discover unfocusable elements that have important information, nevertheless. We
-have this in <a href="https://www.nvaccess.org/">NVDA</a> and other screen readers, but not in Orca and as such, not in Linux. Odilia will
-address that.</p>
-<h2 id="why-the-name">Why the Name?<a class="headerlink" href="#why-the-name" title="Permanent link">&para;</a></h2>
-<p><a href="odilia">Odilia of Alsace</a> is the patroness saint of good vision in the Catholic and Eastern Orthodox churches.
-Every person on this project has a different religion, but we mostly agreed it was a good name.</p>
-<p>Spelling: <code>O D I L I A</code></p>
-<p>Pronunciation: oh-dill-ee-ah</p>
-<h2 id="announcements-and-news">Announcements and News<a class="headerlink" href="#announcements-and-news" title="Permanent link">&para;</a></h2>
-<p>Important announcements and news about Odilia&rsquo;s development will be published here.</p>
-<h3 id="minimal-speech-dispatcher-bindings-completed">Minimal Speech-dispatcher Bindings Completed<a class="headerlink" href="#minimal-speech-dispatcher-bindings-completed" title="Permanent link">&para;</a></h3>
-<p>As of a few days ago, a <a href="https://github.com/yggdrasil-sr/tts_subsystem">minimal binding to Speech-dispatcher</a> (the TTS system for Linux) was created, which
-wraps the C functions provided by <a href="https://github.com/ndarilek/speech-dispatcher-sys">Nolan&rsquo;s <code>Speech-dispatcher-sys</code> crate</a> in a safe Rust API. That means the
-speech component of Odilia can now be implemented after the At-spi components are completed, as well as in other Rust
-projects that need Linux-only TTS or want more control than the <a href="https://github.com/ndarilek/tts-rs">TTS crate</a> gives them.</p>
-<p>These bindings are far from complete, but do provide the essential functionality, such as speaking text, characters and
-keys, and getting and setting voice parameters such as rate, pitch, and volume.</p>
-<p>In our view, that means one step closer to the first Odilia prototype!</p>
-<h3 id="the-first-prototype-has-been-released">the first prototype has been released!<a class="headerlink" href="#the-first-prototype-has-been-released" title="Permanent link">&para;</a></h3>
-<p>We know it has been a long time, however we are delighted to inform you that the first Odilia prototype is up on GitHub, with a very early alpha stage build for anyone curious enough to try it out.  </p>
-<p>If you want to try it out, the link is here:</p>
-<p><a href="https://github.com/yggdrasil-sr/yggdrasil-prototype/releases/">https://github.com/yggdrasil-sr/yggdrasil-prototype/releases/</a></p>
-<p>the screen reader can&rsquo;t do much now, however this is what it can do so far:</p>
-<ul>
-<li>
-<p>Like any normal screen reader, it can read most components exposed by the Linux accessibility interface, such as buttons, checkboxes, radio buttons, etc.<br />
-An exception to this is the WebView control and interacting with text boxes, though the latter might be implemented around the end of the week, if everything goes well.</p>
+<link rel=alternate type=application/rss+xml href=https://odilia.app/index.xml title="Odilia Screen Reader">
+<link rel=license type=text/html href=https://www.gnu.org/licenses/agpl-3.0-standalone.html>
+<link rel=license type=text/html href=https://creativecommons.org/licenses/by-sa/4.0/>
+<link rel=stylesheet type=text/css href=/css/style.css encoding=UTF-8>
+<link rel=stylesheet type=text/css href=/css/syntax.css encoding=UTF-8>
+<title>home | Odilia Screen Reader</title>
+</head>
+<body>
+<div id=container>
+<nav class=global-nav>
+<ul class=nav-list>
+<li class=nav-item>
+<a href=/ class="nav-link active" aria-current=true>
+home
+</a>
 </li>
-<li>
-<p>Some web elements can be navigated through and interacted with, for example links, buttons, checkboxes, forms, etc., even though text inside the WebView and quick navigation doesn&rsquo;t work yet.
-As we all know, this is the first release of an alpha quality software, so feel free to report bugs by opening issues against the repository. However, here are some known issues that we will attempt to fix in the next couple releases, so no need to report those:</p>
+<li class=nav-item>
+<a href=/news/ class=nav-link>
+News
+</a>
 </li>
-<li>
-<p>Sometimes, the name or text of a control might not be announced, the speech saying something like &ldquo;:button&rdquo;, mark the punctuation.<br />
-This is most likely caused by at-spi sending events to Odilia before the controls actually finished loading, so the control names and other attributes might not be filled in by the time Odilia gets the event, though they aren&rsquo;t null since the data exists somewhere, just didn&rsquo;t exist then.</p>
+<li class=nav-item>
+<a href=/design/ class=nav-link>
+Design of the Odilia Screen Reader
+</a>
 </li>
-<li>
-<p>If a control uses something else than name or text to label itself, for example tooltips, Odilia won&rsquo;t pick those as valid ways of labeling, so it will either speak the same as described above, or it could even say unlabeled in some cases</p>
-</li>
-<li>
-<p>Currently, there&rsquo;s no other way to quit the screen reader other than sending it a keyboard interrupt signal or killing the process in another way. This is because the binding generators we work with make stuff more complicated, so no keyboard handlers in this release.</p>
-</li>
-<li>
-<p>On some machines, it&rsquo;s reported that the screen reader doesn&rsquo;t read window titles when cycling between them with Alt+Tab. Currently, we don&rsquo;t know why this is, but we&rsquo;re investigating still.</p>
+<li class=nav-item>
+<a href=https://github.com/odilia-app class=nav-link>
+Code
+</a>
 </li>
 </ul>
-<p>The road to here was a very rough one indeed, however we are excited we could bring this to you, as demo quality as this is. This means much to us, it proves progress is being done, against all odds.  </p>
-<p>If you want to see more content from us, consider visiting our website more often, this way you won&rsquo;t lose anything. Furthermore, you will get information from the source of the project, so you can confirm its authenticity for yourself</p>
-<h2 id="under-active-development">Under Active Development<a class="headerlink" href="#under-active-development" title="Permanent link">&para;</a></h2>
-<p>This website as well as the software itself is under active development, please check back at a later stage to
-see more exciting news and documentation!</p>
-<h2 id="website-documentation-license">Website / Documentation License<a class="headerlink" href="#website-documentation-license" title="Permanent link">&para;</a></h2>
-<p>Copyright (c) 2021 the Odilia contributors.</p>
-<p>Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3
-or any later version published by the Free Software Foundation;
-with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-A copy of the license is included in the section entitled <a href="fdl-1.3/">&ldquo;GNU
-Free Documentation License&rdquo;</a>.</p></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-                <p>Copyright © 2021 the Odilia contributors</p>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = ".",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+</nav>
+<main>
+<div class=features>
+<div class=feature>
+<h2>Addons</h2>
+<p> You're no longer limited to built-in functionality! Install addons
+from third-party developers to extend Odilia with new commands and
+abilities. Or, if you're a developer, write your own in one of several
+languages.</p>
 </div>
-
-    </body>
+<div class=feature>
+<h2>Object Nav</h2>
+<p>Navigate applications as a tree of accessible objects, making it
+easy to interact with parts of the interface that are inaccessible, or
+hard to use, using keyboard focus alone.</p>
+</div>
+<div class=feature>
+<h2>OCR</h2>
+<p>Use optical character recognition to read text in images or
+inaccessible apps, and activate the buttons you need.</p>
+</div>
+<div class=feature>
+<h2>Touch Support</h2>
+<p>Use Odilia on your Linux smartphone, tablet, or touch-screen equipped laptop.</p>
+</div>
+<div class=feature>
+<h2>Customisable Input</h2>
+<p>Configure any keyboard shortcut, mouse button or touch gesture to
+activate any Odilia command, even those provided by addons! You can
+customise any default keybinding, either directly in the config file
+with a text editor, or in an intuative graphical application.</p>
+</div>
+</div>
+<h2>Why the Name?</h2>
+<p>Odilia, also known as <a href=https://en.wikipedia.org/wiki/Odile_of_Alsace>Odile of Alsace</a>, is
+the patron saint of the blind, partially sighted, and good eye sight in the <a href=https://en.wikipedia.org/wiki/Catholic_Church>Catholic</a> and <a href=https://en.wikipedia.org/wiki/Eastern_Orthodox_Church>Eastern
+Orthodox</a> churches. We hope that, like God gave Odilia her sight back when
+she was baptised, we can, in a sense, return the lost sense to Linux desktop
+users, and make using their computer easier and more fun!</p>
+<h2>Under Active Development</h2>
+<p>This website as well as the software itself is under active development,
+please check back at a later stage to see more exciting news and
+documentation!</p>
+</main>
+<footer id=footer>
+Copyright &copy; 2022
+<a href=https://github.com/orgs/odilia-app/people target=_blank>the Odilia developers</a>
+(Code is <a rel=license href=https://www.gnu.org/licenses/agpl-3.0-standalone.html target=blank>AGPL 3</a>,
+content is <a rel=license href=https://creativecommons.org/licenses/by-sa/4.0/ target=blank>CC By SA 4.0</a>)
+</footer>
+</div>
+</body>
 </html>
-
-<!--
-MkDocs version : 1.2.3
-Build Date UTC : 2022-01-07 18:54:53.925075+00:00
--->

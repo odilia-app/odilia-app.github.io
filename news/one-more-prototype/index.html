@@ -1,0 +1,126 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=author content="TheFake VIP">
+<meta name=keywords content="prototype release ">
+<meta name=description content="As we announced recently, we decided that we&rsquo;d learned enough from the Odilia prototype to actually implement the real thing. The prototype code, while functional, prioritised experimentation over quality, and thus we&rsquo;ll be throwing almost all of it out completely, but the code is far less important than the experience we gained from writing it.
+As far as I&rsquo;m concerned, ditching the prototype completely was always part of the plan. From personal experience, large projects always get rewritten after a while, so I figured it would be better to plan for that, and reap the benefits of a clean, modular codebase, hopefully free of bad decisions.">
+<link rel=license type=text/html href=https://www.gnu.org/licenses/agpl-3.0-standalone.html>
+<link rel=license type=text/html href=https://creativecommons.org/licenses/by-sa/4.0/>
+<link rel=stylesheet type=text/css href=/css/style.css encoding=UTF-8>
+<link rel=stylesheet type=text/css href=/css/syntax.css encoding=UTF-8>
+<title>One More Thing - Final Prototype Released | Odilia Screen Reader</title>
+</head>
+<body>
+<div id=container>
+<nav class=global-nav>
+<ul class=nav-list>
+<li class=nav-item>
+<a href=/ class=nav-link>
+Home
+</a>
+</li>
+<li class=nav-item>
+<a href=/news/ class="nav-link active" aria-current=true>
+News
+</a>
+</li>
+<li class=nav-item>
+<a href=/design/ class=nav-link>
+Design
+</a>
+</li>
+<li class=nav-item>
+<a href=https://github.com/odilia-app class=nav-link>
+Code
+</a>
+</li>
+</ul>
+</nav>
+<main>
+<article>
+<header>
+<h1>One More Thing - Final Prototype Released</h1>
+<small>
+Published on <time datetime=2022-02-12>February 12, 2022</time>
+by <a href=https://odilia.app/authors/thefake-vip/>TheFake VIP</a>&#183; 3 minutes read
+<br>
+<nav aria-label="Post tags">
+<a href=https://odilia.app/tags/prototype/>prototype</a> &#183; <a href=https://odilia.app/tags/release/>release</a></nav>
+</small>
+</header>
+<p>As we <a href=../enough-prototypes>announced recently</a>, we decided that we&rsquo;d learned enough from <a href=https://github.com/odilia-app/odilia-prototype>the Odilia prototype</a>
+to actually implement the real thing. The prototype code, while functional, prioritised experimentation over quality,
+and thus we&rsquo;ll be throwing almost all of it out completely, but the code is far less important than the experience we
+gained from writing it.</p>
+<p>As far as I&rsquo;m concerned, ditching the prototype completely was always part of the plan. From personal experience, large
+projects always get rewritten after a while, so I figured it would be better to plan for that, and reap the benefits of
+a clean, modular codebase, hopefully free of bad decisions. It does, however, mean we might not have another release out
+for a while. So we decided to glue together the latest work in the prototype, get it compiling, and release it, as a
+<em>very early</em> look at what Odilia could be in the future.</p>
+<h2 id=changes-since-the-last-release>Changes Since the Last Release</h2>
+<p>Since <a href=../first-prototype>the first prototype</a>, almost everything has changed:</p>
+<ul>
+<li>We upgraded to <a href=https://doc.rust-lang.org/edition-guide/rust-2021/index.html>the Rust 2021 edition</a>.
+<ul>
+<li>All our code will use <code>edition = "2021"</code> going forward.</li>
+</ul>
+</li>
+<li>After analysing our options, we decided to ditch binding <a href=https://gitlab.gnome.org/GNOME/at-spi2-core/-/tree/master/atspi>libatspi</a> using GObject Introspection, and instead
+communicate with at-spi directly over <a href=https://www.freedesktop.org/wiki/Software/dbus/>D-Bus</a>. In the prototype this has been done with the <a href=https://crates.io/crates/dbus>dbus
+crate</a>, but we intend to use <a href=https://crates.io/crates/zbus>zbus</a> going forward.
+<ul>
+<li>The community around <code>zbus</code> seems more active, and its API, workflow, and tight <a href=https://crates.io/crates/tokio>Tokio</a> integration will
+work well for us.</li>
+</ul>
+</li>
+<li>We introduced <a href=https://github.com/odilia-app/odilia-input>input handling</a> using the <a href=https://manpages.ubuntu.com/manpages/jammy/man4/evdev.4.html>evdev kernel API</a>, and used it to allow you to press
+the ctrl key to pause speech.
+<ul>
+<li>I plan to explain our rationale behind using evdev, instead of a higher level library like lininput, or for that
+matter at-spi&rsquo;s own input events, in a future post, as it&rsquo;s an interesting topic.</li>
+</ul>
+</li>
+<li>Using evdev requires specific permissions to be set up via <a href=https://www.linux.com/news/udev-introduction-device-management-modern-linux-system/>udev</a>, so we created a <a href=https://github.com/odilia-app/odilia-prototype/blob/main/setup-permissions.sh>setup-permissions.sh
+script</a> to do this for you.</li>
+<li>We added support for different modes in the <a href=https://github.com/odilia-app/odilia-common>odilia-common crate</a>, though these were never fully taken
+advantage of.</li>
+<li>We added basic, messy structural navigation.</li>
+<li>We made sure the screen reader can&rsquo;t panic by trying to read non-existant accessibles. Instead, it will only read the
+attributes of the valid ones.. If an invalid accessible is incountered, it will silently be skipped for now.</li>
+<li>We changed all debug messages to use the fantastic <a href=https://crates.io/crates/log>log crate</a>, with <a href=https://crates.io/crates/env_logger>env_logger</a> as the log
+implementation.
+<ul>
+<li>This means you can control Odilia&rsquo;s log output with the <code>RUST_LOG</code> environment variable, see <a href=https://docs.rs/env_logger/latest/env_logger/#enabling-logging>the env_logger
+documentation</a> for examples of what you can set this variable to.</li>
+</ul>
+</li>
+</ul>
+<h2 id=using-it>Using It</h2>
+<p>If you want to try out this last prototype for yourself, you can download it from the <a href=https://github.com/odilia-app/odilia-prototype/releases/tag/v-0.1.0>Github release</a>. Here&rsquo;s
+a <a href=https://github.com/odilia-app/odilia-prototype/releases/download/v-0.1.0/odilia-release.tar.gz>direct link to the compiled program and scripts</a>.</p>
+<p>As I said above, evdev is normally a privileged interface, since any
+application that can access it could use it for malicious purposes, for
+example, creating a keylogger. For this reason, to run Odilia, you must give
+yourself access to evdev. This can be done by running the <a href=https://github.com/odilia-app/odilia-prototype/blob/main/setup-permissions.sh>setup-permissions.sh
+shell script</a> included with Odilia. The script adds some
+udev rules, then creates an odilia group. Any users added to this group and the
+<code>input</code> group will be able to run Odilia.</p>
+<p>Once you&rsquo;ve given yourself the correct permissions, you can start Odilia by
+running <code>startup.sh</code> in the release tar ball. You can stop Odilia by running
+<code>shutdown.sh</code>.</p>
+<p>Since this is the final release, we won&rsquo;t be fixing bugs, but if you have any
+feedback, feel free to <a href=https://github.com/odilia-app/odilia-prototype/discussions>leave it on Github</a>.</p>
+<p>Stay tuned, we&rsquo;ll be posting about the new, production-quality Odilia soon.</p>
+</article>
+</main>
+<footer id=footer>
+Copyright &copy; 2022
+<a href=https://github.com/orgs/odilia-app/people target=_blank>the Odilia developers</a>
+(Code is <a rel=license href=https://www.gnu.org/licenses/agpl-3.0-standalone.html target=blank>AGPL 3</a>,
+content is <a rel=license href=https://creativecommons.org/licenses/by-sa/4.0/ target=blank>CC-BY-SA 4.0</a>)
+</footer>
+</div>
+</body>
+</html>

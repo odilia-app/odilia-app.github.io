@@ -1,0 +1,32 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Requirements Odilia should run on any Unix-like platform with the required dependencies supported by Rust . Currently, we primarily target Linux, however, we plan to support other free operating systems such as *BSD in the future (patches welcome).
+The following dependencies are required to build and run Odilia:
+Build Dependencies Rust Libclang >= 5.0, required by Rust Bindgensee this page This is required for generating the Rust bindings to libspeech Runtime Dependenceis speech-dispatcher >= 0."><meta name=theme-color media="(prefers-color-scheme: light)" content="white"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#141414"><link rel=license type=text/html href=https://www.gnu.org/licenses/agpl-3.0-standalone.html><link rel=license type=text/html href=https://creativecommons.org/licenses/by-sa/4.0/><link rel=stylesheet type=text/css href=/css/style.css encoding=UTF-8><link rel=stylesheet type=text/css href=/css/syntax.css encoding=UTF-8><title>Installation | Odilia Screen Reader</title></head><body><div id=container><nav class=global-nav><ul class=nav-list><li class=nav-item><a href=/ class=nav-link>Home</a></li><li class=nav-item><a href=/news/ class=nav-link>News</a></li><li class=nav-item><a href=/design/ class=nav-link>Design</a></li><li class=nav-item><a href=/doc/ class="nav-link active" aria-current=true>Documentation</a></li><li class=nav-item><a href=/community/ class=nav-link>Community</a></li><li class=nav-item><a href=https://github.com/odilia-app class=nav-link>Code</a></li></ul></nav><main><nav class=local-nav aria-label=local><a class=local-nav-prev href=/doc/user/guide/ title="Prev: Odilia Users Guide" aria-label=Previous>&larr;</a>
+<span aria-label=Breadcrumbs><a href=/>Home</a>
+/ <a href=/doc/>Documentation</a>
+/ <a href=/doc/user/>User Documentation</a></span></nav><article><header><h1>Installing Odilia</h1></header><h2 id=requirements>Requirements</h2><p>Odilia should run on any Unix-like platform with the required dependencies supported by <a href=https://doc.rust-lang.org/rustc/platform-support.html>Rust
+</a>. Currently, we primarily target Linux, however, we plan to
+support other free operating systems such as *BSD in the future (<a href=https://github.com/odilia-app/odilia>patches welcome</a>).</p><p>The following dependencies are required to build and run Odilia:</p><h3 id=build-dependencies>Build Dependencies</h3><ul><li><a href=https://rust-lang.org>Rust</a></li><li>Libclang >= 5.0, required by <a href=https://github.com/rust-lang/rust-bindgen>Rust Bindgen</a>see <a href=https://rust-lang.github.io/rust-bindgen/requirements.html>this
+page</a><ul><li>This is required for generating the Rust bindings to libspeech</li></ul></li></ul><h3 id=runtime-dependenceis>Runtime Dependenceis</h3><ul><li><a href=https://freebsoft.org/speechd>speech-dispatcher</a> >= 0.9 (>= 0.10 recommended) - text to speech daemon<ul><li>Odilia uses the speech-dispatcher client library: libspeech</li></ul></li><li><a href=https://gitlab.gnome.org/GNOME/at-spi2-core>at-spi2-core</a> - accessibility infrestructure<ul><li>Odilia doesn&rsquo;t use libatspi, it interacts with AT-SPI over DBus directly</li><li>At-spi required a DBus daemon</li></ul></li><li><a href=https://manpages.ubuntu.com/manpages/jammy/man4/evdev.4.html>evdev</a> - input subsystem</li></ul><h2 id=packages>Packages</h2><h3 id=arch>Arch</h3><p>Install the <a href=https://aur.archlinux.org/packages/odilia>odilia</a> AUR package. This will download and build
+Odilia from source. Binary packages are planned, but currently unavailable.</p><h2 id=pre-built-binaries>Pre-built Binaries</h2><p>You can download pre-built Odilia binaries from <a href=https://github.com/odilia-app/odilia/releases>our releases page</a>.</p><h2 id=building-from-source>Building from Source</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=c1># Clone the git repository:</span>
+</span></span><span class=line><span class=cl>git clone https://github.com/odilia-app/odilia
+</span></span><span class=line><span class=cl><span class=c1># Build the project:</span>
+</span></span><span class=line><span class=cl>cargo build --release
+</span></span><span class=line><span class=cl><span class=c1># Optionally, install Odilia:</span>
+</span></span><span class=line><span class=cl>cargo install --path .
+</span></span></code></pre></td></tr></table></div></div><h2 id=running>Running</h2><p>To run Odilia, your user account must have access to evdev devices. Evdev is
+normally a privileged interface, since any application that can access it could
+use it for malicious purposes, for example, creating a keylogger. For this
+reason, to run Odilia, you must give yourself access to evdev. This can be done
+by running the <a href=https://github.com/odilia-app/odilia/blob/main/setup-permissions.sh>setup-permissions.sh shell script</a> included
+with Odilia. The script adds some udev rules, then creates an odilia group. Any
+users added to this group and the <code>input</code> group will be able to run Odilia.</p><p>Once you have the correct permissions, you can start Odilia by running the
+<code>odilia</code> binary.</p><footer>Last modified: <time datetime=2022-07-24>July 24, 2022</time></footer></article></main><footer id=footer>Copyright &copy; 2022
+<a href=https://github.com/orgs/odilia-app/people target=_blank>the Odilia developers</a>
+(Code is <a rel=license href=https://www.gnu.org/licenses/agpl-3.0-standalone.html target=blank>AGPL 3</a>,
+content is <a rel=license href=https://creativecommons.org/licenses/by-sa/4.0/ target=blank>CC-BY-SA 4.0</a>)</footer></div></body></html>

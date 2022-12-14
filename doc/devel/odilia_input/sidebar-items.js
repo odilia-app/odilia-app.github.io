@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["sr_event_receiver",""]]};

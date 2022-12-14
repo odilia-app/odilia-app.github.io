@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["dispatch",""],["process",""],["receive",""],["sr_event",""],["structural_navigation",""]],"mod":[["document",""],["object",""]]};

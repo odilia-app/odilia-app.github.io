@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Available","A `Available` signal."],["AvailableArgs","`Available` signal arguments."],["AvailableIterator","A `Iterator` implementation that yields [`signal_name`] signals."],["AvailableStream","A `Stream` implementation that yields [`signal_name`] signals."],["SocketProxy",""],["SocketProxyBlocking",""]]};

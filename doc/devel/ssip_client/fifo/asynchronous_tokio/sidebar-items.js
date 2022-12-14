@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Builder",""],["OwnedReadHalf","Owned read half of a `UnixStream`, created by `into_split`."],["OwnedWriteHalf","Owned write half of a `UnixStream`, created by `into_split`."],["UnixStream","A structure representing a connected Unix socket."]]};

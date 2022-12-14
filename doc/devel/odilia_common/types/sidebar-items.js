@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["TextSelectionArea",""]],"struct":[["GranularSelection",""],["IndexesSelection",""]],"type":[["Accessible",""]]};

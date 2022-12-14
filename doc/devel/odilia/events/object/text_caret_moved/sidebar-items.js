@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["dispatch",""],["text_cursor_moved",""]]};

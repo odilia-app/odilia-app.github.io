@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Cache","The root of the accessible cache."],["CacheItem",""]],"type":[["FxBuildHasher",""],["FxReadHandleFactory",""],["FxWriteHandle",""]]};

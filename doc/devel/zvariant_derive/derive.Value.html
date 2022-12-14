@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Implements conversions for your type to/from `Value`."><meta name="keywords" content="rust, rustlang, rust-lang, Value"><title>Value in zvariant_derive - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../normalize.css"><link rel="stylesheet" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../ayu.css" disabled><link rel="stylesheet" href="../dark.css" disabled><link rel="stylesheet" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="sidebar-items.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc derive"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../zvariant_derive/index.html"><div class="logo-container"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../zvariant_derive/index.html"><div class="logo-container">
+                    <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></div></a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In zvariant_derive</a></h2></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../zvariant_derive/index.html">
+                        <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Derive Macro <a href="index.html">zvariant_derive</a>::<wbr><a class="derive" href="#">Value</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/zvariant_derive/lib.rs.html#377-382">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust derive"><code>#[derive(Value)]</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Implements conversions for your type to/from <a href="https://docs.rs/zvariant/2.10.0/zvariant/enum.Value.html"><code>Value</code></a>.</p>
+<p>Implements <code>TryFrom&lt;Value&gt;</code> and <code>Into&lt;Value&gt;</code> for your type.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>Simple owned strutures:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::convert::TryFrom;
+<span class="kw">use </span>zvariant::{OwnedObjectPath, OwnedValue, Value};
+
+<span class="attribute">#[derive(Clone, Value, OwnedValue)]
+</span><span class="kw">struct </span>OwnedStruct {
+    owned_str: String,
+    owned_path: OwnedObjectPath,
+}
+
+<span class="kw">let </span>s = OwnedStruct {
+    owned_str: String::from(<span class="string">&quot;hi&quot;</span>),
+    owned_path: OwnedObjectPath::try_from(<span class="string">&quot;/blah&quot;</span>).unwrap(),
+};
+<span class="kw">let </span>value = Value::from(s.clone());
+<span class="kw">let _ </span>= OwnedStruct::try_from(value).unwrap();
+<span class="kw">let </span>value = OwnedValue::from(s);
+<span class="kw">let </span>s = OwnedStruct::try_from(value).unwrap();
+<span class="macro">assert_eq!</span>(s.owned_str, <span class="string">&quot;hi&quot;</span>);
+<span class="macro">assert_eq!</span>(s.owned_path.as_str(), <span class="string">&quot;/blah&quot;</span>);</code></pre></div>
+<p>Now for the more exciting case of unowned structures:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>zvariant::{ObjectPath, Str};
+<span class="attribute">#[derive(Clone, Value, OwnedValue)]
+</span><span class="kw">struct </span>UnownedStruct&lt;<span class="lifetime">&#39;a</span>&gt; {
+    s: Str&lt;<span class="lifetime">&#39;a</span>&gt;,
+    path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;,
+}
+
+<span class="kw">let </span>hi = String::from(<span class="string">&quot;hi&quot;</span>);
+<span class="kw">let </span>s = UnownedStruct {
+    s: Str::from(<span class="kw-2">&amp;</span>hi),
+    path: ObjectPath::try_from(<span class="string">&quot;/blah&quot;</span>).unwrap(),
+};
+<span class="kw">let </span>value = Value::from(s.clone());
+<span class="kw">let </span>s = UnownedStruct::try_from(value).unwrap();
+
+<span class="kw">let </span>value = OwnedValue::from(s);
+<span class="kw">let </span>s = UnownedStruct::try_from(value).unwrap();
+<span class="macro">assert_eq!</span>(s.s, <span class="string">&quot;hi&quot;</span>);
+<span class="macro">assert_eq!</span>(s.path, <span class="string">&quot;/blah&quot;</span>);</code></pre></div>
+<p>Generic structures also supported:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Clone, Value, OwnedValue)]
+</span><span class="kw">struct </span>GenericStruct&lt;S, O&gt; {
+    field1: S,
+    field2: O,
+}
+
+<span class="kw">let </span>s = GenericStruct {
+    field1: String::from(<span class="string">&quot;hi&quot;</span>),
+    field2: OwnedObjectPath::try_from(<span class="string">&quot;/blah&quot;</span>).unwrap(),
+};
+<span class="kw">let </span>value = Value::from(s.clone());
+<span class="kw">let _ </span>= GenericStruct::&lt;String, OwnedObjectPath&gt;::try_from(value).unwrap();
+<span class="kw">let </span>value = OwnedValue::from(s);
+<span class="kw">let </span>s = GenericStruct::&lt;String, OwnedObjectPath&gt;::try_from(value).unwrap();
+<span class="macro">assert_eq!</span>(s.field1, <span class="string">&quot;hi&quot;</span>);
+<span class="macro">assert_eq!</span>(s.field2.as_str(), <span class="string">&quot;/blah&quot;</span>);</code></pre></div>
+<p>Enums also supported but currently only simple ones w/ an integer representation:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attribute">#[derive(Debug, PartialEq, Value, OwnedValue)]
+#[repr(u8)]
+</span><span class="kw">enum </span>Enum {
+    Variant1 = <span class="number">1</span>,
+    Variant2 = <span class="number">2</span>,
+}
+
+<span class="kw">let </span>value = Value::from(Enum::Variant1);
+<span class="kw">let </span>e = Enum::try_from(value).unwrap();
+<span class="macro">assert_eq!</span>(e, Enum::Variant1);
+<span class="kw">let </span>value = OwnedValue::from(Enum::Variant2);
+<span class="kw">let </span>e = Enum::try_from(value).unwrap();
+<span class="macro">assert_eq!</span>(e, Enum::Variant2);</code></pre></div>
+<h2 id="dictionary-encoding"><a href="#dictionary-encoding">Dictionary encoding</a></h2>
+<p>For treating your type as a dictionary, you can use the <code>signature = &quot;dict&quot;</code> attribute. See
+<a href="derive.Type.html#custom-types"><code>Type</code></a> for more details and an example use. Please note that this macro can only handle
+<code>dict</code> or <code>a{sv}</code> values. All other values will be ignored.</p>
+</div></details></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="zvariant_derive" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0 (897e37553 2022-11-02)" ></div></body></html>

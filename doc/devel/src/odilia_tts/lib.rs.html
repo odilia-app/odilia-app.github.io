@@ -152,7 +152,7 @@
 }
 
 <span class="kw">pub async fn </span>handle_ssip_commands(client: <span class="kw-2">&amp;mut </span>AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;, requests: Receiver&lt;Request&gt;, shutdown_tx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;) -&gt; eyre::Result&lt;()&gt; {
-	<span class="macro">pin_utils::pin_mut!</span>(requests);
+	<span class="macro">tokio::pin!</span>(requests);
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
 			request_option = requests.recv() =&gt; {

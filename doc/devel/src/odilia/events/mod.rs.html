@@ -293,7 +293,7 @@
     shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
 ) {
     <span class="kw">let </span>events = state.atspi.event_stream();
-    <span class="macro">pin_utils::pin_mut!</span>(events);
+    <span class="macro">tokio::pin!</span>(events);
     <span class="kw">loop </span>{
         <span class="macro">tokio::select! </span>{
             event = events.next() =&gt; {

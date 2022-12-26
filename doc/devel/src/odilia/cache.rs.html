@@ -50,10 +50,128 @@
 <span id="50">50</span>
 <span id="51">51</span>
 <span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
 </pre><pre class="rust"><code><span class="kw">use </span>rustc_hash::FxHasher;
 <span class="kw">use </span>tokio::sync::Mutex;
 <span class="kw">use </span>atspi::{
-	accessible::Role,
+	accessible::{
+		Role,
+		AccessibleProxy,
+	},
+	accessible_ext::{
+		AccessibleId,
+	},
 	InterfaceSet,
 	StateSet,
 };
@@ -61,6 +179,30 @@
 <span class="kw">use </span>std::mem::ManuallyDrop;
 
 <span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
+</span><span class="doccomment">/// A struct which represents the bare minimum of an accessible for purposes of caching.
+/// This makes some *possibly eronious* assumptions about what the sender is.
+/// TODO: find a better way to store this info where it still imeplements Copy.
+</span><span class="kw">pub struct </span>AccessiblePrimitive {
+	<span class="doccomment">/// The accessible ID in /org/a11y/atspi/accessible/XYZ; note that XYZ may be equal to any positive number, 0, &quot;null&quot;, or &quot;root&quot;.
+	/// This id will be 0 for &quot;root&quot;, and -1 for &quot;null&quot;.
+	/// TODO: make this some kind of enum type
+	</span>id: i32,
+	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the x portion of this sender.
+	</span>sender_pt1: i32,
+	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the y portion of this sender.
+	</span>sender_pt2: i32,
+}
+<span class="comment">/*
+/// This cannot implement a `From&lt;...&gt;` or `To&lt;...&gt;` trait because the functions needed to work with `AccessibleProxy`s is async and Rust does not yet have support for this yet.
+impl AccessiblePrimitive {
+	pub async fn from_accessible(accessible: &amp;AccessibleProxy) -&gt; AccessiblePrimitive {
+		le
+	}
+}
+*/
+
+</span><span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
+</span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
     <span class="comment">// The accessible object (within the application)   (so)
     </span><span class="kw">pub </span>object: i32,
@@ -79,15 +221,28 @@
     <span class="comment">// The states applicable to the accessible.  au
     </span><span class="kw">pub </span>states: StateSet,
 }
-<span class="kw">impl </span>ShallowCopy <span class="kw">for </span>CacheItem {
+<span class="doccomment">/// This method is safe *only* because all fields in CacheItem are already Copy.
+</span><span class="kw">impl </span>ShallowCopy <span class="kw">for </span>CacheItem {
 	<span class="kw">unsafe fn </span>shallow_copy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ManuallyDrop&lt;<span class="self">Self</span>&gt; {
 		ManuallyDrop::new(<span class="kw-2">*</span><span class="self">self</span>)
 	}
 }
 
-<span class="kw">type </span>FxBuildHasher = std::hash::BuildHasherDefault&lt;FxHasher&gt;;
+<span class="comment">/*
+/// We cannot use `TryFrom&lt;CacheItem&gt; for AccessibleProxy` because functions required to generate an AccessibleProxy are async.
+/// This should be rederesed by a future version of Rust.
+/// TODO: convert to native async-trait impl
+impl CacheItem {
+	pub async fn as_accessible&lt;&#39;a&gt;(&amp;self, connection: &amp;zbus::Connection) -&gt; zbus::Result&lt;AccessibleProxy&lt;&#39;a&gt;&gt; {
+		atspi::accessible::new(connection, 
+	}
+}
+*/
+
+</span><span class="kw">type </span>FxBuildHasher = std::hash::BuildHasherDefault&lt;FxHasher&gt;;
 <span class="kw">pub type </span>FxReadHandleFactory&lt;K, V&gt; = evmap::ReadHandleFactory&lt;K, V, (), FxBuildHasher&gt;;
 <span class="kw">pub type </span>FxWriteHandle&lt;K, V&gt; = evmap::WriteHandle&lt;K, V, (), FxBuildHasher&gt;;
+<span class="kw">pub type </span>FxReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt; = evmap::ReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt;;
 
 <span class="doccomment">/// The root of the accessible cache.
 </span><span class="kw">pub struct </span>Cache {
@@ -95,12 +250,81 @@
     <span class="kw">pub </span>by_id_write: Mutex&lt;FxWriteHandle&lt;i32, CacheItem&gt;&gt;,
 }
 
-<span class="kw">impl </span>Cache {
-    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+<span class="doccomment">/// Copy all info into a plain CacheItem struct.
+/// This is very cheap, and the locking overhead will vastly outstrip making this a non-copy struct.
+</span><span class="attribute">#[inline]
+</span><span class="kw">fn </span>copy_into_cache_item(cache_item_with_handle: FxReadGuard&lt;<span class="lifetime">&#39;_</span>, CacheItem&gt;) -&gt; CacheItem {
+	CacheItem {
+		object: cache_item_with_handle.object,
+		parent: cache_item_with_handle.parent,
+		states: cache_item_with_handle.states,
+		role: cache_item_with_handle.role,
+		app: cache_item_with_handle.app,
+		children: cache_item_with_handle.children,
+		ifaces: cache_item_with_handle.ifaces,
+		index: cache_item_with_handle.index,
+	}
+}
+
+<span class="doccomment">/// An internal cache used within Odilia.
+/// This contains (mostly) all accessibles in the entire accessibility tree, and they are referenced by their IDs.
+/// When setting or getting information from the cache, be sure to use the most appropriate function.
+/// For example, you would not want to remove individual items using the `remove()` function.
+/// You should use the `remove_all()` function to acheive this, since this will only lock the cache mutex once, remove all ids, then refresh the cache.
+/// If you are having issues with incorrect or invalid accessibles trying to be accessed, this is code is probably the issue.
+/// This implementation is not very efficient, but it is very safe:
+/// This is because before inserting, the incomming bucket is cleared (there will never be duplicate accessibles or accessibles at different states stored in the same bucket).
+</span><span class="kw">impl </span>Cache {
+		<span class="doccomment">/// create a new, fresh cache
+    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>(rh, wh) = evmap::with_hasher((), FxBuildHasher::default());
 
         <span class="self">Self </span>{ by_id_read: rh.factory(), by_id_write: Mutex::new(wh) }
     }
+		<span class="doccomment">/// add a single new item to the cache. Note that this will empty the bucket before inserting the `CacheItem` into the cache (this is so there is never two items with the same ID stored in the cache at the same time).
+		</span><span class="kw">pub async fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) {
+				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+				cache_writer.empty(cache_item.object);
+				cache_writer.insert(cache_item.object, cache_item);
+				cache_writer.refresh();
+		}
+		<span class="doccomment">/// remove a single cache item
+		</span><span class="kw">pub async fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) {
+				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+				cache_writer.empty(id);
+				cache_writer.refresh();
+		}
+		<span class="doccomment">/// get a single item from the cache (note that this copies some integers to a new struct)
+		</span><span class="kw">pub async fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
+				<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
+				read_handle.get_one(<span class="kw-2">&amp;</span>id).map(copy_into_cache_item)
+		}
+		<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
+		</span><span class="kw">pub async fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
+				<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
+				ids.iter()
+					.map(|id| read_handle.get_one(id).map(copy_into_cache_item))
+					.collect()
+		}
+		<span class="doccomment">/// Bulk add many items to the cache; this only refreshes the cache after adding all items. Note that this will empty the bucket before inserting. Only one accessible should ever be associated with an id.
+		</span><span class="kw">pub async fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) {
+				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+				cache_items.into_iter()
+					.for_each(|cache_item| {
+						cache_writer.empty(cache_item.object);
+						cache_writer.insert(cache_item.object, cache_item);
+				});
+				cache_writer.refresh();
+		}
+		<span class="doccomment">/// Bulk remove all ids in the cache; this only refreshes the cache after removing all items.
+		</span><span class="kw">pub async fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) {
+				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+				ids.into_iter()
+					.for_each(|id| {
+						cache_writer.empty(id);
+				});
+				cache_writer.refresh();
+		}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

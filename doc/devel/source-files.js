@@ -11,7 +11,7 @@ var sourcesIndex = JSON.parse('{\
 "async_task":["",[],["header.rs","lib.rs","raw.rs","runnable.rs","state.rs","task.rs","utils.rs"]],\
 "async_trait":["",[],["args.rs","bound.rs","expand.rs","lib.rs","lifetime.rs","parse.rs","receiver.rs"]],\
 "atomic_waker":["",[],["lib.rs"]],\
-"atspi":["",[["events",[],["document.rs","focus.rs","keyboard.rs","mod.rs","mouse.rs","object.rs","terminal.rs","window.rs"]]],["accessible.rs","accessible_ext.rs","action.rs","application.rs","bus.rs","cache.rs","collection.rs","component.rs","connection.rs","convertable.rs","device_event_controller.rs","device_event_listener.rs","document.rs","editable_text.rs","hyperlink.rs","hypertext.rs","image.rs","interfaces.rs","lib.rs","processed.rs","registry.rs","selection.rs","socket.rs","state.rs","table.rs","table_cell.rs","text.rs","value.rs"]],\
+"atspi":["",[["events",[],["document.rs","focus.rs","keyboard.rs","mod.rs","mouse.rs","object.rs","terminal.rs","window.rs"]]],["accessible.rs","accessible_ext.rs","action.rs","application.rs","bus.rs","cache.rs","collection.rs","component.rs","connection.rs","convertable.rs","device_event_controller.rs","device_event_listener.rs","document.rs","editable_text.rs","hyperlink.rs","hypertext.rs","image.rs","interfaces.rs","lib.rs","processed.rs","registry.rs","selection.rs","socket.rs","state.rs","table.rs","table_cell.rs","text.rs","text_ext.rs","value.rs"]],\
 "atty":["",[],["lib.rs"]],\
 "bitflags":["",[],["lib.rs"]],\
 "block_buffer":["",[],["lib.rs","sealed.rs"]],\

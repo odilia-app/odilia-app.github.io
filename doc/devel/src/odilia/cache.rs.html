@@ -161,7 +161,6 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
-<span id="164">164</span>
 </pre><pre class="rust"><code><span class="kw">use </span>rustc_hash::FxHasher;
 <span class="kw">use </span>tokio::sync::Mutex;
 <span class="kw">use </span>atspi::{
@@ -175,7 +174,9 @@
 	InterfaceSet,
 	StateSet,
 };
-<span class="kw">use </span>evmap::ShallowCopy;
+<span class="kw">use </span>evmap::shallow_copy::CopyValue;
+<span class="kw">use </span>evmap_derive::ShallowCopy;
+<span class="kw">use </span>std::time::Instant;
 <span class="kw">use </span>std::mem::ManuallyDrop;
 
 <span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
@@ -201,7 +202,7 @@ impl AccessiblePrimitive {
 }
 */
 
-</span><span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
+</span><span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, ShallowCopy)]
 </span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
     <span class="comment">// The accessible object (within the application)   (so)
@@ -215,17 +216,13 @@ impl AccessiblePrimitive {
     <span class="comment">// Child count of the accessible  i
     </span><span class="kw">pub </span>children: i32,
     <span class="comment">// The exposed interfece(s) set.  as
-    </span><span class="kw">pub </span>ifaces: InterfaceSet,
+    </span><span class="kw">pub </span>ifaces: CopyValue&lt;InterfaceSet&gt;,
     <span class="comment">// Accessible role. u
-    </span><span class="kw">pub </span>role: Role,
+    </span><span class="kw">pub </span>role: CopyValue&lt;Role&gt;,
     <span class="comment">// The states applicable to the accessible.  au
-    </span><span class="kw">pub </span>states: StateSet,
-}
-<span class="doccomment">/// This method is safe *only* because all fields in CacheItem are already Copy.
-</span><span class="kw">impl </span>ShallowCopy <span class="kw">for </span>CacheItem {
-	<span class="kw">unsafe fn </span>shallow_copy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ManuallyDrop&lt;<span class="self">Self</span>&gt; {
-		ManuallyDrop::new(<span class="kw-2">*</span><span class="self">self</span>)
-	}
+    </span><span class="kw">pub </span>states: CopyValue&lt;StateSet&gt;,
+		<span class="comment">// The text of the accessible.
+		</span><span class="kw">pub </span>text: String,
 }
 
 <span class="comment">/*
@@ -263,6 +260,7 @@ impl CacheItem {
 		children: cache_item_with_handle.children,
 		ifaces: cache_item_with_handle.ifaces,
 		index: cache_item_with_handle.index,
+		text: cache_item_with_handle.text.clone(),
 	}
 }
 

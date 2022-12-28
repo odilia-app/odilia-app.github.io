@@ -33,6 +33,7 @@ var sourcesIndex = JSON.parse('{\
 "enumflags2_derive":["",[],["lib.rs"]],\
 "event_listener":["",[],["lib.rs"]],\
 "evmap":["",[["read",[],["factory.rs","guard.rs","mod.rs","read_ref.rs"]]],["inner.rs","lib.rs","shallow_copy.rs","values.rs","write.rs"]],\
+"evmap_derive":["",[],["lib.rs"]],\
 "eyre":["",[],["backtrace.rs","chain.rs","context.rs","error.rs","fmt.rs","kind.rs","lib.rs","macros.rs","wrapper.rs"]],\
 "fastrand":["",[],["lib.rs"]],\
 "futures":["",[],["lib.rs"]],\

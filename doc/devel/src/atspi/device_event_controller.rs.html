@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atspi-0.4.1/src/device_event_controller.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>device_event_controller.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atspi-0.6.4/src/device_event_controller.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>device_event_controller.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -92,6 +92,40 @@
 <span id="92">92</span>
 <span id="93">93</span>
 <span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # DBus interface proxy for: `org.a11y.atspi.DeviceEventController`
 //!
 //! This code was generated by `zbus-xmlgen` `2.0.1` from DBus introspection data.
@@ -128,6 +162,40 @@
     Unlockmodifiers,
 }
 
+<span class="attribute">#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, Type)]
+</span><span class="kw">pub struct </span>DeviceEvent&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub </span>event_type: EventType,
+    <span class="kw">pub </span>id: u32,
+    <span class="kw">pub </span>hw_code: u32,
+    <span class="kw">pub </span>modifiers: u32,
+    <span class="kw">pub </span>timestamp: u32,
+    <span class="kw">pub </span>event_string: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    <span class="kw">pub </span>is_text: bool,
+}
+
+<span class="attribute">#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, Type)]
+</span><span class="kw">pub struct </span>EventListenerMode {
+    <span class="doccomment">/// Whether events are delivered synchronously, before the currently focused application sees them.
+    /// If `false`, events may be delivered asynchronously, which means in some
+    /// cases they may already have been delivered to the
+    /// application before the AT client receives the notification.
+    </span><span class="kw">pub </span>synchronous: bool,
+    <span class="doccomment">/// Whether events may be consumed by the AT client.
+    /// Requires [`EventListenerMode::synchronous`] to be set to `true`.
+    </span><span class="kw">pub </span>preemptive: bool,
+    <span class="doccomment">/// If `true`, indicates that events are received not from the application toolkit layer,
+    /// but from the device driver or windowing system subsystem.
+    </span><span class="kw">pub </span>global: bool,
+}
+
+<span class="attribute">#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, Type)]
+</span><span class="kw">pub struct </span>KeyDefinition&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub </span>keycode: i32,
+    <span class="kw">pub </span>keysym: i32,
+    <span class="kw">pub </span>keystring: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    <span class="kw">pub </span>unused: i32,
+}
+
 <span class="attribute">#[dbus_proxy(interface = <span class="string">&quot;org.a11y.atspi.DeviceEventController&quot;</span>, assume_defaults = <span class="bool-val">true</span>)]
 </span><span class="kw">trait </span>DeviceEventController {
     <span class="doccomment">/// DeregisterDeviceEventListener method
@@ -141,7 +209,7 @@
     </span><span class="kw">fn </span>deregister_keystroke_listener(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         listener: <span class="kw-2">&amp;</span>zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;,
-        keys: <span class="kw-2">&amp;</span>[(i32, i32, <span class="kw-2">&amp;</span>str, i32)],
+        keys: <span class="kw-2">&amp;</span>[KeyDefinition&lt;<span class="lifetime">&#39;_</span>&gt;],
         mask: u32,
         type_: EventType,
     ) -&gt; zbus::Result&lt;()&gt;;
@@ -160,13 +228,13 @@
     <span class="doccomment">/// NotifyListenersAsync method
     </span><span class="kw">fn </span>notify_listeners_async(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        event: <span class="kw-2">&amp;</span>(u32, i32, u32, u32, i32, <span class="kw-2">&amp;</span>str, bool),
+        event: <span class="kw-2">&amp;</span>DeviceEvent&lt;<span class="lifetime">&#39;_</span>&gt;,
     ) -&gt; zbus::Result&lt;()&gt;;
 
     <span class="doccomment">/// NotifyListenersSync method
     </span><span class="kw">fn </span>notify_listeners_sync(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        event: <span class="kw-2">&amp;</span>(u32, i32, u32, u32, i32, <span class="kw-2">&amp;</span>str, bool),
+        event: <span class="kw-2">&amp;</span>DeviceEvent&lt;<span class="lifetime">&#39;_</span>&gt;,
     ) -&gt; zbus::Result&lt;bool&gt;;
 
     <span class="doccomment">/// RegisterDeviceEventListener method
@@ -180,10 +248,10 @@
     </span><span class="kw">fn </span>register_keystroke_listener(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         listener: <span class="kw-2">&amp;</span>zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;,
-        keys: <span class="kw-2">&amp;</span>[(i32, i32, <span class="kw-2">&amp;</span>str, i32)],
+        keys: <span class="kw-2">&amp;</span>[KeyDefinition&lt;<span class="lifetime">&#39;_</span>&gt;],
         mask: u32,
         type_: <span class="kw-2">&amp;</span>[EventType],
-        mode: <span class="kw-2">&amp;</span>(bool, bool, bool),
+        mode: <span class="kw-2">&amp;</span>EventListenerMode,
     ) -&gt; zbus::Result&lt;bool&gt;;
 }
 </code></pre></div>

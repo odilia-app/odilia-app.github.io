@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["add",""],["dispatch",""],["get_id_from_path",""],["remove",""]]};
+window.SIDEBAR_ITEMS = {"fn":[["add",""],["dispatch",""],["remove",""]]};

@@ -183,24 +183,6 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::events::Event;
 
@@ -222,19 +204,6 @@
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span>atspi::{accessible, events::Event};
 
-	<span class="kw">pub fn </span>get_id_from_path(path: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to get ID from: {}&quot;</span>, path);
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(id) = path.split(<span class="string">&#39;/&#39;</span>).next_back() {
-			<span class="kw">if let </span><span class="prelude-val">Ok</span>(uid) = id.parse::&lt;i32&gt;() {
-				<span class="kw">return </span><span class="prelude-val">Some</span>(uid);
-			} <span class="kw">else if </span>id == <span class="string">&quot;root&quot; </span>{
-				<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="number">0</span>);
-			} <span class="kw">else if </span>id == <span class="string">&quot;null&quot; </span>{
-				<span class="kw">return </span><span class="prelude-val">Some</span>(-<span class="number">1</span>);
-			}
-		}
-		<span class="prelude-val">None
-	</span>}
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
 		</span><span class="kw">match </span>event.kind() {
@@ -262,13 +231,10 @@
 			accessible.get_state(),
 			accessible.name(),
 		)<span class="question-mark">?</span>;
-		<span class="kw">let </span>object_id = get_id_from_path(<span class="kw-2">&amp;</span>dest).expect(<span class="string">&quot;Invalid accessible&quot;</span>);
-		<span class="kw">let </span>app_id = get_id_from_path(<span class="kw-2">&amp;</span>app.<span class="number">1</span>.to_string()).expect(<span class="string">&quot;Invalid accessible&quot;</span>);
-		<span class="kw">let </span>parent_id = get_id_from_path(<span class="kw-2">&amp;</span>parent.<span class="number">1</span>.to_string()).expect(<span class="string">&quot;Invalid accesible&quot;</span>);
 		<span class="kw">let </span>cache_item = CacheItem {
-			object: object_id,
-			app: app_id,
-			parent: parent_id,
+			object: accessible.try_into().unwrap(),
+			app: app.try_into().unwrap(),
+			parent: parent.try_into().unwrap(),
 			index,
 			children,
 			ifaces: ifaces.into(),
@@ -283,10 +249,8 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 	<span class="kw">pub async fn </span>remove(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>path = event.path().expect(<span class="string">&quot;No path&quot;</span>);
-		<span class="kw">let </span>path_id_str = path.split(<span class="string">&#39;/&#39;</span>).next_back().expect(<span class="string">&quot;No ID&quot;</span>);
-		<span class="kw">let </span>id = path_id_str.parse::&lt;i32&gt;()<span class="question-mark">?</span>;
-		state.cache.remove(id).<span class="kw">await</span>;
+		<span class="kw">let </span>path = event.path().expect(<span class="string">&quot;All accessibles must have a path&quot;</span>);
+		state.cache.remove(path.try_into().unwrap()).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Remove a single item from cache.&quot;</span>);
 		<span class="prelude-val">Ok</span>(())
 	}

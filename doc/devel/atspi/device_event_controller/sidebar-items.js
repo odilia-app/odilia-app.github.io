@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["EventType",""],["KeySynthType",""]],"struct":[["DeviceEventControllerProxy",""],["DeviceEventControllerProxyBlocking",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["EventType",""],["KeySynthType",""]],"struct":[["DeviceEvent",""],["DeviceEventControllerProxy",""],["DeviceEventControllerProxyBlocking",""],["EventListenerMode",""],["KeyDefinition",""]]};

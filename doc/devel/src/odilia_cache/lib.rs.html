@@ -150,44 +150,159 @@
 <span id="150">150</span>
 <span id="151">151</span>
 <span id="152">152</span>
-</pre><pre class="rust"><code><span class="kw">use </span>atspi::{accessible::Role, InterfaceSet, StateSet};
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+</pre><pre class="rust"><code><span class="kw">use </span>atspi::{accessible::{Role, AccessibleProxy}, accessible_ext::{AccessibleId, AccessibleExt, ObjectPathConversionError}, InterfaceSet, StateSet};
 <span class="kw">use </span>evmap::shallow_copy::CopyValue;
 <span class="kw">use </span>evmap_derive::ShallowCopy;
 <span class="kw">use </span>rustc_hash::FxHasher;
 <span class="kw">use </span>tokio::sync::Mutex;
+<span class="kw">use </span>std::{
+  str::FromStr,
+  ops::Deref
+};
+<span class="kw">use </span>zbus::{
+  ProxyBuilder,
+  zvariant::{ObjectPath, OwnedObjectPath},
+};
 
-<span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
+<span class="attribute">#[derive(Clone, Debug)]
+</span><span class="kw">pub enum </span>AccessiblePrimitiveConversionError {
+  ParseError(&lt;i32 <span class="kw">as </span>FromStr&gt;::Err),
+  ObjectConversionError(ObjectPathConversionError),
+  NoPathId,
+  NoFirstSectionOfSender,
+  NoSecondSectionOfSender,
+}
+<span class="kw">impl </span>From&lt;ObjectPathConversionError&gt; <span class="kw">for </span>AccessiblePrimitiveConversionError {
+  <span class="kw">fn </span>from(object_conversion_error: ObjectPathConversionError) -&gt; <span class="self">Self </span>{
+    <span class="self">Self</span>::ObjectConversionError(object_conversion_error)
+  }
+}
+
+<span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, ShallowCopy)]
 </span><span class="doccomment">/// A struct which represents the bare minimum of an accessible for purposes of caching.
 /// This makes some *possibly eronious* assumptions about what the sender is.
 /// TODO: find a better way to store this info where it still imeplements Copy.
 </span><span class="kw">pub struct </span>AccessiblePrimitive {
 	<span class="doccomment">/// The accessible ID in /org/a11y/atspi/accessible/XYZ; note that XYZ may be equal to any positive number, 0, &quot;null&quot;, or &quot;root&quot;.
-	/// This id will be 0 for &quot;root&quot;, and -1 for &quot;null&quot;.
-	/// TODO: make this some kind of enum type
-	</span>id: i32,
-	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the x portion of this sender.
-	</span>sender_pt1: i32,
-	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the y portion of this sender.
-	</span>sender_pt2: i32,
+	</span>id: CopyValue&lt;AccessibleId&gt;,
+	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the (x,y) portion of this sender.
+	</span>sender: String,
 }
-<span class="comment">/*
-/// This cannot implement a `From&lt;...&gt;` or `To&lt;...&gt;` trait because the functions needed to work with `AccessibleProxy`s is async and Rust does not yet have support for this yet.
-impl AccessiblePrimitive {
-	pub async fn from_accessible(accessible: &amp;AccessibleProxy) -&gt; AccessiblePrimitive {
-		le
-	}
+<span class="kw">impl </span>AccessiblePrimitive {
+  <span class="attribute">#[allow(dead_code)]
+  </span><span class="kw">async fn </span>into_accessible&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="self">self</span>, conn: <span class="kw-2">&amp;</span>zbus::Connection) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+    <span class="kw">let </span>id = <span class="kw-2">*</span><span class="self">self</span>.id.deref();
+    <span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
+    <span class="kw">let </span>path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; = id.try_into()<span class="question-mark">?</span>;
+    ProxyBuilder::new(conn)
+      .path(path)<span class="question-mark">?
+      </span>.destination(sender)<span class="question-mark">?
+      </span>.build()
+      .<span class="kw">await
+  </span>}
 }
-*/
+<span class="kw">impl </span>TryFrom&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
+  <span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
 
-</span><span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, ShallowCopy)]
+  <span class="kw">fn </span>try_from(so: (String, OwnedObjectPath)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+    <span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(AccessiblePrimitive {
+      id: accessible_id.into(),
+      sender: so.<span class="number">0</span>,
+    })
+  }
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;(String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
+  <span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+
+  <span class="kw">fn </span>try_from(so: (String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+    <span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(AccessiblePrimitive {
+      id: accessible_id.into(),
+      sender: so.<span class="number">0</span>,
+    })
+  }
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>AccessiblePrimitive {
+  <span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+
+  <span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+    <span class="kw">let </span>sender = accessible.destination().to_string();
+    <span class="kw">let </span>id = <span class="kw">match </span>accessible.get_id() {
+      <span class="prelude-val">Some</span>(path_id) =&gt; path_id,
+      <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
+    };
+    <span class="prelude-val">Ok</span>(AccessiblePrimitive {
+      id: id.into(),
+      sender,
+    })
+  }
+}
+
+<span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, ShallowCopy)]
 </span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
 	<span class="comment">// The accessible object (within the application)   (so)
-	</span><span class="kw">pub </span>object: i32,
+	</span><span class="kw">pub </span>object: AccessiblePrimitive,
 	<span class="comment">// The application (root object(?)    (so)
-	</span><span class="kw">pub </span>app: i32,
+	</span><span class="kw">pub </span>app: AccessiblePrimitive,
 	<span class="comment">// The parent object.  (so)
-	</span><span class="kw">pub </span>parent: i32,
+	</span><span class="kw">pub </span>parent: AccessiblePrimitive,
 	<span class="comment">// The accessbile index in parent.  i
 	</span><span class="kw">pub </span>index: i32,
 	<span class="comment">// Child count of the accessible  i
@@ -202,26 +317,21 @@ impl AccessiblePrimitive {
 	</span><span class="kw">pub </span>text: String,
 }
 
-<span class="comment">/*
-/// We cannot use `TryFrom&lt;CacheItem&gt; for AccessibleProxy` because functions required to generate an AccessibleProxy are async.
-/// This should be rederesed by a future version of Rust.
-/// TODO: convert to native async-trait impl
-impl CacheItem {
-	pub async fn as_accessible&lt;&#39;a&gt;(&amp;self, connection: &amp;zbus::Connection) -&gt; zbus::Result&lt;AccessibleProxy&lt;&#39;a&gt;&gt; {
-		atspi::accessible::new(connection,
-	}
-}
-*/
-
-</span><span class="kw">type </span>FxBuildHasher = std::hash::BuildHasherDefault&lt;FxHasher&gt;;
+<span class="kw">type </span>FxBuildHasher = std::hash::BuildHasherDefault&lt;FxHasher&gt;;
 <span class="kw">pub type </span>FxReadHandleFactory&lt;K, V&gt; = evmap::ReadHandleFactory&lt;K, V, (), FxBuildHasher&gt;;
 <span class="kw">pub type </span>FxWriteHandle&lt;K, V&gt; = evmap::WriteHandle&lt;K, V, (), FxBuildHasher&gt;;
 <span class="kw">type </span>FxReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt; = evmap::ReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt;;
 
 <span class="doccomment">/// The root of the accessible cache.
 </span><span class="kw">pub struct </span>Cache {
-	<span class="kw">pub </span>by_id_read: FxReadHandleFactory&lt;i32, CacheItem&gt;,
-	<span class="kw">pub </span>by_id_write: Mutex&lt;FxWriteHandle&lt;i32, CacheItem&gt;&gt;,
+	<span class="kw">pub </span>by_id_read: FxReadHandleFactory&lt;AccessibleId, CacheItem&gt;,
+	<span class="kw">pub </span>by_id_write: Mutex&lt;FxWriteHandle&lt;AccessibleId, CacheItem&gt;&gt;,
+}
+<span class="comment">// clippy wants this
+</span><span class="kw">impl </span>Default <span class="kw">for </span>Cache {
+  <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+    <span class="self">Self</span>::new()
+  }
 }
 
 <span class="doccomment">/// Copy all info into a plain CacheItem struct.
@@ -229,11 +339,11 @@ impl CacheItem {
 </span><span class="attribute">#[inline]
 </span><span class="kw">fn </span>copy_into_cache_item(cache_item_with_handle: FxReadGuard&lt;<span class="lifetime">&#39;_</span>, CacheItem&gt;) -&gt; CacheItem {
 	CacheItem {
-		object: cache_item_with_handle.object,
-		parent: cache_item_with_handle.parent,
+		object: cache_item_with_handle.object.clone(),
+		parent: cache_item_with_handle.parent.clone(),
 		states: cache_item_with_handle.states,
 		role: cache_item_with_handle.role,
-		app: cache_item_with_handle.app,
+		app: cache_item_with_handle.app.clone(),
 		children: cache_item_with_handle.children,
 		ifaces: cache_item_with_handle.ifaces,
 		index: cache_item_with_handle.index,
@@ -259,25 +369,25 @@ impl CacheItem {
 	<span class="doccomment">/// add a single new item to the cache. Note that this will empty the bucket before inserting the `CacheItem` into the cache (this is so there is never two items with the same ID stored in the cache at the same time).
 	</span><span class="kw">pub async fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) {
 		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
-		cache_writer.empty(cache_item.object);
-		cache_writer.insert(cache_item.object, cache_item);
+		cache_writer.empty(<span class="kw-2">*</span>cache_item.object.id.deref());
+		cache_writer.insert(<span class="kw-2">*</span>cache_item.object.id, cache_item);
 		cache_writer.refresh();
 	}
 	<span class="doccomment">/// remove a single cache item
-	</span><span class="kw">pub async fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) {
+	</span><span class="kw">pub async fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: AccessibleId) {
 		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
 		cache_writer.empty(id);
 		cache_writer.refresh();
 	}
 	<span class="doccomment">/// get a single item from the cache (note that this copies some integers to a new struct)
 	</span><span class="attribute">#[allow(dead_code)]
-	</span><span class="kw">pub async fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
+	</span><span class="kw">pub async fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>AccessibleId) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
 		<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
-		read_handle.get_one(<span class="kw-2">&amp;</span>id).map(copy_into_cache_item)
+		read_handle.get_one(id).map(copy_into_cache_item)
 	}
 	<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
 	</span><span class="attribute">#[allow(dead_code)]
-	</span><span class="kw">pub async fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
+	</span><span class="kw">pub async fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;AccessibleId&gt;) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
 		<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
 		ids.iter()
 			.map(|id| read_handle.get_one(id).map(copy_into_cache_item))
@@ -287,14 +397,14 @@ impl CacheItem {
 	</span><span class="kw">pub async fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) {
 		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
 		cache_items.into_iter().for_each(|cache_item| {
-			cache_writer.empty(cache_item.object);
-			cache_writer.insert(cache_item.object, cache_item);
+			cache_writer.empty(<span class="kw-2">*</span>cache_item.object.id.deref());
+			cache_writer.insert(<span class="kw-2">*</span>cache_item.object.id, cache_item);
 		});
 		cache_writer.refresh();
 	}
 	<span class="doccomment">/// Bulk remove all ids in the cache; this only refreshes the cache after removing all items.
 	</span><span class="attribute">#[allow(dead_code)]
-	</span><span class="kw">pub async fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) {
+	</span><span class="kw">pub async fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;AccessibleId&gt;) {
 		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
 		ids.into_iter().for_each(|id| {
 			cache_writer.empty(id);

@@ -161,168 +161,190 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
 </pre><pre class="rust"><code><span class="kw">use </span>nix::unistd::Uid;
 <span class="kw">use </span>odilia_common::events::ScreenReaderEvent;
 <span class="kw">use </span>std::{
-    env,
-    path::Path,
-    process::{exit, id},
-    time::{SystemTime, UNIX_EPOCH},
+	env,
+	path::Path,
+	process::{exit, id},
+	time::{SystemTime, UNIX_EPOCH},
 };
 <span class="kw">use </span>sysinfo::{ProcessExt, System, SystemExt};
 <span class="kw">use </span>tokio::{fs, io::AsyncReadExt, net::UnixListener, sync::broadcast, sync::mpsc::Sender};
 
 <span class="kw">fn </span>get_log_file_name() -&gt; String {
-    <span class="kw">let </span>time = <span class="kw">match </span>SystemTime::now().duration_since(UNIX_EPOCH) {
-        <span class="prelude-val">Ok</span>(n) =&gt; n.as_secs().to_string(),
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
-            <span class="macro">tracing::error!</span>(<span class="string">&quot;SystemTime before UnixEpoch!&quot;</span>);
-            exit(<span class="number">1</span>);
-        }
-    };
+	<span class="kw">let </span>time = <span class="kw">match </span>SystemTime::now().duration_since(UNIX_EPOCH) {
+		<span class="prelude-val">Ok</span>(n) =&gt; n.as_secs().to_string(),
+		<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
+			<span class="macro">tracing::error!</span>(<span class="string">&quot;SystemTime before UnixEpoch!&quot;</span>);
+			exit(<span class="number">1</span>);
+		}
+	};
 
-    <span class="kw">match </span>env::var(<span class="string">&quot;XDG_DATA_HOME&quot;</span>) {
-        <span class="prelude-val">Ok</span>(val) =&gt; {
-            <span class="macro">tracing::info!</span>(
+	<span class="kw">match </span>env::var(<span class="string">&quot;XDG_DATA_HOME&quot;</span>) {
+		<span class="prelude-val">Ok</span>(val) =&gt; {
+			<span class="macro">tracing::info!</span>(
                 <span class="string">&quot;XDG_DATA_HOME Variable is present, using it&#39;s value for default file path.&quot;
             </span>);
-            <span class="macro">format!</span>(<span class="string">&quot;{val}/sohks/sohks-{time}.log&quot;</span>)
-        }
-        <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="macro">tracing::trace!</span>(
+			<span class="macro">format!</span>(<span class="string">&quot;{val}/sohks/sohks-{time}.log&quot;</span>)
+		}
+		<span class="prelude-val">Err</span>(e) =&gt; {
+			<span class="macro">tracing::trace!</span>(
                 <span class="string">&quot;XDG_DATA_HOME Variable is not set, falling back on hardcoded path.\nError: {:#?}&quot;</span>,
                 e
             );
 
-            <span class="macro">format!</span>(<span class="string">&quot;~/.local/share/sohks/sohks-{time}.log&quot;</span>)
-        }
-    }
+			<span class="macro">format!</span>(<span class="string">&quot;~/.local/share/sohks/sohks-{time}.log&quot;</span>)
+		}
+	}
 }
 
 <span class="kw">pub async fn </span>sr_event_receiver(
-    event_sender: Sender&lt;ScreenReaderEvent&gt;,
-    shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
+	event_sender: Sender&lt;ScreenReaderEvent&gt;,
+	shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
 ) -&gt; eyre::Result&lt;()&gt; {
-    <span class="comment">//tracing::trace!(&quot;Setting process umask.&quot;);
-    //umask(Mode::S_IWGRP | Mode::S_IWOTH);
+	<span class="comment">//tracing::trace!(&quot;Setting process umask.&quot;);
+	//umask(Mode::S_IWGRP | Mode::S_IWOTH);
 
-    </span><span class="kw">let </span>(pid_file_path, sock_file_path) = get_file_paths();
-    <span class="kw">let </span>log_file_name = get_log_file_name();
+	</span><span class="kw">let </span>(pid_file_path, sock_file_path) = get_file_paths();
+	<span class="kw">let </span>log_file_name = get_log_file_name();
 
-    <span class="kw">let </span>log_path = Path::new(<span class="kw-2">&amp;</span>log_file_name);
-    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Socket file located at: {:?}&quot;</span>, sock_file_path);
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(p) = log_path.parent() {
-        <span class="kw">if </span>!p.exists() {
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = fs::create_dir_all(p).<span class="kw">await </span>{
-                <span class="macro">tracing::error!</span>(<span class="string">&quot;Failed to create log dir: {}&quot;</span>, e);
-            }
-        }
-    }
+	<span class="kw">let </span>log_path = Path::new(<span class="kw-2">&amp;</span>log_file_name);
+	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Socket file located at: {:?}&quot;</span>, sock_file_path);
+	<span class="kw">if let </span><span class="prelude-val">Some</span>(p) = log_path.parent() {
+		<span class="kw">if </span>!p.exists() {
+			<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = fs::create_dir_all(p).<span class="kw">await </span>{
+				<span class="macro">tracing::error!</span>(<span class="string">&quot;Failed to create log dir: {}&quot;</span>, e);
+			}
+		}
+	}
 
-    <span class="kw">if </span>Path::new(<span class="kw-2">&amp;</span>pid_file_path).exists() {
-        <span class="macro">tracing::trace!</span>(<span class="string">&quot;Reading {} file and checking for running instances.&quot;</span>, pid_file_path);
-        <span class="kw">let </span>sohkds_pid = <span class="kw">match </span>fs::read_to_string(<span class="kw-2">&amp;</span>pid_file_path).<span class="kw">await </span>{
-            <span class="prelude-val">Ok</span>(sohkds_pid) =&gt; sohkds_pid,
-            <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="macro">tracing::error!</span>(<span class="string">&quot;Unable to read {} to check all running instances&quot;</span>, e);
-                exit(<span class="number">1</span>);
-            }
-        };
-        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Previous PID: {}&quot;</span>, sohkds_pid);
+	<span class="kw">if </span>Path::new(<span class="kw-2">&amp;</span>pid_file_path).exists() {
+		<span class="macro">tracing::trace!</span>(
+			<span class="string">&quot;Reading {} file and checking for running instances.&quot;</span>,
+			pid_file_path
+		);
+		<span class="kw">let </span>sohkds_pid = <span class="kw">match </span>fs::read_to_string(<span class="kw-2">&amp;</span>pid_file_path).<span class="kw">await </span>{
+			<span class="prelude-val">Ok</span>(sohkds_pid) =&gt; sohkds_pid,
+			<span class="prelude-val">Err</span>(e) =&gt; {
+				<span class="macro">tracing::error!</span>(
+					<span class="string">&quot;Unable to read {} to check all running instances&quot;</span>,
+					e
+				);
+				exit(<span class="number">1</span>);
+			}
+		};
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Previous PID: {}&quot;</span>, sohkds_pid);
 
-        <span class="kw">let </span><span class="kw-2">mut </span>sys = System::new_all();
-        sys.refresh_all();
-        <span class="kw">for </span>(pid, process) <span class="kw">in </span>sys.processes() {
-            <span class="kw">if </span>pid.to_string() == sohkds_pid &amp;&amp; process.exe() == env::current_exe().unwrap() {
-                <span class="macro">tracing::error!</span>(<span class="string">&quot;Server is already running!&quot;</span>);
-                exit(<span class="number">1</span>);
-            }
-        }
-    }
+		<span class="kw">let </span><span class="kw-2">mut </span>sys = System::new_all();
+		sys.refresh_all();
+		<span class="kw">for </span>(pid, process) <span class="kw">in </span>sys.processes() {
+			<span class="kw">if </span>pid.to_string() == sohkds_pid
+				&amp;&amp; process.exe() == env::current_exe().unwrap()
+			{
+				<span class="macro">tracing::error!</span>(<span class="string">&quot;Server is already running!&quot;</span>);
+				exit(<span class="number">1</span>);
+			}
+		}
+	}
 
-    <span class="kw">if </span>Path::new(<span class="kw-2">&amp;</span>sock_file_path).exists() {
-        <span class="macro">tracing::trace!</span>(<span class="string">&quot;Sockfile exists, attempting to remove it.&quot;</span>);
-        <span class="kw">match </span>fs::remove_file(<span class="kw-2">&amp;</span>sock_file_path).<span class="kw">await </span>{
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
-                <span class="macro">tracing::debug!</span>(<span class="string">&quot;Removed old socket file&quot;</span>);
-            }
-            <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="macro">tracing::error!</span>(<span class="string">&quot;Error removing the socket file!: {}&quot;</span>, e);
-                <span class="macro">tracing::error!</span>(<span class="string">&quot;You can manually remove the socket file: {}&quot;</span>, sock_file_path);
-                exit(<span class="number">1</span>);
-            }
-        };
-    }
+	<span class="kw">if </span>Path::new(<span class="kw-2">&amp;</span>sock_file_path).exists() {
+		<span class="macro">tracing::trace!</span>(<span class="string">&quot;Sockfile exists, attempting to remove it.&quot;</span>);
+		<span class="kw">match </span>fs::remove_file(<span class="kw-2">&amp;</span>sock_file_path).<span class="kw">await </span>{
+			<span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
+				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Removed old socket file&quot;</span>);
+			}
+			<span class="prelude-val">Err</span>(e) =&gt; {
+				<span class="macro">tracing::error!</span>(<span class="string">&quot;Error removing the socket file!: {}&quot;</span>, e);
+				<span class="macro">tracing::error!</span>(
+					<span class="string">&quot;You can manually remove the socket file: {}&quot;</span>,
+					sock_file_path
+				);
+				exit(<span class="number">1</span>);
+			}
+		};
+	}
 
-    <span class="kw">match </span>fs::write(<span class="kw-2">&amp;</span>pid_file_path, id().to_string()).<span class="kw">await </span>{
-        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {}
-        <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="macro">tracing::error!</span>(<span class="string">&quot;Unable to write to {}: {}&quot;</span>, pid_file_path, e);
-            exit(<span class="number">1</span>);
-        }
-    }
+	<span class="kw">match </span>fs::write(<span class="kw-2">&amp;</span>pid_file_path, id().to_string()).<span class="kw">await </span>{
+		<span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {}
+		<span class="prelude-val">Err</span>(e) =&gt; {
+			<span class="macro">tracing::error!</span>(<span class="string">&quot;Unable to write to {}: {}&quot;</span>, pid_file_path, e);
+			exit(<span class="number">1</span>);
+		}
+	}
 
-    <span class="kw">let </span>listener = UnixListener::bind(sock_file_path).expect(<span class="string">&quot;Could not open socket&quot;</span>);
-    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Listener activated!&quot;</span>);
-    <span class="kw">loop </span>{
-        <span class="macro">tokio::select! </span>{
-            msg = listener.accept() =&gt; {
-                <span class="kw">match </span>msg {
-                    <span class="prelude-val">Ok</span>((<span class="kw-2">mut </span>socket, address)) =&gt; {
-                        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Ok from socket&quot;</span>);
-                        <span class="kw">let </span><span class="kw-2">mut </span>response = String::new();
-                        <span class="kw">match </span>socket.read_to_string(<span class="kw-2">&amp;mut </span>response).<span class="kw">await </span>{
-                          <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {},
-                          <span class="prelude-val">Err</span>(e) =&gt; {
-                            <span class="macro">tracing::error!</span>(<span class="string">&quot;Error reading from socket {:#?}&quot;</span>, e);
-                          }
-                        }
-                        <span class="comment">// if valid screen reader event
-                        </span><span class="kw">match </span>serde_json::from_str::&lt;ScreenReaderEvent&gt;(<span class="kw-2">&amp;</span>response) {
-                          <span class="prelude-val">Ok</span>(sre) =&gt; {
-                            <span class="kw">match  </span>event_sender.send(sre).<span class="kw">await </span>{
-                              <span class="prelude-val">Err</span>(err) =&gt;  <span class="macro">tracing::error!</span>(<span class="string">&quot;Error sending ScreenReaderEvent over socket: {}&quot;</span>, err),
-                              <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Sent SR event&quot;</span>),
-                            }
-                          },
-                          <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Invalid odilia event. {:#?}&quot;</span>, e)
-                        }
-                        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Socket: {:?} Address: {:?} Response: {}&quot;</span>, socket, address, response);
-                    },
-                    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;accept function failed: {:?}&quot;</span>, e),
-                }
-                <span class="kw">continue</span>;
-            }
-            <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
-                <span class="macro">tracing::debug!</span>(<span class="string">&quot;Shutting down input socker.&quot;</span>);
-                <span class="kw">break</span>;
-            }
-        }
-    }
-    <span class="prelude-val">Ok</span>(())
+	<span class="kw">let </span>listener = UnixListener::bind(sock_file_path).expect(<span class="string">&quot;Could not open socket&quot;</span>);
+	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Listener activated!&quot;</span>);
+	<span class="kw">loop </span>{
+		<span class="macro">tokio::select! </span>{
+		    msg = listener.accept() =&gt; {
+			<span class="kw">match </span>msg {
+			    <span class="prelude-val">Ok</span>((<span class="kw-2">mut </span>socket, address)) =&gt; {
+				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ok from socket&quot;</span>);
+				<span class="kw">let </span><span class="kw-2">mut </span>response = String::new();
+				<span class="kw">match </span>socket.read_to_string(<span class="kw-2">&amp;mut </span>response).<span class="kw">await </span>{
+				  <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {},
+				  <span class="prelude-val">Err</span>(e) =&gt; {
+				    <span class="macro">tracing::error!</span>(<span class="string">&quot;Error reading from socket {:#?}&quot;</span>, e);
+				  }
+				}
+				<span class="comment">// if valid screen reader event
+				</span><span class="kw">match </span>serde_json::from_str::&lt;ScreenReaderEvent&gt;(<span class="kw-2">&amp;</span>response) {
+				  <span class="prelude-val">Ok</span>(sre) =&gt; {
+				    <span class="kw">match  </span>event_sender.send(sre).<span class="kw">await </span>{
+				      <span class="prelude-val">Err</span>(err) =&gt;  <span class="macro">tracing::error!</span>(<span class="string">&quot;Error sending ScreenReaderEvent over socket: {}&quot;</span>, err),
+				      <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Sent SR event&quot;</span>),
+				    }
+				  },
+				  <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Invalid odilia event. {:#?}&quot;</span>, e)
+				}
+				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Socket: {:?} Address: {:?} Response: {}&quot;</span>, socket, address, response);
+			    },
+			    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;accept function failed: {:?}&quot;</span>, e),
+			}
+			<span class="kw">continue</span>;
+		    }
+		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
+			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Shutting down input socker.&quot;</span>);
+			<span class="kw">break</span>;
+		    }
+		}
+	}
+	<span class="prelude-val">Ok</span>(())
 }
 
 <span class="kw">fn </span>get_file_paths() -&gt; (String, String) {
-    <span class="kw">match </span>env::var(<span class="string">&quot;XDG_RUNTIME_DIR&quot;</span>) {
-        <span class="prelude-val">Ok</span>(val) =&gt; {
-            <span class="macro">tracing::info!</span>(
+	<span class="kw">match </span>env::var(<span class="string">&quot;XDG_RUNTIME_DIR&quot;</span>) {
+		<span class="prelude-val">Ok</span>(val) =&gt; {
+			<span class="macro">tracing::info!</span>(
                 <span class="string">&quot;XDG_RUNTIME_DIR Variable is present, using it&#39;s value as default file path.&quot;
             </span>);
 
-            <span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;{}/sohkds.pid&quot;</span>, val);
-            <span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;{}/sohkd.sock&quot;</span>, val);
+			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;{val}/sohkds.pid&quot;</span>);
+			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;{val}/sohkd.sock&quot;</span>);
 
-            (pid_file_path, sock_file_path)
-        }
-        <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="macro">tracing::trace!</span>(<span class="string">&quot;XDG_RUNTIME_DIR Variable is not set, falling back on hardcoded path.\nError: {:#?}&quot;</span>, e);
+			(pid_file_path, sock_file_path)
+		}
+		<span class="prelude-val">Err</span>(e) =&gt; {
+			<span class="macro">tracing::trace!</span>(<span class="string">&quot;XDG_RUNTIME_DIR Variable is not set, falling back on hardcoded path.\nError: {:#?}&quot;</span>, e);
 
-            <span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/sohkds.pid&quot;</span>, Uid::current());
-            <span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/sohkd.sock&quot;</span>, Uid::current());
+			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/sohkds.pid&quot;</span>, Uid::current());
+			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/sohkd.sock&quot;</span>, Uid::current());
 
-            (pid_file_path, sock_file_path)
-        }
-    }
+			(pid_file_path, sock_file_path)
+		}
+	}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia_input" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

@@ -55,24 +55,24 @@
 
 <span class="doccomment">/// Initialise the logging stack.
 </span><span class="kw">pub fn </span>init() {
-    <span class="kw">let </span>env_filter = <span class="kw">match </span>env::var(<span class="string">&quot;ODILIA_LOG&quot;</span>).or_else(|<span class="kw">_</span>| env::var(<span class="string">&quot;RUST_LOG&quot;</span>)) {
-        <span class="prelude-val">Ok</span>(s) =&gt; EnvFilter::from(s),
-        <span class="prelude-val">Err</span>(env::VarError::NotPresent) =&gt; EnvFilter::from(DEFAULT_LOG_FILTER),
-        <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="macro">eprintln!</span>(<span class="string">&quot;Warning: Failed to read log filter from ODILIA_LOG or RUST_LOG: {}&quot;</span>, e);
-            EnvFilter::from(DEFAULT_LOG_FILTER)
-        }
-    };
-    <span class="kw">let </span>subscriber = tracing_subscriber::Registry::default()
-        .with(env_filter)
-        .with(ErrorLayer::default())
-        .with(HierarchicalLayer::new(<span class="number">4</span>).with_ansi(<span class="bool-val">false</span>).with_bracketed_fields(<span class="bool-val">true</span>));
-    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = tracing::subscriber::set_global_default(subscriber) {
-        <span class="macro">eprintln!</span>(<span class="string">&quot;Warning: Failed to set log handler: {}&quot;</span>, e);
-    }
-    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = LogTracer::init() {
-        <span class="macro">tracing::warn!</span>(error = %e, <span class="string">&quot;Failed to install log facade&quot;</span>);
-    }
+	<span class="kw">let </span>env_filter = <span class="kw">match </span>env::var(<span class="string">&quot;ODILIA_LOG&quot;</span>).or_else(|<span class="kw">_</span>| env::var(<span class="string">&quot;RUST_LOG&quot;</span>)) {
+		<span class="prelude-val">Ok</span>(s) =&gt; EnvFilter::from(s),
+		<span class="prelude-val">Err</span>(env::VarError::NotPresent) =&gt; EnvFilter::from(DEFAULT_LOG_FILTER),
+		<span class="prelude-val">Err</span>(e) =&gt; {
+			<span class="macro">eprintln!</span>(<span class="string">&quot;Warning: Failed to read log filter from ODILIA_LOG or RUST_LOG: {e}&quot;</span>);
+			EnvFilter::from(DEFAULT_LOG_FILTER)
+		}
+	};
+	<span class="kw">let </span>subscriber = tracing_subscriber::Registry::default()
+		.with(env_filter)
+		.with(ErrorLayer::default())
+		.with(HierarchicalLayer::new(<span class="number">4</span>).with_ansi(<span class="bool-val">false</span>).with_bracketed_fields(<span class="bool-val">true</span>));
+	<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = tracing::subscriber::set_global_default(subscriber) {
+		<span class="macro">eprintln!</span>(<span class="string">&quot;Warning: Failed to set log handler: {e}&quot;</span>);
+	}
+	<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = LogTracer::init() {
+		<span class="macro">tracing::warn!</span>(error = %e, <span class="string">&quot;Failed to install log facade&quot;</span>);
+	}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

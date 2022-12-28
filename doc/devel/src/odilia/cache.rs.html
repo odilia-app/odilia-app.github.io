@@ -150,34 +150,11 @@
 <span id="150">150</span>
 <span id="151">151</span>
 <span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-</pre><pre class="rust"><code><span class="kw">use </span>rustc_hash::FxHasher;
-<span class="kw">use </span>tokio::sync::Mutex;
-<span class="kw">use </span>atspi::{
-	accessible::{
-		Role,
-		AccessibleProxy,
-	},
-	accessible_ext::{
-		AccessibleId,
-	},
-	InterfaceSet,
-	StateSet,
-};
+</pre><pre class="rust"><code><span class="kw">use </span>atspi::{accessible::Role, InterfaceSet, StateSet};
 <span class="kw">use </span>evmap::shallow_copy::CopyValue;
 <span class="kw">use </span>evmap_derive::ShallowCopy;
-<span class="kw">use </span>std::time::Instant;
-<span class="kw">use </span>std::mem::ManuallyDrop;
+<span class="kw">use </span>rustc_hash::FxHasher;
+<span class="kw">use </span>tokio::sync::Mutex;
 
 <span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, Copy)]
 </span><span class="doccomment">/// A struct which represents the bare minimum of an accessible for purposes of caching.
@@ -205,24 +182,24 @@ impl AccessiblePrimitive {
 </span><span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash, ShallowCopy)]
 </span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
-    <span class="comment">// The accessible object (within the application)   (so)
-    </span><span class="kw">pub </span>object: i32,
-    <span class="comment">// The application (root object(?)    (so)
-    </span><span class="kw">pub </span>app: i32,
-    <span class="comment">// The parent object.  (so)
-    </span><span class="kw">pub </span>parent: i32,
-    <span class="comment">// The accessbile index in parent.  i
-    </span><span class="kw">pub </span>index: i32,
-    <span class="comment">// Child count of the accessible  i
-    </span><span class="kw">pub </span>children: i32,
-    <span class="comment">// The exposed interfece(s) set.  as
-    </span><span class="kw">pub </span>ifaces: CopyValue&lt;InterfaceSet&gt;,
-    <span class="comment">// Accessible role. u
-    </span><span class="kw">pub </span>role: CopyValue&lt;Role&gt;,
-    <span class="comment">// The states applicable to the accessible.  au
-    </span><span class="kw">pub </span>states: CopyValue&lt;StateSet&gt;,
-		<span class="comment">// The text of the accessible.
-		</span><span class="kw">pub </span>text: String,
+	<span class="comment">// The accessible object (within the application)   (so)
+	</span><span class="kw">pub </span>object: i32,
+	<span class="comment">// The application (root object(?)    (so)
+	</span><span class="kw">pub </span>app: i32,
+	<span class="comment">// The parent object.  (so)
+	</span><span class="kw">pub </span>parent: i32,
+	<span class="comment">// The accessbile index in parent.  i
+	</span><span class="kw">pub </span>index: i32,
+	<span class="comment">// Child count of the accessible  i
+	</span><span class="kw">pub </span>children: i32,
+	<span class="comment">// The exposed interfece(s) set.  as
+	</span><span class="kw">pub </span>ifaces: CopyValue&lt;InterfaceSet&gt;,
+	<span class="comment">// Accessible role. u
+	</span><span class="kw">pub </span>role: CopyValue&lt;Role&gt;,
+	<span class="comment">// The states applicable to the accessible.  au
+	</span><span class="kw">pub </span>states: CopyValue&lt;StateSet&gt;,
+	<span class="comment">// The text of the accessible.
+	</span><span class="kw">pub </span>text: String,
 }
 
 <span class="comment">/*
@@ -231,7 +208,7 @@ impl AccessiblePrimitive {
 /// TODO: convert to native async-trait impl
 impl CacheItem {
 	pub async fn as_accessible&lt;&#39;a&gt;(&amp;self, connection: &amp;zbus::Connection) -&gt; zbus::Result&lt;AccessibleProxy&lt;&#39;a&gt;&gt; {
-		atspi::accessible::new(connection, 
+		atspi::accessible::new(connection,
 	}
 }
 */
@@ -239,12 +216,12 @@ impl CacheItem {
 </span><span class="kw">type </span>FxBuildHasher = std::hash::BuildHasherDefault&lt;FxHasher&gt;;
 <span class="kw">pub type </span>FxReadHandleFactory&lt;K, V&gt; = evmap::ReadHandleFactory&lt;K, V, (), FxBuildHasher&gt;;
 <span class="kw">pub type </span>FxWriteHandle&lt;K, V&gt; = evmap::WriteHandle&lt;K, V, (), FxBuildHasher&gt;;
-<span class="kw">pub type </span>FxReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt; = evmap::ReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt;;
+<span class="kw">type </span>FxReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt; = evmap::ReadGuard&lt;<span class="lifetime">&#39;a</span>, V&gt;;
 
 <span class="doccomment">/// The root of the accessible cache.
 </span><span class="kw">pub struct </span>Cache {
-    <span class="kw">pub </span>by_id_read: FxReadHandleFactory&lt;i32, CacheItem&gt;,
-    <span class="kw">pub </span>by_id_write: Mutex&lt;FxWriteHandle&lt;i32, CacheItem&gt;&gt;,
+	<span class="kw">pub </span>by_id_read: FxReadHandleFactory&lt;i32, CacheItem&gt;,
+	<span class="kw">pub </span>by_id_write: Mutex&lt;FxWriteHandle&lt;i32, CacheItem&gt;&gt;,
 }
 
 <span class="doccomment">/// Copy all info into a plain CacheItem struct.
@@ -273,56 +250,57 @@ impl CacheItem {
 /// This implementation is not very efficient, but it is very safe:
 /// This is because before inserting, the incomming bucket is cleared (there will never be duplicate accessibles or accessibles at different states stored in the same bucket).
 </span><span class="kw">impl </span>Cache {
-		<span class="doccomment">/// create a new, fresh cache
-    </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>(rh, wh) = evmap::with_hasher((), FxBuildHasher::default());
+	<span class="doccomment">/// create a new, fresh cache
+	</span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span>(rh, wh) = evmap::with_hasher((), FxBuildHasher::default());
 
-        <span class="self">Self </span>{ by_id_read: rh.factory(), by_id_write: Mutex::new(wh) }
-    }
-		<span class="doccomment">/// add a single new item to the cache. Note that this will empty the bucket before inserting the `CacheItem` into the cache (this is so there is never two items with the same ID stored in the cache at the same time).
-		</span><span class="kw">pub async fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) {
-				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
-				cache_writer.empty(cache_item.object);
-				cache_writer.insert(cache_item.object, cache_item);
-				cache_writer.refresh();
-		}
-		<span class="doccomment">/// remove a single cache item
-		</span><span class="kw">pub async fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) {
-				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
-				cache_writer.empty(id);
-				cache_writer.refresh();
-		}
-		<span class="doccomment">/// get a single item from the cache (note that this copies some integers to a new struct)
-		</span><span class="kw">pub async fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
-				<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
-				read_handle.get_one(<span class="kw-2">&amp;</span>id).map(copy_into_cache_item)
-		}
-		<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
-		</span><span class="kw">pub async fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
-				<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
-				ids.iter()
-					.map(|id| read_handle.get_one(id).map(copy_into_cache_item))
-					.collect()
-		}
-		<span class="doccomment">/// Bulk add many items to the cache; this only refreshes the cache after adding all items. Note that this will empty the bucket before inserting. Only one accessible should ever be associated with an id.
-		</span><span class="kw">pub async fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) {
-				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
-				cache_items.into_iter()
-					.for_each(|cache_item| {
-						cache_writer.empty(cache_item.object);
-						cache_writer.insert(cache_item.object, cache_item);
-				});
-				cache_writer.refresh();
-		}
-		<span class="doccomment">/// Bulk remove all ids in the cache; this only refreshes the cache after removing all items.
-		</span><span class="kw">pub async fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) {
-				<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
-				ids.into_iter()
-					.for_each(|id| {
-						cache_writer.empty(id);
-				});
-				cache_writer.refresh();
-		}
+		<span class="self">Self </span>{ by_id_read: rh.factory(), by_id_write: Mutex::new(wh) }
+	}
+	<span class="doccomment">/// add a single new item to the cache. Note that this will empty the bucket before inserting the `CacheItem` into the cache (this is so there is never two items with the same ID stored in the cache at the same time).
+	</span><span class="kw">pub async fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) {
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+		cache_writer.empty(cache_item.object);
+		cache_writer.insert(cache_item.object, cache_item);
+		cache_writer.refresh();
+	}
+	<span class="doccomment">/// remove a single cache item
+	</span><span class="kw">pub async fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) {
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+		cache_writer.empty(id);
+		cache_writer.refresh();
+	}
+	<span class="doccomment">/// get a single item from the cache (note that this copies some integers to a new struct)
+	</span><span class="attribute">#[allow(dead_code)]
+	</span><span class="kw">pub async fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: i32) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
+		<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
+		read_handle.get_one(<span class="kw-2">&amp;</span>id).map(copy_into_cache_item)
+	}
+	<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
+	</span><span class="attribute">#[allow(dead_code)]
+	</span><span class="kw">pub async fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
+		<span class="kw">let </span>read_handle = <span class="self">self</span>.by_id_read.handle();
+		ids.iter()
+			.map(|id| read_handle.get_one(id).map(copy_into_cache_item))
+			.collect()
+	}
+	<span class="doccomment">/// Bulk add many items to the cache; this only refreshes the cache after adding all items. Note that this will empty the bucket before inserting. Only one accessible should ever be associated with an id.
+	</span><span class="kw">pub async fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) {
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+		cache_items.into_iter().for_each(|cache_item| {
+			cache_writer.empty(cache_item.object);
+			cache_writer.insert(cache_item.object, cache_item);
+		});
+		cache_writer.refresh();
+	}
+	<span class="doccomment">/// Bulk remove all ids in the cache; this only refreshes the cache after removing all items.
+	</span><span class="attribute">#[allow(dead_code)]
+	</span><span class="kw">pub async fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;i32&gt;) {
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_writer = <span class="self">self</span>.by_id_write.lock().<span class="kw">await</span>;
+		ids.into_iter().for_each(|id| {
+			cache_writer.empty(id);
+		});
+		cache_writer.refresh();
+	}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

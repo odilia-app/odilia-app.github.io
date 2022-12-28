@@ -85,98 +85,90 @@
 <span id="85">85</span>
 <span id="86">86</span>
 <span id="87">87</span>
-<span id="88">88</span>
-<span id="89">89</span>
-<span id="90">90</span>
-<span id="91">91</span>
-</pre><pre class="rust"><code><span class="kw">use </span>tokio::{
-	sync::{
-		mpsc::Receiver,
-		broadcast,
-	},
-	io::{BufReader, BufWriter},
-	net::unix::{
-		OwnedReadHalf, OwnedWriteHalf
-	},
-};
-<span class="kw">use </span>ssip_client::{
-	tokio::{
-		AsyncClient,
-		Request,
-	},
+</pre><pre class="rust"><code><span class="kw">use </span>ssip_client::{
 	fifo::asynchronous_tokio::Builder,
+	tokio::{AsyncClient, Request},
 	ClientName,
 };
 <span class="kw">use </span>std::{
-  thread,
-  time,
-  process::{
-    exit,
-    Command,
-    Stdio,
-  },
-  io::ErrorKind,
+	io::ErrorKind,
+	process::{exit, Command, Stdio},
+	thread, time,
+};
+<span class="kw">use </span>tokio::{
+	io::{BufReader, BufWriter},
+	net::unix::{OwnedReadHalf, OwnedWriteHalf},
+	sync::{broadcast, mpsc::Receiver},
 };
 
-<span class="kw">pub async fn </span>create_ssip_client() -&gt; eyre::Result&lt;AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;&gt; {
-  <span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to register SSIP client odilia:speech&quot;</span>);
-  <span class="kw">let </span><span class="kw-2">mut </span>ssip_core = <span class="kw">match </span>Builder::new().build().<span class="kw">await </span>{
-     <span class="prelude-val">Ok</span>(ssip) =&gt; ssip,
-     <span class="prelude-val">Err</span>(e) =&gt; {
-        <span class="kw">match </span>e.kind() {
-          ErrorKind::ConnectionRefused =&gt; {
-            <span class="macro">tracing::debug!</span>(<span class="string">&quot;Speech dispatcher is not active. Attempting to spawn it.&quot;</span>);
-            Command::new(<span class="string">&quot;speech-dispatcher&quot;</span>)
+<span class="kw">pub async fn </span>create_ssip_client(
+) -&gt; eyre::Result&lt;AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;&gt; {
+	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to register SSIP client odilia:speech&quot;</span>);
+	<span class="kw">let </span><span class="kw-2">mut </span>ssip_core =
+		<span class="kw">match </span>Builder::new().build().<span class="kw">await </span>{
+			<span class="prelude-val">Ok</span>(ssip) =&gt; ssip,
+			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">match </span>e.kind() {
+				ErrorKind::ConnectionRefused =&gt; {
+					<span class="macro">tracing::debug!</span>(<span class="string">&quot;Speech dispatcher is not active. Attempting to spawn it.&quot;</span>);
+					Command::new(<span class="string">&quot;speech-dispatcher&quot;</span>)
               .arg(<span class="string">&quot;--spawn&quot;</span>)
               .stdin(Stdio::null())
               .stdout(Stdio::null())
               .stderr(Stdio::null())
               .spawn()
               .expect(<span class="string">&quot;Error running `speech-dispatcher --spawn`; this is a fatal error.&quot;</span>);
-            <span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to connect to speech-dispatcher again!&quot;</span>);
-            thread::sleep(time::Duration::from_millis(<span class="number">500</span>));
-            Builder::new().build().<span class="kw">await</span><span class="question-mark">?
-          </span>},
-          <span class="kw">_ </span>=&gt; {
-            <span class="macro">tracing::debug!</span>(<span class="string">&quot;Speech dispatcher could not be started.&quot;</span>);
-            exit(<span class="number">1</span>);
-          },
-        }
-     },
-  };
+					<span class="macro">tracing::debug!</span>(
+						<span class="string">&quot;Attempting to connect to speech-dispatcher again!&quot;
+					</span>);
+					thread::sleep(time::Duration::from_millis(<span class="number">500</span>));
+					Builder::new().build().<span class="kw">await</span><span class="question-mark">?
+				</span>}
+				<span class="kw">_ </span>=&gt; {
+					<span class="macro">tracing::debug!</span>(<span class="string">&quot;Speech dispatcher could not be started.&quot;</span>);
+					exit(<span class="number">1</span>);
+				}
+			},
+		};
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Client created. Setting name&quot;</span>);
-  ssip_core.set_client_name(ClientName::new(<span class="string">&quot;odilia&quot;</span>, <span class="string">&quot;speech&quot;</span>)).<span class="kw">await</span><span class="question-mark">?
-      </span>.check_client_name_set().<span class="kw">await</span><span class="question-mark">?</span>;
-  <span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP client registered as odilia:speech&quot;</span>);
-  <span class="prelude-val">Ok</span>(ssip_core)
+	ssip_core
+		.set_client_name(ClientName::new(<span class="string">&quot;odilia&quot;</span>, <span class="string">&quot;speech&quot;</span>))
+		.<span class="kw">await</span><span class="question-mark">?
+		</span>.check_client_name_set()
+		.<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP client registered as odilia:speech&quot;</span>);
+	<span class="prelude-val">Ok</span>(ssip_core)
 }
 
-<span class="kw">pub async fn </span>handle_ssip_commands(client: <span class="kw-2">&amp;mut </span>AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;, requests: Receiver&lt;Request&gt;, shutdown_tx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;) -&gt; eyre::Result&lt;()&gt; {
+<span class="kw">pub async fn </span>handle_ssip_commands(
+	client: <span class="kw-2">&amp;mut </span>AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;,
+	requests: Receiver&lt;Request&gt;,
+	shutdown_tx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
+) -&gt; eyre::Result&lt;()&gt; {
 	<span class="macro">tokio::pin!</span>(requests);
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
-			request_option = requests.recv() =&gt; {
-				<span class="kw">if </span>request_option.is_none() {
+				request_option = requests.recv() =&gt; {
+					<span class="kw">if </span>request_option.is_none() {
+						<span class="kw">continue</span>;
+					}
+					<span class="kw">let </span>request = request_option.unwrap();
+					<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command received&quot;</span>);
+		<span class="kw">let </span>response = client
+		  .send(request).<span class="kw">await</span>.unwrap()
+		  .receive().<span class="kw">await</span>.unwrap();
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:#?}&quot;</span>, response);
 					<span class="kw">continue</span>;
 				}
-				<span class="kw">let </span>request = request_option.unwrap();
-				<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command received&quot;</span>);
-        <span class="kw">let </span>response = client
-          .send(request).<span class="kw">await</span>.unwrap()
-          .receive().<span class="kw">await</span>.unwrap();
-        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:#?}&quot;</span>, response);
-				<span class="kw">continue</span>;
+				<span class="kw">_ </span>= shutdown_tx.recv() =&gt; {
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to quit SSIP.&quot;</span>);
+		<span class="kw">let </span>response = client
+		  .send(Request::Quit).<span class="kw">await</span>.unwrap()
+		  .receive().<span class="kw">await</span>.unwrap();
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:?}&quot;</span>, response);
+					<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command interpreter is shut down.&quot;</span>);
+					<span class="kw">break</span>;
+				}
 			}
-			<span class="kw">_ </span>= shutdown_tx.recv() =&gt; {
-        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to quit SSIP.&quot;</span>);
-        <span class="kw">let </span>response = client
-          .send(Request::Quit).<span class="kw">await</span>.unwrap()
-          .receive().<span class="kw">await</span>.unwrap();
-        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:?}&quot;</span>, response);
-				<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command interpreter is shut down.&quot;</span>);
-				<span class="kw">break</span>;
-			}
-		}
 	}
 	<span class="prelude-val">Ok</span>(())
 }

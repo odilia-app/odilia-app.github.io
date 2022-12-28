@@ -64,33 +64,10 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
 </pre><pre class="rust"><code><span class="kw">use </span>zbus::zvariant::ObjectPath;
 
-<span class="kw">use crate</span>::{
-	state::ScreenReaderState,
-	cache::CacheItem,
-};
-<span class="kw">use </span>atspi::{
-	accessible::{
-		<span class="self">self</span>,
-		AccessibleProxy,
-	},
-	convertable::Convertable,
-	events::Event,
-	text::TextProxy,
-	text_ext::TextExt,
-};
+<span class="kw">use crate</span>::{cache::CacheItem, state::ScreenReaderState};
+<span class="kw">use </span>atspi::events::Event;
 
 <span class="kw">pub fn </span>get_id_from_path(path: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to get ID for: {}&quot;</span>, path);
@@ -100,57 +77,58 @@
 		} <span class="kw">else if </span>id == <span class="string">&quot;root&quot; </span>{
 			<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="number">0</span>);
 		} <span class="kw">else if </span>id == <span class="string">&quot;null&quot; </span>{
-      <span class="kw">return </span><span class="prelude-val">Some</span>(-<span class="number">1</span>);
-    }
+			<span class="kw">return </span><span class="prelude-val">Some</span>(-<span class="number">1</span>);
+		}
 	}
 	<span class="prelude-val">None
 </span>}
 
 <span class="kw">pub async fn </span>load_complete(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>conn = state.atspi.connection();
-		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
-    <span class="kw">let </span>dest = event.path().unwrap();
-    <span class="kw">let </span>cache = state
-        .build_cache(sender.clone(), ObjectPath::try_from(<span class="string">&quot;/org/a11y/atspi/cache&quot;</span>.to_string())<span class="question-mark">?</span>)
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span><span class="kw-2">mut </span>cache_items = Vec::new();
-		<span class="kw">for </span>item <span class="kw">in </span>entire_cache {
-        <span class="kw">let </span>path = item.object.<span class="number">1</span>.to_string();
-				<span class="kw">let </span>app_path = item.app.<span class="number">1</span>.clone();
-				<span class="kw">let </span>parent_path = item.parent.<span class="number">1</span>.clone();
-				<span class="kw">let </span>object_id = get_id_from_path(<span class="kw-2">&amp;</span>path).expect(<span class="string">&quot;There should always be an accessible ID&quot;</span>);
-				<span class="kw">let </span>app_id = get_id_from_path(<span class="kw-2">&amp;</span>app_path).expect(<span class="string">&quot;There should always be an accessible ID&quot;</span>);
-				<span class="kw">let </span>parent_id = get_id_from_path(<span class="kw-2">&amp;</span>parent_path).expect(<span class="string">&quot;There should always be an accessible ID&quot;</span>);
-				<span class="kw">let </span>accessible = accessible::new(<span class="kw-2">&amp;</span>conn, sender.clone(), dest.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
-				<span class="kw">let </span>text_iface = accessible.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
-				<span class="kw">let </span>text = text_iface.get_text_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-				cache_items.push(CacheItem {
-					object: object_id,
-					app: app_id,
-					parent: parent_id,
-					index: item.index,
-					children: item.children,
-					ifaces: item.ifaces.into(),
-					role: item.role.into(),
-					states: item.states.into(),
-					text
-				});
-		}
-		state.cache.add_all(cache_items).<span class="kw">await</span>;
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add an entire document to cache.&quot;</span>);
-    <span class="prelude-val">Ok</span>(())
+	<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
+	<span class="kw">let </span>cache = state
+		.build_cache(
+			sender.clone(),
+			ObjectPath::try_from(<span class="string">&quot;/org/a11y/atspi/cache&quot;</span>.to_string())<span class="question-mark">?</span>,
+		)
+		.<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="kw">let </span><span class="kw-2">mut </span>cache_items = Vec::new();
+	<span class="kw">for </span>item <span class="kw">in </span>entire_cache {
+		<span class="kw">let </span>path = item.object.<span class="number">1</span>.to_string();
+		<span class="kw">let </span>app_path = item.app.<span class="number">1</span>.clone();
+		<span class="kw">let </span>parent_path = item.parent.<span class="number">1</span>.clone();
+		<span class="kw">let </span>object_id =
+			get_id_from_path(<span class="kw-2">&amp;</span>path).expect(<span class="string">&quot;There should always be an accessible ID&quot;</span>);
+		<span class="kw">let </span>app_id = get_id_from_path(<span class="kw-2">&amp;</span>app_path)
+			.expect(<span class="string">&quot;There should always be an accessible ID&quot;</span>);
+		<span class="kw">let </span>parent_id = get_id_from_path(<span class="kw-2">&amp;</span>parent_path)
+			.expect(<span class="string">&quot;There should always be an accessible ID&quot;</span>);
+		cache_items.push(CacheItem {
+			object: object_id,
+			app: app_id,
+			parent: parent_id,
+			index: item.index,
+			children: item.children,
+			ifaces: item.ifaces.into(),
+			role: item.role.into(),
+			states: item.states.into(),
+			text: item.name.clone(),
+		});
+	}
+	state.cache.add_all(cache_items).<span class="kw">await</span>;
+	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add an entire document to cache.&quot;</span>);
+	<span class="prelude-val">Ok</span>(())
 }
 
 <span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-    <span class="comment">// Dispatch based on member
-    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(member) = event.member() {
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;LoadComplete&quot; </span>=&gt; load_complete(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-            member =&gt; <span class="macro">tracing::debug!</span>(member, <span class="string">&quot;Ignoring event with unknown member&quot;</span>),
-        }
-    }
-    <span class="prelude-val">Ok</span>(())
+	<span class="comment">// Dispatch based on member
+	</span><span class="kw">if let </span><span class="prelude-val">Some</span>(member) = event.member() {
+		<span class="kw">match </span>member.as_str() {
+			<span class="string">&quot;LoadComplete&quot; </span>=&gt; load_complete(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			member =&gt; <span class="macro">tracing::debug!</span>(member, <span class="string">&quot;Ignoring event with unknown member&quot;</span>),
+		}
+	}
+	<span class="prelude-val">Ok</span>(())
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

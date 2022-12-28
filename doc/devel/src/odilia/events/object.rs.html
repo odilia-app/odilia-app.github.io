@@ -201,39 +201,26 @@
 <span id="201">201</span>
 <span id="202">202</span>
 <span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::events::Event;
 
 <span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-    <span class="comment">// Dispatch based on member
-    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(member) = event.member() {
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;StateChanged&quot; </span>=&gt; state_changed::dispatch(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-            <span class="string">&quot;TextCaretMoved&quot; </span>=&gt; text_caret_moved::dispatch(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-						<span class="string">&quot;ChildrenChanged&quot; </span>=&gt; children_changed::dispatch(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-            member =&gt; <span class="macro">tracing::debug!</span>(member, <span class="string">&quot;Ignoring event with unknown member&quot;</span>),
-        }
-    }
-    <span class="prelude-val">Ok</span>(())
+	<span class="comment">// Dispatch based on member
+	</span><span class="kw">if let </span><span class="prelude-val">Some</span>(member) = event.member() {
+		<span class="kw">match </span>member.as_str() {
+			<span class="string">&quot;StateChanged&quot; </span>=&gt; state_changed::dispatch(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">&quot;TextCaretMoved&quot; </span>=&gt; text_caret_moved::dispatch(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">&quot;ChildrenChanged&quot; </span>=&gt; children_changed::dispatch(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			member =&gt; <span class="macro">tracing::debug!</span>(member, <span class="string">&quot;Ignoring event with unknown member&quot;</span>),
+		}
+	}
+	<span class="prelude-val">Ok</span>(())
 }
 
 <span class="kw">mod </span>children_changed {
-	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span><span class="kw">crate</span>::cache::CacheItem;
-	<span class="kw">use </span>atspi::{
-		events::Event,
-		convertable::Convertable,
-		text_ext::TextExt,
-		accessible,
-	};
+	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
+	<span class="kw">use </span>atspi::{accessible, events::Event};
 
 	<span class="kw">pub fn </span>get_id_from_path(path: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;i32&gt; {
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to get ID from: {}&quot;</span>, path);
@@ -243,28 +230,27 @@
 			} <span class="kw">else if </span>id == <span class="string">&quot;root&quot; </span>{
 				<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="number">0</span>);
 			} <span class="kw">else if </span>id == <span class="string">&quot;null&quot; </span>{
-        <span class="kw">return </span><span class="prelude-val">Some</span>(-<span class="number">1</span>);
-      }
+				<span class="kw">return </span><span class="prelude-val">Some</span>(-<span class="number">1</span>);
+			}
 		}
 		<span class="prelude-val">None
 	</span>}
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-			<span class="comment">// Dispatch based on kind
-			</span><span class="kw">match </span>event.kind() {
-					<span class="string">&quot;remove/system&quot; </span>=&gt; remove(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-					<span class="string">&quot;remove&quot; </span>=&gt; remove(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-					<span class="string">&quot;add/system&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-					<span class="string">&quot;add&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-					kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
-			}
-			<span class="prelude-val">Ok</span>(())
+		<span class="comment">// Dispatch based on kind
+		</span><span class="kw">match </span>event.kind() {
+			<span class="string">&quot;remove/system&quot; </span>=&gt; remove(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">&quot;remove&quot; </span>=&gt; remove(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">&quot;add/system&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">&quot;add&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
+		}
+		<span class="prelude-val">Ok</span>(())
 	}
 	<span class="kw">pub async fn </span>add(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>conn = state.atspi.connection();
-    <span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
+		<span class="kw">let </span>conn = state.connection();
+		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
 		<span class="kw">let </span>dest = event.path().unwrap();
 		<span class="kw">let </span>accessible = accessible::new(conn, sender, dest.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span>text_iface = accessible.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// all these properties will be fetched in paralell
 		</span><span class="kw">let </span>(app, parent, index, children, ifaces, role, states, text) = <span class="macro">tokio::try_join!</span>(
 			accessible.get_application(),
@@ -274,27 +260,25 @@
 			accessible.get_interfaces(),
 			accessible.get_role(),
 			accessible.get_state(),
-			text_iface.get_text_ext(),
+			accessible.name(),
 		)<span class="question-mark">?</span>;
 		<span class="kw">let </span>object_id = get_id_from_path(<span class="kw-2">&amp;</span>dest).expect(<span class="string">&quot;Invalid accessible&quot;</span>);
 		<span class="kw">let </span>app_id = get_id_from_path(<span class="kw-2">&amp;</span>app.<span class="number">1</span>.to_string()).expect(<span class="string">&quot;Invalid accessible&quot;</span>);
 		<span class="kw">let </span>parent_id = get_id_from_path(<span class="kw-2">&amp;</span>parent.<span class="number">1</span>.to_string()).expect(<span class="string">&quot;Invalid accesible&quot;</span>);
 		<span class="kw">let </span>cache_item = CacheItem {
-				object: object_id,
-				app: app_id,
-				parent: parent_id,
-				index,
-				children,
-				ifaces: ifaces.into(),
-				role: role.into(),
-				states: states.into(),
-				text,
+			object: object_id,
+			app: app_id,
+			parent: parent_id,
+			index,
+			children,
+			ifaces: ifaces.into(),
+			role: role.into(),
+			states: states.into(),
+			text,
 		};
 
 		<span class="comment">// finally, write data to the internal cache
-		</span><span class="kw">let </span>write_by_id = <span class="kw-2">&amp;</span>state.cache.by_id_write;
-		<span class="kw">let </span><span class="kw-2">mut </span>write_by_id = write_by_id.lock().<span class="kw">await</span>;
-		write_by_id.insert(object_id, cache_item);
+		</span>state.cache.add(cache_item).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add a single item to cache.&quot;</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -302,123 +286,123 @@
 		<span class="kw">let </span>path = event.path().expect(<span class="string">&quot;No path&quot;</span>);
 		<span class="kw">let </span>path_id_str = path.split(<span class="string">&#39;/&#39;</span>).next_back().expect(<span class="string">&quot;No ID&quot;</span>);
 		<span class="kw">let </span>id = path_id_str.parse::&lt;i32&gt;()<span class="question-mark">?</span>;
-		<span class="kw">let </span>shared_write = <span class="kw-2">&amp;</span>state.cache.by_id_write;
-		<span class="kw">let </span><span class="kw-2">mut </span>cache = shared_write.lock().<span class="kw">await</span>;
-		cache.empty(id);
+		state.cache.remove(id).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Remove a single item from cache.&quot;</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
 }
 
 <span class="kw">mod </span>text_caret_moved {
-    <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-    <span class="kw">use </span>atspi::{accessible, convertable::Convertable, events::Event};
-    <span class="kw">use </span>ssip_client::Priority;
+	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
+	<span class="kw">use </span>atspi::{accessible, convertable::Convertable, events::Event};
+	<span class="kw">use </span>ssip_client::Priority;
 
-    <span class="comment">// TODO: left/right vs. up/down, and use generated speech
-    </span><span class="kw">pub async fn </span>text_cursor_moved(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-        <span class="kw">let </span>current_caret_pos = event.detail1();
-        <span class="kw">let </span>previous_caret_pos = state.previous_caret_position.get();
-        state.previous_caret_position.set(current_caret_pos);
-        <span class="kw">let </span>(_start, _end) = <span class="kw">match </span>current_caret_pos &gt; previous_caret_pos {
-            <span class="bool-val">true </span>=&gt; (previous_caret_pos, current_caret_pos),
-            <span class="bool-val">false </span>=&gt; (current_caret_pos, previous_caret_pos),
-        };
-        <span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(path) = event.path() {
-            path
-        } <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-        };
-        <span class="kw">let </span>sender = <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = event.sender()<span class="question-mark">? </span>{
-            sender
-        } <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-        };
-        <span class="kw">let </span>conn = state.connection().clone();
-        <span class="kw">let </span>accessible = accessible::new(<span class="kw-2">&amp;</span>conn, sender.clone(), path.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-            <span class="prelude-val">Some</span>(acc) =&gt; acc,
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
-        };
-        <span class="kw">let </span>last_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">1</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-            <span class="prelude-val">Some</span>(acc) =&gt; acc,
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
-        };
-        state.update_accessible(sender, path).<span class="kw">await</span>;
+	<span class="comment">// TODO: left/right vs. up/down, and use generated speech
+	</span><span class="kw">pub async fn </span>text_cursor_moved(
+		state: <span class="kw-2">&amp;</span>ScreenReaderState,
+		event: Event,
+	) -&gt; eyre::Result&lt;()&gt; {
+		<span class="kw">let </span>current_caret_pos = event.detail1();
+		<span class="kw">let </span>previous_caret_pos = state.previous_caret_position.get();
+		state.previous_caret_position.set(current_caret_pos);
+		<span class="kw">let </span>(_start, _end) = <span class="kw">match </span>current_caret_pos &gt; previous_caret_pos {
+			<span class="bool-val">true </span>=&gt; (previous_caret_pos, current_caret_pos),
+			<span class="bool-val">false </span>=&gt; (current_caret_pos, previous_caret_pos),
+		};
+		<span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(path) = event.path() {
+			path
+		} <span class="kw">else </span>{
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
+		};
+		<span class="kw">let </span>sender = <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = event.sender()<span class="question-mark">? </span>{
+			sender
+		} <span class="kw">else </span>{
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
+		};
+		<span class="kw">let </span>conn = state.connection().clone();
+		<span class="kw">let </span>accessible = accessible::new(<span class="kw-2">&amp;</span>conn, sender.clone(), path.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
+			<span class="prelude-val">Some</span>(acc) =&gt; acc,
+			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
+		};
+		<span class="kw">let </span>last_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">1</span>).<span class="kw">await</span><span class="question-mark">? </span>{
+			<span class="prelude-val">Some</span>(acc) =&gt; acc,
+			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
+		};
+		state.update_accessible(sender, path).<span class="kw">await</span>;
 
-        <span class="comment">// in the case that this is not a tab navigation
-        // TODO: algorithm that only triggers this when a tab navigation is known to have not occured. How the fuck am I supposed to know how that works?
-        // Ok, start out with the basics: if a focus event has recently occuredm, there is a good chance that this function is about to get triggered as well. So, for one, a tab navigation GUARENTEES that the last_accessible will be equal to the curent accessible.
-        </span><span class="kw">if </span>accessible == last_last_accessible {
-            <span class="kw">let </span>txt = accessible.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="kw">let </span>len = txt.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="comment">// TODO: improve text readout
-            </span>state
-                .say(Priority::Text, (txt.get_text(<span class="number">0</span>, len).<span class="kw">await</span><span class="question-mark">?</span>).to_string())
-                .<span class="kw">await</span>;
-        }
-        <span class="prelude-val">Ok</span>(())
-    }
+		<span class="comment">// in the case that this is not a tab navigation
+		// TODO: algorithm that only triggers this when a tab navigation is known to have not occured. How the fuck am I supposed to know how that works?
+		// Ok, start out with the basics: if a focus event has recently occuredm, there is a good chance that this function is about to get triggered as well. So, for one, a tab navigation GUARENTEES that the last_accessible will be equal to the curent accessible.
+		</span><span class="kw">if </span>accessible == last_last_accessible {
+			<span class="kw">let </span>txt = accessible.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
+			<span class="kw">let </span>len = txt.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
+			<span class="comment">// TODO: improve text readout
+			</span>state.say(Priority::Text, (txt.get_text(<span class="number">0</span>, len).<span class="kw">await</span><span class="question-mark">?</span>).to_string())
+				.<span class="kw">await</span>;
+		}
+		<span class="prelude-val">Ok</span>(())
+	}
 
-    <span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-        <span class="comment">// Dispatch based on kind
-        </span><span class="kw">match </span>event.kind() {
-            <span class="string">&quot;&quot; </span>=&gt; text_cursor_moved(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-            kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
-        }
-        <span class="prelude-val">Ok</span>(())
-    }
+	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
+		<span class="comment">// Dispatch based on kind
+		</span><span class="kw">match </span>event.kind() {
+			<span class="string">&quot;&quot; </span>=&gt; text_cursor_moved(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
+		}
+		<span class="prelude-val">Ok</span>(())
+	}
 } <span class="comment">// end of text_caret_moved
 
 </span><span class="kw">mod </span>state_changed {
-    <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-    <span class="kw">use </span>atspi::{accessible, events::Event};
+	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
+	<span class="kw">use </span>atspi::{accessible, events::Event};
 
-    <span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
-        <span class="comment">// Dispatch based on kind
-        </span><span class="kw">match </span>event.kind() {
-            <span class="string">&quot;focused&quot; </span>=&gt; focused(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-            kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
-        }
-        <span class="prelude-val">Ok</span>(())
-    }
+	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
+		<span class="comment">// Dispatch based on kind
+		</span><span class="kw">match </span>event.kind() {
+			<span class="string">&quot;focused&quot; </span>=&gt; focused(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
+		}
+		<span class="prelude-val">Ok</span>(())
+	}
 
-    <span class="kw">pub async fn </span>focused(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; zbus::Result&lt;()&gt; {
-        <span class="comment">// Speak the newly focused object
-        </span><span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(path) = event.path() {
-            path.to_owned()
-        } <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-        };
-        <span class="kw">let </span>sender = <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = event.sender()<span class="question-mark">? </span>{
-            sender.to_owned()
-        } <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-        };
-        <span class="kw">let </span>conn = state.connection();
-        <span class="kw">let </span>accessible = accessible::new(<span class="kw-2">&amp;</span>conn.clone(), sender.clone(), path.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-            <span class="kw">if </span>curr == accessible {
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-            }
-        }
-        state.update_accessible(sender.to_owned(), path.to_owned()).<span class="kw">await</span>;
+	<span class="kw">pub async fn </span>focused(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; zbus::Result&lt;()&gt; {
+		<span class="comment">// Speak the newly focused object
+		</span><span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(path) = event.path() {
+			path.to_owned()
+		} <span class="kw">else </span>{
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
+		};
+		<span class="kw">let </span>sender = <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = event.sender()<span class="question-mark">? </span>{
+			sender.to_owned()
+		} <span class="kw">else </span>{
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
+		};
+		<span class="kw">let </span>conn = state.connection();
+		<span class="kw">let </span>accessible =
+			accessible::new(<span class="kw-2">&amp;</span>conn.clone(), sender.clone(), path.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
+			<span class="kw">if </span>curr == accessible {
+				<span class="kw">return </span><span class="prelude-val">Ok</span>(());
+			}
+		}
+		state.update_accessible(sender.to_owned(), path.to_owned()).<span class="kw">await</span>;
 
-        <span class="kw">let </span>(name, description, role, relation) = <span class="macro">tokio::try_join!</span>(
-        accessible.name(),
-        accessible.description(),
-        accessible.get_localized_role_name(),
-        accessible.get_relation_set(),
-        )<span class="question-mark">?</span>;
-        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Focus event received on: {} with role {}&quot;</span>, path, role);
-        <span class="macro">tracing::debug!</span>(<span class="string">&quot;Relations: {:?}&quot;</span>, relation);
+		<span class="kw">let </span>(name, description, role, relation) = <span class="macro">tokio::try_join!</span>(
+			accessible.name(),
+			accessible.description(),
+			accessible.get_localized_role_name(),
+			accessible.get_relation_set(),
+		)<span class="question-mark">?</span>;
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focus event received on: {} with role {}&quot;</span>, path, role);
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Relations: {:?}&quot;</span>, relation);
 
-        state
-            .say(ssip_client::Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>))
-            .<span class="kw">await</span>;
+		state.say(ssip_client::Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>))
+			.<span class="kw">await</span>;
 
-        <span class="prelude-val">Ok</span>(())
-    }
+		<span class="prelude-val">Ok</span>(())
+	}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

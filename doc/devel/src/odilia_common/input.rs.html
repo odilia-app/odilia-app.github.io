@@ -385,392 +385,408 @@
 <span id="385">385</span>
 <span id="386">386</span>
 <span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::errors::KeyFromStrError;
 <span class="kw">use </span><span class="kw">crate</span>::modes::ScreenReaderMode;
 <span class="kw">use </span>std::str::FromStr;
 
 <span class="attribute">#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 </span><span class="kw">pub enum </span>Key {
-    Up,
-    Down,
-    Left,
-    Right,
-    Home,
-    End,
-    PageDown,
-    PageUp,
-    Backspace,
-    Delete,
-    Escape,
-    F1,
-    F2,
-    F3,
-    F4,
-    F5,
-    F6,
-    F7,
-    F8,
-    F9,
-    F10,
-    F11,
-    F12,
-    Return,
-    Space,
-    Tab,
-    PrintScreen,
-    ScrollLock,
-    Pause,
-    NumLock,
-    KpReturn,
-    KpMinus,
-    KpPlus,
-    KpMultiply,
-    KpDivide,
-    Kp0,
-    Kp1,
-    Kp2,
-    Kp3,
-    Kp4,
-    Kp5,
-    Kp6,
-    Kp7,
-    Kp8,
-    Kp9,
-    KpDelete,
-    Function,
-    Insert,
-    Other(char),
+	Up,
+	Down,
+	Left,
+	Right,
+	Home,
+	End,
+	PageDown,
+	PageUp,
+	Backspace,
+	Delete,
+	Escape,
+	F1,
+	F2,
+	F3,
+	F4,
+	F5,
+	F6,
+	F7,
+	F8,
+	F9,
+	F10,
+	F11,
+	F12,
+	Return,
+	Space,
+	Tab,
+	PrintScreen,
+	ScrollLock,
+	Pause,
+	NumLock,
+	KpReturn,
+	KpMinus,
+	KpPlus,
+	KpMultiply,
+	KpDivide,
+	Kp0,
+	Kp1,
+	Kp2,
+	Kp3,
+	Kp4,
+	Kp5,
+	Kp6,
+	Kp7,
+	Kp8,
+	Kp9,
+	KpDelete,
+	Function,
+	Insert,
+	Other(char),
 }
 
 <span class="kw">impl </span>FromStr <span class="kw">for </span>Key {
-    <span class="kw">type </span><span class="prelude-val">Err </span>= KeyFromStrError;
+	<span class="kw">type </span><span class="prelude-val">Err </span>= KeyFromStrError;
 
-    <span class="kw">fn </span>from_str(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
-        <span class="kw">use </span>KeyFromStrError <span class="kw">as </span>E;
+	<span class="kw">fn </span>from_str(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+		<span class="kw">use </span>KeyFromStrError <span class="kw">as </span>E;
 
-        <span class="kw">if </span>key.len() &lt;= <span class="number">1 </span>{
-            <span class="kw">let </span>c = key.chars().next().ok_or(E::EmptyKey)<span class="question-mark">?</span>;
-            <span class="kw">if </span>!c.is_control() &amp;&amp; !c.is_whitespace() {
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">Self</span>::Other(c));
-            }
-        }
-        <span class="prelude-val">Ok</span>(<span class="kw">match </span>key {
-            <span class="comment">// Special cases
-            </span>k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Up&quot;</span>) =&gt; <span class="self">Self</span>::Up,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Down&quot;</span>) =&gt; <span class="self">Self</span>::Down,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Left&quot;</span>) =&gt; <span class="self">Self</span>::Left,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Right&quot;</span>) =&gt; <span class="self">Self</span>::Right,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Home&quot;</span>) =&gt; <span class="self">Self</span>::Home,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;End&quot;</span>) =&gt; <span class="self">Self</span>::End,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;PageDown&quot;</span>) =&gt; <span class="self">Self</span>::PageDown,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;PageUp&quot;</span>) =&gt; <span class="self">Self</span>::PageUp,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Delete&quot;</span>) =&gt; <span class="self">Self</span>::Delete,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Escape&quot;</span>) =&gt; <span class="self">Self</span>::Escape,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F1&quot;</span>) =&gt; <span class="self">Self</span>::F1,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F2&quot;</span>) =&gt; <span class="self">Self</span>::F2,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F3&quot;</span>) =&gt; <span class="self">Self</span>::F3,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F4&quot;</span>) =&gt; <span class="self">Self</span>::F4,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F5&quot;</span>) =&gt; <span class="self">Self</span>::F5,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F6&quot;</span>) =&gt; <span class="self">Self</span>::F6,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F7&quot;</span>) =&gt; <span class="self">Self</span>::F7,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F8&quot;</span>) =&gt; <span class="self">Self</span>::F8,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F9&quot;</span>) =&gt; <span class="self">Self</span>::F9,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F10&quot;</span>) =&gt; <span class="self">Self</span>::F10,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F11&quot;</span>) =&gt; <span class="self">Self</span>::F11,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F12&quot;</span>) =&gt; <span class="self">Self</span>::F12,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Return&quot;</span>) =&gt; <span class="self">Self</span>::Return,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Space&quot;</span>) =&gt; <span class="self">Self</span>::Space,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Tab&quot;</span>) =&gt; <span class="self">Self</span>::Tab,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;PrintScreen&quot;</span>) =&gt; <span class="self">Self</span>::PrintScreen,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;ScrollLock&quot;</span>) =&gt; <span class="self">Self</span>::ScrollLock,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Pause&quot;</span>) =&gt; <span class="self">Self</span>::Pause,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;NumLock&quot;</span>) =&gt; <span class="self">Self</span>::NumLock,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpReturn&quot;</span>) =&gt; <span class="self">Self</span>::KpReturn,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpMinus&quot;</span>) =&gt; <span class="self">Self</span>::KpMinus,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpPlus&quot;</span>) =&gt; <span class="self">Self</span>::KpPlus,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpMultiply&quot;</span>) =&gt; <span class="self">Self</span>::KpMultiply,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpDivide&quot;</span>) =&gt; <span class="self">Self</span>::KpDivide,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp0&quot;</span>) =&gt; <span class="self">Self</span>::Kp0,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp1&quot;</span>) =&gt; <span class="self">Self</span>::Kp1,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp2&quot;</span>) =&gt; <span class="self">Self</span>::Kp2,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp3&quot;</span>) =&gt; <span class="self">Self</span>::Kp3,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp4&quot;</span>) =&gt; <span class="self">Self</span>::Kp4,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp5&quot;</span>) =&gt; <span class="self">Self</span>::Kp5,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp6&quot;</span>) =&gt; <span class="self">Self</span>::Kp6,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp7&quot;</span>) =&gt; <span class="self">Self</span>::Kp7,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp8&quot;</span>) =&gt; <span class="self">Self</span>::Kp8,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp9&quot;</span>) =&gt; <span class="self">Self</span>::Kp9,
-            k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpDelete&quot;</span>) =&gt; <span class="self">Self</span>::KpDelete,
+		<span class="kw">if </span>key.len() &lt;= <span class="number">1 </span>{
+			<span class="kw">let </span>c = key.chars().next().ok_or(E::EmptyKey)<span class="question-mark">?</span>;
+			<span class="kw">if </span>!c.is_control() &amp;&amp; !c.is_whitespace() {
+				<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">Self</span>::Other(c));
+			}
+		}
+		<span class="prelude-val">Ok</span>(<span class="kw">match </span>key {
+			<span class="comment">// Special cases
+			</span>k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Up&quot;</span>) =&gt; <span class="self">Self</span>::Up,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Down&quot;</span>) =&gt; <span class="self">Self</span>::Down,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Left&quot;</span>) =&gt; <span class="self">Self</span>::Left,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Right&quot;</span>) =&gt; <span class="self">Self</span>::Right,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Home&quot;</span>) =&gt; <span class="self">Self</span>::Home,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;End&quot;</span>) =&gt; <span class="self">Self</span>::End,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;PageDown&quot;</span>) =&gt; <span class="self">Self</span>::PageDown,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;PageUp&quot;</span>) =&gt; <span class="self">Self</span>::PageUp,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Delete&quot;</span>) =&gt; <span class="self">Self</span>::Delete,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Escape&quot;</span>) =&gt; <span class="self">Self</span>::Escape,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F1&quot;</span>) =&gt; <span class="self">Self</span>::F1,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F2&quot;</span>) =&gt; <span class="self">Self</span>::F2,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F3&quot;</span>) =&gt; <span class="self">Self</span>::F3,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F4&quot;</span>) =&gt; <span class="self">Self</span>::F4,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F5&quot;</span>) =&gt; <span class="self">Self</span>::F5,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F6&quot;</span>) =&gt; <span class="self">Self</span>::F6,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F7&quot;</span>) =&gt; <span class="self">Self</span>::F7,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F8&quot;</span>) =&gt; <span class="self">Self</span>::F8,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F9&quot;</span>) =&gt; <span class="self">Self</span>::F9,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F10&quot;</span>) =&gt; <span class="self">Self</span>::F10,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F11&quot;</span>) =&gt; <span class="self">Self</span>::F11,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;F12&quot;</span>) =&gt; <span class="self">Self</span>::F12,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Return&quot;</span>) =&gt; <span class="self">Self</span>::Return,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Space&quot;</span>) =&gt; <span class="self">Self</span>::Space,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Tab&quot;</span>) =&gt; <span class="self">Self</span>::Tab,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;PrintScreen&quot;</span>) =&gt; <span class="self">Self</span>::PrintScreen,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;ScrollLock&quot;</span>) =&gt; <span class="self">Self</span>::ScrollLock,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Pause&quot;</span>) =&gt; <span class="self">Self</span>::Pause,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;NumLock&quot;</span>) =&gt; <span class="self">Self</span>::NumLock,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpReturn&quot;</span>) =&gt; <span class="self">Self</span>::KpReturn,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpMinus&quot;</span>) =&gt; <span class="self">Self</span>::KpMinus,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpPlus&quot;</span>) =&gt; <span class="self">Self</span>::KpPlus,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpMultiply&quot;</span>) =&gt; <span class="self">Self</span>::KpMultiply,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpDivide&quot;</span>) =&gt; <span class="self">Self</span>::KpDivide,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp0&quot;</span>) =&gt; <span class="self">Self</span>::Kp0,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp1&quot;</span>) =&gt; <span class="self">Self</span>::Kp1,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp2&quot;</span>) =&gt; <span class="self">Self</span>::Kp2,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp3&quot;</span>) =&gt; <span class="self">Self</span>::Kp3,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp4&quot;</span>) =&gt; <span class="self">Self</span>::Kp4,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp5&quot;</span>) =&gt; <span class="self">Self</span>::Kp5,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp6&quot;</span>) =&gt; <span class="self">Self</span>::Kp6,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp7&quot;</span>) =&gt; <span class="self">Self</span>::Kp7,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp8&quot;</span>) =&gt; <span class="self">Self</span>::Kp8,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;Kp9&quot;</span>) =&gt; <span class="self">Self</span>::Kp9,
+			k <span class="kw">if </span>k.eq_ignore_ascii_case(<span class="string">&quot;KpDelete&quot;</span>) =&gt; <span class="self">Self</span>::KpDelete,
 
-            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(E::InvalidKey(key.into())),
-        })
-    }
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(E::InvalidKey(key.into())),
+		})
+	}
 }
 
 <span class="macro">bitflags::bitflags! </span>{
     <span class="attribute">#[derive(Default)]
     </span><span class="kw">pub struct </span>Modifiers: u16 {
-        <span class="kw">const </span>NONE = <span class="number">0</span>;
+	<span class="kw">const </span>NONE = <span class="number">0</span>;
 
-        <span class="doccomment">/// Usually capslock, insert, or kp-insert
-        </span><span class="kw">const </span>ODILIA = <span class="number">1 </span>&lt;&lt; <span class="number">0</span>;
+	<span class="doccomment">/// Usually capslock, insert, or kp-insert
+	</span><span class="kw">const </span>ODILIA = <span class="number">1 </span>&lt;&lt; <span class="number">0</span>;
 
-        <span class="kw">const </span>CONTROL_L = <span class="number">1 </span>&lt;&lt; <span class="number">1</span>;
-        <span class="kw">const </span>CONTROL_R = <span class="number">1 </span>&lt;&lt; <span class="number">2</span>;
-        <span class="kw">const </span>CONTROL = <span class="number">1 </span>&lt;&lt; <span class="number">1 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">2</span>;
+	<span class="kw">const </span>CONTROL_L = <span class="number">1 </span>&lt;&lt; <span class="number">1</span>;
+	<span class="kw">const </span>CONTROL_R = <span class="number">1 </span>&lt;&lt; <span class="number">2</span>;
+	<span class="kw">const </span>CONTROL = <span class="number">1 </span>&lt;&lt; <span class="number">1 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">2</span>;
 
-        <span class="kw">const </span>ALT_L = <span class="number">1 </span>&lt;&lt; <span class="number">3</span>;
-        <span class="kw">const </span>ALT_R = <span class="number">1 </span>&lt;&lt; <span class="number">4</span>;
-        <span class="kw">const </span>ALT = <span class="number">1 </span>&lt;&lt; <span class="number">3 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">4</span>;
+	<span class="kw">const </span>ALT_L = <span class="number">1 </span>&lt;&lt; <span class="number">3</span>;
+	<span class="kw">const </span>ALT_R = <span class="number">1 </span>&lt;&lt; <span class="number">4</span>;
+	<span class="kw">const </span>ALT = <span class="number">1 </span>&lt;&lt; <span class="number">3 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">4</span>;
 
-        <span class="kw">const </span>SHIFT_L = <span class="number">1 </span>&lt;&lt; <span class="number">5</span>;
-        <span class="kw">const </span>SHIFT_R = <span class="number">1 </span>&lt;&lt; <span class="number">6</span>;
-        <span class="kw">const </span>SHIFT = <span class="number">1 </span>&lt;&lt; <span class="number">5 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">6</span>;
+	<span class="kw">const </span>SHIFT_L = <span class="number">1 </span>&lt;&lt; <span class="number">5</span>;
+	<span class="kw">const </span>SHIFT_R = <span class="number">1 </span>&lt;&lt; <span class="number">6</span>;
+	<span class="kw">const </span>SHIFT = <span class="number">1 </span>&lt;&lt; <span class="number">5 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">6</span>;
 
-        <span class="kw">const </span>META_L = <span class="number">1 </span>&lt;&lt; <span class="number">7</span>;
-        <span class="kw">const </span>META_R = <span class="number">1 </span>&lt;&lt; <span class="number">8</span>;
-        <span class="kw">const </span>META = <span class="number">1 </span>&lt;&lt; <span class="number">7 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">8</span>;
+	<span class="kw">const </span>META_L = <span class="number">1 </span>&lt;&lt; <span class="number">7</span>;
+	<span class="kw">const </span>META_R = <span class="number">1 </span>&lt;&lt; <span class="number">8</span>;
+	<span class="kw">const </span>META = <span class="number">1 </span>&lt;&lt; <span class="number">7 </span>| <span class="number">1 </span>&lt;&lt; <span class="number">8</span>;
 
-        <span class="kw">const </span>APPLICATIONS = <span class="number">1 </span>&lt;&lt; <span class="number">9</span>;
+	<span class="kw">const </span>APPLICATIONS = <span class="number">1 </span>&lt;&lt; <span class="number">9</span>;
     }
 }
 
 <span class="kw">impl </span>Modifiers {
-    <span class="comment">// Using `self` instead of `&amp;self` here is fine, `Self` is `Copy`.
-    //
-    </span><span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>control(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.intersects(<span class="self">Self</span>::CONTROL)
-    }
+	<span class="comment">// Using `self` instead of `&amp;self` here is fine, `Self` is `Copy`.
+	//
+	</span><span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>control(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.intersects(<span class="self">Self</span>::CONTROL)
+	}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>alt(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.intersects(<span class="self">Self</span>::ALT)
-    }
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>alt(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.intersects(<span class="self">Self</span>::ALT)
+	}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>shift(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.intersects(<span class="self">Self</span>::SHIFT)
-    }
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>shift(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.intersects(<span class="self">Self</span>::SHIFT)
+	}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>meta(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.intersects(<span class="self">Self</span>::META)
-    }
-    <span class="comment">// Are these two useful? Almost certainly not! Am I going to leave them in? You bet ya!
-    // You never know, addon developers are clever!
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>meta(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.intersects(<span class="self">Self</span>::META)
+	}
+	<span class="comment">// Are these two useful? Almost certainly not! Am I going to leave them in? You bet ya!
+	// You never know, addon developers are clever!
 
-    </span><span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>left(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.intersects(<span class="self">Self</span>::CONTROL_L | <span class="self">Self</span>::ALT_L | <span class="self">Self</span>::SHIFT_L | <span class="self">Self</span>::META_L)
-    }
+	</span><span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>left(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.intersects(<span class="self">Self</span>::CONTROL_L | <span class="self">Self</span>::ALT_L | <span class="self">Self</span>::SHIFT_L | <span class="self">Self</span>::META_L)
+	}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>right(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.intersects(<span class="self">Self</span>::CONTROL_R | <span class="self">Self</span>::ALT_R | <span class="self">Self</span>::SHIFT_R | <span class="self">Self</span>::META_R)
-    }
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>right(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.intersects(<span class="self">Self</span>::CONTROL_R | <span class="self">Self</span>::ALT_R | <span class="self">Self</span>::SHIFT_R | <span class="self">Self</span>::META_R)
+	}
 }
 
 <span class="comment">// Notice it has almost the same fields as [`KeyBinding`].
 </span><span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 </span><span class="kw">pub struct </span>KeyEvent {
-    <span class="kw">pub </span>key: <span class="prelude-ty">Option</span>&lt;Key&gt;,
-    <span class="kw">pub </span>mods: Modifiers,
-    <span class="kw">pub </span>repeat: u8,
+	<span class="kw">pub </span>key: <span class="prelude-ty">Option</span>&lt;Key&gt;,
+	<span class="kw">pub </span>mods: Modifiers,
+	<span class="kw">pub </span>repeat: u8,
 }
 
 <span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 </span><span class="kw">pub struct </span>KeyBinding {
-    <span class="kw">pub </span>key: <span class="prelude-ty">Option</span>&lt;Key&gt;,
-    <span class="kw">pub </span>mods: Modifiers,
-    <span class="kw">pub </span>repeat: u8,
-    <span class="doccomment">/// if `None`, match all modes
-    </span><span class="kw">pub </span>mode: <span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt;,
-    <span class="comment">// whether or not to consume the event, or let it pass through
-    </span><span class="kw">pub </span>consume: bool,
-    <span class="doccomment">/// whether to notify the SR that the key has been pressed; currently at least one function in -prototype/main.rs will ALWAYS see every key, but this could change.
-    </span><span class="kw">pub </span>notify: bool,
+	<span class="kw">pub </span>key: <span class="prelude-ty">Option</span>&lt;Key&gt;,
+	<span class="kw">pub </span>mods: Modifiers,
+	<span class="kw">pub </span>repeat: u8,
+	<span class="doccomment">/// if `None`, match all modes
+	</span><span class="kw">pub </span>mode: <span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt;,
+	<span class="comment">// whether or not to consume the event, or let it pass through
+	</span><span class="kw">pub </span>consume: bool,
+	<span class="doccomment">/// whether to notify the SR that the key has been pressed; currently at least one function in -prototype/main.rs will ALWAYS see every key, but this could change.
+	</span><span class="kw">pub </span>notify: bool,
 }
 
 <span class="kw">impl </span>Default <span class="kw">for </span>KeyBinding {
-    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            key: <span class="prelude-val">None</span>,
-            mods: Modifiers::empty(),
-            repeat: <span class="number">1</span>,
-            mode: <span class="prelude-val">None</span>,
-            consume: <span class="bool-val">true</span>,
-            notify: <span class="bool-val">true</span>,
-        }
-    }
+	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			key: <span class="prelude-val">None</span>,
+			mods: Modifiers::empty(),
+			repeat: <span class="number">1</span>,
+			mode: <span class="prelude-val">None</span>,
+			consume: <span class="bool-val">true</span>,
+			notify: <span class="bool-val">true</span>,
+		}
+	}
 }
 
 <span class="kw">impl </span>KeyBinding {
-    <span class="kw">pub fn </span>new(key: <span class="prelude-ty">Option</span>&lt;Key&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{ key, ..Default::default() }
-    }
+	<span class="kw">pub fn </span>new(key: <span class="prelude-ty">Option</span>&lt;Key&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{ key, ..Default::default() }
+	}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>mods(<span class="kw-2">mut </span><span class="self">self</span>, mods: Modifiers) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.mods = mods;
-        <span class="self">self
-    </span>}
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>mods(<span class="kw-2">mut </span><span class="self">self</span>, mods: Modifiers) -&gt; <span class="self">Self </span>{
+		<span class="self">self</span>.mods = mods;
+		<span class="self">self
+	</span>}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>repeat(<span class="kw-2">mut </span><span class="self">self</span>, repeat: u8) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.repeat = repeat;
-        <span class="self">self
-    </span>}
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>repeat(<span class="kw-2">mut </span><span class="self">self</span>, repeat: u8) -&gt; <span class="self">Self </span>{
+		<span class="self">self</span>.repeat = repeat;
+		<span class="self">self
+	</span>}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>mode(<span class="kw-2">mut </span><span class="self">self</span>, mode: <span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.mode = mode;
-        <span class="self">self
-    </span>}
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>mode(<span class="kw-2">mut </span><span class="self">self</span>, mode: <span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">self</span>.mode = mode;
+		<span class="self">self
+	</span>}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>consume(<span class="kw-2">mut </span><span class="self">self</span>, consume: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.consume = consume;
-        <span class="self">self
-    </span>}
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>consume(<span class="kw-2">mut </span><span class="self">self</span>, consume: bool) -&gt; <span class="self">Self </span>{
+		<span class="self">self</span>.consume = consume;
+		<span class="self">self
+	</span>}
 
-    <span class="attribute">#[inline]
-    </span><span class="kw">pub fn </span>notify(<span class="kw-2">mut </span><span class="self">self</span>, notify: bool) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.notify = notify;
-        <span class="self">self
-    </span>}
+	<span class="attribute">#[inline]
+	</span><span class="kw">pub fn </span>notify(<span class="kw-2">mut </span><span class="self">self</span>, notify: bool) -&gt; <span class="self">Self </span>{
+		<span class="self">self</span>.notify = notify;
+		<span class="self">self
+	</span>}
 }
 
 <span class="doccomment">/// get mode and return it with a stripped version of the string
 </span><span class="kw">fn </span>get_mode_strip(s: <span class="kw-2">&amp;</span>str) -&gt; (<span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt;, String) {
-    <span class="kw">let </span>new_str: String;
-    <span class="kw">let </span>mode_index = s.find(<span class="string">&#39;|&#39;</span>);
-    <span class="kw">let </span>mode: <span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt; = <span class="kw">match </span>mode_index {
-        <span class="prelude-val">Some</span>(mode_index) =&gt; {
-            new_str = s.get(mode_index + <span class="number">1</span>..).unwrap().to_string(); <span class="comment">// pretty sure is safe
-            </span><span class="prelude-val">Some</span>(ScreenReaderMode {
-                name: s.get(..mode_index).unwrap().to_string(), <span class="comment">// mostly safe I think?
-            </span>})
-        }
-        <span class="kw">_ </span>=&gt; {
-            new_str = s.to_string();
-            <span class="prelude-val">None
-        </span>}
-    };
+	<span class="kw">let </span>new_str: String;
+	<span class="kw">let </span>mode_index = s.find(<span class="string">&#39;|&#39;</span>);
+	<span class="kw">let </span>mode: <span class="prelude-ty">Option</span>&lt;ScreenReaderMode&gt; = <span class="kw">match </span>mode_index {
+		<span class="prelude-val">Some</span>(mode_index) =&gt; {
+			new_str = s.get(mode_index + <span class="number">1</span>..).unwrap().to_string(); <span class="comment">// pretty sure is safe
+			</span><span class="prelude-val">Some</span>(ScreenReaderMode {
+				name: s.get(..mode_index).unwrap().to_string(), <span class="comment">// mostly safe I think?
+			</span>})
+		}
+		<span class="kw">_ </span>=&gt; {
+			new_str = s.to_string();
+			<span class="prelude-val">None
+		</span>}
+	};
 
-    (mode, new_str)
+	(mode, new_str)
 }
 <span class="kw">fn </span>get_consume_strip(s: <span class="kw-2">&amp;</span>str) -&gt; (bool, String) {
-    <span class="kw">let </span>new_str: String;
-    <span class="kw">let </span>consume_index = s.find(<span class="string">&#39;|&#39;</span>);
-    <span class="kw">let </span>consume: bool = <span class="kw">match </span>consume_index {
-        <span class="prelude-val">Some</span>(consume_index) =&gt; {
-            new_str = s.get(consume_index + <span class="number">1</span>..).unwrap().to_string(); <span class="comment">// pretty sure is safe
-            </span><span class="kw">let </span>b_str = s.get(..consume_index).unwrap().to_string(); <span class="comment">// mostly safe I think?
-            </span>b_str == <span class="string">&quot;C&quot;
-        </span>}
-        <span class="kw">_ </span>=&gt; {
-            new_str = s.to_string();
-            <span class="bool-val">false
-        </span>}
-    };
+	<span class="kw">let </span>new_str: String;
+	<span class="kw">let </span>consume_index = s.find(<span class="string">&#39;|&#39;</span>);
+	<span class="kw">let </span>consume: bool = <span class="kw">match </span>consume_index {
+		<span class="prelude-val">Some</span>(consume_index) =&gt; {
+			new_str = s.get(consume_index + <span class="number">1</span>..).unwrap().to_string(); <span class="comment">// pretty sure is safe
+			</span><span class="kw">let </span>b_str = s.get(..consume_index).unwrap().to_string(); <span class="comment">// mostly safe I think?
+			</span>b_str == <span class="string">&quot;C&quot;
+		</span>}
+		<span class="kw">_ </span>=&gt; {
+			new_str = s.to_string();
+			<span class="bool-val">false
+		</span>}
+	};
 
-    (consume, new_str)
+	(consume, new_str)
 }
 
 <span class="kw">impl </span>FromStr <span class="kw">for </span>KeyBinding {
-    <span class="kw">type </span><span class="prelude-val">Err </span>= KeyFromStrError;
+	<span class="kw">type </span><span class="prelude-val">Err </span>= KeyFromStrError;
 
-    <span class="kw">fn </span>from_str(s1: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
-        <span class="kw">use </span>KeyFromStrError <span class="kw">as </span>E;
-        <span class="kw">let </span>(consume, s2) = get_consume_strip(s1);
-        <span class="kw">let </span>(mode, s) = get_mode_strip(<span class="kw-2">&amp;</span>s2);
+	<span class="kw">fn </span>from_str(s1: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+		<span class="kw">use </span>KeyFromStrError <span class="kw">as </span>E;
+		<span class="kw">let </span>(consume, s2) = get_consume_strip(s1);
+		<span class="kw">let </span>(mode, s) = get_mode_strip(<span class="kw-2">&amp;</span>s2);
 
-        <span class="kw">let </span><span class="kw-2">mut </span>parts = s.rsplit(<span class="string">&#39;+&#39;</span>).map(str::trim);
-        <span class="kw">let </span>key_and_repeat = parts.next().ok_or(E::EmptyString)<span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>subparts = key_and_repeat.split(<span class="string">&#39;:&#39;</span>);
+		<span class="kw">let </span><span class="kw-2">mut </span>parts = s.rsplit(<span class="string">&#39;+&#39;</span>).map(str::trim);
+		<span class="kw">let </span>key_and_repeat = parts.next().ok_or(E::EmptyString)<span class="question-mark">?</span>;
+		<span class="kw">let </span><span class="kw-2">mut </span>subparts = key_and_repeat.split(<span class="string">&#39;:&#39;</span>);
 
-        <span class="kw">let </span>key: Key = subparts.next().ok_or(E::NoKey)<span class="question-mark">?</span>.parse()<span class="question-mark">?</span>;
+		<span class="kw">let </span>key: Key = subparts.next().ok_or(E::NoKey)<span class="question-mark">?</span>.parse()<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>repeat: u8 = {
-            <span class="kw">let </span>repeat_str = subparts.next().unwrap_or(<span class="string">&quot;1&quot;</span>);
-            repeat_str.parse().map_err(|<span class="kw">_</span>| E::InvalidRepeat(repeat_str.into()))<span class="question-mark">?
-        </span>};
+		<span class="kw">let </span>repeat: u8 = {
+			<span class="kw">let </span>repeat_str = subparts.next().unwrap_or(<span class="string">&quot;1&quot;</span>);
+			repeat_str.parse().map_err(|<span class="kw">_</span>| E::InvalidRepeat(repeat_str.into()))<span class="question-mark">?
+		</span>};
 
-        <span class="kw">let </span><span class="kw-2">mut </span>mods = Modifiers::empty();
-        <span class="kw">for </span>m <span class="kw">in </span>parts {
-            <span class="comment">// Yeh ... it&#39;s not pretty ... but would an if chain really look any better?
-            </span>mods |= <span class="kw">match </span>m {
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Odilia&quot;</span>) =&gt; Modifiers::ODILIA,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Applications&quot;</span>) =&gt; Modifiers::APPLICATIONS,
+		<span class="kw">let </span><span class="kw-2">mut </span>mods = Modifiers::empty();
+		<span class="kw">for </span>m <span class="kw">in </span>parts {
+			<span class="comment">// Yeh ... it&#39;s not pretty ... but would an if chain really look any better?
+			</span>mods |= <span class="kw">match </span>m {
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Odilia&quot;</span>) =&gt; Modifiers::ODILIA,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Applications&quot;</span>) =&gt; {
+					Modifiers::APPLICATIONS
+				}
 
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftControl&quot;</span>) =&gt; Modifiers::CONTROL_L,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightControl&quot;</span>) =&gt; Modifiers::CONTROL_R,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Control&quot;</span>) =&gt; Modifiers::CONTROL,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftControl&quot;</span>) =&gt; Modifiers::CONTROL_L,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightControl&quot;</span>) =&gt; Modifiers::CONTROL_R,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Control&quot;</span>) =&gt; Modifiers::CONTROL,
 
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftAlt&quot;</span>) =&gt; Modifiers::ALT_L,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightAlt&quot;</span>) =&gt; Modifiers::ALT_R,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Alt&quot;</span>) =&gt; Modifiers::ALT,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftAlt&quot;</span>) =&gt; Modifiers::ALT_L,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightAlt&quot;</span>) =&gt; Modifiers::ALT_R,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Alt&quot;</span>) =&gt; Modifiers::ALT,
 
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftShift&quot;</span>) =&gt; Modifiers::SHIFT_L,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightShift&quot;</span>) =&gt; Modifiers::SHIFT_R,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Shift&quot;</span>) =&gt; Modifiers::SHIFT,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftShift&quot;</span>) =&gt; Modifiers::SHIFT_L,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightShift&quot;</span>) =&gt; Modifiers::SHIFT_R,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Shift&quot;</span>) =&gt; Modifiers::SHIFT,
 
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftMeta&quot;</span>) =&gt; Modifiers::META_L,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightMeta&quot;</span>) =&gt; Modifiers::META_R,
-                m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Meta&quot;</span>) =&gt; Modifiers::META,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;LeftMeta&quot;</span>) =&gt; Modifiers::META_L,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;RightMeta&quot;</span>) =&gt; Modifiers::META_R,
+				m <span class="kw">if </span>m.eq_ignore_ascii_case(<span class="string">&quot;Meta&quot;</span>) =&gt; Modifiers::META,
 
-                <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(E::InvalidModifier(m.into())),
-            };
-        }
+				<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(E::InvalidModifier(m.into())),
+			};
+		}
 
-        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{ key: <span class="prelude-val">Some</span>(key), mods, repeat, mode, consume, notify: <span class="bool-val">true </span>})
-    }
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ key: <span class="prelude-val">Some</span>(key), mods, repeat, mode, consume, notify: <span class="bool-val">true </span>})
+	}
 }
 
 <span class="attribute">#[cfg(test)]
 </span><span class="kw">mod </span>test {
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+	<span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[test]
-    </span><span class="kw">fn </span>parse_key_binding() {
-        <span class="comment">// simple
-        </span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;Odilia+h&quot;</span>.parse().unwrap();
-        <span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, kb);
-        <span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;h&#39;</span>)));
-        <span class="macro">assert_eq!</span>(kb.mods, Modifiers::ODILIA);
-        <span class="macro">assert_eq!</span>(kb.repeat, <span class="number">1</span>);
-        <span class="comment">// With whitespace
-        </span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;Odilia + h&quot;</span>.parse().unwrap();
-        <span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;h&#39;</span>)));
-        <span class="macro">assert_eq!</span>(kb.mods, Modifiers::ODILIA);
-        <span class="macro">assert_eq!</span>(kb.repeat, <span class="number">1</span>);
-        <span class="comment">// Complex
-        </span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;Control+Shift+Alt+Meta+Applications+Odilia+Return:3&quot;</span>.parse().unwrap();
-        <span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Return));
-        <span class="macro">assert_eq!</span>(kb.mods, Modifiers::all());
-        <span class="macro">assert_eq!</span>(kb.repeat, <span class="number">3</span>);
-        <span class="comment">// Left only
-        </span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;LeftControl+LeftShift+LeftAlt+LeftMeta+.:2&quot;</span>.parse().unwrap();
-        <span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;.&#39;</span>)));
-        <span class="macro">assert_eq!</span>(
-            kb.mods,
-            Modifiers::CONTROL_L | Modifiers::ALT_L | Modifiers::SHIFT_L | Modifiers::META_L
-        );
-        <span class="macro">assert_eq!</span>(kb.repeat, <span class="number">2</span>);
-        <span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;RightControl+RightShift+RightAlt+RightMeta+.:2&quot;</span>.parse().unwrap();
-        <span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;.&#39;</span>)));
-        <span class="macro">assert_eq!</span>(
-            kb.mods,
-            Modifiers::CONTROL_R | Modifiers::ALT_R | Modifiers::SHIFT_R | Modifiers::META_R
-        );
-        <span class="macro">assert_eq!</span>(kb.repeat, <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(kb.consume, <span class="bool-val">false</span>);
-        <span class="comment">// test consume
-        </span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;C|Odilia+h&quot;</span>.parse().unwrap();
-        <span class="macro">assert_eq!</span>(kb.consume, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(kb.notify, <span class="bool-val">true</span>);
-    }
+	<span class="attribute">#[test]
+	</span><span class="kw">fn </span>parse_key_binding() {
+		<span class="comment">// simple
+		</span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;Odilia+h&quot;</span>.parse().unwrap();
+		<span class="macro">println!</span>(<span class="string">&quot;{:?}&quot;</span>, kb);
+		<span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;h&#39;</span>)));
+		<span class="macro">assert_eq!</span>(kb.mods, Modifiers::ODILIA);
+		<span class="macro">assert_eq!</span>(kb.repeat, <span class="number">1</span>);
+		<span class="comment">// With whitespace
+		</span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;Odilia + h&quot;</span>.parse().unwrap();
+		<span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;h&#39;</span>)));
+		<span class="macro">assert_eq!</span>(kb.mods, Modifiers::ODILIA);
+		<span class="macro">assert_eq!</span>(kb.repeat, <span class="number">1</span>);
+		<span class="comment">// Complex
+		</span><span class="kw">let </span>kb: KeyBinding =
+			<span class="string">&quot;Control+Shift+Alt+Meta+Applications+Odilia+Return:3&quot;</span>.parse().unwrap();
+		<span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Return));
+		<span class="macro">assert_eq!</span>(kb.mods, Modifiers::all());
+		<span class="macro">assert_eq!</span>(kb.repeat, <span class="number">3</span>);
+		<span class="comment">// Left only
+		</span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;LeftControl+LeftShift+LeftAlt+LeftMeta+.:2&quot;</span>.parse().unwrap();
+		<span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;.&#39;</span>)));
+		<span class="macro">assert_eq!</span>(
+			kb.mods,
+			Modifiers::CONTROL_L
+				| Modifiers::ALT_L | Modifiers::SHIFT_L
+				| Modifiers::META_L
+		);
+		<span class="macro">assert_eq!</span>(kb.repeat, <span class="number">2</span>);
+		<span class="kw">let </span>kb: KeyBinding =
+			<span class="string">&quot;RightControl+RightShift+RightAlt+RightMeta+.:2&quot;</span>.parse().unwrap();
+		<span class="macro">assert_eq!</span>(kb.key, <span class="prelude-val">Some</span>(Key::Other(<span class="string">&#39;.&#39;</span>)));
+		<span class="macro">assert_eq!</span>(
+			kb.mods,
+			Modifiers::CONTROL_R
+				| Modifiers::ALT_R | Modifiers::SHIFT_R
+				| Modifiers::META_R
+		);
+		<span class="macro">assert_eq!</span>(kb.repeat, <span class="number">2</span>);
+		<span class="macro">assert_eq!</span>(kb.consume, <span class="bool-val">false</span>);
+		<span class="comment">// test consume
+		</span><span class="kw">let </span>kb: KeyBinding = <span class="string">&quot;C|Odilia+h&quot;</span>.parse().unwrap();
+		<span class="macro">assert_eq!</span>(kb.consume, <span class="bool-val">true</span>);
+		<span class="macro">assert_eq!</span>(kb.notify, <span class="bool-val">true</span>);
+	}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia_common" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

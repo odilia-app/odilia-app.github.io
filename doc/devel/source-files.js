@@ -62,7 +62,8 @@ var sourcesIndex = JSON.parse('{\
 "mio":["",[["event",[],["event.rs","events.rs","mod.rs","source.rs"]],["net",[["tcp",[],["listener.rs","mod.rs","stream.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","stream.rs"]]],["mod.rs","udp.rs"]],["sys",[["unix",[["selector",[],["epoll.rs","mod.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","socketaddr.rs","stream.rs"]]],["mod.rs","net.rs","pipe.rs","sourcefd.rs","tcp.rs","udp.rs","waker.rs"]]],["mod.rs"]]],["interest.rs","io_source.rs","lib.rs","macros.rs","poll.rs","token.rs","waker.rs"]],\
 "nix":["",[["mount",[],["linux.rs","mod.rs"]],["net",[],["if_.rs","mod.rs"]],["sys",[["ioctl",[],["linux.rs","mod.rs"]],["ptrace",[],["linux.rs","mod.rs"]],["socket",[],["addr.rs","mod.rs","sockopt.rs"]]],["aio.rs","epoll.rs","eventfd.rs","inotify.rs","memfd.rs","mman.rs","mod.rs","personality.rs","pthread.rs","quota.rs","reboot.rs","resource.rs","select.rs","sendfile.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","termios.rs","time.rs","timer.rs","timerfd.rs","uio.rs","utsname.rs","wait.rs"]]],["dir.rs","env.rs","errno.rs","fcntl.rs","features.rs","ifaddrs.rs","kmod.rs","lib.rs","macros.rs","mqueue.rs","poll.rs","pty.rs","sched.rs","time.rs","ucontext.rs","unistd.rs"]],\
 "nu_ansi_term":["",[],["ansi.rs","debug.rs","difference.rs","display.rs","gradient.rs","lib.rs","rgb.rs","style.rs","util.rs","windows.rs","write.rs"]],\
-"odilia":["",[["events",[],["document.rs","mod.rs","object.rs"]]],["cache.rs","logging.rs","main.rs","state.rs"]],\
+"odilia":["",[["events",[],["document.rs","mod.rs","object.rs"]]],["logging.rs","main.rs","state.rs"]],\
+"odilia_cache":["",[],["lib.rs"]],\
 "odilia_common":["",[["settings",[],["log.rs","mod.rs","speech.rs"]]],["elements.rs","errors.rs","events.rs","input.rs","lib.rs","modes.rs","types.rs"]],\
 "odilia_input":["",[],["lib.rs"]],\
 "odilia_tts":["",[],["lib.rs"]],\

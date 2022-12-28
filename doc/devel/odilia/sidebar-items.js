@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["main",""],["sigterm_signal_watcher",""]],"mod":[["cache",""],["events",""],["logging","Logging with the [`tracing`] crate."],["state",""]]};
+window.SIDEBAR_ITEMS = {"fn":[["main",""],["sigterm_signal_watcher",""]],"mod":[["events",""],["logging","Logging with the [`tracing`] crate."],["state",""]]};

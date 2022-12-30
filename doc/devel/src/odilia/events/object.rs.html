@@ -198,7 +198,7 @@
 <span class="kw">mod </span>children_changed {
 	<span class="kw">use </span>odilia_cache::CacheItem;
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible, events::GenericEvent, identify::ChildrenChangedEvent};
+	<span class="kw">use </span>atspi::{accessible, events::GenericEvent, identify::{object::ChildrenChangedEvent, Signified}};
 
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
@@ -215,7 +215,7 @@
 		<span class="kw">let </span>conn = state.connection();
 		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
 		<span class="kw">let </span>dest = event.path().unwrap();
-		<span class="kw">let </span>accessible = accessible::new(conn, sender, dest.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>accessible = state.new_accessible(sender, dest.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// all these properties will be fetched in paralell
 		</span><span class="kw">let </span>(app, parent, index, children, ifaces, role, states, text) = <span class="macro">tokio::try_join!</span>(
 			accessible.get_application(),
@@ -254,7 +254,7 @@
 
 <span class="kw">mod </span>text_caret_moved {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible, convertable::Convertable, events::GenericEvent, identify::TextCaretMovedEvent};
+	<span class="kw">use </span>atspi::{accessible, convertable::Convertable, events::GenericEvent, identify::{object::TextCaretMovedEvent, Signified}};
 	<span class="kw">use </span>ssip_client::Priority;
 
 	<span class="comment">// TODO: left/right vs. up/down, and use generated speech
@@ -276,7 +276,7 @@
 		};
 		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
 		<span class="kw">let </span>conn = state.connection().clone();
-		<span class="kw">let </span>accessible = accessible::new(<span class="kw-2">&amp;</span>conn, sender.clone(), path.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>accessible = state.new_accessible(sender.clone(), path.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
 			<span class="prelude-val">Some</span>(acc) =&gt; acc,
 			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
@@ -312,7 +312,7 @@
 
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible, events::GenericEvent, identify::StateChangedEvent};
+	<span class="kw">use </span>atspi::{accessible, events::GenericEvent, identify::{object::StateChangedEvent, Signified}};
 
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: StateChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
@@ -333,7 +333,7 @@
 		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
 		<span class="kw">let </span>conn = state.connection();
 		<span class="kw">let </span>accessible =
-			accessible::new(<span class="kw-2">&amp;</span>conn.clone(), sender.clone(), path.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
+			state.new_accessible(sender.clone(), path.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
 			<span class="kw">if </span>curr == accessible {
 				<span class="kw">return </span><span class="prelude-val">Ok</span>(());

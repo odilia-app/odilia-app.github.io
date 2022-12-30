@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["TextGranularity","Level of granularity to get text of, in relation to a cursor position."]],"fn":[["new",""]],"struct":[["TextProxy",""],["TextProxyBlocking",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["TextGranularity","Level of granularity to get text of, in relation to a cursor position."]],"struct":[["TextProxy",""],["TextProxyBlocking",""]]};

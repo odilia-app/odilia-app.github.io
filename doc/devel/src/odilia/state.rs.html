@@ -220,6 +220,18 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{cell::Cell, fs};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
@@ -420,6 +432,18 @@
 		path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;,
 	) -&gt; zbus::Result&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
 		CacheProxy::builder(<span class="self">self</span>.connection())
+			.destination(dest)<span class="question-mark">?
+			</span>.path(path)<span class="question-mark">?
+			</span>.build()
+			.<span class="kw">await
+	</span>}
+	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;,
+		path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;
+	) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		AccessibleProxy::builder(<span class="self">self</span>.connection())
+			.cache_properties(zbus::CacheProperties::No)
 			.destination(dest)<span class="question-mark">?
 			</span>.path(path)<span class="question-mark">?
 			</span>.build()

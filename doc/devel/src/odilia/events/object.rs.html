@@ -166,17 +166,6 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	identify::{
@@ -198,7 +187,7 @@
 <span class="kw">mod </span>children_changed {
 	<span class="kw">use </span>odilia_cache::CacheItem;
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible, events::GenericEvent, identify::{object::ChildrenChangedEvent, Signified}};
+	<span class="kw">use </span>atspi::{events::GenericEvent, identify::{object::ChildrenChangedEvent, Signified}};
 
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
@@ -212,10 +201,7 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 	<span class="kw">pub async fn </span>add(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>conn = state.connection();
-		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
-		<span class="kw">let </span>dest = event.path().unwrap();
-		<span class="kw">let </span>accessible = state.new_accessible(sender, dest.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>accessible = state.new_accessible(<span class="kw-2">&amp;</span>event).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// all these properties will be fetched in paralell
 		</span><span class="kw">let </span>(app, parent, index, children, ifaces, role, states, text) = <span class="macro">tokio::try_join!</span>(
 			accessible.get_application(),
@@ -245,8 +231,8 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 	<span class="kw">pub async fn </span>remove(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>path = event.path().expect(<span class="string">&quot;All accessibles must have a path&quot;</span>);
-		state.cache.remove(path.try_into().unwrap()).<span class="kw">await</span>;
+		<span class="kw">let </span>path = event.path().expect(<span class="string">&quot;All accessibles must have a path&quot;</span>).try_into()<span class="question-mark">?</span>;
+		state.cache.remove(<span class="kw-2">&amp;</span>path).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Remove a single item from cache.&quot;</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -254,7 +240,7 @@
 
 <span class="kw">mod </span>text_caret_moved {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible, convertable::Convertable, events::GenericEvent, identify::{object::TextCaretMovedEvent, Signified}};
+	<span class="kw">use </span>atspi::{accessible_ext::AccessibleId, convertable::Convertable, events::GenericEvent, identify::{object::TextCaretMovedEvent, Signified}};
 	<span class="kw">use </span>ssip_client::Priority;
 
 	<span class="comment">// TODO: left/right vs. up/down, and use generated speech
@@ -274,9 +260,7 @@
 		} <span class="kw">else </span>{
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
 		};
-		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
-		<span class="kw">let </span>conn = state.connection().clone();
-		<span class="kw">let </span>accessible = state.new_accessible(sender.clone(), path.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>accessible = state.new_accessible(<span class="kw-2">&amp;</span>event).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
 			<span class="prelude-val">Some</span>(acc) =&gt; acc,
 			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
@@ -285,7 +269,8 @@
 			<span class="prelude-val">Some</span>(acc) =&gt; acc,
 			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
 		};
-		state.update_accessible(sender, path.into()).<span class="kw">await</span>;
+		<span class="kw">let </span>id: AccessibleId = path.try_into()<span class="question-mark">?</span>;
+		state.update_accessible(id).<span class="kw">await</span>;
 
 		<span class="comment">// in the case that this is not a tab navigation
 		// TODO: algorithm that only triggers this when a tab navigation is known to have not occured. How the fuck am I supposed to know how that works?
@@ -312,7 +297,7 @@
 
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible, events::GenericEvent, identify::{object::StateChangedEvent, Signified}};
+	<span class="kw">use </span>atspi::{accessible_ext::AccessibleId, identify::{object::StateChangedEvent, Signified}};
 
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: StateChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
@@ -324,22 +309,15 @@
 	}
 
 	<span class="kw">pub async fn </span>focused(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: StateChangedEvent) -&gt; eyre::Result&lt;()&gt; {
-		<span class="comment">// Speak the newly focused object
-		</span><span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(path) = event.path() {
-			path.to_owned()
-		} <span class="kw">else </span>{
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
-		};
-		<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
-		<span class="kw">let </span>conn = state.connection();
 		<span class="kw">let </span>accessible =
-			state.new_accessible(sender.clone(), path.clone().into()).<span class="kw">await</span><span class="question-mark">?</span>;
+			state.new_accessible(<span class="kw-2">&amp;</span>event).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
 			<span class="kw">if </span>curr == accessible {
 				<span class="kw">return </span><span class="prelude-val">Ok</span>(());
 			}
 		}
-		state.update_accessible(sender.to_owned(), path.to_owned().into()).<span class="kw">await</span>;
+		<span class="kw">let </span>id: AccessibleId = accessible.path().try_into()<span class="question-mark">?</span>;
+		state.update_accessible(id).<span class="kw">await</span>;
 
 		<span class="kw">let </span>(name, description, role, relation) = <span class="macro">tokio::try_join!</span>(
 			accessible.name(),
@@ -347,7 +325,7 @@
 			accessible.get_localized_role_name(),
 			accessible.get_relation_set(),
 		)<span class="question-mark">?</span>;
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focus event received on: {:?} with role {}&quot;</span>, path, role);
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focus event received on: {:?} with role {}&quot;</span>, id, role);
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Relations: {:?}&quot;</span>, relation);
 
 		state.say(ssip_client::Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>))

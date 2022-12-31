@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atspi-0.7.8/src/accessible_ext.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>accessible_ext.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atspi-0.8.0/src/accessible_ext.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>accessible_ext.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -334,10 +334,20 @@
 <span id="334">334</span>
 <span id="335">335</span>
 <span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
 </pre><pre class="rust"><code><span class="kw">use crate</span>::{
     accessible::{AccessibleProxy, RelationType, Role},
     collection::MatchType,
     convertable::Convertable,
+		error::ObjectPathConversionError,
     InterfaceSet,
 };
 <span class="kw">use </span>async_recursion::async_recursion;
@@ -353,7 +363,6 @@
 <span class="kw">use </span>serde::{
 	Serialize, Deserialize,
 };
-<span class="kw">use </span>std::str::FromStr;
 
 <span class="kw">pub type </span>MatcherArgs =
     (Vec&lt;Role&gt;, MatchType, HashMap&lt;String, String&gt;, MatchType, InterfaceSet, MatchType);
@@ -383,17 +392,17 @@
     ) -&gt; zbus::Result&lt;HashMap&lt;RelationType, Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;&gt;;
 }
 
-<span class="comment">// TODO: make match more broad, allow use of other parameters
+<span class="comment">// TODO: make match more broad, allow use of other parameters; also, support multiple roles, since right now, multiple will just exit immediately with false
 </span><span class="kw">async fn </span>match_(
     accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
     matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
 ) -&gt; zbus::Result&lt;bool&gt; {
     <span class="kw">let </span>roles = <span class="kw-2">&amp;</span>matcher_args.<span class="number">0</span>;
-    <span class="kw">if </span>roles.len() == <span class="number">1 </span>{
-        <span class="prelude-val">Ok</span>(accessible.get_role().<span class="kw">await</span><span class="question-mark">? </span>== <span class="kw-2">*</span>roles.get(<span class="number">0</span>).unwrap())
-    } <span class="kw">else </span>{
-        <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
-    }
+		<span class="kw">if </span>roles.len() != <span class="number">1 </span>{
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
+		}
+		<span class="comment">// our unwrap is protected from panicing with the above check
+		</span><span class="prelude-val">Ok</span>(accessible.get_role().<span class="kw">await</span><span class="question-mark">? </span>== <span class="kw-2">*</span>roles.get(<span class="number">0</span>).unwrap())
 }
 
 <span class="kw">impl </span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt; {
@@ -457,12 +466,6 @@
   }
 }
 
-<span class="attribute">#[derive(Clone, Debug)]
-</span><span class="kw">pub enum </span>ObjectPathConversionError {
-  NoIdAvailable,
-  ParseError(&lt;i64 <span class="kw">as </span>FromStr&gt;::Err),
-}
-
 <span class="kw">impl </span>TryFrom&lt;OwnedObjectPath&gt; <span class="kw">for </span>AccessibleId {
   <span class="kw">type </span>Error = ObjectPathConversionError;
 
@@ -482,6 +485,21 @@
   <span class="kw">type </span>Error = ObjectPathConversionError;
 
   <span class="kw">fn </span>try_from(path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+      <span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
+          <span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
+          <span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
+          <span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
+            <span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
+          },
+          <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
+      }
+  }
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>AccessibleId {
+  <span class="kw">type </span>Error = ObjectPathConversionError;
+
+  <span class="kw">fn </span>try_from(path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
       <span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
           <span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
           <span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["AccessibleId",""],["ObjectPathConversionError",""]],"trait":[["AccessibleExt",""]],"type":[["MatcherArgs",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["AccessibleId",""]],"trait":[["AccessibleExt",""]],"type":[["MatcherArgs",""]]};

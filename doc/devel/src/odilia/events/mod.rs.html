@@ -177,9 +177,6 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
 </pre><pre class="rust"><code><span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
 
@@ -194,7 +191,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	accessible::Role,
-	accessible_ext::{AccessibleExt, MatcherArgs},
+	accessible_ext::{AccessibleExt, MatcherArgs, AccessibleId},
 	collection::MatchType,
 	component::ScrollType,
 	convertable::Convertable,
@@ -204,15 +201,15 @@
 <span class="kw">use </span>odilia_common::{
 	events::{Direction, ScreenReaderEvent},
 	modes::ScreenReaderMode,
+	result::OdiliaResult,
 };
 <span class="kw">use </span>ssip_client::Priority;
-<span class="kw">use </span>zbus::names::UniqueName;
 
 <span class="kw">pub async fn </span>structural_navigation(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	dir: Direction,
 	role: Role,
-) -&gt; zbus::Result&lt;()&gt; {
+) -&gt; OdiliaResult&lt;()&gt; {
 	<span class="kw">let </span>curr = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
 		<span class="prelude-val">Some</span>(acc) =&gt; acc,
 		<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
@@ -236,11 +233,8 @@
 		<span class="kw">let </span>caret_offset = texti.set_caret_offset(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focused: {}&quot;</span>, focused);
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Caret offset: {}&quot;</span>, caret_offset);
-		state.update_accessible(
-			UniqueName::try_from(next.destination().as_str())<span class="question-mark">?</span>,
-			next.path().to_owned(),
-		)
-		.<span class="kw">await</span>;
+		<span class="kw">let </span>id: AccessibleId = curr.path().try_into()<span class="question-mark">?</span>;
+		state.update_accessible(id).<span class="kw">await</span>;
 		<span class="kw">let </span>role = next.get_role().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>len = texti.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>text = texti.get_text(<span class="number">0</span>, len).<span class="kw">await</span><span class="question-mark">?</span>;

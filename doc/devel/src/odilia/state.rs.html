@@ -232,6 +232,12 @@
 <span id="232">232</span>
 <span id="233">233</span>
 <span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{cell::Cell, fs};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
@@ -240,13 +246,16 @@
 <span class="kw">use </span>tokio::sync::{mpsc::Sender, Mutex};
 <span class="kw">use </span>zbus::{fdo::DBusProxy, names::UniqueName, zvariant::ObjectPath, MatchRule, MessageType};
 
-<span class="kw">use </span>odilia_cache::Cache;
+<span class="kw">use </span>odilia_cache::{
+	Cache,
+};
 <span class="kw">use </span>atspi::{
-	accessible::AccessibleProxy, accessible_ext::AccessibleExt, cache::CacheProxy,
+	accessible::AccessibleProxy, accessible_ext::{AccessibleExt, AccessibleId}, cache::CacheProxy,
 	convertable::Convertable, text::TextGranularity,
 };
 <span class="kw">use </span>odilia_common::{
 	modes::ScreenReaderMode, settings::ApplicationConfig, types::TextSelectionArea,
+	<span class="prelude-ty">Result </span><span class="kw">as </span>OdiliaResult,
 };
 
 <span class="kw">pub struct </span>ScreenReaderState {
@@ -257,7 +266,7 @@
 	<span class="kw">pub </span>previous_caret_position: Cell&lt;i32&gt;,
 	<span class="kw">pub </span>mode: Mutex&lt;ScreenReaderMode&gt;,
 	<span class="kw">pub </span>granularity: Mutex&lt;TextGranularity&gt;,
-	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;(UniqueName&lt;<span class="lifetime">&#39;static</span>&gt;, ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt;)&gt;&gt;,
+	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessibleId&gt;&gt;,
 	<span class="kw">pub </span>cache: Cache,
 }
 
@@ -314,7 +323,7 @@
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		acc: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
 		select: TextSelectionArea,
-	) -&gt; zbus::Result&lt;String&gt; {
+	) -&gt; OdiliaResult&lt;String&gt; {
 		<span class="kw">let </span>acc_text = acc.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>_acc_hyper = acc.to_hyperlink().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>text_length = acc_text.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -358,7 +367,7 @@
 		</span><span class="prelude-val">Ok</span>(text_selection)
 	}
 
-	<span class="kw">pub async fn </span>register_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>str) -&gt; zbus::Result&lt;()&gt; {
+	<span class="kw">pub async fn </span>register_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>str) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>match_rule = event_to_match_rule(event)<span class="question-mark">?</span>;
 		<span class="self">self</span>.dbus.add_match_rule(match_rule).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="self">self</span>.atspi.register_event(event).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -366,7 +375,7 @@
 	}
 
 	<span class="attribute">#[allow(dead_code)]
-	</span><span class="kw">pub async fn </span>deregister_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>str) -&gt; zbus::Result&lt;()&gt; {
+	</span><span class="kw">pub async fn </span>deregister_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>str) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>match_rule = event_to_match_rule(event)<span class="question-mark">?</span>;
 		<span class="self">self</span>.dbus.remove_match_rule(match_rule).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="self">self</span>.atspi.deregister_event(event).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -402,57 +411,60 @@
 		<span class="bool-val">true
 	</span>}
 
-	<span class="kw">pub async fn </span>history_item(
+	<span class="kw">pub async fn </span>history_item&lt;<span class="lifetime">&#39;a</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		index: usize,
-	) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;static</span>&gt;&gt;&gt; {
+	) -&gt; OdiliaResult&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
 		<span class="kw">let </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
 		<span class="kw">if </span>history.len() &lt;= index {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
 		}
-		<span class="kw">let </span>(dest, path) = history
+		<span class="kw">let </span>a11y_id = history
 			.iter()
 			.nth(index)
 			.expect(<span class="string">&quot;Looking for invalid index in accessible history&quot;</span>);
-		<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(AccessibleProxy::builder(<span class="self">self</span>.connection())
-			.destination(dest.to_owned())<span class="question-mark">?
-			</span>.path(path)<span class="question-mark">?
-			</span>.build()
-			.<span class="kw">await</span><span class="question-mark">?</span>))
+		<span class="kw">let </span>a11y_cache_item = <span class="kw">match </span><span class="self">self</span>.cache.get(a11y_id).<span class="kw">await </span>{
+			<span class="prelude-val">Some</span>(prim) =&gt; prim,
+			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+		};
+		<span class="kw">let </span>a11y = a11y_cache_item.object.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(a11y))
 	}
 
 	<span class="doccomment">/// Adds a new accessible to the history. We only store 16 previous accessibles, but theoretically, it should be lower.
-	</span><span class="kw">pub async fn </span>update_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>, sender: UniqueName&lt;<span class="lifetime">&#39;_</span>&gt;, path: ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;) {
+	</span><span class="kw">pub async fn </span>update_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>, new_a11y: AccessibleId) {
 		<span class="kw">let </span><span class="kw-2">mut </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
-		history.push((sender.to_owned(), path.to_owned()));
+		history.push(new_a11y);
 	}
 	<span class="kw">pub async fn </span>build_cache&lt;<span class="lifetime">&#39;a</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;,
 		path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;,
-	) -&gt; zbus::Result&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-		CacheProxy::builder(<span class="self">self</span>.connection())
+	) -&gt; OdiliaResult&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="prelude-val">Ok</span>(CacheProxy::builder(<span class="self">self</span>.connection())
 			.destination(dest)<span class="question-mark">?
 			</span>.path(path)<span class="question-mark">?
 			</span>.build()
-			.<span class="kw">await
-	</span>}
-	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">&#39;a</span>&gt;(
+			.<span class="kw">await</span><span class="question-mark">?</span>)
+	}
+	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">&#39;a</span>, T: GenericEvent&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;,
-		path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;
-	) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-		AccessibleProxy::builder(<span class="self">self</span>.connection())
+		event: <span class="kw-2">&amp;</span>T,
+	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="kw">let </span>sender = event.sender().unwrap().unwrap().to_owned();
+		<span class="kw">let </span>path = event.path().unwrap().to_owned();
+		<span class="prelude-val">Ok</span>(AccessibleProxy::builder(<span class="self">self</span>.connection())
 			.cache_properties(zbus::CacheProperties::No)
-			.destination(dest)<span class="question-mark">?
+			.destination(sender)<span class="question-mark">?
 			</span>.path(path)<span class="question-mark">?
 			</span>.build()
-			.<span class="kw">await
-	</span>}
+			.<span class="kw">await</span><span class="question-mark">?</span>)
+	}
 }
+<span class="kw">use </span>atspi::events::GenericEvent;
 
 <span class="doccomment">/// Converts an at-spi event string (&quot;Object:StateChanged:Focused&quot;), into a DBus match rule (&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Object&#39;,member=&#39;StateChanged&#39;&quot;)
-</span><span class="kw">fn </span>event_to_match_rule(event: <span class="kw-2">&amp;</span>str) -&gt; zbus::Result&lt;zbus::MatchRule&gt; {
+</span><span class="kw">fn </span>event_to_match_rule(event: <span class="kw-2">&amp;</span>str) -&gt; OdiliaResult&lt;zbus::MatchRule&gt; {
 	<span class="kw">let </span><span class="kw-2">mut </span>components = event.split(<span class="string">&#39;:&#39;</span>);
 	<span class="kw">let </span>interface = components
 		.next()

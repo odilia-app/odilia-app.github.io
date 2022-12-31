@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["KeyFromStrError",""],["ModeFromStrError",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["KeyFromStrError",""],["ModeFromStrError",""],["OdiliaError",""]]};

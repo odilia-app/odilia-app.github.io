@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["elements",""],["errors",""],["events",""],["input",""],["modes",""],["settings",""],["types",""]],"type":[["Accessible",""]]};
+window.SIDEBAR_ITEMS = {"mod":[["elements",""],["errors",""],["events",""],["input",""],["modes",""],["result",""],["settings",""],["types",""]],"type":[["Accessible",""]]};

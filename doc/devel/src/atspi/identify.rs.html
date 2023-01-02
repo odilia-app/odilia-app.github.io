@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atspi-0.8.0/src/identify.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>identify.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/592fcb0/src/identify.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>identify.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -809,816 +809,1038 @@
 <span id="809">809</span>
 <span id="810">810</span>
 <span id="811">811</span>
-</pre><pre class="rust"><code><span class="doccomment">//! ## Signified signal types
-//!
-//! The generic `AtspiEvent` has a specific meaning depending on its origin.
-//! This module offers the signified types and their conversions from a generic `AtpiEvent`.
-//!
-//! The `TrySignify` macro implements a `TryFrom&lt;Event&gt;` on a per-name and member basis
-//!
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+</pre><pre class="rust"><code>
+<span class="kw">pub mod </span>object {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>ObjectEvents {
+		PropertyChange(PropertyChangeEvent),
+		BoundsChanged(BoundsChangedEvent),
+		LinkSelected(LinkSelectedEvent),
+		StateChanged(StateChangedEvent),
+		ChildrenChanged(ChildrenChangedEvent),
+		VisibleDataChanged(VisibleDataChangedEvent),
+		SelectionChanged(SelectionChangedEvent),
+		ModelChanged(ModelChangedEvent),
+		ActiveDescendantChanged(ActiveDescendantChangedEvent),
+		Announcement(AnnouncementEvent),
+		AttributesChanged(AttributesChangedEvent),
+		RowInserted(RowInsertedEvent),
+		RowReordered(RowReorderedEvent),
+		RowDeleted(RowDeletedEvent),
+		ColumnInserted(ColumnInsertedEvent),
+		ColumnReordered(ColumnReorderedEvent),
+		ColumnDeleted(ColumnDeletedEvent),
+		TextBoundsChanged(TextBoundsChangedEvent),
+		TextSelectionChanged(TextSelectionChangedEvent),
+		TextChanged(TextChangedEvent),
+		TextAttributesChanged(TextAttributesChangedEvent),
+		TextCaretMoved(TextCaretMovedEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>PropertyChangeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-</span><span class="kw">use </span><span class="kw">crate</span>::error::AtspiError;
-<span class="kw">use </span><span class="kw">crate</span>::events::{AtspiEvent, GenericEvent};
-<span class="kw">use </span>atspi_macros::TrySignify;
-<span class="kw">use </span>std::collections::HashMap;
-<span class="kw">use </span>std::sync::Arc;
-<span class="kw">use </span>zbus::{names::MemberName, zvariant, Message};
-<span class="kw">use </span>zbus_names::{<span class="self">self</span>, InterfaceName};
-<span class="kw">use </span>zvariant::OwnedValue;
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>BoundsChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-<span class="doccomment">/// All Atspi / Qspi event types encapsulate `AtspiEvent`.
-/// This trait allows access to the underlying item.
-</span><span class="kw">pub trait </span>Signified {
-    <span class="kw">type </span>Inner;
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>LinkSelectedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    <span class="kw">fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>AtspiEvent;
-    <span class="kw">fn </span>properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, OwnedValue&gt;;
-    <span class="kw">fn </span>kind(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str;
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>StateChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ChildrenChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>VisibleDataChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>SelectionChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ModelChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ActiveDescendantChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>AnnouncementEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>AttributesChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RowInsertedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RowReorderedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RowDeletedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ColumnInsertedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ColumnReorderedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ColumnDeletedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>TextBoundsChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>TextSelectionChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>TextChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>TextAttributesChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>TextCaretMovedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>PropertyChangeEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt; {
+			<span class="self">self</span>.<span class="number">0</span>.any_data()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>BoundsChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>LinkSelectedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>StateChangedEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>enabled(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>ChildrenChangedEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>index_in_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt; {
+			<span class="self">self</span>.<span class="number">0</span>.any_data()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>VisibleDataChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>SelectionChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ModelChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ActiveDescendantChangedEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt; {
+			<span class="self">self</span>.<span class="number">0</span>.any_data()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>AnnouncementEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>AttributesChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>RowInsertedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>RowReorderedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>RowDeletedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ColumnInsertedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ColumnReorderedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ColumnDeletedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>TextBoundsChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>TextSelectionChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>TextChangedEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>start_pos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>end_pos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail2()
+		}
+	
+
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt; {
+			<span class="self">self</span>.<span class="number">0</span>.any_data()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>TextAttributesChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>TextCaretMovedEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>ObjectEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;PropertyChange&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::PropertyChange(PropertyChangeEvent(ev))),
+				<span class="string">&quot;BoundsChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::BoundsChanged(BoundsChangedEvent(ev))),
+				<span class="string">&quot;LinkSelected&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::LinkSelected(LinkSelectedEvent(ev))),
+				<span class="string">&quot;StateChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::StateChanged(StateChangedEvent(ev))),
+				<span class="string">&quot;ChildrenChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ChildrenChanged(ChildrenChangedEvent(ev))),
+				<span class="string">&quot;VisibleDataChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::VisibleDataChanged(VisibleDataChangedEvent(ev))),
+				<span class="string">&quot;SelectionChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::SelectionChanged(SelectionChangedEvent(ev))),
+				<span class="string">&quot;ModelChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ModelChanged(ModelChangedEvent(ev))),
+				<span class="string">&quot;ActiveDescendantChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ActiveDescendantChanged(ActiveDescendantChangedEvent(ev))),
+				<span class="string">&quot;Announcement&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::Announcement(AnnouncementEvent(ev))),
+				<span class="string">&quot;AttributesChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::AttributesChanged(AttributesChangedEvent(ev))),
+				<span class="string">&quot;RowInserted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::RowInserted(RowInsertedEvent(ev))),
+				<span class="string">&quot;RowReordered&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::RowReordered(RowReorderedEvent(ev))),
+				<span class="string">&quot;RowDeleted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::RowDeleted(RowDeletedEvent(ev))),
+				<span class="string">&quot;ColumnInserted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ColumnInserted(ColumnInsertedEvent(ev))),
+				<span class="string">&quot;ColumnReordered&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ColumnReordered(ColumnReorderedEvent(ev))),
+				<span class="string">&quot;ColumnDeleted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ColumnDeleted(ColumnDeletedEvent(ev))),
+				<span class="string">&quot;TextBoundsChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextBoundsChanged(TextBoundsChangedEvent(ev))),
+				<span class="string">&quot;TextSelectionChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextSelectionChanged(TextSelectionChangedEvent(ev))),
+				<span class="string">&quot;TextChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextChanged(TextChangedEvent(ev))),
+				<span class="string">&quot;TextAttributesChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextAttributesChanged(TextAttributesChangedEvent(ev))),
+				<span class="string">&quot;TextCaretMoved&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextCaretMoved(TextCaretMovedEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Object&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
+	
 
-<span class="doccomment">/// Shared functionality of Events, through its `Message` header
-</span><span class="kw">impl</span>&lt;T&gt; GenericEvent <span class="kw">for </span>T
-<span class="kw">where
-    </span>T: Signified,
-{
-    <span class="doccomment">/// Serialized bus message.
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Arc&lt;Message&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.inner().message
-    }
+<span class="kw">pub mod </span>window {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>WindowEvents {
+		PropertyChange(PropertyChangeEvent),
+		Minimize(MinimizeEvent),
+		Maximize(MaximizeEvent),
+		Restore(RestoreEvent),
+		Close(CloseEvent),
+		Create(CreateEvent),
+		Reparent(ReparentEvent),
+		DesktopCreate(DesktopCreateEvent),
+		DesktopDestroy(DesktopDestroyEvent),
+		Destroy(DestroyEvent),
+		Activate(ActivateEvent),
+		Deactivate(DeactivateEvent),
+		Raise(RaiseEvent),
+		Lower(LowerEvent),
+		Move(MoveEvent),
+		Resize(ResizeEvent),
+		Shade(ShadeEvent),
+		uUshade(uUshadeEvent),
+		Restyle(RestyleEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>PropertyChangeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    <span class="comment">// For now this returns the full interface name because the lifetimes in [`zbus_names`][zbus::names] are
-    // wrong such that the `&amp;str` you can get from a
-    // [`zbus_names::InterfaceName`][zbus::names::InterfaceName] is tied to the lifetime of that
-    // name, not to the lifetime of the message as it should be. In future, this will return only
-    // the last component of the interface name (I.E. &quot;Object&quot; from
-    // &quot;org.a11y.atspi.Event.Object&quot;).
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>MinimizeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    </span><span class="doccomment">/// The emitting interface.
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-        <span class="self">self</span>.inner().message.interface()
-    }
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>MaximizeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    <span class="doccomment">/// The interface member that dispatched this event / signal.
-    ///
-    /// Members of the interface are either signals, methods or properties.
-    /// eg. `PropertyChanged` or `TextChanged`
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-        <span class="self">self</span>.inner().message.member()
-    }
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RestoreEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    <span class="doccomment">/// The object path to the object where the signal is emitted from.
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; std::option::Option&lt;zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-        <span class="self">self</span>.inner().message.path()
-    }
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>CloseEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    <span class="doccomment">/// Identifies the `sender` of the `Event`.
-    /// # Errors
-    /// - when deserializeing the header failed, or
-    /// * When `zbus::get_field!` finds that &#39;sender&#39; is an invalid field.
-    </span><span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;zbus::names::UniqueName&gt;, <span class="kw">crate</span>::AtspiError&gt; {
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>.inner().message.header()<span class="question-mark">?</span>.sender()<span class="question-mark">?</span>.cloned())
-    }
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>CreateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ReparentEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>DesktopCreateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>DesktopDestroyEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>DestroyEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ActivateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>DeactivateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RaiseEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>LowerEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>MoveEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ResizeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ShadeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>uUshadeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RestyleEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>PropertyChangeEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>MinimizeEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>MaximizeEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>RestoreEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>CloseEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>CreateEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ReparentEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>DesktopCreateEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>DesktopDestroyEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>DestroyEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ActivateEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>DeactivateEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>RaiseEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>LowerEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>MoveEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ResizeEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ShadeEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>uUshadeEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>RestyleEvent {
+		
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>WindowEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;PropertyChange&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::PropertyChange(PropertyChangeEvent(ev))),
+				<span class="string">&quot;Minimize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Minimize(MinimizeEvent(ev))),
+				<span class="string">&quot;Maximize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Maximize(MaximizeEvent(ev))),
+				<span class="string">&quot;Restore&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restore(RestoreEvent(ev))),
+				<span class="string">&quot;Close&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Close(CloseEvent(ev))),
+				<span class="string">&quot;Create&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Create(CreateEvent(ev))),
+				<span class="string">&quot;Reparent&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Reparent(ReparentEvent(ev))),
+				<span class="string">&quot;DesktopCreate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopCreate(DesktopCreateEvent(ev))),
+				<span class="string">&quot;DesktopDestroy&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopDestroy(DesktopDestroyEvent(ev))),
+				<span class="string">&quot;Destroy&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Destroy(DestroyEvent(ev))),
+				<span class="string">&quot;Activate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Activate(ActivateEvent(ev))),
+				<span class="string">&quot;Deactivate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Deactivate(DeactivateEvent(ev))),
+				<span class="string">&quot;Raise&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Raise(RaiseEvent(ev))),
+				<span class="string">&quot;Lower&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Lower(LowerEvent(ev))),
+				<span class="string">&quot;Move&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Move(MoveEvent(ev))),
+				<span class="string">&quot;Resize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Resize(ResizeEvent(ev))),
+				<span class="string">&quot;Shade&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Shade(ShadeEvent(ev))),
+				<span class="string">&quot;uUshade&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::uUshade(uUshadeEvent(ev))),
+				<span class="string">&quot;Restyle&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restyle(RestyleEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Window&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
+	
 
-<span class="doccomment">/// Any of the `Document` events.
-///
-/// If you are interested in `Event.Document` events, this enum
-/// may help you select for these:
-///
-/// # Example
-/// ```
-/// // Boilerplate omitted.
-/// use crate::identify::DocumentEvent;
-///
-/// while let Ok(Some(ev)) = event_stream.next().await? {
-///     let doc_ev: DocumentEvent = ev.try_into()?;
-/// }
-///  ```
-/// The event details encoded in the de-generalized types.
-///
-///
-///
-/// Event table for the contained types:
-///
-/// |Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties|
-/// |:--|---|---|---|---|---|---|
-/// |Document|LoadComplete|    |    |    |    |properties|
-/// |Document|Reload|    |    |    |    |properties|
-/// |Document|LoadStopped|    |    |    |    |properties|
-/// |Document|ContentChanged|    |    |    |    |properties|
-/// |Document|AttributesChanged|    |    |    |    |properties|
-/// |Document|PageChanged|    |    |    |    |properties|
-</span><span class="attribute">#[derive(Debug, Clone)]
-</span><span class="kw">pub enum </span>DocumentEvents {
-    LoadComplete(LoadCompleteEvent),
-    Reload(ReloadEvent),
-    LoadStopped(LoadStoppedEvent),
-    ContentChanged(ContentChangedEvent),
-    AttributesChanged(AttributesChangedEvent),
-    PageChanged(PageChangedEvent),
+<span class="kw">pub mod </span>mouse {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>MouseEvents {
+		Abs(AbsEvent),
+		Rel(RelEvent),
+		Button(ButtonEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>AbsEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>RelEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ButtonEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>AbsEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>x(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>y(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail2()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>RelEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>x(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>y(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail2()
+		}
+	
+	}
+	
+
+	<span class="kw">impl </span>ButtonEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>mouse_x(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
+
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>mouse_y(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail2()
+		}
+	
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>MouseEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;Abs&quot; </span>=&gt; <span class="prelude-val">Ok</span>(MouseEvents::Abs(AbsEvent(ev))),
+				<span class="string">&quot;Rel&quot; </span>=&gt; <span class="prelude-val">Ok</span>(MouseEvents::Rel(RelEvent(ev))),
+				<span class="string">&quot;Button&quot; </span>=&gt; <span class="prelude-val">Ok</span>(MouseEvents::Button(ButtonEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Mouse&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
+	
 
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>DocumentEvents {
-    <span class="kw">type </span>Error = AtspiError;
+<span class="kw">pub mod </span>keyboard {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>KeyboardEvents {
+		Modifiers(ModifiersEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ModifiersEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>ModifiersEvent {
+		
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>previous_modifiers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail1()
+		}
+	
 
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;LoadComplete&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::LoadComplete(LoadCompleteEvent(ev))),
-            <span class="string">&quot;Reload&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::Reload(ReloadEvent(ev))),
-            <span class="string">&quot;LoadStopped&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::LoadStopped(LoadStoppedEvent(ev))),
-            <span class="string">&quot;ContentChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::ContentChanged(ContentChangedEvent(ev))),
-            <span class="string">&quot;AttributesChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(DocumentEvents::AttributesChanged(AttributesChangedEvent(ev)))
-            }
-            <span class="string">&quot;PageChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::PageChanged(PageChangedEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Document&quot;</span>.into())),
-        }
-    }
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>current_modifiers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+			<span class="self">self</span>.<span class="number">0</span>.detail2()
+		}
+	
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>KeyboardEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;Modifiers&quot; </span>=&gt; <span class="prelude-val">Ok</span>(KeyboardEvents::Modifiers(ModifiersEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Keyboard&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
+	
 
-<span class="doccomment">/// Any of the `Object` events.
-///
-/// Event table for the contained types:
-///
-/// |Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties|
-/// |:--|---|---|---|---|---|---|
-/// |Object|PropertyChange|property|    |    |value|properties|
-/// |Object|BoundsChanged|    |    |    |    |properties|
-/// |Object|LinkSelected|    |    |    |    |properties|
-/// |Object|StateChanged|state|enabled|    |    |properties|
-/// |`Object|ChildrenChanged|operation|index_in_parent`|    |child|properties|
-/// |Object|VisibleDataChanged|    |    |    |    |properties|
-/// |Object|SelectionChanged|    |    |    |    |properties|
-/// |Object|ModelChanged|    |    |    |    |properties|
-/// |Object|ActiveDescendantChanged|    |    |    |child|properties|
-/// |Object|Announcement|text|    |    |    |properties|
-/// |Object|AttributesChanged|    |    |    |    |properties|
-/// |Object|RowInserted|    |    |    |    |properties|
-/// |Object|RowReordered|    |    |    |    |properties|
-/// |Object|RowDeleted|    |    |    |    |properties|
-/// |Object|ColumnInserted|    |    |    |    |properties|
-/// |Object|ColumnReordered|    |    |    |    |properties|
-/// |Object|ColumnDeleted|    |    |    |    |properties|
-/// |Object|TextBoundsChanged|    |    |    |    |properties|
-/// |Object|TextSelectionChanged|    |    |    |    |properties|
-/// |`Object|TextChanged|detail|start_pos|end_pos|text|properties`|
-/// |Object|TextAttributesChanged|    |    |    |    |properties|
-/// |Object|TextCaretMoved|    |position|    |    |properties|
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone)]
-</span><span class="kw">pub enum </span>ObjectEvents {
-    PropertyChange(object::PropertyChangeEvent),
-    BoundsChanged(object::BoundsChangedEvent),
-    LinkSelected(object::LinkSelectedEvent),
-    StateChanged(object::StateChangedEvent),
-    ChildrenChanged(object::ChildrenChangedEvent),
-    VisibleDataChanged(object::VisibleDataChangedEvent),
-    SelectionChanged(object::SelectionChangedEvent),
-    ModelChanged(object::ModelChangedEvent),
-    ActiveDescendantChanged(object::ActiveDescendantChangedEvent),
-    Announcement(object::AnnouncementEvent),
-    AttributesChanged(object::AttributesChangedEvent),
-    RowInserted(object::RowInsertedEvent),
-    RowReordered(object::RowReorderedEvent),
-    RowDeleted(object::RowDeletedEvent),
-    ColumnInserted(object::ColumnInsertedEvent),
-    ColumnReordered(object::ColumnReorderedEvent),
-    ColumnDeleted(object::ColumnDeletedEvent),
-    TextBoundsChanged(object::TextBoundsChangedEvent),
-    TextSelectionChanged(object::TextSelectionChangedEvent),
-    TextChanged(object::TextChangedEvent),
-    TextAttributesChanged(object::TextAttributesChangedEvent),
-    TextCaretMoved(object::TextCaretMovedEvent),
+<span class="kw">pub mod </span>terminal {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>TerminalEvents {
+		LineChanged(LineChangedEvent),
+		ColumncountChanged(ColumncountChangedEvent),
+		LinecountChanged(LinecountChangedEvent),
+		ApplicationChanged(ApplicationChangedEvent),
+		CharwidthChanged(CharwidthChangedEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>LineChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ColumncountChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>LinecountChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ApplicationChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>CharwidthChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>LineChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ColumncountChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>LinecountChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ApplicationChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>CharwidthChangedEvent {
+		
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>TerminalEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;LineChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::LineChanged(LineChangedEvent(ev))),
+				<span class="string">&quot;ColumncountChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::ColumncountChanged(ColumncountChangedEvent(ev))),
+				<span class="string">&quot;LinecountChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::LinecountChanged(LinecountChangedEvent(ev))),
+				<span class="string">&quot;ApplicationChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::ApplicationChanged(ApplicationChangedEvent(ev))),
+				<span class="string">&quot;CharwidthChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::CharwidthChanged(CharwidthChangedEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Terminal&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
+	
 
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>ObjectEvents {
-    <span class="kw">type </span>Error = AtspiError;
+<span class="kw">pub mod </span>document {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>DocumentEvents {
+		LoadComplete(LoadCompleteEvent),
+		Reload(ReloadEvent),
+		LoadStopped(LoadStoppedEvent),
+		ContentChanged(ContentChangedEvent),
+		AttributesChanged(AttributesChangedEvent),
+		PageChanged(PageChangedEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>LoadCompleteEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;PropertyChange&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::PropertyChange(object::PropertyChangeEvent(ev))),
-            <span class="string">&quot;BoundsChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::BoundsChanged(object::BoundsChangedEvent(ev))),
-            <span class="string">&quot;LinkSelected&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::LinkSelected(object::LinkSelectedEvent(ev))),
-            <span class="string">&quot;StateChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::StateChanged(object::StateChangedEvent(ev))),
-            <span class="string">&quot;ChildrenChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::ChildrenChanged(object::ChildrenChangedEvent(ev)))
-            }
-            <span class="string">&quot;VisibleDataChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::VisibleDataChanged(object::VisibleDataChangedEvent(ev)))
-            }
-            <span class="string">&quot;SelectionChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::SelectionChanged(object::SelectionChangedEvent(ev)))
-            }
-            <span class="string">&quot;ModelChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ModelChanged(object::ModelChangedEvent(ev))),
-            <span class="string">&quot;ActiveDescendantChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::ActiveDescendantChanged(object::ActiveDescendantChangedEvent(ev)))
-            }
-            <span class="string">&quot;Announcement&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::Announcement(object::AnnouncementEvent(ev))),
-            <span class="string">&quot;AttributesChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::AttributesChanged(object::AttributesChangedEvent(ev)))
-            }
-            <span class="string">&quot;RowInserted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::RowInserted(object::RowInsertedEvent(ev))),
-            <span class="string">&quot;RowReordered&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::RowReordered(object::RowReorderedEvent(ev))),
-            <span class="string">&quot;RowDeleted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::RowDeleted(object::RowDeletedEvent(ev))),
-            <span class="string">&quot;ColumnInserted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ColumnInserted(object::ColumnInsertedEvent(ev))),
-            <span class="string">&quot;ColumnReordered&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::ColumnReordered(object::ColumnReorderedEvent(ev)))
-            }
-            <span class="string">&quot;ColumnDeleted&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::ColumnDeleted(object::ColumnDeletedEvent(ev))),
-            <span class="string">&quot;TextBoundsChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::TextBoundsChanged(object::TextBoundsChangedEvent(ev)))
-            }
-            <span class="string">&quot;TextSelectionChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::TextSelectionChanged(object::TextSelectionChangedEvent(ev)))
-            }
-            <span class="string">&quot;TextChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextChanged(object::TextChangedEvent(ev))),
-            <span class="string">&quot;TextAttributesChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(ObjectEvents::TextAttributesChanged(object::TextAttributesChangedEvent(ev)))
-            }
-            <span class="string">&quot;TextCaretMoved&quot; </span>=&gt; <span class="prelude-val">Ok</span>(ObjectEvents::TextCaretMoved(object::TextCaretMovedEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Object&quot;</span>.into())),
-        }
-    }
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ReloadEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>LoadStoppedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>ContentChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>AttributesChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>PageChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>LoadCompleteEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ReloadEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>LoadStoppedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>ContentChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>AttributesChangedEvent {
+		
+	}
+	
+
+	<span class="kw">impl </span>PageChangedEvent {
+		
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>DocumentEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;LoadComplete&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::LoadComplete(LoadCompleteEvent(ev))),
+				<span class="string">&quot;Reload&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::Reload(ReloadEvent(ev))),
+				<span class="string">&quot;LoadStopped&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::LoadStopped(LoadStoppedEvent(ev))),
+				<span class="string">&quot;ContentChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::ContentChanged(ContentChangedEvent(ev))),
+				<span class="string">&quot;AttributesChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::AttributesChanged(AttributesChangedEvent(ev))),
+				<span class="string">&quot;PageChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::PageChanged(PageChangedEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Document&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
+	
 
-<span class="doccomment">/// Any of the `Window` events.
-///
-/// Event table for the contained types:
-///
-/// |Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties|
-/// |:--|---|---|---|---|---|---|
-/// |Window|PropertyChange|property|    |    |    |properties|
-/// |Window|Minimize|    |    |    |    |properties|
-/// |Window|Maximize|    |    |    |    |properties|
-/// |Window|Restore|    |    |    |    |properties|
-/// |Window|Close|    |    |    |    |properties|
-/// |Window|Create|    |    |    |    |properties|
-/// |Window|Reparent|    |    |    |    |properties|
-/// |Window|DesktopCreate|    |    |    |    |properties|
-/// |Window|DesktopDestroy|    |    |    |    |properties|
-/// |Window|Destroy|    |    |    |    |properties|
-/// |Window|Activate|    |    |    |    |properties|
-/// |Window|Deactivate|    |    |    |    |properties|
-/// |Window|Raise|    |    |    |    |properties|
-/// |Window|Lower|    |    |    |    |properties|
-/// |Window|Move|    |    |    |    |properties|
-/// |Window|Resize|    |    |    |    |properties|
-/// |Window|Shade|    |    |    |    |properties|
-/// |Window|uUshade|    |    |    |    |properties|
-/// |Window|Restyle|    |    |    |    |properties|
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone)]
-</span><span class="kw">pub enum </span>WindowEvents {
-    PropertyChange(PropertyChangeEvent),
-    Minimize(MinimizeEvent),
-    Maximize(MaximizeEvent),
-    Restore(RestoreEvent),
-    Close(CloseEvent),
-    Create(CreateEvent),
-    Reparent(ReparentEvent),
-    DesktopCreate(DesktopCreateEvent),
-    DesktopDestroy(DesktopDestroyEvent),
-    Destroy(DestroyEvent),
-    Activate(ActivateEvent),
-    Deactivate(DeactivateEvent),
-    Raise(RaiseEvent),
-    Lower(LowerEvent),
-    Move(MoveEvent),
-    Resize(ResizeEvent),
-    Shade(ShadeEvent),
-    UUshade(uUshadeEvent),
-    Restyle(RestyleEvent),
+<span class="kw">pub mod </span>focus {
+	<span class="kw">use </span>atspi_macros::TrySignify;
+	<span class="kw">use crate</span>::{
+		error::AtspiError,
+		events::{AtspiEvent, GenericEvent},
+		signify::Signified,
+	};
+	<span class="kw">use </span>zbus;
+	<span class="kw">use </span>zbus::zvariant::OwnedValue;
+	
+	<span class="attribute">#[derive(Clone, Debug)]
+	</span><span class="kw">pub enum </span>FocusEvents {
+		Focus(FocusEvent),
+	}
+	
+	
+	<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+	</span><span class="kw">pub struct </span>FocusEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
+	
+	<span class="kw">impl </span>FocusEvent {
+		
+	}
+	
+	
+	<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>FocusEvents {
+		<span class="kw">type </span>Error = AtspiError;
+
+		<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+			<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+			<span class="kw">match </span>member.as_str() {
+				<span class="string">&quot;Focus&quot; </span>=&gt; <span class="prelude-val">Ok</span>(FocusEvents::Focus(FocusEvent(ev))),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Focus&quot;</span>.into())),
+			}
+		}
+	}
+	
 }
-
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>WindowEvents {
-    <span class="kw">type </span>Error = AtspiError;
-
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;PropertyChange&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::PropertyChange(PropertyChangeEvent(ev))),
-            <span class="string">&quot;Minimize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Minimize(MinimizeEvent(ev))),
-            <span class="string">&quot;Maximize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Maximize(MaximizeEvent(ev))),
-            <span class="string">&quot;Restore&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restore(RestoreEvent(ev))),
-            <span class="string">&quot;Close&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Close(CloseEvent(ev))),
-            <span class="string">&quot;Create&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Create(CreateEvent(ev))),
-            <span class="string">&quot;Reparent&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Reparent(ReparentEvent(ev))),
-            <span class="string">&quot;DesktopCreate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopCreate(DesktopCreateEvent(ev))),
-            <span class="string">&quot;DesktopDestroy&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopDestroy(DesktopDestroyEvent(ev))),
-            <span class="string">&quot;Destroy&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Destroy(DestroyEvent(ev))),
-            <span class="string">&quot;Activate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Activate(ActivateEvent(ev))),
-            <span class="string">&quot;Deactivate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Deactivate(DeactivateEvent(ev))),
-            <span class="string">&quot;Raise&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Raise(RaiseEvent(ev))),
-            <span class="string">&quot;Lower&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Lower(LowerEvent(ev))),
-            <span class="string">&quot;Move&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Move(MoveEvent(ev))),
-            <span class="string">&quot;Resize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Resize(ResizeEvent(ev))),
-            <span class="string">&quot;Shade&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Shade(ShadeEvent(ev))),
-            <span class="string">&quot;uUshade&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::UUshade(uUshadeEvent(ev))),
-            <span class="string">&quot;Restyle&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restyle(RestyleEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Window&quot;</span>.into())),
-        }
-    }
-}
-
-<span class="doccomment">/// Any of the `Mouse` events.
-///
-/// Those interested in `Event.Mouse` events, this enum
-/// may help select and specify for those on a stream:
-///
-/// # Example
-/// ```
-/// // Boilerplate omitted.
-/// use crate::identify::MouseEvent;
-///
-/// while let Ok(Some(ev)) = event_stream.next().await? {
-///   let mse_ev: MouseEvent = ev.try_into()?;
-/// }
-///  ```
-/// Event table for the contained types:
-///
-/// |Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties|
-/// |:--|---|---|---|---|---|---|
-/// |Mouse|Abs|    |x|y|    |properties|
-/// |Mouse|Rel|    |x|y|    |properties|
-/// |`Mouse|Button|detail|mouse_x|mouse_y`|    |properties|
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone)]
-</span><span class="kw">pub enum </span>MouseEvents {
-    Abs(AbsEvent),
-    Rel(RelEvent),
-    Button(ButtonEvent),
-}
-
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>MouseEvents {
-    <span class="kw">type </span>Error = AtspiError;
-
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;Abs&quot; </span>=&gt; <span class="prelude-val">Ok</span>(MouseEvents::Abs(AbsEvent(ev))),
-            <span class="string">&quot;Rel&quot; </span>=&gt; <span class="prelude-val">Ok</span>(MouseEvents::Rel(RelEvent(ev))),
-            <span class="string">&quot;Button&quot; </span>=&gt; <span class="prelude-val">Ok</span>(MouseEvents::Button(ButtonEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Mouse&quot;</span>.into())),
-        }
-    }
-}
-
-<span class="doccomment">/// Any of the `Terminal` events.
-///
-/// If you are interested in `Event.Terminal` events, this enum
-/// may, for instance, help you select for those on a stream:
-///
-/// # Example
-/// ```
-/// // Boilerplate omitted.
-/// use crate::identify::TerminalEvent;
-///
-/// while let Ok(Some(ev)) = event_stream.next().await? {
-///   let term_ev: TerminalEvent = ev.try_into()?;
-/// }
-///  ```
-/// Event table for the contained types:
-///
-/// |Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties|
-/// |:--|---|---|---|---|---|---|
-/// |Terminal|LineChanged|    |    |    |    |properties|
-/// |Terminal|ColumncountChanged|    |    |    |    |properties|
-/// |Terminal|LinecountChanged|    |    |    |    |properties|
-/// |Terminal|ApplicationChanged|    |    |    |    |properties|
-/// |Terminal|CharwidthChanged|    |    |    |    |properties|
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone)]
-</span><span class="kw">pub enum </span>TerminalEvents {
-    LineChanged(LineChangedEvent),
-    ColumncountChanged(ColumncountChangedEvent),
-    LinecountChanged(LinecountChangedEvent),
-    ApplicationChanged(ApplicationChangedEvent),
-    CharwidthChanged(CharwidthChangedEvent),
-}
-
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>TerminalEvents {
-    <span class="kw">type </span>Error = AtspiError;
-
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;LineChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::LineChanged(LineChangedEvent(ev))),
-            <span class="string">&quot;ColumncountChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(TerminalEvents::ColumncountChanged(ColumncountChangedEvent(ev)))
-            }
-            <span class="string">&quot;LinecountChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::LinecountChanged(LinecountChangedEvent(ev))),
-            <span class="string">&quot;ApplicationChanged&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(TerminalEvents::ApplicationChanged(ApplicationChangedEvent(ev)))
-            }
-            <span class="string">&quot;CharwidthChanged&quot; </span>=&gt; <span class="prelude-val">Ok</span>(TerminalEvents::CharwidthChanged(CharwidthChangedEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Terminal&quot;</span>.into())),
-        }
-    }
-}
-
-<span class="doccomment">/// The `Focus` event.
-/// ## Deprecation notice!!
-/// since: AT-SPI 2.9.4
-/// This signal is deprecated and may be removed in the near future.
-/// Monitor `StateChanged::Focused` signals instead.
-///
-/// Event table for the contained types:
-///
-/// |Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties|
-/// |:--|---|---|---|---|---|---|
-/// |Focus|Focus|    |    |    |    |properties|
-</span><span class="attribute">#[derive(Debug, Clone)]
-</span><span class="kw">pub enum </span>FocusEvents {
-    Focus(FocusEvent),
-}
-
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>FocusEvents {
-    <span class="kw">type </span>Error = AtspiError;
-
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;Focus&quot; </span>=&gt; <span class="prelude-val">Ok</span>(FocusEvents::Focus(FocusEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Focus&quot;</span>.into())),
-        }
-    }
-}
-
-<span class="doccomment">/// The `Keyboard` events.
-///
-/// Contains the variant of the `Keyboard` event.
-/// While this enum has only one item, it is defined nevertheless
-/// to keep conversion requirements congruent over all types.
-///
-/// If you are interested in `Event.Keyboard` events, this enum
-/// may, for instance, help you select for those on a stream:
-///
-/// # Example
-/// ```
-/// // Boilerplate omitted.
-/// use crate::identify::KeyboardEvent;
-///
-/// while let Ok(Some(ev)) = event_stream.next().await? {
-///   let kb_ev: KeyboardEvent = ev.try_into()?;
-/// }
-///  ```
-/// Event table for the contained types:
-///
-/// Interface|Member|Kind|Detail 1|Detail 2|Any Data|Properties
-/// |:--|---|---|---|---|---|---|
-/// |Keyboard|Modifiers|    |`previous_modifiers`|`current_modifiers`|    |properties|
-</span><span class="attribute">#[derive(Debug, Clone)]
-</span><span class="kw">pub enum </span>KeyboardEvents {
-    Modifiers(ModifiersEvent),
-}
-
-<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>KeyboardEvents {
-    <span class="kw">type </span>Error = AtspiError;
-
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
-        <span class="kw">match </span>member.as_str() {
-            <span class="string">&quot;Modifiers&quot; </span>=&gt; <span class="prelude-val">Ok</span>(KeyboardEvents::Modifiers(ModifiersEvent(ev))),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Keyboard&quot;</span>.into())),
-        }
-    }
-}
-
-<span class="comment">// ---------------&gt; Object types:
-
-</span><span class="kw">pub mod </span>object {
-		<span class="kw">use crate</span>::{
-			identify::Signified,
-			events::AtspiEvent,
-		};
-    <span class="kw">use </span>atspi_macros::TrySignify;
-    <span class="kw">use </span>zbus::zvariant::OwnedValue;
-
-    <span class="attribute">#[derive(Debug, Eq, PartialEq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>PropertyChangeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="kw">impl </span>PropertyChangeEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>property(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-            <span class="self">self</span>.<span class="number">0</span>.kind()
-        }
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>OwnedValue {
-            <span class="self">self</span>.<span class="number">0</span>.any_data()
-        }
-    }
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>BoundsChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>LinkSelectedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>StateChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-    <span class="kw">impl </span>StateChangedEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-            <span class="self">self</span>.<span class="number">0</span>.kind()
-        }
-        <span class="comment">//TODO checkme please!!
-        </span><span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>enabled(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-            <span class="self">self</span>.<span class="number">0</span>.detail1() == <span class="number">0
-        </span>}
-    }
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>ChildrenChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-    <span class="kw">impl </span>ChildrenChangedEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>operation(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-            <span class="self">self</span>.<span class="number">0</span>.kind()
-        }
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>index_in_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-            <span class="self">self</span>.<span class="number">0</span>.detail1()
-        } <span class="comment">// usizes ?
-        </span><span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>OwnedValue {
-            <span class="self">self</span>.<span class="number">0</span>.any_data()
-        }
-    }
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>VisibleDataChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>SelectionChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>ModelChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="comment">// TODO Check my impl please.
-    </span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>ActiveDescendantChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-    <span class="kw">impl </span>ActiveDescendantChangedEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>OwnedValue {
-            <span class="self">self</span>.<span class="number">0</span>.any_data() <span class="comment">// TODO Make me a beter returner!
-        </span>}
-    }
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>AnnouncementEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-    <span class="kw">impl </span>AnnouncementEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-            <span class="self">self</span>.<span class="number">0</span>.kind()
-        }
-    }
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>AttributesChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>RowInsertedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>RowReorderedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>RowDeletedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>ColumnInsertedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>ColumnReorderedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>ColumnDeletedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>TextBoundsChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>TextSelectionChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>TextChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-    <span class="kw">impl </span>TextChangedEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>detail(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-            <span class="self">self</span>.<span class="number">0</span>.kind()
-        }
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>start_pos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-            <span class="self">self</span>.<span class="number">0</span>.detail1()
-        }
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>end_pos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-            <span class="self">self</span>.<span class="number">0</span>.detail2()
-        }
-        <span class="comment">// TODO zvariant::Value -&gt; String me please
-        </span><span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>OwnedValue {
-            <span class="self">self</span>.<span class="number">0</span>.any_data()
-        }
-    }
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>TextAttributesChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-    </span><span class="kw">pub struct </span>TextCaretMovedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-    <span class="kw">impl </span>TextCaretMovedEvent {
-        <span class="attribute">#[must_use]
-        </span><span class="kw">pub fn </span>position(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-            <span class="self">self</span>.<span class="number">0</span>.detail1()
-        }
-    }
-}
-
-<span class="comment">// ------&lt;- end of Obj signals
-// ----------&gt; Start of Win
-
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>PropertyChangeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-<span class="kw">impl </span>PropertyChangeEvent {
-    <span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>property(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.<span class="number">0</span>.kind()
-    }
-}
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>MinimizeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>MaximizeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>RestoreEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>CloseEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>CreateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ReparentEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>DesktopCreateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>DesktopDestroyEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>DestroyEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ActivateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>DeactivateEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>RaiseEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>LowerEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>MoveEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ResizeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ShadeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[allow(non_camel_case_types)]
-#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>uUshadeEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>RestyleEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="comment">// ----------&lt;- end of Win signals
-// ----------&gt; Start of Mse
-
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>AbsEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-<span class="kw">impl </span>AbsEvent {
-    <span class="doccomment">/// X-coordinate of mouse button event
-    ///  Coordinates are absolute, with the origin in the top-left of the &#39;root window&#39;
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>x(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail1()
-    }
-    <span class="doccomment">/// Y-coordinate of mouse button event
-    /// Coordinates are absolute, with the origin in the top-left of the &#39;root window&#39;
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>y(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail2()
-    }
-}
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>RelEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-<span class="kw">impl </span>RelEvent {
-    <span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>dx(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail1()
-    }
-    <span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>dy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail2()
-    }
-}
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ButtonEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-<span class="kw">impl </span>ButtonEvent {
-    <span class="doccomment">/// Button being used 1..X
-    /// The suffix may either be &#39;p&#39;, for pressed, or &#39;r&#39; for rekeased.
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>button(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.inner().kind()
-    }
-    <span class="doccomment">/// X-coordinate of mouse button event
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>x(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail1()
-    }
-    <span class="doccomment">/// Y-coordinate of mouse button event
-    </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>y(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail2()
-    }
-}
-
-<span class="comment">// ----------&lt;- end of Mse signals
-// ----------&gt; Start of Kbd
-
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ModifiersEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-<span class="kw">impl </span>ModifiersEvent {
-    <span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>previous_modifiers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail1()
-    }
-    <span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>current_modifiers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.inner().detail2()
-    }
-}
-
-<span class="comment">// ----------&lt;- end of Kbd signals
-// ----------&gt; Start of Term
-
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>LineChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ColumncountChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>LinecountChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ApplicationChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>CharwidthChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="comment">// -------&lt;- end of Term signals
-// ----------&gt; Start of Doc
-
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>LoadCompleteEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ReloadEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>LoadStoppedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>ContentChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>AttributesChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>PageChangedEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
-
-<span class="comment">// ---------- End of Doc
-// ----------&gt; Start of Focus
-
-// #[deprecated(note = &quot;Users are advised to monitor Object:StateChanged:focused instead.&quot;)]
-</span><span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
-</span><span class="kw">pub struct </span>FocusEvent(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="atspi" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

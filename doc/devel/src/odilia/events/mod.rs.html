@@ -177,6 +177,12 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
 </pre><pre class="rust"><code><span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
 
@@ -209,10 +215,11 @@
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	dir: Direction,
 	role: Role,
-) -&gt; OdiliaResult&lt;()&gt; {
+) -&gt; OdiliaResult&lt;bool&gt; {
+	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Structural nav call begins!&quot;</span>);
 	<span class="kw">let </span>curr = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
 		<span class="prelude-val">Some</span>(acc) =&gt; acc,
-		<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(()),
+		<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
 	};
 	<span class="kw">let </span>roles = <span class="macro">vec!</span>[role];
 	<span class="kw">let </span>attributes = HashMap::new();
@@ -230,19 +237,18 @@
 		<span class="kw">let </span>texti = next.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>focused = comp.grab_focus().<span class="kw">await</span><span class="question-mark">?</span>;
 		comp.scroll_to(ScrollType::TopLeft).<span class="kw">await</span><span class="question-mark">?</span>;
+		state.update_accessible(curr.try_into().unwrap()).<span class="kw">await</span>;
 		<span class="kw">let </span>caret_offset = texti.set_caret_offset(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focused: {}&quot;</span>, focused);
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Caret offset: {}&quot;</span>, caret_offset);
-		<span class="kw">let </span>id: AccessibleId = curr.path().try_into()<span class="question-mark">?</span>;
-		state.update_accessible(id).<span class="kw">await</span>;
 		<span class="kw">let </span>role = next.get_role().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>len = texti.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>text = texti.get_text(<span class="number">0</span>, len).<span class="kw">await</span><span class="question-mark">?</span>;
-		state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{text}, {role}&quot;</span>)).<span class="kw">await</span>;
+		<span class="comment">// saying awaits until it is done talking; you may want to spawn a task
+		</span>state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{text}, {role}&quot;</span>)).<span class="kw">await</span>;
+		<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
 	} <span class="kw">else </span>{
 		state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;No more {role}s&quot;</span>)).<span class="kw">await</span>;
+		<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
 	}
-	<span class="prelude-val">Ok</span>(())
 }
 
 <span class="kw">pub async fn </span>sr_event(
@@ -258,6 +264,8 @@
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::StructuralNavigation(dir, role)) =&gt; {
 				 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = structural_navigation(<span class="kw-2">&amp;</span>state, dir, role).<span class="kw">await </span>{
 				    <span class="macro">tracing::debug!</span>(error = %e, <span class="string">&quot;There was an error with the structural navigation call.&quot;</span>);
+				} <span class="kw">else </span>{
+					<span class="macro">tracing::debug!</span>(<span class="string">&quot;Structural navigation successful!&quot;</span>);
 				}
 			    },
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::StopSpeech) =&gt; {
@@ -269,10 +277,11 @@
 			      <span class="kw">let </span><span class="kw-2">mut </span>sr_granularity = state.granularity.lock().<span class="kw">await</span>;
 			      <span class="kw-2">*</span>sr_granularity = granularity;
 			    },
-			    <span class="prelude-val">Some</span>(ScreenReaderEvent::ChangeMode(ScreenReaderMode { name })) =&gt; {
-				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Changing mode to {:?}&quot;</span>, name);
-				<span class="comment">//let _ = mode_channel.send(ScreenReaderMode { name }).await;
-			    </span>}
+			    <span class="prelude-val">Some</span>(ScreenReaderEvent::ChangeMode(new_sr_mode)) =&gt; {
+						<span class="macro">tracing::debug!</span>(<span class="string">&quot;Changing mode to {:?}&quot;</span>, new_sr_mode);
+						<span class="kw">let </span><span class="kw-2">mut </span>sr_mode = state.mode.lock().<span class="kw">await</span>;
+						<span class="kw-2">*</span>sr_mode = new_sr_mode;
+			    }
 			    <span class="kw">_ </span>=&gt; { <span class="kw">continue</span>; }
 			};
 			<span class="kw">continue</span>;
@@ -347,13 +356,16 @@
 
 <span class="kw">async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
 	<span class="comment">// Dispatch based on interface
-	</span><span class="kw">match </span>event {
+	</span><span class="kw">match </span><span class="kw-2">&amp;</span>event {
 		Event::Interfaces(EventInterfaces::Object(object_event)) =&gt; object::dispatch(state, object_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		Event::Interfaces(EventInterfaces::Document(document_event)) =&gt; document::dispatch(state, document_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		other_event =&gt; {
 			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown interface: {:#?}&quot;</span>, other_event)
 		}
 	}
+	<span class="comment">//let accessible_id = state.new_accessible(&amp;interface).await?.path().try_into()?;
+	//state.update_accessible(accessible_id).await;
+	</span>state.event_history_update(event).<span class="kw">await</span>;
 	<span class="prelude-val">Ok</span>(())
 }
 </code></pre></div>

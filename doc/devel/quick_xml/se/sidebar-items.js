@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["to_string","Serialize struct into a `String`"],["to_writer","Serialize struct into a `Write`r"]],"struct":[["Serializer","A Serializer"]]};

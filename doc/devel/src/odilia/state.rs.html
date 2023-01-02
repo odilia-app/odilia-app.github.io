@@ -238,6 +238,29 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{cell::Cell, fs};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
@@ -248,10 +271,12 @@
 
 <span class="kw">use </span>odilia_cache::{
 	Cache,
+	AccessiblePrimitive,
 };
 <span class="kw">use </span>atspi::{
 	accessible::AccessibleProxy, accessible_ext::{AccessibleExt, AccessibleId}, cache::CacheProxy,
 	convertable::Convertable, text::TextGranularity,
+	signify::Signified,
 };
 <span class="kw">use </span>odilia_common::{
 	modes::ScreenReaderMode, settings::ApplicationConfig, types::TextSelectionArea,
@@ -266,7 +291,8 @@
 	<span class="kw">pub </span>previous_caret_position: Cell&lt;i32&gt;,
 	<span class="kw">pub </span>mode: Mutex&lt;ScreenReaderMode&gt;,
 	<span class="kw">pub </span>granularity: Mutex&lt;TextGranularity&gt;,
-	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessibleId&gt;&gt;,
+	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessiblePrimitive&gt;&gt;,
+	<span class="kw">pub </span>event_history: Mutex&lt;CircularQueue&lt;atspi::Event&gt;&gt;,
 	<span class="kw">pub </span>cache: Cache,
 }
 
@@ -301,6 +327,7 @@
 
 		<span class="kw">let </span>previous_caret_position = Cell::new(<span class="number">0</span>);
 		<span class="kw">let </span>accessible_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
+		<span class="kw">let </span>event_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
 		<span class="kw">let </span>cache = Cache::new();
 
 		<span class="kw">let </span>granularity = Mutex::new(TextGranularity::Line);
@@ -313,6 +340,7 @@
 			mode,
 			granularity,
 			accessible_history,
+			event_history,
 			cache,
 		})
 	}
@@ -326,9 +354,8 @@
 	) -&gt; OdiliaResult&lt;String&gt; {
 		<span class="kw">let </span>acc_text = acc.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>_acc_hyper = acc.to_hyperlink().<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span>text_length = acc_text.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span>_full_text = acc_text.get_text(<span class="number">0</span>, text_length).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span>(<span class="kw-2">mut </span>text_selection, start, end) = <span class="kw">match </span>select {
+		<span class="comment">//let _full_text = acc_text.get_text_ext().await?;
+		</span><span class="kw">let </span>(<span class="kw-2">mut </span>text_selection, start, end) = <span class="kw">match </span>select {
 			TextSelectionArea::Granular(granular) =&gt; {
 				acc_text.get_string_at_offset(granular.index, granular.granularity)
 					.<span class="kw">await</span><span class="question-mark">?
@@ -401,6 +428,10 @@
 		<span class="kw">if </span><span class="self">self</span>.ssip.send(SSIPRequest::Speak).<span class="kw">await</span>.is_err() {
 			<span class="kw">return </span><span class="bool-val">false</span>;
 		}
+		<span class="comment">// this crashed ssip-client because the connection is automatically stopped when invalid text is sent; since the period character on a line by itself is the stop character, there&#39;s not much we can do except filter it out explicitly.
+		</span><span class="kw">if </span>text == <span class="string">&quot;.&quot;</span>.to_string() {
+			<span class="kw">return </span><span class="bool-val">false</span>;
+		}
 		<span class="kw">if </span><span class="self">self</span>.ssip
 			.send(SSIPRequest::SendLines(Vec::from([text])))
 			.<span class="kw">await
@@ -411,6 +442,22 @@
 		<span class="bool-val">true
 	</span>}
 
+	<span class="kw">pub async fn </span>event_history_item(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		index: usize
+	) -&gt; <span class="prelude-ty">Option</span>&lt;atspi::Event&gt; {
+		<span class="kw">let </span>history = <span class="self">self</span>.event_history.lock().<span class="kw">await</span>;
+		history.iter().nth(index).cloned()
+	}
+
+	<span class="kw">pub async fn </span>event_history_update(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		event: atspi::Event,
+	) {
+		<span class="kw">let </span><span class="kw-2">mut </span>history = <span class="self">self</span>.event_history.lock().<span class="kw">await</span>;
+		history.push(event);
+	}
+
 	<span class="kw">pub async fn </span>history_item&lt;<span class="lifetime">&#39;a</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		index: usize,
@@ -419,20 +466,19 @@
 		<span class="kw">if </span>history.len() &lt;= index {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
 		}
-		<span class="kw">let </span>a11y_id = history
-			.iter()
-			.nth(index)
-			.expect(<span class="string">&quot;Looking for invalid index in accessible history&quot;</span>);
-		<span class="kw">let </span>a11y_cache_item = <span class="kw">match </span><span class="self">self</span>.cache.get(a11y_id).<span class="kw">await </span>{
-			<span class="prelude-val">Some</span>(prim) =&gt; prim,
-			<span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+		<span class="kw">let </span>a11y_prim = {
+			history
+				.iter()
+				.nth(index)
+				.expect(<span class="string">&quot;Looking for invalid index in accessible history&quot;</span>)
+				.to_owned()
 		};
-		<span class="kw">let </span>a11y = a11y_cache_item.object.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>a11y = a11y_prim.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(a11y))
 	}
 
 	<span class="doccomment">/// Adds a new accessible to the history. We only store 16 previous accessibles, but theoretically, it should be lower.
-	</span><span class="kw">pub async fn </span>update_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>, new_a11y: AccessibleId) {
+	</span><span class="kw">pub async fn </span>update_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>, new_a11y: AccessiblePrimitive) {
 		<span class="kw">let </span><span class="kw-2">mut </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
 		history.push(new_a11y);
 	}
@@ -447,10 +493,10 @@
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}
-	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">&#39;a</span>, T: GenericEvent&gt;(
+	<span class="kw">pub async fn </span>new_accessible&lt;T: Signified&gt; (
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
-	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
 		<span class="kw">let </span>sender = event.sender().unwrap().unwrap().to_owned();
 		<span class="kw">let </span>path = event.path().unwrap().to_owned();
 		<span class="prelude-val">Ok</span>(AccessibleProxy::builder(<span class="self">self</span>.connection())

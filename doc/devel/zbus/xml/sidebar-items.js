@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Annotation","Annotations are generic key/value pairs of metadata."],["Arg","An argument"],["Interface","An interface"],["Method","A method"],["Node","An introspection tree node (typically the root of the XML document)."],["Property","A property"],["Signal","A signal"]]};

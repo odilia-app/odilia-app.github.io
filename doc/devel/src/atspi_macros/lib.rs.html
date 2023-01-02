@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atspi-macros-0.1.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/592fcb0/atspi-macros/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi_macros/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -193,15 +193,380 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
-</pre><pre class="rust"><code><span class="kw">mod </span>serde_signature;
-<span class="kw">mod </span>xml_types;
-
-<span class="kw">use </span>proc_macro::TokenStream;
-<span class="kw">use </span>quote::quote;
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+</pre><pre class="rust"><code><span class="kw">use </span>proc_macro::{
+	TokenStream,
+};
+<span class="kw">use </span>proc_macro2::{
+	Span,
+	TokenStream <span class="kw">as </span>TokenStream2,
+};
+<span class="kw">use </span>quote::{
+	quote,
+};
 <span class="kw">use </span>syn::{
     parse_macro_input, AttributeArgs, DeriveInput, ItemStruct, Lit, Meta, MetaNameValue,
+		Ident,
     NestedMeta, Type,
 };
+<span class="kw">use </span>zbus::{
+	xml::<span class="kw-2">*</span>,
+};
+<span class="kw">use </span>zvariant::{
+	    Basic, ObjectPath, Signature, ARRAY_SIGNATURE_CHAR, DICT_ENTRY_SIG_END_CHAR,
+			    DICT_ENTRY_SIG_START_CHAR, STRUCT_SIG_END_CHAR, STRUCT_SIG_START_CHAR, VARIANT_SIGNATURE_CHAR,
+};
+
+<span class="kw">use </span>std::str::FromStr;
 
 <span class="kw">enum </span>FromZbusMessageParam {
     Invalid,
@@ -209,14 +574,27 @@
     Member(String),
 }
 
-<span class="kw">impl </span>FromZbusMessageParam {
-    <span class="kw">fn </span>from(key: String, val: String) -&gt; <span class="self">Self </span>{
-        <span class="kw">match </span>(key.as_str(), val.as_str()) {
+<span class="kw">impl </span>From&lt;(String, String)&gt; <span class="kw">for </span>FromZbusMessageParam {
+    <span class="kw">fn </span>from(items: (String, String)) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>(items.<span class="number">0</span>.as_str(), items.<span class="number">1</span>.as_str()) {
             (<span class="string">&quot;body&quot;</span>, tp) =&gt; <span class="self">Self</span>::Body(
                 syn::parse_str(tp)
                     .expect(<span class="string">&quot;The value given to the &#39;body&#39; parameter must be a valid type.&quot;</span>),
             ),
             (<span class="string">&quot;member&quot;</span>, mem) =&gt; <span class="self">Self</span>::Member(mem.to_string()),
+            <span class="kw">_ </span>=&gt; <span class="self">Self</span>::Invalid,
+        }
+    }
+}
+
+<span class="kw">enum </span>XmlGenParams {
+	Invalid,
+	FileName(String),
+}
+<span class="kw">impl </span>From&lt;(String, String)&gt; <span class="kw">for </span>XmlGenParams {
+    <span class="kw">fn </span>from(items: (String, String)) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>(items.<span class="number">0</span>.as_str(), items.<span class="number">1</span>.as_str()) {
+            (<span class="string">&quot;filename&quot;</span>, name) =&gt; <span class="self">Self</span>::FileName(name.to_string()),
             <span class="kw">_ </span>=&gt; <span class="self">Self</span>::Invalid,
         }
     }
@@ -258,17 +636,9 @@
     </span>TokenStream::from(expanded)
 }
 
-<span class="comment">//#[proc_macro_derive(TryFromMessage)]
-</span><span class="attribute">#[proc_macro_attribute]
-</span><span class="kw">pub fn </span>try_from_zbus_message(attr: TokenStream, input: TokenStream) -&gt; TokenStream {
-    <span class="kw">let </span>item_struct = <span class="macro">parse_macro_input!</span>(input <span class="kw">as </span>ItemStruct);
-    <span class="comment">// Parse the input token stream into a syntax tree
-    </span><span class="kw">let </span>name = item_struct.ident.clone();
-
-    <span class="comment">// Remove the suffix &quot;Event&quot; from the name of the struct
-    </span><span class="kw">let </span>name_string = name.to_string();
-
-    <span class="kw">let </span>args_parsed: Vec&lt;FromZbusMessageParam&gt; = <span class="macro">parse_macro_input!</span>(attr <span class="kw">as </span>AttributeArgs)
+<span class="kw">fn </span>make_into_params&lt;T&gt;(items: AttributeArgs) -&gt; Vec&lt;T&gt; 
+	<span class="kw">where </span>T: From&lt;(String, String)&gt; {
+    items
         .into_iter()
         .filter_map(|nm| <span class="kw">match </span>nm {
             <span class="comment">// Only select certain tokens
@@ -291,9 +661,339 @@
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         })
         <span class="comment">// convert the (String, LitStr) tuple to a custom type which only accepts certain key/value pairs
-        </span>.map(|(k, v)| FromZbusMessageParam::from(k, v))
-        .collect();
+        </span>.map(|(k, v)| T::from((k, v)))
+        .collect()
+}
 
+<span class="kw">enum </span>AtspiEventInnerName {
+	Detail1,
+	Detail2,
+	AnyData,
+}
+<span class="kw">impl </span>ToString <span class="kw">for </span>AtspiEventInnerName {
+	<span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::Detail1 =&gt; <span class="string">&quot;detail1&quot;</span>,
+			<span class="self">Self</span>::Detail2 =&gt; <span class="string">&quot;detail2&quot;</span>,
+			<span class="self">Self</span>::AnyData =&gt; <span class="string">&quot;any_data&quot;</span>,
+		}.to_string()
+	}
+}
+<span class="kw">enum </span>ConversionError {
+	FunctionAlreadyCreatedFor,
+	UnknownItem,
+}
+<span class="kw">impl </span>TryFrom&lt;usize&gt; <span class="kw">for </span>AtspiEventInnerName {
+	<span class="kw">type </span>Error = ConversionError;
+
+	<span class="kw">fn </span>try_from(from: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">match </span>from {
+			<span class="number">0 </span>=&gt; <span class="prelude-val">Err</span>(ConversionError::FunctionAlreadyCreatedFor),
+			<span class="number">1 </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Detail1),
+			<span class="number">2 </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Detail2),
+			<span class="number">3 </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::AnyData),
+			<span class="number">4 </span>=&gt; <span class="prelude-val">Err</span>(ConversionError::FunctionAlreadyCreatedFor),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ConversionError::UnknownItem),
+		}
+	}
+}
+
+<span class="comment">// taken from zbus_xmlgen: https://gitlab.freedesktop.org/dbus/zbus/-/blob/main/zbus_xmlgen/src/gen.rs
+</span><span class="kw">fn </span>to_rust_type(ty: <span class="kw-2">&amp;</span>str, input: bool, as_ref: bool) -&gt; String {
+    <span class="comment">// can&#39;t haz recursive closure, yet
+    </span><span class="kw">fn </span>iter_to_rust_type(
+        it: <span class="kw-2">&amp;mut </span>std::iter::Peekable&lt;std::slice::Iter&lt;<span class="lifetime">&#39;_</span>, u8&gt;&gt;,
+        input: bool,
+        as_ref: bool,
+    ) -&gt; String {
+        <span class="kw">let </span>c = it.next().unwrap();
+        <span class="kw">match </span><span class="kw-2">*</span>c <span class="kw">as </span>char {
+            u8::SIGNATURE_CHAR =&gt; <span class="string">&quot;u8&quot;</span>.into(),
+            bool::SIGNATURE_CHAR =&gt; <span class="string">&quot;bool&quot;</span>.into(),
+            i16::SIGNATURE_CHAR =&gt; <span class="string">&quot;i16&quot;</span>.into(),
+            u16::SIGNATURE_CHAR =&gt; <span class="string">&quot;u16&quot;</span>.into(),
+            i32::SIGNATURE_CHAR =&gt; <span class="string">&quot;i32&quot;</span>.into(),
+            u32::SIGNATURE_CHAR =&gt; <span class="string">&quot;u32&quot;</span>.into(),
+            i64::SIGNATURE_CHAR =&gt; <span class="string">&quot;i64&quot;</span>.into(),
+            u64::SIGNATURE_CHAR =&gt; <span class="string">&quot;u64&quot;</span>.into(),
+            f64::SIGNATURE_CHAR =&gt; <span class="string">&quot;f64&quot;</span>.into(),
+            <span class="comment">// xmlgen accepts &#39;h&#39; on Windows, only for code generation
+            </span><span class="string">&#39;h&#39; </span>=&gt; (<span class="kw">if </span>input {
+                <span class="string">&quot;zbus::zvariant::Fd&quot;
+            </span>} <span class="kw">else </span>{
+                <span class="string">&quot;zbus::zvariant::OwnedFd&quot;
+            </span>})
+            .into(),
+            &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_CHAR =&gt; (<span class="kw">if </span>input || as_ref { <span class="string">&quot;&amp;str&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;String&quot; </span>}).into(),
+            ObjectPath::SIGNATURE_CHAR =&gt; (<span class="kw">if </span>input {
+                <span class="kw">if </span>as_ref {
+                    <span class="string">&quot;&amp;zbus::zvariant::ObjectPath&lt;&#39;_&gt;&quot;
+                </span>} <span class="kw">else </span>{
+                    <span class="string">&quot;zbus::zvariant::ObjectPath&lt;&#39;_&gt;&quot;
+                </span>}
+            } <span class="kw">else </span>{
+                <span class="string">&quot;zbus::zvariant::OwnedObjectPath&quot;
+            </span>})
+            .into(),
+            Signature::SIGNATURE_CHAR =&gt; (<span class="kw">if </span>input {
+                <span class="kw">if </span>as_ref {
+                    <span class="string">&quot;&amp;zbus::zvariant::Signature&lt;&#39;_&gt;&quot;
+                </span>} <span class="kw">else </span>{
+                    <span class="string">&quot;zbus::zvariant::Signature&lt;&#39;_&gt;&quot;
+                </span>}
+            } <span class="kw">else </span>{
+                <span class="string">&quot;zbus::zvariant::OwnedSignature&quot;
+            </span>})
+            .into(),
+            VARIANT_SIGNATURE_CHAR =&gt; (<span class="kw">if </span>input {
+                <span class="kw">if </span>as_ref {
+                    <span class="string">&quot;&amp;zbus::zvariant::Value&lt;&#39;_&gt;&quot;
+                </span>} <span class="kw">else </span>{
+                    <span class="string">&quot;zbus::zvariant::Value&lt;&#39;_&gt;&quot;
+                </span>}
+            } <span class="kw">else </span>{
+                <span class="string">&quot;zbus::zvariant::OwnedValue&quot;
+            </span>})
+            .into(),
+            ARRAY_SIGNATURE_CHAR =&gt; {
+                <span class="kw">let </span>c = it.peek().unwrap();
+                <span class="kw">match </span><span class="kw-2">**</span>c <span class="kw">as </span>char {
+                    <span class="string">&#39;{&#39; </span>=&gt; <span class="macro">format!</span>(
+                        <span class="string">&quot;std::collections::HashMap&lt;{}&gt;&quot;</span>,
+                        iter_to_rust_type(it, input, <span class="bool-val">false</span>)
+                    ),
+                    <span class="kw">_ </span>=&gt; {
+                        <span class="kw">let </span>ty = iter_to_rust_type(it, input, <span class="bool-val">false</span>);
+                        <span class="kw">if </span>input {
+                            <span class="macro">format!</span>(<span class="string">&quot;&amp;[{ty}]&quot;</span>)
+                        } <span class="kw">else </span>{
+                            <span class="macro">format!</span>(<span class="string">&quot;{}Vec&lt;{}&gt;&quot;</span>, <span class="kw">if </span>as_ref { <span class="string">&quot;&amp;&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;&quot; </span>}, ty)
+                        }
+                    }
+                }
+            }
+            c @ STRUCT_SIG_START_CHAR | c @ DICT_ENTRY_SIG_START_CHAR =&gt; {
+                <span class="kw">let </span>dict = c == <span class="string">&#39;{&#39;</span>;
+                <span class="kw">let </span><span class="kw-2">mut </span>vec = <span class="macro">vec!</span>[];
+                <span class="kw">loop </span>{
+                    <span class="kw">let </span>c = it.peek().unwrap();
+                    <span class="kw">match </span><span class="kw-2">**</span>c <span class="kw">as </span>char {
+                        STRUCT_SIG_END_CHAR | DICT_ENTRY_SIG_END_CHAR =&gt; <span class="kw">break</span>,
+                        <span class="kw">_ </span>=&gt; vec.push(iter_to_rust_type(it, input, <span class="bool-val">false</span>)),
+                    }
+                }
+                <span class="kw">if </span>dict {
+                    vec.join(<span class="string">&quot;, &quot;</span>)
+                } <span class="kw">else if </span>vec.len() &gt; <span class="number">1 </span>{
+                    <span class="macro">format!</span>(<span class="string">&quot;{}({})&quot;</span>, <span class="kw">if </span>as_ref { <span class="string">&quot;&amp;&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;&quot; </span>}, vec.join(<span class="string">&quot;, &quot;</span>))
+                } <span class="kw">else </span>{
+                    vec[<span class="number">0</span>].to_string()
+                }
+            }
+            <span class="kw">_ </span>=&gt; <span class="macro">unimplemented!</span>(),
+        }
+    }
+
+    <span class="kw">let </span><span class="kw-2">mut </span>it = ty.as_bytes().iter().peekable();
+    iter_to_rust_type(<span class="kw-2">&amp;mut </span>it, input, as_ref)
+}
+
+<span class="comment">// accept String or &amp;str
+</span><span class="kw">fn </span>str_ident&lt;S&gt;(string: S) -&gt; Ident 
+	<span class="kw">where </span>S: Into&lt;String&gt; {
+	Ident::new(<span class="kw-2">&amp;</span>string.into(), Span::call_site())
+}
+
+<span class="kw">fn </span>iface_name(iface: <span class="kw-2">&amp;</span>Interface) -&gt; String {
+	iface.name().split(<span class="string">&#39;.&#39;</span>).next_back().expect(<span class="string">&quot;An interface must have a period in its name.&quot;</span>).to_string()
+}
+
+<span class="kw">fn </span>events_ident&lt;S&gt;(string: S) -&gt; Ident 
+	<span class="kw">where </span>S: Into&lt;String&gt; {
+	<span class="kw">let </span><span class="kw-2">mut </span>sig_name_event_str = string.into();
+	sig_name_event_str.push_str(<span class="string">&quot;Events&quot;</span>);
+	str_ident(sig_name_event_str)
+}
+<span class="kw">fn </span>event_ident&lt;S&gt;(string: S) -&gt; Ident 
+	<span class="kw">where </span>S: Into&lt;String&gt; {
+	<span class="kw">let </span><span class="kw-2">mut </span>sig_name_event_str = string.into();
+	sig_name_event_str.push_str(<span class="string">&quot;Event&quot;</span>);
+	str_ident(sig_name_event_str)
+}
+
+<span class="kw">fn </span>str_to_type&lt;S&gt;(s: S) -&gt; Type 
+	<span class="kw">where </span>S: Into&lt;String&gt; + Clone + std::fmt::Display {
+	<span class="kw">let </span>rust_type_ts = TokenStream::from_str(<span class="kw-2">&amp;</span>s.clone().into()).expect(<span class="string">&quot;The string \&quot;{rust_type_str}\&quot; is not able to be turned into a TokenStream&quot;</span>);
+	<span class="kw">match </span>parse_macro_input::parse::&lt;Type&gt;(rust_type_ts) {
+		<span class="prelude-val">Ok</span>(data) =&gt; data,
+		<span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;The string {} could not be converted to Type&quot;</span>, s.clone()),
+	}
+}
+
+<span class="kw">fn </span>generate_fn_for_signal_item(signal_item: <span class="kw-2">&amp;</span>Arg, inner_event_name: AtspiEventInnerName) -&gt; TokenStream2 {
+	<span class="kw">if </span>signal_item.name().is_none() {
+		<span class="kw">return </span><span class="macro">quote!</span>{};
+	}
+	<span class="comment">// unwrap is safe due to check
+	</span><span class="kw">let </span>function_name = str_ident(signal_item.name().unwrap());
+	<span class="kw">let </span>inner_name = str_ident(inner_event_name.to_string());
+	<span class="kw">let </span>rust_type = str_to_type(to_rust_type(signal_item.ty(), <span class="bool-val">true</span>, <span class="bool-val">true</span>));
+	
+	<span class="macro">quote!</span>{
+		<span class="attribute">#[must_use]
+		</span><span class="kw">pub fn </span>#function_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #rust_type {
+			<span class="self">self</span>.<span class="number">0.</span>#inner_name()
+		}
+	}
+}
+
+<span class="kw">fn </span>generate_impl_from_signal(signal: <span class="kw-2">&amp;</span>Signal) -&gt; TokenStream2 {
+	<span class="kw">let </span>sig_name_event = event_ident(signal.name());
+	<span class="kw">let </span>functions = TokenStream2::from_iter(
+		signal.args()
+			.iter()
+			.enumerate()
+				.filter_map(|(i, arg)| <span class="kw">match </span>i.try_into() {
+					<span class="prelude-val">Ok</span>(func_name) =&gt; <span class="prelude-val">Some</span>(generate_fn_for_signal_item(arg, func_name)),
+					<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+			})
+	);
+	<span class="macro">quote!</span>{
+		<span class="kw">impl </span>#sig_name_event {
+			#functions
+		}
+	}
+}
+
+<span class="kw">fn </span>generate_struct_from_signal(signal: <span class="kw-2">&amp;</span>Signal) -&gt; TokenStream2 {
+	<span class="kw">let </span>sig_name_event = event_ident(signal.name());
+	<span class="macro">quote! </span>{
+		<span class="attribute">#[derive(Debug, PartialEq, Eq, Clone, TrySignify)]
+		</span><span class="kw">pub struct </span>#sig_name_event(<span class="kw">pub</span>(<span class="kw">crate</span>) AtspiEvent);
+	}
+}
+
+<span class="kw">fn </span>generate_variant_from_signal(signal: <span class="kw-2">&amp;</span>Signal) -&gt; TokenStream2 {
+	<span class="kw">let </span>sig_name = str_ident(signal.name());
+	<span class="kw">let </span>sig_name_event = event_ident(signal.name());
+	<span class="macro">quote!</span>{
+		#sig_name(#sig_name_event),
+	}
+}
+
+<span class="kw">fn </span>match_arm_for_signal(iface_name: <span class="kw-2">&amp;</span>str, signal: <span class="kw-2">&amp;</span>Signal) -&gt; TokenStream2 {
+	<span class="kw">let </span>signal_name = signal.name();
+	<span class="kw">let </span>enum_name = events_ident(iface_name);
+	<span class="kw">let </span>signal_variant = str_ident(signal_name);
+	<span class="kw">let </span>signal_struct_name = event_ident(signal_name);
+	<span class="macro">quote! </span>{
+		#signal_name =&gt; <span class="prelude-val">Ok</span>(#enum_name::#signal_variant(#signal_struct_name(ev))),
+	}
+}
+
+<span class="kw">fn </span>generate_try_from_atspi_event(iface: <span class="kw-2">&amp;</span>Interface) -&gt; TokenStream2 {
+	<span class="kw">let </span>iname = iface_name(iface);
+	<span class="kw">let </span>error_str = <span class="macro">format!</span>(<span class="string">&quot;No matching member for {iname}&quot;</span>);
+	<span class="kw">let </span>impl_for_name = events_ident(<span class="kw-2">&amp;</span>iname);
+	<span class="kw">let </span>member_conversions = TokenStream2::from_iter(
+		iface.signals()
+			.iter()
+			.map(|signal| match_arm_for_signal(<span class="kw-2">&amp;</span>iname, signal))
+	);
+	<span class="macro">quote! </span>{
+		<span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>#impl_for_name {
+			<span class="kw">type </span>Error = AtspiError;
+
+			<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+				<span class="kw">let </span><span class="prelude-val">Some</span>(member) = ev.member() <span class="kw">else </span>{ <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;Event w/o member&quot;</span>.into())); };
+				<span class="kw">match </span>member.as_str() {
+					#member_conversions
+					<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(#error_str.into())),
+				}
+			}
+		}
+	}
+}
+
+<span class="kw">fn </span>generate_mod_from_iface(iface: <span class="kw-2">&amp;</span>Interface) -&gt; TokenStream2 {
+	<span class="kw">let </span>mod_name = str_ident(iface_name(iface).to_lowercase());
+	<span class="kw">let </span>enums = generate_enum_from_iface(iface);
+	<span class="kw">let </span>structs = TokenStream2::from_iter(
+		iface.signals()
+			.iter()
+			.map(|signal| generate_struct_from_signal(signal)));
+	<span class="kw">let </span>impls = TokenStream2::from_iter(
+		iface.signals()
+			.iter()
+			.map(|signal| generate_impl_from_signal(signal)));
+	<span class="kw">let </span>try_froms = generate_try_from_atspi_event(iface);
+	<span class="macro">quote! </span>{
+		<span class="kw">pub mod </span>#mod_name {
+			<span class="kw">use </span>atspi_macros::TrySignify;
+			<span class="kw">use crate</span>::{
+				error::AtspiError,
+				events::{AtspiEvent, GenericEvent},
+				identify::Signified,
+			};
+			<span class="kw">use </span>zbus;
+			<span class="kw">use </span>zbus::zvariant::{OwnedObjectPath, OwnedValue};
+			#enums
+			#structs
+			#impls
+			#try_froms
+		}
+	}
+}
+
+<span class="kw">fn </span>generate_enum_from_iface(iface: <span class="kw-2">&amp;</span>Interface) -&gt; TokenStream2 {
+	<span class="kw">let </span>name_ident = iface.name().split(<span class="string">&#39;.&#39;</span>).next_back().expect(<span class="string">&quot;Interface must contain a period&quot;</span>);
+	<span class="kw">let </span>name_ident_plural = events_ident(name_ident);
+	<span class="kw">let </span>signal_quotes = TokenStream2::from_iter(
+		iface.signals()
+			.into_iter()
+			.map(|signal| generate_variant_from_signal(signal))
+	);
+	<span class="macro">quote! </span>{
+		<span class="attribute">#[derive(Clone, Debug)]
+		</span><span class="kw">pub enum </span>#name_ident_plural {
+			#signal_quotes
+		}
+	}
+}
+
+<span class="comment">//#[proc_macro_derive(TryFromMessage)]
+</span><span class="attribute">#[proc_macro_attribute]
+</span><span class="kw">pub fn </span>create_from_xml(attr: TokenStream, _input: TokenStream) -&gt; TokenStream {
+	<span class="kw">let </span>args = <span class="macro">parse_macro_input!</span>(attr <span class="kw">as </span>AttributeArgs);
+	<span class="kw">let </span>args_parsed: Vec&lt;XmlGenParams&gt; = make_into_params(args);
+	<span class="kw">let </span>file_name = <span class="kw">match </span>args_parsed
+			.get(<span class="number">0</span>)
+			.expect(<span class="string">&quot;There must be at least one argument to the macro.&quot;</span>)
+	{
+			XmlGenParams::FileName(name) =&gt; name,
+			<span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;The file parameter must be set first, and must be a string.&quot;</span>),
+	};
+	<span class="kw">let </span>xml_file = std::fs::File::open(file_name).expect(<span class="string">&quot;Cannot read file&quot;</span>);
+	<span class="kw">let </span>data: zbus::xml::Node = zbus::xml::Node::from_reader(<span class="kw-2">&amp;</span>xml_file).expect(<span class="string">&quot;Cannot deserialize file&quot;</span>);
+	TokenStream2::from_iter(
+		data.interfaces()
+			.iter()
+			.map(|iface| generate_mod_from_iface(iface))
+	).into()
+}
+
+<span class="comment">//#[proc_macro_derive(TryFromMessage)]
+</span><span class="attribute">#[proc_macro_attribute]
+</span><span class="kw">pub fn </span>try_from_zbus_message(attr: TokenStream, input: TokenStream) -&gt; TokenStream {
+    <span class="kw">let </span>item_struct = <span class="macro">parse_macro_input!</span>(input <span class="kw">as </span>ItemStruct);
+    <span class="comment">// Parse the input token stream into a syntax tree
+    </span><span class="kw">let </span>name = item_struct.ident.clone();
+
+    <span class="comment">// Remove the suffix &quot;Event&quot; from the name of the struct
+    </span><span class="kw">let </span>name_string = name.to_string();
+
+    <span class="kw">let </span>args = <span class="macro">parse_macro_input!</span>(attr <span class="kw">as </span>AttributeArgs);
+		<span class="kw">let </span>args_parsed = make_into_params(args);
     <span class="kw">let </span>body_type = <span class="kw">match </span>args_parsed
         .get(<span class="number">0</span>)
         .expect(<span class="string">&quot;There must be at least one argument to the macro.&quot;</span>)

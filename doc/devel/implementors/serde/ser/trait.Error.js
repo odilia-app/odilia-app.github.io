@@ -1,5 +1,4 @@
 (function() {var implementors = {
-"quick_xml":[["impl <a class=\"trait\" href=\"serde/ser/trait.Error.html\" title=\"trait serde::ser::Error\">Error</a> for <a class=\"enum\" href=\"quick_xml/de/enum.DeError.html\" title=\"enum quick_xml::de::DeError\">DeError</a>"]],
 "serde":[],
 "serde_json":[["impl <a class=\"trait\" href=\"serde/ser/trait.Error.html\" title=\"trait serde::ser::Error\">Error</a> for <a class=\"struct\" href=\"serde_json/struct.Error.html\" title=\"struct serde_json::Error\">Error</a>"]],
 "serde_xml_rs":[["impl <a class=\"trait\" href=\"serde/ser/trait.Error.html\" title=\"trait serde::ser::Error\">Error</a> for <a class=\"enum\" href=\"serde_xml_rs/enum.Error.html\" title=\"enum serde_xml_rs::Error\">Error</a>"]],

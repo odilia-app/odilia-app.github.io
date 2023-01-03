@@ -183,8 +183,10 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
+<span id="186">186</span>
 </pre><pre class="rust"><code><span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
+<span class="kw">mod </span>cache;
 
 <span class="kw">use </span>std::{collections::HashMap, rc::Rc};
 
@@ -197,7 +199,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	accessible::Role,
-	accessible_ext::{AccessibleExt, MatcherArgs, AccessibleId},
+	accessible_ext::{AccessibleExt, MatcherArgs},
 	collection::MatchType,
 	component::ScrollType,
 	convertable::Convertable,
@@ -206,7 +208,6 @@
 };
 <span class="kw">use </span>odilia_common::{
 	events::{Direction, ScreenReaderEvent},
-	modes::ScreenReaderMode,
 	result::OdiliaResult,
 };
 <span class="kw">use </span>ssip_client::Priority;
@@ -235,10 +236,10 @@
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(next) = curr.get_next(<span class="kw-2">&amp;</span>mt, dir == Direction::Backward).<span class="kw">await</span><span class="question-mark">? </span>{
 		<span class="kw">let </span>comp = next.to_component().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>texti = next.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span>focused = comp.grab_focus().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let _ </span>= comp.grab_focus().<span class="kw">await</span><span class="question-mark">?</span>;
 		comp.scroll_to(ScrollType::TopLeft).<span class="kw">await</span><span class="question-mark">?</span>;
 		state.update_accessible(curr.try_into().unwrap()).<span class="kw">await</span>;
-		<span class="kw">let </span>caret_offset = texti.set_caret_offset(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let _ </span>= texti.set_caret_offset(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>role = next.get_role().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>len = texti.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>text = texti.get_text(<span class="number">0</span>, len).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -359,6 +360,7 @@
 	</span><span class="kw">match </span><span class="kw-2">&amp;</span>event {
 		Event::Interfaces(EventInterfaces::Object(object_event)) =&gt; object::dispatch(state, object_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		Event::Interfaces(EventInterfaces::Document(document_event)) =&gt; document::dispatch(state, document_event).<span class="kw">await</span><span class="question-mark">?</span>,
+		Event::Cache(cache_event) =&gt; cache::dispatch(state, cache_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		other_event =&gt; {
 			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown interface: {:#?}&quot;</span>, other_event)
 		}

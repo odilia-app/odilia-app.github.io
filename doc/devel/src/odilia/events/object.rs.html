@@ -166,12 +166,6 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	identify::{
@@ -219,8 +213,7 @@
 			accessible.get_state(),
 			accessible.name(),
 		)<span class="question-mark">?</span>;
-		<span class="comment">/*
-		let cache_item = CacheItem {
+		<span class="kw">let </span>cache_item = CacheItem {
 			object: accessible.try_into().unwrap(),
 			app: app.try_into().unwrap(),
 			parent: parent.try_into().unwrap(),
@@ -232,11 +225,10 @@
 			text,
 		};
 
-		// finally, write data to the internal cache
-		state.cache.add(cache_item).await;
-		tracing::debug!(&quot;Add a single item to cache.&quot;);
-		*/
-		</span><span class="prelude-val">Ok</span>(())
+		<span class="comment">// finally, write data to the internal cache
+		</span>state.cache.add(cache_item).<span class="kw">await</span>;
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add a single item to cache.&quot;</span>);
+		<span class="prelude-val">Ok</span>(())
 	}
 	<span class="kw">pub async fn </span>remove(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="kw">let </span>path = event.path().expect(<span class="string">&quot;All accessibles must have a path&quot;</span>).try_into()<span class="question-mark">?</span>;
@@ -248,7 +240,7 @@
 
 <span class="kw">mod </span>text_caret_moved {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible_ext::AccessibleId, convertable::Convertable, events::GenericEvent, identify::object::TextCaretMovedEvent, signify::Signified};
+	<span class="kw">use </span>atspi::{convertable::Convertable, identify::object::TextCaretMovedEvent, signify::Signified};
 	<span class="kw">use </span>ssip_client::Priority;
 
 	<span class="doccomment">/// this must be checked *before* writing an accessible to the hsitory.
@@ -269,11 +261,7 @@
 		<span class="comment">// likewise when getting the second-most recently focused accessible; we need the second-most recent accessible because it is possible that a tab navigation happened, which focused something before (or after) the caret moved events gets called, meaning the second-most recent accessible may be the only different accessible.
 		// if the accessible is focused before the event happens, the last_accessible variable will be the same as current_accessible.
 		// if the accessible is focused after the event happens, then the last_accessible will be different
-		</span><span class="kw">let </span>last_last_accessible = <span class="kw">match </span>state.history_item(<span class="number">1</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-			<span class="prelude-val">Some</span>(acc) =&gt; acc,
-			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
-		};
-		<span class="kw">let </span>previous_caret_pos = state.previous_caret_position.get();
+		</span><span class="kw">let </span>previous_caret_pos = state.previous_caret_position.get();
 		<span class="kw">let </span>current_accessible = state.new_accessible(event).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// if we know that the previous caret position was not 0, and the current and previous accessibles are the same, we know that this is NOT a tab navigation.
 		</span><span class="kw">if </span>previous_caret_pos != <span class="number">0 </span>&amp;&amp;
@@ -309,7 +297,7 @@
 
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible_ext::{AccessibleId, AccessibleExt}, identify::{object::StateChangedEvent}, signify::Signified};
+	<span class="kw">use </span>atspi::{accessible_ext::{AccessibleExt}, identify::{object::StateChangedEvent}, signify::Signified};
 
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>StateChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind

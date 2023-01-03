@@ -26,9 +26,6 @@ var sourcesIndex = JSON.parse('{\
 "crossbeam_utils":["",[["atomic",[],["atomic_cell.rs","consume.rs","mod.rs","seq_lock.rs"]],["sync",[],["mod.rs","once_lock.rs","parker.rs","sharded_lock.rs","wait_group.rs"]]],["backoff.rs","cache_padded.rs","lib.rs","thread.rs"]],\
 "crypto_common":["",[],["lib.rs"]],\
 "ctor":["",[],["lib.rs"]],\
-"darling":["",[],["lib.rs","macros_public.rs"]],\
-"darling_core":["",[["ast",[],["data.rs","generics.rs","mod.rs"]],["codegen",[],["attr_extractor.rs","default_expr.rs","error.rs","field.rs","from_attributes_impl.rs","from_derive_impl.rs","from_field.rs","from_meta_impl.rs","from_type_param.rs","from_variant_impl.rs","mod.rs","outer_from_impl.rs","postfix_transform.rs","trait_impl.rs","variant.rs","variant_data.rs"]],["error",[],["kind.rs","mod.rs"]],["options",[],["core.rs","forward_attrs.rs","from_attributes.rs","from_derive.rs","from_field.rs","from_meta.rs","from_type_param.rs","from_variant.rs","input_field.rs","input_variant.rs","mod.rs","outer_from.rs","shape.rs"]],["usage",[],["generics_ext.rs","ident_set.rs","lifetimes.rs","mod.rs","options.rs","type_params.rs"]],["util",[],["flag.rs","ident_string.rs","ignored.rs","mod.rs","over_ride.rs","parse_attribute.rs","path_list.rs","path_to_string.rs","spanned_value.rs","with_original.rs"]]],["derive.rs","from_attributes.rs","from_derive_input.rs","from_field.rs","from_generic_param.rs","from_generics.rs","from_meta.rs","from_type_param.rs","from_variant.rs","lib.rs","macros_private.rs","macros_public.rs"]],\
-"darling_macro":["",[],["lib.rs"]],\
 "derivative":["",[],["ast.rs","attr.rs","bound.rs","clone.rs","cmp.rs","debug.rs","default.rs","hash.rs","lib.rs","matcher.rs","paths.rs","utils.rs"]],\
 "digest":["",[["core_api",[],["ct_variable.rs","rt_variable.rs","wrapper.rs","xof_reader.rs"]]],["core_api.rs","digest.rs","lib.rs"]],\
 "dirs":["",[],["lib.rs","lin.rs"]],\
@@ -38,7 +35,6 @@ var sourcesIndex = JSON.parse('{\
 "event_listener":["",[],["lib.rs"]],\
 "eyre":["",[],["backtrace.rs","chain.rs","context.rs","error.rs","fmt.rs","kind.rs","lib.rs","macros.rs","wrapper.rs"]],\
 "fastrand":["",[],["lib.rs"]],\
-"fnv":["",[],["lib.rs"]],\
 "futures":["",[],["lib.rs"]],\
 "futures_channel":["",[["mpsc",[],["mod.rs","queue.rs","sink_impl.rs"]]],["lib.rs","lock.rs","oneshot.rs"]],\
 "futures_core":["",[["task",[["__internal",[],["atomic_waker.rs","mod.rs"]]],["mod.rs","poll.rs"]]],["future.rs","lib.rs","stream.rs"]],\
@@ -51,7 +47,6 @@ var sourcesIndex = JSON.parse('{\
 "getrandom":["",[],["error.rs","error_impls.rs","lib.rs","linux_android.rs","use_file.rs","util.rs","util_libc.rs"]],\
 "heck":["",[],["kebab.rs","lib.rs","lower_camel.rs","shouty_kebab.rs","shouty_snake.rs","snake.rs","title.rs","upper_camel.rs"]],\
 "hex":["",[],["error.rs","lib.rs"]],\
-"ident_case":["",[],["lib.rs"]],\
 "indenter":["",[],["lib.rs"]],\
 "itoa":["",[],["lib.rs","udiv128.rs"]],\
 "kv_log_macro":["",[],["lib.rs"]],\
@@ -65,7 +60,7 @@ var sourcesIndex = JSON.parse('{\
 "mio":["",[["event",[],["event.rs","events.rs","mod.rs","source.rs"]],["net",[["tcp",[],["listener.rs","mod.rs","stream.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","stream.rs"]]],["mod.rs","udp.rs"]],["sys",[["unix",[["selector",[],["epoll.rs","mod.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","socketaddr.rs","stream.rs"]]],["mod.rs","net.rs","pipe.rs","sourcefd.rs","tcp.rs","udp.rs","waker.rs"]]],["mod.rs"]]],["interest.rs","io_source.rs","lib.rs","macros.rs","poll.rs","token.rs","waker.rs"]],\
 "nix":["",[["mount",[],["linux.rs","mod.rs"]],["net",[],["if_.rs","mod.rs"]],["sys",[["ioctl",[],["linux.rs","mod.rs"]],["ptrace",[],["linux.rs","mod.rs"]],["socket",[],["addr.rs","mod.rs","sockopt.rs"]]],["aio.rs","epoll.rs","eventfd.rs","inotify.rs","memfd.rs","mman.rs","mod.rs","personality.rs","pthread.rs","quota.rs","reboot.rs","resource.rs","select.rs","sendfile.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","termios.rs","time.rs","timer.rs","timerfd.rs","uio.rs","utsname.rs","wait.rs"]]],["dir.rs","env.rs","errno.rs","fcntl.rs","features.rs","ifaddrs.rs","kmod.rs","lib.rs","macros.rs","mqueue.rs","poll.rs","pty.rs","sched.rs","time.rs","ucontext.rs","unistd.rs"]],\
 "nu_ansi_term":["",[],["ansi.rs","debug.rs","difference.rs","display.rs","gradient.rs","lib.rs","rgb.rs","style.rs","util.rs","windows.rs","write.rs"]],\
-"odilia":["",[["events",[],["document.rs","mod.rs","object.rs"]]],["logging.rs","main.rs","state.rs"]],\
+"odilia":["",[["events",[],["cache.rs","document.rs","mod.rs","object.rs"]]],["logging.rs","main.rs","state.rs"]],\
 "odilia_cache":["",[],["lib.rs"]],\
 "odilia_common":["",[["settings",[],["log.rs","mod.rs","speech.rs"]]],["elements.rs","errors.rs","events.rs","input.rs","lib.rs","modes.rs","result.rs","types.rs"]],\
 "odilia_input":["",[],["lib.rs"]],\
@@ -80,10 +75,8 @@ var sourcesIndex = JSON.parse('{\
 "pin_utils":["",[],["lib.rs","projection.rs","stack_pin.rs"]],\
 "polling":["",[],["epoll.rs","lib.rs"]],\
 "ppv_lite86":["",[["x86_64",[],["mod.rs","sse2.rs"]]],["lib.rs","soft.rs","types.rs"]],\
-"prettyplease":["",[],["algorithm.rs","attr.rs","convenience.rs","data.rs","expr.rs","file.rs","generics.rs","item.rs","iter.rs","lib.rs","lifetime.rs","lit.rs","mac.rs","pat.rs","path.rs","ring.rs","stmt.rs","token.rs","ty.rs"]],\
 "proc_macro2":["",[],["detection.rs","fallback.rs","lib.rs","marker.rs","parse.rs","rcvec.rs","wrapper.rs"]],\
 "proc_macro_crate":["",[],["lib.rs"]],\
-"quick_xml":["",[["de",[],["escape.rs","map.rs","mod.rs","seq.rs","simple_type.rs","var.rs"]],["events",[],["attributes.rs","mod.rs"]],["reader",[],["buffered_reader.rs","mod.rs","ns_reader.rs","parser.rs","slice_reader.rs"]],["se",[],["key.rs","mod.rs","var.rs"]]],["encoding.rs","errors.rs","escapei.rs","lib.rs","name.rs","utils.rs","writer.rs"]],\
 "quote":["",[],["ext.rs","format.rs","ident_fragment.rs","lib.rs","runtime.rs","spanned.rs","to_tokens.rs"]],\
 "rand":["",[["distributions",[],["bernoulli.rs","distribution.rs","float.rs","integer.rs","mod.rs","other.rs","slice.rs","uniform.rs","utils.rs","weighted.rs","weighted_index.rs"]],["rngs",[["adapter",[],["mod.rs","read.rs","reseeding.rs"]]],["mock.rs","mod.rs","std.rs","thread.rs"]],["seq",[],["index.rs","mod.rs"]]],["lib.rs","prelude.rs","rng.rs"]],\
 "rand_chacha":["",[],["chacha.rs","guts.rs","lib.rs"]],\
@@ -98,8 +91,6 @@ var sourcesIndex = JSON.parse('{\
 "serde_derive":["",[["internals",[],["ast.rs","attr.rs","case.rs","check.rs","ctxt.rs","mod.rs","receiver.rs","respan.rs","symbol.rs"]]],["bound.rs","de.rs","dummy.rs","fragment.rs","lib.rs","pretend.rs","ser.rs","this.rs","try.rs"]],\
 "serde_json":["",[["features_check",[],["mod.rs"]],["io",[],["mod.rs"]],["value",[],["de.rs","from.rs","index.rs","mod.rs","partial_eq.rs","ser.rs"]]],["de.rs","error.rs","iter.rs","lib.rs","macros.rs","map.rs","number.rs","read.rs","ser.rs"]],\
 "serde_repr":["",[],["lib.rs","parse.rs"]],\
-"serde_with":["",[["content",[],["mod.rs","ser.rs"]],["de",[],["impls.rs","mod.rs"]],["duplicate_key_impls",[],["error_on_duplicate.rs","first_value_wins.rs","last_value_wins.rs","mod.rs"]],["ser",[],["impls.rs","mod.rs"]],["utils",[],["duration.rs"]]],["enum_map.rs","flatten_maybe.rs","formats.rs","lib.rs","rust.rs","serde_conv.rs","utils.rs","with_prefix.rs"]],\
-"serde_with_macros":["",[],["apply.rs","lib.rs","utils.rs"]],\
 "serde_xml_rs":["",[["de",[],["map.rs","mod.rs","seq.rs","var.rs"]],["ser",[],["mod.rs","var.rs"]]],["error.rs","lib.rs"]],\
 "sha1":["",[["compress",[],["soft.rs","x86.rs"]]],["compress.rs","lib.rs"]],\
 "sharded_slab":["",[["page",[],["mod.rs","slot.rs","stack.rs"]]],["cfg.rs","clear.rs","implementation.rs","iter.rs","lib.rs","macros.rs","pool.rs","shard.rs","sync.rs","tid.rs"]],\
@@ -110,7 +101,6 @@ var sourcesIndex = JSON.parse('{\
 "socket2":["",[["sys",[],["unix.rs"]]],["lib.rs","sockaddr.rs","socket.rs","sockref.rs"]],\
 "ssip_client":["",[],["async_std.rs","client.rs","constants.rs","fifo.rs","lib.rs","net.rs","poll.rs","protocol.rs","tcp.rs","tokio.rs","types.rs"]],\
 "static_assertions":["",[],["assert_cfg.rs","assert_eq_align.rs","assert_eq_size.rs","assert_fields.rs","assert_impl.rs","assert_obj_safe.rs","assert_trait.rs","assert_type.rs","const_assert.rs","lib.rs"]],\
-"strsim":["",[],["lib.rs"]],\
 "strum":["",[],["additional_attributes.rs","lib.rs"]],\
 "strum_macros":["",[["helpers",[],["case_style.rs","metadata.rs","mod.rs","type_props.rs","variant_props.rs"]],["macros",[["strings",[],["as_ref_str.rs","display.rs","from_string.rs","mod.rs","to_string.rs"]]],["enum_count.rs","enum_discriminants.rs","enum_iter.rs","enum_messages.rs","enum_properties.rs","enum_variant_names.rs","from_repr.rs","mod.rs"]]],["lib.rs"]],\
 "syn":["",[["gen",[],["clone.rs","debug.rs","eq.rs","fold.rs","gen_helper.rs","hash.rs","visit.rs","visit_mut.rs"]]],["attr.rs","await.rs","bigint.rs","buffer.rs","custom_keyword.rs","custom_punctuation.rs","data.rs","derive.rs","discouraged.rs","drops.rs","error.rs","export.rs","expr.rs","ext.rs","file.rs","generics.rs","group.rs","ident.rs","item.rs","lib.rs","lifetime.rs","lit.rs","lookahead.rs","mac.rs","macros.rs","op.rs","parse.rs","parse_macro_input.rs","parse_quote.rs","pat.rs","path.rs","print.rs","punctuated.rs","reserved.rs","sealed.rs","span.rs","spanned.rs","stmt.rs","thread.rs","token.rs","tt.rs","ty.rs","verbatim.rs","whitespace.rs"]],\
@@ -135,7 +125,7 @@ var sourcesIndex = JSON.parse('{\
 "waker_fn":["",[],["lib.rs"]],\
 "xdg":["",[],["lib.rs"]],\
 "xml":["",[["reader",[["parser",[],["inside_cdata.rs","inside_closing_tag_name.rs","inside_comment.rs","inside_declaration.rs","inside_doctype.rs","inside_opening_tag.rs","inside_processing_instruction.rs","inside_reference.rs","mod.rs","outside_tag.rs"]]],["config.rs","error.rs","events.rs","lexer.rs","mod.rs"]],["writer",[],["config.rs","emitter.rs","events.rs","mod.rs"]]],["attribute.rs","common.rs","escape.rs","lib.rs","macros.rs","name.rs","namespace.rs","util.rs"]],\
-"zbus":["",[["abstractions",[],["async_channel.rs","async_lock.rs","executor.rs","mod.rs"]],["blocking",[],["connection.rs","connection_builder.rs","fdo.rs","message_iterator.rs","mod.rs","object_server.rs","proxy.rs","proxy_builder.rs"]],["raw",[],["connection.rs","handshake.rs","mod.rs","socket.rs"]]],["address.rs","connection.rs","connection_builder.rs","dbus_error.rs","error.rs","fdo.rs","guid.rs","handshake.rs","interface.rs","lib.rs","match_rule.rs","match_rule_builder.rs","message.rs","message_field.rs","message_fields.rs","message_header.rs","message_stream.rs","object_server.rs","proxy.rs","proxy_builder.rs","quick_xml.rs","signal_context.rs","utils.rs","xml.rs"]],\
+"zbus":["",[["abstractions",[],["async_channel.rs","async_lock.rs","executor.rs","mod.rs"]],["blocking",[],["connection.rs","connection_builder.rs","fdo.rs","message_iterator.rs","mod.rs","object_server.rs","proxy.rs","proxy_builder.rs"]],["raw",[],["connection.rs","handshake.rs","mod.rs","socket.rs"]]],["address.rs","connection.rs","connection_builder.rs","dbus_error.rs","error.rs","fdo.rs","guid.rs","handshake.rs","interface.rs","lib.rs","match_rule.rs","match_rule_builder.rs","message.rs","message_field.rs","message_fields.rs","message_header.rs","message_stream.rs","object_server.rs","proxy.rs","proxy_builder.rs","signal_context.rs","utils.rs","xml.rs"]],\
 "zbus_macros":["",[],["error.rs","iface.rs","lib.rs","proxy.rs","utils.rs"]],\
 "zbus_names":["",[],["bus_name.rs","error.rs","error_name.rs","interface_name.rs","lib.rs","member_name.rs","unique_name.rs","well_known_name.rs"]],\
 "zvariant":["",[["dbus",[],["de.rs","mod.rs","ser.rs"]],["gvariant",[],["de.rs","mod.rs","ser.rs"]]],["array.rs","basic.rs","container_depths.rs","de.rs","deserialize_value.rs","dict.rs","encoding_context.rs","error.rs","fd.rs","framing_offset_size.rs","framing_offsets.rs","from_value.rs","into_value.rs","lib.rs","maybe.rs","object_path.rs","optional.rs","owned_value.rs","ser.rs","serialize_value.rs","signature.rs","signature_parser.rs","str.rs","structure.rs","type.rs","utils.rs","value.rs"]],\

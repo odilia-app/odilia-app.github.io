@@ -224,6 +224,43 @@
 <span id="224">224</span>
 <span id="225">225</span>
 <span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
 </pre><pre class="rust"><code><span class="kw">use </span>atspi::{accessible::{Role, AccessibleProxy}, accessible_ext::{AccessibleId, AccessibleExt}, InterfaceSet, StateSet, events::GenericEvent, error::ObjectPathConversionError};
 <span class="kw">use </span>tokio::sync::RwLock;
 <span class="kw">use </span>std::{
@@ -235,6 +272,7 @@
 <span class="kw">use </span>zbus::{
   ProxyBuilder,
   zvariant::{ObjectPath, OwnedObjectPath},
+	names::OwnedUniqueName,
 };
 
 <span class="attribute">#[derive(Clone, Debug)]
@@ -264,9 +302,9 @@
 /// This makes some *possibly eronious* assumptions about what the sender is.
 </span><span class="kw">pub struct </span>AccessiblePrimitive {
 	<span class="doccomment">/// The accessible ID in /org/a11y/atspi/accessible/XYZ; note that XYZ may be equal to any positive number, 0, &quot;null&quot;, or &quot;root&quot;.
-	</span>id: AccessibleId,
+	</span><span class="kw">pub </span>id: AccessibleId,
 	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the (x,y) portion of this sender.
-	</span>sender: String,
+	</span><span class="kw">pub </span>sender: String,
 }
 <span class="kw">impl </span>AccessiblePrimitive {
   <span class="attribute">#[allow(dead_code)]
@@ -292,6 +330,25 @@
 			sender: sender.to_string(),
 		})
 	}
+}
+<span class="kw">impl </span>TryFrom&lt;atspi::events::Accessible&gt; <span class="kw">for </span>AccessiblePrimitive {
+  <span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+
+  <span class="kw">fn </span>try_from(atspi_accessible: atspi::events::Accessible) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">let </span>tuple_converter = (atspi_accessible.name, atspi_accessible.path);
+		tuple_converter.try_into()
+  }
+}
+<span class="kw">impl </span>TryFrom&lt;(OwnedUniqueName, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
+  <span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+
+  <span class="kw">fn </span>try_from(so: (OwnedUniqueName, OwnedObjectPath)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+    <span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(AccessiblePrimitive {
+      id: accessible_id,
+      sender: so.<span class="number">0</span>.to_string(),
+    })
+  }
 }
 <span class="kw">impl </span>TryFrom&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
   <span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
@@ -365,6 +422,23 @@
 	</span><span class="kw">pub </span>states: StateSet,
 	<span class="comment">// The text of the accessible.
 	</span><span class="kw">pub </span>text: String,
+}
+<span class="kw">impl </span>TryFrom&lt;atspi::cache::CacheItem&gt; <span class="kw">for </span>CacheItem {
+	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+
+	<span class="kw">fn </span>try_from(atspi_cache_item: atspi::cache::CacheItem) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+			object: atspi_cache_item.object.try_into()<span class="question-mark">?</span>,
+			app: atspi_cache_item.app.try_into()<span class="question-mark">?</span>,
+			parent: atspi_cache_item.parent.try_into()<span class="question-mark">?</span>,
+			index: atspi_cache_item.index,
+			children: atspi_cache_item.children,
+			ifaces: atspi_cache_item.ifaces,
+			role: atspi_cache_item.role,
+			states: atspi_cache_item.states,
+			text: atspi_cache_item.name,
+		})
+	}
 }
 
 <span class="doccomment">/// The root of the accessible cache.

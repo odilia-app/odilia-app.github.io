@@ -44,19 +44,6 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
-<span id="47">47</span>
-<span id="48">48</span>
-<span id="49">49</span>
-<span id="50">50</span>
-<span id="51">51</span>
-<span id="52">52</span>
-<span id="53">53</span>
-<span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
 </pre><pre class="rust"><code><span class="kw">use </span>zbus::{
 	zvariant::ObjectPath,
 	names::UniqueName,
@@ -72,25 +59,12 @@
 };
 
 <span class="kw">pub async fn </span>load_complete(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>LoadCompleteEvent) -&gt; eyre::Result&lt;()&gt; {
-	<span class="macro">println!</span>(<span class="string">&quot;LOAD COMPLETE STARTS&quot;</span>);
 	<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
-	<span class="macro">println!</span>(<span class="string">&quot;GOT SENDER&quot;</span>);
-	<span class="kw">let </span>accessible: AccessibleProxy = AccessiblePrimitive::from_event(event).unwrap().into_accessible(state.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="macro">println!</span>(<span class="string">&quot;Turned into accessible&quot;</span>);
-	<span class="kw">let </span>app: AccessiblePrimitive = accessible.get_application().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
-	<span class="macro">println!</span>(<span class="string">&quot;Became a11y_prim&quot;</span>);
-	<span class="kw">let </span>application_proxy = app.into_accessible(state.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="macro">println!</span>(<span class="string">&quot;Became proxy&quot;</span>);
-	<span class="kw">let </span>name_of_dest = application_proxy.destination().to_string();
-	<span class="macro">println!</span>(<span class="string">&quot;Got dest&quot;</span>);
 	<span class="kw">let </span>cache = state.build_cache(
 		UniqueName::try_from(sender.clone())<span class="question-mark">?</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="macro">println!</span>(<span class="string">&quot;Built cache&quot;</span>);
 	<span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="macro">println!</span>(<span class="string">&quot;Cache items got!&quot;</span>);
 	<span class="kw">let </span><span class="kw-2">mut </span>cache_items = Vec::new();
 	<span class="kw">for </span>item <span class="kw">in </span>entire_cache {
-		<span class="macro">println!</span>(<span class="string">&quot;NEW CACHE ITEM: {:#?}&quot;</span>, item.object.<span class="number">1</span>);
 		cache_items.push(CacheItem {
 			object: item.object.try_into().unwrap(),
 			app: item.app.try_into().unwrap(),

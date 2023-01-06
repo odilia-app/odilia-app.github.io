@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.6.2/src/connection.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.7.0/src/connection.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -1617,16 +1617,25 @@
 <span id="1616">1616</span>
 <span id="1617">1617</span>
 <span id="1618">1618</span>
-</pre><pre class="rust"><code><span class="kw">use </span>async_broadcast::{broadcast, InactiveReceiver, Sender <span class="kw">as </span>Broadcaster};
+<span id="1619">1619</span>
+<span id="1620">1620</span>
+<span id="1621">1621</span>
+<span id="1622">1622</span>
+<span id="1623">1623</span>
+<span id="1624">1624</span>
+<span id="1625">1625</span>
+<span id="1626">1626</span>
+<span id="1627">1627</span>
+<span id="1628">1628</span>
+</pre><pre class="rust"><code><span class="kw">use </span>async_broadcast::{broadcast, InactiveReceiver, Receiver, Sender <span class="kw">as </span>Broadcaster};
 <span class="kw">use </span>enumflags2::BitFlags;
-<span class="kw">use </span>event_listener::EventListener;
+<span class="kw">use </span>event_listener::{Event, EventListener};
 <span class="kw">use </span>once_cell::sync::OnceCell;
 <span class="kw">use </span>ordered_stream::{OrderedFuture, OrderedStream, PollResult};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::{
     collections::HashMap,
     convert::TryInto,
-    future::ready,
     io::{<span class="self">self</span>, ErrorKind},
     ops::Deref,
     pin::Pin,
@@ -1646,17 +1655,18 @@
 <span class="kw">use </span>futures_util::{sink::SinkExt, StreamExt, TryFutureExt};
 
 <span class="kw">use crate</span>::{
-    async_channel::{channel, Receiver, Sender},
     async_lock::Mutex,
     blocking,
     fdo::{<span class="self">self</span>, RequestNameFlags, RequestNameReply},
     raw::{Connection <span class="kw">as </span>RawConnection, Socket},
-    Authenticated, CacheProperties, ConnectionBuilder, DBusError, Error, Executor, Guid, Message,
-    MessageBuilder, MessageFlags, MessageStream, MessageType, ObjectServer, OwnedMatchRule, <span class="prelude-ty">Result</span>,
-    Task,
+    socket_reader::SocketReader,
+    Authenticated, CacheProperties, ConnectionBuilder, DBusError, Error, Executor, Guid, MatchRule,
+    Message, MessageBuilder, MessageFlags, MessageStream, MessageType, ObjectServer,
+    OwnedMatchRule, <span class="prelude-ty">Result</span>, Task,
 };
 
 <span class="kw">const </span>DEFAULT_MAX_QUEUED: usize = <span class="number">64</span>;
+<span class="kw">const </span>DEFAULT_MAX_METHOD_RETURN_QUEUED: usize = <span class="number">8</span>;
 
 <span class="doccomment">/// Inner state shared by Connection and WeakConnection
 </span><span class="attribute">#[derive(Debug)]
@@ -1676,82 +1686,29 @@
     <span class="comment">// Our executor
     </span>executor: Executor&lt;<span class="lifetime">&#39;static</span>&gt;,
 
-    <span class="comment">// Message receiver task
+    <span class="comment">// Socket reader task
     </span><span class="attribute">#[allow(unused)]
-    </span>msg_receiver_task: Task&lt;()&gt;,
+    </span>socket_reader_task: OnceCell&lt;Task&lt;()&gt;&gt;,
 
-    signal_matches: Mutex&lt;HashMap&lt;OwnedMatchRule, u64&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) msg_receiver: InactiveReceiver&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) method_return_receiver: InactiveReceiver&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;,
+    msg_senders: Arc&lt;Mutex&lt;HashMap&lt;<span class="prelude-ty">Option</span>&lt;OwnedMatchRule&gt;, MsgBroadcaster&gt;&gt;&gt;,
+
+    subscriptions: Mutex&lt;Subscriptions&gt;,
 
     object_server: OnceCell&lt;blocking::ObjectServer&gt;,
     object_server_dispatch_task: OnceCell&lt;Task&lt;()&gt;&gt;,
 }
 
+<span class="kw">type </span>Subscriptions = HashMap&lt;OwnedMatchRule, (u64, InactiveReceiver&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;)&gt;;
+
 <span class="comment">// FIXME: Should really use [`AsyncDrop`] for `ConnectionInner` when we&#39;ve something like that to
-//        cancel `msg_receiver_task` manually to ensure task is gone before the connection is. Same
+//        cancel `socket_reader_task` manually to ensure task is gone before the connection is. Same
 //        goes for the registered well-known names.
 //
 // [`AsyncDrop`]: https://github.com/rust-lang/wg-async-foundations/issues/65
 
-</span><span class="attribute">#[derive(Debug)]
-</span><span class="kw">struct </span>MessageReceiverTask {
-    raw_conn: Arc&lt;sync::Mutex&lt;RawConnection&lt;Box&lt;<span class="kw">dyn </span>Socket&gt;&gt;&gt;&gt;,
-
-    <span class="comment">// Message broadcaster.
-    </span>msg_sender: Broadcaster&lt;Arc&lt;Message&gt;&gt;,
-
-    <span class="comment">// Sender side of the error channel
-    </span>error_sender: Sender&lt;Error&gt;,
-}
-
-<span class="kw">impl </span>MessageReceiverTask {
-    <span class="kw">fn </span>new(
-        raw_conn: Arc&lt;sync::Mutex&lt;RawConnection&lt;Box&lt;<span class="kw">dyn </span>Socket&gt;&gt;&gt;&gt;,
-        msg_sender: Broadcaster&lt;Arc&lt;Message&gt;&gt;,
-        error_sender: Sender&lt;Error&gt;,
-    ) -&gt; Arc&lt;<span class="self">Self</span>&gt; {
-        Arc::new(<span class="self">Self </span>{
-            raw_conn,
-            msg_sender,
-            error_sender,
-        })
-    }
-
-    <span class="kw">fn </span>spawn(<span class="self">self</span>: Arc&lt;<span class="self">Self</span>&gt;, executor: <span class="kw-2">&amp;</span>Executor&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Task&lt;()&gt; {
-        executor.spawn(<span class="self">self</span>.receive_msg(), <span class="string">&quot;socket reader&quot;</span>)
-    }
-
-    <span class="comment">// Keep receiving messages and put them on the queue.
-    </span><span class="attribute">#[instrument(name = <span class="string">&quot;socket reader&quot;</span>, skip(<span class="self">self</span>))]
-    </span><span class="kw">async fn </span>receive_msg(<span class="self">self</span>: Arc&lt;<span class="self">Self</span>&gt;) {
-        <span class="kw">loop </span>{
-            <span class="macro">trace!</span>(<span class="string">&quot;Waiting for message on the socket..&quot;</span>);
-            <span class="kw">let </span>receive_msg = ReceiveMessage {
-                raw_conn: <span class="kw-2">&amp;</span><span class="self">self</span>.raw_conn,
-            };
-            <span class="kw">let </span>msg = <span class="kw">match </span>receive_msg.<span class="kw">await </span>{
-                <span class="prelude-val">Ok</span>(msg) =&gt; msg,
-                <span class="prelude-val">Err</span>(e) =&gt; {
-                    <span class="macro">trace!</span>(<span class="string">&quot;Error reading from the socket: {:?}&quot;</span>, e);
-                    <span class="self">self</span>.error_sender.send(e).<span class="kw">await</span>;
-                    <span class="self">self</span>.msg_sender.close();
-                    <span class="macro">trace!</span>(<span class="string">&quot;Socket reading task stopped&quot;</span>);
-
-                    <span class="kw">return</span>;
-                }
-            };
-            <span class="macro">trace!</span>(<span class="string">&quot;Message received on the socket: {:?}&quot;</span>, msg);
-
-            <span class="kw">let </span>msg = Arc::new(msg);
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="self">self</span>.msg_sender.broadcast(msg.clone()).<span class="kw">await </span>{
-                <span class="comment">// An error would be due to the channel being closed, which only happens when the
-                // connection is dropped, so just stop the task.
-                </span><span class="macro">debug!</span>(<span class="string">&quot;Error broadcasting message to streams: {:?}&quot;</span>, e);
-                <span class="kw">return</span>;
-            }
-            <span class="macro">trace!</span>(<span class="string">&quot;Message broadcasted to all streams: {:?}&quot;</span>, msg);
-        }
-    }
-}
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type </span>MsgBroadcaster = Broadcaster&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;;
 
 <span class="doccomment">/// A D-Bus connection.
 ///
@@ -1774,11 +1731,12 @@
 /// parts of your code. `Connection` also implements [`std::marker::Sync`] and [`std::marker::Send`]
 /// so you can send and share a connection instance across threads as well.
 ///
-/// `Connection` keeps an internal queue of incoming message. The maximum capacity of this queue
-/// is configurable through the [`set_max_queued`] method. The default size is 64. When the queue is
-/// full, no more messages can be received until room is created for more. This is why it&#39;s
-/// important to ensure that all [`crate::MessageStream`] and [`crate::blocking::MessageIterator`]
-/// instances are continuously polled and iterated on, respectively.
+/// `Connection` keeps internal queues of incoming message. The default capacity of each of these is
+/// 64. The capacity of the main (unfiltered) queue is configurable through the [`set_max_queued`]
+/// method. When the queue is full, no more messages can be received until room is created for more.
+/// This is why it&#39;s important to ensure that all [`crate::MessageStream`] and
+/// [`crate::blocking::MessageIterator`] instances are continuously polled and iterated on,
+/// respectively.
 ///
 /// For sending messages you can either use [`Connection::send_message`] method or make use of the
 /// [`Sink`] implementation. For latter, you might find [`SinkExt`] API very useful. Keep in mind
@@ -1878,11 +1836,6 @@
 </span><span class="attribute">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Connection {
     <span class="kw">pub</span>(<span class="kw">crate</span>) inner: Arc&lt;ConnectionInner&gt;,
-
-    <span class="kw">pub</span>(<span class="kw">crate</span>) msg_receiver: InactiveReceiver&lt;Arc&lt;Message&gt;&gt;,
-
-    <span class="comment">// Receiver side of the error channel
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) error_receiver: Receiver&lt;Error&gt;,
 }
 
 <span class="macro">assert_impl_all!</span>(Connection: Send, Sync, Unpin);
@@ -1904,10 +1857,9 @@
     <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
         <span class="self">self</span>.poll_before(cx, <span class="prelude-val">None</span>).map(|ret| {
             ret.map(|(<span class="kw">_</span>, r)| r).unwrap_or_else(|| {
-                <span class="prelude-val">Err</span>(<span class="kw">crate</span>::Error::Io(io::Error::new(
-                    ErrorKind::BrokenPipe,
-                    <span class="string">&quot;socket closed&quot;</span>,
-                )))
+                <span class="prelude-val">Err</span>(<span class="kw">crate</span>::Error::InputOutput(
+                    io::Error::new(ErrorKind::BrokenPipe, <span class="string">&quot;socket closed&quot;</span>).into(),
+                ))
             })
         })
     }
@@ -2062,7 +2014,13 @@
         }
         <span class="kw">let </span>msg = builder.build(body)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>stream = <span class="prelude-val">Some</span>(MessageStream::from(<span class="self">self</span>.clone()));
+        <span class="kw">let </span>msg_receiver = <span class="self">self</span>.inner.method_return_receiver.activate_cloned();
+        <span class="kw">let </span>stream = <span class="prelude-val">Some</span>(MessageStream::for_subscription_channel(
+            msg_receiver,
+            <span class="comment">// This is a lie but we only use the stream internally so it&#39;s fine.
+            </span><span class="prelude-val">None</span>,
+            <span class="self">self</span>,
+        ));
         <span class="kw">let </span>serial = <span class="self">self</span>.send_message(msg).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">if </span>flags.contains(MessageFlags::NoReplyExpected) {
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
@@ -2493,14 +2451,14 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="doccomment">/// Max number of messages to queue.
+    <span class="doccomment">/// The capacity of the main (unfiltered) queue.
     </span><span class="kw">pub fn </span>max_queued(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.msg_receiver.capacity()
+        <span class="self">self</span>.inner.msg_receiver.capacity()
     }
 
-    <span class="doccomment">/// Set the max number of messages to queue.
+    <span class="doccomment">/// Set the capacity of the main (unfiltered) queue.
     </span><span class="kw">pub fn </span>set_max_queued(<span class="kw-2">&amp;mut </span><span class="self">self</span>, max: usize) {
-        <span class="self">self</span>.msg_receiver.set_capacity(max);
+        <span class="self">self</span>.inner.msg_receiver.clone().set_capacity(max);
     }
 
     <span class="doccomment">/// The server&#39;s GUID.
@@ -2520,7 +2478,9 @@
     /// scheduler:
     ///
     /// ```
-    ///# #[cfg(not(feature = &quot;tokio&quot;))]
+    ///# // Disable on windows because somehow it triggers a stack overflow there:
+    ///# // https://gitlab.freedesktop.org/zeenix/zbus/-/jobs/34023494
+    ///# #[cfg(all(not(feature = &quot;tokio&quot;), not(target_os = &quot;windows&quot;)))]
     ///# {
     /// use zbus::ConnectionBuilder;
     /// use async_std::task::{block_on, spawn};
@@ -2549,8 +2509,8 @@
     /// **Note**: zbus 2.1 added support for tight integration with tokio. This means, if you use
     /// zbus with tokio, you do not need to worry about this at all. All you need to do is enable
     /// `tokio` feature. You should also disable the (default) `async-io` feature in your
-    /// `Cargo.toml` to drop avoid unused dependencies. Also note that **prior** to zbus 3.0,
-    /// disabling `async-io` was required to enable tight `tokio` integration.
+    /// `Cargo.toml` to avoid unused dependencies. Also note that **prior** to zbus 3.0, disabling
+    /// `async-io` was required to enable tight `tokio` integration.
     ///
     /// [tte]: https://docs.rs/async-executor/1.4.1/async_executor/struct.Executor.html#method.tick
     </span><span class="kw">pub fn </span>executor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Executor&lt;<span class="lifetime">&#39;static</span>&gt; {
@@ -2576,35 +2536,67 @@
             }
         }
 
-        Wrapper(<span class="self">self</span>.sync_object_server(<span class="bool-val">true</span>))
+        Wrapper(<span class="self">self</span>.sync_object_server(<span class="bool-val">true</span>, <span class="prelude-val">None</span>))
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>sync_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>, start: bool) -&gt; <span class="kw-2">&amp;</span>blocking::ObjectServer {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>sync_object_server(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        start: bool,
+        started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;,
+    ) -&gt; <span class="kw-2">&amp;</span>blocking::ObjectServer {
         <span class="self">self</span>.inner
             .object_server
-            .get_or_init(|| <span class="self">self</span>.setup_object_server(start))
+            .get_or_init(<span class="kw">move </span>|| <span class="self">self</span>.setup_object_server(start, started_event))
     }
 
-    <span class="kw">fn </span>setup_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>, start: bool) -&gt; blocking::ObjectServer {
+    <span class="kw">fn </span>setup_object_server(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        start: bool,
+        started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;,
+    ) -&gt; blocking::ObjectServer {
         <span class="kw">if </span>start {
-            <span class="self">self</span>.start_object_server();
+            <span class="self">self</span>.start_object_server(started_event);
         }
 
         blocking::ObjectServer::new(<span class="self">self</span>)
     }
 
     <span class="attribute">#[instrument(skip(<span class="self">self</span>))]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>start_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>start_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>, started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;) {
         <span class="self">self</span>.inner.object_server_dispatch_task.get_or_init(|| {
             <span class="macro">trace!</span>(<span class="string">&quot;starting ObjectServer task&quot;</span>);
             <span class="kw">let </span>weak_conn = WeakConnection::from(<span class="self">self</span>);
-            <span class="kw">let </span><span class="kw-2">mut </span>stream = MessageStream::from(<span class="self">self</span>.clone()).filter(|msg| {
-                ready(msg.as_ref().map(|m| m.message_type() == MessageType::MethodCall).unwrap_or_default())
-            });
 
             <span class="kw">let </span>obj_server_task_name = <span class="string">&quot;ObjectServer task&quot;</span>;
             <span class="self">self</span>.inner.executor.spawn(
                 <span class="kw">async move </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>stream = <span class="kw">match </span>weak_conn.upgrade() {
+                        <span class="prelude-val">Some</span>(conn) =&gt; {
+                            <span class="kw">let </span><span class="kw-2">mut </span>builder = MatchRule::builder().msg_type(MessageType::MethodCall);
+                            <span class="kw">if let </span><span class="prelude-val">Some</span>(unique_name) = conn.unique_name() {
+                                builder = builder.destination(<span class="kw-2">&amp;**</span>unique_name).expect(<span class="string">&quot;unique name&quot;</span>);
+                            }
+                            <span class="kw">let </span>rule = builder.build();
+                            <span class="kw">match </span>MessageStream::for_match_rule(rule, <span class="kw-2">&amp;</span>conn, <span class="prelude-val">None</span>).<span class="kw">await </span>{
+                                <span class="prelude-val">Ok</span>(stream) =&gt; stream,
+                                <span class="prelude-val">Err</span>(e) =&gt; {
+                                    <span class="comment">// Very unlikely but can happen I guess if connection is closed.
+                                    </span><span class="macro">debug!</span>(<span class="string">&quot;Failed to create message stream: {}&quot;</span>, e);
+
+                                    <span class="kw">return</span>;
+                                }
+                            }
+                        }
+                        <span class="prelude-val">None </span>=&gt; {
+                            <span class="macro">trace!</span>(<span class="string">&quot;Connection is gone, stopping associated object server task&quot;</span>);
+
+                            <span class="kw">return</span>;
+                        }
+                    };
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(started_event) = started_event {
+                        started_event.notify(<span class="number">1</span>);
+                    }
+
                     <span class="macro">trace!</span>(<span class="string">&quot;waiting for incoming method call messages..&quot;</span>);
                     <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = stream.next().<span class="kw">await</span>.and_then(|m| {
                         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="kw-2">&amp;</span>m {
@@ -2622,16 +2614,8 @@
                                 }
                             };
                             <span class="kw">match </span>hdr.destination() {
-                                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::Unique(dest))) =&gt; {
-                                    <span class="kw">match </span>conn.unique_name().map(|n| <span class="kw-2">&amp;**</span>n) {
-                                        <span class="prelude-val">Some</span>(unique_name) <span class="kw">if </span>dest != unique_name =&gt; {
-                                            <span class="macro">trace!</span>(<span class="string">&quot;Got a method call for a different destination: {}&quot;</span>, dest);
-
-                                            <span class="kw">continue</span>;
-                                        }
-                                        <span class="kw">_ </span>=&gt; (),
-                                    }
-                                }
+                                <span class="comment">// Unique name is already checked by the match rule.
+                                </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>))) =&gt; (),
                                 <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::WellKnown(dest))) =&gt; {
                                     <span class="kw">let </span>names = conn.inner.registered_names.lock().<span class="kw">await</span>;
                                     <span class="comment">// destination doesn&#39;t matter if no name has been registered
@@ -2663,7 +2647,7 @@
                             };
                             <span class="macro">trace!</span>(<span class="string">&quot;Got `{}`. Will spawn a task for dispatch..&quot;</span>, msg);
                             <span class="kw">let </span>executor = conn.inner.executor.clone();
-                            <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;`{}` method dispatcher&quot;</span>, member);
+                            <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;`{member}` method dispatcher&quot;</span>);
                             executor
                                 .spawn(
                                     <span class="kw">async move </span>{
@@ -2693,49 +2677,85 @@
         });
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>add_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: OwnedMatchRule) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>add_match(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        rule: OwnedMatchRule,
+        max_queued: <span class="prelude-ty">Option</span>&lt;usize&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Receiver&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;&gt; {
         <span class="kw">use </span>std::collections::hash_map::Entry;
-        <span class="kw">if </span>!<span class="self">self</span>.is_bus() {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-        }
-        <span class="kw">let </span><span class="kw-2">mut </span>subscriptions = <span class="self">self</span>.inner.signal_matches.lock().<span class="kw">await</span>;
-        <span class="kw">match </span>subscriptions.entry(rule) {
-            Entry::Vacant(e) =&gt; {
-                fdo::DBusProxy::builder(<span class="self">self</span>)
-                    .cache_properties(CacheProperties::No)
-                    .build()
-                    .<span class="kw">await</span><span class="question-mark">?
-                    </span>.add_match_rule(e.key().inner().clone())
-                    .<span class="kw">await</span><span class="question-mark">?</span>;
-                e.insert(<span class="number">1</span>);
-            }
-            Entry::Occupied(<span class="kw-2">mut </span>e) =&gt; {
-                <span class="kw-2">*</span>e.get_mut() += <span class="number">1</span>;
-            }
-        }
-        <span class="prelude-val">Ok</span>(())
-    }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>remove_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: OwnedMatchRule) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
-        <span class="kw">use </span>std::collections::hash_map::Entry;
-        <span class="kw">if </span>!<span class="self">self</span>.is_bus() {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
+        <span class="kw">if </span><span class="self">self</span>.inner.msg_senders.lock().<span class="kw">await</span>.is_empty() {
+            <span class="comment">// This only happens if socket reader task has errored out.
+            </span><span class="kw">return </span><span class="prelude-val">Err</span>(Error::InputOutput(Arc::new(io::Error::new(
+                io::ErrorKind::BrokenPipe,
+                <span class="string">&quot;Socket reader task has errored out&quot;</span>,
+            ))));
         }
-        <span class="kw">let </span><span class="kw-2">mut </span>subscriptions = <span class="self">self</span>.inner.signal_matches.lock().<span class="kw">await</span>;
-        <span class="comment">// TODO when it becomes stable, use HashMap::raw_entry and only require expr: &amp;str
-        // (both here and in add_match)
-        </span><span class="kw">match </span>subscriptions.entry(rule) {
-            Entry::Vacant(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
-            Entry::Occupied(<span class="kw-2">mut </span>e) =&gt; {
-                <span class="kw-2">*</span>e.get_mut() -= <span class="number">1</span>;
-                <span class="kw">if </span><span class="kw-2">*</span>e.get() == <span class="number">0 </span>{
+
+        <span class="kw">let </span><span class="kw-2">mut </span>subscriptions = <span class="self">self</span>.inner.subscriptions.lock().<span class="kw">await</span>;
+        <span class="kw">let </span>msg_type = rule.msg_type().unwrap_or(MessageType::Signal);
+        <span class="kw">match </span>subscriptions.entry(rule.clone()) {
+            Entry::Vacant(e) =&gt; {
+                <span class="kw">let </span>max_queued = max_queued.unwrap_or(DEFAULT_MAX_QUEUED);
+                <span class="kw">let </span>(sender, <span class="kw-2">mut </span>receiver) = broadcast(max_queued);
+                receiver.set_await_active(<span class="bool-val">false</span>);
+                <span class="kw">if </span><span class="self">self</span>.is_bus() &amp;&amp; msg_type == MessageType::Signal {
                     fdo::DBusProxy::builder(<span class="self">self</span>)
                         .cache_properties(CacheProperties::No)
                         .build()
                         .<span class="kw">await</span><span class="question-mark">?
-                        </span>.remove_match_rule(e.key().inner().clone())
+                        </span>.add_match_rule(e.key().inner().clone())
                         .<span class="kw">await</span><span class="question-mark">?</span>;
+                }
+                e.insert((<span class="number">1</span>, receiver.clone().deactivate()));
+                <span class="self">self</span>.inner
+                    .msg_senders
+                    .lock()
+                    .<span class="kw">await
+                    </span>.insert(<span class="prelude-val">Some</span>(rule), sender);
+
+                <span class="prelude-val">Ok</span>(receiver)
+            }
+            Entry::Occupied(<span class="kw-2">mut </span>e) =&gt; {
+                <span class="kw">let </span>(num_subscriptions, receiver) = e.get_mut();
+                <span class="kw-2">*</span>num_subscriptions += <span class="number">1</span>;
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(max_queued) = max_queued {
+                    <span class="kw">if </span>max_queued &gt; receiver.capacity() {
+                        receiver.set_capacity(max_queued);
+                    }
+                }
+
+                <span class="prelude-val">Ok</span>(receiver.activate_cloned())
+            }
+        }
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>remove_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: OwnedMatchRule) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
+        <span class="kw">use </span>std::collections::hash_map::Entry;
+        <span class="kw">let </span><span class="kw-2">mut </span>subscriptions = <span class="self">self</span>.inner.subscriptions.lock().<span class="kw">await</span>;
+        <span class="comment">// TODO when it becomes stable, use HashMap::raw_entry and only require expr: &amp;str
+        // (both here and in add_match)
+        </span><span class="kw">let </span>msg_type = rule.msg_type().unwrap_or(MessageType::Signal);
+        <span class="kw">match </span>subscriptions.entry(rule) {
+            Entry::Vacant(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
+            Entry::Occupied(<span class="kw-2">mut </span>e) =&gt; {
+                <span class="kw">let </span>rule = e.key().inner().clone();
+                e.get_mut().<span class="number">0 </span>-= <span class="number">1</span>;
+                <span class="kw">if </span>e.get().<span class="number">0 </span>== <span class="number">0 </span>{
+                    <span class="kw">if </span><span class="self">self</span>.is_bus() &amp;&amp; msg_type == MessageType::Signal {
+                        fdo::DBusProxy::builder(<span class="self">self</span>)
+                            .cache_properties(CacheProperties::No)
+                            .build()
+                            .<span class="kw">await</span><span class="question-mark">?
+                            </span>.remove_match_rule(rule.clone())
+                            .<span class="kw">await</span><span class="question-mark">?</span>;
+                    }
                     e.remove();
+                    <span class="self">self</span>.inner
+                        .msg_senders
+                        .lock()
+                        .<span class="kw">await
+                        </span>.remove(<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(rule.into()));
                 }
                 <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
             }
@@ -2750,7 +2770,7 @@
         <span class="self">self</span>.inner.executor.spawn(remove_match, <span class="kw-2">&amp;</span>task_name).detach()
     }
 
-    <span class="kw">async fn </span>hello_bus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>hello_bus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">let </span>dbus_proxy = fdo::DBusProxy::builder(<span class="self">self</span>)
             .cache_properties(CacheProperties::No)
             .build()
@@ -2781,25 +2801,45 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>new(
         auth: Authenticated&lt;Box&lt;<span class="kw">dyn </span>Socket&gt;&gt;,
         bus_connection: bool,
-        <span class="attribute">#[allow(unused)] </span>internal_executor: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>auth = auth.into_inner();
         <span class="attribute">#[cfg(unix)]
         </span><span class="kw">let </span>cap_unix_fd = auth.cap_unix_fd;
 
-        <span class="kw">let </span>(msg_sender, msg_receiver) = broadcast(DEFAULT_MAX_QUEUED);
-        <span class="kw">let </span>msg_receiver = msg_receiver.deactivate();
-        <span class="kw">let </span>(error_sender, error_receiver) = channel(<span class="number">1</span>);
+        <span class="macro">macro_rules! </span>create_msg_broadcast_channel {
+            (<span class="macro-nonterminal">$size</span>:expr) =&gt; {{
+                <span class="kw">let </span>(msg_sender, msg_receiver) = broadcast(<span class="macro-nonterminal">$size</span>);
+                <span class="kw">let </span><span class="kw-2">mut </span>msg_receiver = msg_receiver.deactivate();
+                msg_receiver.set_await_active(<span class="bool-val">false</span>);
+
+                (msg_sender, msg_receiver)
+            }};
+        }
+        <span class="comment">// The unfiltered message channel.
+        </span><span class="kw">let </span>(msg_sender, msg_receiver) = <span class="macro">create_msg_broadcast_channel!</span>(DEFAULT_MAX_QUEUED);
+        <span class="kw">let </span><span class="kw-2">mut </span>msg_senders = HashMap::new();
+        msg_senders.insert(<span class="prelude-val">None</span>, msg_sender);
+
+        <span class="comment">// The special method return &amp; error channel.
+        </span><span class="kw">let </span>(method_return_sender, method_return_receiver) =
+            <span class="macro">create_msg_broadcast_channel!</span>(DEFAULT_MAX_METHOD_RETURN_QUEUED);
+        <span class="kw">let </span>rule = MatchRule::builder()
+            .msg_type(MessageType::MethodReturn)
+            .build()
+            .into();
+        msg_senders.insert(<span class="prelude-val">Some</span>(rule), method_return_sender.clone());
+        <span class="kw">let </span>rule = MatchRule::builder()
+            .msg_type(MessageType::Error)
+            .build()
+            .into();
+        msg_senders.insert(<span class="prelude-val">Some</span>(rule), method_return_sender);
+        <span class="kw">let </span>msg_senders = Arc::new(Mutex::new(msg_senders));
+        <span class="kw">let </span>subscriptions = Mutex::new(HashMap::new());
+
         <span class="kw">let </span>executor = Executor::new();
         <span class="kw">let </span>raw_conn = Arc::new(sync::Mutex::new(auth.conn));
 
-        <span class="comment">// Start the message receiver task.
-        </span><span class="kw">let </span>msg_receiver_task =
-            MessageReceiverTask::new(raw_conn.clone(), msg_sender, error_sender).spawn(<span class="kw-2">&amp;</span>executor);
-
         <span class="kw">let </span>connection = <span class="self">Self </span>{
-            error_receiver,
-            msg_receiver,
             inner: Arc::new(ConnectionInner {
                 raw_conn,
                 server_guid: auth.server_guid,
@@ -2808,35 +2848,17 @@
                 bus_conn: bus_connection,
                 serial: AtomicU32::new(<span class="number">1</span>),
                 unique_name: OnceCell::new(),
-                signal_matches: Mutex::new(HashMap::new()),
+                subscriptions,
                 object_server: OnceCell::new(),
                 object_server_dispatch_task: OnceCell::new(),
-                executor: executor.clone(),
-                msg_receiver_task,
+                executor,
+                socket_reader_task: OnceCell::new(),
+                msg_senders,
+                msg_receiver,
+                method_return_receiver,
                 registered_names: Mutex::new(HashMap::new()),
             }),
         };
-
-        <span class="attribute">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
-        </span><span class="kw">if </span>internal_executor {
-            std::thread::Builder::new()
-                .name(<span class="string">&quot;zbus::Connection executor&quot;</span>.into())
-                .spawn(<span class="kw">move </span>|| {
-                    <span class="kw">crate</span>::utils::block_on(<span class="kw">async move </span>{
-                        <span class="comment">// Run as long as there is a task to run.
-                        </span><span class="kw">while </span>!executor.is_empty() {
-                            executor.tick().<span class="kw">await</span>;
-                        }
-                    })
-                })<span class="question-mark">?</span>;
-        }
-
-        <span class="kw">if </span>!bus_connection {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(connection);
-        }
-
-        <span class="comment">// Now that the server has approved us, we must send the bus Hello, as per specs
-        </span>connection.hello_bus().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(connection)
     }
@@ -2874,6 +2896,17 @@
             .expect(<span class="string">&quot;poisoned lock&quot;</span>)
             .socket()
             .peer_pid()
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>init_socket_reader(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">let </span>inner = <span class="kw-2">&amp;</span><span class="self">self</span>.inner;
+        inner
+            .socket_reader_task
+            .set(
+                SocketReader::new(inner.raw_conn.clone(), inner.msg_senders.clone())
+                    .spawn(<span class="kw-2">&amp;</span>inner.executor),
+            )
+            .expect(<span class="string">&quot;Attempted to set `socket_reader_task` twice&quot;</span>);
     }
 }
 
@@ -2944,19 +2977,6 @@
     }
 }
 
-<span class="kw">struct </span>ReceiveMessage&lt;<span class="lifetime">&#39;r</span>&gt; {
-    raw_conn: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>sync::Mutex&lt;RawConnection&lt;Box&lt;<span class="kw">dyn </span>Socket&gt;&gt;&gt;,
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;r</span>&gt; Future <span class="kw">for </span>ReceiveMessage&lt;<span class="lifetime">&#39;r</span>&gt; {
-    <span class="kw">type </span>Output = <span class="prelude-ty">Result</span>&lt;Message&gt;;
-
-    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>raw_conn = <span class="self">self</span>.raw_conn.lock().expect(<span class="string">&quot;poisoned lock&quot;</span>);
-        raw_conn.try_receive_message(cx)
-    }
-}
-
 <span class="kw">impl </span>From&lt;<span class="kw">crate</span>::blocking::Connection&gt; <span class="kw">for </span>Connection {
     <span class="kw">fn </span>from(conn: <span class="kw">crate</span>::blocking::Connection) -&gt; <span class="self">Self </span>{
         conn.into_inner()
@@ -2967,18 +2987,12 @@
 </span><span class="attribute">#[derive(Debug)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>WeakConnection {
     inner: Weak&lt;ConnectionInner&gt;,
-    msg_receiver: InactiveReceiver&lt;Arc&lt;Message&gt;&gt;,
-    error_receiver: Receiver&lt;Error&gt;,
 }
 
 <span class="kw">impl </span>WeakConnection {
     <span class="doccomment">/// Upgrade to a Connection.
     </span><span class="kw">pub fn </span>upgrade(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Connection&gt; {
-        <span class="self">self</span>.inner.upgrade().map(|inner| Connection {
-            inner,
-            msg_receiver: <span class="self">self</span>.msg_receiver.clone(),
-            error_receiver: <span class="self">self</span>.error_receiver.clone(),
-        })
+        <span class="self">self</span>.inner.upgrade().map(|inner| Connection { inner })
     }
 }
 
@@ -2986,8 +3000,6 @@
     <span class="kw">fn </span>from(conn: <span class="kw-2">&amp;</span>Connection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             inner: Arc::downgrade(<span class="kw-2">&amp;</span>conn.inner),
-            msg_receiver: conn.msg_receiver.clone(),
-            error_receiver: conn.error_receiver.clone(),
         }
     }
 }
@@ -3019,18 +3031,21 @@
         server2: Connection,
         client2: Connection,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>forward1 = MessageStream::from(server1.clone()).forward(client2.clone());
+        <span class="kw">let </span>forward2 = MessageStream::from(<span class="kw-2">&amp;</span>client2).forward(server1);
         <span class="kw">let </span>_forward_task = client1.executor().spawn(
-            <span class="kw">async move </span>{
-                <span class="macro">futures_util::try_join!</span>(
-                    MessageStream::from(<span class="kw-2">&amp;</span>server1).forward(<span class="kw-2">&amp;</span>client2),
-                    MessageStream::from(<span class="kw-2">&amp;</span>client2).forward(<span class="kw-2">&amp;</span>server1),
-                )
-            },
+            <span class="kw">async move </span>{ <span class="macro">futures_util::try_join!</span>(forward1, forward2) },
             <span class="string">&quot;forward_task&quot;</span>,
         );
 
-        <span class="kw">let </span>server_future = <span class="kw">async </span>{
+        <span class="kw">let </span>server_ready = Event::new();
+        <span class="kw">let </span>server_ready_listener = server_ready.listen();
+        <span class="kw">let </span>client_done = Event::new();
+        <span class="kw">let </span>client_done_listener = client_done.listen();
+
+        <span class="kw">let </span>server_future = <span class="kw">async move </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>stream = MessageStream::from(<span class="kw-2">&amp;</span>server2);
+            server_ready.notify(<span class="number">1</span>);
             <span class="kw">let </span>method = <span class="kw">loop </span>{
                 <span class="kw">let </span>m = stream.try_next().<span class="kw">await</span><span class="question-mark">?</span>.unwrap();
                 <span class="kw">if </span>m.to_string() == <span class="string">&quot;Method call Test&quot; </span>{
@@ -3042,17 +3057,22 @@
             </span>server2
                 .emit_signal(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="string">&quot;org.zbus.p2p&quot;</span>, <span class="string">&quot;ASignalForYou&quot;</span>, <span class="kw-2">&amp;</span>())
                 .<span class="kw">await</span><span class="question-mark">?</span>;
-            server2.reply(<span class="kw-2">&amp;</span>method, <span class="kw-2">&amp;</span>(<span class="string">&quot;yay&quot;</span>)).<span class="kw">await
-        </span>};
+            server2.reply(<span class="kw-2">&amp;</span>method, <span class="kw-2">&amp;</span>(<span class="string">&quot;yay&quot;</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+            client_done_listener.<span class="kw">await</span>;
 
-        <span class="kw">let </span>client_future = <span class="kw">async </span>{
+            <span class="prelude-val">Ok</span>(())
+        };
+
+        <span class="kw">let </span>client_future = <span class="kw">async move </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>stream = MessageStream::from(<span class="kw-2">&amp;</span>client1);
+            server_ready_listener.<span class="kw">await</span>;
             <span class="kw">let </span>reply = client1
                 .call_method(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;org.zbus.p2p&quot;</span>), <span class="string">&quot;Test&quot;</span>, <span class="kw-2">&amp;</span>())
                 .<span class="kw">await</span><span class="question-mark">?</span>;
             <span class="macro">assert_eq!</span>(reply.to_string(), <span class="string">&quot;Method return&quot;</span>);
             <span class="comment">// Check we didn&#39;t miss the signal that was sent during the call.
             </span><span class="kw">let </span>m = stream.try_next().<span class="kw">await</span><span class="question-mark">?</span>.unwrap();
+            client_done.notify(<span class="number">1</span>);
             <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">&quot;Signal ASignalForYou&quot;</span>);
             reply.body::&lt;String&gt;()
         };

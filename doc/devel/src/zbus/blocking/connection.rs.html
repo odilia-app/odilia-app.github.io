@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.6.2/src/blocking/connection.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.7.0/src/blocking/connection.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -317,6 +317,9 @@
 <span id="316">316</span>
 <span id="317">317</span>
 <span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
 </pre><pre class="rust"><code><span class="kw">use </span>enumflags2::BitFlags;
 <span class="kw">use </span>event_listener::EventListener;
 <span class="kw">use </span>static_assertions::assert_impl_all;
@@ -356,12 +359,12 @@
         block_on(<span class="kw">crate</span>::Connection::system()).map(<span class="self">Self</span>::from)
     }
 
-    <span class="doccomment">/// Max number of messages to queue.
+    <span class="doccomment">/// The capacity of the main (unfiltered) queue.
     </span><span class="kw">pub fn </span>max_queued(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.inner.max_queued()
     }
 
-    <span class="doccomment">/// Set the max number of messages to queue.
+    <span class="doccomment">/// Set the capacity of the main (unfiltered) queue.
     </span><span class="kw">pub fn </span>set_max_queued(<span class="kw-2">mut </span><span class="self">self</span>, max: usize) {
         <span class="self">self</span>.inner.set_max_queued(max)
     }
@@ -546,7 +549,7 @@
     ///
     /// The `ObjectServer` is created on-demand.
     </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">&#39;_ </span>{
-        <span class="self">self</span>.inner.sync_object_server(<span class="bool-val">true</span>)
+        <span class="self">self</span>.inner.sync_object_server(<span class="bool-val">true</span>, <span class="prelude-val">None</span>)
     }
 
     <span class="doccomment">/// Get a reference to the underlying async Connection.
@@ -598,12 +601,14 @@
         <span class="comment">// Tokio needs us to call the sync function from async context. :shrug:
         </span><span class="kw">let </span>(p0, p1) = <span class="kw">crate</span>::utils::block_on(<span class="kw">async </span>{ UnixStream::pair().unwrap() });
 
+        <span class="kw">let </span>(tx, rx) = std::sync::mpsc::channel();
         <span class="kw">let </span>server_thread = thread::spawn(<span class="kw">move </span>|| {
             <span class="kw">let </span>c = ConnectionBuilder::unix_stream(p0)
                 .server(<span class="kw-2">&amp;</span>guid)
                 .p2p()
                 .build()
                 .unwrap();
+            <span class="kw">let _ </span>= rx.recv().unwrap();
             <span class="kw">let </span>reply = c
                 .call_method(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;org.zbus.p2p&quot;</span>), <span class="string">&quot;Test&quot;</span>, <span class="kw-2">&amp;</span>())
                 .unwrap();
@@ -615,6 +620,7 @@
         <span class="kw">let </span>c = ConnectionBuilder::unix_stream(p1).p2p().build().unwrap();
         <span class="kw">let </span>listener = c.monitor_activity();
         <span class="kw">let </span><span class="kw-2">mut </span>s = MessageIterator::from(<span class="kw-2">&amp;</span>c);
+        tx.send(()).unwrap();
         <span class="kw">let </span>m = s.next().unwrap().unwrap();
         <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">&quot;Method call Test&quot;</span>);
         c.reply(<span class="kw-2">&amp;</span>m, <span class="kw-2">&amp;</span>(<span class="string">&quot;yay&quot;</span>)).unwrap();

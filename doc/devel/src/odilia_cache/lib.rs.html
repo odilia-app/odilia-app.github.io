@@ -261,6 +261,10 @@
 <span id="261">261</span>
 <span id="262">262</span>
 <span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
 </pre><pre class="rust"><code><span class="kw">use </span>atspi::{accessible::{Role, AccessibleProxy}, accessible_ext::{AccessibleId, AccessibleExt}, InterfaceSet, StateSet, events::GenericEvent, error::ObjectPathConversionError};
 <span class="kw">use </span>tokio::sync::RwLock;
 <span class="kw">use </span>std::{
@@ -383,22 +387,9 @@
     };
     <span class="prelude-val">Ok</span>(AccessiblePrimitive {
       id,
-      sender,
+      sender: sender.into(),
     })
   }
-}
-<span class="kw">use </span>atspi::identify::object::TextCaretMovedEvent;
-<span class="kw">impl </span>TryFrom&lt;TextCaretMovedEvent&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
-
-	<span class="kw">fn </span>try_from(event: TextCaretMovedEvent) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>sender = event.sender().unwrap().unwrap();
-		<span class="kw">let </span>id: AccessibleId = event.path().unwrap().try_into()<span class="question-mark">?</span>;
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive {
-			id,
-			sender: sender.to_string(),
-		})
-	}
 }
 
 <span class="attribute">#[derive(Clone, Debug, PartialEq, Eq, Hash)]
@@ -523,6 +514,23 @@
 			cache_writer.remove(id);
 		});
 	}
+
+	<span class="doccomment">/// Edit a mutable CacheItem using a function which returns the edited version.
+	/// Note: an exclusive lock will be placed for the entire length of the passed function, so don&#39;t do any compute in it. 
+	/// Returns true if the update was successful.
+	</span><span class="kw">pub async fn </span>modify_item&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>AccessibleId, modify: F) -&gt; bool 
+		<span class="kw">where </span>F: Fn(<span class="kw-2">&amp;mut </span>CacheItem) {
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_write = <span class="self">self</span>.by_id.write().<span class="kw">await</span>;
+		<span class="kw">let </span>cache_item = <span class="kw">match </span>cache_write.get_mut(id) {
+			<span class="prelude-val">Some</span>(i) =&gt; i,
+			<span class="prelude-val">None </span>=&gt; {
+				<span class="macro">println!</span>(<span class="string">&quot;THE CACHE HAS THE FOLLOWING ITEMS: {:?}&quot;</span>, cache_write.keys());
+				<span class="kw">return </span><span class="bool-val">false</span>;
+			}
+		};
+		modify(cache_item);
+		<span class="bool-val">true
+	</span>}
 }
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia_cache" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>

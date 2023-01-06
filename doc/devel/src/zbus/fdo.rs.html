@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.6.2/src/fdo.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>fdo.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.7.0/src/fdo.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>fdo.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -981,28 +981,6 @@
 <span id="980">980</span>
 <span id="981">981</span>
 <span id="982">982</span>
-<span id="983">983</span>
-<span id="984">984</span>
-<span id="985">985</span>
-<span id="986">986</span>
-<span id="987">987</span>
-<span id="988">988</span>
-<span id="989">989</span>
-<span id="990">990</span>
-<span id="991">991</span>
-<span id="992">992</span>
-<span id="993">993</span>
-<span id="994">994</span>
-<span id="995">995</span>
-<span id="996">996</span>
-<span id="997">997</span>
-<span id="998">998</span>
-<span id="999">999</span>
-<span id="1000">1000</span>
-<span id="1001">1001</span>
-<span id="1002">1002</span>
-<span id="1003">1003</span>
-<span id="1004">1004</span>
 </pre><pre class="rust"><code><span class="doccomment">//! D-Bus standard interfaces.
 //!
 //! The D-Bus specification defines the message bus messages and some standard interfaces that may
@@ -1060,7 +1038,7 @@
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>node = root
             .get_child(path)
-            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">&quot;Unknown object &#39;{}&#39;&quot;</span>, path)))<span class="question-mark">?</span>;
+            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">&quot;Unknown object &#39;{path}&#39;&quot;</span>)))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(node.introspect().<span class="kw">await</span>)
     }
@@ -1134,15 +1112,14 @@
             .get_child(path)
             .and_then(|node| node.interface_lock(interface_name.as_ref()))
             .ok_or_else(|| {
-                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{}&#39;&quot;</span>, interface_name))
+                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{interface_name}&#39;&quot;</span>))
             })<span class="question-mark">?</span>;
 
         <span class="kw">let </span>res = iface.read().<span class="kw">await</span>.get(property_name).<span class="kw">await</span>;
         res.unwrap_or_else(|| {
             <span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
-                <span class="string">&quot;Unknown property &#39;{}&#39;&quot;</span>,
-                property_name
-            )))
+                <span class="string">&quot;Unknown property &#39;{property_name}&#39;&quot;
+            </span>)))
         })
     }
 
@@ -1161,16 +1138,15 @@
             .get_child(path)
             .and_then(|node| node.interface_lock(interface_name.as_ref()))
             .ok_or_else(|| {
-                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{}&#39;&quot;</span>, interface_name))
+                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{interface_name}&#39;&quot;</span>))
             })<span class="question-mark">?</span>;
 
         <span class="kw">match </span>iface.read().<span class="kw">await</span>.set(property_name, <span class="kw-2">&amp;</span>value, <span class="kw-2">&amp;</span>ctxt) {
             zbus::DispatchResult::RequiresMut =&gt; {}
             zbus::DispatchResult::NotFound =&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
-                    <span class="string">&quot;Unknown property &#39;{}&#39;&quot;</span>,
-                    property_name
-                )));
+                    <span class="string">&quot;Unknown property &#39;{property_name}&#39;&quot;
+                </span>)));
             }
             zbus::DispatchResult::Async(f) =&gt; {
                 <span class="kw">return </span>f.<span class="kw">await</span>.map_err(Into::into);
@@ -1183,9 +1159,8 @@
             .<span class="kw">await</span>;
         res.unwrap_or_else(|| {
             <span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
-                <span class="string">&quot;Unknown property &#39;{}&#39;&quot;</span>,
-                property_name
-            )))
+                <span class="string">&quot;Unknown property &#39;{property_name}&#39;&quot;
+            </span>)))
         })
     }
 
@@ -1201,7 +1176,7 @@
             .get_child(path)
             .and_then(|node| node.interface_lock(interface_name.as_ref()))
             .ok_or_else(|| {
-                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{}&#39;&quot;</span>, interface_name))
+                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{interface_name}&#39;&quot;</span>))
             })<span class="question-mark">?</span>;
 
         <span class="kw">let </span>res = iface.read().<span class="kw">await</span>.get_all().<span class="kw">await</span>;
@@ -1301,7 +1276,7 @@
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>node = root
             .get_child(path)
-            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">&quot;Unknown object &#39;{}&#39;&quot;</span>, path)))<span class="question-mark">?</span>;
+            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">&quot;Unknown object &#39;{path}&#39;&quot;</span>)))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(node.get_managed_objects().<span class="kw">await</span>)
     }
@@ -1371,9 +1346,8 @@
                     id
                 } <span class="kw">else </span>{
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::IOError(<span class="macro">format!</span>(
-                        <span class="string">&quot;Failed to read from /var/lib/dbus/machine-id or /etc/machine-id: {}&quot;</span>,
-                        e
-                    )));
+                        <span class="string">&quot;Failed to read from /var/lib/dbus/machine-id or /etc/machine-id: {e}&quot;
+                    </span>)));
                 }
             }
         };
@@ -1717,7 +1691,7 @@
 <span class="macro">assert_impl_all!</span>(DBusProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
 
 <span class="doccomment">/// Errors from &lt;https://gitlab.freedesktop.org/dbus/dbus/-/blob/master/dbus/dbus-protocol.h&gt;
-</span><span class="attribute">#[derive(Debug, DBusError, PartialEq)]
+</span><span class="attribute">#[derive(Clone, Debug, DBusError, PartialEq)]
 #[dbus_error(prefix = <span class="string">&quot;org.freedesktop.DBus.Error&quot;</span>, impl_display = <span class="bool-val">true</span>)]
 #[allow(clippy::upper_case_acronyms)]
 </span><span class="kw">pub enum </span>Error {
@@ -1897,7 +1871,7 @@
     <span class="kw">use crate</span>::{fdo, DBusError, Error, Message};
     <span class="kw">use </span>futures_util::StreamExt;
     <span class="kw">use </span>ntest::timeout;
-    <span class="kw">use </span>std::{convert::TryInto, future::ready};
+    <span class="kw">use </span>std::convert::TryInto;
     <span class="kw">use </span>test_log::test;
     <span class="kw">use </span>tokio::runtime;
     <span class="kw">use </span>zbus_names::WellKnownName;
@@ -1941,33 +1915,15 @@
         // signals called for that.
         </span><span class="kw">let </span>well_known = <span class="string">&quot;org.freedesktop.zbus.FdoSignalStreamTest&quot;</span>;
         <span class="kw">let </span>unique_name = conn.unique_name().unwrap();
-        <span class="kw">let </span>owner_change_stream =
-            proxy
-                .receive_name_owner_changed()
-                .<span class="kw">await
-                </span>.unwrap()
-                .filter(|signal| {
-                    <span class="kw">let </span>args = signal.args().unwrap();
-
-                    <span class="kw">if </span>args.name() != well_known {
-                        <span class="comment">// Meant for the other testcase then
-                        </span><span class="kw">return </span>ready(<span class="bool-val">false</span>);
-                    }
-                    <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>args.new_owner().as_ref().unwrap(), <span class="kw-2">*</span>unique_name);
-
-                    ready(<span class="bool-val">true</span>)
-                });
+        <span class="kw">let </span>owner_change_stream = proxy
+            .receive_name_owner_changed_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, well_known), (<span class="number">2</span>, unique_name.as_str())])
+            .<span class="kw">await
+            </span>.unwrap();
 
         <span class="kw">let </span>name_acquired_stream = proxy
-            .receive_name_acquired()
+            .receive_name_acquired_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, well_known)])
             .<span class="kw">await
-            </span>.unwrap()
-            .filter(|signal| {
-                <span class="kw">let </span>args = signal.args().unwrap();
-                <span class="comment">// `NameAcquired` is emitted twice, first when the unique name is assigned on
-                // connection and secondly after we ask for a specific name.
-                </span>ready(args.name() == well_known)
-            });
+            </span>.unwrap();
         <span class="kw">let </span><span class="kw-2">mut </span>stream = owner_change_stream.zip(name_acquired_stream);
 
         <span class="kw">let </span>well_known: WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; = well_known.try_into().unwrap();

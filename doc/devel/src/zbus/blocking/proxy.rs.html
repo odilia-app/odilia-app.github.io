@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.6.2/src/blocking/proxy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.7.0/src/blocking/proxy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -516,7 +516,6 @@
 <span id="515">515</span>
 <span id="516">516</span>
 <span id="517">517</span>
-<span id="518">518</span>
 </pre><pre class="rust"><code><span class="kw">use </span>enumflags2::BitFlags;
 <span class="kw">use </span>futures_util::StreamExt;
 <span class="kw">use </span>static_assertions::assert_impl_all;
@@ -1003,12 +1002,16 @@
         <span class="comment">// Register a well-known name with the session bus and ensure we get the appropriate
         // signals called for that.
         </span><span class="kw">let </span>conn = Connection::session().unwrap();
+        <span class="kw">let </span>unique_name = conn.unique_name().unwrap().to_string();
 
         <span class="kw">let </span>proxy = blocking::fdo::DBusProxy::new(<span class="kw-2">&amp;</span>conn).unwrap();
-        <span class="kw">let </span>owner_changed = proxy.receive_name_owner_changed().unwrap();
-        <span class="kw">let </span>name_acquired = proxy.receive_name_acquired().unwrap();
         <span class="kw">let </span>well_known = <span class="string">&quot;org.freedesktop.zbus.ProxySignalTest&quot;</span>;
-        <span class="kw">let </span>unique_name = conn.unique_name().unwrap().to_string();
+        <span class="kw">let </span><span class="kw-2">mut </span>owner_changed = proxy
+            .receive_name_owner_changed_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, well_known), (<span class="number">2</span>, unique_name.as_str())])
+            .unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>name_acquired = proxy
+            .receive_name_acquired_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, well_known)])
+            .unwrap();
 
         blocking::fdo::DBusProxy::new(<span class="kw-2">&amp;</span>conn)
             .unwrap()
@@ -1018,21 +1021,16 @@
             )
             .unwrap();
 
-        <span class="kw">for </span>signal <span class="kw">in </span>owner_changed {
-            <span class="kw">let </span>args = signal.args().unwrap();
-            <span class="kw">if </span>args.name() == well_known {
-                <span class="comment">// Meant for the this testcase.
-                </span><span class="macro">assert_eq!</span>(<span class="kw-2">*</span>args.new_owner().as_ref().unwrap(), <span class="kw-2">*</span>unique_name);
-                <span class="kw">break</span>;
-            }
-        }
+        <span class="kw">let </span>signal = owner_changed.next().unwrap();
+        <span class="kw">let </span>args = signal.args().unwrap();
+        <span class="macro">assert!</span>(args.name() == well_known);
+        <span class="macro">assert!</span>(<span class="kw-2">*</span>args.new_owner().as_ref().unwrap() == <span class="kw-2">*</span>unique_name);
+
+        <span class="kw">let </span>signal = name_acquired.next().unwrap();
         <span class="comment">// `NameAcquired` is emitted twice, first when the unique name is assigned on
-        // connection and secondly after we ask for a specific name.
-        </span><span class="kw">for </span>signal <span class="kw">in </span>name_acquired {
-            <span class="kw">if </span>signal.args().unwrap().name() == well_known {
-                <span class="kw">break</span>;
-            }
-        }
+        // connection and secondly after we ask for a specific name. Let&#39;s make sure we only get the
+        // one we subscribed to.
+        </span><span class="macro">assert!</span>(signal.args().unwrap().name() == well_known);
     }
 }
 </code></pre></div>

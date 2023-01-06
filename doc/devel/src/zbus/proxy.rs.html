@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.6.2/src/proxy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.7.0/src/proxy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -1440,17 +1440,59 @@
 <span id="1439">1439</span>
 <span id="1440">1440</span>
 <span id="1441">1441</span>
+<span id="1442">1442</span>
+<span id="1443">1443</span>
+<span id="1444">1444</span>
+<span id="1445">1445</span>
+<span id="1446">1446</span>
+<span id="1447">1447</span>
+<span id="1448">1448</span>
+<span id="1449">1449</span>
+<span id="1450">1450</span>
+<span id="1451">1451</span>
+<span id="1452">1452</span>
+<span id="1453">1453</span>
+<span id="1454">1454</span>
+<span id="1455">1455</span>
+<span id="1456">1456</span>
+<span id="1457">1457</span>
+<span id="1458">1458</span>
+<span id="1459">1459</span>
+<span id="1460">1460</span>
+<span id="1461">1461</span>
+<span id="1462">1462</span>
+<span id="1463">1463</span>
+<span id="1464">1464</span>
+<span id="1465">1465</span>
+<span id="1466">1466</span>
+<span id="1467">1467</span>
+<span id="1468">1468</span>
+<span id="1469">1469</span>
+<span id="1470">1470</span>
+<span id="1471">1471</span>
+<span id="1472">1472</span>
+<span id="1473">1473</span>
+<span id="1474">1474</span>
+<span id="1475">1475</span>
+<span id="1476">1476</span>
+<span id="1477">1477</span>
+<span id="1478">1478</span>
+<span id="1479">1479</span>
+<span id="1480">1480</span>
 </pre><pre class="rust"><code><span class="kw">use </span>enumflags2::{bitflags, BitFlags};
 <span class="kw">use </span>event_listener::{Event, EventListener};
 <span class="kw">use </span>futures_core::{ready, stream};
 <span class="kw">use </span>futures_util::{future::Either, stream::Map};
 <span class="kw">use </span>once_cell::sync::OnceCell;
-<span class="kw">use </span>ordered_stream::{join <span class="kw">as </span>join_streams, FromFuture, OrderedStream, PollResult};
+<span class="kw">use </span>ordered_stream::{
+    join <span class="kw">as </span>join_streams, FromFuture, JoinMultiple, OrderedStream, Peekable, PollResult,
+};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::{
     collections::{HashMap, HashSet},
     convert::{TryFrom, TryInto},
     future::Future,
+    marker::PhantomData,
     ops::Deref,
     pin::Pin,
     sync::{Arc, RwLock, RwLockReadGuard},
@@ -1458,27 +1500,14 @@
 };
 <span class="kw">use </span>tracing::{debug, info_span, instrument, Instrument};
 
-<span class="kw">use </span>zbus_names::{BusName, InterfaceName, MemberName, UniqueName, WellKnownName};
+<span class="kw">use </span>zbus_names::{BusName, InterfaceName, MemberName, UniqueName};
 <span class="kw">use </span>zvariant::{ObjectPath, OwnedValue, Str, Value};
 
 <span class="kw">use crate</span>::{
-    async_channel::channel,
     fdo::{<span class="self">self</span>, IntrospectableProxy, NameOwnerChanged, PropertiesProxy},
     CacheProperties, Connection, Error, Executor, MatchRule, Message, MessageFlags,
     MessageSequence, MessageStream, MessageType, OwnedMatchRule, ProxyBuilder, <span class="prelude-ty">Result</span>, Task,
 };
-
-<span class="attribute">#[derive(Debug, Default)]
-</span><span class="kw">struct </span>PropertyValue {
-    value: <span class="prelude-ty">Option</span>&lt;OwnedValue&gt;,
-    event: Event,
-}
-
-<span class="attribute">#[derive(Debug)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>PropertiesCache {
-    values: RwLock&lt;HashMap&lt;String, PropertyValue&gt;&gt;,
-    ready: <span class="kw">crate</span>::async_channel::Receiver&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt;,
-}
 
 <span class="doccomment">/// A client-side interface proxy.
 ///
@@ -1694,6 +1723,18 @@
     }
 }
 
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>PropertiesCache {
+    values: RwLock&lt;HashMap&lt;String, PropertyValue&gt;&gt;,
+    caching_result: RwLock&lt;CachingResult&gt;,
+}
+
+<span class="attribute">#[derive(Debug)]
+</span><span class="kw">enum </span>CachingResult {
+    Caching { ready: Event },
+    Cached { result: <span class="prelude-ty">Result</span>&lt;()&gt; },
+}
+
 <span class="kw">impl </span>PropertiesCache {
     <span class="attribute">#[instrument]
     </span><span class="kw">fn </span>new(
@@ -1702,33 +1743,42 @@
         executor: <span class="kw-2">&amp;</span>Executor&lt;<span class="lifetime">&#39;_</span>&gt;,
         uncached_properties: HashSet&lt;zvariant::Str&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
     ) -&gt; (Arc&lt;<span class="self">Self</span>&gt;, Task&lt;()&gt;) {
-        <span class="kw">let </span>(send, recv) = channel(<span class="number">1</span>);
-
         <span class="kw">let </span>cache = Arc::new(PropertiesCache {
             values: Default::default(),
-            ready: recv,
+            caching_result: RwLock::new(CachingResult::Caching {
+                ready: Event::new(),
+            }),
         });
 
         <span class="kw">let </span>cache_clone = cache.clone();
-        <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;{} proxy caching&quot;</span>, interface);
+        <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;{interface} proxy caching&quot;</span>);
         <span class="kw">let </span>proxy_caching = <span class="kw">async move </span>{
-            <span class="kw">let </span>(proxy, interface, uncached_properties) = <span class="kw">match </span>cache_clone
+            <span class="kw">let </span>result = cache_clone
                 .init(proxy, interface, uncached_properties)
-                .<span class="kw">await
-            </span>{
-                <span class="prelude-val">Ok</span>((proxy, interface, uncached_properties)) =&gt; {
-                    <span class="comment">// ignore send errors, it just means the original future was cancelled
-                    </span><span class="kw">let _ </span>= send.send(<span class="prelude-val">Ok</span>(())).<span class="kw">await</span>;
+                .<span class="kw">await</span>;
+            <span class="kw">let </span>(proxy, interface, uncached_properties) = {
+                <span class="kw">let </span><span class="kw-2">mut </span>caching_result = cache_clone.caching_result.write().expect(<span class="string">&quot;lock poisoned&quot;</span>);
+                <span class="kw">let </span>ready = <span class="kw">match </span><span class="kw-2">&amp;*</span>caching_result {
+                    CachingResult::Caching { ready } =&gt; ready,
+                    <span class="comment">// SAFETY: This is the only part of the code that changes this state and it&#39;s
+                    // only run once.
+                    </span><span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+                };
+                <span class="kw">match </span>result {
+                    <span class="prelude-val">Ok</span>((proxy, interface, uncached_properties)) =&gt; {
+                        ready.notify(usize::MAX);
+                        <span class="kw-2">*</span>caching_result = CachingResult::Cached { result: <span class="prelude-val">Ok</span>(()) };
 
-                    (proxy, interface, uncached_properties)
-                }
-                <span class="prelude-val">Err</span>(e) =&gt; {
-                    <span class="kw">let _ </span>= send.send(<span class="prelude-val">Err</span>(e)).<span class="kw">await</span>;
+                        (proxy, interface, uncached_properties)
+                    }
+                    <span class="prelude-val">Err</span>(e) =&gt; {
+                        ready.notify(usize::MAX);
+                        <span class="kw-2">*</span>caching_result = CachingResult::Cached { result: <span class="prelude-val">Err</span>(e) };
 
-                    <span class="kw">return</span>;
+                        <span class="kw">return</span>;
+                    }
                 }
             };
-            drop(send);
 
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = cache_clone
                 .keep_updated(proxy, interface, uncached_properties)
@@ -1838,10 +1888,9 @@
 
         <span class="kw">for </span>inval <span class="kw">in </span>invalidated {
             <span class="kw">if </span>uncached_properties.contains(<span class="kw-2">&amp;</span>Str::from(inval)) {
-                <span class="macro">tracing::debug!</span>(
+                <span class="macro">debug!</span>(
                     <span class="string">&quot;Ignoring invalidation of uncached property `{}.{}`&quot;</span>,
-                    interface,
-                    inval
+                    interface, inval
                 );
                 <span class="kw">continue</span>;
             }
@@ -1854,10 +1903,9 @@
 
         <span class="kw">for </span>(property_name, value) <span class="kw">in </span>changed {
             <span class="kw">if </span>uncached_properties.contains(<span class="kw-2">&amp;</span>Str::from(<span class="kw-2">*</span>property_name)) {
-                <span class="macro">tracing::debug!</span>(
+                <span class="macro">debug!</span>(
                     <span class="string">&quot;Ignoring update of uncached property `{}.{}`&quot;</span>,
-                    interface,
-                    property_name
+                    interface, property_name
                 );
                 <span class="kw">continue</span>;
             }
@@ -1873,10 +1921,19 @@
 
     <span class="doccomment">/// Wait for the cache to be populated and return any error encountered during population
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="comment">// Only one caller will actually get the result; all other callers see a closed channel,
-        // but that indicates the cache is ready (and on error, the cache will be empty, which just
-        // means we bypass it)
-        </span><span class="self">self</span>.ready.recv().<span class="kw">await</span>.unwrap_or(<span class="prelude-val">Ok</span>(()))
+        <span class="kw">let </span>listener = <span class="kw">match </span><span class="kw-2">&amp;*</span><span class="self">self</span>.caching_result.read().expect(<span class="string">&quot;lock poisoned&quot;</span>) {
+            CachingResult::Caching { ready } =&gt; ready.listen(),
+            CachingResult::Cached { result } =&gt; <span class="kw">return </span>result.clone(),
+        };
+        listener.<span class="kw">await</span>;
+
+        <span class="comment">// It must be ready now.
+        </span><span class="kw">match </span><span class="kw-2">&amp;*</span><span class="self">self</span>.caching_result.read().expect(<span class="string">&quot;lock poisoned&quot;</span>) {
+            <span class="comment">// SAFETY: We were just notified that state has changed to `Cached` and we never go back
+            // to `Caching` once in `Cached`.
+            </span>CachingResult::Caching { .. } =&gt; <span class="macro">unreachable!</span>(),
+            CachingResult::Cached { result } =&gt; result.clone(),
+        }
     }
 }
 
@@ -1942,7 +1999,11 @@
             .to_owned()
             .into();
 
-        conn.add_match(signal_rule.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
+        conn.add_match(
+            signal_rule.clone(),
+            <span class="prelude-val">Some</span>(MAX_NAME_OWNER_CHANGED_SIGNALS_QUEUED),
+        )
+        .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">if </span><span class="self">self
             </span>.inner_without_borrows
@@ -1957,6 +2018,8 @@
         <span class="prelude-val">Ok</span>(())
     }
 }
+
+<span class="kw">const </span>MAX_NAME_OWNER_CHANGED_SIGNALS_QUEUED: usize = <span class="number">8</span>;
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Proxy&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create a new `Proxy` for the given destination/path/interface.
@@ -2404,6 +2467,12 @@
     }
 }
 
+<span class="attribute">#[derive(Debug, Default)]
+</span><span class="kw">struct </span>PropertyValue {
+    value: <span class="prelude-ty">Option</span>&lt;OwnedValue&gt;,
+    event: Event,
+}
+
 <span class="doccomment">/// Flags to use with [`Proxy::call_with_flags`].
 </span><span class="attribute">#[bitflags]
 #[repr(u8)]
@@ -2484,12 +2553,9 @@
 /// Use [`Proxy::receive_signal`] to create an instance of this type.
 </span><span class="attribute">#[derive(Debug)]
 </span><span class="kw">pub struct </span>SignalStream&lt;<span class="lifetime">&#39;a</span>&gt; {
-    stream: MessageStream,
-    proxy: Proxy&lt;<span class="lifetime">&#39;a</span>&gt;,
-    match_rule: <span class="prelude-ty">Option</span>&lt;OwnedMatchRule&gt;,
-    src_bus_name: <span class="prelude-ty">Option</span>&lt;WellKnownName&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+    stream: JoinMultiple&lt;Vec&lt;Peekable&lt;MessageStream&gt;&gt;&gt;,
     src_unique_name: <span class="prelude-ty">Option</span>&lt;UniqueName&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
-    member: <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+    phantom: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>()&gt;,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; SignalStream&lt;<span class="lifetime">&#39;a</span>&gt; {
@@ -2509,17 +2575,34 @@
         <span class="kw">for </span>(i, arg) <span class="kw">in </span>args {
             rule_builder = rule_builder.arg(<span class="kw-2">*</span>i, <span class="kw-2">*</span>arg)<span class="question-mark">?</span>;
         }
-        <span class="kw">let </span>rule: OwnedMatchRule = rule_builder.build().to_owned().into();
+        <span class="kw">let </span>signal_rule: OwnedMatchRule = rule_builder.build().to_owned().into();
         <span class="kw">let </span>conn = proxy.connection();
-        conn.add_match(rule.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>stream = MessageStream::from(conn);
 
-        <span class="kw">let </span>(src_bus_name, src_unique_name, stream) = <span class="kw">match </span>proxy.destination().to_owned() {
-            BusName::Unique(name) =&gt; (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(name), stream),
+        <span class="kw">let </span>(src_unique_name, stream) = <span class="kw">match </span>proxy.destination().to_owned() {
+            BusName::Unique(name) =&gt; (
+                <span class="prelude-val">Some</span>(name),
+                JoinMultiple(<span class="macro">vec!</span>[ordered_stream::OrderedStreamExt::peekable(
+                    MessageStream::for_match_rule(signal_rule, conn, <span class="prelude-val">None</span>).<span class="kw">await</span><span class="question-mark">?</span>,
+                )]),
+            ),
             BusName::WellKnown(name) =&gt; {
                 <span class="kw">use </span>ordered_stream::OrderedStreamExt;
 
-                <span class="kw">let </span>stream = stream.map(Either::Left);
+                <span class="kw">let </span>name_owner_changed_rule = MatchRule::builder()
+                    .msg_type(MessageType::Signal)
+                    .sender(<span class="string">&quot;org.freedesktop.DBus&quot;</span>)<span class="question-mark">?
+                    </span>.path(<span class="string">&quot;/org/freedesktop/DBus&quot;</span>)<span class="question-mark">?
+                    </span>.interface(<span class="string">&quot;org.freedesktop.DBus&quot;</span>)<span class="question-mark">?
+                    </span>.member(<span class="string">&quot;NameOwnerChanged&quot;</span>)<span class="question-mark">?
+                    </span>.add_arg(name.as_str())<span class="question-mark">?
+                    </span>.build();
+                <span class="kw">let </span>name_owner_changed_stream = MessageStream::for_match_rule(
+                    name_owner_changed_rule,
+                    conn,
+                    <span class="prelude-val">Some</span>(MAX_NAME_OWNER_CHANGED_SIGNALS_QUEUED),
+                )
+                .<span class="kw">await</span><span class="question-mark">?
+                </span>.map(Either::Left);
 
                 <span class="kw">let </span>get_name_owner = conn
                     .call_method_raw(
@@ -2533,9 +2616,9 @@
                     .<span class="kw">await
                     </span>.map(|r| FromFuture::from(r.expect(<span class="string">&quot;no reply&quot;</span>)).map(Either::Right))<span class="question-mark">?</span>;
 
-                <span class="kw">let </span><span class="kw-2">mut </span>join = join_streams(stream, get_name_owner);
+                <span class="kw">let </span><span class="kw-2">mut </span>join = join_streams(name_owner_changed_stream, get_name_owner);
 
-                <span class="kw">let </span>src_unique_name = <span class="kw">loop </span>{
+                <span class="kw">let </span><span class="kw-2">mut </span>src_unique_name = <span class="kw">loop </span>{
                     <span class="kw">match </span>join.next().<span class="kw">await </span>{
                         <span class="prelude-val">Some</span>(Either::Left(msg)) =&gt; {
                             <span class="kw">if let </span><span class="prelude-val">Some</span>(signal) =
@@ -2561,62 +2644,65 @@
                             <span class="kw">break </span><span class="prelude-val">None</span>;
                         }
                         <span class="prelude-val">None </span>=&gt; {
-                            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Io(std::io::Error::new(
-                                std::io::ErrorKind::BrokenPipe,
-                                <span class="string">&quot;connection closed&quot;</span>,
-                            )))
+                            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InputOutput(
+                                std::io::Error::new(
+                                    std::io::ErrorKind::BrokenPipe,
+                                    <span class="string">&quot;connection closed&quot;</span>,
+                                )
+                                .into(),
+                            ))
                         }
                     }
                 };
 
-                <span class="comment">// Ignore any buffered message. We are only interested in the first one (which we
-                // already got since we&#39;re out of the loop).
-                </span><span class="kw">let </span>(stream, <span class="kw">_</span>, <span class="kw">_</span>) = join.into_inner();
-                <span class="kw">let </span>stream = stream.into_inner();
+                <span class="comment">// Let&#39;s take into account any buffered NameOwnerChanged signal.
+                </span><span class="kw">let </span>(stream, <span class="kw">_</span>, queued) = join.into_inner();
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = queued.and_then(|e| <span class="kw">match </span>e.<span class="number">0 </span>{
+                    Either::Left(<span class="prelude-val">Ok</span>(msg)) =&gt; <span class="prelude-val">Some</span>(msg),
+                    Either::Left(<span class="prelude-val">Err</span>(<span class="kw">_</span>)) | Either::Right(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+                }) {
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(signal) = NameOwnerChanged::from_message(msg) {
+                        <span class="kw">if let </span><span class="prelude-val">Ok</span>(args) = signal.args() {
+                            <span class="kw">match </span>(args.name(), args.new_owner().deref()) {
+                                (BusName::WellKnown(n), <span class="prelude-val">Some</span>(new_owner)) <span class="kw">if </span>n == <span class="kw-2">&amp;</span>name =&gt; {
+                                    src_unique_name = <span class="prelude-val">Some</span>(new_owner.to_owned());
+                                }
+                                <span class="kw">_ </span>=&gt; (),
+                            }
+                        }
+                    }
+                }
+                <span class="kw">let </span>name_owner_changed_stream = stream.into_inner();
 
-                (<span class="prelude-val">Some</span>(name), src_unique_name, stream)
+                <span class="kw">let </span>stream = JoinMultiple(<span class="macro">vec!</span>[
+                    MessageStream::for_match_rule(signal_rule, conn, <span class="prelude-val">None</span>)
+                        .<span class="kw">await</span><span class="question-mark">?
+                        </span>.peekable(),
+                    name_owner_changed_stream.peekable(),
+                ]);
+
+                (src_unique_name, stream)
             }
         };
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             stream,
-            proxy,
-            match_rule: <span class="prelude-val">Some</span>(rule),
-            src_bus_name,
             src_unique_name,
-            member: signal_name,
+            phantom: PhantomData,
         })
     }
 
     <span class="kw">fn </span>filter(<span class="kw-2">&amp;mut </span><span class="self">self</span>, msg: <span class="kw-2">&amp;</span>Arc&lt;Message&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
-        <span class="kw">if </span>msg.message_type() != zbus::MessageType::Signal {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
-        }
-        <span class="kw">let </span>memb = msg.member();
-        <span class="kw">let </span>iface = msg.interface();
-        <span class="kw">let </span>path = msg.path();
-
-        <span class="kw">if </span>(<span class="self">self</span>.member.is_none() || memb == <span class="self">self</span>.member)
-            &amp;&amp; path.as_ref() == <span class="prelude-val">Some</span>(<span class="self">self</span>.proxy.path())
-            &amp;&amp; iface.as_ref() == <span class="prelude-val">Some</span>(<span class="self">self</span>.proxy.interface())
-        {
-            <span class="kw">let </span>header = msg.header()<span class="question-mark">?</span>;
-            <span class="kw">let </span>sender = header.sender()<span class="question-mark">?</span>;
-            <span class="kw">if </span>sender == <span class="self">self</span>.src_unique_name.as_ref() {
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
-            }
+        <span class="kw">let </span>header = msg.header()<span class="question-mark">?</span>;
+        <span class="kw">let </span>sender = header.sender()<span class="question-mark">?</span>;
+        <span class="kw">if </span>sender == <span class="self">self</span>.src_unique_name.as_ref() {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
         }
 
         <span class="comment">// The src_unique_name must be maintained in lock-step with the applied filter
-        </span><span class="kw">let </span>bus_name = <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.src_bus_name {
-            <span class="prelude-val">Some</span>(bus_name) =&gt; bus_name,
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
-        };
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(signal) = NameOwnerChanged::from_message(msg.clone()) {
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(signal) = NameOwnerChanged::from_message(msg.clone()) {
             <span class="kw">let </span>args = signal.args()<span class="question-mark">?</span>;
-            <span class="kw">if </span>args.name() == bus_name {
-                <span class="self">self</span>.src_unique_name = args.new_owner().as_ref().map(|n| n.to_owned());
-            }
+            <span class="self">self</span>.src_unique_name = args.new_owner().as_ref().map(|n| n.to_owned());
         }
 
         <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>)
@@ -2628,16 +2714,21 @@
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; stream::Stream <span class="kw">for </span>SignalStream&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">type </span>Item = Arc&lt;Message&gt;;
 
-    <span class="kw">fn </span>poll_next(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
-        <span class="kw">let </span>this = <span class="self">self</span>.get_mut();
-        <span class="kw">while let </span><span class="prelude-val">Some</span>(res) = <span class="macro">ready!</span>(Pin::new(<span class="kw-2">&amp;mut </span>this.stream).poll_next(cx)) {
-            <span class="kw">if let </span><span class="prelude-val">Ok</span>(msg) = res {
-                <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) = this.filter(<span class="kw-2">&amp;</span>msg) {
-                    <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Some</span>(msg));
-                }
+    <span class="kw">fn </span>poll_next(<span class="kw-2">mut </span><span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
+        <span class="kw">loop </span>{
+            <span class="kw">match </span><span class="macro">ready!</span>(OrderedStream::poll_next_before(<span class="self">self</span>.as_mut(), cx, <span class="prelude-val">None</span>)) {
+                <span class="comment">// FIXME: We should make use of `Stream` impl of `Join` when that&#39;s available:
+                //
+                // https://github.com/danieldg/ordered-stream/issues/7
+                </span>PollResult::Item {
+                    data: msg,
+                    ordering: <span class="kw">_</span>,
+                } =&gt; <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Some</span>(msg)),
+                PollResult::Terminated =&gt; <span class="kw">return </span>Poll::Ready(<span class="prelude-val">None</span>),
+                <span class="comment">// SAFETY: We didn&#39;t specify a before ordering, so we should never get this.
+                </span>PollResult::NoneBefore =&gt; <span class="macro">unreachable!</span>(),
             }
         }
-        Poll::Ready(<span class="prelude-val">None</span>)
     }
 }
 
@@ -2676,14 +2767,7 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; stream::FusedStream <span class="kw">for </span>SignalStream&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.stream.is_terminated()
-    }
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; std::ops::Drop <span class="kw">for </span>SignalStream&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">let </span>rule = <span class="self">self</span>.match_rule.take().expect(<span class="string">&quot;match rule already removed&quot;</span>);
-        <span class="self">self</span>.proxy.connection().queue_remove_match(rule);
+        ordered_stream::FusedOrderedStream::is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>.stream)
     }
 }
 
@@ -2699,7 +2783,6 @@
     <span class="kw">use crate</span>::{dbus_interface, dbus_proxy, utils::block_on, ConnectionBuilder, SignalContext};
     <span class="kw">use </span>futures_util::StreamExt;
     <span class="kw">use </span>ntest::timeout;
-    <span class="kw">use </span>std::future::ready;
     <span class="kw">use </span>test_log::test;
 
     <span class="attribute">#[test]
@@ -2725,13 +2808,9 @@
         <span class="kw">let </span><span class="kw-2">mut </span>owner_changed_stream = proxy.receive_owner_changed().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let </span>proxy = fdo::DBusProxy::new(<span class="kw-2">&amp;</span>dest_conn).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>name_acquired_stream = proxy.receive_signal(<span class="string">&quot;NameAcquired&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>.filter(|msg| {
-            <span class="kw">if let </span><span class="prelude-val">Ok</span>(name) = msg.body::&lt;BusName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;() {
-                <span class="kw">return </span>ready(name == well_known);
-            }
-
-            ready(<span class="bool-val">false</span>)
-        });
+        <span class="kw">let </span><span class="kw-2">mut </span>name_acquired_stream = proxy
+            .receive_signal_with_args(<span class="string">&quot;NameAcquired&quot;</span>, <span class="kw-2">&amp;</span>[(<span class="number">0</span>, well_known)])
+            .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let </span>prop_stream =
             proxy
@@ -2819,7 +2898,7 @@
             </span>.build()
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="kw">let </span>(tx, rx) = channel(<span class="number">1</span>);
+        <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = tokio::sync::mpsc::channel(<span class="number">1</span>);
 
         <span class="kw">let </span>handle = {
             <span class="kw">let </span>tx = tx.clone();
@@ -2860,15 +2939,14 @@
         <span class="kw">let </span>signal_fut = <span class="kw">async </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>signal_stream = test_proxy.receive_my_signal().<span class="kw">await</span>.unwrap();
 
-            <span class="macro">assert!</span>(tx.send(()).<span class="kw">await</span>.is_none());
+            tx.send(()).<span class="kw">await</span>.unwrap();
 
             <span class="kw">while let </span><span class="prelude-val">Some</span>(_signal) = signal_stream.next().<span class="kw">await </span>{}
         };
 
-        <span class="kw">let </span>prop_fut = <span class="kw">async </span>{
+        <span class="kw">let </span>prop_fut = <span class="kw">async move </span>{
             rx.recv().<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>_prop_stream = test_prop_proxy.receive_properties_changed().<span class="kw">await</span>.unwrap();
-            rx.close().<span class="kw">await</span>;
         };
 
         <span class="macro">futures_util::pin_mut!</span>(signal_fut);

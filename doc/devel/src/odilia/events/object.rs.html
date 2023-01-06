@@ -166,6 +166,34 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	identify::{
@@ -297,13 +325,41 @@
 
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi::{accessible_ext::{AccessibleExt}, identify::{object::StateChangedEvent}, signify::Signified};
+	<span class="kw">use </span>atspi::{accessible_ext::{AccessibleExt, AccessibleId}, identify::{object::StateChangedEvent}, signify::Signified, State};
+	<span class="kw">use </span>odilia_cache::{AccessiblePrimitive};
+
+	<span class="doccomment">/// Update the state of an item in the cache using a StateChanged event and the ScreenReaderState as context.
+	/// This writes to the value in-place, and does not clone any values.
+	</span><span class="kw">pub async fn </span>update_state(state: <span class="kw-2">&amp;</span>ScreenReaderState, a11y_id: <span class="kw-2">&amp;</span>AccessibleId, state_changed: State, active: bool) -&gt; eyre::Result&lt;bool&gt; {
+		<span class="kw">if </span>active {
+			<span class="prelude-val">Ok</span>(state.cache.modify_item(a11y_id, |cache_item| cache_item.states.remove(state_changed)).<span class="kw">await</span>)
+		} <span class="kw">else </span>{
+			<span class="prelude-val">Ok</span>(state.cache.modify_item(a11y_id, |cache_item| cache_item.states.insert(state_changed)).<span class="kw">await</span>)
+		}
+	}
 
 	<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>StateChangedEvent) -&gt; eyre::Result&lt;()&gt; {
+		<span class="kw">let </span>a11y_state: State = <span class="kw">match </span>serde_plain::from_str(event.kind()) {
+			<span class="prelude-val">Ok</span>(s) =&gt; s,
+			<span class="prelude-val">Err</span>(e) =&gt; {
+				<span class="macro">tracing::error!</span>(<span class="string">&quot;Not able to deserialize state: {}&quot;</span>, event.kind());
+				<span class="kw">return </span><span class="prelude-val">Err</span>(e.into())
+			},
+		};
+		<span class="kw">let </span>state_value = event.enabled() == <span class="number">1</span>;
+		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
+		<span class="comment">// update cache with state of item
+		</span><span class="kw">match </span>update_state(state, <span class="kw-2">&amp;</span>a11y_prim.id, a11y_state, state_value).<span class="kw">await </span>{
+			<span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;Updating of the state was not succesful! The item with id {:?} was not found in the cache.&quot;</span>, a11y_prim.id),
+			<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) =&gt; <span class="macro">tracing::trace!</span>(<span class="string">&quot;Updated the state of accessible with ID {:?}, and state {:?} to {state_value}.&quot;</span>, a11y_prim.id, a11y_state),
+			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
+		};
 		<span class="comment">// Dispatch based on kind
-		</span><span class="kw">match </span>event.kind() {
-			<span class="string">&quot;focused&quot; </span>=&gt; focused(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
+		</span><span class="kw">let </span>state_type = serde_plain::from_str(event.kind())<span class="question-mark">?</span>;
+		<span class="comment">// enabled can only be 1 or 0, but is not a boolean over dbus
+		</span><span class="kw">match </span>(state_type, event.enabled() == <span class="number">1</span>) {
+			(State::Focused, <span class="bool-val">true</span>) =&gt; focused(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			(state, enabled) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring state_changed event with unknown kind: {:?}/{}&quot;</span>, state, enabled),
 		}
 		<span class="prelude-val">Ok</span>(())
 	}

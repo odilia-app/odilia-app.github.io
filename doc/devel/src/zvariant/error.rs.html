@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zvariant-3.9.0/src/error.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zvariant-3.10.0/src/error.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -151,9 +151,37 @@
 <span id="150">150</span>
 <span id="151">151</span>
 <span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
 </pre><pre class="rust"><code><span class="kw">use </span>serde::{de, ser};
 <span class="kw">use </span>static_assertions::assert_impl_all;
-<span class="kw">use </span>std::{convert::Infallible, error, fmt, result};
+<span class="kw">use </span>std::{convert::Infallible, error, fmt, result, sync::Arc};
 
 <span class="doccomment">/// Enum representing the max depth exceeded error.
 </span><span class="attribute">#[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -193,7 +221,10 @@
     </span>Message(String),
 
     <span class="doccomment">/// Wrapper for [`std::io::Error`](https://doc.rust-lang.org/std/io/struct.Error.html)
+    </span><span class="attribute">#[deprecated(note = <span class="string">&quot;Use `Error::InputOutput` instead&quot;</span>)]
     </span>Io(std::io::Error),
+    <span class="doccomment">/// Wrapper for [`std::io::Error`](https://doc.rust-lang.org/std/io/struct.Error.html)
+    </span>InputOutput(Arc&lt;std::io::Error&gt;),
     <span class="doccomment">/// Type conversions errors.
     </span>IncorrectType,
     <span class="doccomment">/// Wrapper for [`std::str::Utf8Error`](https://doc.rust-lang.org/std/str/struct.Utf8Error.html)
@@ -235,7 +266,9 @@
 <span class="kw">impl </span>error::Error <span class="kw">for </span>Error {
     <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>error::Error + <span class="lifetime">&#39;static</span>)&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            Error::Io(e) =&gt; <span class="prelude-val">Some</span>(e),
+            <span class="attribute">#[allow(deprecated)]
+            </span>Error::Io(e) =&gt; <span class="prelude-val">Some</span>(e),
+            Error::InputOutput(e) =&gt; <span class="prelude-val">Some</span>(e),
             Error::Utf8(e) =&gt; <span class="prelude-val">Some</span>(e),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
@@ -245,25 +278,24 @@
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>Error {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
-            Error::Message(s) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, s),
-            Error::Io(e) =&gt; e.fmt(f),
+            Error::Message(s) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{s}&quot;</span>),
+            <span class="attribute">#[allow(deprecated)]
+            </span>Error::Io(e) =&gt; e.fmt(f),
+            Error::InputOutput(e) =&gt; e.fmt(f),
             Error::IncorrectType =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;incorrect type&quot;</span>),
-            Error::Utf8(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, e),
-            Error::PaddingNot0(b) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unexpected non-0 padding byte `{}`&quot;</span>, b),
+            Error::Utf8(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{e}&quot;</span>),
+            Error::PaddingNot0(b) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unexpected non-0 padding byte `{b}`&quot;</span>),
             Error::UnknownFd =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;File descriptor not in the given FD index&quot;</span>),
             Error::MissingFramingOffset =&gt; <span class="macro">write!</span>(
                 f,
                 <span class="string">&quot;Missing framing offset at the end of GVariant-encoded container&quot;
             </span>),
-            Error::IncompatibleFormat(sig, format) =&gt; <span class="macro">write!</span>(
-                f,
-                <span class="string">&quot;Type `{}` is not compatible with `{}` format&quot;</span>,
-                sig, format,
-            ),
+            Error::IncompatibleFormat(sig, format) =&gt; {
+                <span class="macro">write!</span>(f, <span class="string">&quot;Type `{sig}` is not compatible with `{format}` format&quot;</span>,)
+            }
             Error::SignatureMismatch(provided, expected) =&gt; <span class="macro">write!</span>(
                 f,
-                <span class="string">&quot;Signature mismatch: got `{}`, expected {}&quot;</span>,
-                provided, expected,
+                <span class="string">&quot;Signature mismatch: got `{provided}`, expected {expected}&quot;</span>,
             ),
             Error::OutOfBounds =&gt; <span class="macro">write!</span>(
                 f,
@@ -271,6 +303,30 @@
                 </span><span class="string">&quot;Out of bounds range specified&quot;</span>,
             ),
             Error::MaxDepthExceeded(max) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{max}&quot;</span>),
+        }
+    }
+}
+
+<span class="kw">impl </span>Clone <span class="kw">for </span>Error {
+    <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span><span class="self">self </span>{
+            Error::Message(s) =&gt; Error::Message(s.clone()),
+            <span class="attribute">#[allow(deprecated)]
+            </span>Error::Io(e) =&gt; Error::Message(e.to_string()),
+            Error::InputOutput(e) =&gt; Error::InputOutput(e.clone()),
+            Error::IncorrectType =&gt; Error::IncorrectType,
+            Error::Utf8(e) =&gt; Error::Utf8(<span class="kw-2">*</span>e),
+            Error::PaddingNot0(b) =&gt; Error::PaddingNot0(<span class="kw-2">*</span>b),
+            Error::UnknownFd =&gt; Error::UnknownFd,
+            Error::MissingFramingOffset =&gt; Error::MissingFramingOffset,
+            Error::IncompatibleFormat(sig, format) =&gt; {
+                Error::IncompatibleFormat(sig.clone(), <span class="kw-2">*</span>format)
+            }
+            Error::SignatureMismatch(provided, expected) =&gt; {
+                Error::SignatureMismatch(provided.clone(), expected.clone())
+            }
+            Error::OutOfBounds =&gt; Error::OutOfBounds,
+            Error::MaxDepthExceeded(max) =&gt; Error::MaxDepthExceeded(<span class="kw-2">*</span>max),
         }
     }
 }

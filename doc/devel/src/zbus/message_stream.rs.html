@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.6.2/src/message_stream.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>message_stream.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zbus-3.7.0/src/message_stream.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>message_stream.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -117,7 +117,141 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{
+    convert::TryInto,
     pin::Pin,
     sync::Arc,
     task::{Context, Poll},
@@ -130,7 +264,7 @@
 <span class="kw">use </span>static_assertions::assert_impl_all;
 
 <span class="kw">use crate</span>::{
-    async_channel::Receiver, Connection, ConnectionInner, Error, Message, MessageSequence, <span class="prelude-ty">Result</span>,
+    Connection, ConnectionInner, MatchRule, Message, MessageSequence, OwnedMatchRule, <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// A [`stream::Stream`] implementation that yields [`Message`] items.
@@ -146,13 +280,121 @@
 </span><span class="attribute">#[derive(Clone, Debug)]
 #[must_use = <span class="string">&quot;streams do nothing unless polled&quot;</span>]
 </span><span class="kw">pub struct </span>MessageStream {
-    conn_inner: Arc&lt;ConnectionInner&gt;,
-    msg_receiver: ActiveReceiver&lt;Arc&lt;Message&gt;&gt;,
-    error_receiver: Receiver&lt;Error&gt;,
-    last_seq: MessageSequence,
+    inner: Inner,
 }
 
 <span class="macro">assert_impl_all!</span>(MessageStream: Send, Sync, Unpin);
+
+<span class="kw">impl </span>MessageStream {
+    <span class="doccomment">/// Create a message stream for the given match rule.
+    ///
+    /// If `conn` is a bus connection and match rule is for a signal, the match rule will be
+    /// registered with the bus and deregistered when the stream is dropped. The reason match rules
+    /// are only registered with the bus for signals is that D-Bus specification only allows signals
+    /// to be broadcasted and unicast messages are always sent to their destination (regardless of
+    /// any match rules registered by the destination) by the bus. Hence there is no need to
+    /// register match rules for non-signal messages with the bus.
+    ///
+    /// Having said that, stream created by this method can still very useful as it allows you to
+    /// avoid needless task wakeups and simplify your stream consuming code.
+    ///
+    /// You can optionally also request the capacity of the underlying message queue through
+    /// `max_queued`. If specified, the capacity is guaranteed to be at least `max_queued`. If not
+    /// specified, the default of 64 is assumed.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use zbus::{Connection, MatchRule, MessageStream, fdo::NameOwnerChanged};
+    /// use futures_util::TryStreamExt;
+    ///
+    ///# zbus::block_on(async {
+    /// let conn = Connection::session().await?;
+    /// let rule = MatchRule::builder()
+    ///     .msg_type(zbus::MessageType::Signal)
+    ///     .sender(&quot;org.freedesktop.DBus&quot;)?
+    ///     .interface(&quot;org.freedesktop.DBus&quot;)?
+    ///     .member(&quot;NameOwnerChanged&quot;)?
+    ///     .add_arg(&quot;org.freedesktop.zbus.MatchRuleStreamTest42&quot;)?
+    ///     .build();
+    /// let mut stream = MessageStream::for_match_rule(
+    ///     rule,
+    ///     &amp;conn,
+    ///     // For such a specific match rule, we don&#39;t need a big queue.
+    ///     Some(1),
+    /// ).await?;
+    ///
+    /// let rule_str = &quot;type=&#39;signal&#39;,sender=&#39;org.freedesktop.DBus&#39;,\
+    ///                 interface=&#39;org.freedesktop.DBus&#39;,member=&#39;NameOwnerChanged&#39;,\
+    ///                 arg0=&#39;org.freedesktop.zbus.MatchRuleStreamTest42&#39;&quot;;
+    /// assert_eq!(
+    ///     stream.match_rule().map(|r| r.to_string()).as_deref(),
+    ///     Some(rule_str),
+    /// );
+    ///
+    /// // We register 2 names, starting with the uninteresting one. If `stream` wasn&#39;t filtering
+    /// // messages based on the match rule, we&#39;d receive method return call for each of these 2
+    /// // calls first.
+    /// //
+    /// // Note that the `NameOwnerChanged` signal will not be sent by the bus  for the first name
+    /// // we register since we setup an arg filter.
+    /// conn.request_name(&quot;org.freedesktop.zbus.MatchRuleStreamTest44&quot;)
+    ///     .await?;
+    /// conn.request_name(&quot;org.freedesktop.zbus.MatchRuleStreamTest42&quot;)
+    ///     .await?;
+    ///
+    /// let msg = stream.try_next().await?.unwrap();
+    /// let signal = NameOwnerChanged::from_message(msg).unwrap();
+    /// assert_eq!(signal.args()?.name(), &quot;org.freedesktop.zbus.MatchRuleStreamTest42&quot;);
+    ///
+    ///# Ok::&lt;(), zbus::Error&gt;(())
+    ///# }).unwrap();
+    /// ```
+    ///
+    /// # Caveats
+    ///
+    /// Since this method relies on [`MatchRule::matches`], it inherits its caveats.
+    </span><span class="kw">pub async fn </span>for_match_rule&lt;R&gt;(
+        rule: R,
+        conn: <span class="kw-2">&amp;</span>Connection,
+        max_queued: <span class="prelude-ty">Option</span>&lt;usize&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
+    <span class="kw">where
+        </span>R: TryInto&lt;OwnedMatchRule&gt;,
+        R::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
+    {
+        <span class="kw">let </span>rule = rule.try_into().map_err(Into::into)<span class="question-mark">?</span>;
+        <span class="kw">let </span>msg_receiver = conn.add_match(rule.clone(), max_queued).<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::for_subscription_channel(
+            msg_receiver,
+            <span class="prelude-val">Some</span>(rule),
+            conn,
+        ))
+    }
+
+    <span class="doccomment">/// The associated match rule, if any.
+    </span><span class="kw">pub fn </span>match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+        <span class="self">self</span>.inner.match_rule.as_deref().cloned()
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>for_subscription_channel(
+        msg_receiver: ActiveReceiver&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;,
+        rule: <span class="prelude-ty">Option</span>&lt;OwnedMatchRule&gt;,
+        conn: <span class="kw-2">&amp;</span>Connection,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>conn_inner = conn.inner.clone();
+
+        <span class="self">Self </span>{
+            inner: Inner {
+                conn_inner,
+                msg_receiver,
+                last_seq: Default::default(),
+                match_rule: rule,
+            },
+        }
+    }
+}
 
 <span class="kw">impl </span>stream::Stream <span class="kw">for </span>MessageStream {
     <span class="kw">type </span>Item = <span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;;
@@ -160,16 +402,15 @@
     <span class="kw">fn </span>poll_next(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt;&gt; {
         <span class="kw">let </span>this = <span class="self">self</span>.get_mut();
 
-        <span class="kw">if </span>!this.msg_receiver.is_terminated() {
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = <span class="macro">ready!</span>(Pin::new(<span class="kw-2">&amp;mut </span>this.msg_receiver).poll_next(cx)) {
-                this.last_seq = msg.recv_position();
-                <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(msg)));
-            }
-        }
-        <span class="comment">// If msg_receiver is terminated or returns None, try returning the error
-        </span>Pin::new(<span class="kw-2">&amp;mut </span>this.error_receiver)
+        Pin::new(<span class="kw-2">&amp;mut </span>this.inner.msg_receiver)
             .poll_next(cx)
-            .map(|v| v.map(<span class="prelude-val">Err</span>))
+            .map(|msg| {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(msg)) = <span class="kw-2">&amp;</span>msg {
+                    this.inner.last_seq = msg.recv_position();
+                }
+
+                msg
+            })
     }
 }
 
@@ -184,14 +425,14 @@
     ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
         <span class="kw">let </span>this = <span class="self">self</span>.get_mut();
         <span class="kw">if let </span><span class="prelude-val">Some</span>(before) = before {
-            <span class="kw">if </span>this.last_seq &gt;= <span class="kw-2">*</span>before {
+            <span class="kw">if </span>this.inner.last_seq &gt;= <span class="kw-2">*</span>before {
                 <span class="kw">return </span>Poll::Ready(PollResult::NoneBefore);
             }
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = <span class="macro">ready!</span>(stream::Stream::poll_next(Pin::new(this), cx)) {
             Poll::Ready(PollResult::Item {
                 data: msg,
-                ordering: this.last_seq,
+                ordering: this.inner.last_seq,
             })
         } <span class="kw">else </span>{
             Poll::Ready(PollResult::Terminated)
@@ -201,21 +442,22 @@
 
 <span class="kw">impl </span>FusedStream <span class="kw">for </span>MessageStream {
     <span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.msg_receiver.is_terminated() &amp;&amp; <span class="self">self</span>.error_receiver.is_terminated()
+        <span class="self">self</span>.inner.msg_receiver.is_terminated()
     }
 }
 
 <span class="kw">impl </span>From&lt;Connection&gt; <span class="kw">for </span>MessageStream {
     <span class="kw">fn </span>from(conn: Connection) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>conn_inner = conn.inner.clone();
-        <span class="kw">let </span>msg_receiver = conn.msg_receiver.activate();
-        <span class="kw">let </span>error_receiver = conn.error_receiver;
+        <span class="kw">let </span>conn_inner = conn.inner;
+        <span class="kw">let </span>msg_receiver = conn_inner.msg_receiver.activate_cloned();
 
         <span class="self">Self </span>{
-            conn_inner,
-            msg_receiver,
-            error_receiver,
-            last_seq: Default::default(),
+            inner: Inner {
+                conn_inner,
+                msg_receiver,
+                last_seq: Default::default(),
+                match_rule: <span class="prelude-val">None</span>,
+            },
         }
     }
 }
@@ -228,10 +470,34 @@
 
 <span class="kw">impl </span>From&lt;MessageStream&gt; <span class="kw">for </span>Connection {
     <span class="kw">fn </span>from(stream: MessageStream) -&gt; Connection {
+        Connection::from(<span class="kw-2">&amp;</span>stream)
+    }
+}
+
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>MessageStream&gt; <span class="kw">for </span>Connection {
+    <span class="kw">fn </span>from(stream: <span class="kw-2">&amp;</span>MessageStream) -&gt; Connection {
         Connection {
-            msg_receiver: stream.msg_receiver.deactivate(),
-            error_receiver: stream.error_receiver,
-            inner: stream.conn_inner,
+            inner: stream.inner.conn_inner.clone(),
+        }
+    }
+}
+
+<span class="attribute">#[derive(Clone, Debug)]
+</span><span class="kw">struct </span>Inner {
+    conn_inner: Arc&lt;ConnectionInner&gt;,
+    msg_receiver: ActiveReceiver&lt;<span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;&gt;,
+    last_seq: MessageSequence,
+    match_rule: <span class="prelude-ty">Option</span>&lt;OwnedMatchRule&gt;,
+}
+
+<span class="kw">impl </span>Drop <span class="kw">for </span>Inner {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="kw">let </span>conn = Connection {
+            inner: <span class="self">self</span>.conn_inner.clone(),
+        };
+
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(rule) = <span class="self">self</span>.match_rule.take() {
+            conn.queue_remove_match(rule);
         }
     }
 }

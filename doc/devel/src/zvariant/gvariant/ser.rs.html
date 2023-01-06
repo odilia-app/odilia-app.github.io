@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zvariant-3.9.0/src/gvariant/ser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../zvariant/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/zvariant-3.10.0/src/gvariant/ser.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../zvariant/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
@@ -753,6 +753,17 @@
 <span id="752">752</span>
 <span id="753">753</span>
 <span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
 </pre><pre class="rust"><code><span class="kw">use </span>serde::{ser, ser::SerializeSeq, Serialize};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::{
@@ -827,7 +838,9 @@
                 <span class="self">self</span>.<span class="number">0</span>.container_depths = <span class="self">self</span>.<span class="number">0</span>.container_depths.dec_maybe();
 
                 <span class="kw">if </span>!fixed_sized_child {
-                    <span class="self">self</span>.<span class="number">0</span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..]).map_err(Error::Io)<span class="question-mark">?</span>;
+                    <span class="self">self</span>.<span class="number">0
+                        </span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..])
+                        .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
                 }
             }
             <span class="prelude-val">None </span>=&gt; {
@@ -929,15 +942,22 @@
         <span class="comment">// Strings in GVariant format require no alignment.
 
         </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="number">0</span>.write_all(v.as_bytes()).map_err(Error::Io)<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="number">0</span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..]).map_err(Error::Io)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="number">0
+            </span>.write_all(v.as_bytes())
+            .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="number">0
+            </span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..])
+            .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">fn </span>serialize_bytes(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">let </span>seq = <span class="self">self</span>.serialize_seq(<span class="prelude-val">Some</span>(v.len()))<span class="question-mark">?</span>;
-        seq.ser.<span class="number">0</span>.write(v).map_err(Error::Io)<span class="question-mark">?</span>;
+        seq.ser
+            .<span class="number">0
+            </span>.write(v)
+            .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
         seq.end()
     }
 
@@ -953,7 +973,9 @@
     }
 
     <span class="kw">fn </span>serialize_unit(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..]).map_err(Error::Io)
+        <span class="self">self</span>.<span class="number">0
+            </span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..])
+            .map_err(|e| Error::InputOutput(e.into()))
     }
 
     <span class="kw">fn </span>serialize_unit_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -1198,10 +1220,7 @@
     <span class="kw">fn </span>structure(ser: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>c = ser.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
         <span class="kw">if </span>c != STRUCT_SIG_START_CHAR &amp;&amp; c != DICT_ENTRY_SIG_START_CHAR {
-            <span class="kw">let </span>expected = <span class="macro">format!</span>(
-                <span class="string">&quot;`{}` or `{}`&quot;</span>,
-                STRUCT_SIG_START_STR, DICT_ENTRY_SIG_START_STR,
-            );
+            <span class="kw">let </span>expected = <span class="macro">format!</span>(<span class="string">&quot;`{STRUCT_SIG_START_STR}` or `{DICT_ENTRY_SIG_START_STR}`&quot;</span>,);
 
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_type(
                 serde::de::Unexpected::Char(c),
@@ -1271,11 +1290,14 @@
                 value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
                 <span class="self">self</span>.ser.<span class="number">0</span>.bytes_written = ser.<span class="number">0</span>.bytes_written;
 
-                <span class="self">self</span>.ser.<span class="number">0</span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..]).map_err(Error::Io)<span class="question-mark">?</span>;
+                <span class="self">self</span>.ser
+                    .<span class="number">0
+                    </span>.write_all(<span class="kw-2">&amp;</span><span class="string">b&quot;\0&quot;</span>[..])
+                    .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
                 <span class="self">self</span>.ser
                     .<span class="number">0
                     </span>.write_all(signature.as_bytes())
-                    .map_err(Error::Io)<span class="question-mark">?</span>;
+                    .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
 
                 <span class="prelude-val">Ok</span>(())
             }

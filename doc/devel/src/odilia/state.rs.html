@@ -495,11 +495,11 @@
 	<span class="kw">pub async fn </span>build_cache&lt;<span class="lifetime">&#39;a</span>&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;,
-		path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;,
 	) -&gt; OdiliaResult&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="macro">println!</span>(<span class="string">&quot;CACHE SENDER: {}&quot;</span>, dest);
 		<span class="prelude-val">Ok</span>(CacheProxy::builder(<span class="self">self</span>.connection())
 			.destination(dest)<span class="question-mark">?
-			</span>.path(path)<span class="question-mark">?
+			</span>.path(ObjectPath::from_static_str(<span class="string">&quot;/org/a11y/atspi/cache&quot;</span>)<span class="question-mark">?</span>)<span class="question-mark">?
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}

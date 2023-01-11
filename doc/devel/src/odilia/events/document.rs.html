@@ -42,17 +42,13 @@
 <span id="42">42</span>
 <span id="43">43</span>
 <span id="44">44</span>
-<span id="45">45</span>
-<span id="46">46</span>
 </pre><pre class="rust"><code><span class="kw">use </span>zbus::{
-	zvariant::ObjectPath,
 	names::UniqueName,
 };
-<span class="kw">use </span>odilia_cache::{CacheItem, AccessiblePrimitive};
+<span class="kw">use </span>odilia_cache::CacheItem;
 
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
-	accessible::AccessibleProxy,
 	events::GenericEvent,
 	identify::document::DocumentEvents,
 	identify::document::LoadCompleteEvent,
@@ -66,9 +62,9 @@
 	<span class="kw">let </span><span class="kw-2">mut </span>cache_items = Vec::new();
 	<span class="kw">for </span>item <span class="kw">in </span>entire_cache {
 		cache_items.push(CacheItem {
-			object: item.object.try_into().unwrap(),
-			app: item.app.try_into().unwrap(),
-			parent: item.parent.try_into().unwrap(),
+			object: item.object.try_into().expect(<span class="string">&quot;Could not create AccessiblePrimitive from parts&quot;</span>),
+			app: item.app.try_into().expect(<span class="string">&quot;Could not create AccessiblePrimitive from parts for application&quot;</span>),
+			parent: item.parent.try_into().expect(<span class="string">&quot;Could not create AccessiblePrimitive from parts for parent&quot;</span>),
 			index: item.index,
 			children: item.children,
 			ifaces: item.ifaces,
@@ -91,4 +87,4 @@
 	<span class="prelude-val">Ok</span>(())
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="odilia" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

@@ -41,13 +41,42 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
-</pre><pre class="rust"><code><span class="kw">use </span>std::{error::Error, fmt};
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::{error::Error, fmt, str::FromStr};
 <span class="kw">use </span>atspi::error::AtspiError;
 <span class="kw">use </span>smartstring::alias::String <span class="kw">as </span>SmartString;
 
 <span class="attribute">#[derive(Debug)]
 </span><span class="kw">pub enum </span>OdiliaError {
 	AtspiError(AtspiError),
+	PrimitiveConversionError(AccessiblePrimitiveConversionError),
 }
 <span class="kw">impl </span>Error <span class="kw">for </span>OdiliaError {}
 <span class="kw">impl</span>&lt;T: Into&lt;AtspiError&gt;&gt; From&lt;T&gt; <span class="kw">for </span>OdiliaError {
@@ -59,6 +88,33 @@
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
 		<span class="macro">write!</span>(f, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>)
 	}
+}
+
+<span class="attribute">#[derive(Clone, Debug)]
+</span><span class="kw">pub enum </span>AccessiblePrimitiveConversionError {
+  ParseError(&lt;i32 <span class="kw">as </span>FromStr&gt;::Err),
+  ObjectConversionError(atspi::error::ObjectPathConversionError),
+  NoPathId,
+  NoFirstSectionOfSender,
+  NoSecondSectionOfSender,
+	NoSender,
+	ErrSender,
+}
+<span class="kw">impl </span>From&lt;AccessiblePrimitiveConversionError&gt; <span class="kw">for </span>OdiliaError {
+	<span class="kw">fn </span>from(apc_error: AccessiblePrimitiveConversionError) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::PrimitiveConversionError(apc_error)
+	}
+}
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>AccessiblePrimitiveConversionError {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+		<span class="macro">write!</span>(f, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>)
+	}
+}
+<span class="kw">impl </span>std::error::Error <span class="kw">for </span>AccessiblePrimitiveConversionError {}
+<span class="kw">impl </span>From&lt;atspi::error::ObjectPathConversionError&gt; <span class="kw">for </span>AccessiblePrimitiveConversionError {
+  <span class="kw">fn </span>from(object_conversion_error: atspi::error::ObjectPathConversionError) -&gt; <span class="self">Self </span>{
+    <span class="self">Self</span>::ObjectConversionError(object_conversion_error)
+  }
 }
 
 <span class="attribute">#[derive(Debug, Clone, thiserror::Error)]
@@ -85,4 +141,4 @@
 	</span>ModeNameNotFound,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia_common" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia_common" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

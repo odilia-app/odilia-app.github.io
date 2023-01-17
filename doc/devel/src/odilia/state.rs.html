@@ -284,7 +284,7 @@
 };
 <span class="kw">use </span>atspi::{
 	accessible::AccessibleProxy, accessible_ext::{AccessibleExt}, cache::CacheProxy,
-	convertable::Convertable, text::TextGranularity,
+	convertable::Convertable, text::Granularity,
 	signify::Signified,
 };
 <span class="kw">use </span>odilia_common::{
@@ -299,7 +299,7 @@
 	<span class="kw">pub </span>config: ApplicationConfig,
 	<span class="kw">pub </span>previous_caret_position: Cell&lt;i32&gt;,
 	<span class="kw">pub </span>mode: Mutex&lt;ScreenReaderMode&gt;,
-	<span class="kw">pub </span>granularity: Mutex&lt;TextGranularity&gt;,
+	<span class="kw">pub </span>granularity: Mutex&lt;Granularity&gt;,
 	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessiblePrimitive&gt;&gt;,
 	<span class="kw">pub </span>event_history: Mutex&lt;CircularQueue&lt;atspi::Event&gt;&gt;,
 	<span class="kw">pub </span>cache: Cache,
@@ -339,7 +339,7 @@
 		<span class="kw">let </span>event_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
 		<span class="kw">let </span>cache = Cache::new();
 
-		<span class="kw">let </span>granularity = Mutex::new(TextGranularity::Line);
+		<span class="kw">let </span>granularity = Mutex::new(Granularity::Line);
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			atspi,
 			dbus,

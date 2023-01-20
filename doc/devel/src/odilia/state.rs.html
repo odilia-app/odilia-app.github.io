@@ -270,7 +270,7 @@
 <span id="270">270</span>
 <span id="271">271</span>
 <span id="272">272</span>
-</pre><pre class="rust"><code><span class="kw">use </span>std::{cell::Cell, fs};
+</pre><pre class="rust"><code><span class="kw">use </span>std::{cell::Cell, fs, sync::atomic::AtomicI32};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
 <span class="kw">use </span>eyre::WrapErr;
@@ -297,7 +297,7 @@
 	<span class="kw">pub </span>dbus: DBusProxy&lt;<span class="lifetime">&#39;static</span>&gt;,
 	<span class="kw">pub </span>ssip: Sender&lt;SSIPRequest&gt;,
 	<span class="kw">pub </span>config: ApplicationConfig,
-	<span class="kw">pub </span>previous_caret_position: Cell&lt;i32&gt;,
+	<span class="kw">pub </span>previous_caret_position: AtomicI32,
 	<span class="kw">pub </span>mode: Mutex&lt;ScreenReaderMode&gt;,
 	<span class="kw">pub </span>granularity: Mutex&lt;Granularity&gt;,
 	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessiblePrimitive&gt;&gt;,
@@ -334,7 +334,7 @@
 			.wrap_err(<span class="string">&quot;unable to load configuration file&quot;</span>)<span class="question-mark">?</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;configuration loaded successfully&quot;</span>);
 
-		<span class="kw">let </span>previous_caret_position = Cell::new(<span class="number">0</span>);
+		<span class="kw">let </span>previous_caret_position = AtomicI32::new(<span class="number">0</span>);
 		<span class="kw">let </span>accessible_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
 		<span class="kw">let </span>event_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
 		<span class="kw">let </span>cache = Cache::new();

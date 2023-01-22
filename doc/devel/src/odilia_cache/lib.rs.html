@@ -561,12 +561,12 @@
 	/// Note: an exclusive lock will be placed for the entire length of the passed function, so don&#39;t do any compute in it. 
 	/// Returns true if the update was successful.
 	</span><span class="kw">pub async fn </span>modify_item&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>AccessibleId, modify: F) -&gt; bool 
-		<span class="kw">where </span>F: Fn(<span class="kw-2">&amp;mut </span>CacheItem) {
+		<span class="kw">where </span>F: FnOnce(<span class="kw-2">&amp;mut </span>CacheItem) {
 		<span class="kw">let </span><span class="kw-2">mut </span>cache_write = <span class="self">self</span>.by_id.write().<span class="kw">await</span>;
 		<span class="kw">let </span>cache_item = <span class="kw">match </span>cache_write.get_mut(id) {
 			<span class="prelude-val">Some</span>(i) =&gt; i,
 			<span class="prelude-val">None </span>=&gt; {
-				<span class="macro">println!</span>(<span class="string">&quot;THE CACHE HAS THE FOLLOWING ITEMS: {:?}&quot;</span>, cache_write.keys());
+				<span class="macro">tracing::trace!</span>(<span class="string">&quot;The cache has the following items: {:?}&quot;</span>, cache_write.keys());
 				<span class="kw">return </span><span class="bool-val">false</span>;
 			}
 		};
@@ -586,7 +586,7 @@
 		<span class="kw">let </span>cache_item = accessible_to_cache_item(accessible).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>end = std::time::Instant::now();
 		<span class="kw">let </span>diff = end - start;
-		<span class="macro">println!</span>(<span class="string">&quot;Time to create cache item: {:?}&quot;</span>, diff);
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Time to create cache item: {:?}&quot;</span>, diff);
 		<span class="comment">// add a clone of it to the cache
 		</span><span class="self">self</span>.add(copy_into_cache_item(<span class="kw-2">&amp;</span>cache_item)).<span class="kw">await</span>;
 		<span class="comment">// return that same cache item

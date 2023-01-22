@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["TextSelectionArea",""]],"struct":[["GranularSelection",""],["IndexesSelection",""]],"type":[["Accessible",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["AriaLive",""],["TextSelectionArea",""]],"struct":[["GranularSelection",""],["IndexesSelection",""]],"type":[["Accessible",""],["AriaAtomic",""]]};

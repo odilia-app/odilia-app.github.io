@@ -16,7 +16,21 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
-</pre><pre class="rust"><code><span class="kw">use </span>atspi::text::Granularity;
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+</pre><pre class="rust"><code><span class="kw">use </span>serde::{<span class="self">self</span>, Serialize, Deserialize};
+<span class="kw">use </span>atspi::text::Granularity;
 <span class="kw">use </span>zbus::zvariant::OwnedObjectPath;
 
 <span class="kw">pub type </span>Accessible = (String, OwnedObjectPath);
@@ -34,5 +48,17 @@
 	Index(IndexesSelection),
 	Granular(GranularSelection),
 }
+
+<span class="attribute">#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Hash)]
+#[serde(rename_all=<span class="string">&quot;lowercase&quot;</span>, untagged)]
+</span><span class="kw">pub enum </span>AriaLive {
+	Off,
+	Assertive,
+	Polite,
+	Other(String),
+}
+
+<span class="kw">pub type </span>AriaAtomic = bool;
+
 </code></pre></div>
 </section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="odilia_common" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

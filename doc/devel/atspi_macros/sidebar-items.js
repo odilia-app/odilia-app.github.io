@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"attr":[["create_from_xml",""],["try_from_zbus_message",""]],"derive":[["GenericEvent",""],["TrySignify",""]]};

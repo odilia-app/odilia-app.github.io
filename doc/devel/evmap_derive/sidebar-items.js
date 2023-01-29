@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"derive":[["ShallowCopy","Implementation for `#[derive(ShallowCopy)]`"]]};

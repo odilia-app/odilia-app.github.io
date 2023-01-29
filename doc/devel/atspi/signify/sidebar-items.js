@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"trait":[["Signified","All Atspi / Qspi event types encapsulate `AtspiEvent`. This trait allows access to the underlying item."]]};

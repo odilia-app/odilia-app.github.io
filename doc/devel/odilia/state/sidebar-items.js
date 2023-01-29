@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["event_to_match_rule","Converts an at-spi event string (“Object:StateChanged:Focused”), into a DBus match rule (“type=‘signal’,interface=‘org.a11y.atspi.Event.Object’,member=‘StateChanged’”)"]],"struct":[["ScreenReaderState",""]]};

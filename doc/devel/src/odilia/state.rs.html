@@ -256,20 +256,6 @@
 <a href="#256" id="256">256</a>
 <a href="#257" id="257">257</a>
 <a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
-<a href="#263" id="263">263</a>
-<a href="#264" id="264">264</a>
-<a href="#265" id="265">265</a>
-<a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
-<a href="#272" id="272">272</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{fs, sync::atomic::AtomicI32};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
@@ -278,15 +264,11 @@
 <span class="kw">use </span>tokio::sync::{mpsc::Sender, Mutex};
 <span class="kw">use </span>zbus::{fdo::DBusProxy, names::UniqueName, zvariant::ObjectPath, MatchRule, MessageType};
 
-<span class="kw">use </span>odilia_cache::{
-	Cache,
-	AccessiblePrimitive,
-};
 <span class="kw">use </span>atspi::{
-	accessible::AccessibleProxy, accessible_ext::{AccessibleExt}, cache::CacheProxy,
-	convertable::Convertable, text::Granularity,
-	signify::Signified,
+	accessible::AccessibleProxy, accessible_ext::AccessibleExt, cache::CacheProxy,
+	convertable::Convertable, signify::Signified, text::Granularity,
 };
+<span class="kw">use </span>odilia_cache::{AccessiblePrimitive, Cache};
 <span class="kw">use </span>odilia_common::{
 	modes::ScreenReaderMode, settings::ApplicationConfig, types::TextSelectionArea,
 	<span class="prelude-ty">Result </span><span class="kw">as </span>OdiliaResult,
@@ -451,19 +433,13 @@
 		<span class="bool-val">true
 	</span>}
 
-<span class="attr">#[allow(dead_code)]
-	</span><span class="kw">pub async fn </span>event_history_item(
-		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		index: usize
-	) -&gt; <span class="prelude-ty">Option</span>&lt;atspi::Event&gt; {
+	<span class="attr">#[allow(dead_code)]
+	</span><span class="kw">pub async fn </span>event_history_item(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;atspi::Event&gt; {
 		<span class="kw">let </span>history = <span class="self">self</span>.event_history.lock().<span class="kw">await</span>;
 		history.iter().nth(index).cloned()
 	}
 
-	<span class="kw">pub async fn </span>event_history_update(
-		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		event: atspi::Event,
-	) {
+	<span class="kw">pub async fn </span>event_history_update(<span class="kw-2">&amp;</span><span class="self">self</span>, event: atspi::Event) {
 		<span class="kw">let </span><span class="kw-2">mut </span>history = <span class="self">self</span>.event_history.lock().<span class="kw">await</span>;
 		history.push(event);
 	}
@@ -477,8 +453,7 @@
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
 		}
 		<span class="kw">let </span>a11y_prim = {
-			history
-				.iter()
+			history.iter()
 				.nth(index)
 				.expect(<span class="string">&quot;Looking for invalid index in accessible history&quot;</span>)
 				.to_owned()
@@ -492,10 +467,7 @@
 		<span class="kw">let </span><span class="kw-2">mut </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
 		history.push(new_a11y);
 	}
-	<span class="kw">pub async fn </span>build_cache&lt;<span class="lifetime">&#39;a</span>&gt;(
-		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;,
-	) -&gt; OdiliaResult&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+	<span class="kw">pub async fn </span>build_cache&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; OdiliaResult&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
 		<span class="macro">println!</span>(<span class="string">&quot;CACHE SENDER: {dest}&quot;</span>);
 		<span class="prelude-val">Ok</span>(CacheProxy::builder(<span class="self">self</span>.connection())
 			.destination(dest)<span class="question-mark">?
@@ -503,7 +475,7 @@
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}
-	<span class="kw">pub async fn </span>new_accessible&lt;T: Signified&gt; (
+	<span class="kw">pub async fn </span>new_accessible&lt;T: Signified&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {

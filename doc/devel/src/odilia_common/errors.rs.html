@@ -95,10 +95,10 @@
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
 <a href="#97" id="97">97</a>
-</pre><pre class="rust"><code><span class="kw">use </span>serde_plain::Error <span class="kw">as </span>SerdePlainError;
-<span class="kw">use </span>std::{error::Error, fmt, str::FromStr};
-<span class="kw">use </span>atspi::error::AtspiError;
+</pre><pre class="rust"><code><span class="kw">use </span>atspi::error::AtspiError;
+<span class="kw">use </span>serde_plain::Error <span class="kw">as </span>SerdePlainError;
 <span class="kw">use </span>smartstring::alias::String <span class="kw">as </span>SmartString;
+<span class="kw">use </span>std::{error::Error, fmt, str::FromStr};
 
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub enum </span>OdiliaError {
@@ -144,11 +144,11 @@
 
 <span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub enum </span>AccessiblePrimitiveConversionError {
-  ParseError(&lt;i32 <span class="kw">as </span>FromStr&gt;::Err),
-  ObjectConversionError(atspi::error::ObjectPathConversionError),
-  NoPathId,
-  NoFirstSectionOfSender,
-  NoSecondSectionOfSender,
+	ParseError(&lt;i32 <span class="kw">as </span>FromStr&gt;::Err),
+	ObjectConversionError(atspi::error::ObjectPathConversionError),
+	NoPathId,
+	NoFirstSectionOfSender,
+	NoSecondSectionOfSender,
 	NoSender,
 	ErrSender,
 }
@@ -164,9 +164,9 @@
 }
 <span class="kw">impl </span>std::error::Error <span class="kw">for </span>AccessiblePrimitiveConversionError {}
 <span class="kw">impl </span>From&lt;atspi::error::ObjectPathConversionError&gt; <span class="kw">for </span>AccessiblePrimitiveConversionError {
-  <span class="kw">fn </span>from(object_conversion_error: atspi::error::ObjectPathConversionError) -&gt; <span class="self">Self </span>{
-    <span class="self">Self</span>::ObjectConversionError(object_conversion_error)
-  }
+	<span class="kw">fn </span>from(object_conversion_error: atspi::error::ObjectPathConversionError) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::ObjectConversionError(object_conversion_error)
+	}
 }
 
 <span class="attr">#[derive(Debug, Clone, thiserror::Error)]

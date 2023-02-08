@@ -24,13 +24,11 @@
 <a href="#24" id="24">24</a>
 <a href="#25" id="25">25</a>
 <a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::ScreenReaderState;
+<span class="kw">use </span>atspi::events::{AddAccessibleEvent, CacheEvents, RemoveAccessibleEvent};
 <span class="kw">use </span>odilia_cache::AccessiblePrimitive;
-<span class="kw">use </span>atspi::events::{
-	CacheEvents,
-	AddAccessibleEvent,
-	RemoveAccessibleEvent,
-};
 
 <span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>CacheEvents) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">match </span>event {
@@ -40,12 +38,18 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">pub async fn </span>add_accessible(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>AddAccessibleEvent) -&gt; eyre::Result&lt;()&gt; {
+<span class="kw">pub async fn </span>add_accessible(
+	state: <span class="kw-2">&amp;</span>ScreenReaderState,
+	event: <span class="kw-2">&amp;</span>AddAccessibleEvent,
+) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>cache_item = event.to_owned().into_item().try_into()<span class="question-mark">?</span>;
 	state.cache.add(cache_item).<span class="kw">await</span>;
 	<span class="prelude-val">Ok</span>(())
 }
-<span class="kw">pub async fn </span>remove_accessible(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>RemoveAccessibleEvent) -&gt; eyre::Result&lt;()&gt; {
+<span class="kw">pub async fn </span>remove_accessible(
+	state: <span class="kw-2">&amp;</span>ScreenReaderState,
+	event: <span class="kw-2">&amp;</span>RemoveAccessibleEvent,
+) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>accessible_prim: AccessiblePrimitive = event.to_owned().into_accessible().try_into()<span class="question-mark">?</span>;
 	state.cache.remove(<span class="kw-2">&amp;</span>accessible_prim.id).<span class="kw">await</span>;
 	<span class="prelude-val">Ok</span>(())

@@ -191,9 +191,13 @@
 <a href="#191" id="191">191</a>
 <a href="#192" id="192">192</a>
 <a href="#193" id="193">193</a>
-</pre><pre class="rust"><code><span class="kw">mod </span>document;
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+</pre><pre class="rust"><code><span class="kw">mod </span>cache;
+<span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
-<span class="kw">mod </span>cache;
 
 <span class="kw">use </span>std::{collections::HashMap, sync::Arc};
 
@@ -339,41 +343,45 @@
 ) {
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
-		    event = rx.recv() =&gt; {
-			<span class="kw">match </span>event {
-			    <span class="prelude-val">Some</span>(good_event) =&gt; {
-            <span class="kw">let </span>state_arc = Arc::clone(<span class="kw-2">&amp;</span>state);
-            tokio::task::spawn(
-              dispatch_wrapper(state_arc, good_event)
-            );
-			    },
-			    <span class="prelude-val">None </span>=&gt; {
-				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Event was none.&quot;</span>);
-			    }
-			};
-			<span class="kw">continue</span>;
+			event = rx.recv() =&gt; {
+			    <span class="kw">match </span>event {
+				<span class="prelude-val">Some</span>(good_event) =&gt; {
+		<span class="kw">let </span>state_arc = Arc::clone(<span class="kw-2">&amp;</span>state);
+		tokio::task::spawn(
+		  dispatch_wrapper(state_arc, good_event)
+		);
+				},
+				<span class="prelude-val">None </span>=&gt; {
+				    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Event was none.&quot;</span>);
+				}
+			    };
+			    <span class="kw">continue</span>;
+			}
+			<span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
+			    <span class="macro">tracing::debug!</span>(<span class="string">&quot;process function is done&quot;</span>);
+			    <span class="kw">break</span>;
+			}
 		    }
-		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;process function is done&quot;</span>);
-			<span class="kw">break</span>;
-		    }
-		}
 	}
 }
 
 <span class="kw">async fn </span>dispatch_wrapper(state: Arc&lt;ScreenReaderState&gt;, good_event: Event) {
-  <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatch(<span class="kw-2">&amp;</span>state, good_event).<span class="kw">await </span>{
-      <span class="macro">tracing::error!</span>(error = %e, <span class="string">&quot;Could not handle event&quot;</span>);
-  } <span class="kw">else </span>{
-      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Event handled without error&quot;</span>);
-  }
+	<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatch(<span class="kw-2">&amp;</span>state, good_event).<span class="kw">await </span>{
+		<span class="macro">tracing::error!</span>(error = %e, <span class="string">&quot;Could not handle event&quot;</span>);
+	} <span class="kw">else </span>{
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Event handled without error&quot;</span>);
+	}
 }
 
 <span class="kw">async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
 	<span class="comment">// Dispatch based on interface
 	</span><span class="kw">match </span><span class="kw-2">&amp;</span>event {
-		Event::Interfaces(EventInterfaces::Object(object_event)) =&gt; object::dispatch(state, object_event).<span class="kw">await</span><span class="question-mark">?</span>,
-		Event::Interfaces(EventInterfaces::Document(document_event)) =&gt; document::dispatch(state, document_event).<span class="kw">await</span><span class="question-mark">?</span>,
+		Event::Interfaces(EventInterfaces::Object(object_event)) =&gt; {
+			object::dispatch(state, object_event).<span class="kw">await</span><span class="question-mark">?
+		</span>}
+		Event::Interfaces(EventInterfaces::Document(document_event)) =&gt; {
+			document::dispatch(state, document_event).<span class="kw">await</span><span class="question-mark">?
+		</span>}
 		Event::Cache(cache_event) =&gt; cache::dispatch(state, cache_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		other_event =&gt; {
 			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown interface: {:#?}&quot;</span>, other_event)

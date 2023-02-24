@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/async-broadcast-0.5.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../async_broadcast/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/async-broadcast-0.5.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../async_broadcast/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1873,6 +1873,8 @@
 <a href="#1873" id="1873">1873</a>
 <a href="#1874" id="1874">1874</a>
 <a href="#1875" id="1875">1875</a>
+<a href="#1876" id="1876">1876</a>
+<a href="#1877" id="1877">1877</a>
 </pre><pre class="rust"><code><span class="doccomment">//! Async broadcast channel
 //!
 //! An async multi-producer multi-consumer broadcast channel, where each consumer gets a clone of every
@@ -1981,12 +1983,11 @@
 <span class="kw">use </span>std::fmt;
 <span class="kw">use </span>std::future::Future;
 <span class="kw">use </span>std::pin::Pin;
-<span class="kw">use </span>std::sync::Arc;
+<span class="kw">use </span>std::sync::{Arc, RwLock};
 <span class="kw">use </span>std::task::{Context, Poll};
 
 <span class="kw">use </span>event_listener::{Event, EventListener};
 <span class="kw">use </span>futures_core::{ready, stream::Stream};
-<span class="kw">use </span>parking_lot::RwLock;
 
 <span class="doccomment">/// Create a new broadcast channel.
 ///
@@ -2184,7 +2185,7 @@
     /// assert_eq!(s.capacity(), 5);
     /// ```
     </span><span class="kw">pub fn </span>capacity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().capacity
+        <span class="self">self</span>.inner.read().unwrap().capacity
     }
 
     <span class="doccomment">/// Set the channel capacity.
@@ -2218,7 +2219,7 @@
     /// assert_eq!(s.try_broadcast(2), Err(TrySendError::Full(2)));
     /// ```
     </span><span class="kw">pub fn </span>set_capacity(<span class="kw-2">&amp;mut </span><span class="self">self</span>, new_cap: usize) {
-        <span class="self">self</span>.inner.write().set_capacity(new_cap);
+        <span class="self">self</span>.inner.write().unwrap().set_capacity(new_cap);
     }
 
     <span class="doccomment">/// If overflow mode is enabled on this channel.
@@ -2232,7 +2233,7 @@
     /// assert!(!s.overflow());
     /// ```
     </span><span class="kw">pub fn </span>overflow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().overflow
+        <span class="self">self</span>.inner.read().unwrap().overflow
     }
 
     <span class="doccomment">/// Set overflow mode on the channel.
@@ -2259,7 +2260,7 @@
     /// assert_eq!(r.try_recv(), Err(TryRecvError::Empty));
     /// ```
     </span><span class="kw">pub fn </span>set_overflow(<span class="kw-2">&amp;mut </span><span class="self">self</span>, overflow: bool) {
-        <span class="self">self</span>.inner.write().overflow = overflow;
+        <span class="self">self</span>.inner.write().unwrap().overflow = overflow;
     }
 
     <span class="doccomment">/// If sender will wait for active receivers.
@@ -2276,7 +2277,7 @@
     /// assert!(s.await_active());
     /// ```
     </span><span class="kw">pub fn </span>await_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().await_active
+        <span class="self">self</span>.inner.read().unwrap().await_active
     }
 
     <span class="doccomment">/// Specify if sender will wait for active receivers.
@@ -2299,7 +2300,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>set_await_active(<span class="kw-2">&amp;mut </span><span class="self">self</span>, await_active: bool) {
-        <span class="self">self</span>.inner.write().await_active = await_active;
+        <span class="self">self</span>.inner.write().unwrap().await_active = await_active;
     }
 
     <span class="doccomment">/// Closes the channel.
@@ -2323,7 +2324,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.write().close()
+        <span class="self">self</span>.inner.write().unwrap().close()
     }
 
     <span class="doccomment">/// Returns `true` if the channel is closed.
@@ -2342,7 +2343,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>is_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().is_closed
+        <span class="self">self</span>.inner.read().unwrap().is_closed
     }
 
     <span class="doccomment">/// Returns `true` if the channel is empty.
@@ -2361,7 +2362,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().queue.is_empty()
+        <span class="self">self</span>.inner.read().unwrap().queue.is_empty()
     }
 
     <span class="doccomment">/// Returns `true` if the channel is full.
@@ -2380,7 +2381,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>is_full(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read();
+        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read().unwrap();
 
         inner.queue.len() == inner.capacity
     }
@@ -2402,7 +2403,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().queue.len()
+        <span class="self">self</span>.inner.read().unwrap().queue.len()
     }
 
     <span class="doccomment">/// Returns the number of receivers for the channel.
@@ -2425,7 +2426,7 @@
     /// assert_eq!(r.inactive_receiver_count(), 1);
     /// ```
     </span><span class="kw">pub fn </span>receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().receiver_count
+        <span class="self">self</span>.inner.read().unwrap().receiver_count
     }
 
     <span class="doccomment">/// Returns the number of inactive receivers for the channel.
@@ -2445,7 +2446,7 @@
     /// assert_eq!(r.inactive_receiver_count(), 1);
     /// ```
     </span><span class="kw">pub fn </span>inactive_receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().inactive_receiver_count
+        <span class="self">self</span>.inner.read().unwrap().inactive_receiver_count
     }
 
     <span class="doccomment">/// Returns the number of senders for the channel.
@@ -2464,7 +2465,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>sender_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().sender_count
+        <span class="self">self</span>.inner.read().unwrap().sender_count
     }
 
     <span class="doccomment">/// Produce a new Receiver for this channel.
@@ -2496,7 +2497,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>new_receiver(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Receiver&lt;T&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
         inner.receiver_count += <span class="number">1</span>;
         Receiver {
             inner: <span class="self">self</span>.inner.clone(),
@@ -2564,7 +2565,7 @@
     /// ```
     </span><span class="kw">pub fn </span>try_broadcast(<span class="kw-2">&amp;</span><span class="self">self</span>, msg: T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T&gt;, TrySendError&lt;T&gt;&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>ret = <span class="prelude-val">None</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
 
         <span class="kw">if </span>inner.is_closed {
             <span class="kw">return </span><span class="prelude-val">Err</span>(TrySendError::Closed(msg));
@@ -2595,7 +2596,7 @@
 
 <span class="kw">impl</span>&lt;T&gt; Drop <span class="kw">for </span>Sender&lt;T&gt; {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
 
         inner.sender_count -= <span class="number">1</span>;
 
@@ -2607,7 +2608,7 @@
 
 <span class="kw">impl</span>&lt;T&gt; Clone <span class="kw">for </span>Sender&lt;T&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.inner.write().sender_count += <span class="number">1</span>;
+        <span class="self">self</span>.inner.write().unwrap().sender_count += <span class="number">1</span>;
 
         Sender {
             inner: <span class="self">self</span>.inner.clone(),
@@ -2642,7 +2643,7 @@
     /// assert_eq!(r.capacity(), 5);
     /// ```
     </span><span class="kw">pub fn </span>capacity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().capacity
+        <span class="self">self</span>.inner.read().unwrap().capacity
     }
 
     <span class="doccomment">/// Set the channel capacity.
@@ -2676,7 +2677,7 @@
     /// assert_eq!(s.try_broadcast(2), Err(TrySendError::Full(2)));
     /// ```
     </span><span class="kw">pub fn </span>set_capacity(<span class="kw-2">&amp;mut </span><span class="self">self</span>, new_cap: usize) {
-        <span class="self">self</span>.inner.write().set_capacity(new_cap);
+        <span class="self">self</span>.inner.write().unwrap().set_capacity(new_cap);
     }
 
     <span class="doccomment">/// If overflow mode is enabled on this channel.
@@ -2690,7 +2691,7 @@
     /// assert!(!r.overflow());
     /// ```
     </span><span class="kw">pub fn </span>overflow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().overflow
+        <span class="self">self</span>.inner.read().unwrap().overflow
     }
 
     <span class="doccomment">/// Set overflow mode on the channel.
@@ -2717,7 +2718,7 @@
     /// assert_eq!(r.try_recv(), Err(TryRecvError::Empty));
     /// ```
     </span><span class="kw">pub fn </span>set_overflow(<span class="kw-2">&amp;mut </span><span class="self">self</span>, overflow: bool) {
-        <span class="self">self</span>.inner.write().overflow = overflow;
+        <span class="self">self</span>.inner.write().unwrap().overflow = overflow;
     }
 
     <span class="doccomment">/// If sender will wait for active receivers.
@@ -2734,7 +2735,7 @@
     /// assert!(r.await_active());
     /// ```
     </span><span class="kw">pub fn </span>await_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().await_active
+        <span class="self">self</span>.inner.read().unwrap().await_active
     }
 
     <span class="doccomment">/// Specify if sender will wait for active receivers.
@@ -2757,7 +2758,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>set_await_active(<span class="kw-2">&amp;mut </span><span class="self">self</span>, await_active: bool) {
-        <span class="self">self</span>.inner.write().await_active = await_active;
+        <span class="self">self</span>.inner.write().unwrap().await_active = await_active;
     }
 
     <span class="doccomment">/// Closes the channel.
@@ -2781,7 +2782,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.write().close()
+        <span class="self">self</span>.inner.write().unwrap().close()
     }
 
     <span class="doccomment">/// Returns `true` if the channel is closed.
@@ -2800,7 +2801,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>is_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().is_closed
+        <span class="self">self</span>.inner.read().unwrap().is_closed
     }
 
     <span class="doccomment">/// Returns `true` if the channel is empty.
@@ -2819,7 +2820,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().queue.is_empty()
+        <span class="self">self</span>.inner.read().unwrap().queue.is_empty()
     }
 
     <span class="doccomment">/// Returns `true` if the channel is full.
@@ -2838,7 +2839,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>is_full(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read();
+        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read().unwrap();
 
         inner.queue.len() == inner.capacity
     }
@@ -2860,7 +2861,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().queue.len()
+        <span class="self">self</span>.inner.read().unwrap().queue.len()
     }
 
     <span class="doccomment">/// Returns the number of receivers for the channel.
@@ -2883,7 +2884,7 @@
     /// assert_eq!(r.inactive_receiver_count(), 1);
     /// ```
     </span><span class="kw">pub fn </span>receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().receiver_count
+        <span class="self">self</span>.inner.read().unwrap().receiver_count
     }
 
     <span class="doccomment">/// Returns the number of inactive receivers for the channel.
@@ -2903,7 +2904,7 @@
     /// assert_eq!(r.inactive_receiver_count(), 1);
     /// ```
     </span><span class="kw">pub fn </span>inactive_receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().inactive_receiver_count
+        <span class="self">self</span>.inner.read().unwrap().inactive_receiver_count
     }
 
     <span class="doccomment">/// Returns the number of senders for the channel.
@@ -2922,7 +2923,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>sender_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().sender_count
+        <span class="self">self</span>.inner.read().unwrap().sender_count
     }
 
     <span class="doccomment">/// Downgrade to a [`InactiveReceiver`].
@@ -2953,7 +2954,7 @@
     /// ```
     </span><span class="kw">pub fn </span>deactivate(<span class="self">self</span>) -&gt; InactiveReceiver&lt;T&gt; {
         <span class="comment">// Drop::drop impl of Receiver will take care of `receiver_count`.
-        </span><span class="self">self</span>.inner.write().inactive_receiver_count += <span class="number">1</span>;
+        </span><span class="self">self</span>.inner.write().unwrap().inactive_receiver_count += <span class="number">1</span>;
 
         InactiveReceiver {
             inner: <span class="self">self</span>.inner.clone(),
@@ -3029,6 +3030,7 @@
     </span><span class="kw">pub fn </span>try_recv(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, TryRecvError&gt; {
         <span class="self">self</span>.inner
             .write()
+            .unwrap()
             .try_recv_at(<span class="kw-2">&amp;mut </span><span class="self">self</span>.pos)
             .map(|cow| cow.unwrap_or_else(T::clone))
     }
@@ -3059,7 +3061,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>new_sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Sender&lt;T&gt; {
-        <span class="self">self</span>.inner.write().sender_count += <span class="number">1</span>;
+        <span class="self">self</span>.inner.write().unwrap().sender_count += <span class="number">1</span>;
 
         Sender {
             inner: <span class="self">self</span>.inner.clone(),
@@ -3095,7 +3097,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>new_receiver(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
         inner.receiver_count += <span class="number">1</span>;
         Receiver {
             inner: <span class="self">self</span>.inner.clone(),
@@ -3107,7 +3109,7 @@
 
 <span class="kw">impl</span>&lt;T&gt; Drop <span class="kw">for </span>Receiver&lt;T&gt; {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
 
         <span class="comment">// Remove ourself from each item&#39;s counter
         </span><span class="kw">loop </span>{
@@ -3148,7 +3150,7 @@
     /// # });
     /// ```
     </span><span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
         inner.receiver_count += <span class="number">1</span>;
         <span class="comment">// increment the waiter count on all items not yet received by this object
         </span><span class="kw">let </span>n = <span class="self">self</span>.pos.saturating_sub(inner.head_pos) <span class="kw">as </span>usize;
@@ -3196,7 +3198,7 @@
                     <span class="prelude-val">None </span>=&gt; {
                         <span class="comment">// Start listening and then try receiving again.
                         </span><span class="self">self</span>.listener = {
-                            <span class="kw">let </span>inner = <span class="self">self</span>.inner.write();
+                            <span class="kw">let </span>inner = <span class="self">self</span>.inner.write().unwrap();
                             <span class="prelude-val">Some</span>(inner.recv_ops.listen())
                         };
                     }
@@ -3212,7 +3214,7 @@
 
 <span class="kw">impl</span>&lt;T: Clone&gt; futures_core::stream::FusedStream <span class="kw">for </span>Receiver&lt;T&gt; {
     <span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read();
+        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read().unwrap();
 
         inner.is_closed &amp;&amp; inner.queue.is_empty()
     }
@@ -3421,7 +3423,7 @@
             <span class="comment">// Attempt to send a message.
             </span><span class="kw">match </span>this.sender.try_broadcast(msg) {
                 <span class="prelude-val">Ok</span>(msg) =&gt; {
-                    <span class="kw">let </span>inner = inner.write();
+                    <span class="kw">let </span>inner = inner.write().unwrap();
 
                     <span class="kw">if </span>inner.queue.len() &lt; inner.capacity {
                         <span class="comment">// Not full still, so notify the next awaiting sender.
@@ -3432,7 +3434,9 @@
                 }
                 <span class="prelude-val">Err</span>(TrySendError::Closed(msg)) =&gt; <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Err</span>(SendError(msg))),
                 <span class="prelude-val">Err</span>(TrySendError::Full(m)) =&gt; this.msg = <span class="prelude-val">Some</span>(m),
-                <span class="prelude-val">Err</span>(TrySendError::Inactive(m)) <span class="kw">if </span>inner.read().await_active =&gt; this.msg = <span class="prelude-val">Some</span>(m),
+                <span class="prelude-val">Err</span>(TrySendError::Inactive(m)) <span class="kw">if </span>inner.read().unwrap().await_active =&gt; {
+                    this.msg = <span class="prelude-val">Some</span>(m)
+                }
                 <span class="prelude-val">Err</span>(TrySendError::Inactive(m)) =&gt; <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Err</span>(SendError(m))),
             }
 
@@ -3440,7 +3444,7 @@
             </span><span class="kw">match </span><span class="kw-2">&amp;mut </span>this.listener {
                 <span class="prelude-val">None </span>=&gt; {
                     <span class="comment">// Start listening and then try sending again.
-                    </span><span class="kw">let </span>inner = inner.write();
+                    </span><span class="kw">let </span>inner = inner.write().unwrap();
                     this.listener = <span class="prelude-val">Some</span>(inner.send_ops.listen());
                 }
                 <span class="prelude-val">Some</span>(l) =&gt; {
@@ -3475,7 +3479,7 @@
                 <span class="prelude-val">Ok</span>(msg) =&gt; <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Ok</span>(msg)),
                 <span class="prelude-val">Err</span>(TryRecvError::Closed) =&gt; <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Err</span>(RecvError::Closed)),
                 <span class="prelude-val">Err</span>(TryRecvError::Overflowed(n)) =&gt; {
-                    <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Err</span>(RecvError::Overflowed(n)))
+                    <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Err</span>(RecvError::Overflowed(n)));
                 }
                 <span class="prelude-val">Err</span>(TryRecvError::Empty) =&gt; {}
             }
@@ -3485,7 +3489,7 @@
                 <span class="prelude-val">None </span>=&gt; {
                     <span class="comment">// Start listening and then try receiving again.
                     </span>this.listener = {
-                        <span class="kw">let </span>inner = this.receiver.inner.write();
+                        <span class="kw">let </span>inner = this.receiver.inner.write().unwrap();
                         <span class="prelude-val">Some</span>(inner.recv_ops.listen())
                     };
                 }
@@ -3546,7 +3550,7 @@
     /// assert_eq!(r.try_recv(), Ok(10));
     /// ```
     </span><span class="kw">pub fn </span>activate_cloned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Receiver&lt;T&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
         inner.receiver_count += <span class="number">1</span>;
 
         <span class="kw">if </span>inner.receiver_count == <span class="number">1 </span>{
@@ -3566,7 +3570,7 @@
     ///
     /// See [`Receiver::capacity`] documentation for examples.
     </span><span class="kw">pub fn </span>capacity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().capacity
+        <span class="self">self</span>.inner.read().unwrap().capacity
     }
 
     <span class="doccomment">/// Set the channel capacity.
@@ -3577,14 +3581,14 @@
     ///
     /// See [`Receiver::set_capacity`] documentation for examples.
     </span><span class="kw">pub fn </span>set_capacity(<span class="kw-2">&amp;mut </span><span class="self">self</span>, new_cap: usize) {
-        <span class="self">self</span>.inner.write().set_capacity(new_cap);
+        <span class="self">self</span>.inner.write().unwrap().set_capacity(new_cap);
     }
 
     <span class="doccomment">/// If overflow mode is enabled on this channel.
     ///
     /// See [`Receiver::overflow`] documentation for examples.
     </span><span class="kw">pub fn </span>overflow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().overflow
+        <span class="self">self</span>.inner.read().unwrap().overflow
     }
 
     <span class="doccomment">/// Set overflow mode on the channel.
@@ -3594,7 +3598,7 @@
     ///
     /// See [`Receiver::set_overflow`] documentation for examples.
     </span><span class="kw">pub fn </span>set_overflow(<span class="kw-2">&amp;mut </span><span class="self">self</span>, overflow: bool) {
-        <span class="self">self</span>.inner.write().overflow = overflow;
+        <span class="self">self</span>.inner.write().unwrap().overflow = overflow;
     }
 
     <span class="doccomment">/// If sender will wait for active receivers.
@@ -3612,7 +3616,7 @@
     /// assert!(r.await_active());
     /// ```
     </span><span class="kw">pub fn </span>await_active(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().await_active
+        <span class="self">self</span>.inner.read().unwrap().await_active
     }
 
     <span class="doccomment">/// Specify if sender will wait for active receivers.
@@ -3635,7 +3639,7 @@
     /// # });
     /// ```
     </span><span class="kw">pub fn </span>set_await_active(<span class="kw-2">&amp;mut </span><span class="self">self</span>, await_active: bool) {
-        <span class="self">self</span>.inner.write().await_active = await_active;
+        <span class="self">self</span>.inner.write().unwrap().await_active = await_active;
     }
 
     <span class="doccomment">/// Closes the channel.
@@ -3646,28 +3650,28 @@
     ///
     /// See [`Receiver::close`] documentation for examples.
     </span><span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.write().close()
+        <span class="self">self</span>.inner.write().unwrap().close()
     }
 
     <span class="doccomment">/// Returns `true` if the channel is closed.
     ///
     /// See [`Receiver::is_closed`] documentation for examples.
     </span><span class="kw">pub fn </span>is_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().is_closed
+        <span class="self">self</span>.inner.read().unwrap().is_closed
     }
 
     <span class="doccomment">/// Returns `true` if the channel is empty.
     ///
     /// See [`Receiver::is_empty`] documentation for examples.
     </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.inner.read().queue.is_empty()
+        <span class="self">self</span>.inner.read().unwrap().queue.is_empty()
     }
 
     <span class="doccomment">/// Returns `true` if the channel is full.
     ///
     /// See [`Receiver::is_full`] documentation for examples.
     </span><span class="kw">pub fn </span>is_full(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read();
+        <span class="kw">let </span>inner = <span class="self">self</span>.inner.read().unwrap();
 
         inner.queue.len() == inner.capacity
     }
@@ -3676,7 +3680,7 @@
     ///
     /// See [`Receiver::len`] documentation for examples.
     </span><span class="kw">pub fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().queue.len()
+        <span class="self">self</span>.inner.read().unwrap().queue.len()
     }
 
     <span class="doccomment">/// Returns the number of receivers for the channel.
@@ -3699,7 +3703,7 @@
     /// assert_eq!(r.inactive_receiver_count(), 1);
     /// ```
     </span><span class="kw">pub fn </span>receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().receiver_count
+        <span class="self">self</span>.inner.read().unwrap().receiver_count
     }
 
     <span class="doccomment">/// Returns the number of inactive receivers for the channel.
@@ -3719,20 +3723,20 @@
     /// assert_eq!(r.inactive_receiver_count(), 1);
     /// ```
     </span><span class="kw">pub fn </span>inactive_receiver_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().inactive_receiver_count
+        <span class="self">self</span>.inner.read().unwrap().inactive_receiver_count
     }
 
     <span class="doccomment">/// Returns the number of senders for the channel.
     ///
     /// See [`Receiver::sender_count`] documentation for examples.
     </span><span class="kw">pub fn </span>sender_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="self">self</span>.inner.read().sender_count
+        <span class="self">self</span>.inner.read().unwrap().sender_count
     }
 }
 
 <span class="kw">impl</span>&lt;T&gt; Clone <span class="kw">for </span>InactiveReceiver&lt;T&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.inner.write().inactive_receiver_count += <span class="number">1</span>;
+        <span class="self">self</span>.inner.write().unwrap().inactive_receiver_count += <span class="number">1</span>;
 
         InactiveReceiver {
             inner: <span class="self">self</span>.inner.clone(),
@@ -3742,11 +3746,11 @@
 
 <span class="kw">impl</span>&lt;T&gt; Drop <span class="kw">for </span>InactiveReceiver&lt;T&gt; {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write();
+        <span class="kw">let </span><span class="kw-2">mut </span>inner = <span class="self">self</span>.inner.write().unwrap();
 
         inner.inactive_receiver_count -= <span class="number">1</span>;
         inner.close_channel();
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="async_broadcast" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="async_broadcast" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/c871376/src/state.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>state.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/7fc8c1d/src/state.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>state.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -488,9 +488,9 @@
 <a href="#488" id="488">488</a>
 </pre><pre class="rust"><code><span class="kw">use </span>enumflags2::{bitflags, BitFlag, BitFlags, FromBitsError};
 <span class="kw">use </span>serde::{
-    de::{<span class="self">self</span>, Deserializer, Visitor},
-    ser::{SerializeSeq, Serializer},
-    Deserialize, Serialize,
+	de::{<span class="self">self</span>, Deserializer, Visitor},
+	ser::{SerializeSeq, Serializer},
+	Deserialize, Serialize,
 };
 <span class="kw">use </span>std::fmt;
 <span class="kw">use </span>zbus::zvariant::{Signature, Type};
@@ -502,209 +502,209 @@
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = <span class="string">&quot;kebab-case&quot;</span>)]
 </span><span class="kw">pub enum </span>State {
-    <span class="doccomment">/// Indicates an invalid state - probably an error condition.
-    </span>Invalid,
-    <span class="doccomment">/// Indicates a window is currently the active window, or
-    /// an object is the active subelement within a container or table.
-    ///
-    /// `Active` should not be used for objects which have
-    /// [`State::Focusable`] or [`State::Selectable`]: Those objects should use
-    /// [`State::Focused`] and [`State::Selected`] respectively.
-    ///
-    /// `Active` is a means to indicate that an object which is not
-    /// focusable and not selectable is the currently-active item within its
-    /// parent container.
-    </span>Active,
-    <span class="doccomment">/// Indicates that the object is armed.
-    </span>Armed,
-    <span class="doccomment">/// Indicates the current object is busy, i.e. onscreen
-    /// representation is in the process of changing, or       the object is
-    /// temporarily unavailable for interaction due to activity already in progress.
-    </span>Busy,
-    <span class="doccomment">/// Indicates this object is currently checked.
-    </span>Checked,
-    <span class="doccomment">/// Indicates this object is collapsed.
-    </span>Collapsed,
-    <span class="doccomment">/// Indicates that this object no longer has a valid
-    /// backing widget        (for instance, if its peer object has been destroyed).
-    </span>Defunct,
-    <span class="doccomment">/// Indicates the user can change the contents of this object.
-    </span>Editable,
-    <span class="doccomment">/// Indicates that this object is enabled, i.e. that it
-    /// currently reflects some application state. Objects that are &quot;greyed out&quot;
-    /// may lack this state, and may lack the [`State::Sensitive`] if direct
-    /// user interaction cannot cause them to acquire `Enabled`.
-    ///
-    /// See [`State::Sensitive`].
-    </span>Enabled,
-    <span class="doccomment">/// Indicates this object allows progressive
-    /// disclosure of its children.
-    </span>Expandable,
-    <span class="doccomment">/// Indicates this object is expanded.
-    </span>Expanded,
-    <span class="doccomment">/// Indicates this object can accept keyboard focus,
-    /// which means all events resulting from typing on the keyboard will
-    /// normally be passed to it when it has focus.
-    </span>Focusable,
-    <span class="doccomment">/// Indicates this object currently has the keyboard focus.
-    </span>Focused,
-    <span class="doccomment">/// Indicates that the object has an associated tooltip.
-    </span>HasTooltip,
-    <span class="doccomment">/// Indicates the orientation of this object is horizontal.
-    </span>Horizontal,
-    <span class="doccomment">/// Indicates this object is minimized and is
-    /// represented only by an icon.
-    </span>Iconified,
-    <span class="doccomment">/// Indicates something must be done with this object
-    /// before the user can interact with an object in a different window.
-    </span>Modal,
-    <span class="doccomment">/// Indicates this (text) object can contain multiple
-    /// lines of text.
-    </span>MultiLine,
-    <span class="doccomment">/// Indicates this object allows more than one of
-    /// its children to be selected at the same time, or in the case of text
-    /// objects, that the object supports non-contiguous text selections.
-    </span>Multiselectable,
-    <span class="doccomment">/// Indicates this object paints every pixel within its
-    /// rectangular region. It also indicates an alpha value of unity, if it
-    /// supports alpha blending.
-    </span>Opaque,
-    <span class="doccomment">/// Indicates this object is currently pressed.
-    </span>Pressed,
-    <span class="doccomment">/// Indicates the size of this object&#39;s size is not fixed.
-    </span>Resizable,
-    <span class="doccomment">/// Indicates this object is the child of an object
-    /// that allows its children to be selected and that this child is one of
-    /// those children       that can be selected.
-    </span>Selectable,
-    <span class="doccomment">/// Indicates this object is the child of an object that
-    /// allows its children to be selected and that this child is one of those
-    /// children that has been selected.
-    </span>Selected,
-    <span class="doccomment">/// Indicates this object is sensitive, e.g. to user
-    /// interaction. `Sensitive` usually accompanies.
-    /// [`State::Enabled`] for user-actionable controls, but may be found in the
-    /// absence of [`State::Enabled`] if the current visible state of the control
-    /// is &quot;disconnected&quot; from the application state.  In such cases, direct user
-    /// interaction can often result in the object gaining `Sensitive`,
-    /// for instance if a user makes an explicit selection using an object whose
-    /// current state is ambiguous or undefined.
-    ///
-    /// See [`State::Enabled`], [`State::Indeterminate`].
-    </span>Sensitive,
-    <span class="doccomment">/// Indicates this object, the object&#39;s parent, the
-    /// object&#39;s parent&#39;s parent, and so on, are all &#39;shown&#39; to the end-user,
-    /// i.e. subject to &quot;exposure&quot; if blocking or obscuring objects do not
-    /// interpose between this object and the top of the window stack.
-    </span>Showing,
-    <span class="doccomment">/// Indicates this (text) object can contain only a
-    /// single line of text.
-    </span>SingleLine,
-    <span class="doccomment">/// Indicates that the information returned for this object
-    /// may no longer be synchronized with the application state.  This can occur
-    /// if the object has [`State::Transient`], and can also occur towards the
-    /// end of the object peer&#39;s lifecycle.
-    </span>Stale,
-    <span class="doccomment">/// Indicates this object is transient.
-    </span>Transient,
-    <span class="doccomment">/// Indicates the orientation of this object is vertical;
-    /// for example this state may appear on such objects as scrollbars, text
-    /// objects (with vertical text flow), separators, etc.
-    </span>Vertical,
-    <span class="doccomment">/// Indicates this object is visible, e.g. has been
-    /// explicitly marked for exposure to the user. `Visible` is no
-    /// guarantee that the object is actually unobscured on the screen, only that
-    /// it is &#39;potentially&#39; visible, barring obstruction, being scrolled or clipped
-    /// out of the field of view, or having an ancestor container that has not yet
-    /// made visible. A widget is potentially onscreen if it has both
-    /// `Visible` and [`State::Showing`]. The absence of
-    /// `Visible` and [`State::Showing`] is
-    /// semantically equivalent to saying that an object is &#39;hidden&#39;.
-    </span>Visible,
-    <span class="doccomment">/// Indicates that &quot;active-descendant-changed&quot;
-    /// event is sent when children become &#39;active&#39; (i.e. are selected or
-    /// navigated to onscreen).  Used to prevent need to enumerate all children
-    /// in very large containers, like tables. The presence of
-    /// `ManagesDescendants` is an indication to the client that the
-    /// children should not, and need not, be enumerated by the client.
-    /// Objects implementing this state are expected to provide relevant state      
-    /// notifications to listening clients, for instance notifications of
-    /// visibility changes and activation of their contained child objects, without
-    /// the client having previously requested references to those children.
-    </span>ManagesDescendants,
-    <span class="doccomment">/// Indicates that a check box or other boolean
-    /// indicator is in a state other than checked or not checked.
-    ///
-    /// This usually means that the boolean value reflected or controlled by the
-    /// object does not apply consistently to the entire current context.      
-    /// For example, a checkbox for the &quot;Bold&quot; attribute of text may have
-    /// `Indeterminate` if the currently selected text contains a mixture
-    /// of weight attributes. In many cases interacting with a
-    /// `Indeterminate` object will cause the context&#39;s corresponding
-    /// boolean attribute to be homogenized, whereupon the object will lose
-    /// `Indeterminate` and a corresponding state-changed event will be
-    /// fired.
-    </span>Indeterminate,
-    <span class="doccomment">/// Indicates that user interaction with this object is
-    /// &#39;required&#39; from the user, for instance before completing the
-    /// processing of a form.
-    </span>Required,
-    <span class="doccomment">/// Indicates that an object&#39;s onscreen content
-    /// is truncated, e.g. a text value in a spreadsheet cell.
-    </span>Truncated,
-    <span class="doccomment">/// Indicates this object&#39;s visual representation is
-    /// dynamic, not static. This state may be applied to an object during an
-    /// animated &#39;effect&#39; and be removed from the object once its visual
-    /// representation becomes static. Some applications, notably content viewers,
-    /// may not be able to detect all kinds of animated content.  Therefore the
-    /// absence of this state should not be taken as
-    /// definitive evidence that the object&#39;s visual representation is      
-    /// static; this state is advisory.
-    </span>Animated,
-    <span class="doccomment">/// This object has indicated an error condition
-    /// due to failure of input validation.  For instance, a form control may
-    /// acquire this state in response to invalid or malformed user input.
-    </span>InvalidEntry,
-    <span class="doccomment">/// This state indicates that the object
-    /// in question implements some form of typeahead or       
-    /// pre-selection behavior whereby entering the first character of one or more
-    /// sub-elements causes those elements to scroll into view or become
-    /// selected. Subsequent character input may narrow the selection further as
-    /// long as one or more sub-elements match the string. This state is normally
-    /// only useful and encountered on objects that implement [`crate::selection::SelectionProxy`].
-    /// In some cases the typeahead behavior may result in full or partial
-    /// completion of the data in the input field, in which case
-    /// these input events may trigger text-changed events from the source.
-    </span>SupportsAutocompletion,
-    <span class="doccomment">/// Indicates that the object in
-    /// question supports text selection. It should only be exposed on objects
-    /// which implement the [`crate::text::TextProxy`] interface, in order to distinguish this state
-    /// from [`State::Selectable`], which infers that the object in question is a
-    /// selectable child of an object which implements [`crate::selection::SelectionProxy`]. While
-    /// similar, text selection and subelement selection are distinct operations.
-    </span>SelectableText,
-    <span class="doccomment">/// Indicates that the object in question is
-    /// the &#39;default&#39; interaction object in a dialog, i.e. the one that gets
-    /// activated if the user presses &quot;Enter&quot; when the dialog is initially
-    /// posted.
-    </span>IsDefault,
-    <span class="doccomment">/// Indicates that the object (typically a
-    /// hyperlink) has already been activated or invoked, with the result that
-    /// some backing data has been downloaded or rendered.
-    </span>Visited,
-    <span class="doccomment">/// Indicates this object has the potential to
-    /// be checked, such as a checkbox or toggle-able table cell.
-    </span>Checkable,
-    <span class="doccomment">/// Indicates that the object has a popup
-    /// context menu or sub-level menu which may or may not be
-    /// showing. This means that activation renders conditional content.
-    /// Note that ordinary tooltips are not considered popups in this
-    /// context.
-    </span>HasPopup,
-    <span class="doccomment">/// Indicates that an object which is [`State::Enabled`] and
-    /// [`State::Sensitive`] has a value which can be read, but not modified, by the
-    /// user.
-    </span>ReadOnly,
+	<span class="doccomment">/// Indicates an invalid state - probably an error condition.
+	</span>Invalid,
+	<span class="doccomment">/// Indicates a window is currently the active window, or
+	/// an object is the active subelement within a container or table.
+	///
+	/// `Active` should not be used for objects which have
+	/// [`State::Focusable`] or [`State::Selectable`]: Those objects should use
+	/// [`State::Focused`] and [`State::Selected`] respectively.
+	///
+	/// `Active` is a means to indicate that an object which is not
+	/// focusable and not selectable is the currently-active item within its
+	/// parent container.
+	</span>Active,
+	<span class="doccomment">/// Indicates that the object is armed.
+	</span>Armed,
+	<span class="doccomment">/// Indicates the current object is busy, i.e. onscreen
+	/// representation is in the process of changing, or       the object is
+	/// temporarily unavailable for interaction due to activity already in progress.
+	</span>Busy,
+	<span class="doccomment">/// Indicates this object is currently checked.
+	</span>Checked,
+	<span class="doccomment">/// Indicates this object is collapsed.
+	</span>Collapsed,
+	<span class="doccomment">/// Indicates that this object no longer has a valid
+	/// backing widget        (for instance, if its peer object has been destroyed).
+	</span>Defunct,
+	<span class="doccomment">/// Indicates the user can change the contents of this object.
+	</span>Editable,
+	<span class="doccomment">/// Indicates that this object is enabled, i.e. that it
+	/// currently reflects some application state. Objects that are &quot;greyed out&quot;
+	/// may lack this state, and may lack the [`State::Sensitive`] if direct
+	/// user interaction cannot cause them to acquire `Enabled`.
+	///
+	/// See [`State::Sensitive`].
+	</span>Enabled,
+	<span class="doccomment">/// Indicates this object allows progressive
+	/// disclosure of its children.
+	</span>Expandable,
+	<span class="doccomment">/// Indicates this object is expanded.
+	</span>Expanded,
+	<span class="doccomment">/// Indicates this object can accept keyboard focus,
+	/// which means all events resulting from typing on the keyboard will
+	/// normally be passed to it when it has focus.
+	</span>Focusable,
+	<span class="doccomment">/// Indicates this object currently has the keyboard focus.
+	</span>Focused,
+	<span class="doccomment">/// Indicates that the object has an associated tooltip.
+	</span>HasTooltip,
+	<span class="doccomment">/// Indicates the orientation of this object is horizontal.
+	</span>Horizontal,
+	<span class="doccomment">/// Indicates this object is minimized and is
+	/// represented only by an icon.
+	</span>Iconified,
+	<span class="doccomment">/// Indicates something must be done with this object
+	/// before the user can interact with an object in a different window.
+	</span>Modal,
+	<span class="doccomment">/// Indicates this (text) object can contain multiple
+	/// lines of text.
+	</span>MultiLine,
+	<span class="doccomment">/// Indicates this object allows more than one of
+	/// its children to be selected at the same time, or in the case of text
+	/// objects, that the object supports non-contiguous text selections.
+	</span>Multiselectable,
+	<span class="doccomment">/// Indicates this object paints every pixel within its
+	/// rectangular region. It also indicates an alpha value of unity, if it
+	/// supports alpha blending.
+	</span>Opaque,
+	<span class="doccomment">/// Indicates this object is currently pressed.
+	</span>Pressed,
+	<span class="doccomment">/// Indicates the size of this object&#39;s size is not fixed.
+	</span>Resizable,
+	<span class="doccomment">/// Indicates this object is the child of an object
+	/// that allows its children to be selected and that this child is one of
+	/// those children       that can be selected.
+	</span>Selectable,
+	<span class="doccomment">/// Indicates this object is the child of an object that
+	/// allows its children to be selected and that this child is one of those
+	/// children that has been selected.
+	</span>Selected,
+	<span class="doccomment">/// Indicates this object is sensitive, e.g. to user
+	/// interaction. `Sensitive` usually accompanies.
+	/// [`State::Enabled`] for user-actionable controls, but may be found in the
+	/// absence of [`State::Enabled`] if the current visible state of the control
+	/// is &quot;disconnected&quot; from the application state.  In such cases, direct user
+	/// interaction can often result in the object gaining `Sensitive`,
+	/// for instance if a user makes an explicit selection using an object whose
+	/// current state is ambiguous or undefined.
+	///
+	/// See [`State::Enabled`], [`State::Indeterminate`].
+	</span>Sensitive,
+	<span class="doccomment">/// Indicates this object, the object&#39;s parent, the
+	/// object&#39;s parent&#39;s parent, and so on, are all &#39;shown&#39; to the end-user,
+	/// i.e. subject to &quot;exposure&quot; if blocking or obscuring objects do not
+	/// interpose between this object and the top of the window stack.
+	</span>Showing,
+	<span class="doccomment">/// Indicates this (text) object can contain only a
+	/// single line of text.
+	</span>SingleLine,
+	<span class="doccomment">/// Indicates that the information returned for this object
+	/// may no longer be synchronized with the application state.  This can occur
+	/// if the object has [`State::Transient`], and can also occur towards the
+	/// end of the object peer&#39;s lifecycle.
+	</span>Stale,
+	<span class="doccomment">/// Indicates this object is transient.
+	</span>Transient,
+	<span class="doccomment">/// Indicates the orientation of this object is vertical;
+	/// for example this state may appear on such objects as scrollbars, text
+	/// objects (with vertical text flow), separators, etc.
+	</span>Vertical,
+	<span class="doccomment">/// Indicates this object is visible, e.g. has been
+	/// explicitly marked for exposure to the user. `Visible` is no
+	/// guarantee that the object is actually unobscured on the screen, only that
+	/// it is &#39;potentially&#39; visible, barring obstruction, being scrolled or clipped
+	/// out of the field of view, or having an ancestor container that has not yet
+	/// made visible. A widget is potentially onscreen if it has both
+	/// `Visible` and [`State::Showing`]. The absence of
+	/// `Visible` and [`State::Showing`] is
+	/// semantically equivalent to saying that an object is &#39;hidden&#39;.
+	</span>Visible,
+	<span class="doccomment">/// Indicates that &quot;active-descendant-changed&quot;
+	/// event is sent when children become &#39;active&#39; (i.e. are selected or
+	/// navigated to onscreen).  Used to prevent need to enumerate all children
+	/// in very large containers, like tables. The presence of
+	/// `ManagesDescendants` is an indication to the client that the
+	/// children should not, and need not, be enumerated by the client.
+	/// Objects implementing this state are expected to provide relevant state      
+	/// notifications to listening clients, for instance notifications of
+	/// visibility changes and activation of their contained child objects, without
+	/// the client having previously requested references to those children.
+	</span>ManagesDescendants,
+	<span class="doccomment">/// Indicates that a check box or other boolean
+	/// indicator is in a state other than checked or not checked.
+	///
+	/// This usually means that the boolean value reflected or controlled by the
+	/// object does not apply consistently to the entire current context.      
+	/// For example, a checkbox for the &quot;Bold&quot; attribute of text may have
+	/// `Indeterminate` if the currently selected text contains a mixture
+	/// of weight attributes. In many cases interacting with a
+	/// `Indeterminate` object will cause the context&#39;s corresponding
+	/// boolean attribute to be homogenized, whereupon the object will lose
+	/// `Indeterminate` and a corresponding state-changed event will be
+	/// fired.
+	</span>Indeterminate,
+	<span class="doccomment">/// Indicates that user interaction with this object is
+	/// &#39;required&#39; from the user, for instance before completing the
+	/// processing of a form.
+	</span>Required,
+	<span class="doccomment">/// Indicates that an object&#39;s onscreen content
+	/// is truncated, e.g. a text value in a spreadsheet cell.
+	</span>Truncated,
+	<span class="doccomment">/// Indicates this object&#39;s visual representation is
+	/// dynamic, not static. This state may be applied to an object during an
+	/// animated &#39;effect&#39; and be removed from the object once its visual
+	/// representation becomes static. Some applications, notably content viewers,
+	/// may not be able to detect all kinds of animated content.  Therefore the
+	/// absence of this state should not be taken as
+	/// definitive evidence that the object&#39;s visual representation is      
+	/// static; this state is advisory.
+	</span>Animated,
+	<span class="doccomment">/// This object has indicated an error condition
+	/// due to failure of input validation.  For instance, a form control may
+	/// acquire this state in response to invalid or malformed user input.
+	</span>InvalidEntry,
+	<span class="doccomment">/// This state indicates that the object
+	/// in question implements some form of typeahead or       
+	/// pre-selection behavior whereby entering the first character of one or more
+	/// sub-elements causes those elements to scroll into view or become
+	/// selected. Subsequent character input may narrow the selection further as
+	/// long as one or more sub-elements match the string. This state is normally
+	/// only useful and encountered on objects that implement [`crate::selection::SelectionProxy`].
+	/// In some cases the typeahead behavior may result in full or partial
+	/// completion of the data in the input field, in which case
+	/// these input events may trigger text-changed events from the source.
+	</span>SupportsAutocompletion,
+	<span class="doccomment">/// Indicates that the object in
+	/// question supports text selection. It should only be exposed on objects
+	/// which implement the [`crate::text::TextProxy`] interface, in order to distinguish this state
+	/// from [`State::Selectable`], which infers that the object in question is a
+	/// selectable child of an object which implements [`crate::selection::SelectionProxy`]. While
+	/// similar, text selection and subelement selection are distinct operations.
+	</span>SelectableText,
+	<span class="doccomment">/// Indicates that the object in question is
+	/// the &#39;default&#39; interaction object in a dialog, i.e. the one that gets
+	/// activated if the user presses &quot;Enter&quot; when the dialog is initially
+	/// posted.
+	</span>IsDefault,
+	<span class="doccomment">/// Indicates that the object (typically a
+	/// hyperlink) has already been activated or invoked, with the result that
+	/// some backing data has been downloaded or rendered.
+	</span>Visited,
+	<span class="doccomment">/// Indicates this object has the potential to
+	/// be checked, such as a checkbox or toggle-able table cell.
+	</span>Checkable,
+	<span class="doccomment">/// Indicates that the object has a popup
+	/// context menu or sub-level menu which may or may not be
+	/// showing. This means that activation renders conditional content.
+	/// Note that ordinary tooltips are not considered popups in this
+	/// context.
+	</span>HasPopup,
+	<span class="doccomment">/// Indicates that an object which is [`State::Enabled`] and
+	/// [`State::Sensitive`] has a value which can be read, but not modified, by the
+	/// user.
+	</span>ReadOnly,
 }
 
 <span class="attr">#[allow(clippy::module_name_repetitions)]
@@ -713,266 +713,266 @@
 </span><span class="kw">pub struct </span>StateSet(BitFlags&lt;State&gt;);
 
 <span class="kw">impl </span>StateSet {
-    <span class="doccomment">/// Create a new `StateSet`.
-    ///
-    ///## Example
-    ///```Rust
-    ///     let states = State::Focusable | State::Sensitive | State::Active;
-    ///     let set = StateSet::new(states);
-    ///
-    ///     assert!(set.contains(State::Active));
-    ///     assert!(!set.contains(State::Busy));
-    /// ```
-    </span><span class="kw">pub fn </span>new&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(value: B) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>(value.into())
-    }
+	<span class="doccomment">/// Create a new `StateSet`.
+	///
+	///## Example
+	///```Rust
+	///     let states = State::Focusable | State::Sensitive | State::Active;
+	///     let set = StateSet::new(states);
+	///
+	///     assert!(set.contains(State::Active));
+	///     assert!(!set.contains(State::Busy));
+	/// ```
+	</span><span class="kw">pub fn </span>new&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(value: B) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>(value.into())
+	}
 
-    <span class="doccomment">/// Returns the `StateSet` that corresponds to the provided `u64`s bit pattern.
-    ///# Errors
-    /// When the argument encodes an undefined [`State`].
-    </span><span class="kw">pub fn </span>from_bits(bits: u64) -&gt; <span class="prelude-ty">Result</span>&lt;StateSet, FromBitsError&lt;State&gt;&gt; {
-        <span class="prelude-val">Ok</span>(StateSet(BitFlags::from_bits(bits)<span class="question-mark">?</span>))
-    }
+	<span class="doccomment">/// Returns the `StateSet` that corresponds to the provided `u64`s bit pattern.
+	///# Errors
+	/// When the argument encodes an undefined [`State`].
+	</span><span class="kw">pub fn </span>from_bits(bits: u64) -&gt; <span class="prelude-ty">Result</span>&lt;StateSet, FromBitsError&lt;State&gt;&gt; {
+		<span class="prelude-val">Ok</span>(StateSet(BitFlags::from_bits(bits)<span class="question-mark">?</span>))
+	}
 
-    <span class="attr">#[must_use]
-    </span><span class="doccomment">/// Create an empty `StateSet`
-    </span><span class="kw">pub fn </span>empty() -&gt; StateSet {
-        StateSet(State::empty())
-    }
+	<span class="attr">#[must_use]
+	</span><span class="doccomment">/// Create an empty `StateSet`
+	</span><span class="kw">pub fn </span>empty() -&gt; StateSet {
+		StateSet(State::empty())
+	}
 
-    <span class="attr">#[must_use]
-    </span><span class="doccomment">/// Returns the state as represented by a u64.
-    </span><span class="kw">pub fn </span>bits(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
-        <span class="self">self</span>.<span class="number">0</span>.bits()
-    }
+	<span class="attr">#[must_use]
+	</span><span class="doccomment">/// Returns the state as represented by a u64.
+	</span><span class="kw">pub fn </span>bits(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+		<span class="self">self</span>.<span class="number">0</span>.bits()
+	}
 
-    <span class="doccomment">/// Whether the `StateSet` contains a [`State`].
-    </span><span class="kw">pub fn </span>contains&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="self">self</span>, other: B) -&gt; bool {
-        <span class="self">self</span>.<span class="number">0</span>.contains(other)
-    }
+	<span class="doccomment">/// Whether the `StateSet` contains a [`State`].
+	</span><span class="kw">pub fn </span>contains&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="self">self</span>, other: B) -&gt; bool {
+		<span class="self">self</span>.<span class="number">0</span>.contains(other)
+	}
 
-    <span class="doccomment">/// Removes a [`State`] (optionally) previously contained in the `StateSet`.
-    </span><span class="kw">pub fn </span>remove&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: B) {
-        <span class="self">self</span>.<span class="number">0</span>.remove(other);
-    }
+	<span class="doccomment">/// Removes a [`State`] (optionally) previously contained in the `StateSet`.
+	</span><span class="kw">pub fn </span>remove&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: B) {
+		<span class="self">self</span>.<span class="number">0</span>.remove(other);
+	}
 
-    <span class="doccomment">///  Inserts a [`State`] in the `StateSet`.
-    </span><span class="kw">pub fn </span>insert&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: B) {
-        <span class="self">self</span>.<span class="number">0</span>.insert(other);
-    }
+	<span class="doccomment">///  Inserts a [`State`] in the `StateSet`.
+	</span><span class="kw">pub fn </span>insert&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: B) {
+		<span class="self">self</span>.<span class="number">0</span>.insert(other);
+	}
 
-    <span class="doccomment">/// Returns an iterator that yields each set [`State`].
-    </span><span class="kw">pub fn </span>iter(<span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = State&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.iter()
-    }
+	<span class="doccomment">/// Returns an iterator that yields each set [`State`].
+	</span><span class="kw">pub fn </span>iter(<span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = State&gt; {
+		<span class="self">self</span>.<span class="number">0</span>.iter()
+	}
 
-<span class="attr">#[must_use]
-    </span><span class="doccomment">/// Checks if all states are unset.
-    </span><span class="kw">pub fn </span>is_empty(<span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.<span class="number">0</span>.is_empty()
-    }
+	<span class="attr">#[must_use]
+	</span><span class="doccomment">/// Checks if all states are unset.
+	</span><span class="kw">pub fn </span>is_empty(<span class="self">self</span>) -&gt; bool {
+		<span class="self">self</span>.<span class="number">0</span>.is_empty()
+	}
 
-    <span class="doccomment">/// Returns true if at least one flag is shared.
-    </span><span class="kw">pub fn </span>intersects&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="self">self</span>, other: B) -&gt; bool {
-        <span class="self">self</span>.<span class="number">0</span>.intersects(other)
-    }
+	<span class="doccomment">/// Returns true if at least one flag is shared.
+	</span><span class="kw">pub fn </span>intersects&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="self">self</span>, other: B) -&gt; bool {
+		<span class="self">self</span>.<span class="number">0</span>.intersects(other)
+	}
 
-    <span class="doccomment">/// Toggles the matching bits.
-    </span><span class="kw">pub fn </span>toggle&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: B) {
-        <span class="self">self</span>.<span class="number">0</span>.toggle(other);
-    }
+	<span class="doccomment">/// Toggles the matching bits.
+	</span><span class="kw">pub fn </span>toggle&lt;B: Into&lt;BitFlags&lt;State&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: B) {
+		<span class="self">self</span>.<span class="number">0</span>.toggle(other);
+	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
-    <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
-    {
-        <span class="kw">struct </span>StateSetVisitor;
+	<span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
+	<span class="kw">where
+		</span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+	{
+		<span class="kw">struct </span>StateSetVisitor;
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>StateSetVisitor {
-            <span class="kw">type </span>Value = StateSet;
+		<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>StateSetVisitor {
+			<span class="kw">type </span>Value = StateSet;
 
-            <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-                formatter
-                    .write_str(<span class="string">&quot;a sequence comprised of two u32 that represents a valid StateSet&quot;</span>)
-            }
+			<span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+				formatter
+					.write_str(<span class="string">&quot;a sequence comprised of two u32 that represents a valid StateSet&quot;</span>)
+			}
 
-            <span class="kw">fn </span>visit_newtype_struct&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
-            <span class="kw">where
-                </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
-            {
-                <span class="kw">match </span>&lt;Vec&lt;u32&gt; <span class="kw">as </span>Deserialize&gt;::deserialize(deserializer) {
-                    <span class="prelude-val">Ok</span>(states) <span class="kw">if </span>states.len() == <span class="number">2 </span>=&gt; {
-                        <span class="kw">let </span><span class="kw-2">mut </span>bits = u64::from(states[<span class="number">0</span>]);
-                        bits |= (u64::from(states[<span class="number">1</span>])) &lt;&lt; <span class="number">32</span>;
-                        StateSet::from_bits(bits).map_err(|<span class="kw">_</span>| de::Error::custom(<span class="string">&quot;invalid state&quot;</span>))
-                    }
-                    <span class="prelude-val">Ok</span>(states) =&gt; <span class="prelude-val">Err</span>(de::Error::invalid_length(states.len(), <span class="kw-2">&amp;</span><span class="string">&quot;array of size 2&quot;</span>)),
-                    <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
-                }
-            }
-        }
+			<span class="kw">fn </span>visit_newtype_struct&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
+			<span class="kw">where
+				</span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+			{
+				<span class="kw">match </span>&lt;Vec&lt;u32&gt; <span class="kw">as </span>Deserialize&gt;::deserialize(deserializer) {
+					<span class="prelude-val">Ok</span>(states) <span class="kw">if </span>states.len() == <span class="number">2 </span>=&gt; {
+						<span class="kw">let </span><span class="kw-2">mut </span>bits = u64::from(states[<span class="number">0</span>]);
+						bits |= (u64::from(states[<span class="number">1</span>])) &lt;&lt; <span class="number">32</span>;
+						StateSet::from_bits(bits).map_err(|<span class="kw">_</span>| de::Error::custom(<span class="string">&quot;invalid state&quot;</span>))
+					}
+					<span class="prelude-val">Ok</span>(states) =&gt; <span class="prelude-val">Err</span>(de::Error::invalid_length(states.len(), <span class="kw-2">&amp;</span><span class="string">&quot;array of size 2&quot;</span>)),
+					<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
+				}
+			}
+		}
 
-        deserializer.deserialize_newtype_struct(<span class="string">&quot;StateSet&quot;</span>, StateSetVisitor)
-    }
+		deserializer.deserialize_newtype_struct(<span class="string">&quot;StateSet&quot;</span>, StateSetVisitor)
+	}
 }
 
 <span class="kw">impl </span>Serialize <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
-    <span class="kw">where
-        </span>S: Serializer,
-    {
-        <span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="number">2</span>))<span class="question-mark">?</span>;
-        <span class="kw">let </span>bits = <span class="self">self</span>.bits();
+	<span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
+	<span class="kw">where
+		</span>S: Serializer,
+	{
+		<span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="number">2</span>))<span class="question-mark">?</span>;
+		<span class="kw">let </span>bits = <span class="self">self</span>.bits();
 
-        <span class="comment">// This cast is safe and truncation is intentional.
-        //The shift is sound provided that `State` is `#[repr(u64)]`
-        </span><span class="attr">#[allow(clippy::cast_possible_truncation)]
-        </span>seq.serialize_element(<span class="kw-2">&amp;</span>(bits <span class="kw">as </span>u32))<span class="question-mark">?</span>;
-        seq.serialize_element(<span class="kw-2">&amp;</span>((bits &gt;&gt; <span class="number">32</span>) <span class="kw">as </span>u32))<span class="question-mark">?</span>;
-        seq.end()
-    }
+		<span class="comment">// This cast is safe and truncation is intentional.
+		//The shift is sound provided that `State` is `#[repr(u64)]`
+		</span><span class="attr">#[allow(clippy::cast_possible_truncation)]
+		</span>seq.serialize_element(<span class="kw-2">&amp;</span>(bits <span class="kw">as </span>u32))<span class="question-mark">?</span>;
+		seq.serialize_element(<span class="kw-2">&amp;</span>((bits &gt;&gt; <span class="number">32</span>) <span class="kw">as </span>u32))<span class="question-mark">?</span>;
+		seq.end()
+	}
 }
 
 <span class="kw">impl </span>Type <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        &lt;Vec&lt;u32&gt; <span class="kw">as </span>Type&gt;::signature()
-    }
+	<span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+		&lt;Vec&lt;u32&gt; <span class="kw">as </span>Type&gt;::signature()
+	}
 }
 
 <span class="kw">impl </span>From&lt;State&gt; <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>from(value: State) -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>(value.into())
-    }
+	<span class="kw">fn </span>from(value: State) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>(value.into())
+	}
 }
 
 <span class="kw">impl </span>std::ops::BitXor <span class="kw">for </span>StateSet {
-    <span class="kw">type </span>Output = StateSet;
+	<span class="kw">type </span>Output = StateSet;
 
-    <span class="kw">fn </span>bitxor(<span class="self">self</span>, other: <span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
-        StateSet(<span class="self">self</span>.<span class="number">0 </span>^ other.<span class="number">0</span>)
-    }
+	<span class="kw">fn </span>bitxor(<span class="self">self</span>, other: <span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
+		StateSet(<span class="self">self</span>.<span class="number">0 </span>^ other.<span class="number">0</span>)
+	}
 }
 <span class="kw">impl </span>std::ops::BitXorAssign <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>bitxor_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="self">Self</span>) {
-        <span class="self">self</span>.<span class="number">0 </span>= <span class="self">self</span>.<span class="number">0 </span>^ other.<span class="number">0</span>;
-    }
+	<span class="kw">fn </span>bitxor_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="self">Self</span>) {
+		<span class="self">self</span>.<span class="number">0 </span>= <span class="self">self</span>.<span class="number">0 </span>^ other.<span class="number">0</span>;
+	}
 }
 <span class="kw">impl </span>std::ops::BitOr <span class="kw">for </span>StateSet {
-    <span class="kw">type </span>Output = StateSet;
+	<span class="kw">type </span>Output = StateSet;
 
-    <span class="kw">fn </span>bitor(<span class="self">self</span>, other: <span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
-        StateSet(<span class="self">self</span>.<span class="number">0 </span>| other.<span class="number">0</span>)
-    }
+	<span class="kw">fn </span>bitor(<span class="self">self</span>, other: <span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
+		StateSet(<span class="self">self</span>.<span class="number">0 </span>| other.<span class="number">0</span>)
+	}
 }
 <span class="kw">impl </span>std::ops::BitOrAssign <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>bitor_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="self">Self</span>) {
-        <span class="self">self</span>.<span class="number">0 </span>= <span class="self">self</span>.<span class="number">0 </span>| other.<span class="number">0</span>;
-    }
+	<span class="kw">fn </span>bitor_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="self">Self</span>) {
+		<span class="self">self</span>.<span class="number">0 </span>= <span class="self">self</span>.<span class="number">0 </span>| other.<span class="number">0</span>;
+	}
 }
 <span class="kw">impl </span>std::ops::BitAnd <span class="kw">for </span>StateSet {
-    <span class="kw">type </span>Output = StateSet;
+	<span class="kw">type </span>Output = StateSet;
 
-    <span class="kw">fn </span>bitand(<span class="self">self</span>, other: <span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
-        StateSet(<span class="self">self</span>.<span class="number">0 </span>&amp; other.<span class="number">0</span>)
-    }
+	<span class="kw">fn </span>bitand(<span class="self">self</span>, other: <span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
+		StateSet(<span class="self">self</span>.<span class="number">0 </span>&amp; other.<span class="number">0</span>)
+	}
 }
 <span class="kw">impl </span>std::ops::BitAndAssign <span class="kw">for </span>StateSet {
-    <span class="kw">fn </span>bitand_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="self">Self</span>) {
-        <span class="self">self</span>.<span class="number">0 </span>= <span class="self">self</span>.<span class="number">0 </span>&amp; other.<span class="number">0</span>;
-    }
+	<span class="kw">fn </span>bitand_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="self">Self</span>) {
+		<span class="self">self</span>.<span class="number">0 </span>= <span class="self">self</span>.<span class="number">0 </span>&amp; other.<span class="number">0</span>;
+	}
 }
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use </span>byteorder::LE;
-    <span class="kw">use </span>zbus::zvariant::{from_slice, to_bytes, EncodingContext <span class="kw">as </span>Context};
+	<span class="kw">use super</span>::<span class="kw-2">*</span>;
+	<span class="kw">use </span>byteorder::LE;
+	<span class="kw">use </span>zbus::zvariant::{from_slice, to_bytes, EncodingContext <span class="kw">as </span>Context};
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>serialize_empty_state_set() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::empty()).unwrap();
-        <span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>serialize_empty_state_set() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::empty()).unwrap();
+		<span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>deserialize_empty_state_set() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded, StateSet::empty());
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>deserialize_empty_state_set() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
+		<span class="macro">assert_eq!</span>(decoded, StateSet::empty());
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>serialize_state_set_invalid() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::Invalid)).unwrap();
-        <span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>serialize_state_set_invalid() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::Invalid)).unwrap();
+		<span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>deserialize_state_set_invalid() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded, StateSet::new(State::Invalid));
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>deserialize_state_set_invalid() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
+		<span class="macro">assert_eq!</span>(decoded, StateSet::new(State::Invalid));
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>serialize_state_set_manages_descendants() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::ManagesDescendants)).unwrap();
-        <span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>serialize_state_set_manages_descendants() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::ManagesDescendants)).unwrap();
+		<span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>deserialize_state_set_manages_descendants() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded, StateSet::new(State::ManagesDescendants));
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>deserialize_state_set_manages_descendants() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">128</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
+		<span class="macro">assert_eq!</span>(decoded, StateSet::new(State::ManagesDescendants));
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>serialize_state_set_indeterminate() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::Indeterminate)).unwrap();
-        <span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>serialize_state_set_indeterminate() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::Indeterminate)).unwrap();
+		<span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>deserialize_state_set_indeterminate() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded, StateSet::new(State::Indeterminate));
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>deserialize_state_set_indeterminate() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
+		<span class="macro">assert_eq!</span>(decoded, StateSet::new(State::Indeterminate));
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>serialize_state_set_focusable_focused() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::Focusable | State::Focused)).unwrap();
-        <span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">24</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>serialize_state_set_focusable_focused() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>StateSet::new(State::Focusable | State::Focused)).unwrap();
+		<span class="macro">assert_eq!</span>(encoded, <span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">24</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>deserialize_state_set_focusable_focused() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">24</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded, StateSet::new(State::Focusable | State::Focused));
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>deserialize_state_set_focusable_focused() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded: StateSet = from_slice(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">24</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt).unwrap();
+		<span class="macro">assert_eq!</span>(decoded, StateSet::new(State::Focusable | State::Focused));
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>cannot_deserialize_state_set_invalid_length() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded = from_slice::&lt;<span class="kw">_</span>, StateSet&gt;(<span class="kw-2">&amp;</span>[<span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt);
-        <span class="macro">assert!</span>(decoded.is_err());
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>cannot_deserialize_state_set_invalid_length() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded = from_slice::&lt;<span class="kw">_</span>, StateSet&gt;(<span class="kw-2">&amp;</span>[<span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], ctxt);
+		<span class="macro">assert!</span>(decoded.is_err());
+	}
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>cannot_deserialize_state_set_invalid_flag() {
-        <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>decoded = from_slice::&lt;<span class="kw">_</span>, StateSet&gt;(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">32</span>], ctxt);
-        <span class="macro">assert!</span>(decoded.is_err());
-    }
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>cannot_deserialize_state_set_invalid_flag() {
+		<span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
+		<span class="kw">let </span>decoded = from_slice::&lt;<span class="kw">_</span>, StateSet&gt;(<span class="kw-2">&amp;</span>[<span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">32</span>], ctxt);
+		<span class="macro">assert!</span>(decoded.is_err());
+	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>

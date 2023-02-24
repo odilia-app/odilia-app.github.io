@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/c871376/src/accessible_ext.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>accessible_ext.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/7fc8c1d/src/accessible_ext.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>accessible_ext.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -339,344 +339,344 @@
 <a href="#339" id="339">339</a>
 <a href="#340" id="340">340</a>
 </pre><pre class="rust"><code><span class="kw">use crate</span>::{
-    accessible::{AccessibleProxy, RelationType, Role},
-    collection::MatchType,
-    convertable::Convertable,
-    error::ObjectPathConversionError,
-    InterfaceSet,
+	accessible::{AccessibleProxy, RelationType, Role},
+	collection::MatchType,
+	convertable::Convertable,
+	error::ObjectPathConversionError,
+	InterfaceSet,
 };
 <span class="kw">use </span>async_recursion::async_recursion;
 <span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::{collections::HashMap, error::Error};
 <span class="kw">use </span>zbus::{
-    zvariant::{ObjectPath, OwnedObjectPath},
-    CacheProperties,
+	zvariant::{ObjectPath, OwnedObjectPath},
+	CacheProperties,
 };
 
 <span class="kw">pub type </span>MatcherArgs =
-    (Vec&lt;Role&gt;, MatchType, HashMap&lt;String, String&gt;, MatchType, InterfaceSet, MatchType);
+	(Vec&lt;Role&gt;, MatchType, HashMap&lt;String, String&gt;, MatchType, InterfaceSet, MatchType);
 
 <span class="attr">#[async_trait]
 </span><span class="kw">pub trait </span>AccessibleExt {
-    <span class="comment">// Assumes that an accessible can be made from the component parts
-    </span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;AccessibleId&gt;;
-    <span class="kw">async fn </span>get_parent_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;;
-    <span class="kw">async fn </span>get_children_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
-    <span class="kw">async fn </span>get_siblings&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt;;
-    <span class="kw">async fn </span>get_children_indexes&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;i32&gt;&gt;;
-    <span class="kw">async fn </span>get_siblings_before&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt;;
-    <span class="kw">async fn </span>get_siblings_after&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt;;
-    <span class="kw">async fn </span>get_ancestors&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
-    <span class="kw">async fn </span>get_ancestor_with_role&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, role: Role) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;;
-    <span class="comment">/* TODO: not sure where these should go since it requires both Text as a self interface and
-     * Hyperlink as children interfaces. */
-    </span><span class="kw">async fn </span>get_children_caret&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, after: bool) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
-    <span class="kw">async fn </span>get_next&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
-        backward: bool,
-    ) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
-    <span class="kw">async fn </span>get_relation_set_ext&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-    ) -&gt; zbus::Result&lt;HashMap&lt;RelationType, Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;&gt;;
+	<span class="comment">// Assumes that an accessible can be made from the component parts
+	</span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;AccessibleId&gt;;
+	<span class="kw">async fn </span>get_parent_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;;
+	<span class="kw">async fn </span>get_children_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
+	<span class="kw">async fn </span>get_siblings&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt;;
+	<span class="kw">async fn </span>get_children_indexes&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;i32&gt;&gt;;
+	<span class="kw">async fn </span>get_siblings_before&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt;;
+	<span class="kw">async fn </span>get_siblings_after&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt;;
+	<span class="kw">async fn </span>get_ancestors&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
+	<span class="kw">async fn </span>get_ancestor_with_role&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, role: Role) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;;
+	<span class="comment">/* TODO: not sure where these should go since it requires both Text as a self interface and
+	 * Hyperlink as children interfaces. */
+	</span><span class="kw">async fn </span>get_children_caret&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, after: bool) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
+	<span class="kw">async fn </span>get_next&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
+		backward: bool,
+	) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;;
+	<span class="kw">async fn </span>get_relation_set_ext&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+	) -&gt; zbus::Result&lt;HashMap&lt;RelationType, Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;&gt;;
 }
 
 <span class="comment">// TODO: make match more broad, allow use of other parameters; also, support multiple roles, since right now, multiple will just exit immediately with false
 </span><span class="kw">async fn </span>match_(
-    accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
-    matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
+	accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
+	matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
 ) -&gt; zbus::Result&lt;bool&gt; {
-    <span class="kw">let </span>roles = <span class="kw-2">&amp;</span>matcher_args.<span class="number">0</span>;
-    <span class="kw">if </span>roles.len() != <span class="number">1 </span>{
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
-    }
-    <span class="comment">// our unwrap is protected from panicing with the above check
-    </span><span class="prelude-val">Ok</span>(accessible.get_role().<span class="kw">await</span><span class="question-mark">? </span>== <span class="kw-2">*</span>roles.get(<span class="number">0</span>).unwrap())
+	<span class="kw">let </span>roles = <span class="kw-2">&amp;</span>matcher_args.<span class="number">0</span>;
+	<span class="kw">if </span>roles.len() != <span class="number">1 </span>{
+		<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
+	}
+	<span class="comment">// our unwrap is protected from panicing with the above check
+	</span><span class="prelude-val">Ok</span>(accessible.get_role().<span class="kw">await</span><span class="question-mark">? </span>== <span class="kw-2">*</span>roles.get(<span class="number">0</span>).unwrap())
 }
 
 <span class="kw">impl </span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-    <span class="attr">#[async_recursion]
-    </span><span class="kw">async fn </span>find_inner&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        after_or_before: i32,
-        matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
-        backward: bool,
-        recur: bool,
-    ) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
-        <span class="kw">let </span>children = <span class="kw">if </span>backward {
-            <span class="kw">let </span><span class="kw-2">mut </span>vec = <span class="self">self</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-            vec.reverse();
-            vec
-        } <span class="kw">else </span>{
-            <span class="self">self</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">?
-        </span>};
-        <span class="kw">for </span>child <span class="kw">in </span>children {
-            <span class="kw">let </span>child_index = child.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="kw">if </span>!recur
-                &amp;&amp; ((child_index &lt;= after_or_before &amp;&amp; !backward)
-                    || (child_index &gt;= after_or_before &amp;&amp; backward))
-            {
-                <span class="kw">continue</span>;
-            }
-            <span class="kw">if </span>match_(<span class="kw-2">&amp;</span>child.clone(), matcher_args).<span class="kw">await</span><span class="question-mark">? </span>{
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(child));
-            }
-            <span class="comment">/* 0 here is ignored because we are recursive; see the line starting with if !recur */
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(found_decendant) = child.find_inner(<span class="number">0</span>, matcher_args, backward, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?
-            </span>{
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(found_decendant));
-            }
-        }
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
-    }
+	<span class="attr">#[async_recursion]
+	</span><span class="kw">async fn </span>find_inner&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		after_or_before: i32,
+		matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
+		backward: bool,
+		recur: bool,
+	) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
+		<span class="kw">let </span>children = <span class="kw">if </span>backward {
+			<span class="kw">let </span><span class="kw-2">mut </span>vec = <span class="self">self</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+			vec.reverse();
+			vec
+		} <span class="kw">else </span>{
+			<span class="self">self</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">?
+		</span>};
+		<span class="kw">for </span>child <span class="kw">in </span>children {
+			<span class="kw">let </span>child_index = child.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>;
+			<span class="kw">if </span>!recur
+				&amp;&amp; ((child_index &lt;= after_or_before &amp;&amp; !backward)
+					|| (child_index &gt;= after_or_before &amp;&amp; backward))
+			{
+				<span class="kw">continue</span>;
+			}
+			<span class="kw">if </span>match_(<span class="kw-2">&amp;</span>child.clone(), matcher_args).<span class="kw">await</span><span class="question-mark">? </span>{
+				<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(child));
+			}
+			<span class="comment">/* 0 here is ignored because we are recursive; see the line starting with if !recur */
+			</span><span class="kw">if let </span><span class="prelude-val">Some</span>(found_decendant) = child.find_inner(<span class="number">0</span>, matcher_args, backward, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?
+			</span>{
+				<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(found_decendant));
+			}
+		}
+		<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+	}
 }
 
 <span class="attr">#[derive(Clone, Copy, Hash, Debug, Eq, PartialEq, PartialOrd, Ord, Serialize, Deserialize)]
 </span><span class="kw">pub enum </span>AccessibleId {
-    Null,
-    Root,
-    Number(i64),
+	Null,
+	Root,
+	Number(i64),
 }
 <span class="kw">impl </span>ToString <span class="kw">for </span>AccessibleId {
-    <span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="kw">let </span>ending = <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Null =&gt; <span class="string">&quot;null&quot;</span>.to_string(),
-            <span class="self">Self</span>::Root =&gt; <span class="string">&quot;root&quot;</span>.to_string(),
-            <span class="self">Self</span>::Number(int) =&gt; int.to_string(),
-        };
-        <span class="macro">format!</span>(<span class="string">&quot;/org/a11y/atspi/accessible/{ending}&quot;</span>)
-    }
+	<span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="kw">let </span>ending = <span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::Null =&gt; <span class="string">&quot;null&quot;</span>.to_string(),
+			<span class="self">Self</span>::Root =&gt; <span class="string">&quot;root&quot;</span>.to_string(),
+			<span class="self">Self</span>::Number(int) =&gt; int.to_string(),
+		};
+		<span class="macro">format!</span>(<span class="string">&quot;/org/a11y/atspi/accessible/{ending}&quot;</span>)
+	}
 }
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>AccessibleId {
-    <span class="kw">type </span>Error = zbus::zvariant::Error;
+	<span class="kw">type </span>Error = zbus::zvariant::Error;
 
-    <span class="kw">fn </span>try_into(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;, <span class="self">Self</span>::Error&gt; {
-        ObjectPath::try_from(<span class="self">self</span>.to_string())
-    }
+	<span class="kw">fn </span>try_into(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;, <span class="self">Self</span>::Error&gt; {
+		ObjectPath::try_from(<span class="self">self</span>.to_string())
+	}
 }
 
 <span class="kw">impl </span>TryFrom&lt;OwnedObjectPath&gt; <span class="kw">for </span>AccessibleId {
-    <span class="kw">type </span>Error = ObjectPathConversionError;
+	<span class="kw">type </span>Error = ObjectPathConversionError;
 
-    <span class="kw">fn </span>try_from(path: OwnedObjectPath) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
-            <span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
-                <span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
-                <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
-            },
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
-        }
-    }
+	<span class="kw">fn </span>try_from(path: OwnedObjectPath) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
+			<span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
+			<span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
+			<span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
+				<span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
+			},
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
+		}
+	}
 }
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>AccessibleId {
-    <span class="kw">type </span>Error = ObjectPathConversionError;
+	<span class="kw">type </span>Error = ObjectPathConversionError;
 
-    <span class="kw">fn </span>try_from(path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
-            <span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
-                <span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
-                <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
-            },
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
-        }
-    }
+	<span class="kw">fn </span>try_from(path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
+			<span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
+			<span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
+			<span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
+				<span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
+			},
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
+		}
+	}
 }
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>AccessibleId {
-    <span class="kw">type </span>Error = ObjectPathConversionError;
+	<span class="kw">type </span>Error = ObjectPathConversionError;
 
-    <span class="kw">fn </span>try_from(path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
-            <span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
-                <span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
-                <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
-            },
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
-        }
-    }
+	<span class="kw">fn </span>try_from(path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
+			<span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Null),
+			<span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Root),
+			<span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
+				<span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Ok</span>(AccessibleId::Number(uid)),
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::ParseError(e)),
+			},
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">Self</span>::Error::NoIdAvailable),
+		}
+	}
 }
 
 <span class="attr">#[async_trait]
 </span><span class="kw">impl </span>AccessibleExt <span class="kw">for </span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-    <span class="doccomment">/// get_id gets the id (if available) for any accessible.
-    /// This *should* always return a Some(i32) and never None, but you never know.
-    /// Sometimes, a path (`/org/a11y/atspi/accessible/XYZ`) may contain a special value for `XYZ`.
-    /// For example: &quot;null&quot; (invalid item), or &quot;root&quot; (the ancestor of all accessibles).
-    /// It *should* be safe to `.expect()` the return type.
-    </span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;AccessibleId&gt; {
-        <span class="kw">let </span>path = <span class="self">self</span>.path();
-        <span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Some</span>(AccessibleId::Null),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Some</span>(AccessibleId::Root),
-            <span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
-                <span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Some</span>(AccessibleId::Number(uid)),
-                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-            },
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-        }
-    }
-    <span class="kw">async fn </span>get_parent_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-        <span class="kw">let </span>parent_parts = <span class="self">self</span>.parent().<span class="kw">await</span><span class="question-mark">?</span>;
-        AccessibleProxy::builder(<span class="self">self</span>.connection())
-            .destination(parent_parts.<span class="number">0</span>)<span class="question-mark">?
-            </span>.cache_properties(CacheProperties::No)
-            .path(parent_parts.<span class="number">1</span>)<span class="question-mark">?
-            </span>.build()
-            .<span class="kw">await
-    </span>}
-    <span class="kw">async fn </span>get_children_indexes&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;i32&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>indexes = Vec::new();
-        <span class="kw">for </span>child <span class="kw">in </span><span class="self">self</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">? </span>{
-            indexes.push(child.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>);
-        }
-        <span class="prelude-val">Ok</span>(indexes)
-    }
-    <span class="kw">async fn </span>get_children_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
-        <span class="kw">let </span>children_parts = <span class="self">self</span>.get_children().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>children = Vec::new();
-        <span class="kw">for </span>child_parts <span class="kw">in </span>children_parts {
-            <span class="kw">let </span>acc = AccessibleProxy::builder(<span class="self">self</span>.connection())
-                .destination(child_parts.<span class="number">0</span>)<span class="question-mark">?
-                </span>.cache_properties(CacheProperties::No)
-                .path(child_parts.<span class="number">1</span>)<span class="question-mark">?
-                </span>.build()
-                .<span class="kw">await</span><span class="question-mark">?</span>;
-            children.push(acc);
-        }
-        <span class="prelude-val">Ok</span>(children)
-    }
-    <span class="kw">async fn </span>get_siblings&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
-        <span class="kw">let </span>parent = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
-        <span class="comment">// Clippy false positive: Standard pattern for excluding index item from list.
-        </span><span class="attr">#[allow(clippy::if_not_else)]
-        </span><span class="kw">let </span>children: Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; = parent
-            .get_children_ext()
-            .<span class="kw">await</span><span class="question-mark">?
-            </span>.into_iter()
-            .enumerate()
-            .filter_map(|(i, a)| <span class="kw">if </span>i != index { <span class="prelude-val">Some</span>(a) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
-            .collect();
-        <span class="prelude-val">Ok</span>(children)
-    }
-    <span class="kw">async fn </span>get_siblings_before&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
-        <span class="kw">let </span>parent = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
-        <span class="kw">let </span>children: Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; = parent
-            .get_children_ext()
-            .<span class="kw">await</span><span class="question-mark">?
-            </span>.into_iter()
-            .enumerate()
-            .filter_map(|(i, a)| <span class="kw">if </span>i &lt; index { <span class="prelude-val">Some</span>(a) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
-            .collect();
-        <span class="prelude-val">Ok</span>(children)
-    }
-    <span class="kw">async fn </span>get_siblings_after&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
-        <span class="kw">let </span>parent = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
-        <span class="kw">let </span>children: Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; = parent
-            .get_children_ext()
-            .<span class="kw">await</span><span class="question-mark">?
-            </span>.into_iter()
-            .enumerate()
-            .filter_map(|(i, a)| <span class="kw">if </span>i &gt; index { <span class="prelude-val">Some</span>(a) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
-            .collect();
-        <span class="prelude-val">Ok</span>(children)
-    }
-    <span class="kw">async fn </span>get_ancestors&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>ancestors = Vec::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>ancestor = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">while </span>ancestor.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= Role::Frame {
-            ancestors.push(ancestor.clone());
-            ancestor = ancestor.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        }
-        <span class="prelude-val">Ok</span>(ancestors)
-    }
-    <span class="kw">async fn </span>get_ancestor_with_role&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, role: Role) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>ancestor = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">while </span>ancestor.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= role &amp;&amp; ancestor.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= Role::Frame {
-            ancestor = ancestor.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        }
-        <span class="prelude-val">Ok</span>(ancestor)
-    }
-    <span class="kw">async fn </span>get_children_caret&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        backward: bool,
-    ) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>children_after_before = Vec::new();
-        <span class="kw">let </span>caret_pos = <span class="self">self</span>.to_text().<span class="kw">await</span><span class="question-mark">?</span>.caret_offset().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>children_hyperlink = <span class="self">self</span>.to_accessible().<span class="kw">await</span><span class="question-mark">?</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">for </span>child <span class="kw">in </span>children_hyperlink {
-            <span class="kw">let </span>hyperlink = child.to_hyperlink().<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="kw">if let </span><span class="prelude-val">Ok</span>(start_index) = hyperlink.start_index().<span class="kw">await </span>{
-                <span class="kw">if </span>(start_index &lt;= caret_pos &amp;&amp; backward) || (start_index &gt;= caret_pos &amp;&amp; !backward)
-                {
-                    children_after_before.push(child);
-                }
-            <span class="comment">// include all children which do not identify their positions, for some reason
-            </span>} <span class="kw">else </span>{
-                children_after_before.push(child);
-            }
-        }
-        <span class="prelude-val">Ok</span>(children_after_before)
-    }
-    <span class="kw">async fn </span>get_next&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
-        backward: bool,
-    ) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
-        <span class="comment">// TODO if backwards, check here
-        </span><span class="kw">let </span>caret_children = <span class="self">self</span>.get_children_caret(backward).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">for </span>child <span class="kw">in </span>caret_children {
-            <span class="kw">if </span>match_(<span class="kw-2">&amp;</span>child.clone(), matcher_args).<span class="kw">await</span><span class="question-mark">? </span>{
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(child));
-            } <span class="kw">else if let </span><span class="prelude-val">Some</span>(found_sub) =
-                child.find_inner(<span class="number">0</span>, matcher_args, backward, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?
-            </span>{
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(found_sub));
-            }
-        }
-        <span class="kw">let </span><span class="kw-2">mut </span>last_parent_index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>parent) = <span class="self">self</span>.get_parent_ext().<span class="kw">await </span>{
-            <span class="kw">while </span>parent.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= Role::InternalFrame {
-                <span class="kw">let </span>found_inner_child = parent
-                    .find_inner(last_parent_index, matcher_args, backward, <span class="bool-val">false</span>)
-                    .<span class="kw">await</span><span class="question-mark">?</span>;
-                <span class="kw">if </span>found_inner_child.is_some() {
-                    <span class="kw">return </span><span class="prelude-val">Ok</span>(found_inner_child);
-                }
-                last_parent_index = parent.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>;
-                parent = parent.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
-            }
-        }
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
-    }
-    <span class="kw">async fn </span>get_relation_set_ext&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-    ) -&gt; zbus::Result&lt;HashMap&lt;RelationType, Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;&gt; {
-        <span class="kw">let </span>raw_relations = <span class="self">self</span>.get_relation_set().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>relations = HashMap::new();
-        <span class="kw">for </span>relation <span class="kw">in </span>raw_relations {
-            <span class="kw">let </span><span class="kw-2">mut </span>related_vec = Vec::new();
-            <span class="kw">for </span>related <span class="kw">in </span>relation.<span class="number">1 </span>{
-                <span class="kw">let </span>accessible = AccessibleProxy::builder(<span class="self">self</span>.connection())
-                    .destination(related.<span class="number">0</span>)<span class="question-mark">?
-                    </span>.cache_properties(CacheProperties::No)
-                    .path(related.<span class="number">1</span>)<span class="question-mark">?
-                    </span>.build()
-                    .<span class="kw">await</span><span class="question-mark">?</span>;
-                related_vec.push(accessible);
-            }
-            relations.insert(relation.<span class="number">0</span>, related_vec);
-        }
-        <span class="prelude-val">Ok</span>(relations)
-    }
+	<span class="doccomment">/// get_id gets the id (if available) for any accessible.
+	/// This *should* always return a Some(i32) and never None, but you never know.
+	/// Sometimes, a path (`/org/a11y/atspi/accessible/XYZ`) may contain a special value for `XYZ`.
+	/// For example: &quot;null&quot; (invalid item), or &quot;root&quot; (the ancestor of all accessibles).
+	/// It *should* be safe to `.expect()` the return type.
+	</span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;AccessibleId&gt; {
+		<span class="kw">let </span>path = <span class="self">self</span>.path();
+		<span class="kw">match </span>path.split(<span class="string">&#39;/&#39;</span>).next_back() {
+			<span class="prelude-val">Some</span>(<span class="string">&quot;null&quot;</span>) =&gt; <span class="prelude-val">Some</span>(AccessibleId::Null),
+			<span class="prelude-val">Some</span>(<span class="string">&quot;root&quot;</span>) =&gt; <span class="prelude-val">Some</span>(AccessibleId::Root),
+			<span class="prelude-val">Some</span>(id) =&gt; <span class="kw">match </span>id.parse::&lt;i64&gt;() {
+				<span class="prelude-val">Ok</span>(uid) =&gt; <span class="prelude-val">Some</span>(AccessibleId::Number(uid)),
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+			},
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+		}
+	}
+	<span class="kw">async fn </span>get_parent_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="kw">let </span>parent_parts = <span class="self">self</span>.parent().<span class="kw">await</span><span class="question-mark">?</span>;
+		AccessibleProxy::builder(<span class="self">self</span>.connection())
+			.destination(parent_parts.<span class="number">0</span>)<span class="question-mark">?
+			</span>.cache_properties(CacheProperties::No)
+			.path(parent_parts.<span class="number">1</span>)<span class="question-mark">?
+			</span>.build()
+			.<span class="kw">await
+	</span>}
+	<span class="kw">async fn </span>get_children_indexes&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;i32&gt;&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>indexes = Vec::new();
+		<span class="kw">for </span>child <span class="kw">in </span><span class="self">self</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">? </span>{
+			indexes.push(child.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>);
+		}
+		<span class="prelude-val">Ok</span>(indexes)
+	}
+	<span class="kw">async fn </span>get_children_ext&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
+		<span class="kw">let </span>children_parts = <span class="self">self</span>.get_children().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span><span class="kw-2">mut </span>children = Vec::new();
+		<span class="kw">for </span>child_parts <span class="kw">in </span>children_parts {
+			<span class="kw">let </span>acc = AccessibleProxy::builder(<span class="self">self</span>.connection())
+				.destination(child_parts.<span class="number">0</span>)<span class="question-mark">?
+				</span>.cache_properties(CacheProperties::No)
+				.path(child_parts.<span class="number">1</span>)<span class="question-mark">?
+				</span>.build()
+				.<span class="kw">await</span><span class="question-mark">?</span>;
+			children.push(acc);
+		}
+		<span class="prelude-val">Ok</span>(children)
+	}
+	<span class="kw">async fn </span>get_siblings&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
+		<span class="kw">let </span>parent = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
+		<span class="comment">// Clippy false positive: Standard pattern for excluding index item from list.
+		</span><span class="attr">#[allow(clippy::if_not_else)]
+		</span><span class="kw">let </span>children: Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; = parent
+			.get_children_ext()
+			.<span class="kw">await</span><span class="question-mark">?
+			</span>.into_iter()
+			.enumerate()
+			.filter_map(|(i, a)| <span class="kw">if </span>i != index { <span class="prelude-val">Some</span>(a) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
+			.collect();
+		<span class="prelude-val">Ok</span>(children)
+	}
+	<span class="kw">async fn </span>get_siblings_before&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
+		<span class="kw">let </span>parent = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
+		<span class="kw">let </span>children: Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; = parent
+			.get_children_ext()
+			.<span class="kw">await</span><span class="question-mark">?
+			</span>.into_iter()
+			.enumerate()
+			.filter_map(|(i, a)| <span class="kw">if </span>i &lt; index { <span class="prelude-val">Some</span>(a) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
+			.collect();
+		<span class="prelude-val">Ok</span>(children)
+	}
+	<span class="kw">async fn </span>get_siblings_after&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
+		<span class="kw">let </span>parent = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>.try_into()<span class="question-mark">?</span>;
+		<span class="kw">let </span>children: Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; = parent
+			.get_children_ext()
+			.<span class="kw">await</span><span class="question-mark">?
+			</span>.into_iter()
+			.enumerate()
+			.filter_map(|(i, a)| <span class="kw">if </span>i &gt; index { <span class="prelude-val">Some</span>(a) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
+			.collect();
+		<span class="prelude-val">Ok</span>(children)
+	}
+	<span class="kw">async fn </span>get_ancestors&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>ancestors = Vec::new();
+		<span class="kw">let </span><span class="kw-2">mut </span>ancestor = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">while </span>ancestor.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= Role::Frame {
+			ancestors.push(ancestor.clone());
+			ancestor = ancestor.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		}
+		<span class="prelude-val">Ok</span>(ancestors)
+	}
+	<span class="kw">async fn </span>get_ancestor_with_role&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, role: Role) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>ancestor = <span class="self">self</span>.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">while </span>ancestor.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= role &amp;&amp; ancestor.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= Role::Frame {
+			ancestor = ancestor.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		}
+		<span class="prelude-val">Ok</span>(ancestor)
+	}
+	<span class="kw">async fn </span>get_children_caret&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		backward: bool,
+	) -&gt; zbus::Result&lt;Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
+		<span class="kw">let </span><span class="kw-2">mut </span>children_after_before = Vec::new();
+		<span class="kw">let </span>caret_pos = <span class="self">self</span>.to_text().<span class="kw">await</span><span class="question-mark">?</span>.caret_offset().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>children_hyperlink = <span class="self">self</span>.to_accessible().<span class="kw">await</span><span class="question-mark">?</span>.get_children_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">for </span>child <span class="kw">in </span>children_hyperlink {
+			<span class="kw">let </span>hyperlink = child.to_hyperlink().<span class="kw">await</span><span class="question-mark">?</span>;
+			<span class="kw">if let </span><span class="prelude-val">Ok</span>(start_index) = hyperlink.start_index().<span class="kw">await </span>{
+				<span class="kw">if </span>(start_index &lt;= caret_pos &amp;&amp; backward) || (start_index &gt;= caret_pos &amp;&amp; !backward)
+				{
+					children_after_before.push(child);
+				}
+			<span class="comment">// include all children which do not identify their positions, for some reason
+			</span>} <span class="kw">else </span>{
+				children_after_before.push(child);
+			}
+		}
+		<span class="prelude-val">Ok</span>(children_after_before)
+	}
+	<span class="kw">async fn </span>get_next&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		matcher_args: <span class="kw-2">&amp;</span>MatcherArgs,
+		backward: bool,
+	) -&gt; zbus::Result&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
+		<span class="comment">// TODO if backwards, check here
+		</span><span class="kw">let </span>caret_children = <span class="self">self</span>.get_children_caret(backward).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">for </span>child <span class="kw">in </span>caret_children {
+			<span class="kw">if </span>match_(<span class="kw-2">&amp;</span>child.clone(), matcher_args).<span class="kw">await</span><span class="question-mark">? </span>{
+				<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(child));
+			} <span class="kw">else if let </span><span class="prelude-val">Some</span>(found_sub) =
+				child.find_inner(<span class="number">0</span>, matcher_args, backward, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?
+			</span>{
+				<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(found_sub));
+			}
+		}
+		<span class="kw">let </span><span class="kw-2">mut </span>last_parent_index = <span class="self">self</span>.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>parent) = <span class="self">self</span>.get_parent_ext().<span class="kw">await </span>{
+			<span class="kw">while </span>parent.get_role().<span class="kw">await</span><span class="question-mark">? </span>!= Role::InternalFrame {
+				<span class="kw">let </span>found_inner_child = parent
+					.find_inner(last_parent_index, matcher_args, backward, <span class="bool-val">false</span>)
+					.<span class="kw">await</span><span class="question-mark">?</span>;
+				<span class="kw">if </span>found_inner_child.is_some() {
+					<span class="kw">return </span><span class="prelude-val">Ok</span>(found_inner_child);
+				}
+				last_parent_index = parent.get_index_in_parent().<span class="kw">await</span><span class="question-mark">?</span>;
+				parent = parent.get_parent_ext().<span class="kw">await</span><span class="question-mark">?</span>;
+			}
+		}
+		<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+	}
+	<span class="kw">async fn </span>get_relation_set_ext&lt;<span class="lifetime">&#39;a</span>&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+	) -&gt; zbus::Result&lt;HashMap&lt;RelationType, Vec&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;&gt; {
+		<span class="kw">let </span>raw_relations = <span class="self">self</span>.get_relation_set().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span><span class="kw-2">mut </span>relations = HashMap::new();
+		<span class="kw">for </span>relation <span class="kw">in </span>raw_relations {
+			<span class="kw">let </span><span class="kw-2">mut </span>related_vec = Vec::new();
+			<span class="kw">for </span>related <span class="kw">in </span>relation.<span class="number">1 </span>{
+				<span class="kw">let </span>accessible = AccessibleProxy::builder(<span class="self">self</span>.connection())
+					.destination(related.<span class="number">0</span>)<span class="question-mark">?
+					</span>.cache_properties(CacheProperties::No)
+					.path(related.<span class="number">1</span>)<span class="question-mark">?
+					</span>.build()
+					.<span class="kw">await</span><span class="question-mark">?</span>;
+				related_vec.push(accessible);
+			}
+			relations.insert(relation.<span class="number">0</span>, related_vec);
+		}
+		<span class="prelude-val">Ok</span>(relations)
+	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>

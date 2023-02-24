@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/ordered-stream-0.1.4/src/join.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>join.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../ordered_stream/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/ordered-stream-0.2.0/src/join.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>join.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../ordered_stream/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -426,6 +426,104 @@
 <a href="#426" id="426">426</a>
 <a href="#427" id="427">427</a>
 <a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+<a href="#487" id="487">487</a>
+<a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
+<a href="#492" id="492">492</a>
+<a href="#493" id="493">493</a>
+<a href="#494" id="494">494</a>
+<a href="#495" id="495">495</a>
+<a href="#496" id="496">496</a>
+<a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
+<a href="#499" id="499">499</a>
+<a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
+<a href="#504" id="504">504</a>
+<a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
+<a href="#511" id="511">511</a>
+<a href="#512" id="512">512</a>
+<a href="#513" id="513">513</a>
+<a href="#514" id="514">514</a>
+<a href="#515" id="515">515</a>
+<a href="#516" id="516">516</a>
+<a href="#517" id="517">517</a>
+<a href="#518" id="518">518</a>
+<a href="#519" id="519">519</a>
+<a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
 </pre><pre class="rust"><code><span class="kw">use crate</span>::<span class="kw-2">*</span>;
 <span class="kw">use </span>core::mem;
 <span class="kw">use </span>core::pin::Pin;
@@ -703,6 +801,17 @@
                 b.into()
             }
 
+            <span class="comment">// If one side is pending, we can&#39;t return Ready until that gets resolved.  Because we
+            // have already requested that our child streams wake us when it is possible to make
+            // any kind of progress, we meet the requirements to return Poll::Pending.
+            </span>(PollState::Item(a, t), PollState::Pending) =&gt; {
+                <span class="kw-2">*</span>this.state = JoinState::A(a, t);
+                Poll::Pending
+            }
+            (PollState::Pending, PollState::Item(b, t)) =&gt; {
+                <span class="kw-2">*</span>this.state = JoinState::B(b, t);
+                Poll::Pending
+            }
             (PollState::Pending, PollState::Pending) =&gt; Poll::Pending,
             (PollState::Pending, PollState::NoneBefore) =&gt; Poll::Pending,
             (PollState::NoneBefore, PollState::Pending) =&gt; Poll::Pending,
@@ -710,9 +819,8 @@
             <span class="comment">// If both sides report NoneBefore, so can we.
             </span>(PollState::NoneBefore, PollState::NoneBefore) =&gt; Poll::Ready(PollResult::NoneBefore),
 
-            (PollState::Item(data, ordering), PollState::NoneBefore | PollState::Pending) =&gt; {
-                <span class="comment">// B was polled using either the Some value of (before) or using A&#39;s ordering, or A
-                // is ready while B is Pending.
+            (PollState::Item(data, ordering), PollState::NoneBefore) =&gt; {
+                <span class="comment">// B was polled using either the Some value of (before) or using A&#39;s ordering.
                 //
                 // If before is set and is earlier than A&#39;s ordering, then B might later produce a
                 // value with (bt &gt;= before &amp;&amp; bt &lt; at), so we can&#39;t return A&#39;s item yet and must
@@ -730,9 +838,8 @@
                 }
             }
 
-            (PollState::NoneBefore | PollState::Pending, PollState::Item(data, ordering)) =&gt; {
-                <span class="comment">// A was polled using either the Some value of (before) or using B&#39;s ordering, or B
-                // is ready while A is Pending.
+            (PollState::NoneBefore, PollState::Item(data, ordering)) =&gt; {
+                <span class="comment">// A was polled using either the Some value of (before) or using B&#39;s ordering.
                 //
                 // By a mirror of the above argument, this NoneBefore result gives us permission to
                 // produce either B&#39;s item or NoneBefore.
@@ -802,16 +909,21 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
     <span class="kw">extern crate </span>alloc;
-
-    <span class="kw">use </span>alloc::boxed::Box;
-    <span class="kw">use </span>futures_executor::block_on;
-    <span class="kw">use </span>futures_util::stream::{iter, once, pending};
-
     <span class="kw">use </span><span class="kw">crate</span>::join;
     <span class="kw">use </span><span class="kw">crate</span>::FromStream;
+    <span class="kw">use </span><span class="kw">crate</span>::OrderedStream;
     <span class="kw">use </span><span class="kw">crate</span>::OrderedStreamExt;
+    <span class="kw">use </span><span class="kw">crate</span>::PollResult;
+    <span class="kw">use </span>alloc::rc::Rc;
+    <span class="kw">use </span>core::cell::Cell;
+    <span class="kw">use </span>core::pin::Pin;
+    <span class="kw">use </span>core::task::{Context, Poll};
+    <span class="kw">use </span>futures_executor::block_on;
+    <span class="kw">use </span>futures_util::pin_mut;
+    <span class="kw">use </span>futures_util::stream::iter;
 
-    <span class="kw">pub struct </span>Message {
+    <span class="attr">#[derive(Debug, PartialEq)]
+    </span><span class="kw">pub struct </span>Message {
         serial: u32,
     }
 
@@ -841,18 +953,102 @@
     }
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>join_1_pending() {
-        block_on(<span class="kw">async </span>{
-            <span class="kw">let </span>stream1 = FromStream::with_ordering(pending::&lt;Message&gt;(), |m| m.serial);
-            <span class="kw">let </span>stream2 =
-                FromStream::with_ordering(once(Box::pin(<span class="kw">async </span>{ Message { serial: <span class="number">1 </span>} })), |m| {
-                    m.serial
-                });
-            <span class="kw">let </span><span class="kw-2">mut </span>joined = join(stream1, stream2);
-            <span class="kw">let </span>msg = joined.next().<span class="kw">await</span>.unwrap();
-            <span class="macro">assert_eq!</span>(msg.serial, <span class="number">1</span>);
+    </span><span class="kw">fn </span>join_one_slow() {
+        futures_executor::block_on(<span class="kw">async </span>{
+            <span class="kw">pub struct </span>DelayStream(Rc&lt;Cell&lt;u8&gt;&gt;);
+
+            <span class="kw">impl </span>OrderedStream <span class="kw">for </span>DelayStream {
+                <span class="kw">type </span>Ordering = u32;
+                <span class="kw">type </span>Data = Message;
+                <span class="kw">fn </span>poll_next_before(
+                    <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
+                    <span class="kw">_</span>: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+                    before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
+                ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
+                    <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.get() {
+                        <span class="number">0 </span>=&gt; Poll::Pending,
+                        <span class="number">1 </span><span class="kw">if </span><span class="macro">matches!</span>(before, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="number">1</span>)) =&gt; Poll::Ready(PollResult::NoneBefore),
+                        <span class="number">1 </span>=&gt; Poll::Pending,
+
+                        <span class="number">2 </span>=&gt; {
+                            <span class="self">self</span>.<span class="number">0</span>.set(<span class="number">3</span>);
+                            Poll::Ready(PollResult::Item {
+                                data: Message { serial: <span class="number">4 </span>},
+                                ordering: <span class="number">4</span>,
+                            })
+                        }
+                        <span class="kw">_ </span>=&gt; Poll::Ready(PollResult::Terminated),
+                    }
+                }
+            }
+
+            <span class="kw">let </span>stream1 = iter([
+                Message { serial: <span class="number">1 </span>},
+                Message { serial: <span class="number">3 </span>},
+                Message { serial: <span class="number">5 </span>},
+            ]);
+
+            <span class="kw">let </span>stream1 = FromStream::with_ordering(stream1, |m| m.serial);
+            <span class="kw">let </span>go = Rc::new(Cell::new(<span class="number">0</span>));
+            <span class="kw">let </span>stream2 = DelayStream(go.clone());
+
+            <span class="kw">let </span>join = join(stream1, stream2);
+            <span class="kw">let </span>waker = futures_util::task::noop_waker();
+            <span class="kw">let </span><span class="kw-2">mut </span>ctx = core::task::Context::from_waker(<span class="kw-2">&amp;</span>waker);
+
+            <span class="macro">pin_mut!</span>(join);
+
+            <span class="comment">// When the DelayStream has no information about what it contains, join returns Pending
+            // (since there could be a serial-0 message output of DelayStream)
+            </span><span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Pending
+            );
+
+            go.set(<span class="number">1</span>);
+            <span class="comment">// Now the DelayStream will return NoneBefore on serial 1
+            </span><span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Ready(PollResult::Item {
+                    data: Message { serial: <span class="number">1 </span>},
+                    ordering: <span class="number">1</span>,
+                })
+            );
+            <span class="comment">// however, it does not (yet) do so for serial 3
+            </span><span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Pending
+            );
+
+            go.set(<span class="number">2</span>);
+            <span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Ready(PollResult::Item {
+                    data: Message { serial: <span class="number">3 </span>},
+                    ordering: <span class="number">3</span>,
+                })
+            );
+            <span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Ready(PollResult::Item {
+                    data: Message { serial: <span class="number">4 </span>},
+                    ordering: <span class="number">4</span>,
+                })
+            );
+            <span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Ready(PollResult::Item {
+                    data: Message { serial: <span class="number">5 </span>},
+                    ordering: <span class="number">5</span>,
+                })
+            );
+
+            <span class="macro">assert_eq!</span>(
+                join.as_mut().poll_next_before(<span class="kw-2">&amp;mut </span>ctx, <span class="prelude-val">None</span>),
+                Poll::Ready(PollResult::Terminated)
+            );
         });
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ordered_stream" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ordered_stream" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>

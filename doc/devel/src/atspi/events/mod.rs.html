@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/c871376/src/events/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../atspi/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/7fc8c1d/src/events/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../atspi/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -476,6 +476,31 @@
 <a href="#476" id="476">476</a>
 <a href="#477" id="477">477</a>
 <a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+<a href="#487" id="487">487</a>
+<a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
+<a href="#492" id="492">492</a>
+<a href="#493" id="493">493</a>
+<a href="#494" id="494">494</a>
+<a href="#495" id="495">495</a>
+<a href="#496" id="496">496</a>
+<a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
+<a href="#499" id="499">499</a>
+<a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
 </pre><pre class="rust"><code><span class="kw">pub mod </span>document;
 <span class="kw">pub mod </span>focus;
 <span class="kw">pub mod </span>keyboard;
@@ -484,81 +509,98 @@
 <span class="kw">pub mod </span>terminal;
 <span class="kw">pub mod </span>window;
 
+<span class="comment">// Event body signatures: These outline the event specific deserialized event types.
+// Safety: These are evaluated at compile time.
+// ----
+// The signal signature &quot;(so)&quot; (an Accessible) is ambiguous, because it is used in:
+// -  Cache : RemoveAccessible
+// -  Socket: Available  *( signals the availability of the `Registry` daeomon.)
+//
+// ATSPI- and QSPI both describe the generic events. These can be converted into
+// specific signal types with TryFrom implementations. See crate::[`identify`]
+//  EVENT_LISTENER is a type signature used to notify when events are registered or deregistered.
+//  CACHE_ADD and *_REMOVE have very different types
+</span><span class="kw">pub const </span>ATSPI_EVENT: Signature&lt;<span class="lifetime">&#39;_</span>&gt; = Signature::from_static_str_unchecked(<span class="string">&quot;siiva{sv}&quot;</span>);
+<span class="kw">pub const </span>QSPI_EVENT: Signature&lt;<span class="lifetime">&#39;_</span>&gt; = Signature::from_static_str_unchecked(<span class="string">&quot;siiv(so)&quot;</span>);
+<span class="kw">pub const </span>ACCESSIBLE: Signature&lt;<span class="lifetime">&#39;_</span>&gt; = Signature::from_static_str_unchecked(<span class="string">&quot;(so)&quot;</span>);
+<span class="kw">pub const </span>EVENT_LISTENER: Signature&lt;<span class="lifetime">&#39;_</span>&gt; = Signature::from_static_str_unchecked(<span class="string">&quot;(ss)&quot;</span>);
+<span class="kw">pub const </span>CACHE_ADD: Signature&lt;<span class="lifetime">&#39;_</span>&gt; =
+	Signature::from_static_str_unchecked(<span class="string">&quot;((so)(so)(so)iiassusau)&quot;</span>);
+
 <span class="kw">use </span>std::{collections::HashMap, sync::Arc};
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::{
-    names::{InterfaceName, MemberName, OwnedUniqueName, UniqueName},
-    zvariant::{<span class="self">self</span>, OwnedObjectPath, OwnedValue, Signature, Type, Value},
-    Message,
+	names::{InterfaceName, MemberName, OwnedUniqueName, UniqueName},
+	zvariant::{<span class="self">self</span>, OwnedObjectPath, OwnedValue, Signature, Type, Value},
+	Message,
 };
 
 <span class="kw">use crate</span>::{
-    cache::CacheItem,
-    connection,
-    identify::{
-        document::DocumentEvents, focus::FocusEvents, keyboard::KeyboardEvents, mouse::MouseEvents,
-        object::ObjectEvents, terminal::TerminalEvents, window::WindowEvents,
-    },
-    AtspiError,
+	cache::CacheItem,
+	identify::{
+		document::DocumentEvents, focus::FocusEvents, keyboard::KeyboardEvents, mouse::MouseEvents,
+		object::ObjectEvents, terminal::TerminalEvents, window::WindowEvents,
+	},
+	AtspiError,
 };
 <span class="kw">use </span>atspi_macros::{try_from_zbus_message, GenericEvent};
 
 <span class="attr">#[derive(Debug, Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>EventBody&lt;<span class="lifetime">&#39;a</span>, T&gt; {
-    <span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
-    </span><span class="kw">pub </span>kind: T,
-    <span class="kw">pub </span>detail1: i32,
-    <span class="kw">pub </span>detail2: i32,
-    <span class="attr">#[serde(borrow)]
-    </span><span class="kw">pub </span>any_data: Value&lt;<span class="lifetime">&#39;a</span>&gt;,
-    <span class="attr">#[serde(borrow)]
-    </span><span class="kw">pub </span>properties: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+	<span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
+	</span><span class="kw">pub </span>kind: T,
+	<span class="kw">pub </span>detail1: i32,
+	<span class="kw">pub </span>detail2: i32,
+	<span class="attr">#[serde(borrow)]
+	</span><span class="kw">pub </span>any_data: Value&lt;<span class="lifetime">&#39;a</span>&gt;,
+	<span class="attr">#[serde(borrow)]
+	</span><span class="kw">pub </span>properties: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
 }
 
 <span class="kw">impl</span>&lt;T&gt; Type <span class="kw">for </span>EventBody&lt;<span class="lifetime">&#39;_</span>, T&gt; {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        &lt;(<span class="kw-2">&amp;</span>str, i32, i32, Value, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&gt;)&gt;::signature()
-    }
+	<span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+		&lt;(<span class="kw-2">&amp;</span>str, i32, i32, Value, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&gt;)&gt;::signature()
+	}
 }
 
 <span class="comment">// Signature:  &quot;siiv(so)&quot;,
 </span><span class="attr">#[derive(Debug, Serialize, Deserialize, Type)]
 </span><span class="kw">pub struct </span>EventBodyQT {
-    <span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
-    </span><span class="kw">pub </span>kind: String,
-    <span class="kw">pub </span>detail1: i32,
-    <span class="kw">pub </span>detail2: i32,
-    <span class="kw">pub </span>any_data: OwnedValue,
-    <span class="kw">pub </span>properties: (String, OwnedObjectPath),
+	<span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
+	</span><span class="kw">pub </span>kind: String,
+	<span class="kw">pub </span>detail1: i32,
+	<span class="kw">pub </span>detail2: i32,
+	<span class="kw">pub </span>any_data: OwnedValue,
+	<span class="kw">pub </span>properties: (String, OwnedObjectPath),
 }
 
 <span class="comment">// Signature (siiva{sv}),
 </span><span class="attr">#[derive(Clone, Debug, Serialize, Deserialize, Type)]
 </span><span class="kw">pub struct </span>EventBodyOwned {
-    <span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
-    </span><span class="kw">pub </span>kind: String,
-    <span class="kw">pub </span>detail1: i32,
-    <span class="kw">pub </span>detail2: i32,
-    <span class="kw">pub </span>any_data: OwnedValue,
-    <span class="kw">pub </span>properties: HashMap&lt;String, OwnedValue&gt;,
+	<span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
+	</span><span class="kw">pub </span>kind: String,
+	<span class="kw">pub </span>detail1: i32,
+	<span class="kw">pub </span>detail2: i32,
+	<span class="kw">pub </span>any_data: OwnedValue,
+	<span class="kw">pub </span>properties: HashMap&lt;String, OwnedValue&gt;,
 }
 
 <span class="kw">impl </span>From&lt;EventBodyQT&gt; <span class="kw">for </span>EventBodyOwned {
-    <span class="kw">fn </span>from(body: EventBodyQT) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span><span class="kw-2">mut </span>props = HashMap::new();
-        props.insert(
-            body.properties.<span class="number">0</span>,
-            Value::ObjectPath(body.properties.<span class="number">1</span>.into_inner()).to_owned(),
-        );
-        <span class="self">Self </span>{
-            kind: body.kind,
-            detail1: body.detail1,
-            detail2: body.detail2,
-            any_data: body.any_data,
-            properties: props,
-        }
-    }
+	<span class="kw">fn </span>from(body: EventBodyQT) -&gt; <span class="self">Self </span>{
+		<span class="kw">let </span><span class="kw-2">mut </span>props = HashMap::new();
+		props.insert(
+			body.properties.<span class="number">0</span>,
+			Value::ObjectPath(body.properties.<span class="number">1</span>.into_inner()).to_owned(),
+		);
+		<span class="self">Self </span>{
+			kind: body.kind,
+			detail1: body.detail1,
+			detail2: body.detail2,
+			any_data: body.any_data,
+			properties: props,
+		}
+	}
 }
 
 <span class="doccomment">/// Encapsulates the various different accessibility bus signal types.
@@ -567,23 +609,23 @@
 </span><span class="attr">#[derive(Debug, Clone)]
 #[non_exhaustive]
 </span><span class="kw">pub enum </span>Event {
-    <span class="comment">// Exploring if having a fully destructable hierarchical  works as we&#39;d like..
-    </span>Interfaces(EventInterfaces),
-    <span class="doccomment">/// Emitted when the ` Registry` interface on `org.a11y.atspi.Registry` becomes available.
-    </span>Available(AvailableEvent),
-    <span class="doccomment">/// Both `CacheAdd` and `CacheRemove` signals
-    </span>Cache(CacheEvents),
-    <span class="doccomment">/// Emitted on registry or deregristry of event listeners.,
-    ///
-    /// (eg. &quot;Cache:AddAccessible:&quot;)
-    </span>Listener(EventListenerEvents),
+	<span class="comment">// Exploring if having a fully destructable hierarchical  works as we&#39;d like..
+	</span>Interfaces(EventInterfaces),
+	<span class="doccomment">/// Emitted when the ` Registry` interface on `org.a11y.atspi.Registry` becomes available.
+	</span>Available(AvailableEvent),
+	<span class="doccomment">/// Both `CacheAdd` and `CacheRemove` signals
+	</span>Cache(CacheEvents),
+	<span class="doccomment">/// Emitted on registry or deregristry of event listeners.,
+	///
+	/// (eg. &quot;Cache:AddAccessible:&quot;)
+	</span>Listener(EventListenerEvents),
 }
 
 <span class="attr">#[derive(Debug, Clone)]
 #[allow(clippy::module_name_repetitions)]
 </span><span class="kw">pub enum </span>CacheEvents {
-    Add(AddAccessibleEvent),
-    Remove(RemoveAccessibleEvent),
+	Add(AddAccessibleEvent),
+	Remove(RemoveAccessibleEvent),
 }
 
 <span class="doccomment">/// Type that contains the `zbus::Message` for meta information and
@@ -591,54 +633,54 @@
 </span><span class="attr">#[derive(Debug, Clone, GenericEvent)]
 #[try_from_zbus_message(body = <span class="string">&quot;CacheItem&quot;</span>)]
 </span><span class="kw">pub struct </span>AddAccessibleEvent {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) body: CacheItem,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) body: CacheItem,
 }
 
 <span class="kw">impl </span>AddAccessibleEvent {
-    <span class="doccomment">/// When an object in an application is added, this may evoke a `CacheAdd` event,
-    /// this yields an [`crate::cache::CacheItem`]
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>item(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>CacheItem {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body
-    }
+	<span class="doccomment">/// When an object in an application is added, this may evoke a `CacheAdd` event,
+	/// this yields an [`crate::cache::CacheItem`]
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>item(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>CacheItem {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body
+	}
 
-    <span class="doccomment">/// When an object in an application is added, this may evoke a `CacheAdd` event,
-    /// this yields an [`crate::cache::CacheItem`]
-    /// Consumes the `CacheAdd` event.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>into_item(<span class="self">self</span>) -&gt; CacheItem {
-        <span class="self">self</span>.body
-    }
+	<span class="doccomment">/// When an object in an application is added, this may evoke a `CacheAdd` event,
+	/// this yields an [`crate::cache::CacheItem`]
+	/// Consumes the `CacheAdd` event.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>into_item(<span class="self">self</span>) -&gt; CacheItem {
+		<span class="self">self</span>.body
+	}
 }
 
 <span class="attr">#[derive(Debug, Clone, GenericEvent)]
 #[try_from_zbus_message(body = <span class="string">&quot;Accessible&quot;</span>)]
 </span><span class="kw">pub struct </span>RemoveAccessibleEvent {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) body: Accessible,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) body: Accessible,
 }
 
 <span class="kw">impl </span>RemoveAccessibleEvent {
-    <span class="doccomment">/// What `Accessible` is removed from the application state.
-    /// A reference to the `Accessible`
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>as_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Accessible {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body
-    }
+	<span class="doccomment">/// What `Accessible` is removed from the application state.
+	/// A reference to the `Accessible`
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>as_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Accessible {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body
+	}
 
-    <span class="doccomment">/// What `Accessible` is removed from the application state.
-    /// Converts the event to an Accessible
-    /// Consumes the cache remove event.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>into_accessible(<span class="self">self</span>) -&gt; Accessible {
-        <span class="self">self</span>.body
-    }
+	<span class="doccomment">/// What `Accessible` is removed from the application state.
+	/// Converts the event to an Accessible
+	/// Consumes the cache remove event.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>into_accessible(<span class="self">self</span>) -&gt; Accessible {
+		<span class="self">self</span>.body
+	}
 
-    <span class="comment">// pub fn as_iface_reusing_connection(&amp;self, conn: &amp;Connection) -&gt; AccessibleProxy {
-    //     let Accessible { name, path } = self.as_accessible();
-    //     crate::accessible::new(&amp;**conn, sender, path.into())
-    // }
+	<span class="comment">// pub fn as_iface_reusing_connection(&amp;self, conn: &amp;Connection) -&gt; AccessibleProxy {
+	//     let Accessible { name, path } = self.as_accessible();
+	//     crate::accessible::new(&amp;**conn, sender, path.into())
+	// }
 </span>}
 
 <span class="comment">// TODO: Try to make borrowed versions work,
@@ -649,74 +691,74 @@
 /// Emitted by `CacheRemove` and `Available`
 </span><span class="attr">#[derive(Debug, Clone, Serialize, Deserialize, Type)]
 </span><span class="kw">pub struct </span>Accessible {
-    <span class="kw">pub </span>name: OwnedUniqueName,
-    <span class="kw">pub </span>path: OwnedObjectPath,
+	<span class="kw">pub </span>name: OwnedUniqueName,
+	<span class="kw">pub </span>path: OwnedObjectPath,
 }
 
 <span class="attr">#[test]
 </span><span class="kw">fn </span>test_accessible_signature() {
-    <span class="macro">assert_eq!</span>(Accessible::signature(), <span class="string">&quot;(so)&quot;</span>);
+	<span class="macro">assert_eq!</span>(Accessible::signature(), <span class="string">&quot;(so)&quot;</span>);
 }
 
 <span class="doccomment">/// Offers events, grouped-by Interface.
 </span><span class="attr">#[derive(Clone, Debug)]
 #[non_exhaustive]
 </span><span class="kw">pub enum </span>EventInterfaces {
-    Document(DocumentEvents),
-    Focus(FocusEvents),
-    Keyboard(KeyboardEvents),
-    Mouse(MouseEvents),
-    Object(ObjectEvents),
-    Terminal(TerminalEvents),
-    Window(WindowEvents),
+	Document(DocumentEvents),
+	Focus(FocusEvents),
+	Keyboard(KeyboardEvents),
+	Mouse(MouseEvents),
+	Object(ObjectEvents),
+	Terminal(TerminalEvents),
+	Window(WindowEvents),
 }
 
 <span class="kw">impl </span>TryFrom&lt;AtspiEvent&gt; <span class="kw">for </span>EventInterfaces {
-    <span class="kw">type </span>Error = AtspiError;
+	<span class="kw">type </span>Error = AtspiError;
 
-    <span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="prelude-val">Some</span>(interface) = ev.interface() <span class="kw">else </span>{  <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MissingInterface);  };
-        <span class="kw">match </span>interface.as_str() {
-            <span class="string">&quot;org.a11y.atspi.Event.Document&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(EventInterfaces::Document(DocumentEvents::try_from(ev)<span class="question-mark">?</span>))
-            }
-            <span class="string">&quot;org.a11y.atspi.Event.Focus&quot; </span>=&gt; <span class="prelude-val">Ok</span>(EventInterfaces::Focus(FocusEvents::try_from(ev)<span class="question-mark">?</span>)),
-            <span class="string">&quot;org.a11y.atspi.Event.Keyboard&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(EventInterfaces::Keyboard(KeyboardEvents::try_from(ev)<span class="question-mark">?</span>))
-            }
-            <span class="string">&quot;org.a11y.atspi.Event.Mouse&quot; </span>=&gt; <span class="prelude-val">Ok</span>(EventInterfaces::Mouse(MouseEvents::try_from(ev)<span class="question-mark">?</span>)),
-            <span class="string">&quot;org.a11y.atspi.Event.Object&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(EventInterfaces::Object(ObjectEvents::try_from(ev)<span class="question-mark">?</span>))
-            }
-            <span class="string">&quot;org.a11y.atspi.Event.Terminal&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(EventInterfaces::Terminal(TerminalEvents::try_from(ev)<span class="question-mark">?</span>))
-            }
-            <span class="string">&quot;org.a11y.atspi.Event.Window&quot; </span>=&gt; {
-                <span class="prelude-val">Ok</span>(EventInterfaces::Window(WindowEvents::try_from(ev)<span class="question-mark">?</span>))
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::UnknownInterface),
-        }
-    }
+	<span class="kw">fn </span>try_from(ev: AtspiEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">let </span><span class="prelude-val">Some</span>(interface) = ev.interface() <span class="kw">else </span>{  <span class="kw">return </span><span class="prelude-val">Err</span>(AtspiError::MissingInterface);  };
+		<span class="kw">match </span>interface.as_str() {
+			<span class="string">&quot;org.a11y.atspi.Event.Document&quot; </span>=&gt; {
+				<span class="prelude-val">Ok</span>(EventInterfaces::Document(DocumentEvents::try_from(ev)<span class="question-mark">?</span>))
+			}
+			<span class="string">&quot;org.a11y.atspi.Event.Focus&quot; </span>=&gt; <span class="prelude-val">Ok</span>(EventInterfaces::Focus(FocusEvents::try_from(ev)<span class="question-mark">?</span>)),
+			<span class="string">&quot;org.a11y.atspi.Event.Keyboard&quot; </span>=&gt; {
+				<span class="prelude-val">Ok</span>(EventInterfaces::Keyboard(KeyboardEvents::try_from(ev)<span class="question-mark">?</span>))
+			}
+			<span class="string">&quot;org.a11y.atspi.Event.Mouse&quot; </span>=&gt; <span class="prelude-val">Ok</span>(EventInterfaces::Mouse(MouseEvents::try_from(ev)<span class="question-mark">?</span>)),
+			<span class="string">&quot;org.a11y.atspi.Event.Object&quot; </span>=&gt; {
+				<span class="prelude-val">Ok</span>(EventInterfaces::Object(ObjectEvents::try_from(ev)<span class="question-mark">?</span>))
+			}
+			<span class="string">&quot;org.a11y.atspi.Event.Terminal&quot; </span>=&gt; {
+				<span class="prelude-val">Ok</span>(EventInterfaces::Terminal(TerminalEvents::try_from(ev)<span class="question-mark">?</span>))
+			}
+			<span class="string">&quot;org.a11y.atspi.Event.Window&quot; </span>=&gt; {
+				<span class="prelude-val">Ok</span>(EventInterfaces::Window(WindowEvents::try_from(ev)<span class="question-mark">?</span>))
+			}
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::UnknownInterface),
+		}
+	}
 }
 
 <span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>AtspiEvent {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) body: EventBodyOwned,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) body: EventBodyOwned,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; PartialEq&lt;AtspiEvent&gt; <span class="kw">for </span>MemberName&lt;<span class="lifetime">&#39;name</span>&gt; {
-    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>AtspiEvent) -&gt; bool {
-        <span class="kw">let </span>other_member = other.member().expect(<span class="string">&quot;AtspiEvent without member?&quot;</span>);
-        <span class="kw-2">*</span><span class="self">self </span>== other_member
-    }
+	<span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>AtspiEvent) -&gt; bool {
+		<span class="kw">let </span>other_member = other.member().expect(<span class="string">&quot;AtspiEvent without member?&quot;</span>);
+		<span class="kw-2">*</span><span class="self">self </span>== other_member
+	}
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; PartialEq&lt;MemberName&lt;<span class="lifetime">&#39;name</span>&gt;&gt; <span class="kw">for </span>AtspiEvent {
-    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>MemberName) -&gt; bool {
-        <span class="kw">let </span>self_member = <span class="self">self</span>.member().expect(<span class="string">&quot;AtspiEvent w/o member?&quot;</span>);
-        self_member == <span class="kw-2">*</span>other
-    }
+	<span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>MemberName) -&gt; bool {
+		<span class="kw">let </span>self_member = <span class="self">self</span>.member().expect(<span class="string">&quot;AtspiEvent w/o member?&quot;</span>);
+		self_member == <span class="kw-2">*</span>other
+	}
 }
 
 <span class="comment">//  Equality on `AtspiEvent` may be considered ambiguous.
@@ -727,232 +769,240 @@
 // This PartialEq implements the strictest kind where only same instances are considered the same.
 // Other equalities should be made with PartailEq&lt;T&gt; for AtspiEvent and PartialEq&lt;AtspiEvent&gt; for T
 </span><span class="kw">impl </span>PartialEq <span class="kw">for </span>AtspiEvent {
-    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>AtspiEvent) -&gt; bool {
-        <span class="self">self</span>.message.as_bytes() == other.message().as_bytes()
-    }
+	<span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>AtspiEvent) -&gt; bool {
+		<span class="self">self</span>.message.as_bytes() == other.message().as_bytes()
+	}
 }
 
 <span class="kw">impl </span>Eq <span class="kw">for </span>AtspiEvent {}
 
 <span class="kw">impl </span>TryFrom&lt;Arc&lt;Message&gt;&gt; <span class="kw">for </span>AtspiEvent {
-    <span class="kw">type </span>Error = AtspiError;
+	<span class="kw">type </span>Error = AtspiError;
 
-    <span class="kw">fn </span>try_from(message: Arc&lt;Message&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span>signature = message.body_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>body = <span class="kw">if </span>signature == connection::QSPI_EVENT {
-            EventBodyOwned::from(message.body::&lt;EventBodyQT&gt;()<span class="question-mark">?</span>)
-        } <span class="kw">else </span>{
-            message.body::&lt;EventBodyOwned&gt;()<span class="question-mark">?
-        </span>};
-        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{ message, body })
-    }
+	<span class="kw">fn </span>try_from(message: Arc&lt;Message&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">let </span>signature = message.body_signature()<span class="question-mark">?</span>;
+		<span class="kw">let </span>body = <span class="kw">if </span>signature == QSPI_EVENT {
+			EventBodyOwned::from(message.body::&lt;EventBodyQT&gt;()<span class="question-mark">?</span>)
+		} <span class="kw">else </span>{
+			message.body::&lt;EventBodyOwned&gt;()<span class="question-mark">?
+		</span>};
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ message, body })
+	}
 }
 
 <span class="doccomment">/// Signal type emitted by `EventListenerRegistered` and `EventListenerDeregistered` signals,
 /// which belong to the `Registry` interface, implemented by the registry-daemon.
 </span><span class="attr">#[derive(Debug, Clone, Serialize, Deserialize, Type)]
-</span><span class="kw">pub struct </span>EventListener {
-    <span class="kw">pub </span>bus_name: OwnedUniqueName,
-    <span class="kw">pub </span>path: String,
+</span><span class="kw">pub struct </span>EventListeners {
+	<span class="kw">pub </span>bus_name: OwnedUniqueName,
+	<span class="kw">pub </span>path: String,
 }
 
 <span class="attr">#[test]
 </span><span class="kw">fn </span>test_event_listener_signature() {
-    <span class="macro">assert_eq!</span>(EventListener::signature(), <span class="string">&quot;(ss)&quot;</span>);
+	<span class="macro">assert_eq!</span>(EventListeners::signature(), <span class="string">&quot;(ss)&quot;</span>);
 }
 
 <span class="doccomment">/// Covers both `EventListener` events.
 </span><span class="attr">#[derive(Clone, Debug)]
 #[allow(clippy::module_name_repetitions)]
 </span><span class="kw">pub enum </span>EventListenerEvents {
-    Registered(EventListenerRegisteredEvent),
-    Deregistered(EventListenerDeregisteredEvent),
+	Registered(EventListenerRegisteredEvent),
+	Deregistered(EventListenerDeregisteredEvent),
 }
 
 <span class="doccomment">/// An event that is emitted by the regostry daemon to signal that an event has been deregistered
 /// to no longer listen for.
 </span><span class="attr">#[derive(Clone, Debug, GenericEvent)]
-#[try_from_zbus_message(body = <span class="string">&quot;EventListener&quot;</span>)]
+#[try_from_zbus_message(body = <span class="string">&quot;EventListeners&quot;</span>)]
 </span><span class="kw">pub struct </span>EventListenerDeregisteredEvent {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
-    <span class="kw">pub </span>body: EventListener,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
+	<span class="kw">pub </span>body: EventListeners,
 }
 
 <span class="doccomment">/// An event that is emitted by the regostry daemon to signal that an event has been registered to listen for.
 </span><span class="attr">#[derive(Clone, Debug, GenericEvent)]
-#[try_from_zbus_message(body = <span class="string">&quot;EventListener&quot;</span>)]
+#[try_from_zbus_message(body = <span class="string">&quot;EventListeners&quot;</span>)]
 </span><span class="kw">pub struct </span>EventListenerRegisteredEvent {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
-    <span class="kw">pub </span>body: EventListener,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
+	<span class="kw">pub </span>body: EventListeners,
 }
 
 <span class="doccomment">/// An event that is emitted when the registry daemon has started.
 </span><span class="attr">#[derive(Clone, Debug, GenericEvent)]
 #[try_from_zbus_message(body = <span class="string">&quot;Accessible&quot;</span>)]
 </span><span class="kw">pub struct </span>AvailableEvent {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) body: Accessible,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) message: Arc&lt;Message&gt;,
+	<span class="kw">pub</span>(<span class="kw">crate</span>) body: Accessible,
 }
 
 <span class="kw">impl </span>AvailableEvent {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>registry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Accessible {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body
-    }
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>registry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Accessible {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body
+	}
 }
 
 <span class="kw">impl </span>TryFrom&lt;Arc&lt;Message&gt;&gt; <span class="kw">for </span>Event {
-    <span class="kw">type </span>Error = AtspiError;
+	<span class="kw">type </span>Error = AtspiError;
 
-    <span class="kw">fn </span>try_from(msg: Arc&lt;Message&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Event, AtspiError&gt; {
-        <span class="kw">let </span>body_signature = msg.body_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>message_signature = body_signature.as_str();
-        <span class="kw">let </span>signal_member = msg
-            .member()
-            .ok_or(AtspiError::MemberMatch(<span class="string">&quot;signal w/o member&quot;</span>.to_string()))<span class="question-mark">?</span>;
-        <span class="kw">let </span>message_member = signal_member.as_str();
+	<span class="kw">fn </span>try_from(msg: Arc&lt;Message&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Event, AtspiError&gt; {
+		<span class="kw">let </span>body_signature = msg.body_signature()<span class="question-mark">?</span>;
+		<span class="kw">let </span>message_signature = body_signature.as_str();
+		<span class="kw">let </span>signal_member = msg
+			.member()
+			.ok_or(AtspiError::MemberMatch(<span class="string">&quot;signal w/o member&quot;</span>.to_string()))<span class="question-mark">?</span>;
+		<span class="kw">let </span>message_member = signal_member.as_str();
 
-        <span class="kw">match </span>message_signature {
-            <span class="comment">// Accessible signature
-            </span><span class="string">&quot;(so)&quot; </span>=&gt; <span class="kw">match </span>message_member {
-                <span class="string">&quot;RemoveAccessible&quot; </span>=&gt; {
-                    <span class="kw">let </span>ev = RemoveAccessibleEvent::try_from(msg)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(Event::Cache(CacheEvents::Remove(ev)))
-                }
-                <span class="string">&quot;Available&quot; </span>=&gt; {
-                    <span class="kw">let </span>ev = AvailableEvent::try_from(msg)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(Event::Available(ev))
-                }
-                <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::UnknownSignal),
-            },
-            <span class="comment">// Atspi / Qspi signature
-            </span><span class="string">&quot;siiva{sv}&quot; </span>| <span class="string">&quot;siiv(so)&quot; </span>=&gt; {
-                <span class="kw">let </span>ev = AtspiEvent::try_from(msg)<span class="question-mark">?</span>;
-                <span class="kw">let </span>event_interfaces: EventInterfaces = ev.try_into()<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(Event::Interfaces(event_interfaces))
-            }
-            <span class="string">&quot;(ss)&quot; </span>=&gt; {
-                <span class="kw">if let </span><span class="prelude-val">Ok</span>(ev) = EventListenerRegisteredEvent::try_from(msg.clone()) {
-                    <span class="kw">return </span><span class="prelude-val">Ok</span>(Event::Listener(EventListenerEvents::Registered(ev)));
-                }
-                <span class="kw">if let </span><span class="prelude-val">Ok</span>(ev) = EventListenerDeregisteredEvent::try_from(msg) {
-                    <span class="kw">return </span><span class="prelude-val">Ok</span>(Event::Listener(EventListenerEvents::Deregistered(ev)));
-                }
-                <span class="prelude-val">Err</span>(AtspiError::UnknownSignal)
-            }
-            <span class="comment">// CacheAdd signature
-            </span><span class="string">&quot;((so)(so)(so)iiassusau)&quot; </span>=&gt; {
-                <span class="kw">let </span>ev = AddAccessibleEvent::try_from(msg)<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(Event::Cache(CacheEvents::Add(ev)))
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::UnknownBusSignature),
-        }
-    }
+		<span class="kw">match </span>message_signature {
+			<span class="comment">// Accessible signature
+			</span><span class="string">&quot;(so)&quot; </span>=&gt; <span class="kw">match </span>message_member {
+				<span class="string">&quot;RemoveAccessible&quot; </span>=&gt; {
+					<span class="kw">let </span>ev = RemoveAccessibleEvent::try_from(msg)<span class="question-mark">?</span>;
+					<span class="prelude-val">Ok</span>(Event::Cache(CacheEvents::Remove(ev)))
+				}
+				<span class="string">&quot;Available&quot; </span>=&gt; {
+					<span class="kw">let </span>ev = AvailableEvent::try_from(msg)<span class="question-mark">?</span>;
+					<span class="prelude-val">Ok</span>(Event::Available(ev))
+				}
+				<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::UnknownSignal),
+			},
+			<span class="comment">// Atspi / Qspi signature
+			</span><span class="string">&quot;siiva{sv}&quot; </span>| <span class="string">&quot;siiv(so)&quot; </span>=&gt; {
+				<span class="kw">let </span>ev = AtspiEvent::try_from(msg)<span class="question-mark">?</span>;
+				<span class="kw">let </span>event_interfaces: EventInterfaces = ev.try_into()<span class="question-mark">?</span>;
+				<span class="prelude-val">Ok</span>(Event::Interfaces(event_interfaces))
+			}
+			<span class="string">&quot;(ss)&quot; </span>=&gt; {
+				<span class="kw">if let </span><span class="prelude-val">Ok</span>(ev) = EventListenerRegisteredEvent::try_from(msg.clone()) {
+					<span class="kw">return </span><span class="prelude-val">Ok</span>(Event::Listener(EventListenerEvents::Registered(ev)));
+				}
+				<span class="kw">if let </span><span class="prelude-val">Ok</span>(ev) = EventListenerDeregisteredEvent::try_from(msg) {
+					<span class="kw">return </span><span class="prelude-val">Ok</span>(Event::Listener(EventListenerEvents::Deregistered(ev)));
+				}
+				<span class="prelude-val">Err</span>(AtspiError::UnknownSignal)
+			}
+			<span class="comment">// CacheAdd signature
+			</span><span class="string">&quot;((so)(so)(so)iiassusau)&quot; </span>=&gt; {
+				<span class="kw">let </span>ev = AddAccessibleEvent::try_from(msg)<span class="question-mark">?</span>;
+				<span class="prelude-val">Ok</span>(Event::Cache(CacheEvents::Add(ev)))
+			}
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::UnknownBusSignature),
+		}
+	}
 }
 
 <span class="doccomment">/// Shared behavior of bus `Signal` events.
 </span><span class="kw">pub trait </span>GenericEvent {
-    <span class="doccomment">/// Returns the `Message` of the event type.
-    </span><span class="kw">fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Arc&lt;Message&gt;;
+	<span class="doccomment">/// Returns the `Message` of the event type.
+	</span><span class="kw">fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Arc&lt;Message&gt;;
 
-    <span class="doccomment">/// Interface that has the signal member implemented.
-    </span><span class="kw">fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;;
+	<span class="doccomment">/// Interface that has the signal member implemented.
+	</span><span class="kw">fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;;
 
-    <span class="doccomment">/// Interface member that sent the signal.
-    </span><span class="kw">fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;;
+	<span class="doccomment">/// Interface member that sent the signal.
+	</span><span class="kw">fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;;
 
-    <span class="doccomment">/// Path of the signalling object.
-    </span><span class="kw">fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;&gt;;
+	<span class="doccomment">/// Path of the signalling object.
+	</span><span class="kw">fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;&gt;;
 
-    <span class="doccomment">/// Sender of the signal.
-    ///
-    /// ### Errors
-    /// - when deserializeing the header failed, or
-    /// - When `zbus::get_field!` finds that &#39;sender&#39; is an invalid field.
-    </span><span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;UniqueName&gt;, AtspiError&gt;;
+	<span class="doccomment">/// Sender of the signal.
+	///
+	/// ### Errors
+	/// - when deserializeing the header failed, or
+	/// - When `zbus::get_field!` finds that &#39;sender&#39; is an invalid field.
+	</span><span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;UniqueName&gt;, AtspiError&gt;;
+}
+
+<span class="kw">pub trait </span>HasMatchRule {
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
+}
+
+<span class="kw">pub trait </span>HasRegistryEventString {
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
 }
 
 <span class="kw">impl </span>AtspiEvent {
-    <span class="doccomment">/// Deserialized signal body type.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>EventBodyOwned {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body
-    }
+	<span class="doccomment">/// Deserialized signal body type.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>EventBodyOwned {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body
+	}
 
-    <span class="doccomment">/// Returns the atspi event string for this event type (E.G. &quot;Object:StateChanged:Focused&quot;).
-    ///
-    /// This should not be used for matching on events as it needlessly allocates and copies the 3
-    /// components of the event type. It is meant for logging, etc.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>event_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="kw">let </span>interface = <span class="self">self</span>.message.interface().expect(<span class="string">&quot;Event should have an interface&quot;</span>);
-        <span class="kw">let </span>interface = interface.rsplit(<span class="string">&#39;.&#39;</span>).next().expect(<span class="string">&quot;Interface should contain a &#39;.&#39;&quot;</span>);
-        <span class="kw">let </span>member = <span class="self">self</span>.message.member().expect(<span class="string">&quot;Event should have a member&quot;</span>);
-        <span class="kw">let </span>kind = <span class="self">self</span>.kind();
-        <span class="macro">format!</span>(<span class="string">&quot;{interface}:{member}:{kind}&quot;</span>)
-    }
+	<span class="doccomment">/// Returns the atspi event string for this event type (E.G. &quot;Object:StateChanged:Focused&quot;).
+	///
+	/// This should not be used for matching on events as it needlessly allocates and copies the 3
+	/// components of the event type. It is meant for logging, etc.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>event_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="kw">let </span>interface = <span class="self">self</span>.message.interface().expect(<span class="string">&quot;Event should have an interface&quot;</span>);
+		<span class="kw">let </span>interface = interface.rsplit(<span class="string">&#39;.&#39;</span>).next().expect(<span class="string">&quot;Interface should contain a &#39;.&#39;&quot;</span>);
+		<span class="kw">let </span>member = <span class="self">self</span>.message.member().expect(<span class="string">&quot;Event should have a member&quot;</span>);
+		<span class="kw">let </span>kind = <span class="self">self</span>.kind();
+		<span class="macro">format!</span>(<span class="string">&quot;{interface}:{member}:{kind}&quot;</span>)
+	}
 
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>kind(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body.kind
-    }
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>kind(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body.kind
+	}
 
-    <span class="doccomment">/// Event dependant detail.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>detail1(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.body.detail1
-    }
+	<span class="doccomment">/// Event dependant detail.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>detail1(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+		<span class="self">self</span>.body.detail1
+	}
 
-    <span class="doccomment">/// Event dependant detail.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>detail2(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="self">self</span>.body.detail2
-    }
+	<span class="doccomment">/// Event dependant detail.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>detail2(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
+		<span class="self">self</span>.body.detail2
+	}
 
-    <span class="doccomment">/// Event dependant generic `Value`.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>any_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zvariant::OwnedValue {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body.any_data
-    }
+	<span class="doccomment">/// Event dependant generic `Value`.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>any_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zvariant::OwnedValue {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body.any_data
+	}
 
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, zvariant::OwnedValue&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.body.properties
-    }
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>properties(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, zvariant::OwnedValue&gt; {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.body.properties
+	}
 }
 
 <span class="kw">impl </span>GenericEvent <span class="kw">for </span>AtspiEvent {
-    <span class="doccomment">/// Bus message.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Arc&lt;Message&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.message
-    }
+	<span class="doccomment">/// Bus message.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">fn </span>message(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Arc&lt;Message&gt; {
+		<span class="kw-2">&amp;</span><span class="self">self</span>.message
+	}
 
-    <span class="doccomment">/// The interface that emitted the event.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-        <span class="self">self</span>.message.interface()
-    }
+	<span class="doccomment">/// The interface that emitted the event.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+		<span class="self">self</span>.message.interface()
+	}
 
-    <span class="doccomment">/// Identifies this event interface&#39;s member name.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-        <span class="self">self</span>.message.member()
-    }
+	<span class="doccomment">/// Identifies this event interface&#39;s member name.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+		<span class="self">self</span>.message.member()
+	}
 
-    <span class="doccomment">/// The object path to the object where the signal was emitted.
-    </span><span class="attr">#[must_use]
-    </span><span class="kw">fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; std::option::Option&lt;zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-        <span class="self">self</span>.message.path()
-    }
+	<span class="doccomment">/// The object path to the object where the signal was emitted.
+	</span><span class="attr">#[must_use]
+	</span><span class="kw">fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; std::option::Option&lt;zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+		<span class="self">self</span>.message.path()
+	}
 
-    <span class="doccomment">/// Identifies the `sender` of the event.
-    /// # Errors
-    /// - when deserializeing the header failed, or
-    /// - When `zbus::get_field!` finds that &#39;sender&#39; is an invalid field.
-    </span><span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;zbus::names::UniqueName&gt;, <span class="kw">crate</span>::AtspiError&gt; {
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>.message.header()<span class="question-mark">?</span>.sender()<span class="question-mark">?</span>.cloned())
-    }
+	<span class="doccomment">/// Identifies the `sender` of the event.
+	/// # Errors
+	/// - when deserializeing the header failed, or
+	/// - When `zbus::get_field!` finds that &#39;sender&#39; is an invalid field.
+	</span><span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;zbus::names::UniqueName&gt;, <span class="kw">crate</span>::AtspiError&gt; {
+		<span class="prelude-val">Ok</span>(<span class="self">self</span>.message.header()<span class="question-mark">?</span>.sender()<span class="question-mark">?</span>.cloned())
+	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>

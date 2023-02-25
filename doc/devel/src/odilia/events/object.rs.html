@@ -459,6 +459,7 @@
 <a href="#459" id="459">459</a>
 <a href="#460" id="460">460</a>
 <a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::identify::object::ObjectEvents;
 
@@ -827,7 +828,8 @@
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span>atspi::{
-		accessible_ext::{AccessibleExt, AccessibleId},
+		accessible_ext::AccessibleExt,
+		accessible_id::{AccessibleId, HasAccessibleId},
 		identify::object::StateChangedEvent,
 		signify::Signified,
 		State,
@@ -909,7 +911,7 @@
 			accessible.get_localized_role_name(),
 			accessible.get_relation_set(),
 		)<span class="question-mark">?</span>;
-		<span class="kw">let </span>id = accessible.get_id();
+		<span class="kw">let </span>id = accessible.id();
 		state.update_accessible(accessible.try_into()<span class="question-mark">?</span>).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focus event received on: {:?} with role {}&quot;</span>, id, role);
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Relations: {:?}&quot;</span>, relation);

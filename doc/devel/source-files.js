@@ -11,8 +11,8 @@ var sourcesIndex = JSON.parse('{\
 "async_task":["",[],["header.rs","lib.rs","raw.rs","runnable.rs","state.rs","task.rs","utils.rs"]],\
 "async_trait":["",[],["args.rs","bound.rs","expand.rs","lib.rs","lifetime.rs","parse.rs","receiver.rs"]],\
 "atomic_waker":["",[],["lib.rs"]],\
-"atspi":["",[["events",[],["document.rs","focus.rs","keyboard.rs","mod.rs","mouse.rs","object.rs","terminal.rs","window.rs"]]],["accessibility_bus.rs","accessible.rs","accessible_ext.rs","action.rs","application.rs","bus.rs","cache.rs","collection.rs","component.rs","convertable.rs","device_event_controller.rs","device_event_listener.rs","document.rs","editable_text.rs","error.rs","hyperlink.rs","hypertext.rs","identify.rs","image.rs","interfaces.rs","lib.rs","processed.rs","registry.rs","selection.rs","signify.rs","socket.rs","state.rs","table.rs","table_cell.rs","text.rs","text_ext.rs","value.rs"]],\
-"atspi_macros":["",[],["lib.rs"]],\
+"atspi":["",[["events",[],["document.rs","focus.rs","keyboard.rs","mod.rs","mouse.rs","object.rs","terminal.rs","window.rs"]]],["accessibility_connection.rs","accessible.rs","accessible_ext.rs","accessible_id.rs","action.rs","action_ext.rs","application.rs","application_ext.rs","bus.rs","cache.rs","cache_ext.rs","collection.rs","collection_ext.rs","component.rs","component_ext.rs","convertable.rs","device_event_controller.rs","device_event_controller_ext.rs","device_event_listener.rs","device_event_listener_ext.rs","document.rs","document_ext.rs","editable_text.rs","editable_text_ext.rs","error.rs","hyperlink.rs","hyperlink_ext.rs","hypertext.rs","hypertext_ext.rs","identify.rs","image.rs","image_ext.rs","interfaces.rs","lib.rs","registry.rs","registry_ext.rs","selection.rs","selection_ext.rs","signify.rs","socket.rs","socket_ext.rs","state.rs","table.rs","table_cell.rs","table_cell_ext.rs","table_ext.rs","text.rs","text_ext.rs","value.rs","value_ext.rs"]],\
+"atspi_macros":["",[],["lib.rs","proxy.rs","utils.rs","zbus_proxy.rs"]],\
 "atty":["",[],["lib.rs"]],\
 "bitflags":["",[],["lib.rs"]],\
 "block_buffer":["",[],["lib.rs","sealed.rs"]],\
@@ -95,6 +95,7 @@ var sourcesIndex = JSON.parse('{\
 "serde_json":["",[["features_check",[],["mod.rs"]],["io",[],["mod.rs"]],["value",[],["de.rs","from.rs","index.rs","mod.rs","partial_eq.rs","ser.rs"]]],["de.rs","error.rs","iter.rs","lib.rs","macros.rs","map.rs","number.rs","read.rs","ser.rs"]],\
 "serde_plain":["",[],["de.rs","error.rs","lib.rs","macros.rs","ser.rs"]],\
 "serde_repr":["",[],["lib.rs","parse.rs"]],\
+"serde_xml_rs":["",[["de",[],["map.rs","mod.rs","seq.rs","var.rs"]],["ser",[],["mod.rs","var.rs"]]],["error.rs","lib.rs"]],\
 "sha1":["",[["compress",[],["soft.rs","x86.rs"]]],["compress.rs","lib.rs"]],\
 "sharded_slab":["",[["page",[],["mod.rs","slot.rs","stack.rs"]]],["cfg.rs","clear.rs","implementation.rs","iter.rs","lib.rs","macros.rs","pool.rs","shard.rs","sync.rs","tid.rs"]],\
 "signal_hook_registry":["",[],["half_lock.rs","lib.rs"]],\
@@ -128,10 +129,11 @@ var sourcesIndex = JSON.parse('{\
 "value_bag":["",[["internal",[["cast",[],["mod.rs","primitive.rs"]]],["fill.rs","fmt.rs","mod.rs"]]],["error.rs","fill.rs","impls.rs","lib.rs","visit.rs"]],\
 "waker_fn":["",[],["lib.rs"]],\
 "xdg":["",[],["lib.rs"]],\
-"zbus":["",[["abstractions",[],["async_drop.rs","async_lock.rs","executor.rs","mod.rs"]],["blocking",[],["connection.rs","connection_builder.rs","fdo.rs","message_iterator.rs","mod.rs","object_server.rs","proxy.rs","proxy_builder.rs"]],["raw",[],["connection.rs","handshake.rs","mod.rs","socket.rs"]]],["address.rs","connection.rs","connection_builder.rs","dbus_error.rs","error.rs","fdo.rs","guid.rs","handshake.rs","interface.rs","lib.rs","match_rule.rs","match_rule_builder.rs","message.rs","message_field.rs","message_fields.rs","message_header.rs","message_stream.rs","object_server.rs","proxy.rs","proxy_builder.rs","signal_context.rs","socket_reader.rs","utils.rs"]],\
+"xml":["",[["reader",[["parser",[],["inside_cdata.rs","inside_closing_tag_name.rs","inside_comment.rs","inside_declaration.rs","inside_doctype.rs","inside_opening_tag.rs","inside_processing_instruction.rs","inside_reference.rs","mod.rs","outside_tag.rs"]]],["config.rs","error.rs","events.rs","lexer.rs","mod.rs"]],["writer",[],["config.rs","emitter.rs","events.rs","mod.rs"]]],["attribute.rs","common.rs","escape.rs","lib.rs","macros.rs","name.rs","namespace.rs","util.rs"]],\
+"zbus":["",[["abstractions",[],["async_drop.rs","async_lock.rs","executor.rs","mod.rs"]],["blocking",[],["connection.rs","connection_builder.rs","fdo.rs","message_iterator.rs","mod.rs","object_server.rs","proxy.rs","proxy_builder.rs"]],["raw",[],["connection.rs","handshake.rs","mod.rs","socket.rs"]]],["address.rs","connection.rs","connection_builder.rs","dbus_error.rs","error.rs","fdo.rs","guid.rs","handshake.rs","interface.rs","lib.rs","match_rule.rs","match_rule_builder.rs","message.rs","message_field.rs","message_fields.rs","message_header.rs","message_stream.rs","object_server.rs","proxy.rs","proxy_builder.rs","signal_context.rs","socket_reader.rs","utils.rs","xml.rs"]],\
 "zbus_macros":["",[],["error.rs","iface.rs","lib.rs","proxy.rs","utils.rs"]],\
 "zbus_names":["",[],["bus_name.rs","error.rs","error_name.rs","interface_name.rs","lib.rs","member_name.rs","unique_name.rs","well_known_name.rs"]],\
-"zvariant":["",[["dbus",[],["de.rs","mod.rs","ser.rs"]]],["array.rs","basic.rs","container_depths.rs","de.rs","deserialize_value.rs","dict.rs","encoding_context.rs","error.rs","fd.rs","from_value.rs","into_value.rs","lib.rs","object_path.rs","optional.rs","owned_value.rs","ser.rs","serialize_value.rs","signature.rs","signature_parser.rs","str.rs","structure.rs","type.rs","utils.rs","value.rs"]],\
+"zvariant":["",[["dbus",[],["de.rs","mod.rs","ser.rs"]],["gvariant",[],["de.rs","mod.rs","ser.rs"]]],["array.rs","basic.rs","container_depths.rs","de.rs","deserialize_value.rs","dict.rs","encoding_context.rs","error.rs","fd.rs","framing_offset_size.rs","framing_offsets.rs","from_value.rs","into_value.rs","lib.rs","maybe.rs","object_path.rs","optional.rs","owned_value.rs","ser.rs","serialize_value.rs","signature.rs","signature_parser.rs","str.rs","structure.rs","type.rs","utils.rs","value.rs"]],\
 "zvariant_derive":["",[],["dict.rs","lib.rs","type.rs","utils.rs","value.rs"]]\
 }');
 createSourceSidebar();

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["DocumentProxy",""],["DocumentProxyBlocking",""]]};
+window.SIDEBAR_ITEMS = {"struct":[["DocumentProxy",""],["DocumentProxyBlocking",""]],"trait":[["Document",""],["DocumentBlocking",""]]};

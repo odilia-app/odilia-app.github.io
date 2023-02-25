@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["DeviceEventListenerProxy",""],["DeviceEventListenerProxyBlocking",""]]};
+window.SIDEBAR_ITEMS = {"struct":[["DeviceEventListenerProxy",""],["DeviceEventListenerProxyBlocking",""]],"trait":[["DeviceEventListener",""],["DeviceEventListenerBlocking",""]]};

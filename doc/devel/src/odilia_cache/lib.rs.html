@@ -308,15 +308,33 @@
 <a href="#308" id="308">308</a>
 <a href="#309" id="309">309</a>
 <a href="#310" id="310">310</a>
-</pre><pre class="rust"><code><span class="kw">use </span>atspi::{
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+</pre><pre class="rust"><code><span class="comment">//#![deny(clippy::all, clippy::pedantic, clippy::cargo)]
+
+</span><span class="kw">use </span>atspi::{
 	accessible::{AccessibleProxy, Role},
-	accessible_ext::{AccessibleExt, AccessibleId},
+	accessible_ext::AccessibleExt,
+	accessible_id::{HasAccessibleId, AccessibleId},
 	convertable::Convertable,
 	events::GenericEvent,
 	text_ext::TextExt,
 	InterfaceSet, StateSet,
 };
-<span class="kw">use </span>odilia_common::{errors::AccessiblePrimitiveConversionError, result::OdiliaResult};
+<span class="kw">use </span>odilia_common::{errors::AccessiblePrimitiveConversionError, errors::OdiliaError, result::OdiliaResult};
 <span class="kw">use </span>std::{collections::HashMap, sync::Arc};
 <span class="kw">use </span>tokio::sync::RwLock;
 <span class="kw">use </span>zbus::{
@@ -347,13 +365,20 @@
 	</span>}
 	<span class="kw">pub fn </span>from_event&lt;T: GenericEvent&gt;(
 		event: <span class="kw-2">&amp;</span>T,
-	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AccessiblePrimitiveConversionError&gt; {
+	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, OdiliaError&gt; {
 		<span class="kw">let </span>sender = <span class="kw">match </span>event.sender() {
 			<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(s)) =&gt; s,
-			<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoSender),
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::ErrSender),
+			<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(AccessiblePrimitiveConversionError::NoSender)),
+			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(AccessiblePrimitiveConversionError::ErrSender)),
 		};
-		<span class="kw">let </span>id: AccessibleId = event.path().unwrap().try_into()<span class="question-mark">?</span>;
+		<span class="kw">let </span>path = <span class="kw">match </span>event.path() {
+			<span class="prelude-val">Some</span>(path) =&gt; path,
+			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(AccessiblePrimitiveConversionError::NoPathId)),
+		};
+		<span class="kw">let </span>id: AccessibleId = <span class="kw">match </span>path.try_into() {
+			<span class="prelude-val">Ok</span>(id) =&gt; id,
+			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::Zvariant(e)),
+		};
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ id, sender: sender.to_string() })
 	}
 }
@@ -385,8 +410,15 @@
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: accessible_id, sender: so.<span class="number">0 </span>})
 	}
 }
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;(String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
+<span class="kw">impl </span>TryFrom&lt;(String, AccessibleId)&gt; <span class="kw">for </span>AccessiblePrimitive {
 	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+
+	<span class="kw">fn </span>try_from(so: (String, AccessibleId)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: so.<span class="number">1</span>, sender: so.<span class="number">0 </span>})
+	}
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;(String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
+	<span class="kw">type </span>Error = OdiliaError;
 
 	<span class="kw">fn </span>try_from(so: (String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
@@ -398,9 +430,9 @@
 
 	<span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().to_string();
-		<span class="kw">let </span>id = <span class="kw">match </span>accessible.get_id() {
-			<span class="prelude-val">Some</span>(path_id) =&gt; path_id,
-			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
+		<span class="kw">let </span>id = <span class="kw">match </span>accessible.id() {
+			<span class="prelude-val">Ok</span>(path_id) =&gt; path_id,
+			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
 		};
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
@@ -410,9 +442,9 @@
 
 	<span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().to_string();
-		<span class="kw">let </span>id = <span class="kw">match </span>accessible.get_id() {
-			<span class="prelude-val">Some</span>(path_id) =&gt; path_id,
-			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
+		<span class="kw">let </span>id = <span class="kw">match </span>accessible.id() {
+			<span class="prelude-val">Ok</span>(path_id) =&gt; path_id,
+			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
 		};
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
@@ -569,7 +601,7 @@
 	) -&gt; OdiliaResult&lt;CacheItem&gt; {
 		<span class="comment">// if the item already exists in the cache, return it
 		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self
-			</span>.get(<span class="kw-2">&amp;</span>accessible.get_id().expect(<span class="string">&quot;Could not get ID from accessible path&quot;</span>))
+			</span>.get(<span class="kw-2">&amp;</span>accessible.id().expect(<span class="string">&quot;Could not get ID from accessible path&quot;</span>))
 			.<span class="kw">await
 		</span>{
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
@@ -588,7 +620,7 @@
 }
 
 <span class="kw">pub async fn </span>accessible_to_cache_item(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; OdiliaResult&lt;CacheItem&gt; {
-	<span class="kw">let </span>(app, parent, index, children, ifaces, role, states, text) = <span class="macro">tokio::try_join!</span>(
+	<span class="kw">let </span>(app, parent, index, children, ifaces, role, states) = <span class="macro">tokio::try_join!</span>(
 		accessible.get_application(),
 		accessible.parent(),
 		accessible.get_index_in_parent(),
@@ -596,16 +628,14 @@
 		accessible.get_interfaces(),
 		accessible.get_role(),
 		accessible.get_state(),
-		<span class="kw">async </span>{
-			<span class="comment">// if it implements the Text interface
-			</span><span class="kw">match </span>accessible.to_text().<span class="kw">await </span>{
-				<span class="comment">// get *all* the text
-				</span><span class="prelude-val">Ok</span>(text_iface) =&gt; text_iface.get_text_ext().<span class="kw">await</span>,
-				<span class="comment">// otherwise, use the name instaed
-				</span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; accessible.name().<span class="kw">await</span>,
-			}
-		},
 	)<span class="question-mark">?</span>;
+	<span class="comment">// if it implements the Text interface
+	</span><span class="kw">let </span>text = <span class="kw">match </span>accessible.to_text().<span class="kw">await </span>{
+		<span class="comment">// get *all* the text
+		</span><span class="prelude-val">Ok</span>(text_iface) =&gt; text_iface.get_all_text().<span class="kw">await</span>,
+		<span class="comment">// otherwise, use the name instaed
+		</span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(accessible.name().<span class="kw">await</span><span class="question-mark">?</span>),
+	}<span class="question-mark">?</span>;
 	<span class="prelude-val">Ok</span>(CacheItem {
 		object: accessible.try_into()<span class="question-mark">?</span>,
 		app: app.try_into()<span class="question-mark">?</span>,

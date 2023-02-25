@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["ImageProxy",""],["ImageProxyBlocking",""]]};
+window.SIDEBAR_ITEMS = {"struct":[["ImageProxy",""],["ImageProxyBlocking",""]],"trait":[["Image",""],["ImageBlocking",""]]};

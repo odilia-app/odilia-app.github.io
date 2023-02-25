@@ -276,7 +276,7 @@
 	events::{HasMatchRule, HasRegistryEventString},
 	signify::Signified,
 	text::Granularity,
-	AccessibilityBus,
+	AccessibilityConnection,
 };
 <span class="kw">use </span>odilia_cache::{AccessiblePrimitive, Cache};
 <span class="kw">use </span>odilia_common::{
@@ -285,7 +285,7 @@
 };
 
 <span class="kw">pub struct </span>ScreenReaderState {
-	<span class="kw">pub </span>atspi: AccessibilityBus,
+	<span class="kw">pub </span>atspi: AccessibilityConnection,
 	<span class="kw">pub </span>dbus: DBusProxy&lt;<span class="lifetime">&#39;static</span>&gt;,
 	<span class="kw">pub </span>ssip: Sender&lt;SSIPRequest&gt;,
 	<span class="kw">pub </span>config: ApplicationConfig,
@@ -300,7 +300,7 @@
 <span class="kw">impl </span>ScreenReaderState {
 	<span class="attr">#[tracing::instrument]
 	</span><span class="kw">pub async fn </span>new(ssip: Sender&lt;SSIPRequest&gt;) -&gt; eyre::Result&lt;ScreenReaderState&gt; {
-		<span class="kw">let </span>atspi = AccessibilityBus::open()
+		<span class="kw">let </span>atspi = AccessibilityConnection::open()
 			.<span class="kw">await
 			</span>.wrap_err(<span class="string">&quot;Could not connect to at-spi bus&quot;</span>)<span class="question-mark">?</span>;
 		<span class="kw">let </span>dbus = DBusProxy::new(atspi.connection())

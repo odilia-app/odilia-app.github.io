@@ -323,19 +323,36 @@
 <a href="#323" id="323">323</a>
 <a href="#324" id="324">324</a>
 <a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
 </pre><pre class="rust"><code><span class="comment">//#![deny(clippy::all, clippy::pedantic, clippy::cargo)]
+</span><span class="kw">use </span>std::{collections::HashMap, sync::Arc};
 
-</span><span class="kw">use </span>atspi::{
+<span class="kw">use </span>atspi::{
 	accessible::{AccessibleProxy, Role},
-	accessible_ext::AccessibleExt,
-	accessible_id::{HasAccessibleId, AccessibleId},
+	accessible_id::{AccessibleId, HasAccessibleId},
 	convertable::Convertable,
 	events::GenericEvent,
 	text_ext::TextExt,
 	InterfaceSet, StateSet,
 };
-<span class="kw">use </span>odilia_common::{errors::AccessiblePrimitiveConversionError, errors::OdiliaError, result::OdiliaResult};
-<span class="kw">use </span>std::{collections::HashMap, sync::Arc};
+<span class="kw">use </span>odilia_common::{
+	errors::{AccessiblePrimitiveConversionError, OdiliaError},
+	result::OdiliaResult,
+};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>tokio::sync::RwLock;
 <span class="kw">use </span>zbus::{
 	names::OwnedUniqueName,
@@ -343,7 +360,7 @@
 	ProxyBuilder,
 };
 
-<span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+<span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash, Deserialize, Serialize)]
 </span><span class="doccomment">/// A struct which represents the bare minimum of an accessible for purposes of caching.
 /// This makes some *possibly eronious* assumptions about what the sender is.
 </span><span class="kw">pub struct </span>AccessiblePrimitive {
@@ -363,17 +380,27 @@
 		<span class="kw">let </span>path: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; = id.try_into()<span class="question-mark">?</span>;
 		ProxyBuilder::new(conn).path(path)<span class="question-mark">?</span>.destination(sender)<span class="question-mark">?</span>.build().<span class="kw">await
 	</span>}
-	<span class="kw">pub fn </span>from_event&lt;T: GenericEvent&gt;(
-		event: <span class="kw-2">&amp;</span>T,
-	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, OdiliaError&gt; {
+	<span class="kw">pub fn </span>from_event&lt;T: GenericEvent&gt;(event: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, OdiliaError&gt; {
 		<span class="kw">let </span>sender = <span class="kw">match </span>event.sender() {
 			<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(s)) =&gt; s,
-			<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(AccessiblePrimitiveConversionError::NoSender)),
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(AccessiblePrimitiveConversionError::ErrSender)),
+			<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; {
+				<span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(
+					AccessiblePrimitiveConversionError::NoSender,
+				))
+			}
+			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
+				<span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(
+					AccessiblePrimitiveConversionError::ErrSender,
+				))
+			}
 		};
 		<span class="kw">let </span>path = <span class="kw">match </span>event.path() {
 			<span class="prelude-val">Some</span>(path) =&gt; path,
-			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(AccessiblePrimitiveConversionError::NoPathId)),
+			<span class="prelude-val">None </span>=&gt; {
+				<span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(
+					AccessiblePrimitiveConversionError::NoPathId,
+				))
+			}
 		};
 		<span class="kw">let </span>id: AccessibleId = <span class="kw">match </span>path.try_into() {
 			<span class="prelude-val">Ok</span>(id) =&gt; id,
@@ -450,7 +477,7 @@
 	}
 }
 
-<span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+<span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash, Deserialize, Serialize)]
 </span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
 	<span class="comment">// The accessible object (within the application)   (so)
@@ -491,6 +518,7 @@
 }
 
 <span class="doccomment">/// The root of the accessible cache.
+</span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>Cache {
 	<span class="kw">pub </span>by_id: Arc&lt;RwLock&lt;HashMap&lt;AccessibleId, CacheItem&gt;&gt;&gt;,
 }

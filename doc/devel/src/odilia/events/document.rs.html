@@ -49,15 +49,12 @@
 <a href="#49" id="49">49</a>
 <a href="#50" id="50">50</a>
 <a href="#51" id="51">51</a>
-<a href="#52" id="52">52</a>
-<a href="#53" id="53">53</a>
-</pre><pre class="rust"><code><span class="kw">use </span>odilia_cache::CacheItem;
-
-<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	events::GenericEvent, identify::document::DocumentEvents,
 	identify::document::LoadCompleteEvent,
 };
+<span class="kw">use </span>odilia_cache::CacheItem;
 
 <span class="kw">pub async fn </span>load_complete(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
@@ -65,10 +62,10 @@
 ) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
 	<span class="kw">let </span>cache = state.build_cache(sender.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="kw">let </span><span class="kw-2">mut </span>cache_items = Vec::new();
+	<span class="comment">// TODO: this should be streamed, rather than waiting for the entire vec to fill up.
+	</span><span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="kw">for </span>item <span class="kw">in </span>entire_cache {
-		cache_items.push(CacheItem {
+		state.cache.add(CacheItem {
 			object: item
 				.object
 				.try_into()
@@ -85,9 +82,8 @@
 			role: item.role,
 			states: item.states,
 			text: item.name.clone(),
-		});
+		}).<span class="kw">await</span>;
 	}
-	state.cache.add_all(cache_items).<span class="kw">await</span>;
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add an entire document to cache.&quot;</span>);
 	<span class="prelude-val">Ok</span>(())
 }

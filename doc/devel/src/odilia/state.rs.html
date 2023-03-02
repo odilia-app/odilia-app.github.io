@@ -243,6 +243,55 @@
 <a href="#243" id="243">243</a>
 <a href="#244" id="244">244</a>
 <a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{fs, sync::atomic::AtomicI32};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
@@ -261,11 +310,15 @@
 	text::Granularity,
 	AccessibilityConnection,
 };
-<span class="kw">use </span>odilia_cache::{AccessiblePrimitive, Cache};
+<span class="kw">use </span>odilia_cache::{AccessiblePrimitive, Cache, CacheItem};
 <span class="kw">use </span>odilia_common::{
-	errors::OdiliaError, modes::ScreenReaderMode, settings::ApplicationConfig,
-	types::TextSelectionArea, <span class="prelude-ty">Result </span><span class="kw">as </span>OdiliaResult,
+	errors::{CacheError, OdiliaError},
+	modes::ScreenReaderMode,
+	settings::ApplicationConfig,
+	types::TextSelectionArea,
+	<span class="prelude-ty">Result </span><span class="kw">as </span>OdiliaResult,
 };
+<span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">pub struct </span>ScreenReaderState {
 	<span class="kw">pub </span>atspi: AccessibilityConnection,
@@ -277,7 +330,7 @@
 	<span class="kw">pub </span>granularity: Mutex&lt;Granularity&gt;,
 	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessiblePrimitive&gt;&gt;,
 	<span class="kw">pub </span>event_history: Mutex&lt;CircularQueue&lt;atspi::Event&gt;&gt;,
-	<span class="kw">pub </span>cache: Cache,
+	<span class="kw">pub </span>cache: Arc&lt;Cache&gt;,
 }
 
 <span class="kw">impl </span>ScreenReaderState {
@@ -312,7 +365,7 @@
 		<span class="kw">let </span>previous_caret_position = AtomicI32::new(<span class="number">0</span>);
 		<span class="kw">let </span>accessible_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
 		<span class="kw">let </span>event_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
-		<span class="kw">let </span>cache = Cache::new();
+		<span class="kw">let </span>cache = Arc::new(Cache::new(atspi.connection().to_owned()));
 
 		<span class="kw">let </span>granularity = Mutex::new(Granularity::Line);
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
@@ -327,6 +380,37 @@
 			event_history,
 			cache,
 		})
+	}
+
+	<span class="kw">pub async fn </span>get_or_create_atspi_cache_item_to_cache(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		atspi_cache_item: atspi::cache::CacheItem,
+	) -&gt; OdiliaResult&lt;CacheItem&gt; {
+		<span class="kw">let </span>prim = atspi_cache_item.object.clone().try_into()<span class="question-mark">?</span>;
+		<span class="kw">if </span><span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).is_none() {
+			<span class="self">self</span>.cache.add(CacheItem::from_atspi_cache_item(
+				atspi_cache_item,
+				Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)),
+				<span class="self">self</span>.atspi.connection(),
+			)
+			.<span class="kw">await</span><span class="question-mark">?</span>);
+		}
+		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
+	}
+	<span class="kw">pub async fn </span>get_or_create_event_object_to_cache&lt;T: Signified&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		event: <span class="kw-2">&amp;</span>T,
+	) -&gt; OdiliaResult&lt;CacheItem&gt; {
+		<span class="kw">let </span>prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
+		<span class="kw">if </span><span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).is_none() {
+			<span class="self">self</span>.cache.add(CacheItem::from_atspi_event(
+				event,
+				Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)),
+				<span class="self">self</span>.atspi.connection(),
+			)
+			.<span class="kw">await</span><span class="question-mark">?</span>);
+		}
+		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
 
 	<span class="comment">// TODO: use cache; this will uplift performance MASSIVELY, also TODO: use this function instad of manually generating speech every time.
@@ -466,6 +550,20 @@
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}
+	<span class="attr">#[allow(dead_code)]
+	</span><span class="kw">pub async fn </span>get_or_create_cache_item(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		accessible: AccessiblePrimitive,
+	) -&gt; OdiliaResult&lt;CacheItem&gt; {
+		<span class="kw">let </span>accessible_proxy = AccessibleProxy::builder(<span class="self">self</span>.atspi.connection())
+			.destination(accessible.sender.as_str())<span class="question-mark">?
+			</span>.path(accessible.id.to_string())<span class="question-mark">?
+			</span>.build()
+			.<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="self">self</span>.cache
+			.get_or_create(<span class="kw-2">&amp;</span>accessible_proxy, Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)))
+			.<span class="kw">await
+	</span>}
 	<span class="kw">pub async fn </span>new_accessible&lt;T: Signified&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,

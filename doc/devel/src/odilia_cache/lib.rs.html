@@ -457,25 +457,6 @@
 <a href="#457" id="457">457</a>
 <a href="#458" id="458">458</a>
 <a href="#459" id="459">459</a>
-<a href="#460" id="460">460</a>
-<a href="#461" id="461">461</a>
-<a href="#462" id="462">462</a>
-<a href="#463" id="463">463</a>
-<a href="#464" id="464">464</a>
-<a href="#465" id="465">465</a>
-<a href="#466" id="466">466</a>
-<a href="#467" id="467">467</a>
-<a href="#468" id="468">468</a>
-<a href="#469" id="469">469</a>
-<a href="#470" id="470">470</a>
-<a href="#471" id="471">471</a>
-<a href="#472" id="472">472</a>
-<a href="#473" id="473">473</a>
-<a href="#474" id="474">474</a>
-<a href="#475" id="475">475</a>
-<a href="#476" id="476">476</a>
-<a href="#477" id="477">477</a>
-<a href="#478" id="478">478</a>
 </pre><pre class="rust"><code><span class="comment">//#![deny(clippy::all, clippy::pedantic, clippy::cargo)]
 
 </span><span class="kw">use </span>async_trait::async_trait;
@@ -806,25 +787,6 @@
 	<span class="kw">pub </span>connection: zbus::Connection,
 }
 
-<span class="doccomment">/// Copy all info into a plain CacheItem struct.
-/// This is very cheap, and the locking overhead will vastly outstrip making this a non-copy struct.
-</span><span class="attr">#[inline]
-</span><span class="kw">fn </span>copy_into_cache_item(cache_item_with_handle: <span class="kw-2">&amp;</span>CacheItem) -&gt; CacheItem {
-	CacheItem {
-		object: cache_item_with_handle.object.clone(),
-		parent: cache_item_with_handle.parent.clone(),
-		states: cache_item_with_handle.states,
-		role: cache_item_with_handle.role,
-		app: cache_item_with_handle.app.clone(),
-		children_num: cache_item_with_handle.children_num,
-		interfaces: cache_item_with_handle.interfaces,
-		index: cache_item_with_handle.index,
-		text: cache_item_with_handle.text.clone(),
-		children: cache_item_with_handle.children.clone(),
-		cache: Weak::clone(<span class="kw-2">&amp;</span>cache_item_with_handle.cache),
-	}
-}
-
 <span class="doccomment">/// An internal cache used within Odilia.
 /// This contains (mostly) all accessibles in the entire accessibility tree, and they are referenced by their IDs.
 /// When setting or getting information from the cache, be sure to use the most appropriate function.
@@ -910,7 +872,7 @@
 		<span class="kw">let </span>diff = end - start;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Time to create cache item: {:?}&quot;</span>, diff);
 		<span class="comment">// add a clone of it to the cache
-		</span><span class="self">self</span>.add(copy_into_cache_item(<span class="kw-2">&amp;</span>cache_item));
+		</span><span class="self">self</span>.add(cache_item.clone());
 		<span class="comment">// return that same cache item
 		</span><span class="prelude-val">Ok</span>(cache_item)
 	}

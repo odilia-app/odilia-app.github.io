@@ -42,7 +42,7 @@
 	event: <span class="kw-2">&amp;</span>LoadCompleteEvent,
 ) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
-	<span class="kw">let </span>cache = state.build_cache(sender.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="kw">let </span>cache = state.build_cache(sender).<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="comment">// TODO: this should be streamed, rather than waiting for the entire vec to fill up.
 	</span><span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="kw">for </span>item <span class="kw">in </span>entire_cache {

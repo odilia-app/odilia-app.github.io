@@ -235,8 +235,8 @@
 			<span class="string">&quot;Reading {} file and checking for running instances.&quot;</span>,
 			pid_file_path
 		);
-		<span class="kw">let </span>sohkds_pid = <span class="kw">match </span>fs::read_to_string(<span class="kw-2">&amp;</span>pid_file_path).<span class="kw">await </span>{
-			<span class="prelude-val">Ok</span>(sohkds_pid) =&gt; sohkds_pid,
+		<span class="kw">let </span>odilias_pid = <span class="kw">match </span>fs::read_to_string(<span class="kw-2">&amp;</span>pid_file_path).<span class="kw">await </span>{
+			<span class="prelude-val">Ok</span>(odilias_pid) =&gt; odilias_pid,
 			<span class="prelude-val">Err</span>(e) =&gt; {
 				<span class="macro">tracing::error!</span>(
 					<span class="string">&quot;Unable to read {} to check all running instances&quot;</span>,
@@ -245,12 +245,12 @@
 				exit(<span class="number">1</span>);
 			}
 		};
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Previous PID: {}&quot;</span>, sohkds_pid);
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Previous PID: {}&quot;</span>, odilias_pid);
 
 		<span class="kw">let </span><span class="kw-2">mut </span>sys = System::new_all();
 		sys.refresh_all();
 		<span class="kw">for </span>(pid, process) <span class="kw">in </span>sys.processes() {
-			<span class="kw">if </span>pid.to_string() == sohkds_pid
+			<span class="kw">if </span>pid.to_string() == odilias_pid
 				&amp;&amp; process.exe() == env::current_exe().unwrap()
 			{
 				<span class="macro">tracing::error!</span>(<span class="string">&quot;Server is already running!&quot;</span>);
@@ -331,16 +331,16 @@
                 <span class="string">&quot;XDG_RUNTIME_DIR Variable is present, using it&#39;s value as default file path.&quot;
             </span>);
 
-			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;{val}/sohkds.pid&quot;</span>);
-			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;{val}/sohkd.sock&quot;</span>);
+			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;{val}/odilias.pid&quot;</span>);
+			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;{val}/odilia.sock&quot;</span>);
 
 			(pid_file_path, sock_file_path)
 		}
 		<span class="prelude-val">Err</span>(e) =&gt; {
 			<span class="macro">tracing::trace!</span>(<span class="string">&quot;XDG_RUNTIME_DIR Variable is not set, falling back on hardcoded path.\nError: {:#?}&quot;</span>, e);
 
-			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/sohkds.pid&quot;</span>, Uid::current());
-			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/sohkd.sock&quot;</span>, Uid::current());
+			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/odilias.pid&quot;</span>, Uid::current());
+			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}/odilia.sock&quot;</span>, Uid::current());
 
 			(pid_file_path, sock_file_path)
 		}

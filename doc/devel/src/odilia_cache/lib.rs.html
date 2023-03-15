@@ -718,7 +718,7 @@
 <a href="#718" id="718">718</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{
 	collections::HashMap,
-	sync::{Arc, Mutex, Weak},
+	sync::{Arc, RwLock, Weak},
 };
 
 <span class="kw">use </span>async_trait::async_trait;
@@ -747,7 +747,7 @@
 };
 
 <span class="kw">type </span>CacheKey = AccessiblePrimitive;
-<span class="kw">type </span>InnerCache = DashMap&lt;CacheKey, Arc&lt;Mutex&lt;CacheItem&gt;&gt;, FxBuildHasher&gt;;
+<span class="kw">type </span>InnerCache = DashMap&lt;CacheKey, Arc&lt;RwLock&lt;CacheItem&gt;&gt;, FxBuildHasher&gt;;
 <span class="kw">type </span>ThreadSafeCache = Arc&lt;InnerCache&gt;;
 
 <span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash, Deserialize, Serialize)]
@@ -915,7 +915,7 @@
 	</span><span class="kw">pub </span>cache: Weak&lt;Cache&gt;,
 }
 <span class="kw">impl </span>CacheItem {
-	<span class="kw">pub fn </span>parent_ref(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; OdiliaResult&lt;Arc&lt;std::sync::Mutex&lt;CacheItem&gt;&gt;&gt; {
+	<span class="kw">pub fn </span>parent_ref(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; OdiliaResult&lt;Arc&lt;std::sync::RwLock&lt;CacheItem&gt;&gt;&gt; {
 		<span class="kw">let </span>parent_ref = Weak::upgrade(<span class="kw-2">&amp;</span><span class="self">self</span>.parent.item);
 		<span class="kw">match </span>parent_ref {
 			<span class="prelude-val">Some</span>(p) =&gt; <span class="prelude-val">Ok</span>(p),
@@ -994,7 +994,7 @@
 </span><span class="kw">pub struct </span>CacheRef {
 	<span class="kw">pub </span>key: CacheKey,
 	<span class="attr">#[serde(skip)]
-	</span>item: Weak&lt;Mutex&lt;CacheItem&gt;&gt;,
+	</span>item: Weak&lt;RwLock&lt;CacheItem&gt;&gt;,
 }
 
 <span class="kw">impl </span>CacheRef {
@@ -1211,7 +1211,7 @@
 	<span class="kw">pub </span>connection: zbus::Connection,
 }
 
-<span class="comment">// N.B.: we are using std Mutexes internally here, within the cache hashmap
+<span class="comment">// N.B.: we are using std RwLockes internally here, within the cache hashmap
 // entries. When adding async methods, take care not to hold these mutexes
 // across .await points.
 </span><span class="kw">impl </span>Cache {
@@ -1224,10 +1224,10 @@
 	/// never two items with the same ID stored in the cache at the same time).
 	</span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) {
 		<span class="kw">let </span>id = cache_item.object.clone();
-		<span class="self">self</span>.add_ref(id, Arc::new(Mutex::new(cache_item)));
+		<span class="self">self</span>.add_ref(id, Arc::new(RwLock::new(cache_item)));
 	}
 
-	<span class="kw">pub fn </span>add_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: CacheKey, cache_item: Arc&lt;Mutex&lt;CacheItem&gt;&gt;) {
+	<span class="kw">pub fn </span>add_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: CacheKey, cache_item: Arc&lt;RwLock&lt;CacheItem&gt;&gt;) {
 		<span class="self">self</span>.by_id.insert(id, Arc::clone(<span class="kw-2">&amp;</span>cache_item));
 		<span class="self">Self</span>::populate_references(<span class="kw-2">&amp;</span><span class="self">self</span>.by_id, cache_item);
 	}
@@ -1239,7 +1239,7 @@
 	<span class="doccomment">/// Get a single item (mutable via lock) from the cache.
 	</span><span class="comment">// For now this is kept private, as it would be easy to naively deadlock if
 	// someone does a chain of `get_ref`s on parent-&gt;child-&gt;parent, etc.
-	</span><span class="kw">pub fn </span>get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;Mutex&lt;CacheItem&gt;&gt;&gt; {
+	</span><span class="kw">pub fn </span>get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;RwLock&lt;CacheItem&gt;&gt;&gt; {
 		<span class="self">self</span>.by_id.get(id).as_deref().cloned()
 	}
 
@@ -1264,7 +1264,7 @@
 			.into_iter()
 			.map(|cache_item| {
 				<span class="kw">let </span>id = cache_item.object.clone();
-				<span class="kw">let </span>arc = Arc::new(Mutex::new(cache_item));
+				<span class="kw">let </span>arc = Arc::new(RwLock::new(cache_item));
 				<span class="self">self</span>.by_id.insert(id, Arc::clone(<span class="kw-2">&amp;</span>arc));
 				arc
 			})
@@ -1304,7 +1304,7 @@
 				<span class="kw">return </span><span class="bool-val">false</span>;
 			}
 		};
-		<span class="kw">let </span><span class="kw-2">mut </span>cache_item = entry.lock().unwrap();
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_item = entry.write().unwrap();
 		modify(<span class="kw-2">&amp;mut </span>cache_item);
 		<span class="bool-val">true
 	</span>}
@@ -1333,10 +1333,10 @@
 		</span><span class="prelude-val">Ok</span>(cache_item)
 	}
 
-	<span class="kw">fn </span>populate_references(cache: <span class="kw-2">&amp;</span>ThreadSafeCache, item_ref: Arc&lt;Mutex&lt;CacheItem&gt;&gt;) {
+	<span class="kw">fn </span>populate_references(cache: <span class="kw-2">&amp;</span>ThreadSafeCache, item_ref: Arc&lt;RwLock&lt;CacheItem&gt;&gt;) {
 		<span class="kw">let </span>item_wk_ref = Arc::downgrade(<span class="kw-2">&amp;</span>item_ref);
 
-		<span class="kw">let </span><span class="kw-2">mut </span>item = item_ref.lock().unwrap();
+		<span class="kw">let </span><span class="kw-2">mut </span>item = item_ref.write().unwrap();
 		<span class="kw">let </span>item_key = item.object.clone();
 		<span class="kw">let </span>parent_key = item.parent.key.clone();
 		<span class="kw">let </span>ix_opt = usize::try_from(item.index)
@@ -1364,13 +1364,13 @@
 
 		<span class="comment">// Update children to point to this item as parent
 		</span><span class="kw">for </span>child_arc <span class="kw">in </span>child_arcs {
-			<span class="kw">let </span><span class="kw-2">mut </span>child = child_arc.lock().unwrap();
+			<span class="kw">let </span><span class="kw-2">mut </span>child = child_arc.write().unwrap();
 			child.parent.item = Weak::clone(<span class="kw-2">&amp;</span>item_wk_ref);
 		}
 
 		<span class="comment">// Populate parent&#39;s ref to this item as child
 		</span><span class="kw">if let </span><span class="prelude-val">Some</span>((parent_ref, ix)) = parent_ref_opt.zip(ix_opt) {
-			<span class="kw">let </span><span class="kw-2">mut </span>parent = parent_ref.lock().unwrap();
+			<span class="kw">let </span><span class="kw-2">mut </span>parent = parent_ref.write().unwrap();
 			<span class="kw">match </span>parent.children.get_mut(ix).as_mut() {
 				<span class="prelude-val">Some</span>(i) <span class="kw">if </span>i.key == item_key =&gt; {
 					i.item = Weak::clone(<span class="kw-2">&amp;</span>item_wk_ref);
@@ -1431,8 +1431,8 @@
 	})
 }
 
-<span class="kw">pub fn </span>clone_arc_mutex&lt;T: Clone&gt;(arc: <span class="kw-2">&amp;</span>Arc&lt;Mutex&lt;T&gt;&gt;) -&gt; T {
-	arc.lock().unwrap().clone()
+<span class="kw">pub fn </span>clone_arc_mutex&lt;T: Clone&gt;(arc: <span class="kw-2">&amp;</span>Arc&lt;RwLock&lt;T&gt;&gt;) -&gt; T {
+	arc.read().unwrap().clone()
 }
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0 (2c8cc3432 2023-03-06)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

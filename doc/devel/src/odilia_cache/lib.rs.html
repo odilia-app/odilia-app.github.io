@@ -797,6 +797,49 @@
 <a href="#797" id="797">797</a>
 <a href="#798" id="798">798</a>
 <a href="#799" id="799">799</a>
+<a href="#800" id="800">800</a>
+<a href="#801" id="801">801</a>
+<a href="#802" id="802">802</a>
+<a href="#803" id="803">803</a>
+<a href="#804" id="804">804</a>
+<a href="#805" id="805">805</a>
+<a href="#806" id="806">806</a>
+<a href="#807" id="807">807</a>
+<a href="#808" id="808">808</a>
+<a href="#809" id="809">809</a>
+<a href="#810" id="810">810</a>
+<a href="#811" id="811">811</a>
+<a href="#812" id="812">812</a>
+<a href="#813" id="813">813</a>
+<a href="#814" id="814">814</a>
+<a href="#815" id="815">815</a>
+<a href="#816" id="816">816</a>
+<a href="#817" id="817">817</a>
+<a href="#818" id="818">818</a>
+<a href="#819" id="819">819</a>
+<a href="#820" id="820">820</a>
+<a href="#821" id="821">821</a>
+<a href="#822" id="822">822</a>
+<a href="#823" id="823">823</a>
+<a href="#824" id="824">824</a>
+<a href="#825" id="825">825</a>
+<a href="#826" id="826">826</a>
+<a href="#827" id="827">827</a>
+<a href="#828" id="828">828</a>
+<a href="#829" id="829">829</a>
+<a href="#830" id="830">830</a>
+<a href="#831" id="831">831</a>
+<a href="#832" id="832">832</a>
+<a href="#833" id="833">833</a>
+<a href="#834" id="834">834</a>
+<a href="#835" id="835">835</a>
+<a href="#836" id="836">836</a>
+<a href="#837" id="837">837</a>
+<a href="#838" id="838">838</a>
+<a href="#839" id="839">839</a>
+<a href="#840" id="840">840</a>
+<a href="#841" id="841">841</a>
+<a href="#842" id="842">842</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{
 	collections::HashMap,
 	sync::{Arc, RwLock, Weak},
@@ -1303,7 +1346,50 @@
 		offset: i32,
 		granularity: Granularity,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;(String, i32, i32), <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(as_text(<span class="self">self</span>).<span class="kw">await</span><span class="question-mark">?</span>.get_string_at_offset(offset, granularity).<span class="kw">await</span><span class="question-mark">?</span>)
+		<span class="kw">let </span>uoffset = offset <span class="kw">as </span>usize;
+		<span class="comment">// optimisations that don&#39;t call out to DBus.
+		</span><span class="kw">if </span>granularity == Granularity::Paragraph {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="self">self</span>.text.clone(), <span class="number">0</span>, <span class="self">self</span>.text.len().try_into().unwrap()));
+		} <span class="kw">else if </span>granularity == Granularity::Char {
+			<span class="kw">let </span>range = uoffset..(uoffset+<span class="number">1</span>);
+			<span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="self">self</span>.text.get(range).unwrap().to_string(), offset, offset+<span class="number">1</span>));
+		} <span class="kw">else if </span>granularity == Granularity::Word {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self</span>.text
+				<span class="comment">// [char]
+				</span>.split_whitespace()
+				<span class="comment">// [(idx, char)]
+        </span>.enumerate()
+				<span class="comment">// [(word, start, end)]
+        </span>.filter_map(|(<span class="kw">_</span>, word)| {
+            <span class="kw">let </span>start = <span class="self">self</span>.text
+								<span class="comment">// [(idx, char)]
+                </span>.char_indices()
+								<span class="comment">// [(idx, char)]: uses pointer arithmatic to find start index
+                </span>.find(|<span class="kw-2">&amp;</span>(idx, <span class="kw">_</span>)| idx == word.as_ptr() <span class="kw">as </span>usize - <span class="self">self</span>.text.as_ptr() <span class="kw">as </span>usize)
+								<span class="comment">// [idx]
+                </span>.map(|(idx, <span class="kw">_</span>)| idx)
+                .unwrap();
+						<span class="comment">// calculate based on start
+            </span><span class="kw">let </span>end = start + word.len();
+						<span class="comment">// if the offset if within bounds
+						</span><span class="kw">if </span>uoffset &gt;= start &amp;&amp; uoffset &lt;= end {
+							<span class="prelude-val">Some</span>((word.to_string(), start <span class="kw">as </span>i32, end <span class="kw">as </span>i32))
+						} <span class="kw">else </span>{
+							<span class="prelude-val">None
+						</span>}
+        })
+				<span class="comment">// get &quot;all&quot; words that match; there should be only one result
+				</span>.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
+				<span class="comment">// get the first result
+				</span>.get(<span class="number">0</span>)
+				<span class="comment">// if there&#39;s no matching word (out of bounds)
+				</span>.ok_or_else(|| OdiliaError::Generic(<span class="string">&quot;Out of bounds&quot;</span>.to_string()))<span class="question-mark">?
+				</span><span class="comment">// clone the reference into a value
+				</span>.clone())
+		}
+		<span class="comment">// any other variations, in particular, Granularity::Line, will need to call out to DBus. It&#39;s just too complex to calculate, get updates for bounding boxes, etc.
+		// this variation does NOT get a semantic line. It gets a visual line.
+		</span><span class="prelude-val">Ok</span>(as_text(<span class="self">self</span>).<span class="kw">await</span><span class="question-mark">?</span>.get_string_at_offset(offset, granularity).<span class="kw">await</span><span class="question-mark">?</span>)
 	}
 	<span class="kw">async fn </span>get_text(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,

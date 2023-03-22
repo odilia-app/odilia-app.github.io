@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["dispatch",""],["focused",""],["update_state","Update the state of an item in the cache using a `StateChanged` event and the `ScreenReaderState` as context. This writes to the value in-place, and does not clone any values."]]};

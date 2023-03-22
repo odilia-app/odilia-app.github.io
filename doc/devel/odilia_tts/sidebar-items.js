@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["create_ssip_client","Creates a new async SSIP client which can be sent commends, and can await responses to."],["handle_ssip_commands","A handler task for incomming SSIP requests. This function will run until it receives a requrst via the `shutdown_tx`’s sender half."]]};

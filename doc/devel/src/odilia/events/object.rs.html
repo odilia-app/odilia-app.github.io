@@ -664,6 +664,8 @@
 <a href="#664" id="664">664</a>
 <a href="#665" id="665">665</a>
 <a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::identify::object::ObjectEvents;
 
@@ -671,19 +673,19 @@
 	<span class="comment">// Dispatch based on member
 	</span><span class="kw">match </span>event {
 		ObjectEvents::StateChanged(state_changed_event) =&gt; {
-			state_changed::dispatch(state, state_changed_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			state_changed::dispatch(state, state_changed_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		ObjectEvents::TextCaretMoved(text_caret_moved_event) =&gt; {
-			text_caret_moved::dispatch(state, text_caret_moved_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			text_caret_moved::dispatch(state, text_caret_moved_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		ObjectEvents::TextChanged(text_changed_event) =&gt; {
-			text_changed::dispatch(state, text_changed_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			text_changed::dispatch(state, text_changed_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		ObjectEvents::ChildrenChanged(children_changed_event) =&gt; {
-			children_changed::dispatch(state, children_changed_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			children_changed::dispatch(state, children_changed_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		other_member =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown member: {:#?}&quot;</span>, other_member)
+			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown member: {:#?}&quot;</span>, other_member);
 		}
 	}
 	<span class="prelude-val">Ok</span>(())
@@ -698,7 +700,7 @@
 		result::OdiliaResult,
 		types::{AriaAtomic, AriaLive},
 	};
-	<span class="kw">use </span>ssip_client::Priority;
+	<span class="kw">use </span>ssip_client_async::Priority;
 	<span class="kw">use </span>std::collections::HashMap;
 
 	<span class="attr">#[inline]
@@ -778,7 +780,7 @@
 	</span><span class="doccomment">/// if the aria-live attribute is set to &quot;polite&quot;, then set the prioirty of the message to speak once all other messages are done
 	/// if the aria-live attribute is set to &quot;assertive&quot;, thenset the priority of the message to speak immediately, stop all other messages, and do not interrupt that piece of speech
 	/// otherwise, do not continue
-	</span><span class="kw">pub fn </span>live_to_priority(live_str: AriaLive) -&gt; Priority {
+	</span><span class="kw">pub fn </span>live_to_priority(live_str: <span class="kw-2">&amp;</span>AriaLive) -&gt; Priority {
 		<span class="kw">match </span>live_str {
 			AriaLive::Assertive =&gt; Priority::Important,
 			AriaLive::Polite =&gt; Priority::Notification,
@@ -851,11 +853,9 @@
 		<span class="comment">// if the atomic state is true, then read out the entite piece of text
 		// if atomic state is false, then only read out the portion which has been added
 		// otherwise, do not continue through this function
-		</span><span class="kw">let </span>text_to_say = <span class="kw">match </span>atomic {
-			<span class="bool-val">true </span>=&gt; cache_text.to_string(),
-			<span class="bool-val">false </span>=&gt; event.text().try_into()<span class="question-mark">?</span>,
-		};
-		<span class="kw">let </span>prioirty = live_to_priority(live);
+		</span><span class="kw">let </span>text_to_say =
+			<span class="kw">if </span>atomic { cache_text.to_string() } <span class="kw">else </span>{ event.text().try_into()<span class="question-mark">? </span>};
+		<span class="kw">let </span>prioirty = live_to_priority(<span class="kw-2">&amp;</span>live);
 		state.say(prioirty, text_to_say).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -873,7 +873,7 @@
 		<span class="kw">let </span>updated_text: String = event.text().try_into()<span class="question-mark">?</span>;
 		<span class="kw">let </span>current_text = cache_item.text;
 		<span class="kw">let </span>(start_pos, update_length) =
-			(event.start_pos() <span class="kw">as </span>usize, event.length() <span class="kw">as </span>usize);
+			(usize::try_from(event.start_pos())<span class="question-mark">?</span>, usize::try_from(event.length())<span class="question-mark">?</span>);
 		<span class="comment">// if this is an insert, figure out if we shuld announce anything, then speak it;
 		// only after should we try to update the cache
 		</span><span class="kw">if </span>insert {
@@ -892,7 +892,7 @@
 			state.cache.modify_item(
 				<span class="kw-2">&amp;</span>cache_item.object,
 				update_string_insert(start_pos, update_length, <span class="kw-2">&amp;</span>updated_text),
-			);
+			)<span class="question-mark">?</span>;
 		} <span class="kw">else if </span>remove_has_not_occured {
 			state.cache.modify_item(<span class="kw-2">&amp;</span>cache_item.object, <span class="kw">move </span>|cache_item| {
 				cache_item.text = cache_item
@@ -903,7 +903,7 @@
 						update_length,
 					))
 					.collect();
-			});
+			})<span class="question-mark">?</span>;
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -913,7 +913,9 @@
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span>atspi::{identify::object::ChildrenChangedEvent, signify::Signified};
 	<span class="kw">use </span>odilia_cache::AccessiblePrimitive;
+	<span class="kw">use </span>odilia_common::errors::OdiliaError;
 	<span class="kw">use </span>std::sync::Arc;
+	<span class="kw">use </span>zbus::zvariant::ObjectPath;
 
 	<span class="kw">pub async fn </span>dispatch(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
@@ -921,10 +923,8 @@
 	) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
 		</span><span class="kw">match </span>event.kind() {
-			<span class="string">&quot;remove/system&quot; </span>=&gt; remove(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">&quot;remove&quot; </span>=&gt; remove(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">&quot;add/system&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">&quot;add&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">&quot;remove&quot; </span>| <span class="string">&quot;remove/system&quot; </span>=&gt; remove(state, event)<span class="question-mark">?</span>,
+			<span class="string">&quot;add&quot; </span>| <span class="string">&quot;add/system&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
 			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
 		}
 		<span class="prelude-val">Ok</span>(())
@@ -933,7 +933,9 @@
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>ChildrenChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>accessible = state.new_accessible(event).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>accessible = get_child_primitive(event)<span class="question-mark">?
+			</span>.into_accessible(state.atspi.connection())
+			.<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let _ </span>= state
 			.cache
 			.get_or_create(<span class="kw-2">&amp;</span>accessible, Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span>state.cache)))
@@ -941,11 +943,20 @@
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add a single item to cache.&quot;</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
-	<span class="kw">pub async fn </span>remove(
-		state: <span class="kw-2">&amp;</span>ScreenReaderState,
+	<span class="attr">#[inline]
+	</span><span class="kw">fn </span>get_child_primitive(
 		event: <span class="kw-2">&amp;</span>ChildrenChangedEvent,
-	) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
+	) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, OdiliaError&gt; {
+		event.child()
+			.clone()
+			.downcast::&lt;(String, ObjectPath)&gt;()
+			.ok_or(OdiliaError::Generic(
+				<span class="string">&quot;Error converting child Value into (String,ObjectPath)&quot;</span>.to_string(),
+			))<span class="question-mark">?
+			</span>.try_into()
+	}
+	<span class="kw">pub fn </span>remove(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
+		<span class="kw">let </span>prim = get_child_primitive(event)<span class="question-mark">?</span>;
 		state.cache.remove(<span class="kw-2">&amp;</span>prim);
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Remove a single item from cache.&quot;</span>);
 		<span class="prelude-val">Ok</span>(())
@@ -955,10 +966,13 @@
 <span class="kw">mod </span>text_caret_moved {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span>atspi::{
-		convertable::Convertable, identify::object::TextCaretMovedEvent, signify::Signified, text::{Text, Granularity},
+		identify::object::TextCaretMovedEvent,
+		signify::Signified,
+		text::{Granularity, Text},
 	};
 	<span class="kw">use </span>odilia_cache::CacheItem;
-	<span class="kw">use </span>ssip_client::Priority;
+	<span class="kw">use </span>odilia_common::errors::{CacheError, OdiliaError};
+	<span class="kw">use </span>ssip_client_async::Priority;
 	<span class="kw">use </span>std::{
 		cmp::{max, min},
 		sync::atomic::Ordering,
@@ -969,37 +983,51 @@
 		old_item: CacheItem,
 		new_position: i32,
 		old_position: i32,
-		new_text: String,
-	) -&gt; String {
-		<span class="kw">let </span>new_id = new_item.object.id;
-		<span class="kw">let </span>old_id = old_item.object.id;
-		<span class="kw">let </span>new_pos = usize::try_from(new_position).unwrap();
-		<span class="kw">let </span>old_pos = usize::try_from(old_position).unwrap();
+	) -&gt; <span class="prelude-ty">Result</span>&lt;String, OdiliaError&gt; {
+		<span class="kw">let </span>new_id = new_item.object.clone();
+		<span class="kw">let </span>old_id = old_item.object.clone();
+		<span class="comment">// NOTE: the errors here should never happen. Unless the user is at a position which is larger than the unsigned native integer size on the machine *and also* smaller than i32::MAX. This seems extremely rare.
+		</span><span class="kw">let </span>new_pos = usize::try_from(new_position)<span class="question-mark">?</span>;
+		<span class="kw">let </span>old_pos = usize::try_from(old_position)<span class="question-mark">?</span>;
 
-		<span class="comment">// unknwon
+		<span class="comment">// if the user has moved into a new item, then also read a whole line.
 		</span><span class="kw">if </span>new_id != old_id {
-			<span class="kw">return </span>String::new();
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(new_item
+				.get_string_at_offset(new_position, Granularity::Line)
+				.<span class="kw">await</span><span class="question-mark">?
+				</span>.<span class="number">0</span>);
 		}
 		<span class="kw">let </span>first_position = min(new_position, old_position);
 		<span class="kw">let </span>last_position = max(new_position, old_position);
 		<span class="comment">// if there is one character between the old and new position
 		</span><span class="kw">if </span>new_pos.abs_diff(old_pos) == <span class="number">1 </span>{
-			<span class="kw">return </span>new_item.get_string_at_offset(first_position, Granularity::Char).<span class="kw">await</span>.unwrap().<span class="number">0</span>;
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(new_item
+				.get_string_at_offset(first_position, Granularity::Char)
+				.<span class="kw">await</span><span class="question-mark">?
+				</span>.<span class="number">0</span>);
 		}
-		<span class="kw">let </span>first_word = new_item.get_string_at_offset(first_position, Granularity::Word).<span class="kw">await</span>.unwrap();
-		<span class="kw">let </span>last_word = old_item.get_string_at_offset(last_position, Granularity::Word).<span class="kw">await</span>.unwrap();
+		<span class="kw">let </span>first_word = new_item
+			.get_string_at_offset(first_position, Granularity::Word)
+			.<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>last_word = old_item
+			.get_string_at_offset(last_position, Granularity::Word)
+			.<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// if words are the same
 		</span><span class="kw">if </span>first_word == last_word ||
 			 <span class="comment">// if the end position of the first word immediately peceeds the start of the second word
-			 </span>first_word.<span class="number">2</span>.abs_diff(last_word.<span class="number">1</span>) == <span class="number">1 </span>{
-			<span class="kw">return </span>new_item.get_text(first_position, last_position).<span class="kw">await</span>.unwrap();
+			 </span>first_word.<span class="number">2</span>.abs_diff(last_word.<span class="number">1</span>) == <span class="number">1
+		</span>{
+			<span class="kw">return </span>new_item.get_text(first_position, last_position).<span class="kw">await</span>;
 		}
 		<span class="comment">// if the user has somehow from the beginning to the end. Usually happens with Home, the End.
-		</span><span class="kw">if </span>first_position == <span class="number">0 </span>&amp;&amp; last_position <span class="kw">as </span>usize == new_item.text.len() {
-			<span class="kw">return </span>new_item.text.clone();
+		</span><span class="kw">if </span>first_position == <span class="number">0 </span>&amp;&amp; usize::try_from(last_position)<span class="question-mark">? </span>== new_item.text.len() {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(new_item.text.clone());
 		}
-		new_item.get_string_at_offset(new_position, Granularity::Line).<span class="kw">await</span>.unwrap().<span class="number">0
-	</span>}
+		<span class="prelude-val">Ok</span>(new_item
+			.get_string_at_offset(new_position, Granularity::Line)
+			.<span class="kw">await</span><span class="question-mark">?
+			</span>.<span class="number">0</span>)
+	}
 
 	<span class="doccomment">/// this must be checked *before* writing an accessible to the hsitory.
 	/// if this is checked after writing, it may give inaccurate results.
@@ -1015,23 +1043,22 @@
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
 		}
 		<span class="comment">// Hopefully this shouldn&#39;t happen, but technically the caret may change before any other event happens. Since we already know that the caret position is 0, it may be a caret moved event
-		</span><span class="kw">let </span>last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-			<span class="prelude-val">Some</span>(acc) =&gt; acc,
+		</span><span class="kw">let </span>last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+			<span class="prelude-val">Some</span>(acc) =&gt; state.get_or_create_cache_item(acc).<span class="kw">await</span><span class="question-mark">?</span>,
 			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
 		};
 		<span class="comment">// likewise when getting the second-most recently focused accessible; we need the second-most recent accessible because it is possible that a tab navigation happened, which focused something before (or after) the caret moved events gets called, meaning the second-most recent accessible may be the only different accessible.
 		// if the accessible is focused before the event happens, the last_accessible variable will be the same as current_accessible.
 		// if the accessible is focused after the event happens, then the last_accessible will be different
 		</span><span class="kw">let </span>previous_caret_pos = state.previous_caret_position.load(Ordering::Relaxed);
-		<span class="kw">let </span>current_accessible = state.new_accessible(event).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>current_accessible = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// if we know that the previous caret position was not 0, and the current and previous accessibles are the same, we know that this is NOT a tab navigation.
-		</span><span class="kw">if </span>previous_caret_pos != <span class="number">0 </span>&amp;&amp; current_accessible == last_accessible {
+		</span><span class="kw">if </span>previous_caret_pos != <span class="number">0 </span>&amp;&amp; current_accessible.object == last_accessible.object {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
 		}
 		<span class="comment">// otherwise, it probably was a tab navigation
 		</span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
 	}
-
 
 	<span class="comment">// TODO: left/right vs. up/down, and use generated speech
 	</span><span class="kw">pub async fn </span>text_cursor_moved(
@@ -1041,14 +1068,20 @@
 		<span class="kw">if </span>is_tab_navigation(state, event).<span class="kw">await</span><span class="question-mark">? </span>{
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
 		}
-		<span class="kw">let </span>text = state
-			.new_accessible(event)
-			.<span class="kw">await</span><span class="question-mark">?
-			</span>.to_text()
-			.<span class="kw">await</span><span class="question-mark">?
-			</span>.get_string_at_offset(event.position(), <span class="kw-2">*</span>state.granularity.lock().<span class="kw">await</span>)
-			.<span class="kw">await</span><span class="question-mark">?
-			</span>.<span class="number">0</span>;
+		<span class="kw">let </span>new_item = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>text = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+			<span class="prelude-val">Some</span>(old_prim) =&gt; {
+				<span class="kw">let </span>old_pos = state.previous_caret_position.load(Ordering::Relaxed);
+				<span class="kw">let </span>old_item =
+					state.cache.get(<span class="kw-2">&amp;</span>old_prim).ok_or(CacheError::NoItem)<span class="question-mark">?</span>;
+				<span class="kw">let </span>new_pos = event.position();
+				new_position(new_item, old_item, new_pos, old_pos).<span class="kw">await</span><span class="question-mark">?
+			</span>}
+			<span class="prelude-val">None </span>=&gt; {
+				<span class="comment">// if no previous item exists, as in the screen reader has just loaded, then read out the whole item.
+				</span>new_item.get_string_at_offset(<span class="number">0</span>, Granularity::Paragraph).<span class="kw">await</span><span class="question-mark">?</span>.<span class="number">0
+			</span>}
+		};
 		state.say(Priority::Text, text).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -1069,14 +1102,14 @@
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span>atspi::{
-		accessible_id::HasAccessibleId, identify::object::StateChangedEvent,
-		signify::Signified, State,
+		accessible::Accessible, identify::object::StateChangedEvent, signify::Signified,
+		State,
 	};
 	<span class="kw">use </span>odilia_cache::AccessiblePrimitive;
 
-	<span class="doccomment">/// Update the state of an item in the cache using a StateChanged event and the ScreenReaderState as context.
+	<span class="doccomment">/// Update the state of an item in the cache using a `StateChanged` event and the `ScreenReaderState` as context.
 	/// This writes to the value in-place, and does not clone any values.
-	</span><span class="kw">pub async fn </span>update_state(
+	</span><span class="kw">pub fn </span>update_state(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		a11y: <span class="kw-2">&amp;</span>AccessiblePrimitive,
 		state_changed: State,
@@ -1084,12 +1117,12 @@
 	) -&gt; eyre::Result&lt;bool&gt; {
 		<span class="kw">if </span>active {
 			<span class="prelude-val">Ok</span>(state.cache.modify_item(a11y, |cache_item| {
-				cache_item.states.remove(state_changed)
-			}))
+				cache_item.states.remove(state_changed);
+			})<span class="question-mark">?</span>)
 		} <span class="kw">else </span>{
 			<span class="prelude-val">Ok</span>(state.cache.modify_item(a11y, |cache_item| {
-				cache_item.states.insert(state_changed)
-			}))
+				cache_item.states.insert(state_changed);
+			})<span class="question-mark">?</span>)
 		}
 	}
 
@@ -1107,7 +1140,7 @@
 		<span class="kw">let </span>state_value = event.enabled() == <span class="number">1</span>;
 		<span class="comment">// update cache with state of item
 		</span><span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
-		<span class="kw">match </span>update_state(state, <span class="kw-2">&amp;</span>a11y_prim, a11y_state, state_value).<span class="kw">await </span>{
+		<span class="kw">match </span>update_state(state, <span class="kw-2">&amp;</span>a11y_prim, a11y_state, state_value) {
 			<span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;Updating of the state was not succesful! The item with id {:?} was not found in the cache.&quot;</span>, a11y_prim.id),
 			<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) =&gt; <span class="macro">tracing::trace!</span>(<span class="string">&quot;Updated the state of accessible with ID {:?}, and state {:?} to {state_value}.&quot;</span>, a11y_prim.id, a11y_state),
 			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
@@ -1130,9 +1163,9 @@
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>StateChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>accessible = state.new_accessible(event).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-			<span class="kw">if </span>curr == accessible {
+		<span class="kw">let </span>accessible = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+			<span class="kw">if </span>curr == accessible.object {
 				<span class="kw">return </span><span class="prelude-val">Ok</span>(());
 			}
 		}
@@ -1143,13 +1176,19 @@
 			accessible.get_localized_role_name(),
 			accessible.get_relation_set(),
 		)<span class="question-mark">?</span>;
-		<span class="kw">let </span>id = accessible.id();
-		state.update_accessible(accessible.try_into()<span class="question-mark">?</span>).<span class="kw">await</span>;
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Focus event received on: {:?} with role {}&quot;</span>, id, role);
+		state.update_accessible(accessible.object.clone()).<span class="kw">await</span>;
+		<span class="macro">tracing::debug!</span>(
+			<span class="string">&quot;Focus event received on: {:?} with role {}&quot;</span>,
+			accessible.object.id,
+			role
+		);
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Relations: {:?}&quot;</span>, relation);
 
-		state.say(ssip_client::Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>))
-			.<span class="kw">await</span>;
+		state.say(
+			ssip_client_async::Priority::Text,
+			<span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>),
+		)
+		.<span class="kw">await</span>;
 
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -1200,45 +1239,16 @@
 			children: Vec::new(),
 			cache: Arc::downgrade(<span class="kw-2">&amp;</span>CACHE_ARC),
 		};
-		<span class="kw">static </span><span class="kw-2">ref </span>ANSWER_VALUES: [(CacheItem, CacheItem, u32, u32, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str); <span class="number">9</span>] = [
-			(
-				A11Y_PARAGRAPH_ITEM.clone(),
-				A11Y_PARAGRAPH_ITEM.clone(),
-				<span class="number">4</span>,
-				<span class="number">3</span>,
-				A11Y_PARAGRAPH_STRING,
-				<span class="string">&quot; &quot;
-			</span>),
-			(
-				A11Y_PARAGRAPH_ITEM.clone(),
-				A11Y_PARAGRAPH_ITEM.clone(),
-				<span class="number">3</span>,
-				<span class="number">4</span>,
-				A11Y_PARAGRAPH_STRING,
-				<span class="string">&quot; &quot;
-			</span>),
-			(
-				A11Y_PARAGRAPH_ITEM.clone(),
-				A11Y_PARAGRAPH_ITEM.clone(),
-				<span class="number">0</span>,
-				<span class="number">3</span>,
-				A11Y_PARAGRAPH_STRING,
-				<span class="string">&quot;The&quot;
-			</span>),
-			(
-				A11Y_PARAGRAPH_ITEM.clone(),
-				A11Y_PARAGRAPH_ITEM.clone(),
-				<span class="number">3</span>,
-				<span class="number">0</span>,
-				A11Y_PARAGRAPH_STRING,
-				<span class="string">&quot;The&quot;
-			</span>),
+		<span class="kw">static </span><span class="kw-2">ref </span>ANSWER_VALUES: [(CacheItem, CacheItem, u32, u32, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str); <span class="number">9</span>] = [
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">4</span>, <span class="number">3</span>, <span class="string">&quot; &quot;</span>),
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">3</span>, <span class="number">4</span>, <span class="string">&quot; &quot;</span>),
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">0</span>, <span class="number">3</span>, <span class="string">&quot;The&quot;</span>),
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">3</span>, <span class="number">0</span>, <span class="string">&quot;The&quot;</span>),
 			(
 				A11Y_PARAGRAPH_ITEM.clone(),
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">169</span>,
 				<span class="number">182</span>,
-				A11Y_PARAGRAPH_STRING,
 				<span class="string">&quot;Microsystems,&quot;
 			</span>),
 			(
@@ -1246,7 +1256,6 @@
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">77</span>,
 				<span class="number">83</span>,
-				A11Y_PARAGRAPH_STRING,
 				<span class="string">&quot; Linux&quot;
 			</span>),
 			(
@@ -1254,7 +1263,6 @@
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">181</span>,
 				<span class="number">189</span>,
-				A11Y_PARAGRAPH_STRING,
 				<span class="string">&quot;, before&quot;
 			</span>),
 			(
@@ -1263,14 +1271,12 @@
 				<span class="number">0</span>,
 				<span class="number">220</span>,
 				A11Y_PARAGRAPH_STRING,
-				A11Y_PARAGRAPH_STRING,
 			),
 			(
 				A11Y_PARAGRAPH_ITEM.clone(),
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">220</span>,
 				<span class="number">0</span>,
-				A11Y_PARAGRAPH_STRING,
 				A11Y_PARAGRAPH_STRING,
 			),
 		];
@@ -1279,16 +1285,14 @@
 	<span class="macro">macro_rules! </span>check_answer_values {
 		(<span class="macro-nonterminal">$idx</span>:literal) =&gt; {
 			<span class="macro">assert_eq!</span>(
-				tokio_test::block_on(
-					new_position(
-						ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">0</span>.clone(),
-						ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">1</span>.clone(),
-						ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">2</span>.try_into().unwrap(),
-						ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">3</span>.try_into().unwrap(),
-						ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">4</span>.to_string(),
-					)
-				),
-				ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">5</span>.to_string()
+				tokio_test::block_on(new_position(
+					ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">0</span>.clone(),
+					ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">1</span>.clone(),
+					ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">2</span>.try_into().unwrap(),
+					ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">3</span>.try_into().unwrap(),
+				))
+				.unwrap(),
+				ANSWER_VALUES[<span class="macro-nonterminal">$idx</span>].<span class="number">4</span>.to_string(),
 			);
 		};
 	}

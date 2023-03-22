@@ -33,13 +33,24 @@
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
 <a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
+<a href="#42" id="42">42</a>
+<a href="#43" id="43">43</a>
+<a href="#44" id="44">44</a>
 </pre><pre class="rust"><code><span class="kw">mod </span>log;
 <span class="kw">mod </span>speech;
 <span class="kw">use </span>log::LogSettings;
 <span class="kw">use </span>speech::SpeechSettings;
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>tini::{Error, Ini};
+<span class="kw">use </span>tini::Ini;
+
+<span class="kw">use </span><span class="kw">crate</span>::errors::ConfigError;
 
 <span class="doccomment">///type representing a *read-only* view of the odilia screenreader configuration
 /// this type should only be obtained as a result of parsing odilia&#39;s configuration files, as it containes types for each section responsible for controlling various parts of the screenreader
@@ -51,20 +62,27 @@
 }
 
 <span class="kw">impl </span>ApplicationConfig {
-	<span class="kw">pub fn </span>new(path: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+	<span class="doccomment">/// Opens a new config file with a certain path.
+	///
+	/// # Errors
+	///
+	/// This can return `Err(_)` if the path doesn&#39;t exist, or if not all the key/value pairs are defined.
+	</span><span class="kw">pub fn </span>new(path: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ConfigError&gt; {
 		<span class="kw">let </span>ini = Ini::from_file(path)<span class="question-mark">?</span>;
-		<span class="kw">let </span>rate: i32 = ini.get(<span class="string">&quot;speech&quot;</span>, <span class="string">&quot;rate&quot;</span>).unwrap();
-		<span class="kw">let </span>level: String = ini.get(<span class="string">&quot;log&quot;</span>, <span class="string">&quot;level&quot;</span>).unwrap();
+		<span class="kw">let </span>rate: i32 = ini.get(<span class="string">&quot;speech&quot;</span>, <span class="string">&quot;rate&quot;</span>).ok_or(ConfigError::ValueNotFound)<span class="question-mark">?</span>;
+		<span class="kw">let </span>level: String = ini.get(<span class="string">&quot;log&quot;</span>, <span class="string">&quot;level&quot;</span>).ok_or(ConfigError::ValueNotFound)<span class="question-mark">?</span>;
 		<span class="kw">let </span>speech = SpeechSettings::new(rate);
 		<span class="kw">let </span>log = LogSettings::new(level);
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ speech, log })
 	}
 
-	<span class="kw">pub fn </span>log(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>LogSettings {
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>log(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>LogSettings {
 		<span class="kw-2">&amp;</span><span class="self">self</span>.log
 	}
 
-	<span class="kw">pub fn </span>speech(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SpeechSettings {
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>speech(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SpeechSettings {
 		<span class="kw-2">&amp;</span><span class="self">self</span>.speech
 	}
 }

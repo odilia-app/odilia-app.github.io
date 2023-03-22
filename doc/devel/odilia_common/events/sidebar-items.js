@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Direction",""],["Feature",""],["ScreenReaderEvent",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["Direction",""],["Feature","A list of features supported natively by Odilia."],["ScreenReaderEvent","Events which can be trigged through Odilia’s external API. Subject to change without notice until v1.0, but we’re open to suggestions on our Github; please reach out with features you’d like to see."]]};

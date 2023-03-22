@@ -31,17 +31,19 @@
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
 <a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::{
 	events::GenericEvent, identify::document::DocumentEvents,
 	identify::document::LoadCompleteEvent,
 };
+<span class="kw">use </span>odilia_common::errors::OdiliaError;
 
 <span class="kw">pub async fn </span>load_complete(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	event: <span class="kw-2">&amp;</span>LoadCompleteEvent,
-) -&gt; eyre::Result&lt;()&gt; {
-	<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.unwrap();
+) -&gt; <span class="prelude-ty">Result</span>&lt;(), OdiliaError&gt; {
+	<span class="kw">let </span>sender = event.sender()<span class="question-mark">?</span>.ok_or(zbus::Error::MissingField)<span class="question-mark">?</span>;
 	<span class="kw">let </span>cache = state.build_cache(sender).<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="comment">// TODO: this should be streamed, rather than waiting for the entire vec to fill up.
 	</span><span class="kw">let </span>entire_cache = cache.get_items().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -56,10 +58,10 @@
 	<span class="comment">// Dispatch based on member
 	</span><span class="kw">match </span>event {
 		DocumentEvents::LoadComplete(load_complete_event) =&gt; {
-			load_complete(state, load_complete_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			load_complete(state, load_complete_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		other_member =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown member: {:#?}&quot;</span>, other_member)
+			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown member: {:#?}&quot;</span>, other_member);
 		}
 	}
 	<span class="prelude-val">Ok</span>(())

@@ -34,7 +34,7 @@
 <span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>CacheEvents) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">match </span>event {
 		CacheEvents::Add(add_event) =&gt; add_accessible(state, add_event).<span class="kw">await</span><span class="question-mark">?</span>,
-		CacheEvents::Remove(rem_event) =&gt; remove_accessible(state, rem_event).<span class="kw">await</span><span class="question-mark">?</span>,
+		CacheEvents::Remove(rem_event) =&gt; remove_accessible(state, rem_event)<span class="question-mark">?</span>,
 	}
 	<span class="prelude-val">Ok</span>(())
 }
@@ -43,12 +43,12 @@
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	event: <span class="kw-2">&amp;</span>AddAccessibleEvent,
 ) -&gt; eyre::Result&lt;()&gt; {
-	<span class="kw">let </span>atspi_cache_item = event.to_owned().into_item();
+	<span class="kw">let </span>atspi_cache_item = event.clone().into_item();
 	state.get_or_create_atspi_cache_item_to_cache(atspi_cache_item)
 		.<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="prelude-val">Ok</span>(())
 }
-<span class="kw">pub async fn </span>remove_accessible(
+<span class="kw">pub fn </span>remove_accessible(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	event: <span class="kw-2">&amp;</span>RemoveAccessibleEvent,
 ) -&gt; eyre::Result&lt;()&gt; {

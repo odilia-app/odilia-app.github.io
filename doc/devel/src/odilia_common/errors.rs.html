@@ -124,6 +124,45 @@
 <a href="#124" id="124">124</a>
 <a href="#125" id="125">125</a>
 <a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
 </pre><pre class="rust"><code><span class="kw">use </span>atspi::error::AtspiError;
 <span class="kw">use </span>serde_plain::Error <span class="kw">as </span>SerdePlainError;
 <span class="kw">use </span>smartstring::alias::String <span class="kw">as </span>SmartString;
@@ -140,13 +179,40 @@
 	Zvariant(zbus::zvariant::Error),
 	Cache(CacheError),
 	InfallibleConversion(std::convert::Infallible),
+	ConversionError(std::num::TryFromIntError),
+	Config(ConfigError),
+	PoisoningError,
 	Generic(String),
 }
+<span class="attr">#[derive(Debug)]
+</span><span class="kw">pub enum </span>ConfigError {
+	Tini(tini::Error),
+	ValueNotFound,
+	PathNotFound,
+}
+<span class="kw">impl </span>From&lt;tini::Error&gt; <span class="kw">for </span>ConfigError {
+	<span class="kw">fn </span>from(t_err: tini::Error) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::Tini(t_err)
+	}
+}
+<span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ConfigError {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::Tini(t) =&gt; t.fmt(f),
+			<span class="self">Self</span>::ValueNotFound =&gt; f.write_str(<span class="string">&quot;Vlaue not found in config file.&quot;</span>),
+			<span class="self">Self</span>::PathNotFound =&gt; {
+				f.write_str(<span class="string">&quot;The path for the config file was not found.&quot;</span>)
+			}
+		}
+	}
+}
+<span class="kw">impl </span>std::error::Error <span class="kw">for </span>ConfigError {}
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub enum </span>CacheError {
 	NotAvailable,
 	NoItem,
 	NoLock,
+	TextBoundsError,
 }
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>CacheError {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
@@ -154,11 +220,22 @@
 			<span class="self">Self</span>::NotAvailable =&gt; f.write_str(<span class="string">&quot;The cache has been dropped from memory. This never happens under normal circumstances, and should never happen. Please send a detailed bug report if this ever happens.&quot;</span>),
 			<span class="self">Self</span>::NoItem =&gt; f.write_str(<span class="string">&quot;No item in cache found.&quot;</span>),
       <span class="self">Self</span>::NoLock =&gt; f.write_str(<span class="string">&quot;It was not possible to get a lock on this item from the cache.&quot;</span>),
+      <span class="self">Self</span>::TextBoundsError =&gt; f.write_str(<span class="string">&quot;The range asked for in a call to a get_string_*_offset function has invalid bounds.&quot;</span>),
 		}
 	}
 }
 <span class="kw">impl </span>std::error::Error <span class="kw">for </span>CacheError {}
 <span class="kw">impl </span>Error <span class="kw">for </span>OdiliaError {}
+<span class="kw">impl</span>&lt;T&gt; From&lt;std::sync::PoisonError&lt;T&gt;&gt; <span class="kw">for </span>OdiliaError {
+	<span class="kw">fn </span>from(<span class="kw">_</span>: std::sync::PoisonError&lt;T&gt;) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::PoisoningError
+	}
+}
+<span class="kw">impl </span>From&lt;std::num::TryFromIntError&gt; <span class="kw">for </span>OdiliaError {
+	<span class="kw">fn </span>from(fie: std::num::TryFromIntError) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::ConversionError(fie)
+	}
+}
 <span class="kw">impl </span>From&lt;zbus::fdo::Error&gt; <span class="kw">for </span>OdiliaError {
 	<span class="kw">fn </span>from(spe: zbus::fdo::Error) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::ZbusFdo(spe)
@@ -205,6 +282,7 @@
 	ParseError(&lt;i32 <span class="kw">as </span>FromStr&gt;::Err),
 	ObjectConversionError(atspi::error::ObjectPathConversionError),
 	NoPathId,
+	InvalidPath,
 	NoFirstSectionOfSender,
 	NoSecondSectionOfSender,
 	NoSender,

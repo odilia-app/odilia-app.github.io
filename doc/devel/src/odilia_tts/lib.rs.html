@@ -92,7 +92,32 @@
 <a href="#92" id="92">92</a>
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
-</pre><pre class="rust"><code><span class="kw">use </span>ssip_client::{
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+</pre><pre class="rust"><code><span class="attr">#![deny(
+	clippy::all,
+	clippy::pedantic,
+	clippy::cargo,
+	clippy::map_unwrap_or,
+	clippy::unwrap_used,
+	unsafe_code
+)]
+
+</span><span class="kw">use </span>ssip_client_async::{
 	fifo::asynchronous_tokio::Builder,
 	tokio::{AsyncClient, Request},
 	ClientName,
@@ -108,14 +133,17 @@
 	sync::{broadcast, mpsc::Receiver},
 };
 
-<span class="kw">pub async fn </span>create_ssip_client(
+<span class="doccomment">/// Creates a new async SSIP client which can be sent commends, and can await responses to.
+/// # Errors
+/// There may be errors when trying to send the initial registration command, or when parsing the response.
+</span><span class="kw">pub async fn </span>create_ssip_client(
 ) -&gt; eyre::Result&lt;AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;&gt; {
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to register SSIP client odilia:speech&quot;</span>);
 	<span class="kw">let </span><span class="kw-2">mut </span>ssip_core =
 		<span class="kw">match </span>Builder::new().build().<span class="kw">await </span>{
 			<span class="prelude-val">Ok</span>(ssip) =&gt; ssip,
-			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">match </span>e.kind() {
-				ErrorKind::ConnectionRefused =&gt; {
+			<span class="prelude-val">Err</span>(e) =&gt; {
+				<span class="kw">if </span>e.kind() == ErrorKind::ConnectionRefused {
 					<span class="macro">tracing::debug!</span>(<span class="string">&quot;Speech dispatcher is not active. Attempting to spawn it.&quot;</span>);
 					Command::new(<span class="string">&quot;speech-dispatcher&quot;</span>)
               .arg(<span class="string">&quot;--spawn&quot;</span>)
@@ -129,12 +157,11 @@
 					</span>);
 					thread::sleep(time::Duration::from_millis(<span class="number">500</span>));
 					Builder::new().build().<span class="kw">await</span><span class="question-mark">?
-				</span>}
-				<span class="kw">_ </span>=&gt; {
+				</span>} <span class="kw">else </span>{
 					<span class="macro">tracing::debug!</span>(<span class="string">&quot;Speech dispatcher could not be started.&quot;</span>);
 					exit(<span class="number">1</span>);
 				}
-			},
+			}
 		};
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Client created. Setting name&quot;</span>);
 	ssip_core
@@ -146,7 +173,15 @@
 	<span class="prelude-val">Ok</span>(ssip_core)
 }
 
-<span class="kw">pub async fn </span>handle_ssip_commands(
+<span class="doccomment">/// A handler task for incomming SSIP requests.
+/// This function will run until it receives a requrst via the `shutdown_tx`&#39;s sender half.
+///
+/// # Errors
+///
+/// This function will return an error if anything within it fails. It may fail to read a value from the channel, it may fail to run an SSIP command, or fail to parse the response.
+/// Errors may also be returned during cleanup via the `shutdown_tx` parameter, since shutting down the connection to speech dispatcher can also potentially error.
+/// Any of these failures will result in this function exiting with an `Err(_)` variant.
+</span><span class="kw">pub async fn </span>handle_ssip_commands(
 	client: <span class="kw-2">&amp;mut </span>AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;,
 	requests: Receiver&lt;Request&gt;,
 	shutdown_tx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
@@ -154,35 +189,32 @@
 	<span class="macro">tokio::pin!</span>(requests);
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
-				request_option = requests.recv() =&gt; {
-					<span class="kw">if </span>request_option.is_none() {
-						<span class="kw">continue</span>;
-					}
-					<span class="kw">let </span>request = request_option.unwrap();
-					<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command received&quot;</span>);
-		<span class="kw">let </span>response = client
-		  .send(request).<span class="kw">await</span>.unwrap()
-		  .receive().<span class="kw">await</span>.unwrap();
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:#?}&quot;</span>, response);
-					<span class="kw">continue</span>;
-				}
-				<span class="kw">_ </span>= shutdown_tx.recv() =&gt; {
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Saying goodbye message.&quot;</span>);
-		<span class="kw">let _ </span>= client
-			.send(Request::Speak).<span class="kw">await</span>.unwrap()
-			.receive().<span class="kw">await</span>.unwrap();
-		<span class="kw">let _ </span>= client
-			.send(Request::SendLines(Vec::from([<span class="string">&quot;Quitting Odilia&quot;</span>.to_string()]))).<span class="kw">await</span>.unwrap()
-			.receive().<span class="kw">await</span>.unwrap();
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to quit SSIP.&quot;</span>);
-		<span class="kw">let </span>response = client
-		  .send(Request::Quit).<span class="kw">await</span>.unwrap()
-		  .receive().<span class="kw">await</span>.unwrap();
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:?}&quot;</span>, response);
-					<span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command interpreter is shut down.&quot;</span>);
-					<span class="kw">break</span>;
-				}
-			}
+				      request_option = requests.recv() =&gt; {
+					      <span class="kw">if let </span><span class="prelude-val">Some</span>(request) = request_option {
+		  <span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command received&quot;</span>);
+		  <span class="kw">let </span>response = client
+		    .send(request).<span class="kw">await</span><span class="question-mark">?
+		    </span>.receive().<span class="kw">await</span><span class="question-mark">?</span>;
+		  <span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:#?}&quot;</span>, response);
+		}
+				      }
+				      <span class="kw">_ </span>= shutdown_tx.recv() =&gt; {
+		      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Saying goodbye message.&quot;</span>);
+		      <span class="kw">let _ </span>= client
+			      .send(Request::Speak).<span class="kw">await</span><span class="question-mark">?
+			      </span>.receive().<span class="kw">await</span><span class="question-mark">?</span>;
+		      <span class="kw">let _ </span>= client
+			      .send(Request::SendLines(Vec::from([<span class="string">&quot;Quitting Odilia&quot;</span>.to_string()]))).<span class="kw">await</span><span class="question-mark">?
+			      </span>.receive().<span class="kw">await</span><span class="question-mark">?</span>;
+		      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Attempting to quit SSIP.&quot;</span>);
+		      <span class="kw">let </span>response = client
+			.send(Request::Quit).<span class="kw">await</span><span class="question-mark">?
+			</span>.receive().<span class="kw">await</span><span class="question-mark">?</span>;
+		      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Response from server: {:?}&quot;</span>, response);
+					      <span class="macro">tracing::debug!</span>(<span class="string">&quot;SSIP command interpreter is shut down.&quot;</span>);
+					      <span class="kw">break</span>;
+				      }
+			      }
 	}
 	<span class="prelude-val">Ok</span>(())
 }

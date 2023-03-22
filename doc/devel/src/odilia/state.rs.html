@@ -283,20 +283,11 @@
 <a href="#283" id="283">283</a>
 <a href="#284" id="284">284</a>
 <a href="#285" id="285">285</a>
-<a href="#286" id="286">286</a>
-<a href="#287" id="287">287</a>
-<a href="#288" id="288">288</a>
-<a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::{fs, sync::atomic::AtomicI32};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
 <span class="kw">use </span>eyre::WrapErr;
-<span class="kw">use </span>ssip_client::{tokio::Request <span class="kw">as </span>SSIPRequest, MessageScope, Priority};
+<span class="kw">use </span>ssip_client_async::{tokio::Request <span class="kw">as </span>SSIPRequest, MessageScope, Priority};
 <span class="kw">use </span>tokio::sync::{mpsc::Sender, Mutex};
 <span class="kw">use </span>zbus::{fdo::DBusProxy, names::UniqueName, zvariant::ObjectPath, MatchRule, MessageType};
 
@@ -307,12 +298,11 @@
 	convertable::Convertable,
 	events::{GenericEvent, HasMatchRule, HasRegistryEventString},
 	signify::Signified,
-	text::Granularity,
 	AccessibilityConnection,
 };
 <span class="kw">use </span>odilia_cache::{AccessiblePrimitive, Cache, CacheItem};
 <span class="kw">use </span>odilia_common::{
-	errors::{CacheError, OdiliaError},
+	errors::{AccessiblePrimitiveConversionError, CacheError, ConfigError, OdiliaError},
 	modes::ScreenReaderMode,
 	settings::ApplicationConfig,
 	types::TextSelectionArea,
@@ -320,14 +310,14 @@
 };
 <span class="kw">use </span>std::sync::Arc;
 
-<span class="kw">pub struct </span>ScreenReaderState {
+<span class="attr">#[allow(clippy::module_name_repetitions)]
+</span><span class="kw">pub struct </span>ScreenReaderState {
 	<span class="kw">pub </span>atspi: AccessibilityConnection,
 	<span class="kw">pub </span>dbus: DBusProxy&lt;<span class="lifetime">&#39;static</span>&gt;,
 	<span class="kw">pub </span>ssip: Sender&lt;SSIPRequest&gt;,
 	<span class="kw">pub </span>config: ApplicationConfig,
 	<span class="kw">pub </span>previous_caret_position: AtomicI32,
 	<span class="kw">pub </span>mode: Mutex&lt;ScreenReaderMode&gt;,
-	<span class="kw">pub </span>granularity: Mutex&lt;Granularity&gt;,
 	<span class="kw">pub </span>accessible_history: Mutex&lt;CircularQueue&lt;AccessiblePrimitive&gt;&gt;,
 	<span class="kw">pub </span>event_history: Mutex&lt;CircularQueue&lt;atspi::Event&gt;&gt;,
 	<span class="kw">pub </span>cache: Arc&lt;Cache&gt;,
@@ -356,7 +346,7 @@
 			fs::copy(<span class="string">&quot;config.toml&quot;</span>, <span class="kw-2">&amp;</span>config_path)
 				.expect(<span class="string">&quot;Unable to copy default config file.&quot;</span>);
 		}
-		<span class="kw">let </span>config_path = config_path.to_str().unwrap().to_owned();
+		<span class="kw">let </span>config_path = config_path.to_str().ok_or(ConfigError::PathNotFound)<span class="question-mark">?</span>.to_owned();
 		<span class="macro">tracing::debug!</span>(path=%config_path, <span class="string">&quot;loading configuration file&quot;</span>);
 		<span class="kw">let </span>config = ApplicationConfig::new(<span class="kw-2">&amp;</span>config_path)
 			.wrap_err(<span class="string">&quot;unable to load configuration file&quot;</span>)<span class="question-mark">?</span>;
@@ -365,9 +355,8 @@
 		<span class="kw">let </span>previous_caret_position = AtomicI32::new(<span class="number">0</span>);
 		<span class="kw">let </span>accessible_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
 		<span class="kw">let </span>event_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
-		<span class="kw">let </span>cache = Arc::new(Cache::new(atspi.connection().to_owned()));
+		<span class="kw">let </span>cache = Arc::new(Cache::new(atspi.connection().clone()));
 
-		<span class="kw">let </span>granularity = Mutex::new(Granularity::Line);
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			atspi,
 			dbus,
@@ -375,7 +364,6 @@
 			config,
 			previous_caret_position,
 			mode,
-			granularity,
 			accessible_history,
 			event_history,
 			cache,
@@ -393,7 +381,7 @@
 				Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)),
 				<span class="self">self</span>.atspi.connection(),
 			)
-			.<span class="kw">await</span><span class="question-mark">?</span>);
+			.<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
 		}
 		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
@@ -408,7 +396,7 @@
 				Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)),
 				<span class="self">self</span>.atspi.connection(),
 			)
-			.<span class="kw">await</span><span class="question-mark">?</span>);
+			.<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
 		}
 		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
@@ -446,15 +434,16 @@
 		}
 		<span class="kw">for </span>child <span class="kw">in </span>children_in_range {
 			<span class="kw">let </span>child_hyper = child.to_hyperlink().<span class="kw">await</span><span class="question-mark">?</span>;
-			<span class="kw">let </span>child_start = child_hyper.start_index().<span class="kw">await</span><span class="question-mark">? </span><span class="kw">as </span>usize;
-			<span class="kw">let </span>child_end = child_hyper.end_index().<span class="kw">await</span><span class="question-mark">? </span><span class="kw">as </span>usize;
+			<span class="kw">let </span>child_start = usize::try_from(child_hyper.start_index().<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
+			<span class="kw">let </span>child_end = usize::try_from(child_hyper.end_index().<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
 			<span class="kw">let </span>child_text = <span class="macro">format!</span>(
 				<span class="string">&quot;{}, {}&quot;</span>,
 				child.name().<span class="kw">await</span><span class="question-mark">?</span>,
 				child.get_role_name().<span class="kw">await</span><span class="question-mark">?
 			</span>);
 			text_selection.replace_range(
-				child_start + (start <span class="kw">as </span>usize)..child_end + (start <span class="kw">as </span>usize),
+				child_start + (usize::try_from(start)<span class="question-mark">?</span>)
+					..child_end + (usize::try_from(start)<span class="question-mark">?</span>),
 				<span class="kw-2">&amp;</span>child_text,
 			);
 		}
@@ -519,22 +508,9 @@
 		history.push(event);
 	}
 
-	<span class="kw">pub async fn </span>history_item&lt;<span class="lifetime">&#39;a</span>&gt;(
-		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		index: usize,
-	) -&gt; OdiliaResult&lt;<span class="prelude-ty">Option</span>&lt;AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; {
+	<span class="kw">pub async fn </span>history_item&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;AccessiblePrimitive&gt; {
 		<span class="kw">let </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
-		<span class="kw">if </span>history.len() &lt;= index {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
-		}
-		<span class="kw">let </span>a11y_prim = {
-			history.iter()
-				.nth(index)
-				.expect(<span class="string">&quot;Looking for invalid index in accessible history&quot;</span>)
-				.to_owned()
-		};
-		<span class="kw">let </span>a11y = a11y_prim.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(a11y))
+		history.iter().nth(index).cloned()
 	}
 
 	<span class="doccomment">/// Adds a new accessible to the history. We only store 16 previous accessibles, but theoretically, it should be lower.
@@ -568,8 +544,14 @@
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
-		<span class="kw">let </span>sender = event.sender().unwrap().unwrap().to_owned();
-		<span class="kw">let </span>path = event.path().unwrap().to_owned();
+		<span class="kw">let </span>sender = event
+			.sender()<span class="question-mark">?
+			</span>.ok_or(AccessiblePrimitiveConversionError::NoSender)<span class="question-mark">?
+			</span>.to_owned();
+		<span class="kw">let </span>path = event
+			.path()
+			.ok_or(AccessiblePrimitiveConversionError::NoPathId)<span class="question-mark">?
+			</span>.to_owned();
 		<span class="prelude-val">Ok</span>(AccessibleProxy::builder(<span class="self">self</span>.connection())
 			.cache_properties(zbus::CacheProperties::No)
 			.destination(sender)<span class="question-mark">?

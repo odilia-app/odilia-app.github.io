@@ -194,7 +194,6 @@
 <a href="#194" id="194">194</a>
 <a href="#195" id="195">195</a>
 <a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
 </pre><pre class="rust"><code><span class="kw">mod </span>cache;
 <span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
@@ -221,7 +220,7 @@
 	events::{Direction, ScreenReaderEvent},
 	result::OdiliaResult,
 };
-<span class="kw">use </span>ssip_client::Priority;
+<span class="kw">use </span>ssip_client_async::Priority;
 
 <span class="kw">pub async fn </span>structural_navigation(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
@@ -229,8 +228,8 @@
 	role: Role,
 ) -&gt; OdiliaResult&lt;bool&gt; {
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Structural nav call begins!&quot;</span>);
-	<span class="kw">let </span>curr = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">? </span>{
-		<span class="prelude-val">Some</span>(acc) =&gt; acc,
+	<span class="kw">let </span>curr = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+		<span class="prelude-val">Some</span>(acc) =&gt; acc.into_accessible(state.atspi.connection()).<span class="kw">await</span><span class="question-mark">?</span>,
 		<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
 	};
 	<span class="kw">let </span>roles = <span class="macro">vec!</span>[role];
@@ -247,9 +246,10 @@
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(next) = curr.get_next(<span class="kw-2">&amp;</span>mt, dir == Direction::Backward).<span class="kw">await</span><span class="question-mark">? </span>{
 		<span class="kw">let </span>comp = next.to_component().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>texti = next.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>curr_prim = curr.try_into()<span class="question-mark">?</span>;
 		<span class="kw">let _ </span>= comp.grab_focus().<span class="kw">await</span><span class="question-mark">?</span>;
 		comp.scroll_to(ScrollType::TopLeft).<span class="kw">await</span><span class="question-mark">?</span>;
-		state.update_accessible(curr.try_into().unwrap()).<span class="kw">await</span>;
+		state.update_accessible(curr_prim).<span class="kw">await</span>;
 		<span class="kw">let _ </span>= texti.set_caret_offset(<span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>role = next.get_role().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>len = texti.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -283,11 +283,6 @@
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::StopSpeech) =&gt; {
 			      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Stopping speech!&quot;</span>);
 			      <span class="kw">let _ </span>= state.stop_speech().<span class="kw">await</span>;
-			    },
-			    <span class="prelude-val">Some</span>(ScreenReaderEvent::ChangeGranularity(granularity)) =&gt; {
-			      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Changing granularity of read text.&quot;</span>);
-			      <span class="kw">let </span><span class="kw-2">mut </span>sr_granularity = state.granularity.lock().<span class="kw">await</span>;
-			      <span class="kw-2">*</span>sr_granularity = granularity;
 			    },
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::ChangeMode(new_sr_mode)) =&gt; {
 						<span class="macro">tracing::debug!</span>(<span class="string">&quot;Changing mode to {:?}&quot;</span>, new_sr_mode);
@@ -377,14 +372,17 @@
 	<span class="comment">// Dispatch based on interface
 	</span><span class="kw">match </span><span class="kw-2">&amp;</span>event {
 		Event::Interfaces(EventInterfaces::Object(object_event)) =&gt; {
-			object::dispatch(state, object_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			object::dispatch(state, object_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		Event::Interfaces(EventInterfaces::Document(document_event)) =&gt; {
-			document::dispatch(state, document_event).<span class="kw">await</span><span class="question-mark">?
-		</span>}
+			document::dispatch(state, document_event).<span class="kw">await</span><span class="question-mark">?</span>;
+		}
 		Event::Cache(cache_event) =&gt; cache::dispatch(state, cache_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		other_event =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown interface: {:#?}&quot;</span>, other_event)
+			<span class="macro">tracing::debug!</span>(
+				<span class="string">&quot;Ignoring event with unknown interface: {:#?}&quot;</span>,
+				other_event
+			);
 		}
 	}
 	<span class="comment">//let accessible_id = state.new_accessible(&amp;interface).await?.path().try_into()?;

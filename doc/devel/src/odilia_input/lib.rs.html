@@ -172,7 +172,26 @@
 <a href="#172" id="172">172</a>
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
-</pre><pre class="rust"><code><span class="kw">use </span>nix::unistd::Uid;
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+</pre><pre class="rust"><code><span class="attr">#![deny(
+	clippy::all,
+	clippy::pedantic,
+	clippy::cargo,
+	clippy::map_unwrap_or,
+	clippy::unwrap_used,
+	unsafe_code
+)]
+
+</span><span class="kw">use </span>nix::unistd::Uid;
 <span class="kw">use </span>odilia_common::events::ScreenReaderEvent;
 <span class="kw">use </span>std::{
 	env,
@@ -184,12 +203,11 @@
 <span class="kw">use </span>tokio::{fs, io::AsyncReadExt, net::UnixListener, sync::broadcast, sync::mpsc::Sender};
 
 <span class="kw">fn </span>get_log_file_name() -&gt; String {
-	<span class="kw">let </span>time = <span class="kw">match </span>SystemTime::now().duration_since(UNIX_EPOCH) {
-		<span class="prelude-val">Ok</span>(n) =&gt; n.as_secs().to_string(),
-		<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
-			<span class="macro">tracing::error!</span>(<span class="string">&quot;SystemTime before UnixEpoch!&quot;</span>);
-			exit(<span class="number">1</span>);
-		}
+	<span class="kw">let </span>time = <span class="kw">if let </span><span class="prelude-val">Ok</span>(n) = SystemTime::now().duration_since(UNIX_EPOCH) {
+		n.as_secs().to_string()
+	} <span class="kw">else </span>{
+		<span class="macro">tracing::error!</span>(<span class="string">&quot;SystemTime before UnixEpoch!&quot;</span>);
+		exit(<span class="number">1</span>);
 	};
 
 	<span class="kw">match </span>env::var(<span class="string">&quot;XDG_DATA_HOME&quot;</span>) {
@@ -210,14 +228,17 @@
 	}
 }
 
-<span class="kw">pub async fn </span>sr_event_receiver(
+<span class="doccomment">/// Receives [`odilia_common::events::ScreenReaderEvent`] structs, then sends them over the `event_sender` socket.
+/// This function will exit upon cancelation via a message from `shutdown_rx` parameter.
+/// # Errors
+/// This function will return an error type if the same function is already running.
+/// This is checked by looking for a file on disk. If the file exists, this program is probably already running.
+/// If there is no way to get access to the directory, then this function will call `exit(1)`; TODO: should probably return a result instead.
+</span><span class="kw">pub async fn </span>sr_event_receiver(
 	event_sender: Sender&lt;ScreenReaderEvent&gt;,
 	shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
 ) -&gt; eyre::Result&lt;()&gt; {
-	<span class="comment">//tracing::trace!(&quot;Setting process umask.&quot;);
-	//umask(Mode::S_IWGRP | Mode::S_IWOTH);
-
-	</span><span class="kw">let </span>(pid_file_path, sock_file_path) = get_file_paths();
+	<span class="kw">let </span>(pid_file_path, sock_file_path) = get_file_paths();
 	<span class="kw">let </span>log_file_name = get_log_file_name();
 
 	<span class="kw">let </span>log_path = Path::new(<span class="kw-2">&amp;</span>log_file_name);
@@ -250,9 +271,7 @@
 		<span class="kw">let </span><span class="kw-2">mut </span>sys = System::new_all();
 		sys.refresh_all();
 		<span class="kw">for </span>(pid, process) <span class="kw">in </span>sys.processes() {
-			<span class="kw">if </span>pid.to_string() == odilias_pid
-				&amp;&amp; process.exe() == env::current_exe().unwrap()
-			{
+			<span class="kw">if </span>pid.to_string() == odilias_pid &amp;&amp; process.exe() == env::current_exe()<span class="question-mark">? </span>{
 				<span class="macro">tracing::error!</span>(<span class="string">&quot;Server is already running!&quot;</span>);
 				exit(<span class="number">1</span>);
 			}
@@ -288,38 +307,39 @@
 	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Listener activated!&quot;</span>);
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
-		    msg = listener.accept() =&gt; {
-			<span class="kw">match </span>msg {
-			    <span class="prelude-val">Ok</span>((<span class="kw-2">mut </span>socket, address)) =&gt; {
-				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ok from socket&quot;</span>);
-				<span class="kw">let </span><span class="kw-2">mut </span>response = String::new();
-				<span class="kw">match </span>socket.read_to_string(<span class="kw-2">&amp;mut </span>response).<span class="kw">await </span>{
-				  <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {},
-				  <span class="prelude-val">Err</span>(e) =&gt; {
-				    <span class="macro">tracing::error!</span>(<span class="string">&quot;Error reading from socket {:#?}&quot;</span>, e);
-				  }
-				}
-				<span class="comment">// if valid screen reader event
-				</span><span class="kw">match </span>serde_json::from_str::&lt;ScreenReaderEvent&gt;(<span class="kw-2">&amp;</span>response) {
-				  <span class="prelude-val">Ok</span>(sre) =&gt; {
-				    <span class="kw">match  </span>event_sender.send(sre).<span class="kw">await </span>{
-				      <span class="prelude-val">Err</span>(err) =&gt;  <span class="macro">tracing::error!</span>(<span class="string">&quot;Error sending ScreenReaderEvent over socket: {}&quot;</span>, err),
-				      <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Sent SR event&quot;</span>),
+			msg = listener.accept() =&gt; {
+			    <span class="kw">match </span>msg {
+				<span class="prelude-val">Ok</span>((<span class="kw-2">mut </span>socket, address)) =&gt; {
+				    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Ok from socket&quot;</span>);
+				    <span class="kw">let </span><span class="kw-2">mut </span>response = String::new();
+				    <span class="kw">match </span>socket.read_to_string(<span class="kw-2">&amp;mut </span>response).<span class="kw">await </span>{
+				      <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {},
+				      <span class="prelude-val">Err</span>(e) =&gt; {
+					<span class="macro">tracing::error!</span>(<span class="string">&quot;Error reading from socket {:#?}&quot;</span>, e);
+				      }
 				    }
-				  },
-				  <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Invalid odilia event. {:#?}&quot;</span>, e)
-				}
-				<span class="macro">tracing::debug!</span>(<span class="string">&quot;Socket: {:?} Address: {:?} Response: {}&quot;</span>, socket, address, response);
-			    },
-			    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;accept function failed: {:?}&quot;</span>, e),
-			}
-			<span class="kw">continue</span>;
-		    }
-		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Shutting down input socker.&quot;</span>);
-			<span class="kw">break</span>;
-		    }
+				    <span class="comment">// if valid screen reader event
+				    </span><span class="kw">match </span>serde_json::from_str::&lt;ScreenReaderEvent&gt;(<span class="kw-2">&amp;</span>response) {
+				      <span class="prelude-val">Ok</span>(sre) =&gt; {
+					<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = event_sender.send(sre).<span class="kw">await </span>{
+					  <span class="macro">tracing::error!</span>(<span class="string">&quot;Error sending ScreenReaderEvent over socket: {}&quot;</span>, e);
+		} <span class="kw">else </span>{
+					  <span class="macro">tracing::debug!</span>(<span class="string">&quot;Sent SR event&quot;</span>);
 		}
+				      },
+				      <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Invalid odilia event. {:#?}&quot;</span>, e),
+				    }
+				    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Socket: {:?} Address: {:?} Response: {}&quot;</span>, socket, address, response);
+				},
+				<span class="prelude-val">Err</span>(e) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;accept function failed: {:?}&quot;</span>, e),
+			    }
+			    <span class="kw">continue</span>;
+			}
+			<span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
+			    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Shutting down input socker.&quot;</span>);
+			    <span class="kw">break</span>;
+			}
+		    }
 	}
 	<span class="prelude-val">Ok</span>(())
 }

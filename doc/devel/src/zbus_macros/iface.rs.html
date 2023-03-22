@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.10.0/src/iface.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iface.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.11.1/src/iface.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iface.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -905,41 +905,52 @@
 <a href="#904" id="904">904</a>
 <a href="#905" id="905">905</a>
 <a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
-<a href="#910" id="910">910</a>
-<a href="#911" id="911">911</a>
-<a href="#912" id="912">912</a>
-<a href="#913" id="913">913</a>
-<a href="#914" id="914">914</a>
-<a href="#915" id="915">915</a>
-<a href="#916" id="916">916</a>
-<a href="#917" id="917">917</a>
-<a href="#918" id="918">918</a>
-<a href="#919" id="919">919</a>
-<a href="#920" id="920">920</a>
-<a href="#921" id="921">921</a>
-<a href="#922" id="922">922</a>
-<a href="#923" id="923">923</a>
-<a href="#924" id="924">924</a>
-<a href="#925" id="925">925</a>
-<a href="#926" id="926">926</a>
-<a href="#927" id="927">927</a>
-<a href="#928" id="928">928</a>
-<a href="#929" id="929">929</a>
-<a href="#930" id="930">930</a>
 </pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::TokenStream;
 <span class="kw">use </span>quote::{format_ident, quote};
 <span class="kw">use </span>std::collections::BTreeMap;
 <span class="kw">use </span>syn::{
-    <span class="self">self</span>, parse_quote, punctuated::Punctuated, AngleBracketedGenericArguments, AttributeArgs,
-    Error, FnArg, GenericArgument, ImplItem, ItemImpl, Lit::Str, Meta, Meta::NameValue, MetaList,
-    MetaNameValue, NestedMeta, PatType, PathArguments, ReturnType, Signature, Token, Type,
-    TypePath,
+    <span class="self">self</span>, parse_quote, punctuated::Punctuated, spanned::Spanned, AngleBracketedGenericArguments,
+    AttributeArgs, Error, FnArg, GenericArgument, ImplItem, ItemImpl, Lit::Str, Meta,
+    Meta::NameValue, MetaList, MetaNameValue, NestedMeta, PatType, PathArguments, ReturnType,
+    Signature, Token, Type, TypePath,
 };
+<span class="kw">use </span>zvariant_utils::{case, def_attrs};
 
 <span class="kw">use </span><span class="kw">crate</span>::utils::<span class="kw-2">*</span>;
+
+<span class="comment">// FIXME: The list name should once be &quot;zbus&quot; instead of &quot;dbus_interface&quot; (like in serde).
+</span><span class="macro">def_attrs! </span>{
+    <span class="kw">crate </span>dbus_interface;
+
+    <span class="kw">pub </span>TraitAttributes(<span class="string">&quot;trait&quot;</span>) {
+        interface str,
+        name str
+    };
+
+    <span class="kw">pub </span>MethodAttributes(<span class="string">&quot;method&quot;</span>) {
+        name str,
+        signal none,
+        property none,
+        out_args [str]
+    };
+}
+
+<span class="kw">mod </span>arg_attrs {
+    <span class="kw">use </span>zvariant_utils::def_attrs;
+
+    <span class="macro">def_attrs! </span>{
+        <span class="kw">crate </span>zbus;
+
+        <span class="kw">pub </span>ArgAttributes(<span class="string">&quot;argument&quot;</span>) {
+            object_server none,
+            connection none,
+            header none,
+            signal_context none
+        };
+    }
+}
+
+<span class="kw">use </span>arg_attrs::ArgAttributes;
 
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">struct </span>Property&lt;<span class="lifetime">&#39;a</span>&gt; {
@@ -986,24 +997,19 @@
         <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>input.self_ty, <span class="string">&quot;Invalid type&quot;</span>)),
     };
 
-    <span class="kw">let </span><span class="kw-2">mut </span>iface_name = <span class="prelude-val">None</span>;
-    <span class="kw">for </span>arg <span class="kw">in </span>args {
-        <span class="kw">match </span>arg {
-            NestedMeta::Meta(NameValue(nv)) =&gt; {
-                <span class="kw">if </span>nv.path.is_ident(<span class="string">&quot;interface&quot;</span>) || nv.path.is_ident(<span class="string">&quot;name&quot;</span>) {
-                    <span class="kw">if let </span>Str(lit) = nv.lit {
-                        iface_name = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;Invalid interface argument&quot;</span>));
-                    }
-                } <span class="kw">else </span>{
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.path, <span class="string">&quot;Unsupported argument&quot;</span>));
-                }
+    <span class="kw">let </span>iface_name =
+        {
+            <span class="kw">let </span>TraitAttributes { name, interface } = TraitAttributes::parse_nested_metas(<span class="kw-2">&amp;</span>args)<span class="question-mark">?</span>;
+
+            <span class="kw">match </span>(name, interface) {
+                (<span class="prelude-val">Some</span>(name), <span class="prelude-val">None</span>) | (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(name)) =&gt; name,
+                (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;org.freedesktop.{ty}&quot;</span>),
+                (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(syn::Error::new(
+                    input.span(),
+                    <span class="string">&quot;`name` and `interface` attributes should not be specified at the same time&quot;</span>,
+                )),
             }
-            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>arg, <span class="string">&quot;Unknown attribute&quot;</span>)),
-        }
-    }
-    <span class="kw">let </span>iface_name = iface_name.unwrap_or(<span class="macro">format!</span>(<span class="string">&quot;org.freedesktop.{ty}&quot;</span>));
+        };
 
     <span class="kw">for </span>method <span class="kw">in </span><span class="kw-2">&amp;mut </span>input.items {
         <span class="kw">let </span><span class="kw-2">mut </span>method = <span class="kw">match </span>method {
@@ -1020,10 +1026,11 @@
             ..
         } = <span class="kw-2">&amp;mut </span>method.sig;
 
-        <span class="kw">let </span>attrs = parse_item_attributes(<span class="kw-2">&amp;</span>method.attrs, <span class="string">&quot;dbus_interface&quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>attrs = MethodAttributes::parse(<span class="kw-2">&amp;</span>method.attrs)<span class="question-mark">?</span>;
         method
             .attrs
             .retain(|attr| !attr.path.is_ident(<span class="string">&quot;dbus_interface&quot;</span>));
+
         <span class="kw">let </span>docs = get_doc_attrs(<span class="kw-2">&amp;</span>method.attrs)
             .iter()
             .filter_map(|attr| {
@@ -1038,12 +1045,9 @@
             .collect();
 
         <span class="kw">let </span>doc_comments = to_xml_docs(docs);
-        <span class="kw">let </span>is_property = attrs.iter().any(|x| x.is_property());
-        <span class="kw">let </span>is_signal = attrs.iter().any(|x| x.is_signal());
-        <span class="kw">let </span>out_args = attrs.iter().find(|x| x.is_out_args()).map(|x| <span class="kw">match </span>x {
-            ItemAttribute::OutArgs(a) =&gt; a,
-            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
-        });
+        <span class="kw">let </span>is_property = attrs.property;
+        <span class="kw">let </span>is_signal = attrs.signal;
+        <span class="kw">let </span>out_args = attrs.out_args.as_deref();
         <span class="macro">assert!</span>(!is_property || !is_signal);
 
         <span class="kw">let </span>has_inputs = inputs.len() &gt; <span class="number">1</span>;
@@ -1088,7 +1092,7 @@
 
         <span class="kw">let </span><span class="kw-2">mut </span>intro_args = <span class="macro">quote!</span>();
         intro_args.extend(introspect_input_args(<span class="kw-2">&amp;</span>typed_inputs, is_signal));
-        <span class="kw">let </span>is_result_output = introspect_add_output_args(<span class="kw-2">&amp;mut </span>intro_args, output, <span class="kw-2">&amp;</span>out_args)<span class="question-mark">?</span>;
+        <span class="kw">let </span>is_result_output = introspect_add_output_args(<span class="kw-2">&amp;mut </span>intro_args, output, out_args)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>(args_from_msg, args_names) = get_args_from_inputs(<span class="kw-2">&amp;</span>typed_inputs, <span class="kw-2">&amp;</span>zbus)<span class="question-mark">?</span>;
 
@@ -1108,20 +1112,14 @@
             <span class="macro">quote!</span>(c.reply(m, <span class="kw-2">&amp;</span>reply).<span class="kw">await</span>)
         };
 
-        <span class="kw">let </span>member_name = attrs
-            .iter()
-            .find_map(|x| <span class="kw">match </span>x {
-                ItemAttribute::Name(n) =&gt; <span class="prelude-val">Some</span>(n.to_string()),
-                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-            })
-            .unwrap_or_else(|| {
-                <span class="kw">let </span><span class="kw-2">mut </span>name = ident.to_string();
-                <span class="kw">if </span>is_property &amp;&amp; has_inputs {
-                    <span class="macro">assert!</span>(name.starts_with(<span class="string">&quot;set_&quot;</span>));
-                    name = name[<span class="number">4</span>..].to_string();
-                }
-                pascal_case(<span class="kw-2">&amp;</span>name)
-            });
+        <span class="kw">let </span>member_name = attrs.name.clone().unwrap_or_else(|| {
+            <span class="kw">let </span><span class="kw-2">mut </span>name = ident.to_string();
+            <span class="kw">if </span>is_property &amp;&amp; has_inputs {
+                <span class="macro">assert!</span>(name.starts_with(<span class="string">&quot;set_&quot;</span>));
+                name = name[<span class="number">4</span>..].to_string();
+            }
+            pascal_case(<span class="kw-2">&amp;</span>name)
+        });
 
         <span class="kw">if </span>is_signal {
             introspect.extend(doc_comments);
@@ -1140,9 +1138,10 @@
             </span>});
         } <span class="kw">else if </span>is_property {
             <span class="kw">let </span>p = properties.entry(member_name.to_string());
-            <span class="kw">let </span>prop_changed_method_name = <span class="macro">format_ident!</span>(<span class="string">&quot;{}_changed&quot;</span>, snake_case(<span class="kw-2">&amp;</span>member_name));
-            <span class="kw">let </span>prop_invalidate_method_name =
-                <span class="macro">format_ident!</span>(<span class="string">&quot;{}_invalidate&quot;</span>, snake_case(<span class="kw-2">&amp;</span>member_name));
+
+            <span class="kw">let </span>sk_member_name = case::snake_case(<span class="kw-2">&amp;</span>member_name);
+            <span class="kw">let </span>prop_changed_method_name = <span class="macro">format_ident!</span>(<span class="string">&quot;{sk_member_name}_changed&quot;</span>);
+            <span class="kw">let </span>prop_invalidate_method_name = <span class="macro">format_ident!</span>(<span class="string">&quot;{sk_member_name}_invalidate&quot;</span>);
 
             <span class="kw">let </span>p = p.or_insert_with(Property::new);
             p.doc_comments.extend(doc_comments);
@@ -1487,56 +1486,9 @@
         <span class="kw">let </span><span class="kw-2">mut </span>tys = Vec::new();
 
         <span class="kw">for </span>input <span class="kw">in </span>inputs {
-            <span class="kw">let </span><span class="kw-2">mut </span>is_server = <span class="bool-val">false</span>;
-            <span class="kw">let </span><span class="kw-2">mut </span>is_conn = <span class="bool-val">false</span>;
-            <span class="kw">let </span><span class="kw-2">mut </span>is_header = <span class="bool-val">false</span>;
-            <span class="kw">let </span><span class="kw-2">mut </span>is_signal_context = <span class="bool-val">false</span>;
+            <span class="kw">let </span>attrs = ArgAttributes::parse(<span class="kw-2">&amp;</span>input.attrs)<span class="question-mark">?</span>;
 
-            <span class="kw">for </span>attr <span class="kw">in </span><span class="kw-2">&amp;</span>input.attrs {
-                <span class="kw">if </span>!attr.path.is_ident(<span class="string">&quot;zbus&quot;</span>) {
-                    <span class="kw">continue</span>;
-                }
-
-                <span class="kw">let </span>nested = <span class="kw">match </span>attr.parse_meta()<span class="question-mark">? </span>{
-                    Meta::List(MetaList { nested, .. }) =&gt; nested,
-                    meta =&gt; {
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
-                            meta,
-                            <span class="string">&quot;Unsupported syntax\n
-                             Did you mean `#[zbus(...)]`?&quot;</span>,
-                        ));
-                    }
-                };
-
-                <span class="kw">for </span>item <span class="kw">in </span>nested {
-                    <span class="kw">match </span><span class="kw-2">&amp;</span>item {
-                        NestedMeta::Meta(Meta::Path(p)) =&gt; {
-                            <span class="kw">if </span>p.is_ident(<span class="string">&quot;object_server&quot;</span>) {
-                                is_server = <span class="bool-val">true</span>;
-                            } <span class="kw">else if </span>p.is_ident(<span class="string">&quot;connection&quot;</span>) {
-                                is_conn = <span class="bool-val">true</span>;
-                            } <span class="kw">else if </span>p.is_ident(<span class="string">&quot;header&quot;</span>) {
-                                is_header = <span class="bool-val">true</span>;
-                            } <span class="kw">else if </span>p.is_ident(<span class="string">&quot;signal_context&quot;</span>) {
-                                is_signal_context = <span class="bool-val">true</span>;
-                            } <span class="kw">else </span>{
-                                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
-                                    item,
-                                    <span class="string">&quot;Unrecognized zbus attribute&quot;</span>,
-                                ));
-                            }
-                        }
-                        NestedMeta::Meta(<span class="kw">_</span>) =&gt; {
-                            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(item, <span class="string">&quot;Unrecognized zbus attribute&quot;</span>));
-                        }
-                        NestedMeta::Lit(l) =&gt; {
-                            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(l, <span class="string">&quot;Unexpected literal&quot;</span>))
-                        }
-                    }
-                }
-            }
-
-            <span class="kw">if </span>is_server {
+            <span class="kw">if </span>attrs.object_server {
                 <span class="kw">if </span>server_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
@@ -1546,7 +1498,7 @@
 
                 <span class="kw">let </span>server_arg = <span class="kw-2">&amp;</span>input.pat;
                 server_arg_decl = <span class="prelude-val">Some</span>(<span class="macro">quote! </span>{ <span class="kw">let </span>#server_arg = <span class="kw-2">&amp;</span>s; });
-            } <span class="kw">else if </span>is_conn {
+            } <span class="kw">else if </span>attrs.connection {
                 <span class="kw">if </span>conn_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
@@ -1556,7 +1508,7 @@
 
                 <span class="kw">let </span>conn_arg = <span class="kw-2">&amp;</span>input.pat;
                 conn_arg_decl = <span class="prelude-val">Some</span>(<span class="macro">quote! </span>{ <span class="kw">let </span>#conn_arg = <span class="kw-2">&amp;</span>c; });
-            } <span class="kw">else if </span>is_header {
+            } <span class="kw">else if </span>attrs.header {
                 <span class="kw">if </span>header_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
@@ -1569,7 +1521,7 @@
                 header_arg_decl = <span class="prelude-val">Some</span>(<span class="macro">quote! </span>{
                     <span class="kw">let </span>#header_arg = m.header()<span class="question-mark">?</span>;
                 });
-            } <span class="kw">else if </span>is_signal_context {
+            } <span class="kw">else if </span>attrs.signal_context {
                 <span class="kw">if </span>signal_context_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
@@ -1731,7 +1683,7 @@
 <span class="kw">fn </span>introspect_add_output_args(
     args: <span class="kw-2">&amp;mut </span>TokenStream,
     output: <span class="kw-2">&amp;</span>ReturnType,
-    arg_names: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Vec&lt;String&gt;&gt;,
+    arg_names: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[String]&gt;,
 ) -&gt; syn::Result&lt;bool&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>is_result_output = <span class="bool-val">false</span>;
 

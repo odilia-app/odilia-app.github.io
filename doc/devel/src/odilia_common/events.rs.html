@@ -28,15 +28,26 @@
 <a href="#28" id="28">28</a>
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
 </pre><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="kw">use </span><span class="kw">crate</span>::modes::ScreenReaderMode;
-<span class="kw">use </span>atspi::{accessible::Role, text::Granularity};
+<span class="kw">use </span>atspi::accessible::Role;
 
 <span class="attr">#[derive(Eq, PartialEq, Clone, Hash, Serialize, Deserialize)]
+</span><span class="doccomment">/// A list of features supported natively by Odilia.
 </span><span class="kw">pub enum </span>Feature {
-	Speech,
-	Braille, <span class="comment">// TODO
+	<span class="doccomment">/// Unimplemented, but will eventually stop all speech until re-activated.
+	</span>Speech,
+	<span class="doccomment">/// Unimplemented.
+	</span>Braille, <span class="comment">// TODO
 </span>}
 
 <span class="attr">#[derive(Eq, PartialEq, Clone, Hash, Serialize, Deserialize)]
@@ -48,14 +59,19 @@
 
 <span class="attr">#[derive(Eq, PartialEq, Clone, Hash, Serialize, Deserialize)]
 #[serde(tag = <span class="string">&quot;event&quot;</span>, content = <span class="string">&quot;args&quot;</span>, rename_all = <span class="string">&quot;camelCase&quot;</span>)]
+</span><span class="doccomment">/// Events which can be trigged through Odilia&#39;s external API.
+/// Subject to change without notice until v1.0, but we&#39;re [open to suggestions on our Github](https://github.com/odilia-app/odilia/); please reach out with features you&#39;d like to see.
 </span><span class="kw">pub enum </span>ScreenReaderEvent {
-	Noop, <span class="comment">// when we need to do &quot;something&quot; but this is always hardcoded as nothing
-	</span>Speak(String, u32),
-	StopSpeech,
-	Enable(Feature),
-	Disable(Feature),
-	ChangeMode(ScreenReaderMode),
-	ChangeGranularity(Granularity),
+	<span class="doccomment">/// when we need to do &quot;something&quot; but this is always hardcoded as nothing
+	</span>Noop,
+	<span class="doccomment">/// Stop all current speech.
+	</span>StopSpeech,
+	<span class="doccomment">/// Enable a feature from working.
+	</span>Enable(Feature),
+	<span class="doccomment">/// Disable a feature.
+	</span>Disable(Feature),
+	<span class="doccomment">/// Change mode of the screen reader. This is currently global, but it should be per application, and an update should only affect the current application.
+	</span>ChangeMode(ScreenReaderMode),
 	StructuralNavigation(Direction, Role),
 }
 </code></pre></div>

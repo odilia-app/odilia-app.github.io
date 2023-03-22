@@ -108,7 +108,26 @@
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
-</pre><pre class="rust"><code><span class="kw">mod </span>events;
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+</pre><pre class="rust"><code><span class="attr">#![deny(
+	clippy::all,
+	clippy::pedantic,
+	clippy::cargo,
+	clippy::map_unwrap_or,
+	clippy::unwrap_used,
+	unsafe_code
+)]
+#![allow(clippy::multiple_crate_versions)]
+
+</span><span class="kw">mod </span>events;
 <span class="kw">mod </span>logging;
 <span class="kw">mod </span>state;
 
@@ -124,7 +143,7 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>odilia_input::sr_event_receiver;
-<span class="kw">use </span>ssip_client::Priority;
+<span class="kw">use </span>ssip_client_async::Priority;
 
 <span class="kw">use </span>atspi::identify::{document, object};
 
@@ -152,19 +171,18 @@
 	<span class="comment">// this is the chanel which handles all SSIP commands. If SSIP is not allowed to operate on a separate task, then wdaiting for the receiving message can block other long-running operations like structural navigation.
 	// Although in the future, this may possibly be remidied through a proper cache, I think it still makes sense to separate SSIP&#39;s IO operations to a separate task.
 	// Like the channel above, it is very important that this is *never* full, since it can cause deadlocking if the other task sending the request is working with zbus.
-	</span><span class="kw">let </span>(ssip_req_tx, ssip_req_rx) = mpsc::channel::&lt;ssip_client::tokio::Request&gt;(<span class="number">128</span>);
+	</span><span class="kw">let </span>(ssip_req_tx, ssip_req_rx) = mpsc::channel::&lt;ssip_client_async::tokio::Request&gt;(<span class="number">128</span>);
 	<span class="comment">// Initialize state
 	</span><span class="kw">let </span>state = Arc::new(ScreenReaderState::new(ssip_req_tx).<span class="kw">await</span><span class="question-mark">?</span>);
 	<span class="kw">let </span><span class="kw-2">mut </span>ssip = odilia_tts::create_ssip_client().<span class="kw">await</span><span class="question-mark">?</span>;
 
-	<span class="kw">match </span>state.say(Priority::Message, <span class="string">&quot;Welcome to Odilia!&quot;</span>.to_string()).<span class="kw">await </span>{
-		<span class="bool-val">true </span>=&gt; <span class="macro">tracing::debug!</span>(<span class="string">&quot;Welcome message spoken.&quot;</span>),
-		<span class="bool-val">false </span>=&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Welcome message failed. Odilia is not able to continue in this state. Existing now.&quot;</span>);
-			<span class="kw">let _ </span>= state.close_speech().<span class="kw">await</span>;
-			exit(<span class="number">1</span>);
-		}
-	};
+	<span class="kw">if </span>state.say(Priority::Message, <span class="string">&quot;Welcome to Odilia!&quot;</span>.to_string()).<span class="kw">await </span>{
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Welcome message spoken.&quot;</span>);
+	} <span class="kw">else </span>{
+		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Welcome message failed. Odilia is not able to continue in this state. Existing now.&quot;</span>);
+		<span class="kw">let _ </span>= state.close_speech().<span class="kw">await</span>;
+		exit(<span class="number">1</span>);
+	}
 
 	<span class="comment">// Register events
 	</span><span class="macro">tokio::try_join!</span>(

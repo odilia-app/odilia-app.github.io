@@ -840,7 +840,93 @@
 <a href="#840" id="840">840</a>
 <a href="#841" id="841">841</a>
 <a href="#842" id="842">842</a>
-</pre><pre class="rust"><code><span class="kw">use </span>std::{
+<a href="#843" id="843">843</a>
+<a href="#844" id="844">844</a>
+<a href="#845" id="845">845</a>
+<a href="#846" id="846">846</a>
+<a href="#847" id="847">847</a>
+<a href="#848" id="848">848</a>
+<a href="#849" id="849">849</a>
+<a href="#850" id="850">850</a>
+<a href="#851" id="851">851</a>
+<a href="#852" id="852">852</a>
+<a href="#853" id="853">853</a>
+<a href="#854" id="854">854</a>
+<a href="#855" id="855">855</a>
+<a href="#856" id="856">856</a>
+<a href="#857" id="857">857</a>
+<a href="#858" id="858">858</a>
+<a href="#859" id="859">859</a>
+<a href="#860" id="860">860</a>
+<a href="#861" id="861">861</a>
+<a href="#862" id="862">862</a>
+<a href="#863" id="863">863</a>
+<a href="#864" id="864">864</a>
+<a href="#865" id="865">865</a>
+<a href="#866" id="866">866</a>
+<a href="#867" id="867">867</a>
+<a href="#868" id="868">868</a>
+<a href="#869" id="869">869</a>
+<a href="#870" id="870">870</a>
+<a href="#871" id="871">871</a>
+<a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+</pre><pre class="rust"><code><span class="attr">#![deny(
+	clippy::all,
+	clippy::pedantic,
+	clippy::cargo,
+	clippy::map_unwrap_or,
+	clippy::unwrap_used,
+	unsafe_code
+)]
+
+</span><span class="kw">use </span>std::{
 	collections::HashMap,
 	sync::{Arc, RwLock, Weak},
 };
@@ -883,7 +969,9 @@
 	</span><span class="kw">pub </span>sender: smartstring::alias::String,
 }
 <span class="kw">impl </span>AccessiblePrimitive {
-	<span class="attr">#[allow(dead_code)]
+	<span class="doccomment">/// Convert into an [`atspi::accessible::AccessibleProxy`]. Must be async because the creation of an async proxy requires async itself.
+	/// # Errors
+	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
 	</span><span class="kw">pub async fn </span>into_accessible&lt;<span class="lifetime">&#39;a</span>&gt;(
 		<span class="self">self</span>,
 		conn: <span class="kw-2">&amp;</span>zbus::Connection,
@@ -898,7 +986,9 @@
 			.build()
 			.<span class="kw">await
 	</span>}
-	<span class="attr">#[allow(dead_code)]
+	<span class="doccomment">/// Convert into an [`atspi::text::TextProxy`]. Must be async because the creation of an async proxy requires async itself.
+	/// # Errors
+	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
 	</span><span class="kw">pub async fn </span>into_text&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="self">self</span>, conn: <span class="kw-2">&amp;</span>zbus::Connection) -&gt; zbus::Result&lt;TextProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
 		<span class="kw">let </span>id = <span class="self">self</span>.id;
 		<span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
@@ -910,32 +1000,20 @@
 			.build()
 			.<span class="kw">await
 	</span>}
-	<span class="kw">pub fn </span>from_event&lt;T: GenericEvent&gt;(event: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, OdiliaError&gt; {
-		<span class="kw">let </span>sender = <span class="kw">match </span>event.sender() {
-			<span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(s)) =&gt; s,
-			<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; {
-				<span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(
-					AccessiblePrimitiveConversionError::NoSender,
-				))
-			}
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
-				<span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(
-					AccessiblePrimitiveConversionError::ErrSender,
-				))
-			}
-		};
-		<span class="kw">let </span>path = <span class="kw">match </span>event.path() {
-			<span class="prelude-val">Some</span>(path) =&gt; path,
-			<span class="prelude-val">None </span>=&gt; {
-				<span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::PrimitiveConversionError(
-					AccessiblePrimitiveConversionError::NoPathId,
-				))
-			}
-		};
-		<span class="kw">let </span>id: AccessibleId = <span class="kw">match </span>path.try_into() {
-			<span class="prelude-val">Ok</span>(id) =&gt; id,
-			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OdiliaError::Zvariant(e)),
-		};
+	<span class="doccomment">/// Turns any `atspi::event` type into an `AccessiblePrimtive`, the basic type which is used for keys in the cache.
+	/// # Errors
+	/// The errors are self-explanitory variants of the [`odilia_common::errors::AccessiblePrimitiveConversionError`].
+	</span><span class="kw">pub fn </span>from_event&lt;T: GenericEvent&gt;(
+		event: <span class="kw-2">&amp;</span>T,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AccessiblePrimitiveConversionError&gt; {
+		<span class="kw">let </span>sender = event
+			.sender()
+			.map_err(|<span class="kw">_</span>| AccessiblePrimitiveConversionError::ErrSender)<span class="question-mark">?
+			</span>.ok_or(AccessiblePrimitiveConversionError::NoSender)<span class="question-mark">?</span>;
+		<span class="kw">let </span>path = event.path().ok_or(AccessiblePrimitiveConversionError::NoPathId)<span class="question-mark">?</span>;
+		<span class="kw">let </span>id: AccessibleId = path
+			.try_into()
+			.map_err(|<span class="kw">_</span>| AccessiblePrimitiveConversionError::InvalidPath)<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ id, sender: sender.as_str().into() })
 	}
 }
@@ -987,9 +1065,8 @@
 
 	<span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-		<span class="kw">let </span>id = <span class="kw">match </span>accessible.id() {
-			<span class="prelude-val">Ok</span>(path_id) =&gt; path_id,
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
+		<span class="kw">let </span><span class="prelude-val">Ok</span>(id) = accessible.id() <span class="kw">else </span>{
+			<span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId);
 		};
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
@@ -999,10 +1076,9 @@
 
 	<span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-		<span class="kw">let </span>id = <span class="kw">match </span>accessible.id() {
-			<span class="prelude-val">Ok</span>(path_id) =&gt; path_id,
-			<span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId),
-		};
+		<span class="kw">let </span><span class="prelude-val">Ok</span>(id) = accessible.id() <span class="kw">else </span>{
+      <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId);
+    };
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
 }
@@ -1035,21 +1111,30 @@
 	</span><span class="kw">pub </span>cache: Weak&lt;Cache&gt;,
 }
 <span class="kw">impl </span>CacheItem {
-	<span class="kw">pub fn </span>parent_ref(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; OdiliaResult&lt;Arc&lt;std::sync::RwLock&lt;CacheItem&gt;&gt;&gt; {
+	<span class="doccomment">/// Return a *reference* to a parent. This is *much* cheaper than getting the parent element outright via [`Self::parent`].
+	/// # Errors
+	/// This method will return a [`CacheError::NoItem`] if no item is found within the cache.
+	</span><span class="kw">pub fn </span>parent_ref(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; OdiliaResult&lt;Arc&lt;std::sync::RwLock&lt;CacheItem&gt;&gt;&gt; {
 		<span class="kw">let </span>parent_ref = Weak::upgrade(<span class="kw-2">&amp;</span><span class="self">self</span>.parent.item);
-		<span class="kw">match </span>parent_ref {
-			<span class="prelude-val">Some</span>(p) =&gt; <span class="prelude-val">Ok</span>(p),
-			<span class="prelude-val">None </span>=&gt; {
-				<span class="kw">let </span>cache = strong_cache(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)<span class="question-mark">?</span>;
-				<span class="kw">let </span>arc_mut_parent = cache
-					.get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>.parent.key.clone())
-					.ok_or(CacheError::NoItem)<span class="question-mark">?</span>;
-				<span class="self">self</span>.parent.item = Arc::downgrade(<span class="kw-2">&amp;</span>arc_mut_parent);
-				<span class="prelude-val">Ok</span>(arc_mut_parent)
-			}
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(p) = parent_ref {
+			<span class="prelude-val">Ok</span>(p)
+		} <span class="kw">else </span>{
+			<span class="kw">let </span>cache = strong_cache(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)<span class="question-mark">?</span>;
+			<span class="kw">let </span>arc_mut_parent = cache
+				.get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>.parent.key.clone())
+				.ok_or(CacheError::NoItem)<span class="question-mark">?</span>;
+			<span class="self">self</span>.parent.item = Arc::downgrade(<span class="kw-2">&amp;</span>arc_mut_parent);
+			<span class="prelude-val">Ok</span>(arc_mut_parent)
 		}
 	}
-	<span class="kw">pub async fn </span>from_atspi_event&lt;T: Signified&gt;(
+	<span class="doccomment">/// Creates a `CacheItem` from an [`atspi::Event`] type.
+	/// # Errors
+	/// This can fail under three possible conditions:
+	///
+	/// 1. We are unable to convert information from the event into an [`AccessiblePrimitive`] hashmap key. This should never happen.
+	/// 2. We are unable to convert the [`AccessiblePrimitive`] to an [`atspi::accessible::AccessibleProxy`].
+	/// 3. The `accessible_to_cache_item` function fails for any reason. This also shouldn&#39;t happen.
+	</span><span class="kw">pub async fn </span>from_atspi_event&lt;T: Signified&gt;(
 		event: <span class="kw-2">&amp;</span>T,
 		cache: Weak&lt;Cache&gt;,
 		connection: <span class="kw-2">&amp;</span>zbus::Connection,
@@ -1057,7 +1142,17 @@
 		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
 		accessible_to_cache_item(<span class="kw-2">&amp;</span>a11y_prim.into_accessible(connection).<span class="kw">await</span><span class="question-mark">?</span>, cache).<span class="kw">await
 	</span>}
-	<span class="kw">pub async fn </span>from_atspi_cache_item(
+	<span class="doccomment">/// Convert an [`atspi::cache::CacheItem`] into a [`crate::CacheItem`].
+	/// This requires calls to `DBus`, which is quite expensive. Beware calling this too often.
+	/// # Errors
+	/// This function can fail under the following conditions:
+	///
+	/// 1. The [`atspi::cache::CacheItem`] can not be turned into a [`crate::AccessiblePrimitive`]. This should never happen.
+	/// 2. The [`crate::AccessiblePrimitive`] can not be turned into a [`atspi::accessible::AccessibleProxy`]. This should never happen.
+	/// 3. Getting children from the `AccessibleProxy` fails. This should never happen.
+	///
+	/// The only time these can fail is if the item is removed on the application side before the conversion to `AccessibleProxy`.
+	</span><span class="kw">pub async fn </span>from_atspi_cache_item(
 		atspi_cache_item: atspi::cache::CacheItem,
 		cache: Weak&lt;Cache&gt;,
 		connection: <span class="kw-2">&amp;</span>zbus::Connection,
@@ -1088,6 +1183,10 @@
 		})
 	}
 	<span class="comment">// Same as [`Accessible::get_children`], just offered as a non-async version.
+	</span><span class="doccomment">/// Get a `Vec` of children with the same type as `Self`.
+	/// # Errors
+	/// 1. Will return an `Err` variant if `self.cache` does not reference an active cache. This should never happen, but it is technically possible.
+	/// 2. Any children keys&#39; values are not found in the cache itself.
 	</span><span class="kw">pub fn </span>get_children(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OdiliaResult&lt;Vec&lt;<span class="self">Self</span>&gt;&gt; {
 		<span class="kw">let </span>derefed_cache: Arc&lt;Cache&gt; = strong_cache(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)<span class="question-mark">?</span>;
 		<span class="kw">let </span>children = <span class="self">self
@@ -1118,12 +1217,14 @@
 }
 
 <span class="kw">impl </span>CacheRef {
-	<span class="kw">pub fn </span>new(key: AccessiblePrimitive) -&gt; <span class="self">Self </span>{
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>new(key: AccessiblePrimitive) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ key, item: Weak::new() }
 	}
 
-	<span class="kw">pub fn </span>clone_inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
-		<span class="self">self</span>.item.upgrade().as_ref().map(clone_arc_mutex)
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>clone_inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
+		<span class="prelude-val">Some</span>(<span class="self">self</span>.item.upgrade().as_ref()<span class="question-mark">?</span>.read().ok()<span class="question-mark">?</span>.clone())
 	}
 }
 
@@ -1225,7 +1326,7 @@
 	<span class="kw">async fn </span>get_child_at_index(<span class="kw-2">&amp;</span><span class="self">self</span>, idx: i32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		&lt;<span class="self">Self </span><span class="kw">as </span>Accessible&gt;::get_children(<span class="self">self</span>)
 			.<span class="kw">await</span><span class="question-mark">?
-			</span>.get(idx <span class="kw">as </span>usize)
+			</span>.get(usize::try_from(idx)<span class="question-mark">?</span>)
 			.ok_or(CacheError::NoItem.into())
 			.cloned()
 	}
@@ -1346,38 +1447,51 @@
 		offset: i32,
 		granularity: Granularity,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;(String, i32, i32), <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>uoffset = offset <span class="kw">as </span>usize;
+		<span class="kw">let </span>uoffset = usize::try_from(offset)<span class="question-mark">?</span>;
 		<span class="comment">// optimisations that don&#39;t call out to DBus.
 		</span><span class="kw">if </span>granularity == Granularity::Paragraph {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="self">self</span>.text.clone(), <span class="number">0</span>, <span class="self">self</span>.text.len().try_into().unwrap()));
+			<span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="self">self</span>.text.clone(), <span class="number">0</span>, <span class="self">self</span>.text.len().try_into()<span class="question-mark">?</span>));
 		} <span class="kw">else if </span>granularity == Granularity::Char {
-			<span class="kw">let </span>range = uoffset..(uoffset+<span class="number">1</span>);
-			<span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="self">self</span>.text.get(range).unwrap().to_string(), offset, offset+<span class="number">1</span>));
+			<span class="kw">let </span>range = uoffset..=uoffset;
+			<span class="kw">return </span><span class="prelude-val">Ok</span>((
+				<span class="self">self</span>.text
+					.get(range)
+					.ok_or(CacheError::TextBoundsError)<span class="question-mark">?
+					</span>.to_string(),
+				offset,
+				offset + <span class="number">1</span>,
+			));
 		} <span class="kw">else if </span>granularity == Granularity::Word {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self</span>.text
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self
+				</span>.text
 				<span class="comment">// [char]
 				</span>.split_whitespace()
 				<span class="comment">// [(idx, char)]
-        </span>.enumerate()
+				</span>.enumerate()
 				<span class="comment">// [(word, start, end)]
-        </span>.filter_map(|(<span class="kw">_</span>, word)| {
-            <span class="kw">let </span>start = <span class="self">self</span>.text
-								<span class="comment">// [(idx, char)]
-                </span>.char_indices()
-								<span class="comment">// [(idx, char)]: uses pointer arithmatic to find start index
-                </span>.find(|<span class="kw-2">&amp;</span>(idx, <span class="kw">_</span>)| idx == word.as_ptr() <span class="kw">as </span>usize - <span class="self">self</span>.text.as_ptr() <span class="kw">as </span>usize)
-								<span class="comment">// [idx]
-                </span>.map(|(idx, <span class="kw">_</span>)| idx)
-                .unwrap();
-						<span class="comment">// calculate based on start
-            </span><span class="kw">let </span>end = start + word.len();
-						<span class="comment">// if the offset if within bounds
-						</span><span class="kw">if </span>uoffset &gt;= start &amp;&amp; uoffset &lt;= end {
-							<span class="prelude-val">Some</span>((word.to_string(), start <span class="kw">as </span>i32, end <span class="kw">as </span>i32))
-						} <span class="kw">else </span>{
-							<span class="prelude-val">None
-						</span>}
-        })
+				</span>.filter_map(|(<span class="kw">_</span>, word)| {
+					<span class="kw">let </span>start = <span class="self">self
+						</span>.text
+						<span class="comment">// [(idx, char)]
+						</span>.char_indices()
+						<span class="comment">// [(idx, char)]: uses pointer arithmatic to find start index
+						</span>.find(|<span class="kw-2">&amp;</span>(idx, <span class="kw">_</span>)| {
+							idx == word.as_ptr() <span class="kw">as </span>usize
+								- <span class="self">self</span>.text.as_ptr() <span class="kw">as </span>usize
+						})
+						<span class="comment">// [idx]
+						</span>.map(|(idx, <span class="kw">_</span>)| idx)<span class="question-mark">?</span>;
+					<span class="comment">// calculate based on start
+					</span><span class="kw">let </span>end = start + word.len();
+					<span class="kw">let </span>i_start = i32::try_from(start).ok()<span class="question-mark">?</span>;
+					<span class="kw">let </span>i_end = i32::try_from(end).ok()<span class="question-mark">?</span>;
+					<span class="comment">// if the offset if within bounds
+					</span><span class="kw">if </span>uoffset &gt;= start &amp;&amp; uoffset &lt;= end {
+						<span class="prelude-val">Some</span>((word.to_string(), i_start, i_end))
+					} <span class="kw">else </span>{
+						<span class="prelude-val">None
+					</span>}
+				})
 				<span class="comment">// get &quot;all&quot; words that match; there should be only one result
 				</span>.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
 				<span class="comment">// get the first result
@@ -1385,7 +1499,7 @@
 				<span class="comment">// if there&#39;s no matching word (out of bounds)
 				</span>.ok_or_else(|| OdiliaError::Generic(<span class="string">&quot;Out of bounds&quot;</span>.to_string()))<span class="question-mark">?
 				</span><span class="comment">// clone the reference into a value
-				</span>.clone())
+				</span>.clone());
 		}
 		<span class="comment">// any other variations, in particular, Granularity::Line, will need to call out to DBus. It&#39;s just too complex to calculate, get updates for bounding boxes, etc.
 		// this variation does NOT get a semantic line. It gets a visual line.
@@ -1397,8 +1511,8 @@
 		end_offset: i32,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;String, <span class="self">Self</span>::Error&gt; {
 		<span class="self">self</span>.text
-			.get(start_offset <span class="kw">as </span>usize..end_offset <span class="kw">as </span>usize)
-			.map_or(<span class="prelude-val">None</span>, |str_ref| <span class="prelude-val">Some</span>(str_ref.to_owned()))
+			.get(usize::try_from(start_offset)<span class="question-mark">?</span>..usize::try_from(end_offset)<span class="question-mark">?</span>)
+			.map(std::borrow::ToOwned::to_owned)
 			.ok_or(OdiliaError::Generic(<span class="string">&quot;Type is None, not Some&quot;</span>.to_string()))
 	}
 	<span class="kw">async fn </span>get_text_after_offset(
@@ -1467,7 +1581,7 @@
 		<span class="prelude-val">Ok</span>(as_text(<span class="self">self</span>).<span class="kw">await</span><span class="question-mark">?</span>.caret_offset().<span class="kw">await</span><span class="question-mark">?</span>)
 	}
 	<span class="kw">async fn </span>character_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;i32, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">self</span>.text.len() <span class="kw">as </span>i32)
+		<span class="prelude-val">Ok</span>(i32::try_from(<span class="self">self</span>.text.len())<span class="question-mark">?</span>)
 	}
 }
 
@@ -1487,29 +1601,47 @@
 // across .await points.
 </span><span class="kw">impl </span>Cache {
 	<span class="doccomment">/// create a new, fresh cache
+	</span><span class="attr">#[must_use]
 	</span><span class="kw">pub fn </span>new(conn: zbus::Connection) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{ by_id: Arc::new(DashMap::with_capacity_and_hasher(<span class="number">10_000</span>, FxBuildHasher::default())), connection: conn }
+		<span class="self">Self </span>{
+			by_id: Arc::new(DashMap::with_capacity_and_hasher(
+				<span class="number">10_000</span>,
+				FxBuildHasher::default(),
+			)),
+			connection: conn,
+		}
 	}
 	<span class="doccomment">/// add a single new item to the cache. Note that this will empty the bucket
 	/// before inserting the `CacheItem` into the cache (this is so there is
 	/// never two items with the same ID stored in the cache at the same time).
-	</span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) {
+	/// # Errors
+	/// Fails if the internal call to [`Self::add_ref`] fails.
+	</span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>id = cache_item.object.clone();
-		<span class="self">self</span>.add_ref(id, Arc::new(RwLock::new(cache_item)));
+		<span class="self">self</span>.add_ref(id, <span class="kw-2">&amp;</span>Arc::new(RwLock::new(cache_item)))
 	}
 
-	<span class="kw">pub fn </span>add_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: CacheKey, cache_item: Arc&lt;RwLock&lt;CacheItem&gt;&gt;) {
-		<span class="self">self</span>.by_id.insert(id, Arc::clone(<span class="kw-2">&amp;</span>cache_item));
-		<span class="self">Self</span>::populate_references(<span class="kw-2">&amp;</span><span class="self">self</span>.by_id, <span class="kw-2">&amp;</span>cache_item);
+	<span class="doccomment">/// Add an item via a reference instead of creating the reference.
+	/// # Errors
+	/// Can error if [`Cache::populate_references`] errors. The insertion is guarenteed to succeed.
+	</span><span class="kw">pub fn </span>add_ref(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		id: CacheKey,
+		cache_item: <span class="kw-2">&amp;</span>Arc&lt;RwLock&lt;CacheItem&gt;&gt;,
+	) -&gt; OdiliaResult&lt;()&gt; {
+		<span class="self">self</span>.by_id.insert(id, Arc::clone(cache_item));
+		<span class="self">Self</span>::populate_references(<span class="kw-2">&amp;</span><span class="self">self</span>.by_id, cache_item)
 	}
 
-	<span class="doccomment">/// Remove a single cache item
+	<span class="doccomment">/// Remove a single cache item. This function can not fail.
 	</span><span class="kw">pub fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) {
 		<span class="self">self</span>.by_id.remove(id);
 	}
-	<span class="doccomment">/// Get a single item (mutable via lock) from the cache.
-	</span><span class="comment">// For now this is kept private, as it would be easy to naively deadlock if
-	// someone does a chain of `get_ref`s on parent-&gt;child-&gt;parent, etc.
+
+	<span class="doccomment">/// Get a single item from the cache, this only gets a reference to an item, not the item itself.
+	/// You will need to either get a read or a write lock on any item returned from this function.
+	/// It also may return `None` if a value is not matched to the key.
+	</span><span class="attr">#[must_use]
 	</span><span class="kw">pub fn </span>get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;RwLock&lt;CacheItem&gt;&gt;&gt; {
 		<span class="self">self</span>.by_id.get(id).as_deref().cloned()
 	}
@@ -1518,19 +1650,22 @@
 	///
 	/// This will allow you to get the item without holding any locks to it,
 	/// at the cost of (1) a clone and (2) no guarantees that the data is kept up-to-date.
+	</span><span class="attr">#[must_use]
 	</span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
-		<span class="self">self</span>.by_id.get(id).as_deref().map(clone_arc_mutex)
+		<span class="prelude-val">Some</span>(<span class="self">self</span>.by_id.get(id).as_deref()<span class="question-mark">?</span>.read().ok()<span class="question-mark">?</span>.clone())
 	}
 
 	<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
-	</span><span class="attr">#[allow(dead_code)]
+	</span><span class="attr">#[must_use]
 	</span><span class="kw">pub fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: <span class="kw-2">&amp;</span>[CacheKey]) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
 		ids.iter().map(|id| <span class="self">self</span>.get(id)).collect()
 	}
 
 	<span class="doccomment">/// Bulk add many items to the cache; only one accessible should ever be
 	/// associated with an id.
-	</span><span class="kw">pub fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) {
+	/// # Errors
+	/// An `Err(_)` variant may be returned if the [`Cache::populate_references`] function fails.
+	</span><span class="kw">pub fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) -&gt; OdiliaResult&lt;()&gt; {
 		cache_items
 			.into_iter()
 			.map(|cache_item| {
@@ -1541,47 +1676,49 @@
 			})
 			.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;() <span class="comment">// Insert all items before populating
 			</span>.into_iter()
-			.for_each(|item| {
-				<span class="self">Self</span>::populate_references(<span class="kw-2">&amp;</span><span class="self">self</span>.by_id, <span class="kw-2">&amp;</span>item);
-			});
+			.try_for_each(|item| <span class="self">Self</span>::populate_references(<span class="kw-2">&amp;</span><span class="self">self</span>.by_id, <span class="kw-2">&amp;</span>item))
 	}
 	<span class="doccomment">/// Bulk remove all ids in the cache; this only refreshes the cache after removing all items.
-	</span><span class="attr">#[allow(dead_code)]
-	</span><span class="kw">pub fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: Vec&lt;CacheKey&gt;) {
-		ids.iter().for_each(|id| {
+	</span><span class="kw">pub fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: <span class="kw-2">&amp;</span>Vec&lt;CacheKey&gt;) {
+		<span class="kw">for </span>id <span class="kw">in </span>ids {
 			<span class="self">self</span>.by_id.remove(id);
-		});
+		}
 	}
 
-	<span class="doccomment">/// Edit a mutable CacheItem. Returns true if the update was successful.
+	<span class="doccomment">/// Edit a mutable `CacheItem`. Returns true if the update was successful.
 	///
 	/// Note: an exclusive lock for the given cache item will be placed for the
 	/// entire length of the passed function, so try to avoid any compute in it.
-	</span><span class="kw">pub fn </span>modify_item&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey, modify: F) -&gt; bool
+	///
+	/// # Errors
+	///
+	/// An [`odilia_common::errors::OdiliaError::PoisoningError`] may be returned if a write lock can not be aquired on the `CacheItem` being modified.
+	</span><span class="kw">pub fn </span>modify_item&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey, modify: F) -&gt; OdiliaResult&lt;bool&gt;
 	<span class="kw">where
 		</span>F: FnOnce(<span class="kw-2">&amp;mut </span>CacheItem),
 	{
 		<span class="comment">// I wonder if `get_mut` vs `get` makes any difference here? I suppose
 		// it will just rely on the dashmap write access vs mutex lock access.
 		// Let&#39;s default to the fairness of the mutex.
-		</span><span class="kw">let </span>entry = <span class="kw">match </span><span class="self">self</span>.by_id.get(id) {
+		</span><span class="kw">let </span>entry = <span class="kw">if let </span><span class="prelude-val">Some</span>(i) = <span class="self">self</span>.by_id.get(id) {
 			<span class="comment">// Drop the dashmap reference immediately, at the expense of an Arc clone.
-			</span><span class="prelude-val">Some</span>(i) =&gt; (<span class="kw-2">*</span>i).clone(),
-			<span class="prelude-val">None </span>=&gt; {
-				<span class="macro">tracing::trace!</span>(
-					<span class="string">&quot;The cache does not contain the requested item: {:?}&quot;</span>,
-					id
-				);
-				<span class="kw">return </span><span class="bool-val">false</span>;
-			}
+			</span>(<span class="kw-2">*</span>i).clone()
+		} <span class="kw">else </span>{
+			<span class="macro">tracing::trace!</span>(<span class="string">&quot;The cache does not contain the requested item: {:?}&quot;</span>, id);
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
 		};
-		<span class="kw">let </span><span class="kw-2">mut </span>cache_item = entry.write().unwrap();
+		<span class="kw">let </span><span class="kw-2">mut </span>cache_item = entry.write()<span class="question-mark">?</span>;
 		modify(<span class="kw-2">&amp;mut </span>cache_item);
-		<span class="bool-val">true
-	</span>}
+		<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
+	}
 
 	<span class="doccomment">/// Get a single item from the cache (note that this copies some integers to a new struct).
-	/// If the CacheItem is not found, create one, add it to the cache, and return it.
+	/// If the `CacheItem` is not found, create one, add it to the cache, and return it.
+	/// # Errors
+	/// The function will return an error if:
+	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
+	/// 2. The [`Self::add`] function fails.
+	/// 3. The [`accessible_to_cache_item`] function fails.
 	</span><span class="kw">pub async fn </span>get_or_create(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
@@ -1599,15 +1736,23 @@
 		<span class="kw">let </span>diff = end - start;
 		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Time to create cache item: {:?}&quot;</span>, diff);
 		<span class="comment">// add a clone of it to the cache
-		</span><span class="self">self</span>.add(cache_item.clone());
+		</span><span class="self">self</span>.add(cache_item.clone())<span class="question-mark">?</span>;
 		<span class="comment">// return that same cache item
 		</span><span class="prelude-val">Ok</span>(cache_item)
 	}
 
-	<span class="kw">fn </span>populate_references(cache: <span class="kw-2">&amp;</span>ThreadSafeCache, item_ref: <span class="kw-2">&amp;</span>Arc&lt;RwLock&lt;CacheItem&gt;&gt;) {
-		<span class="kw">let </span>item_wk_ref = Arc::downgrade(<span class="kw-2">&amp;</span>item_ref);
+	<span class="doccomment">/// Populate children and parent references given a cache and an `Arc&lt;RwLock&lt;CacheItem&gt;&gt;`.
+	/// This will unlock the `RwLock&lt;_&gt;`, update the references for children and parents, then go to the parent and children and do the same: update the parent for the children, then update the children referneces for the parent.
+	/// # Errors
+	/// If any references, either the ones passed in through the `item_ref` parameter, any children references, or the parent reference are unable to be unlocked, an `Err(_)` variant will be returned.
+	/// Technically it can also fail if the index of the `item_ref` in its parent exceeds `usize` on the given platform, but this is highly improbable.
+	</span><span class="kw">pub fn </span>populate_references(
+		cache: <span class="kw-2">&amp;</span>ThreadSafeCache,
+		item_ref: <span class="kw-2">&amp;</span>Arc&lt;RwLock&lt;CacheItem&gt;&gt;,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;(), OdiliaError&gt; {
+		<span class="kw">let </span>item_wk_ref = Arc::downgrade(item_ref);
 
-		<span class="kw">let </span><span class="kw-2">mut </span>item = item_ref.write().unwrap();
+		<span class="kw">let </span><span class="kw-2">mut </span>item = item_ref.write()<span class="question-mark">?</span>;
 		<span class="kw">let </span>item_key = item.object.clone();
 
 		<span class="kw">let </span>parent_key = item.parent.key.clone();
@@ -1617,30 +1762,43 @@
 		</span><span class="kw">let </span>ix_opt = usize::try_from(item.index).ok();
 
 		<span class="comment">// Update this item&#39;s children references
-		</span>item.children.iter_mut().for_each(|child_ref| {
-			cache.get(<span class="kw-2">&amp;</span>child_ref.key).as_ref().map(|child_arc| {
+		</span><span class="kw">for </span>child_ref <span class="kw">in </span><span class="kw-2">&amp;mut </span>item.children {
+			<span class="kw">if let </span><span class="prelude-val">Some</span>(child_arc) = cache.get(<span class="kw-2">&amp;</span>child_ref.key).as_ref() {
 				child_ref.item = Arc::downgrade(child_arc);
-				child_arc.write().unwrap().parent.item = Weak::clone(<span class="kw-2">&amp;</span>item_wk_ref);
-				Arc::clone(child_arc)
-			});
-		});
-
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(parent_ref) = parent_ref_opt {
-			item.parent.item = Arc::downgrade(<span class="kw-2">&amp;</span>parent_ref);
-			<span class="kw">if let </span><span class="prelude-val">Some</span>(ix) = ix_opt {
-				parent_ref
-					.write()
-					.unwrap()
-					.children
-					.get_mut(ix)
-					.filter(|i| i.key == item_key)
-					.map(|i| i.item = Weak::clone(<span class="kw-2">&amp;</span>item_wk_ref));
+				child_arc.write()<span class="question-mark">?</span>.parent.item = Weak::clone(<span class="kw-2">&amp;</span>item_wk_ref);
 			}
 		}
+
+		<span class="comment">// TODO: Should there be errors for the non let bindings?
+		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(parent_ref) = parent_ref_opt {
+			item.parent.item = Arc::downgrade(<span class="kw-2">&amp;</span>parent_ref);
+			<span class="kw">if let </span><span class="prelude-val">Some</span>(ix) = ix_opt {
+				<span class="kw">if let </span><span class="prelude-val">Some</span>(cache_ref) = parent_ref
+					.write()<span class="question-mark">?
+					</span>.children
+					.get_mut(ix)
+					.filter(|i| i.key == item_key)
+				{
+					cache_ref.item = Weak::clone(<span class="kw-2">&amp;</span>item_wk_ref);
+				}
+			}
+		}
+		<span class="prelude-val">Ok</span>(())
 	}
 }
 
-<span class="kw">pub async fn </span>accessible_to_cache_item(
+<span class="doccomment">/// Convert an [`atspi::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
+/// This runs a bunch of long-awaiting code and can take quite some time; use this sparingly.
+/// This takes most properties and some function calls through the `AccessibleProxy` structure and generates a new `CacheItem`, which will be written to cache before being sent back.
+///
+/// # Errors
+///
+/// Will return an `Err(_)` variant when:
+///
+/// 1. The `cache` parameter does not reference an active cache once the `Weak` is upgraded to an `Option&lt;Arc&lt;_&gt;&gt;`.
+/// 2. Any of the function calls on the `accessible` fail.
+/// 3. Any `(String, OwnedObjectPath) -&gt; AccessiblePrimitive` conversions fail. This *should* never happen, but technically it is possible.
+</span><span class="kw">pub async fn </span>accessible_to_cache_item(
 	accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
 	cache: Weak&lt;Cache&gt;,
 ) -&gt; OdiliaResult&lt;CacheItem&gt; {
@@ -1677,10 +1835,6 @@
 			.collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, AccessiblePrimitiveConversionError&gt;&gt;()<span class="question-mark">?</span>,
 		cache,
 	})
-}
-
-<span class="kw">pub fn </span>clone_arc_mutex&lt;T: Clone&gt;(arc: <span class="kw-2">&amp;</span>Arc&lt;RwLock&lt;T&gt;&gt;) -&gt; T {
-	arc.read().unwrap().clone()
 }
 </code></pre></div>
 </section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0 (2c8cc3432 2023-03-06)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

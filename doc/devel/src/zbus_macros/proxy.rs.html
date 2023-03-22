@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.10.0/src/proxy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.11.1/src/proxy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html">
                         <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -1164,43 +1164,48 @@
 <a href="#1163" id="1163">1163</a>
 <a href="#1164" id="1164">1164</a>
 <a href="#1165" id="1165">1165</a>
-<a href="#1166" id="1166">1166</a>
-<a href="#1167" id="1167">1167</a>
-<a href="#1168" id="1168">1168</a>
-<a href="#1169" id="1169">1169</a>
-<a href="#1170" id="1170">1170</a>
-<a href="#1171" id="1171">1171</a>
-<a href="#1172" id="1172">1172</a>
-<a href="#1173" id="1173">1173</a>
-<a href="#1174" id="1174">1174</a>
-<a href="#1175" id="1175">1175</a>
-<a href="#1176" id="1176">1176</a>
-<a href="#1177" id="1177">1177</a>
-<a href="#1178" id="1178">1178</a>
-<a href="#1179" id="1179">1179</a>
-<a href="#1180" id="1180">1180</a>
-<a href="#1181" id="1181">1181</a>
-<a href="#1182" id="1182">1182</a>
-<a href="#1183" id="1183">1183</a>
-<a href="#1184" id="1184">1184</a>
-<a href="#1185" id="1185">1185</a>
-<a href="#1186" id="1186">1186</a>
-<a href="#1187" id="1187">1187</a>
-<a href="#1188" id="1188">1188</a>
-<a href="#1189" id="1189">1189</a>
-<a href="#1190" id="1190">1190</a>
-<a href="#1191" id="1191">1191</a>
-<a href="#1192" id="1192">1192</a>
-</pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::{Literal, Span, TokenStream};
+</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::utils::{pat_ident, typed_arg, zbus_path};
+<span class="kw">use </span>proc_macro2::{Literal, Span, TokenStream};
 <span class="kw">use </span>quote::{format_ident, quote, quote_spanned, ToTokens};
 <span class="kw">use </span>regex::Regex;
-<span class="kw">use </span>std::collections::HashMap;
 <span class="kw">use </span>syn::{
     <span class="self">self</span>, fold::Fold, parse_quote, spanned::Spanned, AttributeArgs, Error, FnArg, Ident, ItemTrait,
-    NestedMeta, ReturnType, TraitItemMethod, Type,
+    ReturnType, TraitItemMethod,
 };
+<span class="kw">use </span>zvariant_utils::{case, def_attrs};
 
-<span class="kw">use </span><span class="kw">crate</span>::utils::<span class="kw-2">*</span>;
+<span class="comment">// FIXME: The list name should once be &quot;zbus&quot; instead of &quot;dbus_proxy&quot; (like in serde).
+</span><span class="macro">def_attrs! </span>{
+    <span class="kw">crate </span>dbus_proxy;
+
+    <span class="kw">pub </span>ImplAttributes(<span class="string">&quot;impl block&quot;</span>) {
+        interface str,
+        name str,
+        assume_defaults bool,
+        default_path str,
+        default_service str,
+        async_name str,
+        blocking_name str,
+        gen_async bool,
+        gen_blocking bool
+    };
+
+    <span class="kw">pub </span>MethodAttributes(<span class="string">&quot;method&quot;</span>) {
+        name str,
+        property {
+            <span class="kw">pub </span>PropertyAttributes(<span class="string">&quot;property&quot;</span>) {
+                emits_changed_signal str
+            }
+        },
+        signal none,
+        object str,
+        async_object str,
+        blocking_object str,
+        no_reply none,
+        no_autostart none,
+        allow_interactive_auth none
+    };
+}
 
 <span class="kw">struct </span>AsyncOpts {
     blocking: bool,
@@ -1224,76 +1229,28 @@
 }
 
 <span class="kw">pub fn </span>expand(args: AttributeArgs, input: ItemTrait) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream, Error&gt; {
-    <span class="kw">let </span>(<span class="kw-2">mut </span>gen_async, <span class="kw-2">mut </span>gen_blocking) = (<span class="bool-val">true</span>, <span class="bool-val">true</span>);
-    <span class="kw">let </span>(<span class="kw-2">mut </span>async_name, <span class="kw-2">mut </span>blocking_name) = (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
-    <span class="kw">let </span><span class="kw-2">mut </span>iface_name = <span class="prelude-val">None</span>;
-    <span class="kw">let </span><span class="kw-2">mut </span>assume_defaults = <span class="prelude-val">None</span>;
-    <span class="kw">let </span><span class="kw-2">mut </span>default_path = <span class="prelude-val">None</span>;
-    <span class="kw">let </span><span class="kw-2">mut </span>default_service = <span class="prelude-val">None</span>;
-    <span class="kw">for </span>arg <span class="kw">in </span><span class="kw-2">&amp;</span>args {
-        <span class="kw">match </span>arg {
-            NestedMeta::Meta(syn::Meta::NameValue(nv)) =&gt; {
-                <span class="kw">if </span>nv.path.is_ident(<span class="string">&quot;interface&quot;</span>) || nv.path.is_ident(<span class="string">&quot;name&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Str(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        iface_name = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;invalid interface argument&quot;</span>));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;assume_defaults&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Bool(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        assume_defaults = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
-                            <span class="kw-2">&amp;</span>nv.lit,
-                            <span class="string">&quot;invalid assume_defaults argument&quot;</span>,
-                        ));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;default_path&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Str(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        default_path = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;invalid path argument&quot;</span>));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;default_service&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Str(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        default_service = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;invalid service argument&quot;</span>));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;async_name&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Str(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        async_name = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;invalid async_name argument&quot;</span>));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;blocking_name&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Str(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        blocking_name = <span class="prelude-val">Some</span>(lit.value());
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
-                            <span class="kw-2">&amp;</span>nv.lit,
-                            <span class="string">&quot;invalid blocking_name argument&quot;</span>,
-                        ));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;gen_async&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Bool(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        gen_async = lit.value();
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;invalid gen_async argument&quot;</span>));
-                    }
-                } <span class="kw">else if </span>nv.path.is_ident(<span class="string">&quot;gen_blocking&quot;</span>) {
-                    <span class="kw">if let </span>syn::Lit::Bool(lit) = <span class="kw-2">&amp;</span>nv.lit {
-                        gen_blocking = lit.value();
-                    } <span class="kw">else </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;invalid gen_blocking argument&quot;</span>));
-                    }
-                } <span class="kw">else </span>{
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>nv.lit, <span class="string">&quot;unsupported argument&quot;</span>));
-                }
-            }
-            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(arg, <span class="string">&quot;unknown attribute&quot;</span>)),
-        }
-    }
+    <span class="kw">let </span>ImplAttributes {
+        interface,
+        name,
+        assume_defaults,
+        default_path,
+        default_service,
+        async_name,
+        blocking_name,
+        gen_async,
+        gen_blocking,
+    } = ImplAttributes::parse_nested_metas(<span class="kw-2">&amp;</span>args)<span class="question-mark">?</span>;
+
+    <span class="kw">let </span>iface_name = <span class="kw">match </span>(interface, name) {
+        (<span class="prelude-val">Some</span>(name), <span class="prelude-val">None</span>) | (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(name)) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(name)),
+        (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; <span class="prelude-val">Err</span>(syn::Error::new(
+            input.span(),
+            <span class="string">&quot;both `interface` and `name` attributes shouldn&#39;t be specified at the same time&quot;</span>,
+        )),
+    }<span class="question-mark">?</span>;
+    <span class="kw">let </span>gen_async = gen_async.unwrap_or(<span class="bool-val">true</span>);
+    <span class="kw">let </span>gen_blocking = gen_blocking.unwrap_or(<span class="bool-val">true</span>);
 
     <span class="comment">// Some sanity checks
     </span><span class="macro">assert!</span>(
@@ -1407,36 +1364,39 @@
 
     <span class="kw">for </span>i <span class="kw">in </span>input.items.iter() {
         <span class="kw">if let </span>syn::TraitItem::Method(m) = i {
+            <span class="kw">let </span><span class="kw-2">mut </span>attrs = MethodAttributes::parse(<span class="kw-2">&amp;</span>m.attrs)<span class="question-mark">?</span>;
+
             <span class="kw">let </span>method_name = m.sig.ident.to_string();
-            <span class="kw">let </span>attrs = parse_item_attributes(<span class="kw-2">&amp;</span>m.attrs, <span class="string">&quot;dbus_proxy&quot;</span>)<span class="question-mark">?</span>;
-            <span class="kw">let </span>property_attrs = attrs.iter().find_map(|x| <span class="kw">match </span>x {
-                ItemAttribute::Property(v) =&gt; <span class="prelude-val">Some</span>(v),
-                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-            });
-            <span class="kw">let </span>is_property = property_attrs.is_some();
-            <span class="kw">let </span>is_signal = attrs.iter().any(|x| x.is_signal());
+
+            <span class="kw">let </span>is_property = attrs.property.is_some();
+            <span class="kw">let </span>is_signal = attrs.signal;
             <span class="kw">let </span>has_inputs = m.sig.inputs.len() &gt; <span class="number">1</span>;
-            <span class="kw">let </span>member_name = attrs
-                .iter()
-                .find_map(|x| <span class="kw">match </span>x {
-                    ItemAttribute::Name(n) =&gt; <span class="prelude-val">Some</span>(n.to_string()),
-                    <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-                })
-                .unwrap_or_else(|| {
-                    pascal_case(<span class="kw">if </span>is_property &amp;&amp; has_inputs {
+
+            <span class="kw">let </span>member_name = attrs.name.take().unwrap_or_else(|| {
+                case::pascal_or_camel_case(
+                    <span class="kw">if </span>is_property &amp;&amp; has_inputs {
                         <span class="macro">assert!</span>(method_name.starts_with(<span class="string">&quot;set_&quot;</span>));
                         <span class="kw-2">&amp;</span>method_name[<span class="number">4</span>..]
                     } <span class="kw">else </span>{
                         <span class="kw-2">&amp;</span>method_name
-                    })
-                });
-            <span class="kw">let </span>m = <span class="kw">if let </span><span class="prelude-val">Some</span>(prop_attrs) = property_attrs {
-                <span class="macro">assert!</span>(is_property);
+                    },
+                    <span class="bool-val">true</span>,
+                )
+            });
+
+            <span class="kw">let </span>m = <span class="kw">if let </span><span class="prelude-val">Some</span>(prop_attrs) = <span class="kw-2">&amp;</span>attrs.property {
                 has_properties = <span class="bool-val">true</span>;
-                <span class="kw">let </span>emits_changed_signal = PropertyEmitsChangedSignal::parse_from_attrs(prop_attrs);
+
+                <span class="kw">let </span>emits_changed_signal = <span class="kw">if let </span><span class="prelude-val">Some</span>(s) = <span class="kw-2">&amp;</span>prop_attrs.emits_changed_signal {
+                    PropertyEmitsChangedSignal::parse(s, m.span())<span class="question-mark">?
+                </span>} <span class="kw">else </span>{
+                    PropertyEmitsChangedSignal::True
+                };
+
                 <span class="kw">if let </span>PropertyEmitsChangedSignal::False = emits_changed_signal {
                     uncached_properties.push(member_name.clone());
                 }
+
                 gen_proxy_property(
                     <span class="kw-2">&amp;</span>member_name,
                     <span class="kw-2">&amp;</span>method_name,
@@ -1458,7 +1418,7 @@
 
                 method
             } <span class="kw">else </span>{
-                gen_proxy_method_call(<span class="kw-2">&amp;</span>member_name, <span class="kw-2">&amp;</span>method_name, m, <span class="kw-2">&amp;</span>async_opts)
+                gen_proxy_method_call(<span class="kw-2">&amp;</span>member_name, <span class="kw-2">&amp;</span>method_name, m, <span class="kw-2">&amp;</span>attrs, <span class="kw-2">&amp;</span>async_opts)
             };
             methods.extend(m);
         }
@@ -1664,6 +1624,7 @@
     method_name: <span class="kw-2">&amp;</span>str,
     snake_case_name: <span class="kw-2">&amp;</span>str,
     m: <span class="kw-2">&amp;</span>TraitItemMethod,
+    attrs: <span class="kw-2">&amp;</span>MethodAttributes,
     async_opts: <span class="kw-2">&amp;</span>AsyncOpts,
 ) -&gt; TokenStream {
     <span class="kw">let </span>AsyncOpts {
@@ -1684,39 +1645,26 @@
         .filter_map(typed_arg)
         .filter_map(pat_ident)
         .collect();
-    <span class="kw">let </span>attrs = parse_item_attributes(<span class="kw-2">&amp;</span>m.attrs, <span class="string">&quot;dbus_proxy&quot;</span>).unwrap();
-    <span class="kw">let </span>async_proxy_object = attrs.iter().find_map(|x| <span class="kw">match </span>x {
-        ItemAttribute::AsyncObject(o) =&gt; <span class="prelude-val">Some</span>(o.clone()),
-        <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-    });
-    <span class="kw">let </span>blocking_proxy_object = attrs.iter().find_map(|x| <span class="kw">match </span>x {
-        ItemAttribute::BlockingObject(o) =&gt; <span class="prelude-val">Some</span>(o.clone()),
-        <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-    });
-    <span class="kw">let </span>proxy_object = attrs.iter().find_map(|x| <span class="kw">match </span>x {
-        ItemAttribute::Object(o) =&gt; {
-            <span class="kw">if </span><span class="kw-2">*</span>blocking {
-                <span class="comment">// FIXME: for some reason Rust doesn&#39;t let us move `blocking_proxy_object` so we&#39;ve to clone.
-                </span>blocking_proxy_object
-                    .as_ref()
-                    .cloned()
-                    .or_else(|| <span class="prelude-val">Some</span>(<span class="macro">format!</span>(<span class="string">&quot;{o}ProxyBlocking&quot;</span>)))
-            } <span class="kw">else </span>{
-                async_proxy_object
-                    .as_ref()
-                    .cloned()
-                    .or_else(|| <span class="prelude-val">Some</span>(<span class="macro">format!</span>(<span class="string">&quot;{o}Proxy&quot;</span>)))
-            }
+
+    <span class="kw">let </span>proxy_object = attrs.object.as_ref().map(|o| {
+        <span class="kw">if </span><span class="kw-2">*</span>blocking {
+            <span class="comment">// FIXME: for some reason Rust doesn&#39;t let us move `blocking_proxy_object` so we&#39;ve to clone.
+            </span>attrs
+                .blocking_object
+                .as_ref()
+                .cloned()
+                .unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;{o}ProxyBlocking&quot;</span>))
+        } <span class="kw">else </span>{
+            attrs
+                .async_object
+                .as_ref()
+                .cloned()
+                .unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;{o}Proxy&quot;</span>))
         }
-        <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
     });
-    <span class="kw">let </span>no_reply = attrs.iter().any(|x| <span class="macro">matches!</span>(x, ItemAttribute::NoReply));
-    <span class="kw">let </span>no_autostart = attrs
-        .iter()
-        .any(|x| <span class="macro">matches!</span>(x, ItemAttribute::NoAutoStart));
-    <span class="kw">let </span>allow_interactive_auth = attrs
-        .iter()
-        .any(|x| <span class="macro">matches!</span>(x, ItemAttribute::AllowInteractiveAuth));
+    <span class="kw">let </span>no_reply = attrs.no_reply;
+    <span class="kw">let </span>no_autostart = attrs.no_autostart;
+    <span class="kw">let </span>allow_interactive_auth = attrs.allow_interactive_auth;
 
     <span class="kw">let </span>method_flags = <span class="kw">match </span>(no_reply, no_autostart, allow_interactive_auth) {
         (<span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Some</span>(<span class="macro">quote!</span>(::std::convert::Into::into(
@@ -1877,21 +1825,19 @@
 }
 
 <span class="kw">impl </span>PropertyEmitsChangedSignal {
-    <span class="doccomment">/// Macro property attribute key, like `#[dbus_proxy(property(emits_changed_signal = &quot;...&quot;))]`.
-    </span><span class="kw">const </span>ATTRIBUTE_KEY: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;emits_changed_signal&quot;</span>;
+    <span class="kw">fn </span>parse(s: <span class="kw-2">&amp;</span>str, span: Span) -&gt; syn::Result&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">use </span>PropertyEmitsChangedSignal::<span class="kw-2">*</span>;
 
-    <span class="doccomment">/// Parse the value from macro attributes.
-    </span><span class="kw">fn </span>parse_from_attrs(attrs: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; <span class="self">Self </span>{
-        attrs
-            .get(<span class="self">Self</span>::ATTRIBUTE_KEY)
-            .map(|val| <span class="kw">match </span>val.as_str() {
-                <span class="string">&quot;true&quot; </span>=&gt; PropertyEmitsChangedSignal::True,
-                <span class="string">&quot;invalidates&quot; </span>=&gt; PropertyEmitsChangedSignal::Invalidates,
-                <span class="string">&quot;const&quot; </span>=&gt; PropertyEmitsChangedSignal::Const,
-                <span class="string">&quot;false&quot; </span>=&gt; PropertyEmitsChangedSignal::False,
-                x =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid attribute &#39;{} = {}&#39;&quot;</span>, <span class="self">Self</span>::ATTRIBUTE_KEY, x),
-            })
-            .unwrap_or_default()
+        <span class="kw">match </span>s {
+            <span class="string">&quot;true&quot; </span>=&gt; <span class="prelude-val">Ok</span>(True),
+            <span class="string">&quot;invalidates&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Invalidates),
+            <span class="string">&quot;const&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Const),
+            <span class="string">&quot;false&quot; </span>=&gt; <span class="prelude-val">Ok</span>(False),
+            other =&gt; <span class="prelude-val">Err</span>(syn::Error::new(
+                span,
+                <span class="macro">format!</span>(<span class="string">&quot;invalid value \&quot;{other}\&quot; for attribute `property(emits_changed_signal)`&quot;</span>),
+            )),
+        }
     }
 }
 
@@ -2027,7 +1973,7 @@
     iface_name: <span class="kw-2">&amp;</span>str,
     signal_name: <span class="kw-2">&amp;</span>str,
     snake_case_name: <span class="kw-2">&amp;</span>str,
-    m: <span class="kw-2">&amp;</span>TraitItemMethod,
+    method: <span class="kw-2">&amp;</span>TraitItemMethod,
     async_opts: <span class="kw-2">&amp;</span>AsyncOpts,
     gen_sig_args: bool,
 ) -&gt; (TokenStream, TokenStream) {
@@ -2037,22 +1983,22 @@
         blocking,
     } = async_opts;
     <span class="kw">let </span>zbus = zbus_path();
-    <span class="kw">let </span>other_attrs: Vec&lt;<span class="kw">_</span>&gt; = m
+    <span class="kw">let </span>other_attrs: Vec&lt;<span class="kw">_</span>&gt; = method
         .attrs
         .iter()
         .filter(|a| !a.path.is_ident(<span class="string">&quot;dbus_proxy&quot;</span>))
         .collect();
-    <span class="kw">let </span>input_types: Vec&lt;Box&lt;Type&gt;&gt; = m
+    <span class="kw">let </span>input_types: Vec&lt;<span class="kw">_</span>&gt; = method
         .sig
         .inputs
         .iter()
         .filter_map(|arg| <span class="kw">match </span>arg {
-            FnArg::Typed(p) =&gt; <span class="prelude-val">Some</span>(p.ty.clone()),
+            FnArg::Typed(p) =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">&amp;*</span>p.ty),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         })
         .collect();
     <span class="kw">let </span>input_types_s: Vec&lt;<span class="kw">_</span>&gt; = SetLifetimeS
-        .fold_signature(m.sig.clone())
+        .fold_signature(method.sig.clone())
         .inputs
         .iter()
         .filter_map(|arg| <span class="kw">match </span>arg {
@@ -2060,7 +2006,7 @@
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         })
         .collect();
-    <span class="kw">let </span>args: Vec&lt;Ident&gt; = m
+    <span class="kw">let </span>args: Vec&lt;Ident&gt; = method
         .sig
         .inputs
         .iter()
@@ -2073,7 +2019,7 @@
         .map(|(i, <span class="kw">_</span>)| Literal::usize_unsuffixed(i))
         .collect();
 
-    <span class="kw">let </span><span class="kw-2">mut </span>generics = m.sig.generics.clone();
+    <span class="kw">let </span><span class="kw-2">mut </span>generics = method.sig.generics.clone();
     <span class="kw">let </span>where_clause = generics.where_clause.get_or_insert(<span class="macro">parse_quote!</span>(<span class="kw">where</span>));
     <span class="kw">for </span>param <span class="kw">in </span>generics
         .params
@@ -2135,7 +2081,7 @@
         <span class="macro">quote! </span>{
             <span class="attr">#[doc = #receive_with_args_gen_doc]
             </span>#(#other_attrs)*
-            <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_with_args_name(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="kw-2">&amp;</span>[(u8, <span class="kw-2">&amp;</span>str)]) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">&#39;c</span>&gt;&gt;
+            <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_with_args_name(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="kw-2">&amp;</span>[(u8, <span class="kw-2">&amp;</span>str)]) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">&#39;static</span>&gt;&gt;
             {
                 <span class="self">self</span>.receive_signal_with_args(#signal_name, args)#wait.map(#stream_name)
             }
@@ -2144,7 +2090,7 @@
     <span class="kw">let </span>receive_signal = <span class="macro">quote! </span>{
         <span class="attr">#[doc = #receive_gen_doc]
         </span>#(#other_attrs)*
-        <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">&#39;c</span>&gt;&gt;
+        <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">&#39;static</span>&gt;&gt;
         {
             <span class="self">self</span>.receive_signal(#signal_name)#wait.map(#stream_name)
         }

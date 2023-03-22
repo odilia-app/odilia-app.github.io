@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":[["Request","Request for SSIP server."],["Response","Response from SSIP server."]],"struct":[["Client","SSIP client on generic stream"]],"trait":[["Source","A trait to extract the raw file descriptor from an underlying object."]]};

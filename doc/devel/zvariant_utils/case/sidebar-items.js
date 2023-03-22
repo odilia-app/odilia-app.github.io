@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["pascal_or_camel_case","Convert to pascal or camel case, assuming snake case."],["snake_case","Convert to snake case, assuming pascal case."]]};

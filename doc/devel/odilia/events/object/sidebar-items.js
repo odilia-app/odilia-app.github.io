@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["dispatch",""]],"mod":[["children_changed",""],["state_changed",""],["text_caret_moved",""],["text_changed",""]]};

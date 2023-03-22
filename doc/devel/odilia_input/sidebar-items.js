@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["sr_event_receiver","Receives [`odilia_common::events::ScreenReaderEvent`] structs, then sends them over the `event_sender` socket. This function will exit upon cancelation via a message from `shutdown_rx` parameter."]]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":[["MouseEvents","Example"]],"struct":[["AbsEvent","Example"],["ButtonEvent","Example"],["RelEvent","Example"]]};

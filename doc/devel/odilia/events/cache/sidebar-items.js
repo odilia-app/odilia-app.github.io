@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["add_accessible",""],["dispatch",""],["remove_accessible",""]]};

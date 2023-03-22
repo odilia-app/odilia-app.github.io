@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":[["elements",""],["errors",""],["events",""],["modes",""],["result",""],["settings",""],["types",""]],"type":[["Accessible",""]]};

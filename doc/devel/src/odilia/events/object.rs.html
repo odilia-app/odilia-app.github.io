@@ -671,6 +671,10 @@
 <a href="#671" id="671">671</a>
 <a href="#672" id="672">672</a>
 <a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi::identify::object::ObjectEvents;
 
@@ -996,8 +1000,8 @@
 		<span class="kw">let </span>old_pos = usize::try_from(old_position)<span class="question-mark">?</span>;
 
 		<span class="comment">// if the user has moved into a new item, then also read a whole line.
-    </span><span class="macro">println!</span>(<span class="string">&quot;{new_id:?},{old_id:?}&quot;</span>);
-    <span class="macro">println!</span>(<span class="string">&quot;{old_pos},{new_pos}&quot;</span>);
+		</span><span class="macro">println!</span>(<span class="string">&quot;{new_id:?},{old_id:?}&quot;</span>);
+		<span class="macro">println!</span>(<span class="string">&quot;{old_pos},{new_pos}&quot;</span>);
 		<span class="kw">if </span>new_id != old_id {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(new_item
 				.get_string_at_offset(new_position, Granularity::Line)
@@ -1076,7 +1080,8 @@
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(());
 		}
 		<span class="kw">let </span>new_item = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">let </span>new_prim = new_item.object.clone();
+
+		<span class="kw">let </span>new_prim = new_item.object.clone();
 		<span class="kw">let </span>text = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
 			<span class="prelude-val">Some</span>(old_prim) =&gt; {
 				<span class="kw">let </span>old_pos = state.previous_caret_position.load(Ordering::Relaxed);
@@ -1091,7 +1096,7 @@
 			</span>}
 		};
 		state.say(Priority::Text, text).<span class="kw">await</span>;
-    state.update_accessible(new_prim).<span class="kw">await</span>;
+		state.update_accessible(new_prim).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(())
 	}
 
@@ -1104,7 +1109,9 @@
 			<span class="string">&quot;&quot; </span>=&gt; text_cursor_moved(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
 			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
 		}
-    state.previous_caret_position.store(event.position(), Ordering::Relaxed);
+
+		state.previous_caret_position
+			.store(event.position(), Ordering::Relaxed);
 		<span class="prelude-val">Ok</span>(())
 	}
 } <span class="comment">// end of text_caret_moved
@@ -1199,7 +1206,8 @@
 			<span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>),
 		)
 		.<span class="kw">await</span>;
-    state.update_accessible(accessible.object).<span class="kw">await</span>;
+
+		state.update_accessible(accessible.object).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(())
 	}
 }

@@ -1,3 +1,3 @@
 (function() {var implementors = {
-"zbus":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.68.1/alloc/string/trait.ToString.html\" title=\"trait alloc::string::ToString\">ToString</a> for <a class=\"struct\" href=\"zbus/struct.MatchRule.html\" title=\"struct zbus::MatchRule\">MatchRule</a>&lt;'_&gt;"]]
+"zbus":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.68.2/alloc/string/trait.ToString.html\" title=\"trait alloc::string::ToString\">ToString</a> for <a class=\"struct\" href=\"zbus/struct.MatchRule.html\" title=\"struct zbus::MatchRule\">MatchRule</a>&lt;'_&gt;"]]
 };if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

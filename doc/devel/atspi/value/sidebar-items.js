@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["ValueProxy",""],["ValueProxyBlocking",""]],"trait":[["Value",""],["ValueBlocking",""]]};
+window.SIDEBAR_ITEMS = {"struct":["ValueProxy","ValueProxyBlocking"],"trait":["Value","ValueBlocking"]};

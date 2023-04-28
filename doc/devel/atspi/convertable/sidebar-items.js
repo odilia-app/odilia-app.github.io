@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["Convertable",""],["ConvertableBlocking",""]]};
+window.SIDEBAR_ITEMS = {"trait":["Convertable","ConvertableBlocking"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Request","Request for SSIP server."],["Response","Response from SSIP server."]],"struct":[["AsyncClient","SSIP client on generic async stream"]]};
+window.SIDEBAR_ITEMS = {"enum":["Request","Response"],"struct":["AsyncClient"]};

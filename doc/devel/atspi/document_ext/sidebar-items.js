@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["DocumentBlockingExt",""],["DocumentBlockingExtError",""],["DocumentExt",""],["DocumentExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["DocumentBlockingExt","DocumentBlockingExtError","DocumentExt","DocumentExtError"]};

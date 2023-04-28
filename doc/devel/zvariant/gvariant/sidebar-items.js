@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Deserializer","Our GVariant deserialization implementation."],["Serializer","Our serialization implementation."]]};
+window.SIDEBAR_ITEMS = {"struct":["Deserializer","Serializer"]};

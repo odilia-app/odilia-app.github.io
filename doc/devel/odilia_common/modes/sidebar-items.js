@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["ScreenReaderMode",""]]};
+window.SIDEBAR_ITEMS = {"struct":["ScreenReaderMode"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["ElementType",""]]};
+window.SIDEBAR_ITEMS = {"enum":["ElementType"]};

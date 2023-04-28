@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["AccessibleId",""]],"trait":[["HasAccessibleId",""]]};
+window.SIDEBAR_ITEMS = {"enum":["AccessibleId"],"trait":["HasAccessibleId"]};

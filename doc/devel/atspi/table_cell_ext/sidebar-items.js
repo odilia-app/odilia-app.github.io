@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["TableCellBlockingExt",""],["TableCellBlockingExtError",""],["TableCellExt",""],["TableCellExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["TableCellBlockingExt","TableCellBlockingExtError","TableCellExt","TableCellExtError"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["DeviceEventListenerBlockingExt",""],["DeviceEventListenerBlockingExtError",""],["DeviceEventListenerExt",""],["DeviceEventListenerExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["DeviceEventListenerBlockingExt","DeviceEventListenerBlockingExtError","DeviceEventListenerExt","DeviceEventListenerExtError"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["EditableTextProxy",""],["EditableTextProxyBlocking",""]],"trait":[["EditableText",""],["EditableTextBlocking",""]]};
+window.SIDEBAR_ITEMS = {"struct":["EditableTextProxy","EditableTextProxyBlocking"],"trait":["EditableText","EditableTextBlocking"]};

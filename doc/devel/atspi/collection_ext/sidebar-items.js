@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["CollectionBlockingExt",""],["CollectionBlockingExtError",""],["CollectionExt",""],["CollectionExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["CollectionBlockingExt","CollectionBlockingExtError","CollectionExt","CollectionExtError"]};

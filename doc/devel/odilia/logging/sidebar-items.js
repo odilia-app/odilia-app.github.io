@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":[["DEFAULT_LOG_FILTER",""]],"fn":[["init","Initialise the logging stack."]]};
+window.SIDEBAR_ITEMS = {"constant":["DEFAULT_LOG_FILTER"],"fn":["init"],"static":["CALLSITE","META"]};

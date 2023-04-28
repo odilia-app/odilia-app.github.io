@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"type":[["OdiliaResult",""]]};
+window.SIDEBAR_ITEMS = {"type":["OdiliaResult"]};

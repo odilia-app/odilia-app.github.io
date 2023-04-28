@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["async_std",""],["client",""],["constants",""],["fifo",""],["net",""],["tcp",""],["tokio",""],["types",""]],"struct":[["QueuedClient","Client with a queue of requests."]]};
+window.SIDEBAR_ITEMS = {"mod":["async_std","client","constants","fifo","net","tcp","tokio","types"],"struct":["QueuedClient"]};

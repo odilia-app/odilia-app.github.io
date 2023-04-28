@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ActionBlockingExt",""],["ActionBlockingExtError",""],["ActionExt",""],["ActionExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ActionBlockingExt","ActionBlockingExtError","ActionExt","ActionExtError"]};

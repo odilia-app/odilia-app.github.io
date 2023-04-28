@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Builder",""],["TcpStream","A TCP stream between a local and a remote socket."]]};
+window.SIDEBAR_ITEMS = {"struct":["Builder","TcpStream"]};

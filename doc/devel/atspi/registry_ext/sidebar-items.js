@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["RegistryBlockingExt",""],["RegistryBlockingExtError",""],["RegistryExt",""],["RegistryExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["RegistryBlockingExt","RegistryBlockingExtError","RegistryExt","RegistryExtError"]};

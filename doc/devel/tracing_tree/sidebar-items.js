@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["HierarchicalLayer",""]]};
+window.SIDEBAR_ITEMS = {"struct":["HierarchicalLayer"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["AtspiError","An error type that can describe atspi and `std` and different `zbus` errors."],["ObjectPathConversionError",""]]};
+window.SIDEBAR_ITEMS = {"enum":["AtspiError","ObjectPathConversionError"]};

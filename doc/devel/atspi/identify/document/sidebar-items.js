@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["DocumentEvents","Example"]],"struct":[["AttributesChangedEvent","Example"],["ContentChangedEvent","Example"],["LoadCompleteEvent","Example"],["LoadStoppedEvent","Example"],["PageChangedEvent","Example"],["ReloadEvent","Example"]]};
+window.SIDEBAR_ITEMS = {"enum":["DocumentEvents"],"struct":["AttributesChangedEvent","ContentChangedEvent","LoadCompleteEvent","LoadStoppedEvent","PageChangedEvent","ReloadEvent"]};

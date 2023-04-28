@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["add",""],["dispatch",""],["get_child_primitive",""],["remove",""]]};
+window.SIDEBAR_ITEMS = {"fn":["add","dispatch","get_child_primitive","remove"],"static":["CALLSITE","META"]};

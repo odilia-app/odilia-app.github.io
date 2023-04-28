@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["HypertextBlockingExt",""],["HypertextBlockingExtError",""],["HypertextExt",""],["HypertextExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["HypertextBlockingExt","HypertextBlockingExtError","HypertextExt","HypertextExtError"]};

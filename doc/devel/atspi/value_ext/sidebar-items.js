@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ValueBlockingExt",""],["ValueBlockingExtError",""],["ValueExt",""],["ValueExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ValueBlockingExt","ValueBlockingExtError","ValueExt","ValueExtError"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Focus","A `Focus` signal."],["FocusArgs","`Focus` signal arguments."],["FocusIterator","A `Iterator` implementation that yields [`Focus`] signals."],["FocusProxy",""],["FocusProxyBlocking",""],["FocusStream","A `Stream` implementation that yields [`Focus`] signals."]]};
+window.SIDEBAR_ITEMS = {"struct":["Focus","FocusArgs","FocusIterator","FocusProxy","FocusProxyBlocking","FocusStream"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["ImageBlockingExt",""],["ImageBlockingExtError",""],["ImageExt",""],["ImageExtError",""]]};
+window.SIDEBAR_ITEMS = {"trait":["ImageBlockingExt","ImageBlockingExtError","ImageExt","ImageExtError"]};

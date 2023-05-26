@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-0.13.0/src/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-0.15.1/src/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../atspi/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -376,6 +376,126 @@
 <a href="#376" id="376">376</a>
 <a href="#377" id="377">377</a>
 <a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+<a href="#487" id="487">487</a>
+<a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
+<a href="#492" id="492">492</a>
+<a href="#493" id="493">493</a>
+<a href="#494" id="494">494</a>
+<a href="#495" id="495">495</a>
+<a href="#496" id="496">496</a>
+<a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
 </pre><pre class="rust"><code><span class="doccomment">//! # `DBus` interface proxy for: `org.a11y.atspi.Accessible`
 //!
 //! This code was generated by `zbus-xmlgen` `2.0.1` from `DBus` introspection data.
@@ -389,7 +509,7 @@
 //!
 
 </span><span class="kw">use </span><span class="kw">crate</span>::atspi_proxy;
-<span class="kw">use crate</span>::{accessible_id::HasAccessibleId, AccessibleId, AtspiError, InterfaceSet, StateSet};
+<span class="kw">use crate</span>::{AtspiError, InterfaceSet, StateSet};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus::zvariant::Type;
 
@@ -611,34 +731,151 @@
 	Mark,
 	Suggestion,
 	PushButtonMenu,
-	LastDefined,
 }
+
+<span class="kw">const </span>ROLE_NAMES: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str] = <span class="kw-2">&amp;</span>[
+	<span class="string">&quot;invalid&quot;</span>,
+	<span class="string">&quot;accelerator label&quot;</span>,
+	<span class="string">&quot;alert&quot;</span>,
+	<span class="string">&quot;animation&quot;</span>,
+	<span class="string">&quot;arrow&quot;</span>,
+	<span class="string">&quot;calendar&quot;</span>,
+	<span class="string">&quot;canvas&quot;</span>,
+	<span class="string">&quot;check box&quot;</span>,
+	<span class="string">&quot;check menu item&quot;</span>,
+	<span class="string">&quot;color chooser&quot;</span>,
+	<span class="string">&quot;column header&quot;</span>,
+	<span class="string">&quot;combo box&quot;</span>,
+	<span class="string">&quot;date editor&quot;</span>,
+	<span class="string">&quot;desktop icon&quot;</span>,
+	<span class="string">&quot;desktop frame&quot;</span>,
+	<span class="string">&quot;dial&quot;</span>,
+	<span class="string">&quot;dialog&quot;</span>,
+	<span class="string">&quot;directory pane&quot;</span>,
+	<span class="string">&quot;drawing area&quot;</span>,
+	<span class="string">&quot;file chooser&quot;</span>,
+	<span class="string">&quot;filler&quot;</span>,
+	<span class="string">&quot;focus traversable&quot;</span>,
+	<span class="string">&quot;font chooser&quot;</span>,
+	<span class="string">&quot;frame&quot;</span>,
+	<span class="string">&quot;glass pane&quot;</span>,
+	<span class="string">&quot;html container&quot;</span>,
+	<span class="string">&quot;icon&quot;</span>,
+	<span class="string">&quot;image&quot;</span>,
+	<span class="string">&quot;internal frame&quot;</span>,
+	<span class="string">&quot;label&quot;</span>,
+	<span class="string">&quot;layered pane&quot;</span>,
+	<span class="string">&quot;list&quot;</span>,
+	<span class="string">&quot;list item&quot;</span>,
+	<span class="string">&quot;menu&quot;</span>,
+	<span class="string">&quot;menu bar&quot;</span>,
+	<span class="string">&quot;menu item&quot;</span>,
+	<span class="string">&quot;option pane&quot;</span>,
+	<span class="string">&quot;page tab&quot;</span>,
+	<span class="string">&quot;page tab list&quot;</span>,
+	<span class="string">&quot;panel&quot;</span>,
+	<span class="string">&quot;password text&quot;</span>,
+	<span class="string">&quot;popup menu&quot;</span>,
+	<span class="string">&quot;progress bar&quot;</span>,
+	<span class="string">&quot;push button&quot;</span>,
+	<span class="string">&quot;radio button&quot;</span>,
+	<span class="string">&quot;radio menu item&quot;</span>,
+	<span class="string">&quot;root pane&quot;</span>,
+	<span class="string">&quot;row header&quot;</span>,
+	<span class="string">&quot;scroll bar&quot;</span>,
+	<span class="string">&quot;scroll pane&quot;</span>,
+	<span class="string">&quot;separator&quot;</span>,
+	<span class="string">&quot;slider&quot;</span>,
+	<span class="string">&quot;spin button&quot;</span>,
+	<span class="string">&quot;split pane&quot;</span>,
+	<span class="string">&quot;status bar&quot;</span>,
+	<span class="string">&quot;table&quot;</span>,
+	<span class="string">&quot;table cell&quot;</span>,
+	<span class="string">&quot;table column header&quot;</span>,
+	<span class="string">&quot;table row header&quot;</span>,
+	<span class="string">&quot;tearoff menu item&quot;</span>,
+	<span class="string">&quot;terminal&quot;</span>,
+	<span class="string">&quot;text&quot;</span>,
+	<span class="string">&quot;toggle button&quot;</span>,
+	<span class="string">&quot;tool bar&quot;</span>,
+	<span class="string">&quot;tool tip&quot;</span>,
+	<span class="string">&quot;tree&quot;</span>,
+	<span class="string">&quot;tree table&quot;</span>,
+	<span class="string">&quot;unknown&quot;</span>,
+	<span class="string">&quot;viewport&quot;</span>,
+	<span class="string">&quot;window&quot;</span>,
+	<span class="string">&quot;extended&quot;</span>,
+	<span class="string">&quot;header&quot;</span>,
+	<span class="string">&quot;footer&quot;</span>,
+	<span class="string">&quot;paragraph&quot;</span>,
+	<span class="string">&quot;ruler&quot;</span>,
+	<span class="string">&quot;application&quot;</span>,
+	<span class="string">&quot;autocomplete&quot;</span>,
+	<span class="string">&quot;editbar&quot;</span>,
+	<span class="string">&quot;embedded&quot;</span>,
+	<span class="string">&quot;entry&quot;</span>,
+	<span class="string">&quot;chart&quot;</span>,
+	<span class="string">&quot;caption&quot;</span>,
+	<span class="string">&quot;document frame&quot;</span>,
+	<span class="string">&quot;heading&quot;</span>,
+	<span class="string">&quot;page&quot;</span>,
+	<span class="string">&quot;section&quot;</span>,
+	<span class="string">&quot;redundant object&quot;</span>,
+	<span class="string">&quot;form&quot;</span>,
+	<span class="string">&quot;link&quot;</span>,
+	<span class="string">&quot;input method window&quot;</span>,
+	<span class="string">&quot;table row&quot;</span>,
+	<span class="string">&quot;tree item&quot;</span>,
+	<span class="string">&quot;document spreadsheet&quot;</span>,
+	<span class="string">&quot;document presentation&quot;</span>,
+	<span class="string">&quot;document text&quot;</span>,
+	<span class="string">&quot;document web&quot;</span>,
+	<span class="string">&quot;document email&quot;</span>,
+	<span class="string">&quot;comment&quot;</span>,
+	<span class="string">&quot;list box&quot;</span>,
+	<span class="string">&quot;grouping&quot;</span>,
+	<span class="string">&quot;image map&quot;</span>,
+	<span class="string">&quot;notification&quot;</span>,
+	<span class="string">&quot;info bar&quot;</span>,
+	<span class="string">&quot;level bar&quot;</span>,
+	<span class="string">&quot;title bar&quot;</span>,
+	<span class="string">&quot;block quote&quot;</span>,
+	<span class="string">&quot;audio&quot;</span>,
+	<span class="string">&quot;video&quot;</span>,
+	<span class="string">&quot;definition&quot;</span>,
+	<span class="string">&quot;article&quot;</span>,
+	<span class="string">&quot;landmark&quot;</span>,
+	<span class="string">&quot;log&quot;</span>,
+	<span class="string">&quot;marquee&quot;</span>,
+	<span class="string">&quot;math&quot;</span>,
+	<span class="string">&quot;rating&quot;</span>,
+	<span class="string">&quot;timer&quot;</span>,
+	<span class="string">&quot;static&quot;</span>,
+	<span class="string">&quot;math fraction&quot;</span>,
+	<span class="string">&quot;math root&quot;</span>,
+	<span class="string">&quot;subscript&quot;</span>,
+	<span class="string">&quot;superscript&quot;</span>,
+	<span class="string">&quot;description list&quot;</span>,
+	<span class="string">&quot;description term&quot;</span>,
+	<span class="string">&quot;description value&quot;</span>,
+	<span class="string">&quot;footnote&quot;</span>,
+	<span class="string">&quot;content deletion&quot;</span>,
+	<span class="string">&quot;content insertion&quot;</span>,
+	<span class="string">&quot;mark&quot;</span>,
+	<span class="string">&quot;suggestion&quot;</span>,
+	<span class="string">&quot;push button menu&quot;</span>,
+];
+
+<span class="kw">impl </span>Role {
+	<span class="attr">#[must_use]
+	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+		ROLE_NAMES[<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>usize]
+	}
+}
+
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Role {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-		<span class="macro">write!</span>(
-			f,
-			<span class="string">&quot;{}&quot;</span>,
-			<span class="kw">match </span><span class="self">self </span>{
-				<span class="self">Self</span>::Heading =&gt; <span class="string">&quot;heading&quot;</span>,
-				<span class="self">Self</span>::Link =&gt; <span class="string">&quot;link&quot;</span>,
-				<span class="self">Self</span>::ListItem =&gt; <span class="string">&quot;list item&quot;</span>,
-				<span class="self">Self</span>::PushButton =&gt; <span class="string">&quot;push button&quot;</span>,
-				<span class="self">Self</span>::List =&gt; <span class="string">&quot;list&quot;</span>,
-				<span class="self">Self</span>::Video =&gt; <span class="string">&quot;video&quot;</span>,
-				<span class="self">Self</span>::Form =&gt; <span class="string">&quot;form&quot;</span>,
-				<span class="self">Self</span>::CheckBox =&gt; <span class="string">&quot;checkbox&quot;</span>,
-				<span class="self">Self</span>::Separator =&gt; <span class="string">&quot;separator&quot;</span>,
-				<span class="self">Self</span>::Math =&gt; <span class="string">&quot;math&quot;</span>,
-				<span class="self">Self</span>::Section =&gt; <span class="string">&quot;section&quot;</span>,
-				<span class="self">Self</span>::ComboBox =&gt; <span class="string">&quot;combo box&quot;</span>,
-				<span class="self">Self</span>::RadioButton =&gt; <span class="string">&quot;radio button&quot;</span>,
-				<span class="self">Self</span>::Table =&gt; <span class="string">&quot;table&quot;</span>,
-				<span class="self">Self</span>::Image =&gt; <span class="string">&quot;image&quot;</span>,
-				<span class="self">Self</span>::Frame =&gt; <span class="string">&quot;frame&quot;</span>,
-				<span class="self">Self</span>::Entry =&gt; <span class="string">&quot;entry&quot;</span>,
-				<span class="kw">_ </span>=&gt; <span class="string">&quot;Invalid&quot;</span>,
-			}
-		)
+		<span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.name())
 	}
 }
 
@@ -671,7 +908,7 @@
 
 <span class="doccomment">/// A pair of (`sender`, `object path with id`) which constitutes the fundemental parts of an Accessible object in `atspi`.
 /// NOTE: If you update the name of this type alias, also update the constant in `atspi_macros::OBJECT_PAIR_NAME`.
-</span><span class="kw">pub type </span>ObjectPair = (String, AccessibleId);
+</span><span class="kw">pub type </span>ObjectPair = (String, zbus::zvariant::OwnedObjectPath);
 
 <span class="attr">#[atspi_proxy(interface = <span class="string">&quot;org.a11y.atspi.Accessible&quot;</span>, assume_defaults = <span class="bool-val">true</span>)]
 </span><span class="kw">trait </span>Accessible {
@@ -710,7 +947,7 @@
 
 	<span class="doccomment">/// AccessibleId property
 	</span><span class="attr">#[dbus_proxy(property)]
-	</span><span class="kw">fn </span>accessible_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;AccessibleId&gt;;
+	</span><span class="kw">fn </span>accessible_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;zbus::zvariant::OwnedObjectPath&gt;;
 
 	<span class="doccomment">/// ChildCount property
 	</span><span class="attr">#[dbus_proxy(property)]
@@ -746,12 +983,15 @@
 	}
 }
 <span class="kw">impl </span>Eq <span class="kw">for </span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt; {}
-<span class="kw">impl </span>HasAccessibleId <span class="kw">for </span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt; {
-	<span class="kw">type </span>Error = zbus::zvariant::Error;
 
-	<span class="kw">fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;AccessibleId, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>path = <span class="self">self</span>.path();
-		path.try_into()
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+	<span class="kw">use </span><span class="kw">crate</span>::accessible::Role;
+
+	<span class="attr">#[test]
+	</span><span class="kw">fn </span>test_output_of_role_name() {
+		<span class="macro">assert_eq!</span>(Role::Invalid.name(), <span class="string">&quot;invalid&quot;</span>);
+		<span class="macro">assert_eq!</span>(Role::PushButtonMenu.name(), <span class="string">&quot;push button menu&quot;</span>);
 	}
 }
 </code></pre></div>

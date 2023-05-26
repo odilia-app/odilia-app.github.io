@@ -957,13 +957,13 @@
 	</span><span class="kw">fn </span>get_child_primitive(
 		event: <span class="kw-2">&amp;</span>ChildrenChangedEvent,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, OdiliaError&gt; {
-		event.child()
+		<span class="prelude-val">Ok</span>(event.child()
 			.clone()
 			.downcast::&lt;(String, ObjectPath)&gt;()
 			.ok_or(OdiliaError::Generic(
 				<span class="string">&quot;Error converting child Value into (String,ObjectPath)&quot;</span>.to_string(),
 			))<span class="question-mark">?
-			</span>.try_into()
+			</span>.into())
 	}
 	<span class="kw">pub fn </span>remove(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="kw">let </span>prim = get_child_primitive(event)<span class="question-mark">?</span>;
@@ -1218,7 +1218,7 @@
 </span><span class="kw">mod </span>tests {
 	<span class="kw">use </span><span class="kw">crate</span>::events::object::text_caret_moved::new_position;
 	<span class="kw">use </span>atspi::{
-		accessible::Role, accessible_id::AccessibleId, AccessibilityConnection, Interface,
+		accessible::Role, AccessibilityConnection, Interface,
 		InterfaceSet, State, StateSet,
 	};
 	<span class="kw">use </span>lazy_static::lazy_static;
@@ -1234,12 +1234,12 @@
 			Arc::new(Cache::new(ZBUS_CONN.connection().clone()));
 		<span class="kw">static </span><span class="kw-2">ref </span>A11Y_PARAGRAPH_ITEM: CacheItem = CacheItem {
 			object: AccessiblePrimitive {
-				id: AccessibleId::Number(<span class="number">1</span>),
+				id: <span class="string">&quot;/org/a11y/atspi/accessible/1&quot;</span>.to_string(),
 				sender: <span class="string">&quot;:1.2&quot;</span>.into(),
 			},
-			app: AccessiblePrimitive { id: AccessibleId::Root, sender: <span class="string">&quot;:1.2&quot;</span>.into() },
+			app: AccessiblePrimitive { id: <span class="string">&quot;/org/a11y/atspi/accessible/root&quot;</span>.to_string(), sender: <span class="string">&quot;:1.2&quot;</span>.into() },
 			parent: AccessiblePrimitive {
-				id: AccessibleId::Number(<span class="number">1</span>),
+				id: <span class="string">&quot;/otg/a11y/atspi/accessible/1&quot;</span>.to_string(),
 				sender: <span class="string">&quot;:1.2&quot;</span>.into(),
 			}
 			.into(),

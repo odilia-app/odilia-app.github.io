@@ -909,14 +909,6 @@
 <a href="#909" id="909">909</a>
 <a href="#910" id="910">910</a>
 <a href="#911" id="911">911</a>
-<a href="#912" id="912">912</a>
-<a href="#913" id="913">913</a>
-<a href="#914" id="914">914</a>
-<a href="#915" id="915">915</a>
-<a href="#916" id="916">916</a>
-<a href="#917" id="917">917</a>
-<a href="#918" id="918">918</a>
-<a href="#919" id="919">919</a>
 </pre><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -934,7 +926,6 @@
 <span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>atspi::{
 	accessible::{Accessible, AccessibleProxy, RelationType, Role},
-	accessible_id::{AccessibleId, HasAccessibleId},
 	convertable::Convertable,
 	events::GenericEvent,
 	signify::Signified,
@@ -963,9 +954,19 @@
 </span><span class="doccomment">/// A struct which represents the bare minimum of an accessible for purposes of caching.
 /// This makes some *possibly eronious* assumptions about what the sender is.
 </span><span class="kw">pub struct </span>AccessiblePrimitive {
-	<span class="doccomment">/// The accessible ID in /org/a11y/atspi/accessible/XYZ; note that XYZ may be equal to any positive number, 0, &quot;null&quot;, or &quot;root&quot;.
-	</span><span class="kw">pub </span>id: AccessibleId,
+	<span class="doccomment">/// The accessible ID, which is an arbitrary string specified by the application.
+  /// It is guarenteed to be unique per application.
+  /// Examples:
+  /// * /org/a11y/atspi/accessible/1234
+  /// * /org/a11y/atspi/accessible/null
+  /// * /org/a11y/atspi/accessible/root
+  /// * /org/Gnome/GTK/abab22-bbbb33-2bba2
+	</span><span class="kw">pub </span>id: String,
 	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the (x,y) portion of this sender.
+  /// Examples:
+  /// * :1.1 (the first window has opened)
+  /// * :2.5 (a second session exists, where at least 5 applications have been lauinched)
+  /// * :1.262 (many applications have been started on this bus)
 	</span><span class="kw">pub </span>sender: smartstring::alias::String,
 }
 <span class="kw">impl </span>AccessiblePrimitive {
@@ -1011,9 +1012,7 @@
 			.map_err(|<span class="kw">_</span>| AccessiblePrimitiveConversionError::ErrSender)<span class="question-mark">?
 			</span>.ok_or(AccessiblePrimitiveConversionError::NoSender)<span class="question-mark">?</span>;
 		<span class="kw">let </span>path = event.path().ok_or(AccessiblePrimitiveConversionError::NoPathId)<span class="question-mark">?</span>;
-		<span class="kw">let </span>id: AccessibleId = path
-			.try_into()
-			.map_err(|<span class="kw">_</span>| AccessiblePrimitiveConversionError::InvalidPath)<span class="question-mark">?</span>;
+		<span class="kw">let </span>id = path.to_string();
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ id, sender: sender.as_str().into() })
 	}
 }
@@ -1033,31 +1032,20 @@
 	<span class="kw">fn </span>try_from(
 		so: (OwnedUniqueName, OwnedObjectPath),
 	) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: accessible_id, sender: so.<span class="number">0</span>.as_str().into() })
+		<span class="kw">let </span>accessible_id= so.<span class="number">1</span>;
+		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.as_str().into() })
 	}
 }
-<span class="kw">impl </span>TryFrom&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
+<span class="kw">impl </span>From&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
 
-	<span class="kw">fn </span>try_from(so: (String, OwnedObjectPath)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: accessible_id, sender: so.<span class="number">0</span>.into() })
+	<span class="kw">fn </span>from(so: (String, OwnedObjectPath)) -&gt; AccessiblePrimitive {
+		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
+		AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.into() }
 	}
 }
-<span class="kw">impl </span>TryFrom&lt;(String, AccessibleId)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
-
-	<span class="kw">fn </span>try_from(so: (String, AccessibleId)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: so.<span class="number">1</span>, sender: so.<span class="number">0</span>.into() })
-	}
-}
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;(String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">type </span>Error = OdiliaError;
-
-	<span class="kw">fn </span>try_from(so: (String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>accessible_id: AccessibleId = so.<span class="number">1</span>.try_into()<span class="question-mark">?</span>;
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: accessible_id, sender: so.<span class="number">0</span>.into() })
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; From&lt;(String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
+	<span class="kw">fn </span>from(so: (String, ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;)) -&gt; AccessiblePrimitive {
+		AccessiblePrimitive { id: so.<span class="number">1</span>.to_string(), sender: so.<span class="number">0</span>.into() }
 	}
 }
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>AccessiblePrimitive {
@@ -1065,9 +1053,7 @@
 
 	<span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-		<span class="kw">let </span><span class="prelude-val">Ok</span>(id) = accessible.id() <span class="kw">else </span>{
-			<span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId);
-		};
+    <span class="kw">let </span>id = accessible.path().as_str().into();
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
 }
@@ -1076,9 +1062,7 @@
 
 	<span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-		<span class="kw">let </span><span class="prelude-val">Ok</span>(id) = accessible.id() <span class="kw">else </span>{
-      <span class="kw">return </span><span class="prelude-val">Err</span>(AccessiblePrimitiveConversionError::NoPathId);
-    };
+    <span class="kw">let </span>id = accessible.path().as_str().into();
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
 }
@@ -1165,9 +1149,9 @@
 				.<span class="kw">await</span><span class="question-mark">?
 				</span>.into_iter()
 				.map(|child_object_pair| {
-					<span class="prelude-val">Ok</span>(CacheRef::new(child_object_pair.try_into()<span class="question-mark">?</span>))
+					CacheRef::new(child_object_pair.into())
 				})
-				.collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, AccessiblePrimitiveConversionError&gt;&gt;()<span class="question-mark">?</span>;
+				.collect();
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			object: atspi_cache_item.object.try_into()<span class="question-mark">?</span>,
 			app: atspi_cache_item.app.try_into()<span class="question-mark">?</span>,
@@ -1333,8 +1317,8 @@
 	<span class="kw">async fn </span>get_localized_role_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(as_accessible(<span class="self">self</span>).<span class="kw">await</span><span class="question-mark">?</span>.get_localized_role_name().<span class="kw">await</span><span class="question-mark">?</span>)
 	}
-	<span class="kw">async fn </span>accessible_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;AccessibleId, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">self</span>.object.id)
+	<span class="kw">async fn </span>accessible_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedObjectPath, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(ObjectPath::try_from(<span class="self">self</span>.object.id.to_string()).unwrap().into())
 	}
 }
 <span class="attr">#[async_trait]
@@ -1831,8 +1815,8 @@
 		text,
 		children: children
 			.into_iter()
-			.map(|k| <span class="prelude-val">Ok</span>(CacheRef::new(k.try_into()<span class="question-mark">?</span>)))
-			.collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, AccessiblePrimitiveConversionError&gt;&gt;()<span class="question-mark">?</span>,
+			.map(|k| CacheRef::new(k.into()))
+			.collect(),
 		cache,
 	})
 }

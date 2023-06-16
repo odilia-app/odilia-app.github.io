@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ClipType","CoordType","Granularity","Layer","MatchType","RelationType","Role","ScrollType","SortOrder","TreeTraversalType"],"macro":["impl_event_conversions"],"mod":["cache","error","events","interface","state"],"type":["MatchArgs","MatcherArgs","ObjectPair"]};

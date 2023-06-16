@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["attribute","common","escape","macros","name","namespace","reader","writer"],"struct":["EmitterConfig","ParserConfig"]};
+window.SIDEBAR_ITEMS = {"enum":["Encoding"],"mod":["attribute","common","escape","name","namespace","reader","writer"]};

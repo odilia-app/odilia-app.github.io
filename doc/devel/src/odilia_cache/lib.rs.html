@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cache/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../odilia_cache/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cache/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../odilia_cache/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -904,12 +904,7 @@
 <a href="#904" id="904">904</a>
 <a href="#905" id="905">905</a>
 <a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
-<a href="#910" id="910">910</a>
-<a href="#911" id="911">911</a>
-</pre><pre class="rust"><code><span class="attr">#![deny(
+</pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
 	clippy::cargo,
@@ -924,14 +919,13 @@
 };
 
 <span class="kw">use </span>async_trait::async_trait;
-<span class="kw">use </span>atspi::{
-	accessible::{Accessible, AccessibleProxy, RelationType, Role},
-	convertable::Convertable,
-	events::GenericEvent,
-	signify::Signified,
-	text::{ClipType, Granularity, Text, TextProxy},
-	text_ext::TextExt,
-	CoordType, InterfaceSet, StateSet,
+<span class="kw">use </span>atspi_client::{convertable::Convertable, text_ext::TextExt};
+<span class="kw">use </span>atspi_common::{
+	ClipType, CoordType, GenericEvent, Granularity, InterfaceSet, RelationType, Role, StateSet,
+};
+<span class="kw">use </span>atspi_proxies::{
+	accessible::{Accessible, AccessibleProxy},
+	text::{Text, TextProxy},
 };
 <span class="kw">use </span>dashmap::DashMap;
 <span class="kw">use </span>fxhash::FxBuildHasher;
@@ -955,22 +949,22 @@
 /// This makes some *possibly eronious* assumptions about what the sender is.
 </span><span class="kw">pub struct </span>AccessiblePrimitive {
 	<span class="doccomment">/// The accessible ID, which is an arbitrary string specified by the application.
-  /// It is guarenteed to be unique per application.
-  /// Examples:
-  /// * /org/a11y/atspi/accessible/1234
-  /// * /org/a11y/atspi/accessible/null
-  /// * /org/a11y/atspi/accessible/root
-  /// * /org/Gnome/GTK/abab22-bbbb33-2bba2
+	/// It is guarenteed to be unique per application.
+	/// Examples:
+	/// * /org/a11y/atspi/accessible/1234
+	/// * /org/a11y/atspi/accessible/null
+	/// * /org/a11y/atspi/accessible/root
+	/// * /org/Gnome/GTK/abab22-bbbb33-2bba2
 	</span><span class="kw">pub </span>id: String,
 	<span class="doccomment">/// Assuming that the sender is &quot;:x.y&quot;, this stores the (x,y) portion of this sender.
-  /// Examples:
-  /// * :1.1 (the first window has opened)
-  /// * :2.5 (a second session exists, where at least 5 applications have been lauinched)
-  /// * :1.262 (many applications have been started on this bus)
+	/// Examples:
+	/// * :1.1 (the first window has opened)
+	/// * :2.5 (a second session exists, where at least 5 applications have been lauinched)
+	/// * :1.262 (many applications have been started on this bus)
 	</span><span class="kw">pub </span>sender: smartstring::alias::String,
 }
 <span class="kw">impl </span>AccessiblePrimitive {
-	<span class="doccomment">/// Convert into an [`atspi::accessible::AccessibleProxy`]. Must be async because the creation of an async proxy requires async itself.
+	<span class="doccomment">/// Convert into an [`atspi_proxies::accessible::AccessibleProxy`]. Must be async because the creation of an async proxy requires async itself.
 	/// # Errors
 	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
 	</span><span class="kw">pub async fn </span>into_accessible&lt;<span class="lifetime">&#39;a</span>&gt;(
@@ -987,7 +981,7 @@
 			.build()
 			.<span class="kw">await
 	</span>}
-	<span class="doccomment">/// Convert into an [`atspi::text::TextProxy`]. Must be async because the creation of an async proxy requires async itself.
+	<span class="doccomment">/// Convert into an [`atspi_proxies::text::TextProxy`]. Must be async because the creation of an async proxy requires async itself.
 	/// # Errors
 	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
 	</span><span class="kw">pub async fn </span>into_text&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="self">self</span>, conn: <span class="kw-2">&amp;</span>zbus::Connection) -&gt; zbus::Result&lt;TextProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
@@ -1004,15 +998,14 @@
 	<span class="doccomment">/// Turns any `atspi::event` type into an `AccessiblePrimtive`, the basic type which is used for keys in the cache.
 	/// # Errors
 	/// The errors are self-explanitory variants of the [`odilia_common::errors::AccessiblePrimitiveConversionError`].
-	</span><span class="kw">pub fn </span>from_event&lt;T: GenericEvent&gt;(
+	</span><span class="kw">pub fn </span>from_event&lt;<span class="lifetime">&#39;a</span>, T: GenericEvent&lt;<span class="lifetime">&#39;a</span>&gt;&gt;(
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AccessiblePrimitiveConversionError&gt; {
-		<span class="kw">let </span>sender = event
-			.sender()
-			.map_err(|<span class="kw">_</span>| AccessiblePrimitiveConversionError::ErrSender)<span class="question-mark">?
-			</span>.ok_or(AccessiblePrimitiveConversionError::NoSender)<span class="question-mark">?</span>;
-		<span class="kw">let </span>path = event.path().ok_or(AccessiblePrimitiveConversionError::NoPathId)<span class="question-mark">?</span>;
-		<span class="kw">let </span>id = path.to_string();
+		<span class="kw">let </span>sender = event.sender();
+		<span class="comment">//.map_err(|_| AccessiblePrimitiveConversionError::ErrSender)?
+		//.ok_or(AccessiblePrimitiveConversionError::NoSender)?;
+		</span><span class="kw">let </span>path = event.path(); <span class="comment">//.ok_or(AccessiblePrimitiveConversionError::NoPathId)?;
+		</span><span class="kw">let </span>id = path.to_string();
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ id, sender: sender.as_str().into() })
 	}
 }
@@ -1032,12 +1025,14 @@
 	<span class="kw">fn </span>try_from(
 		so: (OwnedUniqueName, OwnedObjectPath),
 	) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>accessible_id= so.<span class="number">1</span>;
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.as_str().into() })
+		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
+		<span class="prelude-val">Ok</span>(AccessiblePrimitive {
+			id: accessible_id.to_string(),
+			sender: so.<span class="number">0</span>.as_str().into(),
+		})
 	}
 }
 <span class="kw">impl </span>From&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
-
 	<span class="kw">fn </span>from(so: (String, OwnedObjectPath)) -&gt; AccessiblePrimitive {
 		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
 		AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.into() }
@@ -1053,7 +1048,7 @@
 
 	<span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-    <span class="kw">let </span>id = accessible.path().as_str().into();
+		<span class="kw">let </span>id = accessible.path().as_str().into();
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
 }
@@ -1062,13 +1057,13 @@
 
 	<span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-    <span class="kw">let </span>id = accessible.path().as_str().into();
+		<span class="kw">let </span>id = accessible.path().as_str().into();
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
 	}
 }
 
 <span class="attr">#[derive(Clone, Debug, Deserialize, Serialize)]
-</span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
+</span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi_proxies::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
 	<span class="comment">// The accessible object (within the application)	(so)
 	</span><span class="kw">pub </span>object: AccessiblePrimitive,
@@ -1116,9 +1111,9 @@
 	/// This can fail under three possible conditions:
 	///
 	/// 1. We are unable to convert information from the event into an [`AccessiblePrimitive`] hashmap key. This should never happen.
-	/// 2. We are unable to convert the [`AccessiblePrimitive`] to an [`atspi::accessible::AccessibleProxy`].
+	/// 2. We are unable to convert the [`AccessiblePrimitive`] to an [`atspi_proxies::accessible::AccessibleProxy`].
 	/// 3. The `accessible_to_cache_item` function fails for any reason. This also shouldn&#39;t happen.
-	</span><span class="kw">pub async fn </span>from_atspi_event&lt;T: Signified&gt;(
+	</span><span class="kw">pub async fn </span>from_atspi_event&lt;<span class="lifetime">&#39;a</span>, T: GenericEvent&lt;<span class="lifetime">&#39;a</span>&gt;&gt;(
 		event: <span class="kw-2">&amp;</span>T,
 		cache: Weak&lt;Cache&gt;,
 		connection: <span class="kw-2">&amp;</span>zbus::Connection,
@@ -1126,18 +1121,18 @@
 		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
 		accessible_to_cache_item(<span class="kw-2">&amp;</span>a11y_prim.into_accessible(connection).<span class="kw">await</span><span class="question-mark">?</span>, cache).<span class="kw">await
 	</span>}
-	<span class="doccomment">/// Convert an [`atspi::cache::CacheItem`] into a [`crate::CacheItem`].
+	<span class="doccomment">/// Convert an [`atspi::CacheItem`] into a [`crate::CacheItem`].
 	/// This requires calls to `DBus`, which is quite expensive. Beware calling this too often.
 	/// # Errors
 	/// This function can fail under the following conditions:
 	///
-	/// 1. The [`atspi::cache::CacheItem`] can not be turned into a [`crate::AccessiblePrimitive`]. This should never happen.
-	/// 2. The [`crate::AccessiblePrimitive`] can not be turned into a [`atspi::accessible::AccessibleProxy`]. This should never happen.
+	/// 1. The [`atspi::CacheItem`] can not be turned into a [`crate::AccessiblePrimitive`]. This should never happen.
+	/// 2. The [`crate::AccessiblePrimitive`] can not be turned into a [`atspi_proxies::accessible::AccessibleProxy`]. This should never happen.
 	/// 3. Getting children from the `AccessibleProxy` fails. This should never happen.
 	///
 	/// The only time these can fail is if the item is removed on the application side before the conversion to `AccessibleProxy`.
 	</span><span class="kw">pub async fn </span>from_atspi_cache_item(
-		atspi_cache_item: atspi::cache::CacheItem,
+		atspi_cache_item: atspi_common::CacheItem,
 		cache: Weak&lt;Cache&gt;,
 		connection: <span class="kw-2">&amp;</span>zbus::Connection,
 	) -&gt; OdiliaResult&lt;<span class="self">Self</span>&gt; {
@@ -1148,9 +1143,7 @@
 				</span>.get_children()
 				.<span class="kw">await</span><span class="question-mark">?
 				</span>.into_iter()
-				.map(|child_object_pair| {
-					CacheRef::new(child_object_pair.into())
-				})
+				.map(|child_object_pair| CacheRef::new(child_object_pair.into()))
 				.collect();
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			object: atspi_cache_item.object.try_into()<span class="question-mark">?</span>,
@@ -1317,8 +1310,8 @@
 	<span class="kw">async fn </span>get_localized_role_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, <span class="self">Self</span>::Error&gt; {
 		<span class="prelude-val">Ok</span>(as_accessible(<span class="self">self</span>).<span class="kw">await</span><span class="question-mark">?</span>.get_localized_role_name().<span class="kw">await</span><span class="question-mark">?</span>)
 	}
-	<span class="kw">async fn </span>accessible_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedObjectPath, <span class="self">Self</span>::Error&gt; {
-		<span class="prelude-val">Ok</span>(ObjectPath::try_from(<span class="self">self</span>.object.id.to_string()).unwrap().into())
+	<span class="kw">async fn </span>accessible_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, <span class="self">Self</span>::Error&gt; {
+		<span class="prelude-val">Ok</span>(<span class="self">self</span>.object.id.to_string())
 	}
 }
 <span class="attr">#[async_trait]
@@ -1771,7 +1764,7 @@
 	}
 }
 
-<span class="doccomment">/// Convert an [`atspi::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
+<span class="doccomment">/// Convert an [`atspi_proxies::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
 /// This runs a bunch of long-awaiting code and can take quite some time; use this sparingly.
 /// This takes most properties and some function calls through the `AccessibleProxy` structure and generates a new `CacheItem`, which will be written to cache before being sent back.
 ///
@@ -1813,12 +1806,8 @@
 		role,
 		states,
 		text,
-		children: children
-			.into_iter()
-			.map(|k| CacheRef::new(k.into()))
-			.collect(),
+		children: children.into_iter().map(|k| CacheRef::new(k.into())).collect(),
 		cache,
 	})
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

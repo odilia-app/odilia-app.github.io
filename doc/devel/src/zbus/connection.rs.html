@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.11.1/src/connection.rs`."><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html">
-                        <img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/connection.rs`."><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1673,7 +1672,126 @@
 <a href="#1672" id="1672">1672</a>
 <a href="#1673" id="1673">1673</a>
 <a href="#1674" id="1674">1674</a>
-</pre><pre class="rust"><code><span class="kw">use </span>async_broadcast::{broadcast, InactiveReceiver, Receiver, Sender <span class="kw">as </span>Broadcaster};
+<a href="#1675" id="1675">1675</a>
+<a href="#1676" id="1676">1676</a>
+<a href="#1677" id="1677">1677</a>
+<a href="#1678" id="1678">1678</a>
+<a href="#1679" id="1679">1679</a>
+<a href="#1680" id="1680">1680</a>
+<a href="#1681" id="1681">1681</a>
+<a href="#1682" id="1682">1682</a>
+<a href="#1683" id="1683">1683</a>
+<a href="#1684" id="1684">1684</a>
+<a href="#1685" id="1685">1685</a>
+<a href="#1686" id="1686">1686</a>
+<a href="#1687" id="1687">1687</a>
+<a href="#1688" id="1688">1688</a>
+<a href="#1689" id="1689">1689</a>
+<a href="#1690" id="1690">1690</a>
+<a href="#1691" id="1691">1691</a>
+<a href="#1692" id="1692">1692</a>
+<a href="#1693" id="1693">1693</a>
+<a href="#1694" id="1694">1694</a>
+<a href="#1695" id="1695">1695</a>
+<a href="#1696" id="1696">1696</a>
+<a href="#1697" id="1697">1697</a>
+<a href="#1698" id="1698">1698</a>
+<a href="#1699" id="1699">1699</a>
+<a href="#1700" id="1700">1700</a>
+<a href="#1701" id="1701">1701</a>
+<a href="#1702" id="1702">1702</a>
+<a href="#1703" id="1703">1703</a>
+<a href="#1704" id="1704">1704</a>
+<a href="#1705" id="1705">1705</a>
+<a href="#1706" id="1706">1706</a>
+<a href="#1707" id="1707">1707</a>
+<a href="#1708" id="1708">1708</a>
+<a href="#1709" id="1709">1709</a>
+<a href="#1710" id="1710">1710</a>
+<a href="#1711" id="1711">1711</a>
+<a href="#1712" id="1712">1712</a>
+<a href="#1713" id="1713">1713</a>
+<a href="#1714" id="1714">1714</a>
+<a href="#1715" id="1715">1715</a>
+<a href="#1716" id="1716">1716</a>
+<a href="#1717" id="1717">1717</a>
+<a href="#1718" id="1718">1718</a>
+<a href="#1719" id="1719">1719</a>
+<a href="#1720" id="1720">1720</a>
+<a href="#1721" id="1721">1721</a>
+<a href="#1722" id="1722">1722</a>
+<a href="#1723" id="1723">1723</a>
+<a href="#1724" id="1724">1724</a>
+<a href="#1725" id="1725">1725</a>
+<a href="#1726" id="1726">1726</a>
+<a href="#1727" id="1727">1727</a>
+<a href="#1728" id="1728">1728</a>
+<a href="#1729" id="1729">1729</a>
+<a href="#1730" id="1730">1730</a>
+<a href="#1731" id="1731">1731</a>
+<a href="#1732" id="1732">1732</a>
+<a href="#1733" id="1733">1733</a>
+<a href="#1734" id="1734">1734</a>
+<a href="#1735" id="1735">1735</a>
+<a href="#1736" id="1736">1736</a>
+<a href="#1737" id="1737">1737</a>
+<a href="#1738" id="1738">1738</a>
+<a href="#1739" id="1739">1739</a>
+<a href="#1740" id="1740">1740</a>
+<a href="#1741" id="1741">1741</a>
+<a href="#1742" id="1742">1742</a>
+<a href="#1743" id="1743">1743</a>
+<a href="#1744" id="1744">1744</a>
+<a href="#1745" id="1745">1745</a>
+<a href="#1746" id="1746">1746</a>
+<a href="#1747" id="1747">1747</a>
+<a href="#1748" id="1748">1748</a>
+<a href="#1749" id="1749">1749</a>
+<a href="#1750" id="1750">1750</a>
+<a href="#1751" id="1751">1751</a>
+<a href="#1752" id="1752">1752</a>
+<a href="#1753" id="1753">1753</a>
+<a href="#1754" id="1754">1754</a>
+<a href="#1755" id="1755">1755</a>
+<a href="#1756" id="1756">1756</a>
+<a href="#1757" id="1757">1757</a>
+<a href="#1758" id="1758">1758</a>
+<a href="#1759" id="1759">1759</a>
+<a href="#1760" id="1760">1760</a>
+<a href="#1761" id="1761">1761</a>
+<a href="#1762" id="1762">1762</a>
+<a href="#1763" id="1763">1763</a>
+<a href="#1764" id="1764">1764</a>
+<a href="#1765" id="1765">1765</a>
+<a href="#1766" id="1766">1766</a>
+<a href="#1767" id="1767">1767</a>
+<a href="#1768" id="1768">1768</a>
+<a href="#1769" id="1769">1769</a>
+<a href="#1770" id="1770">1770</a>
+<a href="#1771" id="1771">1771</a>
+<a href="#1772" id="1772">1772</a>
+<a href="#1773" id="1773">1773</a>
+<a href="#1774" id="1774">1774</a>
+<a href="#1775" id="1775">1775</a>
+<a href="#1776" id="1776">1776</a>
+<a href="#1777" id="1777">1777</a>
+<a href="#1778" id="1778">1778</a>
+<a href="#1779" id="1779">1779</a>
+<a href="#1780" id="1780">1780</a>
+<a href="#1781" id="1781">1781</a>
+<a href="#1782" id="1782">1782</a>
+<a href="#1783" id="1783">1783</a>
+<a href="#1784" id="1784">1784</a>
+<a href="#1785" id="1785">1785</a>
+<a href="#1786" id="1786">1786</a>
+<a href="#1787" id="1787">1787</a>
+<a href="#1788" id="1788">1788</a>
+<a href="#1789" id="1789">1789</a>
+<a href="#1790" id="1790">1790</a>
+<a href="#1791" id="1791">1791</a>
+<a href="#1792" id="1792">1792</a>
+<a href="#1793" id="1793">1793</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>async_broadcast::{broadcast, InactiveReceiver, Receiver, Sender <span class="kw">as </span>Broadcaster};
 <span class="kw">use </span>enumflags2::BitFlags;
 <span class="kw">use </span>event_listener::{Event, EventListener};
 <span class="kw">use </span>once_cell::sync::OnceCell;
@@ -1703,7 +1821,7 @@
 <span class="kw">use crate</span>::{
     async_lock::Mutex,
     blocking,
-    fdo::{<span class="self">self</span>, RequestNameFlags, RequestNameReply},
+    fdo::{<span class="self">self</span>, ConnectionCredentials, RequestNameFlags, RequestNameReply},
     raw::{Connection <span class="kw">as </span>RawConnection, Socket},
     socket_reader::SocketReader,
     Authenticated, CacheProperties, ConnectionBuilder, DBusError, Error, Executor, Guid, MatchRule,
@@ -1874,6 +1992,7 @@
 ///
 /// [Monitor]: https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-become-monitor
 </span><span class="attr">#[derive(Clone, Debug)]
+#[must_use = <span class="string">&quot;Dropping a `Connection` will close the underlying socket.&quot;</span>]
 </span><span class="kw">pub struct </span>Connection {
     <span class="kw">pub</span>(<span class="kw">crate</span>) inner: Arc&lt;ConnectionInner&gt;,
 }
@@ -2664,7 +2783,7 @@
                             };
                             <span class="kw">match </span>hdr.destination() {
                                 <span class="comment">// Unique name is already checked by the match rule.
-                                </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>))) =&gt; (),
+                                </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>))) | <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; (),
                                 <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::WellKnown(dest))) =&gt; {
                                     <span class="kw">let </span>names = conn.inner.registered_names.lock().<span class="kw">await</span>;
                                     <span class="comment">// destination doesn&#39;t matter if no name has been registered
@@ -2674,11 +2793,6 @@
 
                                         <span class="kw">continue</span>;
                                     }
-                                }
-                                <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; {
-                                    <span class="macro">warn!</span>(<span class="string">&quot;Got a method call with no destination: {}&quot;</span>, msg);
-
-                                    <span class="kw">continue</span>;
                                 }
                                 <span class="prelude-val">Err</span>(e) =&gt; {
                                     <span class="macro">warn!</span>(<span class="string">&quot;Failed to parse destination: {}&quot;</span>, e);
@@ -2937,6 +3051,11 @@
     }
 
     <span class="doccomment">/// Returns the peer process ID, or Ok(None) if it cannot be returned for the associated socket.
+    </span><span class="attr">#[deprecated(
+        since = <span class="string">&quot;3.13.0&quot;</span>,
+        note = <span class="string">&quot;Use `peer_credentials` instead, which returns `ConnectionCredentials` which includes
+                the peer PID.&quot;
+    </span>)]
     </span><span class="kw">pub fn </span>peer_pid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; io::Result&lt;<span class="prelude-ty">Option</span>&lt;u32&gt;&gt; {
         <span class="self">self</span>.inner
             .raw_conn
@@ -2944,6 +3063,36 @@
             .expect(<span class="string">&quot;poisoned lock&quot;</span>)
             .socket()
             .peer_pid()
+    }
+
+    <span class="doccomment">/// Returns the peer credentials.
+    ///
+    /// The fields are populated on the best effort basis. Some or all fields may not even make
+    /// sense for certain sockets or on certain platforms and hence will be set to `None`.
+    ///
+    /// # Caveats
+    ///
+    /// Currently `unix_group_ids` and `linux_security_label` fields are not populated.
+    </span><span class="attr">#[allow(deprecated)]
+    </span><span class="kw">pub async fn </span>peer_credentials(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; io::Result&lt;ConnectionCredentials&gt; {
+        <span class="kw">let </span>raw_conn = <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">&quot;poisoned lock&quot;</span>);
+        <span class="kw">let </span>socket = raw_conn.socket();
+
+        <span class="prelude-val">Ok</span>(ConnectionCredentials {
+            process_id: socket.peer_pid()<span class="question-mark">?</span>,
+            <span class="attr">#[cfg(unix)]
+            </span>unix_user_id: socket.uid()<span class="question-mark">?</span>,
+            <span class="attr">#[cfg(not(unix))]
+            </span>unix_user_id: <span class="prelude-val">None</span>,
+            <span class="comment">// Should we beother providing all the groups of user? What&#39;s the use case?
+            </span>unix_group_ids: <span class="prelude-val">None</span>,
+            <span class="attr">#[cfg(windows)]
+            </span>windows_sid: socket.peer_sid(),
+            <span class="attr">#[cfg(not(windows))]
+            </span>windows_sid: <span class="prelude-val">None</span>,
+            <span class="comment">// TODO: Populate this field (see the field docs for pointers).
+            </span>linux_security_label: <span class="prelude-val">None</span>,
+        })
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>init_socket_reader(<span class="kw-2">&amp;</span><span class="self">self</span>) {
@@ -3303,10 +3452,22 @@
         <span class="kw">crate</span>::block_on(<span class="kw">async </span>{ addr.connect().<span class="kw">await </span>}).expect(<span class="string">&quot;Unable to connect to session bus&quot;</span>);
     }
 
+    <span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
+    #[test]
+    </span><span class="kw">fn </span>connect_launchd_session_bus() {
+        <span class="kw">crate</span>::block_on(<span class="kw">async </span>{
+            <span class="kw">let </span>addr = <span class="kw">crate</span>::address::macos_launchd_bus_address(<span class="string">&quot;DBUS_LAUNCHD_SESSION_BUS_SOCKET&quot;</span>)
+                .<span class="kw">await
+                </span>.expect(<span class="string">&quot;Unable to get Launchd session bus address&quot;</span>);
+            addr.connect().<span class="kw">await
+        </span>})
+        .expect(<span class="string">&quot;Unable to connect to session bus&quot;</span>);
+    }
+
     <span class="attr">#[test]
     #[timeout(<span class="number">15000</span>)]
     </span><span class="kw">fn </span>disconnect_on_drop() {
-        <span class="comment">// Reproducer for https://gitlab.freedesktop.org/dbus/zbus/-/issues/308 where setting up the
+        <span class="comment">// Reproducer for https://github.com/dbus2/zbus/issues/308 where setting up the
         // objectserver would cause the connection to not disconnect on drop.
         </span><span class="kw">crate</span>::utils::block_on(test_disconnect_on_drop());
     }
@@ -3346,6 +3507,81 @@
         </span><span class="kw">let </span>name_has_owner = dbus.name_has_owner(name.try_into().unwrap()).<span class="kw">await</span>.unwrap();
         <span class="macro">assert!</span>(!name_has_owner);
     }
+
+    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    #[test]
+    #[timeout(<span class="number">15000</span>)]
+    </span><span class="kw">fn </span>unix_p2p_cookie_auth() {
+        <span class="kw">use </span><span class="kw">crate</span>::utils::block_on;
+        <span class="kw">use </span>std::{
+            fs::{create_dir_all, remove_file, write},
+            time::{SystemTime <span class="kw">as </span>Time, UNIX_EPOCH},
+        };
+        <span class="attr">#[cfg(unix)]
+        </span><span class="kw">use </span>std::{
+            fs::{set_permissions, Permissions},
+            os::unix::fs::PermissionsExt,
+        };
+        <span class="kw">use </span>xdg_home::home_dir;
+
+        <span class="kw">let </span>cookie_context = <span class="string">&quot;zbus-test-cookie-context&quot;</span>;
+        <span class="kw">let </span>cookie_id = <span class="number">123456789</span>;
+        <span class="kw">let </span>cookie = hex::encode(<span class="string">b&quot;our cookie&quot;</span>);
+
+        <span class="comment">// Ensure cookie directory exists.
+        </span><span class="kw">let </span>cookie_dir = home_dir().unwrap().join(<span class="string">&quot;.dbus-keyrings&quot;</span>);
+        create_dir_all(<span class="kw-2">&amp;</span>cookie_dir).unwrap();
+        <span class="attr">#[cfg(unix)]
+        </span>set_permissions(<span class="kw-2">&amp;</span>cookie_dir, Permissions::from_mode(<span class="number">0o700</span>)).unwrap();
+
+        <span class="comment">// Create a cookie file.
+        </span><span class="kw">let </span>cookie_file = cookie_dir.join(cookie_context);
+        <span class="kw">let </span>ts = Time::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+        <span class="kw">let </span>cookie_entry = <span class="macro">format!</span>(<span class="string">&quot;{cookie_id} {ts} {cookie}&quot;</span>);
+        write(<span class="kw-2">&amp;</span>cookie_file, cookie_entry).unwrap();
+
+        <span class="comment">// Explicit cookie ID.
+        </span><span class="kw">let </span>res1 = block_on(test_unix_p2p_cookie_auth(cookie_context, <span class="prelude-val">Some</span>(cookie_id)));
+        <span class="comment">// Implicit cookie ID (first one should be picked).
+        </span><span class="kw">let </span>res2 = block_on(test_unix_p2p_cookie_auth(cookie_context, <span class="prelude-val">None</span>));
+
+        <span class="comment">// Remove the cookie file.
+        </span>remove_file(<span class="kw-2">&amp;</span>cookie_file).unwrap();
+
+        res1.unwrap();
+        res2.unwrap();
+    }
+
+    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    </span><span class="kw">async fn </span>test_unix_p2p_cookie_auth(
+        cookie_context: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        cookie_id: <span class="prelude-ty">Option</span>&lt;usize&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="attr">#[cfg(all(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        </span><span class="kw">use </span>std::os::unix::net::UnixStream;
+        <span class="attr">#[cfg(all(unix, feature = <span class="string">&quot;tokio&quot;</span>))]
+        </span><span class="kw">use </span>tokio::net::UnixStream;
+        <span class="attr">#[cfg(all(windows, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        </span><span class="kw">use </span>uds_windows::UnixStream;
+
+        <span class="kw">let </span>guid = Guid::generate();
+
+        <span class="kw">let </span>(p0, p1) = UnixStream::pair().unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>server_builder = ConnectionBuilder::unix_stream(p0)
+            .server(<span class="kw-2">&amp;</span>guid)
+            .p2p()
+            .auth_mechanisms(<span class="kw-2">&amp;</span>[AuthMechanism::Cookie])
+            .cookie_context(cookie_context)
+            .unwrap();
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(cookie_id) = cookie_id {
+            server_builder = server_builder.cookie_id(cookie_id);
+        }
+
+        <span class="macro">futures_util::try_join!</span>(
+            ConnectionBuilder::unix_stream(p1).p2p().build(),
+            server_builder.build(),
+        )
+        .map(|<span class="kw">_</span>| ())
+    }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

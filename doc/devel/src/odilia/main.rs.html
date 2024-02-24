@@ -118,6 +118,11 @@
 <a href="#117" id="117">117</a>
 <a href="#118" id="118">118</a>
 <a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -128,12 +133,14 @@
 )]
 #![allow(clippy::multiple_crate_versions)]
 
-</span><span class="kw">mod </span>events;
+</span><span class="kw">mod </span>cli;
+<span class="kw">mod </span>events;
 <span class="kw">mod </span>logging;
 <span class="kw">mod </span>state;
 
 <span class="kw">use </span>std::{process::exit, sync::Arc};
 
+<span class="kw">use </span>clap::Parser;
 <span class="kw">use </span>eyre::WrapErr;
 <span class="kw">use </span>futures::future::FutureExt;
 <span class="kw">use </span>tokio::{
@@ -142,6 +149,7 @@
 	sync::mpsc,
 };
 
+<span class="kw">use </span><span class="kw">crate</span>::cli::Args;
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>odilia_input::sr_event_receiver;
 <span class="kw">use </span>ssip_client_async::Priority;
@@ -159,6 +167,8 @@
 
 <span class="attr">#[tokio::main(flavor = <span class="string">"current_thread"</span>)]
 </span><span class="kw">async fn </span>main() -&gt; eyre::Result&lt;()&gt; {
+	<span class="kw">let </span>args = Args::parse();
+
 	logging::init();
 	<span class="comment">// Make sure applications with dynamic accessibility supprt do expose their AT-SPI2 interfaces.
 	</span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = atspi_connection::set_session_accessibility(<span class="bool-val">true</span>).<span class="kw">await </span>{
@@ -174,7 +184,7 @@
 	// Like the channel above, it is very important that this is *never* full, since it can cause deadlocking if the other task sending the request is working with zbus.
 	</span><span class="kw">let </span>(ssip_req_tx, ssip_req_rx) = mpsc::channel::&lt;ssip_client_async::tokio::Request&gt;(<span class="number">128</span>);
 	<span class="comment">// Initialize state
-	</span><span class="kw">let </span>state = Arc::new(ScreenReaderState::new(ssip_req_tx).<span class="kw">await</span><span class="question-mark">?</span>);
+	</span><span class="kw">let </span>state = Arc::new(ScreenReaderState::new(ssip_req_tx, args.config.as_deref()).<span class="kw">await</span><span class="question-mark">?</span>);
 	<span class="kw">let </span><span class="kw-2">mut </span>ssip = odilia_tts::create_ssip_client().<span class="kw">await</span><span class="question-mark">?</span>;
 
 	<span class="kw">if </span>state.say(Priority::Message, <span class="string">"Welcome to Odilia!"</span>.to_string()).<span class="kw">await </span>{

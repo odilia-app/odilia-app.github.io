@@ -1,5 +1,9 @@
 var srcIndex = new Map(JSON.parse('[\
 ["aho_corasick",["",[["nfa",[],["contiguous.rs","mod.rs","noncontiguous.rs"]],["packed",[["teddy",[],["compile.rs","mod.rs","runtime.rs"]]],["api.rs","mod.rs","pattern.rs","rabinkarp.rs","vector.rs"]],["util",[],["alphabet.rs","buffer.rs","byte_frequencies.rs","debug.rs","error.rs","int.rs","mod.rs","prefilter.rs","primitives.rs","remapper.rs","search.rs","special.rs"]]],["ahocorasick.rs","automaton.rs","dfa.rs","lib.rs","macros.rs"]]],\
+["anstream",["",[["adapter",[],["mod.rs","strip.rs","wincon.rs"]]],["auto.rs","buffer.rs","fmt.rs","lib.rs","macros.rs","stream.rs","strip.rs"]]],\
+["anstyle",["",[],["color.rs","effect.rs","lib.rs","macros.rs","reset.rs","style.rs"]]],\
+["anstyle_parse",["",[["state",[],["definitions.rs","mod.rs","table.rs"]]],["lib.rs","params.rs"]]],\
+["anstyle_query",["",[],["lib.rs","windows.rs"]]],\
 ["async_broadcast",["",[],["lib.rs"]]],\
 ["async_channel",["",[],["lib.rs"]]],\
 ["async_executor",["",[],["lib.rs"]]],\
@@ -26,6 +30,11 @@ var srcIndex = new Map(JSON.parse('[\
 ["bytes",["",[["buf",[],["buf_impl.rs","buf_mut.rs","chain.rs","iter.rs","limit.rs","mod.rs","reader.rs","take.rs","uninit_slice.rs","vec_deque.rs","writer.rs"]],["fmt",[],["debug.rs","hex.rs","mod.rs"]]],["bytes.rs","bytes_mut.rs","lib.rs","loom.rs"]]],\
 ["cfg_if",["",[],["lib.rs"]]],\
 ["circular_queue",["",[],["lib.rs"]]],\
+["clap",["",[],["lib.rs"]]],\
+["clap_builder",["",[["builder",[],["action.rs","app_settings.rs","arg.rs","arg_group.rs","arg_predicate.rs","arg_settings.rs","command.rs","debug_asserts.rs","ext.rs","mod.rs","os_str.rs","possible_value.rs","range.rs","resettable.rs","str.rs","styled_str.rs","styling.rs","value_hint.rs","value_parser.rs"]],["error",[],["context.rs","format.rs","kind.rs","mod.rs"]],["output",[["textwrap",[],["core.rs","mod.rs"]]],["fmt.rs","help.rs","help_template.rs","mod.rs","usage.rs"]],["parser",[["features",[],["mod.rs","suggestions.rs"]],["matches",[],["arg_matches.rs","matched_arg.rs","mod.rs","value_source.rs"]]],["arg_matcher.rs","error.rs","mod.rs","parser.rs","validator.rs"]],["util",[],["any_value.rs","color.rs","flat_map.rs","flat_set.rs","graph.rs","id.rs","mod.rs","str_to_bool.rs"]]],["derive.rs","lib.rs","macros.rs","mkeymap.rs"]]],\
+["clap_derive",["",[["derives",[],["args.rs","into_app.rs","mod.rs","parser.rs","subcommand.rs","value_enum.rs"]],["utils",[],["doc_comments.rs","error.rs","mod.rs","spanned.rs","ty.rs"]]],["attr.rs","dummies.rs","item.rs","lib.rs","macros.rs"]]],\
+["clap_lex",["",[],["ext.rs","lib.rs"]]],\
+["colorchoice",["",[],["lib.rs"]]],\
 ["concurrent_queue",["",[],["bounded.rs","lib.rs","single.rs","sync.rs","unbounded.rs"]]],\
 ["cpufeatures",["",[],["lib.rs","x86.rs"]]],\
 ["crossbeam_utils",["",[["atomic",[],["atomic_cell.rs","consume.rs","mod.rs","seq_lock.rs"]],["sync",[],["mod.rs","once_lock.rs","parker.rs","sharded_lock.rs","wait_group.rs"]]],["backoff.rs","cache_padded.rs","lib.rs","thread.rs"]]],\
@@ -71,7 +80,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["mio",["",[["event",[],["event.rs","events.rs","mod.rs","source.rs"]],["net",[["tcp",[],["listener.rs","mod.rs","stream.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","stream.rs"]]],["mod.rs","udp.rs"]],["sys",[["unix",[["selector",[],["epoll.rs","mod.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","socketaddr.rs","stream.rs"]]],["mod.rs","net.rs","pipe.rs","sourcefd.rs","tcp.rs","udp.rs","waker.rs"]]],["mod.rs"]]],["interest.rs","io_source.rs","lib.rs","macros.rs","poll.rs","token.rs","waker.rs"]]],\
 ["nix",["",[["mount",[],["linux.rs","mod.rs"]],["net",[],["if_.rs","mod.rs"]],["sys",[["ioctl",[],["linux.rs","mod.rs"]],["ptrace",[],["linux.rs","mod.rs"]],["socket",[],["addr.rs","mod.rs","sockopt.rs"]]],["aio.rs","epoll.rs","eventfd.rs","inotify.rs","memfd.rs","mman.rs","mod.rs","personality.rs","pthread.rs","quota.rs","reboot.rs","resource.rs","select.rs","sendfile.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","termios.rs","time.rs","timer.rs","timerfd.rs","uio.rs","utsname.rs","wait.rs"]]],["dir.rs","env.rs","errno.rs","fcntl.rs","features.rs","ifaddrs.rs","kmod.rs","lib.rs","macros.rs","mqueue.rs","poll.rs","pty.rs","sched.rs","time.rs","ucontext.rs","unistd.rs"]]],\
 ["nu_ansi_term",["",[],["ansi.rs","debug.rs","difference.rs","display.rs","gradient.rs","lib.rs","rgb.rs","style.rs","util.rs","windows.rs","write.rs"]]],\
-["odilia",["",[["events",[],["cache.rs","document.rs","mod.rs","object.rs"]]],["logging.rs","main.rs","state.rs"]]],\
+["odilia",["",[["events",[],["cache.rs","document.rs","mod.rs","object.rs"]]],["cli.rs","logging.rs","main.rs","state.rs"]]],\
 ["odilia_cache",["",[],["lib.rs"]]],\
 ["odilia_common",["",[["settings",[],["log.rs","mod.rs","speech.rs"]]],["elements.rs","errors.rs","events.rs","lib.rs","modes.rs","result.rs","types.rs"]]],\
 ["odilia_input",["",[],["lib.rs"]]],\
@@ -114,6 +123,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["socket2",["",[["sys",[],["unix.rs"]]],["lib.rs","sockaddr.rs","socket.rs","sockref.rs"]]],\
 ["ssip_client_async",["",[],["async_std.rs","client.rs","constants.rs","fifo.rs","lib.rs","net.rs","poll.rs","protocol.rs","tcp.rs","tokio.rs","types.rs"]]],\
 ["static_assertions",["",[],["assert_cfg.rs","assert_eq_align.rs","assert_eq_size.rs","assert_fields.rs","assert_impl.rs","assert_obj_safe.rs","assert_trait.rs","assert_type.rs","const_assert.rs","lib.rs"]]],\
+["strsim",["",[],["lib.rs"]]],\
 ["strum",["",[],["additional_attributes.rs","lib.rs"]]],\
 ["strum_macros",["",[["helpers",[],["case_style.rs","metadata.rs","mod.rs","type_props.rs","variant_props.rs"]],["macros",[["strings",[],["as_ref_str.rs","display.rs","from_string.rs","mod.rs","to_string.rs"]]],["enum_count.rs","enum_discriminants.rs","enum_iter.rs","enum_messages.rs","enum_properties.rs","enum_variant_names.rs","from_repr.rs","mod.rs"]]],["lib.rs"]]],\
 ["sysinfo",["",[["linux",[],["component.rs","cpu.rs","disk.rs","mod.rs","network.rs","process.rs","system.rs","utils.rs"]]],["common.rs","debug.rs","lib.rs","macros.rs","system.rs","traits.rs","users.rs","utils.rs"]]],\
@@ -134,6 +144,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["tracing_tree",["",[],["format.rs","lib.rs","time.rs"]]],\
 ["typenum",["",[],["array.rs","bit.rs","int.rs","lib.rs","marker_traits.rs","operator_aliases.rs","private.rs","type_operators.rs","uint.rs"]]],\
 ["unicode_ident",["",[],["lib.rs","tables.rs"]]],\
+["utf8parse",["",[],["lib.rs","types.rs"]]],\
 ["value_bag",["",[["internal",[["cast",[],["mod.rs","primitive.rs"]]],["fill.rs","fmt.rs","mod.rs"]]],["error.rs","fill.rs","impls.rs","lib.rs","visit.rs"]]],\
 ["waker_fn",["",[],["lib.rs"]]],\
 ["winnow",["",[["bits",[],["mod.rs"]],["branch",[],["mod.rs"]],["bytes",[],["mod.rs"]],["character",[],["mod.rs"]],["combinator",[],["mod.rs"]],["multi",[],["mod.rs"]],["number",[],["mod.rs"]],["sequence",[],["mod.rs"]],["stream",[],["impls.rs","mod.rs"]],["trace",[],["mod.rs"]]],["error.rs","lib.rs","macros.rs","parser.rs"]]],\

@@ -430,7 +430,7 @@
 		<span class="kw">let </span>(send, _recv) = channel(<span class="number">32</span>);
 		<span class="kw">let </span>cache = serde_json::from_str(<span class="macro">include_str!</span>(<span class="string">"wcag_cache_items.json"</span>))
 			.context(<span class="string">"unable to load cache data from json file"</span>)<span class="question-mark">?</span>;
-		<span class="kw">let </span>state = ScreenReaderState::new(send)
+		<span class="kw">let </span>state = ScreenReaderState::new(send, <span class="prelude-val">None</span>)
 			.<span class="kw">await
 			</span>.context(<span class="string">"unable to realise screenreader state"</span>)<span class="question-mark">?</span>;
 		state.cache

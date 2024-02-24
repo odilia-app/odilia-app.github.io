@@ -277,6 +277,21 @@
 <a href="#276" id="276">276</a>
 <a href="#277" id="277">277</a>
 <a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fs, sync::atomic::AtomicI32};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
@@ -318,7 +333,10 @@
 
 <span class="kw">impl </span>ScreenReaderState {
 	<span class="attr">#[tracing::instrument]
-	</span><span class="kw">pub async fn </span>new(ssip: Sender&lt;SSIPRequest&gt;) -&gt; eyre::Result&lt;ScreenReaderState&gt; {
+	</span><span class="kw">pub async fn </span>new(
+		ssip: Sender&lt;SSIPRequest&gt;,
+		config_override: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>std::path::Path&gt;,
+	) -&gt; eyre::Result&lt;ScreenReaderState&gt; {
 		<span class="kw">let </span>atspi = AccessibilityConnection::open()
 			.<span class="kw">await
 			</span>.wrap_err(<span class="string">"Could not connect to at-spi bus"</span>)<span class="question-mark">?</span>;
@@ -329,20 +347,32 @@
 		<span class="kw">let </span>mode = Mutex::new(ScreenReaderMode { name: <span class="string">"CommandMode"</span>.to_string() });
 
 		<span class="macro">tracing::debug!</span>(<span class="string">"Reading configuration"</span>);
-		<span class="kw">let </span>xdg_dirs = xdg::BaseDirectories::with_prefix(<span class="string">"odilia"</span>).expect(
+
+		<span class="kw">let </span>config_path = <span class="kw">if </span>config_override.is_none() {
+			<span class="kw">let </span>xdg_dirs = xdg::BaseDirectories::with_prefix(<span class="string">"odilia"</span>).expect(
             <span class="string">"unable to find the odilia config directory according to the xdg dirs specification"</span>,
-        );
-		<span class="kw">let </span>config_path = xdg_dirs.place_config_file(<span class="string">"config.toml"</span>).expect(
+        	);
+			<span class="kw">let </span>config_path = xdg_dirs.place_config_file(<span class="string">"config.toml"</span>).expect(
 			<span class="string">"unable to place configuration file. Maybe your system is readonly?"</span>,
-		);
-		<span class="kw">if </span>!config_path.exists() {
-			fs::write(<span class="kw-2">&amp;</span>config_path, <span class="macro">include_str!</span>(<span class="string">"../config.toml"</span>))
-				.expect(<span class="string">"Unable to copy default config file."</span>);
-		}
-		<span class="kw">let </span>config_path = config_path.to_str().ok_or(ConfigError::PathNotFound)<span class="question-mark">?</span>.to_owned();
+			);
+
+			<span class="kw">if </span>!config_path.exists() {
+				fs::write(<span class="kw-2">&amp;</span>config_path, <span class="macro">include_str!</span>(<span class="string">"../config.toml"</span>))
+					.expect(<span class="string">"Unable to copy default config file."</span>);
+			}
+			config_path.to_str().ok_or(ConfigError::PathNotFound)<span class="question-mark">?</span>.to_owned()
+		} <span class="kw">else </span>{
+			config_override
+				.expect(<span class="string">"Config override was provided but is None"</span>)
+				.to_str()
+				.ok_or(ConfigError::PathNotFound)<span class="question-mark">?
+				</span>.to_owned()
+		};
+
 		<span class="macro">tracing::debug!</span>(path=%config_path, <span class="string">"loading configuration file"</span>);
 		<span class="kw">let </span>config = ApplicationConfig::new(<span class="kw-2">&amp;</span>config_path)
 			.wrap_err(<span class="string">"unable to load configuration file"</span>)<span class="question-mark">?</span>;
+
 		<span class="macro">tracing::debug!</span>(<span class="string">"configuration loaded successfully"</span>);
 
 		<span class="kw">let </span>previous_caret_position = AtomicI32::new(<span class="number">0</span>);

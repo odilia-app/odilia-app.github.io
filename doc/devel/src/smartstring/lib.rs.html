@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smartstring-1.0.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="smartstring" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../smartstring/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smartstring-1.0.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="smartstring" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -988,9 +989,9 @@
 //! B-tree (such as [`std::collections::BTreeMap`]) or any kind of
 //! array operation where cache locality is critical.
 //!
-//! In general, it&#39;s a nice data type for reducing your heap allocations and
+//! In general, it's a nice data type for reducing your heap allocations and
 //! increasing the locality of string data. If you use [`SmartString`]
-//! as a drop-in replacement for [`String`], you&#39;re almost certain to see
+//! as a drop-in replacement for [`String`], you're almost certain to see
 //! a slight performance boost, as well as slightly reduced memory usage.
 //!
 //! ## How To Use It?
@@ -1003,10 +1004,10 @@
 //! use std::fmt::Write;
 //!
 //! let mut string = String::new();
-//! string.push_str(&quot;This is just a string!&quot;);
+//! string.push_str("This is just a string!");
 //! string.clear();
-//! write!(string, &quot;Hello Joe!&quot;);
-//! assert_eq!(&quot;Hello Joe!&quot;, string);
+//! write!(string, "Hello Joe!");
+//! assert_eq!("Hello Joe!", string);
 //! ```
 //!
 //! ## Give Me The Details
@@ -1016,31 +1017,31 @@
 //! inline form that will never be present in its [`String`] form, thus
 //! giving us 24 bytes (on 64-bit architectures) minus one bit to encode our
 //! inline string. It uses 23 bytes to store the string data and the remaining
-//! 7 bits to encode the string&#39;s length. When the available space is exceeded,
+//! 7 bits to encode the string's length. When the available space is exceeded,
 //! it swaps itself out with a boxed string type containing its previous
-//! contents. Likewise, if the string&#39;s length should drop below its inline
+//! contents. Likewise, if the string's length should drop below its inline
 //! capacity again, it deallocates the string and moves its contents inline.
 //!
 //! In [`Compact`] mode, it is aggressive about inlining strings, meaning that if you modify a heap allocated
 //! string such that it becomes short enough for inlining, it will be inlined immediately
 //! and the allocated [`String`] will be dropped. This may cause multiple
-//! unintended allocations if you repeatedly adjust your string&#39;s length across the
-//! inline capacity threshold, so if your string&#39;s construction can get
-//! complicated and you&#39;re relying on performance during construction, it might be better
+//! unintended allocations if you repeatedly adjust your string's length across the
+//! inline capacity threshold, so if your string's construction can get
+//! complicated and you're relying on performance during construction, it might be better
 //! to construct it as a [`String`] and convert it once construction is done.
 //!
 //! [`LazyCompact`] looks the same as [`Compact`], except
-//! it never re-inlines a string that&#39;s already been heap allocated, instead
+//! it never re-inlines a string that's already been heap allocated, instead
 //! keeping the allocation around in case it needs it. This makes for less
-//! cache local strings, but is the best choice if you&#39;re more worried about
+//! cache local strings, but is the best choice if you're more worried about
 //! time spent on unnecessary allocations than cache locality.
 //!
 //! ## Performance
 //!
-//! It doesn&#39;t aim to be more performant than [`String`] in the general case,
-//! except that it doesn&#39;t trigger heap allocations for anything shorter than
+//! It doesn't aim to be more performant than [`String`] in the general case,
+//! except that it doesn't trigger heap allocations for anything shorter than
 //! its inline capacity and so can be reasonably expected to exceed
-//! [`String`]&#39;s performance perceptibly on shorter strings, as well as being more
+//! [`String`]'s performance perceptibly on shorter strings, as well as being more
 //! memory efficient in these cases. There will always be a slight overhead on all
 //! operations on boxed strings, compared to [`String`].
 //!
@@ -1051,7 +1052,7 @@
 //!
 //! ```no_compile
 //! [dependencies]
-//! smartstring = { version = &quot;*&quot;, features = [&quot;proptest&quot;, &quot;serde&quot;] }
+//! smartstring = { version = "*", features = ["proptest", "serde"] }
 //! ```
 //!
 //! | Feature | Description |
@@ -1069,7 +1070,7 @@
 #![forbid(rust_2018_idioms)]
 #![deny(nonstandard_style)]
 #![warn(unreachable_pub, missing_debug_implementations, missing_docs)]
-#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), no_std)]
+#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 #![cfg_attr(needs_allocator_feature, feature(allocator_api))]
 
 </span><span class="kw">extern crate </span>alloc;
@@ -1095,7 +1096,7 @@
     str::FromStr,
 };
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>std::borrow::Cow;
 
 <span class="kw">mod </span>config;
@@ -1119,13 +1120,13 @@
 <span class="kw">mod </span>ops;
 <span class="kw">use </span>ops::{string_op_grow, string_op_shrink};
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"serde"</span>)]
 </span><span class="kw">mod </span>serde;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;arbitrary&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"arbitrary"</span>)]
 </span><span class="kw">mod </span>arbitrary;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;proptest&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"proptest"</span>)]
 </span><span class="kw">pub mod </span>proptest;
 
 <span class="doccomment">/// Convenient type aliases.
@@ -1134,7 +1135,7 @@
 
     <span class="doccomment">/// A convenience alias for a [`LazyCompact`] layout [`SmartString`].
     ///
-    /// Just pretend it&#39;s a [`String`][String]!
+    /// Just pretend it's a [`String`][String]!
     </span><span class="kw">pub type </span>String = SmartString&lt;LazyCompact&gt;;
 
     <span class="doccomment">/// A convenience alias for a [`Compact`] layout [`SmartString`].
@@ -1154,7 +1155,7 @@
 /// really exists in the boxed variant, because the inline variant can still give
 /// sensible behaviour for these operations, but `with_capacity()`, `reserve()` etc are
 /// absent, because they would have no effect on inline strings and the requested
-/// state changes wouldn&#39;t carry over if the inline string is promoted to a boxed
+/// state changes wouldn't carry over if the inline string is promoted to a boxed
 /// one - not without also storing that state in the inline representation, which
 /// would waste precious bytes for inline string data.
 </span><span class="kw">pub struct </span>SmartString&lt;Mode: SmartStringMode&gt; {
@@ -1212,7 +1213,7 @@
     <span class="doccomment">/// Construct an empty string.
     ///
     /// This is a `const fn` version of [`SmartString::new`].
-    /// It&#39;s a temporary measure while we wait for trait bounds on
+    /// It's a temporary measure while we wait for trait bounds on
     /// type arguments to `const fn`s to stabilise, and will be deprecated
     /// once this happens.
     </span><span class="kw">pub const fn </span>new_const() -&gt; <span class="self">Self </span>{
@@ -1227,7 +1228,7 @@
     <span class="doccomment">/// Construct an empty string.
     ///
     /// This is a `const fn` version of [`SmartString::new`].
-    /// It&#39;s a temporary measure while we wait for trait bounds on
+    /// It's a temporary measure while we wait for trait bounds on
     /// type arguments to `const fn`s to stabilise, and will be deprecated
     /// once this happens.
     </span><span class="kw">pub const fn </span>new_const() -&gt; <span class="self">Self </span>{
@@ -1273,7 +1274,7 @@
         </span>Discriminant::from_bit(BoxedString::check_alignment(<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>str_ptr }))
     }
 
-    <span class="kw">fn </span>cast(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StringCast&lt;<span class="lifetime">&#39;_</span>&gt; {
+    <span class="kw">fn </span>cast(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StringCast&lt;<span class="lifetime">'_</span>&gt; {
         <span class="attr">#[allow(unsafe_code)]
         </span><span class="kw">match </span><span class="self">self</span>.discriminant() {
             Discriminant::Inline =&gt; StringCast::Inline(<span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span><span class="self">self</span>.data.as_ptr() }),
@@ -1281,7 +1282,7 @@
         }
     }
 
-    <span class="kw">fn </span>cast_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; StringCastMut&lt;<span class="lifetime">&#39;_</span>&gt; {
+    <span class="kw">fn </span>cast_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; StringCastMut&lt;<span class="lifetime">'_</span>&gt; {
         <span class="attr">#[allow(unsafe_code)]
         </span><span class="kw">match </span><span class="self">self</span>.discriminant() {
             Discriminant::Inline =&gt; StringCastMut::Inline(<span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span><span class="self">self</span>.data.as_mut_ptr() }),
@@ -1313,9 +1314,9 @@
         };
     }
 
-    <span class="doccomment">/// Attempt to inline the string if it&#39;s currently heap allocated.
+    <span class="doccomment">/// Attempt to inline the string if it's currently heap allocated.
     ///
-    /// Returns the resulting state: `true` if it&#39;s inlined, `false` if it&#39;s not.
+    /// Returns the resulting state: `true` if it's inlined, `false` if it's not.
     </span><span class="kw">fn </span>try_demote(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; bool {
         <span class="kw">if </span>Mode::DEALLOC {
             <span class="self">self</span>.really_try_demote()
@@ -1403,7 +1404,7 @@
     <span class="doccomment">/// Shrink the capacity of the string to fit its contents exactly.
     ///
     /// This has no effect on inline strings, which always have a fixed capacity.
-    /// Thus, it&#39;s not safe to assume that [`capacity()`][SmartString::capacity] will
+    /// Thus, it's not safe to assume that [`capacity()`][SmartString::capacity] will
     /// equal [`len()`][SmartString::len] after calling this.
     ///
     /// Calling this on a [`LazyCompact`] string that is currently
@@ -1420,8 +1421,8 @@
 
     <span class="doccomment">/// Truncate the string to `new_len` bytes.
     ///
-    /// If `new_len` is larger than the string&#39;s current length, this does nothing.
-    /// If `new_len` isn&#39;t on a UTF-8 character boundary, this method panics.
+    /// If `new_len` is larger than the string's current length, this does nothing.
+    /// If `new_len` isn't on a UTF-8 character boundary, this method panics.
     </span><span class="kw">pub fn </span>truncate(<span class="kw-2">&amp;mut </span><span class="self">self</span>, new_len: usize) {
         <span class="macro">string_op_shrink!</span>(ops::Truncate, <span class="self">self</span>, new_len)
     }
@@ -1433,21 +1434,21 @@
 
     <span class="doccomment">/// Remove a `char` from the string at the given index.
     ///
-    /// If the index doesn&#39;t fall on a UTF-8 character boundary, this method panics.
+    /// If the index doesn't fall on a UTF-8 character boundary, this method panics.
     </span><span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: usize) -&gt; char {
         <span class="macro">string_op_shrink!</span>(ops::Remove, <span class="self">self</span>, index)
     }
 
     <span class="doccomment">/// Insert a `char` into the string at the given index.
     ///
-    /// If the index doesn&#39;t fall on a UTF-8 character boundary, this method panics.
+    /// If the index doesn't fall on a UTF-8 character boundary, this method panics.
     </span><span class="kw">pub fn </span>insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: usize, ch: char) {
         <span class="macro">string_op_grow!</span>(ops::Insert, <span class="self">self</span>, index, ch)
     }
 
     <span class="doccomment">/// Insert a string slice into the string at the given index.
     ///
-    /// If the index doesn&#39;t fall on a UTF-8 character boundary, this method panics.
+    /// If the index doesn't fall on a UTF-8 character boundary, this method panics.
     </span><span class="kw">pub fn </span>insert_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: usize, string: <span class="kw-2">&amp;</span>str) {
         <span class="macro">string_op_grow!</span>(ops::InsertStr, <span class="self">self</span>, index, string)
     }
@@ -1457,7 +1458,7 @@
     /// Returns the content to the right of the index as a new string, and removes
     /// it from the original.
     ///
-    /// If the index doesn&#39;t fall on a UTF-8 character boundary, this method panics.
+    /// If the index doesn't fall on a UTF-8 character boundary, this method panics.
     </span><span class="kw">pub fn </span>split_off(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: usize) -&gt; <span class="self">Self </span>{
         <span class="macro">string_op_shrink!</span>(ops::SplitOff&lt;Mode&gt;, <span class="self">self</span>, index)
     }
@@ -1481,7 +1482,7 @@
     ///
     /// This removes the given range from the string, and returns an iterator over the
     /// removed `char`s.
-    </span><span class="kw">pub fn </span>drain&lt;R&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, range: R) -&gt; Drain&lt;<span class="lifetime">&#39;_</span>, Mode&gt;
+    </span><span class="kw">pub fn </span>drain&lt;R&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, range: R) -&gt; Drain&lt;<span class="lifetime">'_</span>, Mode&gt;
     <span class="kw">where
         </span>R: RangeBounds&lt;usize&gt;,
     {
@@ -1612,8 +1613,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from(string: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from(string: <span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str) -&gt; <span class="self">Self </span>{
         <span class="kw">if </span>string.len() &gt; MAX_INLINE {
             <span class="self">Self</span>::from_boxed(string.to_string().into())
         } <span class="kw">else </span>{
@@ -1622,8 +1623,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span><span class="kw-2">mut </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from(string: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span><span class="kw-2">mut </span>str) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span><span class="kw-2">mut </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from(string: <span class="kw-2">&amp;</span><span class="lifetime">'_ </span><span class="kw-2">mut </span>str) -&gt; <span class="self">Self </span>{
         <span class="kw">if </span>string.len() &gt; MAX_INLINE {
             <span class="self">Self</span>::from_boxed(string.to_string().into())
         } <span class="kw">else </span>{
@@ -1632,8 +1633,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from(string: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>String) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from(string: <span class="kw-2">&amp;</span><span class="lifetime">'_ </span>String) -&gt; <span class="self">Self </span>{
         <span class="kw">if </span>string.len() &gt; MAX_INLINE {
             <span class="self">Self</span>::from_boxed(string.clone().into())
         } <span class="kw">else </span>{
@@ -1662,9 +1663,9 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;Cow&lt;<span class="lifetime">&#39;_</span>, str&gt;&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from(string: Cow&lt;<span class="lifetime">&#39;_</span>, str&gt;) -&gt; <span class="self">Self </span>{
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; From&lt;Cow&lt;<span class="lifetime">'_</span>, str&gt;&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from(string: Cow&lt;<span class="lifetime">'_</span>, str&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">if </span>string.len() &gt; MAX_INLINE {
             String::from(string).into()
         } <span class="kw">else </span>{
@@ -1673,16 +1674,16 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
         <span class="kw">for </span>item <span class="kw">in </span>iter {
             <span class="self">self</span>.push_str(item);
         }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>char&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>char&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>char&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span>char&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
         <span class="kw">for </span>item <span class="kw">in </span>iter {
             <span class="self">self</span>.push(<span class="kw-2">*</span>item);
         }
@@ -1713,16 +1714,16 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode + <span class="lifetime">&#39;a</span>&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SmartString&lt;Mode&gt;&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>SmartString&lt;Mode&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode + <span class="lifetime">'a</span>&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>SmartString&lt;Mode&gt;&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span>SmartString&lt;Mode&gt;&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
         <span class="kw">for </span>item <span class="kw">in </span>iter {
             <span class="self">self</span>.push_str(item);
         }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode&gt; Extend&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>extend&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span>String&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, iter: I) {
         <span class="kw">for </span>item <span class="kw">in </span>iter {
             <span class="self">self</span>.push_str(item);
         }
@@ -1737,25 +1738,25 @@
     </span>}
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Add&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span><span class="self">Self</span>&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Add&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span><span class="self">Self</span>&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
     <span class="kw">type </span>Output = <span class="self">Self</span>;
-    <span class="kw">fn </span>add(<span class="kw-2">mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span><span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
+    <span class="kw">fn </span>add(<span class="kw-2">mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="lifetime">'_ </span><span class="self">Self</span>) -&gt; <span class="self">Self</span>::Output {
         <span class="self">self</span>.push_str(rhs);
         <span class="self">self
     </span>}
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Add&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Add&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
     <span class="kw">type </span>Output = <span class="self">Self</span>;
-    <span class="kw">fn </span>add(<span class="kw-2">mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str) -&gt; <span class="self">Self</span>::Output {
+    <span class="kw">fn </span>add(<span class="kw-2">mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str) -&gt; <span class="self">Self</span>::Output {
         <span class="self">self</span>.push_str(rhs);
         <span class="self">self
     </span>}
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Add&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Add&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
     <span class="kw">type </span>Output = <span class="self">Self</span>;
-    <span class="kw">fn </span>add(<span class="kw-2">mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>String) -&gt; <span class="self">Self</span>::Output {
+    <span class="kw">fn </span>add(<span class="kw-2">mut </span><span class="self">self</span>, rhs: <span class="kw-2">&amp;</span><span class="lifetime">'_ </span>String) -&gt; <span class="self">Self</span>::Output {
         <span class="self">self</span>.push_str(rhs);
         <span class="self">self
     </span>}
@@ -1793,24 +1794,24 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode + <span class="lifetime">&#39;a</span>&gt; FromIterator&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">Self</span>&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">Self</span>&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode + <span class="lifetime">'a</span>&gt; FromIterator&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">Self</span>&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">Self</span>&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>out = <span class="self">Self</span>::new();
         out.extend(iter.into_iter());
         out
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode&gt; FromIterator&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode&gt; FromIterator&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>out = <span class="self">Self</span>::new();
         out.extend(iter.into_iter());
         out
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, Mode: SmartStringMode&gt; FromIterator&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, Mode: SmartStringMode&gt; FromIterator&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>String&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+    <span class="kw">fn </span>from_iter&lt;I: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">'a </span>String&gt;&gt;(iter: I) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>out = <span class="self">Self</span>::new();
         out.extend(iter.into_iter());
         out
@@ -1852,13 +1853,13 @@
     }
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; PartialEq&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; PartialEq&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str&gt; <span class="kw">for </span>SmartString&lt;Mode&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: &amp;&amp;str) -&gt; bool {
         <span class="self">self</span>.as_str() == <span class="kw-2">*</span>other
     }
 }
 
-<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; PartialEq&lt;SmartString&lt;Mode&gt;&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str {
+<span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; PartialEq&lt;SmartString&lt;Mode&gt;&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>SmartString&lt;Mode&gt;) -&gt; bool {
         other.eq(<span class="kw-2">*</span><span class="self">self</span>)
     }
@@ -1915,13 +1916,13 @@
 }
 
 <span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Debug <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         Debug::fmt(<span class="self">self</span>.as_str(), f)
     }
 }
 
 <span class="kw">impl</span>&lt;Mode: SmartStringMode&gt; Display <span class="kw">for </span>SmartString&lt;Mode&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         Display::fmt(<span class="self">self</span>.as_str(), f)
     }
 }
@@ -1933,7 +1934,7 @@
     }
 }
 
-<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test&quot;</span>))]
+<span class="attr">#[cfg(any(test, feature = <span class="string">"test"</span>))]
 #[allow(missing_docs)]
 </span><span class="kw">pub mod </span>test;
 </code></pre></div></section></main></body></html>

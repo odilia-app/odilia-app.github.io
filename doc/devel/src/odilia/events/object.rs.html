@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/events/object.rs`."><title>object.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../odilia/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/events/object.rs`."><title>object.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -664,6 +665,7 @@
 <a href="#664" id="664">664</a>
 <a href="#665" id="665">665</a>
 <a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi_common::events::object::ObjectEvents;
 
@@ -683,7 +685,7 @@
 			children_changed::dispatch(state, children_changed_event).<span class="kw">await</span><span class="question-mark">?</span>;
 		}
 		other_member =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;Ignoring event with unknown member: {:#?}&quot;</span>, other_member);
+			<span class="macro">tracing::debug!</span>(<span class="string">"Ignoring event with unknown member: {:#?}"</span>, other_member);
 		}
 	}
 	<span class="prelude-val">Ok</span>(())
@@ -706,10 +708,10 @@
 		start_pos: usize,
 		update_length: usize,
 		updated_text: <span class="kw-2">&amp;</span>str,
-	) -&gt; <span class="kw">impl </span>Fn(<span class="kw-2">&amp;mut </span>CacheItem) + <span class="lifetime">&#39;_ </span>{
+	) -&gt; <span class="kw">impl </span>Fn(<span class="kw-2">&amp;mut </span>CacheItem) + <span class="lifetime">'_ </span>{
 		<span class="kw">move </span>|cache_item| {
 			<span class="macro">tracing::trace!</span>(
-				<span class="string">&quot;Insert into \&quot;{}\&quot;({:?} @ {}+{} should insert \&quot;{}\&quot;&quot;</span>,
+				<span class="string">"Insert into \"{}\"({:?} @ {}+{} should insert \"{}\""</span>,
 				cache_item.text,
 				cache_item.object.id,
 				start_pos,
@@ -768,15 +770,15 @@
 	</span><span class="doccomment">/// Get the live state of a set of attributes.
 	/// Although the function only currently tests one attributes, in the future it may be imporant to inspect many attributes, compare them, or do additional logic.
 	</span><span class="kw">pub fn </span>get_live_state(attributes: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; OdiliaResult&lt;AriaLive&gt; {
-		<span class="kw">match </span>attributes.get(<span class="string">&quot;live&quot;</span>) {
-			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(OdiliaError::NoAttributeError(<span class="string">&quot;live&quot;</span>.to_string())),
+		<span class="kw">match </span>attributes.get(<span class="string">"live"</span>) {
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(OdiliaError::NoAttributeError(<span class="string">"live"</span>.to_string())),
 			<span class="prelude-val">Some</span>(live) =&gt; <span class="prelude-val">Ok</span>(serde_plain::from_str(live)<span class="question-mark">?</span>),
 		}
 	}
 
 	<span class="attr">#[inline]
-	</span><span class="doccomment">/// if the aria-live attribute is set to &quot;polite&quot;, then set the prioirty of the message to speak once all other messages are done
-	/// if the aria-live attribute is set to &quot;assertive&quot;, thenset the priority of the message to speak immediately, stop all other messages, and do not interrupt that piece of speech
+	</span><span class="doccomment">/// if the aria-live attribute is set to "polite", then set the prioirty of the message to speak once all other messages are done
+	/// if the aria-live attribute is set to "assertive", thenset the priority of the message to speak immediately, stop all other messages, and do not interrupt that piece of speech
 	/// otherwise, do not continue
 	</span><span class="kw">pub fn </span>live_to_priority(live_str: <span class="kw-2">&amp;</span>AriaLive) -&gt; Priority {
 		<span class="kw">match </span>live_str {
@@ -788,8 +790,8 @@
 
 	<span class="attr">#[inline]
 	</span><span class="kw">pub fn </span>get_atomic_state(attributes: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; OdiliaResult&lt;AriaAtomic&gt; {
-		<span class="kw">match </span>attributes.get(<span class="string">&quot;atomic&quot;</span>) {
-			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(OdiliaError::NoAttributeError(<span class="string">&quot;atomic&quot;</span>.to_string())),
+		<span class="kw">match </span>attributes.get(<span class="string">"atomic"</span>) {
+			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(OdiliaError::NoAttributeError(<span class="string">"atomic"</span>.to_string())),
 			<span class="prelude-val">Some</span>(atomic) =&gt; <span class="prelude-val">Ok</span>(serde_plain::from_str(atomic)<span class="question-mark">?</span>),
 		}
 	}
@@ -829,12 +831,12 @@
 		event: <span class="kw-2">&amp;</span>TextChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
 		<span class="kw">match </span>event.operation.as_str() {
-			<span class="string">&quot;insert/system&quot; </span>=&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">&quot;insert&quot; </span>=&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">&quot;delete/system&quot; </span>=&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">&quot;delete&quot; </span>=&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">"insert/system" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">"insert" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">"delete/system" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
+			<span class="string">"delete" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
 			<span class="kw">_ </span>=&gt; <span class="macro">tracing::trace!</span>(
-				<span class="string">&quot;TextChangedEvent has invalid kind: {}&quot;</span>,
+				<span class="string">"TextChangedEvent has invalid kind: {}"</span>,
 				event.operation
 			),
 		};
@@ -854,7 +856,7 @@
 		// if atomic state is false, then only read out the portion which has been added
 		// otherwise, do not continue through this function
 		</span><span class="kw">let </span>text_to_say =
-			<span class="kw">if </span>atomic { cache_text.to_string() } <span class="kw">else </span>{ (<span class="kw-2">&amp;</span>event.text).try_into()<span class="question-mark">? </span>};
+			<span class="kw">if </span>atomic { cache_text.to_string() } <span class="kw">else </span>{ (<span class="kw-2">&amp;</span>event.text).into() };
 		<span class="kw">let </span>prioirty = live_to_priority(<span class="kw-2">&amp;</span>live);
 		state.say(prioirty, text_to_say).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(())
@@ -870,7 +872,7 @@
 	) -&gt; eyre::Result&lt;()&gt; {
 		<span class="kw">let </span>accessible = state.new_accessible(event).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>cache_item = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let </span>updated_text: String = (<span class="kw-2">&amp;</span>event.text).try_into()<span class="question-mark">?</span>;
+		<span class="kw">let </span>updated_text: String = (<span class="kw-2">&amp;</span>event.text).into();
 		<span class="kw">let </span>current_text = cache_item.text;
 		<span class="kw">let </span>(start_pos, update_length) =
 			(usize::try_from(event.start_pos)<span class="question-mark">?</span>, usize::try_from(event.length)<span class="question-mark">?</span>);
@@ -923,9 +925,9 @@
 	) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
 		</span><span class="kw">match </span>event.operation.as_str() {
-			<span class="string">&quot;remove&quot; </span>| <span class="string">&quot;remove/system&quot; </span>=&gt; remove(state, event)<span class="question-mark">?</span>,
-			<span class="string">&quot;add&quot; </span>| <span class="string">&quot;add/system&quot; </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">&quot;Ignoring event with unknown kind&quot;</span>),
+			<span class="string">"remove" </span>| <span class="string">"remove/system" </span>=&gt; remove(state, event)<span class="question-mark">?</span>,
+			<span class="string">"add" </span>| <span class="string">"add/system" </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">"Ignoring event with unknown kind"</span>),
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -940,7 +942,7 @@
 			.cache
 			.get_or_create(<span class="kw-2">&amp;</span>accessible, Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span>state.cache)))
 			.<span class="kw">await</span>;
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Add a single item to cache.&quot;</span>);
+		<span class="macro">tracing::debug!</span>(<span class="string">"Add a single item to cache."</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
 	<span class="attr">#[inline]
@@ -952,7 +954,7 @@
 	<span class="kw">pub fn </span>remove(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>ChildrenChangedEvent) -&gt; eyre::Result&lt;()&gt; {
 		<span class="kw">let </span>prim = get_child_primitive(event)<span class="question-mark">?</span>;
 		state.cache.remove(<span class="kw-2">&amp;</span>prim);
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Remove a single item from cache.&quot;</span>);
+		<span class="macro">tracing::debug!</span>(<span class="string">"Remove a single item from cache."</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
 }
@@ -984,8 +986,8 @@
 		<span class="kw">let </span>old_pos = usize::try_from(old_position)<span class="question-mark">?</span>;
 
 		<span class="comment">// if the user has moved into a new item, then also read a whole line.
-		</span><span class="macro">debug!</span>(<span class="string">&quot;{new_id:?},{old_id:?}&quot;</span>);
-		<span class="macro">debug!</span>(<span class="string">&quot;{old_pos},{new_pos}&quot;</span>);
+		</span><span class="macro">debug!</span>(<span class="string">"{new_id:?},{old_id:?}"</span>);
+		<span class="macro">debug!</span>(<span class="string">"{old_pos},{new_pos}"</span>);
 		<span class="kw">if </span>new_id != old_id {
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(new_item
 				.get_string_at_offset(new_position, Granularity::Line)
@@ -1027,7 +1029,7 @@
 	<span class="doccomment">/// this must be checked *before* writing an accessible to the hsitory.
 	/// if this is checked after writing, it may give inaccurate results.
 	/// that said, this is a *guess* and not a guarentee.
-	/// TODO: make this a testable function, anything which queries &quot;state&quot; is not testable
+	/// TODO: make this a testable function, anything which queries "state" is not testable
 	</span><span class="kw">async fn </span>is_tab_navigation(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextCaretMovedEvent,
@@ -1037,7 +1039,7 @@
 		</span><span class="kw">if </span>current_caret_pos != <span class="number">0 </span>{
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
 		}
-		<span class="comment">// Hopefully this shouldn&#39;t happen, but technically the caret may change before any other event happens. Since we already know that the caret position is 0, it may be a caret moved event
+		<span class="comment">// Hopefully this shouldn't happen, but technically the caret may change before any other event happens. Since we already know that the caret position is 0, it may be a caret moved event
 		</span><span class="kw">let </span>last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
 			<span class="prelude-val">Some</span>(acc) =&gt; state.get_or_create_cache_item(acc).<span class="kw">await</span><span class="question-mark">?</span>,
 			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
@@ -1127,7 +1129,7 @@
 		<span class="kw">let </span>a11y_state: State = <span class="kw">match </span>serde_plain::from_str(<span class="kw-2">&amp;</span>event.state) {
 			<span class="prelude-val">Ok</span>(s) =&gt; s,
 			<span class="prelude-val">Err</span>(e) =&gt; {
-				<span class="macro">tracing::error!</span>(<span class="string">&quot;Not able to deserialize state: {}&quot;</span>, event.state);
+				<span class="macro">tracing::error!</span>(<span class="string">"Not able to deserialize state: {}"</span>, event.state);
 				<span class="kw">return </span><span class="prelude-val">Err</span>(e.into());
 			}
 		};
@@ -1135,8 +1137,8 @@
 		<span class="comment">// update cache with state of item
 		</span><span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
 		<span class="kw">match </span>update_state(state, <span class="kw-2">&amp;</span>a11y_prim, a11y_state, state_value) {
-			<span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) =&gt; <span class="macro">tracing::error!</span>(<span class="string">&quot;Updating of the state was not succesful! The item with id {:?} was not found in the cache.&quot;</span>, a11y_prim.id),
-			<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) =&gt; <span class="macro">tracing::trace!</span>(<span class="string">&quot;Updated the state of accessible with ID {:?}, and state {:?} to {state_value}.&quot;</span>, a11y_prim.id, a11y_state),
+			<span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) =&gt; <span class="macro">tracing::error!</span>(<span class="string">"Updating of the state was not succesful! The item with id {:?} was not found in the cache."</span>, a11y_prim.id),
+			<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) =&gt; <span class="macro">tracing::trace!</span>(<span class="string">"Updated the state of accessible with ID {:?}, and state {:?} to {state_value}."</span>, a11y_prim.id, a11y_state),
 			<span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e),
 		};
 		<span class="comment">// Dispatch based on kind
@@ -1145,7 +1147,7 @@
 		</span><span class="kw">match </span>(state_type, event.enabled == <span class="number">1</span>) {
 			(State::Focused, <span class="bool-val">true</span>) =&gt; focused(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
 			(state, enabled) =&gt; <span class="macro">tracing::debug!</span>(
-				<span class="string">&quot;Ignoring state_changed event with unknown kind: {:?}/{}&quot;</span>,
+				<span class="string">"Ignoring state_changed event with unknown kind: {:?}/{}"</span>,
 				state,
 				enabled
 			),
@@ -1172,15 +1174,15 @@
 		)<span class="question-mark">?</span>;
 		state.update_accessible(accessible.object.clone()).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(
-			<span class="string">&quot;Focus event received on: {:?} with role {}&quot;</span>,
+			<span class="string">"Focus event received on: {:?} with role {}"</span>,
 			accessible.object.id,
 			role
 		);
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Relations: {:?}&quot;</span>, relation);
+		<span class="macro">tracing::debug!</span>(<span class="string">"Relations: {:?}"</span>, relation);
 
 		state.say(
 			ssip_client_async::Priority::Text,
-			<span class="macro">format!</span>(<span class="string">&quot;{name}, {role}. {description}&quot;</span>),
+			<span class="macro">format!</span>(<span class="string">"{name}, {role}. {description}"</span>),
 		)
 		.<span class="kw">await</span>;
 
@@ -1199,24 +1201,25 @@
 	<span class="kw">use </span>std::sync::Arc;
 	<span class="kw">use </span>tokio_test::block_on;
 
-	<span class="kw">static </span>A11Y_PARAGRAPH_STRING: <span class="kw-2">&amp;</span>str = <span class="string">&quot;The AT-SPI (Assistive Technology Service Provider Interface) enables users of Linux to use their computer without sighted assistance. It was originally developed at Sun Microsystems, before they were purchased by Oracle.&quot;</span>;
+	<span class="kw">static </span>A11Y_PARAGRAPH_STRING: <span class="kw-2">&amp;</span>str = <span class="string">"The AT-SPI (Assistive Technology Service Provider Interface) enables users of Linux to use their computer without sighted assistance. It was originally developed at Sun Microsystems, before they were purchased by Oracle."</span>;
 	<span class="macro">lazy_static! </span>{
 		<span class="kw">static </span><span class="kw-2">ref </span>ZBUS_CONN: AccessibilityConnection =
-			block_on(AccessibilityConnection::open()).unwrap();
+			<span class="attr">#[allow(clippy::unwrap_used)]
+			</span>block_on(AccessibilityConnection::open()).unwrap();
 		<span class="kw">static </span><span class="kw-2">ref </span>CACHE_ARC: Arc&lt;Cache&gt; =
 			Arc::new(Cache::new(ZBUS_CONN.connection().clone()));
 		<span class="kw">static </span><span class="kw-2">ref </span>A11Y_PARAGRAPH_ITEM: CacheItem = CacheItem {
 			object: AccessiblePrimitive {
-				id: <span class="string">&quot;/org/a11y/atspi/accessible/1&quot;</span>.to_string(),
-				sender: <span class="string">&quot;:1.2&quot;</span>.into(),
+				id: <span class="string">"/org/a11y/atspi/accessible/1"</span>.to_string(),
+				sender: <span class="string">":1.2"</span>.into(),
 			},
 			app: AccessiblePrimitive {
-				id: <span class="string">&quot;/org/a11y/atspi/accessible/root&quot;</span>.to_string(),
-				sender: <span class="string">&quot;:1.2&quot;</span>.into()
+				id: <span class="string">"/org/a11y/atspi/accessible/root"</span>.to_string(),
+				sender: <span class="string">":1.2"</span>.into()
 			},
 			parent: AccessiblePrimitive {
-				id: <span class="string">&quot;/otg/a11y/atspi/accessible/1&quot;</span>.to_string(),
-				sender: <span class="string">&quot;:1.2&quot;</span>.into(),
+				id: <span class="string">"/otg/a11y/atspi/accessible/1"</span>.to_string(),
+				sender: <span class="string">":1.2"</span>.into(),
 			}
 			.into(),
 			index: <span class="number">323</span>,
@@ -1235,31 +1238,31 @@
 			children: Vec::new(),
 			cache: Arc::downgrade(<span class="kw-2">&amp;</span>CACHE_ARC),
 		};
-		<span class="kw">static </span><span class="kw-2">ref </span>ANSWER_VALUES: [(CacheItem, CacheItem, u32, u32, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str); <span class="number">9</span>] = [
-			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">4</span>, <span class="number">3</span>, <span class="string">&quot; &quot;</span>),
-			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">3</span>, <span class="number">4</span>, <span class="string">&quot; &quot;</span>),
-			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">0</span>, <span class="number">3</span>, <span class="string">&quot;The&quot;</span>),
-			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">3</span>, <span class="number">0</span>, <span class="string">&quot;The&quot;</span>),
+		<span class="kw">static </span><span class="kw-2">ref </span>ANSWER_VALUES: [(CacheItem, CacheItem, u32, u32, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str); <span class="number">9</span>] = [
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">4</span>, <span class="number">3</span>, <span class="string">" "</span>),
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">3</span>, <span class="number">4</span>, <span class="string">" "</span>),
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">0</span>, <span class="number">3</span>, <span class="string">"The"</span>),
+			(A11Y_PARAGRAPH_ITEM.clone(), A11Y_PARAGRAPH_ITEM.clone(), <span class="number">3</span>, <span class="number">0</span>, <span class="string">"The"</span>),
 			(
 				A11Y_PARAGRAPH_ITEM.clone(),
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">169</span>,
 				<span class="number">182</span>,
-				<span class="string">&quot;Microsystems,&quot;
+				<span class="string">"Microsystems,"
 			</span>),
 			(
 				A11Y_PARAGRAPH_ITEM.clone(),
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">77</span>,
 				<span class="number">83</span>,
-				<span class="string">&quot; Linux&quot;
+				<span class="string">" Linux"
 			</span>),
 			(
 				A11Y_PARAGRAPH_ITEM.clone(),
 				A11Y_PARAGRAPH_ITEM.clone(),
 				<span class="number">181</span>,
 				<span class="number">189</span>,
-				<span class="string">&quot;, before&quot;
+				<span class="string">", before"
 			</span>),
 			(
 				A11Y_PARAGRAPH_ITEM.clone(),

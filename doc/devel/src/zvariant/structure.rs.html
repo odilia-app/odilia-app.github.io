@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/structure.rs`."><title>structure.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/structure.rs`."><title>structure.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -369,11 +370,11 @@
 ///
 /// [`Structure`]: struct.Structure.html
 </span><span class="attr">#[derive(Debug, Default, Clone, PartialEq)]
-</span><span class="kw">pub struct </span>StructureBuilder&lt;<span class="lifetime">&#39;a</span>&gt;(Vec&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;);
+</span><span class="kw">pub struct </span>StructureBuilder&lt;<span class="lifetime">'a</span>&gt;(Vec&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;);
 
-<span class="macro">assert_impl_all!</span>(StructureBuilder&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(StructureBuilder&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; StructureBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; StructureBuilder&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Create a new `StructureBuilder`.
     ///
     /// Same as `StructureBuilder::default()`.
@@ -388,7 +389,7 @@
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>add_field&lt;T&gt;(<span class="self">self</span>, field: T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: DynamicType + Into&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>T: DynamicType + Into&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
     {
         <span class="self">self</span>.append_field(Value::new(field))
     }
@@ -397,7 +398,7 @@
     ///
     /// Identical to `add_field`, except the field must be in the form of a `Value`.
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>append_field&lt;<span class="lifetime">&#39;e</span>: <span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, field: Value&lt;<span class="lifetime">&#39;e</span>&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>append_field&lt;<span class="lifetime">'e</span>: <span class="lifetime">'a</span>&gt;(<span class="kw-2">mut </span><span class="self">self</span>, field: Value&lt;<span class="lifetime">'e</span>&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.<span class="number">0</span>.push(field);
 
         <span class="self">self
@@ -408,7 +409,7 @@
     /// Identical to `add_field`, except it makes changes in-place.
     </span><span class="kw">pub fn </span>push_field&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, field: T)
     <span class="kw">where
-        </span>T: DynamicType + Into&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>T: DynamicType + Into&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
     {
         <span class="self">self</span>.push_value(Value::new(field))
     }
@@ -416,14 +417,14 @@
     <span class="doccomment">/// Append `field` to `self`.
     ///
     /// Identical to `append_field`, except it makes changes in-place.
-    </span><span class="kw">pub fn </span>push_value&lt;<span class="lifetime">&#39;e</span>: <span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, field: Value&lt;<span class="lifetime">&#39;e</span>&gt;) {
+    </span><span class="kw">pub fn </span>push_value&lt;<span class="lifetime">'e</span>: <span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, field: Value&lt;<span class="lifetime">'e</span>&gt;) {
         <span class="self">self</span>.<span class="number">0</span>.push(field)
     }
 
     <span class="doccomment">/// Build the `Structure`.
     ///
     /// [`Structure`]: struct.Structure.html
-    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Structure&lt;<span class="lifetime">'a</span>&gt; {
         <span class="kw">let </span>signature = create_signature_from_fields(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>);
 
         Structure {
@@ -433,7 +434,7 @@
     }
 
     <span class="doccomment">/// Same as `build` except Signature is provided.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>build_with_signature&lt;<span class="lifetime">&#39;s</span>: <span class="lifetime">&#39;a</span>&gt;(<span class="self">self</span>, signature: Signature&lt;<span class="lifetime">&#39;s</span>&gt;) -&gt; Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>build_with_signature&lt;<span class="lifetime">'s</span>: <span class="lifetime">'a</span>&gt;(<span class="self">self</span>, signature: Signature&lt;<span class="lifetime">'s</span>&gt;) -&gt; Structure&lt;<span class="lifetime">'a</span>&gt; {
         Structure {
             fields: <span class="self">self</span>.<span class="number">0</span>,
             signature,
@@ -445,24 +446,24 @@
 ///
 /// [`Structure`]: struct.Structure.html
 </span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">pub struct </span>StructureSeed&lt;<span class="lifetime">&#39;a</span>&gt;(Signature&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>StructureSeed&lt;<span class="lifetime">'a</span>&gt;(Signature&lt;<span class="lifetime">'a</span>&gt;);
 
-<span class="macro">assert_impl_all!</span>(StructureSeed&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(StructureSeed&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; StructureSeed&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; StructureSeed&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Create a new `StructureSeed`
     ///
     /// The given signature must be a valid structure signature.
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new_unchecked(signature: Signature&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new_unchecked(signature: Signature&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
         StructureSeed(signature)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; std::convert::TryFrom&lt;Signature&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>StructureSeed&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; std::convert::TryFrom&lt;Signature&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>StructureSeed&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = zvariant::Error;
 
-    <span class="kw">fn </span>try_from(signature: Signature&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, zvariant::Error&gt; {
+    <span class="kw">fn </span>try_from(signature: Signature&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, zvariant::Error&gt; {
         <span class="kw">if </span>signature.starts_with(zvariant::STRUCT_SIG_START_CHAR) {
             <span class="prelude-val">Ok</span>(StructureSeed(signature))
         } <span class="kw">else </span>{
@@ -471,31 +472,31 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>StructureSeed&lt;<span class="lifetime">&#39;de</span>&gt; {
-    <span class="kw">type </span>Value = Structure&lt;<span class="lifetime">&#39;de</span>&gt;;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; DeserializeSeed&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>StructureSeed&lt;<span class="lifetime">'de</span>&gt; {
+    <span class="kw">type </span>Value = Structure&lt;<span class="lifetime">'de</span>&gt;;
     <span class="kw">fn </span>deserialize&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         deserializer.deserialize_seq(StructureVisitor { signature: <span class="self">self</span>.<span class="number">0 </span>})
     }
 }
 
 <span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">struct </span>StructureVisitor&lt;<span class="lifetime">&#39;a</span>&gt; {
-    signature: Signature&lt;<span class="lifetime">&#39;a</span>&gt;,
+</span><span class="kw">struct </span>StructureVisitor&lt;<span class="lifetime">'a</span>&gt; {
+    signature: Signature&lt;<span class="lifetime">'a</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>StructureVisitor&lt;<span class="lifetime">&#39;de</span>&gt; {
-    <span class="kw">type </span>Value = Structure&lt;<span class="lifetime">&#39;de</span>&gt;;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>StructureVisitor&lt;<span class="lifetime">'de</span>&gt; {
+    <span class="kw">type </span>Value = Structure&lt;<span class="lifetime">'de</span>&gt;;
 
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        formatter.write_str(<span class="string">&quot;a Structure value&quot;</span>)
+    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        formatter.write_str(<span class="string">"a Structure value"</span>)
     }
 
-    <span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Structure&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    <span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Structure&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         SignatureSeed {
             signature: <span class="self">self</span>.signature,
@@ -510,40 +511,40 @@
 ///
 /// [`Value`]: enum.Value.html
 </span><span class="attr">#[derive(Debug, Clone, PartialEq)]
-</span><span class="kw">pub struct </span>Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
-    fields: Vec&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
-    signature: Signature&lt;<span class="lifetime">&#39;a</span>&gt;,
+</span><span class="kw">pub struct </span>Structure&lt;<span class="lifetime">'a</span>&gt; {
+    fields: Vec&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
+    signature: Signature&lt;<span class="lifetime">'a</span>&gt;,
 }
 
-<span class="macro">assert_impl_all!</span>(Structure&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(Structure&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Structure&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Get a reference to all the fields of `self`.
-    </span><span class="kw">pub fn </span>fields(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[Value&lt;<span class="lifetime">&#39;a</span>&gt;] {
+    </span><span class="kw">pub fn </span>fields(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[Value&lt;<span class="lifetime">'a</span>&gt;] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.fields
     }
 
     <span class="doccomment">/// Converts `self` to a `Vec` containing all its fields.
-    </span><span class="kw">pub fn </span>into_fields(<span class="self">self</span>) -&gt; Vec&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>into_fields(<span class="self">self</span>) -&gt; Vec&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt; {
         <span class="self">self</span>.fields
     }
 
     <span class="doccomment">/// Get the signature of this `Structure`.
     ///
-    /// NB: This method potentially allocates and copies. Use [`full_signature`] if you&#39;d like to
+    /// NB: This method potentially allocates and copies. Use [`full_signature`] if you'd like to
     /// avoid that.
     ///
     /// [`full_signature`]: #method.full_signature
-    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="self">self</span>.signature.to_owned()
     }
 
     <span class="doccomment">/// Get the signature of this `Structure`.
-    </span><span class="kw">pub fn </span>full_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt; {
+    </span><span class="kw">pub fn </span>full_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.signature
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Structure&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Structure&lt;<span class="lifetime">'static</span>&gt; {
         Structure {
             fields: <span class="self">self</span>.fields.iter().map(|v| v.to_owned().into()).collect(),
             signature: <span class="self">self</span>.signature.to_owned(),
@@ -551,9 +552,9 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Default <span class="kw">for </span>Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Default <span class="kw">for </span>Structure&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>signature = Signature::from_static_str_unchecked(<span class="string">&quot;()&quot;</span>);
+        <span class="kw">let </span>signature = Signature::from_static_str_unchecked(<span class="string">"()"</span>);
 
         <span class="self">Self </span>{
             fields: <span class="macro">vec!</span>[],
@@ -562,51 +563,51 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DynamicType <span class="kw">for </span>Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DynamicType <span class="kw">for </span>Structure&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
         <span class="self">self</span>.signature.clone()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DynamicType <span class="kw">for </span>StructureSeed&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DynamicType <span class="kw">for </span>StructureSeed&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
         <span class="self">self</span>.<span class="number">0</span>.clone()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DynamicDeserialize&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">for </span>Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">type </span>Deserializer = StructureSeed&lt;<span class="lifetime">&#39;a</span>&gt;;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DynamicDeserialize&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>Structure&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Deserializer = StructureSeed&lt;<span class="lifetime">'a</span>&gt;;
 
     <span class="kw">fn </span>deserializer_for_signature&lt;S&gt;(signature: S) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt;
     <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'a</span>&gt;&gt;,
         S::Error: Into&lt;zvariant::Error&gt;,
     {
         <span class="kw">let </span><span class="kw-2">mut </span>signature = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
         <span class="kw">if </span>!signature.starts_with(zvariant::STRUCT_SIG_START_CHAR) {
             <span class="comment">// This is certainly not a valid struct signature
-            </span>signature = <span class="macro">format!</span>(<span class="string">&quot;({signature})&quot;</span>).try_into()<span class="question-mark">?</span>;
+            </span>signature = <span class="macro">format!</span>(<span class="string">"({signature})"</span>).try_into()<span class="question-mark">?</span>;
             <span class="kw">return </span>signature.try_into();
         }
 
-        <span class="comment">// The signature might be something like &quot;(i)u(i)&quot; - we need to parse it to check.
+        <span class="comment">// The signature might be something like "(i)u(i)" - we need to parse it to check.
         </span><span class="kw">let </span><span class="kw-2">mut </span>parser = SignatureParser::new(signature.clone());
         parser.parse_next_signature()<span class="question-mark">?</span>;
         <span class="kw">if </span>!parser.done() {
             <span class="comment">// more than one element - we must wrap it
-            </span>signature = <span class="macro">format!</span>(<span class="string">&quot;({signature})&quot;</span>).try_into()<span class="question-mark">?</span>;
+            </span>signature = <span class="macro">format!</span>(<span class="string">"({signature})"</span>).try_into()<span class="question-mark">?</span>;
         }
         signature.try_into()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Serialize <span class="kw">for </span>Structure&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Serialize <span class="kw">for </span>Structure&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: Serializer,
     {
         <span class="kw">let </span><span class="kw-2">mut </span>structure =
-            serializer.serialize_tuple_struct(<span class="string">&quot;zvariant::Structure&quot;</span>, <span class="self">self</span>.fields.len())<span class="question-mark">?</span>;
+            serializer.serialize_tuple_struct(<span class="string">"zvariant::Structure"</span>, <span class="self">self</span>.fields.len())<span class="question-mark">?</span>;
         <span class="kw">for </span>field <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.fields {
             field.serialize_value_as_tuple_struct_field(<span class="kw-2">&amp;mut </span>structure)<span class="question-mark">?</span>;
         }
@@ -617,9 +618,9 @@
 <span class="macro">macro_rules! </span>tuple_impls {
     ($(<span class="macro-nonterminal">$len</span>:expr =&gt; ($(<span class="macro-nonterminal">$n</span>:tt <span class="macro-nonterminal">$name</span>:ident)+))+) =&gt; {
         $(
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, $(<span class="macro-nonterminal">$name</span>),+&gt; From&lt;($(<span class="macro-nonterminal">$name</span>),+,)&gt; <span class="kw">for </span>Structure&lt;<span class="lifetime">&#39;a</span>&gt;
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, $(<span class="macro-nonterminal">$name</span>),+&gt; From&lt;($(<span class="macro-nonterminal">$name</span>),+,)&gt; <span class="kw">for </span>Structure&lt;<span class="lifetime">'a</span>&gt;
             <span class="kw">where
-                </span>$(<span class="macro-nonterminal">$name</span>: DynamicType + Into&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,)+
+                </span>$(<span class="macro-nonterminal">$name</span>: DynamicType + Into&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,)+
             {
                 <span class="attr">#[inline]
                 </span><span class="kw">fn </span>from(value: ($(<span class="macro-nonterminal">$name</span>),+,)) -&gt; <span class="self">Self </span>{
@@ -631,15 +632,15 @@
                 }
             }
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, E, $(<span class="macro-nonterminal">$name</span>),+&gt; std::convert::TryFrom&lt;Structure&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>),+,)
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, E, $(<span class="macro-nonterminal">$name</span>),+&gt; std::convert::TryFrom&lt;Structure&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>),+,)
             <span class="kw">where
-                </span>$(<span class="macro-nonterminal">$name</span>: std::convert::TryFrom&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;, Error = E&gt;,)+
+                </span>$(<span class="macro-nonterminal">$name</span>: std::convert::TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;, Error = E&gt;,)+
                 <span class="kw">crate</span>::Error: From&lt;E&gt;,
 
             {
                 <span class="kw">type </span>Error = <span class="kw">crate</span>::Error;
 
-                <span class="kw">fn </span>try_from(<span class="kw-2">mut </span>s: Structure&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; core::result::Result&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+                <span class="kw">fn </span>try_from(<span class="kw-2">mut </span>s: Structure&lt;<span class="lifetime">'a</span>&gt;) -&gt; core::result::Result&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
                     <span class="prelude-val">Ok</span>((
                     $(
                          <span class="macro-nonterminal">$name::try_from</span>(s.fields.remove(<span class="number">0</span>))<span class="question-mark">?</span>,
@@ -648,22 +649,22 @@
                 }
             }
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, E, $(<span class="macro-nonterminal">$name</span>),+&gt; std::convert::TryFrom&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>),+,)
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, E, $(<span class="macro-nonterminal">$name</span>),+&gt; std::convert::TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>),+,)
             <span class="kw">where
-                </span>$(<span class="macro-nonterminal">$name</span>: std::convert::TryFrom&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;, Error = E&gt;,)+
+                </span>$(<span class="macro-nonterminal">$name</span>: std::convert::TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;, Error = E&gt;,)+
                 <span class="kw">crate</span>::Error: From&lt;E&gt;,
 
             {
                 <span class="kw">type </span>Error = <span class="kw">crate</span>::Error;
 
-                <span class="kw">fn </span>try_from(v: Value&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; core::result::Result&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+                <span class="kw">fn </span>try_from(v: Value&lt;<span class="lifetime">'a</span>&gt;) -&gt; core::result::Result&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
                     <span class="self">Self</span>::try_from(Structure::try_from(v)<span class="question-mark">?</span>)
                 }
             }
 
             <span class="kw">impl</span>&lt;E, $(<span class="macro-nonterminal">$name</span>),+&gt; std::convert::TryFrom&lt;OwnedValue&gt; <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>),+,)
             <span class="kw">where
-                </span>$(<span class="macro-nonterminal">$name</span>: std::convert::TryFrom&lt;Value&lt;<span class="lifetime">&#39;static</span>&gt;, Error = E&gt;,)+
+                </span>$(<span class="macro-nonterminal">$name</span>: std::convert::TryFrom&lt;Value&lt;<span class="lifetime">'static</span>&gt;, Error = E&gt;,)+
                 <span class="kw">crate</span>::Error: From&lt;E&gt;,
 
             {
@@ -696,13 +697,13 @@
     <span class="number">16 </span>=&gt; (<span class="number">0 </span>T0 <span class="number">1 </span>T1 <span class="number">2 </span>T2 <span class="number">3 </span>T3 <span class="number">4 </span>T4 <span class="number">5 </span>T5 <span class="number">6 </span>T6 <span class="number">7 </span>T7 <span class="number">8 </span>T8 <span class="number">9 </span>T9 <span class="number">10 </span>T10 <span class="number">11 </span>T11 <span class="number">12 </span>T12 <span class="number">13 </span>T13 <span class="number">14 </span>T14 <span class="number">15 </span>T15)
 }
 
-<span class="kw">fn </span>create_signature_from_fields(fields: <span class="kw-2">&amp;</span>[Value&lt;<span class="lifetime">&#39;_</span>&gt;]) -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">fn </span>create_signature_from_fields(fields: <span class="kw-2">&amp;</span>[Value&lt;<span class="lifetime">'_</span>&gt;]) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>signature = String::with_capacity(<span class="number">255</span>);
-    signature.push(<span class="string">&#39;(&#39;</span>);
+    signature.push(<span class="string">'('</span>);
     <span class="kw">for </span>field <span class="kw">in </span>fields {
         signature.push_str(<span class="kw-2">&amp;</span>field.value_signature());
     }
-    signature.push(<span class="string">&#39;)&#39;</span>);
+    signature.push(<span class="string">')'</span>);
 
     Signature::from_string_unchecked(signature)
 }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-automata-0.1.10/src/regex.rs`."><title>regex.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="regex_automata" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../regex_automata/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-automata-0.1.10/src/regex.rs`."><title>regex.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="regex_automata" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -769,21 +770,21 @@
 <a href="#769" id="769">769</a>
 <a href="#770" id="770">770</a>
 <a href="#771" id="771">771</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>dense::{<span class="self">self</span>, DenseDFA};
 <span class="kw">use </span>dfa::DFA;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>error::Result;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>sparse::SparseDFA;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>state_id::StateID;
 
 <span class="doccomment">/// A regular expression that uses deterministic finite automata for fast
 /// searching.
 ///
-/// A regular expression is comprised of two DFAs, a &quot;forward&quot; DFA and a
-/// &quot;reverse&quot; DFA. The forward DFA is responsible for detecting the end of a
+/// A regular expression is comprised of two DFAs, a "forward" DFA and a
+/// "reverse" DFA. The forward DFA is responsible for detecting the end of a
 /// match while the reverse DFA is responsible for detecting the start of a
 /// match. Thus, in order to find the bounds of any given match, a forward
 /// search must first be run followed by a reverse search. A match found by
@@ -795,7 +796,7 @@
 /// [`SparseDFA`](enum.SparseDFA.html), where dense DFAs use more memory but
 /// search faster, while sparse DFAs use less memory but search more slowly.
 ///
-/// By default, a regex&#39;s DFA type parameter is set to
+/// By default, a regex's DFA type parameter is set to
 /// `DenseDFA&lt;Vec&lt;usize&gt;, usize&gt;`. For most in-memory work loads, this is the
 /// most convenient type that gives the best search performance.
 ///
@@ -811,7 +812,7 @@
 ///
 /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
 /// // First, build a regex that uses dense DFAs.
-/// let dense_re = Regex::new(&quot;foo[0-9]+&quot;)?;
+/// let dense_re = Regex::new("foo[0-9]+")?;
 ///
 /// // Second, build sparse DFAs from the forward and reverse dense DFAs.
 /// let fwd = dense_re.forward().to_sparse()?;
@@ -821,10 +822,10 @@
 /// let sparse_re = Regex::from_dfas(fwd, rev);
 ///
 /// // A regex that uses sparse DFAs can be used just like with dense DFAs.
-/// assert_eq!(true, sparse_re.is_match(b&quot;foo123&quot;));
+/// assert_eq!(true, sparse_re.is_match(b"foo123"));
 /// # Ok(()) }; example().unwrap()
 /// ```
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 #[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Regex&lt;D: DFA = DenseDFA&lt;Vec&lt;usize&gt;, usize&gt;&gt; {
     forward: D,
@@ -834,8 +835,8 @@
 <span class="doccomment">/// A regular expression that uses deterministic finite automata for fast
 /// searching.
 ///
-/// A regular expression is comprised of two DFAs, a &quot;forward&quot; DFA and a
-/// &quot;reverse&quot; DFA. The forward DFA is responsible for detecting the end of a
+/// A regular expression is comprised of two DFAs, a "forward" DFA and a
+/// "reverse" DFA. The forward DFA is responsible for detecting the end of a
 /// match while the reverse DFA is responsible for detecting the start of a
 /// match. Thus, in order to find the bounds of any given match, a forward
 /// search must first be run followed by a reverse search. A match found by
@@ -862,7 +863,7 @@
 ///
 /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
 /// // First, build a regex that uses dense DFAs.
-/// let dense_re = Regex::new(&quot;foo[0-9]+&quot;)?;
+/// let dense_re = Regex::new("foo[0-9]+")?;
 ///
 /// // Second, build sparse DFAs from the forward and reverse dense DFAs.
 /// let fwd = dense_re.forward().to_sparse()?;
@@ -872,17 +873,17 @@
 /// let sparse_re = Regex::from_dfas(fwd, rev);
 ///
 /// // A regex that uses sparse DFAs can be used just like with dense DFAs.
-/// assert_eq!(true, sparse_re.is_match(b&quot;foo123&quot;));
+/// assert_eq!(true, sparse_re.is_match(b"foo123"));
 /// # Ok(()) }; example().unwrap()
 /// ```
-</span><span class="attr">#[cfg(not(feature = <span class="string">&quot;std&quot;</span>))]
+</span><span class="attr">#[cfg(not(feature = <span class="string">"std"</span>))]
 #[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Regex&lt;D&gt; {
     forward: D,
     reverse: D,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl </span>Regex {
     <span class="doccomment">/// Parse the given regular expression using a default configuration and
     /// return the corresponding regex.
@@ -901,8 +902,8 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let re = Regex::new(&quot;foo[0-9]+bar&quot;)?;
-    /// assert_eq!(Some((3, 14)), re.find(b&quot;zzzfoo12345barzzz&quot;));
+    /// let re = Regex::new("foo[0-9]+bar")?;
+    /// assert_eq!(Some((3, 14)), re.find(b"zzzfoo12345barzzz"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>new(pattern: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Regex&gt; {
@@ -910,7 +911,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl </span>Regex&lt;SparseDFA&lt;Vec&lt;u8&gt;, usize&gt;&gt; {
     <span class="doccomment">/// Parse the given regular expression using a default configuration and
     /// return the corresponding regex using sparse DFAs.
@@ -929,8 +930,8 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let re = Regex::new_sparse(&quot;foo[0-9]+bar&quot;)?;
-    /// assert_eq!(Some((3, 14)), re.find(b&quot;zzzfoo12345barzzz&quot;));
+    /// let re = Regex::new_sparse("foo[0-9]+bar")?;
+    /// assert_eq!(Some((3, 14)), re.find(b"zzzfoo12345barzzz"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>new_sparse(
@@ -954,9 +955,9 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let re = Regex::new(&quot;foo[0-9]+bar&quot;)?;
-    /// assert_eq!(true, re.is_match(b&quot;foo12345bar&quot;));
-    /// assert_eq!(false, re.is_match(b&quot;foobar&quot;));
+    /// let re = Regex::new("foo[0-9]+bar")?;
+    /// assert_eq!(true, re.is_match(b"foo12345bar"));
+    /// assert_eq!(false, re.is_match(b"foobar"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>is_match(<span class="kw-2">&amp;</span><span class="self">self</span>, input: <span class="kw-2">&amp;</span>[u8]) -&gt; bool {
@@ -976,13 +977,13 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let re = Regex::new(&quot;foo[0-9]+&quot;)?;
-    /// assert_eq!(Some(4), re.shortest_match(b&quot;foo12345&quot;));
+    /// let re = Regex::new("foo[0-9]+")?;
+    /// assert_eq!(Some(4), re.shortest_match(b"foo12345"));
     ///
     /// // Normally, the end of the leftmost first match here would be 3,
     /// // but the shortest match semantics detect a match earlier.
-    /// let re = Regex::new(&quot;abc|a&quot;)?;
-    /// assert_eq!(Some(1), re.shortest_match(b&quot;abc&quot;));
+    /// let re = Regex::new("abc|a")?;
+    /// assert_eq!(Some(1), re.shortest_match(b"abc"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>shortest_match(<span class="kw-2">&amp;</span><span class="self">self</span>, input: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Option</span>&lt;usize&gt; {
@@ -992,15 +993,15 @@
     <span class="doccomment">/// Returns the start and end offset of the leftmost first match. If no
     /// match exists, then `None` is returned.
     ///
-    /// The &quot;leftmost first&quot; match corresponds to the match with the smallest
+    /// The "leftmost first" match corresponds to the match with the smallest
     /// starting offset, but where the end offset is determined by preferring
     /// earlier branches in the original regular expression. For example,
     /// `Sam|Samwise` will match `Sam` in `Samwise`, but `Samwise|Sam` will
     /// match `Samwise` in `Samwise`.
     ///
-    /// Generally speaking, the &quot;leftmost first&quot; match is how most backtracking
+    /// Generally speaking, the "leftmost first" match is how most backtracking
     /// regular expressions tend to work. This is in contrast to POSIX-style
-    /// regular expressions that yield &quot;leftmost longest&quot; matches. Namely,
+    /// regular expressions that yield "leftmost longest" matches. Namely,
     /// both `Sam|Samwise` and `Samwise|Sam` match `Samwise` when using
     /// leftmost longest semantics.
     ///
@@ -1010,14 +1011,14 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let re = Regex::new(&quot;foo[0-9]+&quot;)?;
-    /// assert_eq!(Some((3, 11)), re.find(b&quot;zzzfoo12345zzz&quot;));
+    /// let re = Regex::new("foo[0-9]+")?;
+    /// assert_eq!(Some((3, 11)), re.find(b"zzzfoo12345zzz"));
     ///
     /// // Even though a match is found after reading the first byte (`a`),
     /// // the leftmost first match semantics demand that we find the earliest
     /// // match that prefers earlier parts of the pattern over latter parts.
-    /// let re = Regex::new(&quot;abc|a&quot;)?;
-    /// assert_eq!(Some((0, 3)), re.find(b&quot;abc&quot;));
+    /// let re = Regex::new("abc|a")?;
+    /// assert_eq!(Some((0, 3)), re.find(b"abc"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, input: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Option</span>&lt;(usize, usize)&gt; {
@@ -1067,7 +1068,7 @@
             </span>.reverse()
             .rfind(<span class="kw-2">&amp;</span>input[start..end])
             .map(|i| start + i)
-            .expect(<span class="string">&quot;reverse search must match if forward search does&quot;</span>);
+            .expect(<span class="string">"reverse search must match if forward search does"</span>);
         <span class="prelude-val">Some</span>((start, end))
     }
 
@@ -1088,13 +1089,13 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let re = Regex::new(&quot;foo[0-9]+&quot;)?;
-    /// let text = b&quot;foo1 foo12 foo123&quot;;
+    /// let re = Regex::new("foo[0-9]+")?;
+    /// let text = b"foo1 foo12 foo123";
     /// let matches: Vec&lt;(usize, usize)&gt; = re.find_iter(text).collect();
     /// assert_eq!(matches, vec![(0, 4), (5, 10), (11, 17)]);
     /// # Ok(()) }; example().unwrap()
     /// ```
-    </span><span class="kw">pub fn </span>find_iter&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><span class="self">self</span>, input: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t </span>[u8]) -&gt; Matches&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D&gt; {
+    </span><span class="kw">pub fn </span>find_iter&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'r </span><span class="self">self</span>, input: <span class="kw-2">&amp;</span><span class="lifetime">'t </span>[u8]) -&gt; Matches&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D&gt; {
         Matches::new(<span class="self">self</span>, input)
     }
 
@@ -1114,12 +1115,12 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let initial_re = Regex::new(&quot;foo[0-9]+&quot;)?;
-    /// assert_eq!(true, initial_re.is_match(b&quot;foo123&quot;));
+    /// let initial_re = Regex::new("foo[0-9]+")?;
+    /// assert_eq!(true, initial_re.is_match(b"foo123"));
     ///
     /// let (fwd, rev) = (initial_re.forward(), initial_re.reverse());
     /// let re = Regex::from_dfas(fwd, rev);
-    /// assert_eq!(true, re.is_match(b&quot;foo123&quot;));
+    /// assert_eq!(true, re.is_match(b"foo123"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     ///
@@ -1130,13 +1131,13 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let initial_re = Regex::new(&quot;foo[0-9]+&quot;)?;
-    /// assert_eq!(true, initial_re.is_match(b&quot;foo123&quot;));
+    /// let initial_re = Regex::new("foo[0-9]+")?;
+    /// assert_eq!(true, initial_re.is_match(b"foo123"));
     ///
     /// let fwd = initial_re.forward().to_u16()?;
     /// let rev = initial_re.reverse().to_u16()?;
     /// let re = Regex::from_dfas(fwd, rev);
-    /// assert_eq!(true, re.is_match(b&quot;foo123&quot;));
+    /// assert_eq!(true, re.is_match(b"foo123"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     ///
@@ -1147,13 +1148,13 @@
     /// use regex_automata::Regex;
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let initial_re = Regex::new(&quot;foo[0-9]+&quot;)?;
-    /// assert_eq!(true, initial_re.is_match(b&quot;foo123&quot;));
+    /// let initial_re = Regex::new("foo[0-9]+")?;
+    /// assert_eq!(true, initial_re.is_match(b"foo123"));
     ///
     /// let fwd = initial_re.forward().to_sparse()?;
     /// let rev = initial_re.reverse().to_sparse()?;
     /// let re = Regex::from_dfas(fwd, rev);
-    /// assert_eq!(true, re.is_match(b&quot;foo123&quot;));
+    /// assert_eq!(true, re.is_match(b"foo123"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>from_dfas(forward: D, reverse: D) -&gt; Regex&lt;D&gt; {
@@ -1180,23 +1181,23 @@
 /// `S` is the type used to represent state identifiers in the underlying
 /// regex. The lifetime variables are as follows:
 ///
-/// * `&#39;r` is the lifetime of the regular expression value itself.
-/// * `&#39;t` is the lifetime of the text being searched.
+/// * `'r` is the lifetime of the regular expression value itself.
+/// * `'t` is the lifetime of the text being searched.
 </span><span class="attr">#[derive(Clone, Debug)]
-</span><span class="kw">pub struct </span>Matches&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D: DFA + <span class="lifetime">&#39;r</span>&gt; {
-    re: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Regex&lt;D&gt;,
-    text: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t </span>[u8],
+</span><span class="kw">pub struct </span>Matches&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D: DFA + <span class="lifetime">'r</span>&gt; {
+    re: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>Regex&lt;D&gt;,
+    text: <span class="kw-2">&amp;</span><span class="lifetime">'t </span>[u8],
     last_end: usize,
     last_match: <span class="prelude-ty">Option</span>&lt;usize&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D: DFA&gt; Matches&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D&gt; {
-    <span class="kw">fn </span>new(re: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Regex&lt;D&gt;, text: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t </span>[u8]) -&gt; Matches&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D: DFA&gt; Matches&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D&gt; {
+    <span class="kw">fn </span>new(re: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>Regex&lt;D&gt;, text: <span class="kw-2">&amp;</span><span class="lifetime">'t </span>[u8]) -&gt; Matches&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D&gt; {
         Matches { re, text, last_end: <span class="number">0</span>, last_match: <span class="prelude-val">None </span>}
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D: DFA&gt; Iterator <span class="kw">for </span>Matches&lt;<span class="lifetime">&#39;r</span>, <span class="lifetime">&#39;t</span>, D&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D: DFA&gt; Iterator <span class="kw">for </span>Matches&lt;<span class="lifetime">'r</span>, <span class="lifetime">'t</span>, D&gt; {
     <span class="kw">type </span>Item = (usize, usize);
 
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(usize, usize)&gt; {
@@ -1212,7 +1213,7 @@
             // the next search at the smallest possible starting position
             // of the next match following this one.
             </span><span class="self">self</span>.last_end = e + <span class="number">1</span>;
-            <span class="comment">// Don&#39;t accept empty matches immediately following a match.
+            <span class="comment">// Don't accept empty matches immediately following a match.
             // Just move on to the next match.
             </span><span class="kw">if </span><span class="prelude-val">Some</span>(e) == <span class="self">self</span>.last_match {
                 <span class="kw">return </span><span class="self">self</span>.next();
@@ -1238,13 +1239,13 @@
 /// or only the end of a match, then you should use a
 /// [`dense::Builder`](dense/struct.Builder.html)
 /// to construct a single DFA, which is cheaper than building two DFAs.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 #[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>RegexBuilder {
     dfa: dense::Builder,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl </span>RegexBuilder {
     <span class="doccomment">/// Create a new regex builder with the default configuration.
     </span><span class="kw">pub fn </span>new() -&gt; RegexBuilder {
@@ -1353,7 +1354,7 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Enable or disable the &quot;dot matches any character&quot; flag by default.
+    <span class="doccomment">/// Enable or disable the "dot matches any character" flag by default.
     ///
     /// By default this is disabled. It may alternatively be selectively
     /// enabled in the regular expression itself via the `s` flag.
@@ -1362,7 +1363,7 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Enable or disable the &quot;swap greed&quot; flag by default.
+    <span class="doccomment">/// Enable or disable the "swap greed" flag by default.
     ///
     /// By default this is disabled. It may alternatively be selectively
     /// enabled in the regular expression itself via the `U` flag.
@@ -1376,7 +1377,7 @@
     /// By default this is **enabled**. It may alternatively be selectively
     /// disabled in the regular expression itself via the `u` flag.
     ///
-    /// Note that unless `allow_invalid_utf8` is enabled (it&#39;s disabled by
+    /// Note that unless `allow_invalid_utf8` is enabled (it's disabled by
     /// default), a regular expression will fail to parse if Unicode mode is
     /// disabled and a sub-expression could possibly match invalid UTF-8.
     </span><span class="kw">pub fn </span>unicode(<span class="kw-2">&amp;mut </span><span class="self">self</span>, yes: bool) -&gt; <span class="kw-2">&amp;mut </span>RegexBuilder {
@@ -1402,7 +1403,7 @@
     /// groups), then an error is returned by the parser.
     ///
     /// The purpose of this limit is to act as a heuristic to prevent stack
-    /// overflow when building a finite automaton from a regular expression&#39;s
+    /// overflow when building a finite automaton from a regular expression's
     /// abstract syntax tree. In particular, construction currently uses
     /// recursion. In the future, the implementation may stop using recursion
     /// and this option will no longer be necessary.
@@ -1431,29 +1432,29 @@
     /// such that it is as small as possible.
     ///
     /// Whether one enables minimization or not depends on the types of costs
-    /// you&#39;re willing to pay and how much you care about its benefits. In
+    /// you're willing to pay and how much you care about its benefits. In
     /// particular, minimization has worst case `O(n*k*logn)` time and `O(k*n)`
     /// space, where `n` is the number of DFA states and `k` is the alphabet
     /// size. In practice, minimization can be quite costly in terms of both
-    /// space and time, so it should only be done if you&#39;re willing to wait
+    /// space and time, so it should only be done if you're willing to wait
     /// longer to produce a DFA. In general, you might want a minimal DFA in
     /// the following circumstances:
     ///
     /// 1. You would like to optimize for the size of the automaton. This can
-    ///    manifest in one of two ways. Firstly, if you&#39;re converting the
+    ///    manifest in one of two ways. Firstly, if you're converting the
     ///    DFA into Rust code (or a table embedded in the code), then a minimal
     ///    DFA will translate into a corresponding reduction in code  size, and
     ///    thus, also the final compiled binary size. Secondly, if you are
-    ///    building many DFAs and putting them on the heap, you&#39;ll be able to
+    ///    building many DFAs and putting them on the heap, you'll be able to
     ///    fit more if they are smaller. Note though that building a minimal
     ///    DFA itself requires additional space; you only realize the space
     ///    savings once the minimal DFA is constructed (at which point, the
     ///    space used for minimization is freed).
-    /// 2. You&#39;ve observed that a smaller DFA results in faster match
-    ///    performance. Naively, this isn&#39;t guaranteed since there is no
+    /// 2. You've observed that a smaller DFA results in faster match
+    ///    performance. Naively, this isn't guaranteed since there is no
     ///    inherent difference between matching with a bigger-than-minimal
     ///    DFA and a minimal DFA. However, a smaller DFA may make use of your
-    ///    CPU&#39;s cache more efficiently.
+    ///    CPU's cache more efficiently.
     /// 3. You are trying to establish an equivalence between regular
     ///    languages. The standard method for this is to build a minimal DFA
     ///    for each language and then compare them. If the DFAs are equivalent
@@ -1468,7 +1469,7 @@
     <span class="doccomment">/// Premultiply state identifiers in the underlying DFA transition tables.
     ///
     /// When enabled, state identifiers are premultiplied to point to their
-    /// corresponding row in the DFA&#39;s transition table. That is, given the
+    /// corresponding row in the DFA's transition table. That is, given the
     /// `i`th state, its corresponding premultiplied identifier is `i * k`
     /// where `k` is the alphabet size of the DFA. (The alphabet size is at
     /// most 256, but is in practice smaller if byte classes is enabled.)
@@ -1534,7 +1535,7 @@
     </span>}
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl </span>Default <span class="kw">for </span>RegexBuilder {
     <span class="kw">fn </span>default() -&gt; RegexBuilder {
         RegexBuilder::new()

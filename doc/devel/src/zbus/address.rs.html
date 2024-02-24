@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/address.rs`."><title>address.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/address.rs`."><title>address.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -949,31 +950,31 @@
 <a href="#949" id="949">949</a>
 <a href="#950" id="950">950</a>
 <a href="#951" id="951">951</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::process::run;
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::run_in_thread;
 <span class="attr">#[cfg(all(windows))]
 </span><span class="kw">use </span><span class="kw">crate</span>::win32::windows_autolaunch_bus_address;
 <span class="kw">use crate</span>::{Error, <span class="prelude-ty">Result</span>};
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span>async_io::Async;
-<span class="attr">#[cfg(all(unix, not(target_os = <span class="string">&quot;macos&quot;</span>)))]
+<span class="attr">#[cfg(all(unix, not(target_os = <span class="string">"macos"</span>)))]
 </span><span class="kw">use </span>nix::unistd::Uid;
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span>std::net::{SocketAddr, TcpStream, ToSocketAddrs};
-<span class="attr">#[cfg(all(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+<span class="attr">#[cfg(all(unix, not(feature = <span class="string">"tokio"</span>)))]
 </span><span class="kw">use </span>std::os::unix::net::UnixStream;
 <span class="kw">use </span>std::{collections::HashMap, convert::TryFrom, env, str::FromStr};
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span>tokio::net::TcpStream;
-<span class="attr">#[cfg(all(unix, feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span>tokio::net::UnixStream;
-<span class="attr">#[cfg(feature = <span class="string">&quot;tokio-vsock&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
 </span><span class="kw">use </span>tokio_vsock::VsockStream;
-<span class="attr">#[cfg(all(windows, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+<span class="attr">#[cfg(all(windows, not(feature = <span class="string">"tokio"</span>)))]
 </span><span class="kw">use </span>uds_windows::UnixStream;
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+<span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
 </span><span class="kw">use </span>vsock::VsockStream;
 
 <span class="kw">use </span>std::{
@@ -1022,22 +1023,22 @@
     <span class="comment">// Helper for FromStr
     </span><span class="kw">fn </span>from_tcp(opts: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>bind = <span class="prelude-val">None</span>;
-        <span class="kw">if </span>opts.contains_key(<span class="string">&quot;bind&quot;</span>) {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(<span class="string">&quot;`bind` isn&#39;t yet supported&quot;</span>.into()));
+        <span class="kw">if </span>opts.contains_key(<span class="string">"bind"</span>) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(<span class="string">"`bind` isn't yet supported"</span>.into()));
         }
 
         <span class="kw">let </span>host = opts
-            .get(<span class="string">&quot;host&quot;</span>)
-            .ok_or_else(|| Error::Address(<span class="string">&quot;tcp address is missing `host`&quot;</span>.into()))<span class="question-mark">?
+            .get(<span class="string">"host"</span>)
+            .ok_or_else(|| Error::Address(<span class="string">"tcp address is missing `host`"</span>.into()))<span class="question-mark">?
             </span>.to_string();
         <span class="kw">let </span>port = opts
-            .get(<span class="string">&quot;port&quot;</span>)
-            .ok_or_else(|| Error::Address(<span class="string">&quot;tcp address is missing `port`&quot;</span>.into()))<span class="question-mark">?</span>;
+            .get(<span class="string">"port"</span>)
+            .ok_or_else(|| Error::Address(<span class="string">"tcp address is missing `port`"</span>.into()))<span class="question-mark">?</span>;
         <span class="kw">let </span>port = port
             .parse::&lt;u16&gt;()
-            .map_err(|<span class="kw">_</span>| Error::Address(<span class="string">&quot;invalid tcp `port`&quot;</span>.into()))<span class="question-mark">?</span>;
+            .map_err(|<span class="kw">_</span>| Error::Address(<span class="string">"invalid tcp `port`"</span>.into()))<span class="question-mark">?</span>;
         <span class="kw">let </span>family = opts
-            .get(<span class="string">&quot;family&quot;</span>)
+            .get(<span class="string">"family"</span>)
             .map(|f| TcpAddressFamily::from_str(f))
             .transpose()<span class="question-mark">?</span>;
 
@@ -1049,20 +1050,20 @@
         })
     }
 
-    <span class="kw">fn </span>write_options(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        f.write_str(<span class="string">&quot;host=&quot;</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn </span>write_options(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        f.write_str(<span class="string">"host="</span>)<span class="question-mark">?</span>;
 
         encode_percents(f, <span class="self">self</span>.host.as_ref())<span class="question-mark">?</span>;
 
-        <span class="macro">write!</span>(f, <span class="string">&quot;,port={}&quot;</span>, <span class="self">self</span>.port)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(f, <span class="string">",port={}"</span>, <span class="self">self</span>.port)<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(bind) = <span class="kw-2">&amp;</span><span class="self">self</span>.bind {
-            f.write_str(<span class="string">&quot;,bind=&quot;</span>)<span class="question-mark">?</span>;
+            f.write_str(<span class="string">",bind="</span>)<span class="question-mark">?</span>;
             encode_percents(f, bind.as_ref())<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(family) = <span class="kw-2">&amp;</span><span class="self">self</span>.family {
-            <span class="macro">write!</span>(f, <span class="string">&quot;,family={family}&quot;</span>)<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(f, <span class="string">",family={family}"</span>)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -1070,8 +1071,8 @@
 }
 
 <span class="attr">#[cfg(any(
-    all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)),
-    feature = <span class="string">&quot;tokio-vsock&quot;
+    all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+    feature = <span class="string">"tokio-vsock"
 </span>))]
 </span><span class="doccomment">/// A `tcp:` D-Bus address.
 </span><span class="attr">#[derive(Clone, Debug, PartialEq, Eq)]
@@ -1081,8 +1082,8 @@
 }
 
 <span class="attr">#[cfg(any(
-    all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)),
-    feature = <span class="string">&quot;tokio-vsock&quot;
+    all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+    feature = <span class="string">"tokio-vsock"
 </span>))]
 </span><span class="kw">impl </span>VsockAddress {
     <span class="doccomment">/// Create a new VSOCK address.
@@ -1109,8 +1110,8 @@
     <span class="doccomment">/// Launchd address with a required env key
     </span>Launchd(String),
     <span class="attr">#[cfg(any(
-        all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)),
-        feature = <span class="string">&quot;tokio-vsock&quot;
+        all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+        feature = <span class="string">"tokio-vsock"
     </span>))]
     </span><span class="doccomment">/// VSOCK address
     ///
@@ -1120,26 +1121,26 @@
     </span>Vsock(VsockAddress),
 }
 
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 #[derive(Debug)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>Stream {
     Unix(Async&lt;UnixStream&gt;),
     Tcp(Async&lt;TcpStream&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;vsock&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"vsock"</span>)]
     </span>Vsock(Async&lt;VsockStream&gt;),
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
 #[derive(Debug)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>Stream {
     <span class="attr">#[cfg(unix)]
     </span>Unix(UnixStream),
     Tcp(TcpStream),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;tokio-vsock&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
     </span>Vsock(VsockStream),
 }
 
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">async fn </span>connect_tcp(addr: TcpAddress) -&gt; <span class="prelude-ty">Result</span>&lt;Async&lt;TcpStream&gt;&gt; {
     <span class="kw">let </span>addrs = run_in_thread(<span class="kw">move </span>|| -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;SocketAddr&gt;&gt; {
         <span class="kw">let </span>addrs = (addr.host(), addr.port()).to_socket_addrs()<span class="question-mark">?</span>.filter(|a| {
@@ -1156,10 +1157,10 @@
         <span class="prelude-val">Ok</span>(addrs.collect())
     })
     .<span class="kw">await
-    </span>.map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">&quot;Failed to receive TCP addresses: {e}&quot;</span>)))<span class="question-mark">?</span>;
+    </span>.map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">"Failed to receive TCP addresses: {e}"</span>)))<span class="question-mark">?</span>;
 
     <span class="comment">// we could attempt connections in parallel?
-    </span><span class="kw">let </span><span class="kw-2">mut </span>last_err = Error::Address(<span class="string">&quot;Failed to connect&quot;</span>.into());
+    </span><span class="kw">let </span><span class="kw-2">mut </span>last_err = Error::Address(<span class="string">"Failed to connect"</span>.into());
     <span class="kw">for </span>addr <span class="kw">in </span>addrs {
         <span class="kw">match </span>Async::&lt;TcpStream&gt;::connect(addr).<span class="kw">await </span>{
             <span class="prelude-val">Ok</span>(stream) =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(stream),
@@ -1170,31 +1171,31 @@
     <span class="prelude-val">Err</span>(last_err)
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">&quot;tokio&quot;</span>))]
+<span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">async fn </span>connect_tcp(addr: TcpAddress) -&gt; <span class="prelude-ty">Result</span>&lt;TcpStream&gt; {
     TcpStream::connect((addr.host(), addr.port()))
         .<span class="kw">await
         </span>.map_err(|e| Error::InputOutput(e.into()))
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
+<span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>macos_launchd_bus_address(env_key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Address&gt; {
-    <span class="kw">let </span>output = run(<span class="string">&quot;launchctl&quot;</span>, [<span class="string">&quot;getenv&quot;</span>, env_key])
+    <span class="kw">let </span>output = run(<span class="string">"launchctl"</span>, [<span class="string">"getenv"</span>, env_key])
         .<span class="kw">await
-        </span>.expect(<span class="string">&quot;failed to wait on launchctl output&quot;</span>);
+        </span>.expect(<span class="string">"failed to wait on launchctl output"</span>);
 
     <span class="kw">if </span>!output.status.success() {
         <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw">crate</span>::Error::Address(<span class="macro">format!</span>(
-            <span class="string">&quot;launchctl terminated with code: {}&quot;</span>,
+            <span class="string">"launchctl terminated with code: {}"</span>,
             output.status
         )));
     }
 
     <span class="kw">let </span>addr = String::from_utf8(output.stdout).map_err(|e| {
-        <span class="kw">crate</span>::Error::Address(<span class="macro">format!</span>(<span class="string">&quot;Unable to parse launchctl output as UTF-8: {}&quot;</span>, e))
+        <span class="kw">crate</span>::Error::Address(<span class="macro">format!</span>(<span class="string">"Unable to parse launchctl output as UTF-8: {}"</span>, e))
     })<span class="question-mark">?</span>;
 
-    <span class="macro">format!</span>(<span class="string">&quot;unix:path={}&quot;</span>, addr.trim()).parse()
+    <span class="macro">format!</span>(<span class="string">"unix:path={}"</span>, addr.trim()).parse()
 }
 
 <span class="kw">impl </span>Address {
@@ -1202,7 +1203,7 @@
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>connect(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Stream&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             Address::Unix(p) =&gt; {
-                <span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+                <span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
                 </span>{
                     <span class="attr">#[cfg(windows)]
                     </span>{
@@ -1221,7 +1222,7 @@
                     }
                 }
 
-                <span class="attr">#[cfg(all(feature = <span class="string">&quot;tokio&quot;</span>))]
+                <span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
                 </span>{
                     <span class="attr">#[cfg(unix)]
                     </span>{
@@ -1239,13 +1240,13 @@
                 }
             }
 
-            <span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+            <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
             </span>Address::Vsock(addr) =&gt; {
                 <span class="kw">let </span>stream = VsockStream::connect_with_cid_port(addr.cid, addr.port)<span class="question-mark">?</span>;
                 Async::new(stream).map(Stream::Vsock).map_err(Into::into)
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;tokio-vsock&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
             </span>Address::Vsock(addr) =&gt; VsockStream::connect(addr.cid, addr.port)
                 .<span class="kw">await
                 </span>.map(Stream::Vsock)
@@ -1264,9 +1265,9 @@
 
                 <span class="attr">#[cfg(windows)]
                 </span><span class="kw">let </span>nonce_file = std::str::from_utf8(<span class="kw-2">&amp;</span>nonce_file)
-                    .map_err(|<span class="kw">_</span>| Error::Address(<span class="string">&quot;nonce file path is invalid UTF-8&quot;</span>.to_owned()))<span class="question-mark">?</span>;
+                    .map_err(|<span class="kw">_</span>| Error::Address(<span class="string">"nonce file path is invalid UTF-8"</span>.to_owned()))<span class="question-mark">?</span>;
 
-                <span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+                <span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
                 </span>{
                     <span class="kw">let </span>nonce = std::fs::read(nonce_file)<span class="question-mark">?</span>;
                     <span class="kw">let </span><span class="kw-2">mut </span>nonce = <span class="kw-2">&amp;</span>nonce[..];
@@ -1279,7 +1280,7 @@
                     }
                 }
 
-                <span class="attr">#[cfg(all(feature = <span class="string">&quot;tokio&quot;</span>))]
+                <span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
                 </span>{
                     <span class="kw">let </span>nonce = tokio::fs::read(nonce_file).<span class="kw">await</span><span class="question-mark">?</span>;
                     tokio::io::AsyncWriteExt::write_all(<span class="kw-2">&amp;mut </span>stream, <span class="kw-2">&amp;</span>nonce).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1290,12 +1291,12 @@
 
             <span class="attr">#[cfg(not(windows))]
             </span>Address::Autolaunch(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(Error::Address(
-                <span class="string">&quot;Autolaunch addresses are only supported on Windows&quot;</span>.to_owned(),
+                <span class="string">"Autolaunch addresses are only supported on Windows"</span>.to_owned(),
             )),
 
             <span class="attr">#[cfg(windows)]
             </span>Address::Autolaunch(<span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; <span class="prelude-val">Err</span>(Error::Address(
-                <span class="string">&quot;Autolaunch scopes are currently unsupported&quot;</span>.to_owned(),
+                <span class="string">"Autolaunch scopes are currently unsupported"</span>.to_owned(),
             )),
 
             <span class="attr">#[cfg(windows)]
@@ -1304,12 +1305,12 @@
                 addr.connect().<span class="kw">await
             </span>}
 
-            <span class="attr">#[cfg(not(target_os = <span class="string">&quot;macos&quot;</span>))]
+            <span class="attr">#[cfg(not(target_os = <span class="string">"macos"</span>))]
             </span>Address::Launchd(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(Error::Address(
-                <span class="string">&quot;Launchd addresses are only supported on macOS&quot;</span>.to_owned(),
+                <span class="string">"Launchd addresses are only supported on macOS"</span>.to_owned(),
             )),
 
-            <span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
+            <span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
             </span>Address::Launchd(env) =&gt; {
                 <span class="kw">let </span>addr = macos_launchd_bus_address(<span class="kw-2">&amp;</span>env).<span class="kw">await</span><span class="question-mark">?</span>;
                 addr.connect().<span class="kw">await
@@ -1318,92 +1319,92 @@
     }
 
     <span class="doccomment">/// Get the address for session socket respecting the DBUS_SESSION_BUS_ADDRESS environment
-    /// variable. If we don&#39;t recognize the value (or it&#39;s not set) we fall back to
+    /// variable. If we don't recognize the value (or it's not set) we fall back to
     /// $XDG_RUNTIME_DIR/bus
     </span><span class="kw">pub fn </span>session() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">match </span>env::var(<span class="string">&quot;DBUS_SESSION_BUS_ADDRESS&quot;</span>) {
+        <span class="kw">match </span>env::var(<span class="string">"DBUS_SESSION_BUS_ADDRESS"</span>) {
             <span class="prelude-val">Ok</span>(val) =&gt; <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>val),
             <span class="kw">_ </span>=&gt; {
                 <span class="attr">#[cfg(windows)]
                 </span>{
-                    <span class="attr">#[cfg(feature = <span class="string">&quot;windows-gdbus&quot;</span>)]
-                    </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">&quot;autolaunch:&quot;</span>);
+                    <span class="attr">#[cfg(feature = <span class="string">"windows-gdbus"</span>)]
+                    </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">"autolaunch:"</span>);
 
-                    <span class="attr">#[cfg(not(feature = <span class="string">&quot;windows-gdbus&quot;</span>))]
-                    </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">&quot;autolaunch:scope=*user&quot;</span>);
+                    <span class="attr">#[cfg(not(feature = <span class="string">"windows-gdbus"</span>))]
+                    </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">"autolaunch:scope=*user"</span>);
                 }
 
-                <span class="attr">#[cfg(all(unix, not(target_os = <span class="string">&quot;macos&quot;</span>)))]
+                <span class="attr">#[cfg(all(unix, not(target_os = <span class="string">"macos"</span>)))]
                 </span>{
-                    <span class="kw">let </span>runtime_dir = env::var(<span class="string">&quot;XDG_RUNTIME_DIR&quot;</span>)
-                        .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">format!</span>(<span class="string">&quot;/run/user/{}&quot;</span>, Uid::effective()));
-                    <span class="kw">let </span>path = <span class="macro">format!</span>(<span class="string">&quot;unix:path={runtime_dir}/bus&quot;</span>);
+                    <span class="kw">let </span>runtime_dir = env::var(<span class="string">"XDG_RUNTIME_DIR"</span>)
+                        .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">format!</span>(<span class="string">"/run/user/{}"</span>, Uid::effective()));
+                    <span class="kw">let </span>path = <span class="macro">format!</span>(<span class="string">"unix:path={runtime_dir}/bus"</span>);
 
                     <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>path)
                 }
 
-                <span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
-                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">&quot;launchd:env=DBUS_LAUNCHD_SESSION_BUS_SOCKET&quot;</span>);
+                <span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
+                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">"launchd:env=DBUS_LAUNCHD_SESSION_BUS_SOCKET"</span>);
             }
         }
     }
 
     <span class="doccomment">/// Get the address for system bus respecting the DBUS_SYSTEM_BUS_ADDRESS environment
-    /// variable. If we don&#39;t recognize the value (or it&#39;s not set) we fall back to
+    /// variable. If we don't recognize the value (or it's not set) we fall back to
     /// /var/run/dbus/system_bus_socket
     </span><span class="kw">pub fn </span>system() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">match </span>env::var(<span class="string">&quot;DBUS_SYSTEM_BUS_ADDRESS&quot;</span>) {
+        <span class="kw">match </span>env::var(<span class="string">"DBUS_SYSTEM_BUS_ADDRESS"</span>) {
             <span class="prelude-val">Ok</span>(val) =&gt; <span class="self">Self</span>::from_str(<span class="kw-2">&amp;</span>val),
             <span class="kw">_ </span>=&gt; {
-                <span class="attr">#[cfg(all(unix, not(target_os = <span class="string">&quot;macos&quot;</span>)))]
-                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">&quot;unix:path=/var/run/dbus/system_bus_socket&quot;</span>);
+                <span class="attr">#[cfg(all(unix, not(target_os = <span class="string">"macos"</span>)))]
+                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">"unix:path=/var/run/dbus/system_bus_socket"</span>);
 
                 <span class="attr">#[cfg(windows)]
-                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">&quot;autolaunch:&quot;</span>);
+                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">"autolaunch:"</span>);
 
-                <span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
-                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">&quot;launchd:env=DBUS_LAUNCHD_SESSION_BUS_SOCKET&quot;</span>);
+                <span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
+                </span><span class="kw">return </span><span class="self">Self</span>::from_str(<span class="string">"launchd:env=DBUS_LAUNCHD_SESSION_BUS_SOCKET"</span>);
             }
         }
     }
 
     <span class="comment">// Helper for FromStr
-    </span><span class="attr">#[cfg(any(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(unix, not(feature = <span class="string">"tokio"</span>)))]
     </span><span class="kw">fn </span>from_unix(opts: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(abs) = opts.get(<span class="string">&quot;abstract&quot;</span>) {
-            <span class="kw">if </span>opts.get(<span class="string">&quot;path&quot;</span>).is_some() {
+        <span class="kw">let </span>path = <span class="kw">if let </span><span class="prelude-val">Some</span>(abs) = opts.get(<span class="string">"abstract"</span>) {
+            <span class="kw">if </span>opts.get(<span class="string">"path"</span>).is_some() {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(
-                    <span class="string">&quot;`path` and `abstract` cannot be specified together&quot;</span>.into(),
+                    <span class="string">"`path` and `abstract` cannot be specified together"</span>.into(),
                 ));
             }
-            <span class="kw">let </span><span class="kw-2">mut </span>s = OsString::from(<span class="string">&quot;\0&quot;</span>);
+            <span class="kw">let </span><span class="kw-2">mut </span>s = OsString::from(<span class="string">"\0"</span>);
             s.push(abs);
             s
-        } <span class="kw">else if let </span><span class="prelude-val">Some</span>(path) = opts.get(<span class="string">&quot;path&quot;</span>) {
+        } <span class="kw">else if let </span><span class="prelude-val">Some</span>(path) = opts.get(<span class="string">"path"</span>) {
             OsString::from(path)
         } <span class="kw">else </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(
-                <span class="string">&quot;unix address is missing path or abstract&quot;</span>.to_owned(),
+                <span class="string">"unix address is missing path or abstract"</span>.to_owned(),
             ));
         };
 
         <span class="prelude-val">Ok</span>(Address::Unix(path))
     }
 
-    <span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
     </span><span class="kw">fn </span>from_vsock(opts: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>cid = opts
-            .get(<span class="string">&quot;cid&quot;</span>)
-            .ok_or_else(|| Error::Address(<span class="string">&quot;VSOCK address is missing cid=&quot;</span>.into()))<span class="question-mark">?</span>;
+            .get(<span class="string">"cid"</span>)
+            .ok_or_else(|| Error::Address(<span class="string">"VSOCK address is missing cid="</span>.into()))<span class="question-mark">?</span>;
         <span class="kw">let </span>cid = cid
             .parse::&lt;u32&gt;()
-            .map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">&quot;Failed to parse VSOCK cid `{}`: {}&quot;</span>, cid, e)))<span class="question-mark">?</span>;
+            .map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">"Failed to parse VSOCK cid `{}`: {}"</span>, cid, e)))<span class="question-mark">?</span>;
         <span class="kw">let </span>port = opts
-            .get(<span class="string">&quot;port&quot;</span>)
-            .ok_or_else(|| Error::Address(<span class="string">&quot;VSOCK address is missing port=&quot;</span>.into()))<span class="question-mark">?</span>;
+            .get(<span class="string">"port"</span>)
+            .ok_or_else(|| Error::Address(<span class="string">"VSOCK address is missing port="</span>.into()))<span class="question-mark">?</span>;
         <span class="kw">let </span>port = port
             .parse::&lt;u32&gt;()
-            .map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">&quot;Failed to parse VSOCK port `{}`: {}&quot;</span>, port, e)))<span class="question-mark">?</span>;
+            .map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">"Failed to parse VSOCK port `{}`: {}"</span>, port, e)))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(Address::Vsock(VsockAddress { cid, port }))
     }
@@ -1414,32 +1415,32 @@
 
     <span class="kw">fn </span>from_str(family: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>family {
-            <span class="string">&quot;ipv4&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Ipv4),
-            <span class="string">&quot;ipv6&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Ipv6),
+            <span class="string">"ipv4" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Ipv4),
+            <span class="string">"ipv6" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Ipv6),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::Address(<span class="macro">format!</span>(
-                <span class="string">&quot;invalid tcp address `family`: {family}&quot;
+                <span class="string">"invalid tcp address `family`: {family}"
             </span>))),
         }
     }
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>TcpAddressFamily {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Ipv4 =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;ipv4&quot;</span>),
-            <span class="self">Self</span>::Ipv6 =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;ipv6&quot;</span>),
+            <span class="self">Self</span>::Ipv4 =&gt; <span class="macro">write!</span>(f, <span class="string">"ipv4"</span>),
+            <span class="self">Self</span>::Ipv6 =&gt; <span class="macro">write!</span>(f, <span class="string">"ipv6"</span>),
         }
     }
 }
 
 <span class="kw">fn </span>decode_hex(c: char) -&gt; <span class="prelude-ty">Result</span>&lt;u8&gt; {
     <span class="kw">match </span>c {
-        <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39; </span>=&gt; <span class="prelude-val">Ok</span>(c <span class="kw">as </span>u8 - <span class="string">b&#39;0&#39;</span>),
-        <span class="string">&#39;a&#39;</span>..=<span class="string">&#39;f&#39; </span>=&gt; <span class="prelude-val">Ok</span>(c <span class="kw">as </span>u8 - <span class="string">b&#39;a&#39; </span>+ <span class="number">10</span>),
-        <span class="string">&#39;A&#39;</span>..=<span class="string">&#39;F&#39; </span>=&gt; <span class="prelude-val">Ok</span>(c <span class="kw">as </span>u8 - <span class="string">b&#39;A&#39; </span>+ <span class="number">10</span>),
+        <span class="string">'0'</span>..=<span class="string">'9' </span>=&gt; <span class="prelude-val">Ok</span>(c <span class="kw">as </span>u8 - <span class="string">b'0'</span>),
+        <span class="string">'a'</span>..=<span class="string">'f' </span>=&gt; <span class="prelude-val">Ok</span>(c <span class="kw">as </span>u8 - <span class="string">b'a' </span>+ <span class="number">10</span>),
+        <span class="string">'A'</span>..=<span class="string">'F' </span>=&gt; <span class="prelude-val">Ok</span>(c <span class="kw">as </span>u8 - <span class="string">b'A' </span>+ <span class="number">10</span>),
 
         <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::Address(
-            <span class="string">&quot;invalid hexadecimal character in percent-encoded sequence&quot;</span>.to_owned(),
+            <span class="string">"invalid hexadecimal character in percent-encoded sequence"</span>.to_owned(),
         )),
     }
 }
@@ -1449,28 +1450,28 @@
     <span class="kw">let </span><span class="kw-2">mut </span>decoded = Vec::new();
 
     <span class="kw">while let </span><span class="prelude-val">Some</span>(c) = iter.next() {
-        <span class="kw">if </span><span class="macro">matches!</span>(c, <span class="string">&#39;-&#39; </span>| <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39; </span>| <span class="string">&#39;A&#39;</span>..=<span class="string">&#39;Z&#39; </span>| <span class="string">&#39;a&#39;</span>..=<span class="string">&#39;z&#39; </span>| <span class="string">&#39;_&#39; </span>| <span class="string">&#39;/&#39; </span>| <span class="string">&#39;.&#39; </span>| <span class="string">&#39;\\&#39; </span>| <span class="string">&#39;*&#39;</span>) {
+        <span class="kw">if </span><span class="macro">matches!</span>(c, <span class="string">'-' </span>| <span class="string">'0'</span>..=<span class="string">'9' </span>| <span class="string">'A'</span>..=<span class="string">'Z' </span>| <span class="string">'a'</span>..=<span class="string">'z' </span>| <span class="string">'_' </span>| <span class="string">'/' </span>| <span class="string">'.' </span>| <span class="string">'\\' </span>| <span class="string">'*'</span>) {
             decoded.push(c <span class="kw">as </span>u8)
-        } <span class="kw">else if </span>c == <span class="string">&#39;%&#39; </span>{
+        } <span class="kw">else if </span>c == <span class="string">'%' </span>{
             decoded.push(
                 decode_hex(iter.next().ok_or_else(|| {
-                    Error::Address(<span class="string">&quot;incomplete percent-encoded sequence&quot;</span>.to_owned())
+                    Error::Address(<span class="string">"incomplete percent-encoded sequence"</span>.to_owned())
                 })<span class="question-mark">?</span>)<span class="question-mark">?
                     </span>&lt;&lt; <span class="number">4
                     </span>| decode_hex(iter.next().ok_or_else(|| {
-                        Error::Address(<span class="string">&quot;incomplete percent-encoded sequence&quot;</span>.to_owned())
+                        Error::Address(<span class="string">"incomplete percent-encoded sequence"</span>.to_owned())
                     })<span class="question-mark">?</span>)<span class="question-mark">?</span>,
             );
         } <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(<span class="string">&quot;Invalid character in address&quot;</span>.to_owned()));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(<span class="string">"Invalid character in address"</span>.to_owned()));
         }
     }
 
     <span class="prelude-val">Ok</span>(decoded)
 }
 
-<span class="kw">fn </span>encode_percents(f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;, <span class="kw-2">mut </span>value: <span class="kw-2">&amp;</span>[u8]) -&gt; std::fmt::Result {
-    <span class="kw">const </span>LOOKUP: <span class="kw-2">&amp;</span>str = <span class="string">&quot;\
+<span class="kw">fn </span>encode_percents(f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">mut </span>value: <span class="kw-2">&amp;</span>[u8]) -&gt; std::fmt::Result {
+    <span class="kw">const </span>LOOKUP: <span class="kw-2">&amp;</span>str = <span class="string">"\
 %00%01%02%03%04%05%06%07%08%09%0a%0b%0c%0d%0e%0f\
 %10%11%12%13%14%15%16%17%18%19%1a%1b%1c%1d%1e%1f\
 %20%21%22%23%24%25%26%27%28%29%2a%2b%2c%2d%2e%2f\
@@ -1486,11 +1487,11 @@
 %c0%c1%c2%c3%c4%c5%c6%c7%c8%c9%ca%cb%cc%cd%ce%cf\
 %d0%d1%d2%d3%d4%d5%d6%d7%d8%d9%da%db%dc%dd%de%df\
 %e0%e1%e2%e3%e4%e5%e6%e7%e8%e9%ea%eb%ec%ed%ee%ef\
-%f0%f1%f2%f3%f4%f5%f6%f7%f8%f9%fa%fb%fc%fd%fe%ff&quot;</span>;
+%f0%f1%f2%f3%f4%f5%f6%f7%f8%f9%fa%fb%fc%fd%fe%ff"</span>;
 
     <span class="kw">loop </span>{
         <span class="kw">let </span>pos = value.iter().position(
-            |c| !<span class="macro">matches!</span>(c, <span class="string">b&#39;-&#39; </span>| <span class="string">b&#39;0&#39;</span>..=<span class="string">b&#39;9&#39; </span>| <span class="string">b&#39;A&#39;</span>..=<span class="string">b&#39;Z&#39; </span>| <span class="string">b&#39;a&#39;</span>..=<span class="string">b&#39;z&#39; </span>| <span class="string">b&#39;_&#39; </span>| <span class="string">b&#39;/&#39; </span>| <span class="string">b&#39;.&#39; </span>| <span class="string">b&#39;\\&#39; </span>| <span class="string">b&#39;*&#39;</span>),
+            |c| !<span class="macro">matches!</span>(c, <span class="string">b'-' </span>| <span class="string">b'0'</span>..=<span class="string">b'9' </span>| <span class="string">b'A'</span>..=<span class="string">b'Z' </span>| <span class="string">b'a'</span>..=<span class="string">b'z' </span>| <span class="string">b'_' </span>| <span class="string">b'/' </span>| <span class="string">b'.' </span>| <span class="string">b'\\' </span>| <span class="string">b'*'</span>),
         );
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(pos) = pos {
@@ -1511,17 +1512,17 @@
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>Address {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Tcp(addr) =&gt; {
-                f.write_str(<span class="string">&quot;tcp:&quot;</span>)<span class="question-mark">?</span>;
+                f.write_str(<span class="string">"tcp:"</span>)<span class="question-mark">?</span>;
                 addr.write_options(f)<span class="question-mark">?</span>;
             }
 
             <span class="self">Self</span>::NonceTcp { addr, nonce_file } =&gt; {
-                f.write_str(<span class="string">&quot;nonce-tcp:noncefile=&quot;</span>)<span class="question-mark">?</span>;
+                f.write_str(<span class="string">"nonce-tcp:noncefile="</span>)<span class="question-mark">?</span>;
                 encode_percents(f, nonce_file)<span class="question-mark">?</span>;
-                f.write_str(<span class="string">&quot;,&quot;</span>)<span class="question-mark">?</span>;
+                f.write_str(<span class="string">","</span>)<span class="question-mark">?</span>;
                 addr.write_options(f)<span class="question-mark">?</span>;
             }
 
@@ -1529,31 +1530,31 @@
                 <span class="attr">#[cfg(unix)]
                 </span>{
                     <span class="kw">use </span>std::os::unix::ffi::OsStrExt;
-                    f.write_str(<span class="string">&quot;unix:path=&quot;</span>)<span class="question-mark">?</span>;
+                    f.write_str(<span class="string">"unix:path="</span>)<span class="question-mark">?</span>;
                     encode_percents(f, path.as_bytes())<span class="question-mark">?</span>;
                 }
 
                 <span class="attr">#[cfg(windows)]
-                </span><span class="macro">write!</span>(f, <span class="string">&quot;unix:path={}&quot;</span>, path.to_str().ok_or(std::fmt::Error)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+                </span><span class="macro">write!</span>(f, <span class="string">"unix:path={}"</span>, path.to_str().ok_or(std::fmt::Error)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
             }
 
             <span class="attr">#[cfg(any(
-                all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)),
-                feature = <span class="string">&quot;tokio-vsock&quot;
+                all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+                feature = <span class="string">"tokio-vsock"
             </span>))]
             </span><span class="self">Self</span>::Vsock(addr) =&gt; {
-                <span class="macro">write!</span>(f, <span class="string">&quot;vsock:cid={},port={}&quot;</span>, addr.cid, addr.port)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"vsock:cid={},port={}"</span>, addr.cid, addr.port)<span class="question-mark">?</span>;
             }
 
             <span class="self">Self</span>::Autolaunch(scope) =&gt; {
-                <span class="macro">write!</span>(f, <span class="string">&quot;autolaunch:&quot;</span>)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"autolaunch:"</span>)<span class="question-mark">?</span>;
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(scope) = scope {
-                    <span class="macro">write!</span>(f, <span class="string">&quot;scope={scope}&quot;</span>)<span class="question-mark">?</span>;
+                    <span class="macro">write!</span>(f, <span class="string">"scope={scope}"</span>)<span class="question-mark">?</span>;
                 }
             }
 
             <span class="self">Self</span>::Launchd(env) =&gt; {
-                <span class="macro">write!</span>(f, <span class="string">&quot;launchd:env={}&quot;</span>, env)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"launchd:env={}"</span>, env)<span class="question-mark">?</span>;
             }
         }
 
@@ -1567,63 +1568,63 @@
     <span class="doccomment">/// Parse a D-BUS address and return its path if we recognize it
     </span><span class="kw">fn </span>from_str(address: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>col = address
-            .find(<span class="string">&#39;:&#39;</span>)
-            .ok_or_else(|| Error::Address(<span class="string">&quot;address has no colon&quot;</span>.to_owned()))<span class="question-mark">?</span>;
+            .find(<span class="string">':'</span>)
+            .ok_or_else(|| Error::Address(<span class="string">"address has no colon"</span>.to_owned()))<span class="question-mark">?</span>;
         <span class="kw">let </span>transport = <span class="kw-2">&amp;</span>address[..col];
         <span class="kw">let </span><span class="kw-2">mut </span>options = HashMap::new();
 
         <span class="kw">if </span>address.len() &gt; col + <span class="number">1 </span>{
-            <span class="kw">for </span>kv <span class="kw">in </span>address[col + <span class="number">1</span>..].split(<span class="string">&#39;,&#39;</span>) {
-                <span class="kw">let </span>(k, v) = <span class="kw">match </span>kv.find(<span class="string">&#39;=&#39;</span>) {
+            <span class="kw">for </span>kv <span class="kw">in </span>address[col + <span class="number">1</span>..].split(<span class="string">','</span>) {
+                <span class="kw">let </span>(k, v) = <span class="kw">match </span>kv.find(<span class="string">'='</span>) {
                     <span class="prelude-val">Some</span>(eq) =&gt; (<span class="kw-2">&amp;</span>kv[..eq], <span class="kw-2">&amp;</span>kv[eq + <span class="number">1</span>..]),
                     <span class="prelude-val">None </span>=&gt; {
                         <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(
-                            <span class="string">&quot;missing = when parsing key/value&quot;</span>.to_owned(),
+                            <span class="string">"missing = when parsing key/value"</span>.to_owned(),
                         ))
                     }
                 };
                 <span class="kw">if </span>options.insert(k, v).is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Address(<span class="macro">format!</span>(
-                        <span class="string">&quot;Key `{k}` specified multiple times&quot;
+                        <span class="string">"Key `{k}` specified multiple times"
                     </span>)));
                 }
             }
         }
 
         <span class="kw">match </span>transport {
-            <span class="attr">#[cfg(any(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
-            </span><span class="string">&quot;unix&quot; </span>=&gt; <span class="self">Self</span>::from_unix(options),
-            <span class="string">&quot;tcp&quot; </span>=&gt; TcpAddress::from_tcp(options).map(<span class="self">Self</span>::Tcp),
+            <span class="attr">#[cfg(any(unix, not(feature = <span class="string">"tokio"</span>)))]
+            </span><span class="string">"unix" </span>=&gt; <span class="self">Self</span>::from_unix(options),
+            <span class="string">"tcp" </span>=&gt; TcpAddress::from_tcp(options).map(<span class="self">Self</span>::Tcp),
 
-            <span class="string">&quot;nonce-tcp&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::NonceTcp {
+            <span class="string">"nonce-tcp" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::NonceTcp {
                 nonce_file: decode_percents(
                     options
-                        .get(<span class="string">&quot;noncefile&quot;</span>)
-                        .ok_or_else(|| Error::Address(<span class="string">&quot;missing nonce file parameter&quot;</span>.into()))<span class="question-mark">?</span>,
+                        .get(<span class="string">"noncefile"</span>)
+                        .ok_or_else(|| Error::Address(<span class="string">"missing nonce file parameter"</span>.into()))<span class="question-mark">?</span>,
                 )<span class="question-mark">?</span>,
                 addr: TcpAddress::from_tcp(options)<span class="question-mark">?</span>,
             }),
-            <span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
-            </span><span class="string">&quot;vsock&quot; </span>=&gt; <span class="self">Self</span>::from_vsock(options),
-            <span class="string">&quot;autolaunch&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Autolaunch(
+            <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
+            </span><span class="string">"vsock" </span>=&gt; <span class="self">Self</span>::from_vsock(options),
+            <span class="string">"autolaunch" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Autolaunch(
                 options
-                    .get(<span class="string">&quot;scope&quot;</span>)
+                    .get(<span class="string">"scope"</span>)
                     .map(|scope| -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>&gt; {
                         String::from_utf8(decode_percents(scope)<span class="question-mark">?</span>).map_err(|<span class="kw">_</span>| {
-                            Error::Address(<span class="string">&quot;autolaunch scope is not valid UTF-8&quot;</span>.to_owned())
+                            Error::Address(<span class="string">"autolaunch scope is not valid UTF-8"</span>.to_owned())
                         })
                     })
                     .transpose()<span class="question-mark">?</span>,
             )),
-            <span class="string">&quot;launchd&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Launchd(
+            <span class="string">"launchd" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Launchd(
                 options
-                    .get(<span class="string">&quot;env&quot;</span>)
-                    .ok_or_else(|| Error::Address(<span class="string">&quot;missing env key&quot;</span>.into()))<span class="question-mark">?
+                    .get(<span class="string">"env"</span>)
+                    .ok_or_else(|| Error::Address(<span class="string">"missing env key"</span>.into()))<span class="question-mark">?
                     </span>.to_string(),
             )),
 
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::Address(<span class="macro">format!</span>(
-                <span class="string">&quot;unsupported transport &#39;{transport}&#39;&quot;
+                <span class="string">"unsupported transport '{transport}'"
             </span>))),
         }
     }
@@ -1646,232 +1647,232 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_dbus_addresses() {
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;address has no colon&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">""</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"address has no colon"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;foo&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;address has no colon&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"foo"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"address has no colon"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;foo:opt&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;missing = when parsing key/value&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"foo:opt"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"missing = when parsing key/value"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;foo:opt=1,opt=2&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;Key `opt` specified multiple times&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"foo:opt=1,opt=2"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"Key `opt` specified multiple times"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;tcp:host=localhost&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;tcp address is missing `port`&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"tcp:host=localhost"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"tcp address is missing `port`"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;tcp:host=localhost,port=32f&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;invalid tcp `port`&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"tcp:host=localhost,port=32f"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"invalid tcp `port`"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;tcp:host=localhost,port=123,family=ipv7&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;invalid tcp address `family`: ipv7&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"tcp:host=localhost,port=123,family=ipv7"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"invalid tcp address `family`: ipv7"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;unix:foo=blah&quot;</span>).unwrap_err() {
-            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">&quot;unix address is missing path or abstract&quot;</span>),
+        <span class="kw">match </span>Address::from_str(<span class="string">"unix:foo=blah"</span>).unwrap_err() {
+            Error::Address(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="string">"unix address is missing path or abstract"</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
-        <span class="kw">match </span>Address::from_str(<span class="string">&quot;unix:path=/tmp,abstract=foo&quot;</span>).unwrap_err() {
+        <span class="kw">match </span>Address::from_str(<span class="string">"unix:path=/tmp,abstract=foo"</span>).unwrap_err() {
             Error::Address(e) =&gt; {
-                <span class="macro">assert_eq!</span>(e, <span class="string">&quot;`path` and `abstract` cannot be specified together&quot;</span>)
+                <span class="macro">assert_eq!</span>(e, <span class="string">"`path` and `abstract` cannot be specified together"</span>)
             }
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
         }
         <span class="macro">assert_eq!</span>(
-            Address::Unix(<span class="string">&quot;/tmp/dbus-foo&quot;</span>.into()),
-            Address::from_str(<span class="string">&quot;unix:path=/tmp/dbus-foo&quot;</span>).unwrap()
+            Address::Unix(<span class="string">"/tmp/dbus-foo"</span>.into()),
+            Address::from_str(<span class="string">"unix:path=/tmp/dbus-foo"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
-            Address::Unix(<span class="string">&quot;/tmp/dbus-foo&quot;</span>.into()),
-            Address::from_str(<span class="string">&quot;unix:path=/tmp/dbus-foo,guid=123&quot;</span>).unwrap()
+            Address::Unix(<span class="string">"/tmp/dbus-foo"</span>.into()),
+            Address::from_str(<span class="string">"unix:path=/tmp/dbus-foo,guid=123"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">None
             </span>}),
-            Address::from_str(<span class="string">&quot;tcp:host=localhost,port=4142&quot;</span>).unwrap()
+            Address::from_str(<span class="string">"tcp:host=localhost,port=4142"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv4)
             }),
-            Address::from_str(<span class="string">&quot;tcp:host=localhost,port=4142,family=ipv4&quot;</span>).unwrap()
+            Address::from_str(<span class="string">"tcp:host=localhost,port=4142,family=ipv4"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv6)
             }),
-            Address::from_str(<span class="string">&quot;tcp:host=localhost,port=4142,family=ipv6&quot;</span>).unwrap()
+            Address::from_str(<span class="string">"tcp:host=localhost,port=4142,family=ipv6"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv6)
             }),
-            Address::from_str(<span class="string">&quot;tcp:host=localhost,port=4142,family=ipv6,noncefile=/a/file/path&quot;</span>)
+            Address::from_str(<span class="string">"tcp:host=localhost,port=4142,family=ipv6,noncefile=/a/file/path"</span>)
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
             Address::NonceTcp {
                 addr: TcpAddress {
-                    host: <span class="string">&quot;localhost&quot;</span>.into(),
+                    host: <span class="string">"localhost"</span>.into(),
                     port: <span class="number">4142</span>,
                     bind: <span class="prelude-val">None</span>,
                     family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv6),
                 },
-                nonce_file: <span class="string">b&quot;/a/file/path to file 1234&quot;</span>.to_vec()
+                nonce_file: <span class="string">b"/a/file/path to file 1234"</span>.to_vec()
             },
             Address::from_str(
-                <span class="string">&quot;nonce-tcp:host=localhost,port=4142,family=ipv6,noncefile=/a/file/path%20to%20file%201234&quot;
+                <span class="string">"nonce-tcp:host=localhost,port=4142,family=ipv6,noncefile=/a/file/path%20to%20file%201234"
             </span>)
             .unwrap()
         );
         <span class="macro">assert_eq!</span>(
             Address::Autolaunch(<span class="prelude-val">None</span>),
-            Address::from_str(<span class="string">&quot;autolaunch:&quot;</span>).unwrap()
+            Address::from_str(<span class="string">"autolaunch:"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
-            Address::Autolaunch(<span class="prelude-val">Some</span>(<span class="string">&quot;*my_cool_scope*&quot;</span>.to_owned())),
-            Address::from_str(<span class="string">&quot;autolaunch:scope=*my_cool_scope*&quot;</span>).unwrap()
+            Address::Autolaunch(<span class="prelude-val">Some</span>(<span class="string">"*my_cool_scope*"</span>.to_owned())),
+            Address::from_str(<span class="string">"autolaunch:scope=*my_cool_scope*"</span>).unwrap()
         );
         <span class="macro">assert_eq!</span>(
-            Address::Launchd(<span class="string">&quot;my_cool_env_key&quot;</span>.to_owned()),
-            Address::from_str(<span class="string">&quot;launchd:env=my_cool_env_key&quot;</span>).unwrap()
+            Address::Launchd(<span class="string">"my_cool_env_key"</span>.to_owned()),
+            Address::from_str(<span class="string">"launchd:env=my_cool_env_key"</span>).unwrap()
         );
 
-        <span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
         </span><span class="macro">assert_eq!</span>(
             Address::Vsock(<span class="kw">crate</span>::VsockAddress {
                 cid: <span class="number">98</span>,
                 port: <span class="number">2934
             </span>}),
-            Address::from_str(<span class="string">&quot;vsock:cid=98,port=2934,guid=123&quot;</span>).unwrap()
+            Address::from_str(<span class="string">"vsock:cid=98,port=2934,guid=123"</span>).unwrap()
         );
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>stringify_dbus_addresses() {
         <span class="macro">assert_eq!</span>(
-            Address::Unix(<span class="string">&quot;/tmp/dbus-foo&quot;</span>.into()).to_string(),
-            <span class="string">&quot;unix:path=/tmp/dbus-foo&quot;
+            Address::Unix(<span class="string">"/tmp/dbus-foo"</span>.into()).to_string(),
+            <span class="string">"unix:path=/tmp/dbus-foo"
         </span>);
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">None
             </span>})
             .to_string(),
-            <span class="string">&quot;tcp:host=localhost,port=4142&quot;
+            <span class="string">"tcp:host=localhost,port=4142"
         </span>);
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv4)
             })
             .to_string(),
-            <span class="string">&quot;tcp:host=localhost,port=4142,family=ipv4&quot;
+            <span class="string">"tcp:host=localhost,port=4142,family=ipv4"
         </span>);
         <span class="macro">assert_eq!</span>(
             Address::Tcp(TcpAddress {
-                host: <span class="string">&quot;localhost&quot;</span>.into(),
+                host: <span class="string">"localhost"</span>.into(),
                 port: <span class="number">4142</span>,
                 bind: <span class="prelude-val">None</span>,
                 family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv6)
             })
             .to_string(),
-            <span class="string">&quot;tcp:host=localhost,port=4142,family=ipv6&quot;
+            <span class="string">"tcp:host=localhost,port=4142,family=ipv6"
         </span>);
         <span class="macro">assert_eq!</span>(
             Address::NonceTcp {
                 addr: TcpAddress {
-                    host: <span class="string">&quot;localhost&quot;</span>.into(),
+                    host: <span class="string">"localhost"</span>.into(),
                     port: <span class="number">4142</span>,
                     bind: <span class="prelude-val">None</span>,
                     family: <span class="prelude-val">Some</span>(TcpAddressFamily::Ipv6),
                 },
-                nonce_file: <span class="string">b&quot;/a/file/path to file 1234&quot;</span>.to_vec()
+                nonce_file: <span class="string">b"/a/file/path to file 1234"</span>.to_vec()
             }
             .to_string(),
-            <span class="string">&quot;nonce-tcp:noncefile=/a/file/path%20to%20file%201234,host=localhost,port=4142,family=ipv6&quot;
+            <span class="string">"nonce-tcp:noncefile=/a/file/path%20to%20file%201234,host=localhost,port=4142,family=ipv6"
         </span>);
-        <span class="macro">assert_eq!</span>(Address::Autolaunch(<span class="prelude-val">None</span>).to_string(), <span class="string">&quot;autolaunch:&quot;</span>);
+        <span class="macro">assert_eq!</span>(Address::Autolaunch(<span class="prelude-val">None</span>).to_string(), <span class="string">"autolaunch:"</span>);
         <span class="macro">assert_eq!</span>(
-            Address::Autolaunch(<span class="prelude-val">Some</span>(<span class="string">&quot;*my_cool_scope*&quot;</span>.to_owned())).to_string(),
-            <span class="string">&quot;autolaunch:scope=*my_cool_scope*&quot;
+            Address::Autolaunch(<span class="prelude-val">Some</span>(<span class="string">"*my_cool_scope*"</span>.to_owned())).to_string(),
+            <span class="string">"autolaunch:scope=*my_cool_scope*"
         </span>);
         <span class="macro">assert_eq!</span>(
-            Address::Launchd(<span class="string">&quot;my_cool_key&quot;</span>.to_owned()).to_string(),
-            <span class="string">&quot;launchd:env=my_cool_key&quot;
+            Address::Launchd(<span class="string">"my_cool_key"</span>.to_owned()).to_string(),
+            <span class="string">"launchd:env=my_cool_key"
         </span>);
 
-        <span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
         </span><span class="macro">assert_eq!</span>(
             Address::Vsock(<span class="kw">crate</span>::VsockAddress {
                 cid: <span class="number">98</span>,
                 port: <span class="number">2934
             </span>})
             .to_string(),
-            <span class="string">&quot;vsock:cid=98,port=2934,guid=123&quot;</span>,
+            <span class="string">"vsock:cid=98,port=2934,guid=123"</span>,
         );
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>connect_tcp() {
-        <span class="kw">let </span>listener = std::net::TcpListener::bind(<span class="string">&quot;127.0.0.1:0&quot;</span>).unwrap();
+        <span class="kw">let </span>listener = std::net::TcpListener::bind(<span class="string">"127.0.0.1:0"</span>).unwrap();
         <span class="kw">let </span>port = listener.local_addr().unwrap().port();
-        <span class="kw">let </span>addr = Address::from_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;tcp:host=localhost,port={port}&quot;</span>)).unwrap();
+        <span class="kw">let </span>addr = Address::from_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"tcp:host=localhost,port={port}"</span>)).unwrap();
         <span class="kw">crate</span>::utils::block_on(<span class="kw">async </span>{ addr.connect().<span class="kw">await </span>}).unwrap();
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>connect_nonce_tcp() {
-        <span class="kw">struct </span>PercentEncoded&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]);
+        <span class="kw">struct </span>PercentEncoded&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]);
 
-        <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>PercentEncoded&lt;<span class="lifetime">&#39;_</span>&gt; {
-            <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>PercentEncoded&lt;<span class="lifetime">'_</span>&gt; {
+            <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
                 <span class="kw">super</span>::encode_percents(f, <span class="self">self</span>.<span class="number">0</span>)
             }
         }
 
         <span class="kw">use </span>std::io::Write;
 
-        <span class="kw">const </span>TEST_COOKIE: <span class="kw-2">&amp;</span>[u8] = <span class="string">b&quot;VERILY SECRETIVE&quot;</span>;
+        <span class="kw">const </span>TEST_COOKIE: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"VERILY SECRETIVE"</span>;
 
-        <span class="kw">let </span>listener = std::net::TcpListener::bind(<span class="string">&quot;127.0.0.1:0&quot;</span>).unwrap();
+        <span class="kw">let </span>listener = std::net::TcpListener::bind(<span class="string">"127.0.0.1:0"</span>).unwrap();
         <span class="kw">let </span>port = listener.local_addr().unwrap().port();
 
         <span class="kw">let </span><span class="kw-2">mut </span>cookie = tempfile::NamedTempFile::new().unwrap();
         cookie.as_file_mut().write_all(TEST_COOKIE).unwrap();
 
         <span class="kw">let </span>encoded_path = <span class="macro">format!</span>(
-            <span class="string">&quot;{}&quot;</span>,
+            <span class="string">"{}"</span>,
             PercentEncoded(cookie.path().to_str().unwrap().as_ref())
         );
 
         <span class="kw">let </span>addr = Address::from_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
-            <span class="string">&quot;nonce-tcp:host=localhost,port={port},noncefile={encoded_path}&quot;
+            <span class="string">"nonce-tcp:host=localhost,port={port},noncefile={encoded_path}"
         </span>))
         .unwrap();
 
@@ -1892,11 +1893,11 @@
 
         <span class="kw">let </span>saw_cookie = receiver
             .recv_timeout(std::time::Duration::from_millis(<span class="number">100</span>))
-            .expect(<span class="string">&quot;nonce file content hasn&#39;t been received by server thread in time&quot;</span>);
+            .expect(<span class="string">"nonce file content hasn't been received by server thread in time"</span>);
 
         <span class="macro">assert!</span>(
             saw_cookie,
-            <span class="string">&quot;nonce file content has been received, but was invalid&quot;
+            <span class="string">"nonce file content has been received, but was invalid"
         </span>);
     }
 }

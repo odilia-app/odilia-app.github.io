@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/value.rs`."><title>value.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/value.rs`."><title>value.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -758,7 +759,7 @@
 };
 <span class="kw">use </span>static_assertions::assert_impl_all;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::Maybe;
 <span class="kw">use crate</span>::{
     signature_parser::SignatureParser, utils::<span class="kw-2">*</span>, Array, Basic, Dict, DynamicType, ObjectPath,
@@ -794,7 +795,7 @@
 /// assert_eq!(i16::try_from(&amp;v).unwrap(), i16::max_value());
 /// ```
 ///
-/// Now let&#39;s try a more complicated example:
+/// Now let's try a more complicated example:
 ///
 /// ```
 /// use std::convert::TryFrom;
@@ -802,7 +803,7 @@
 /// use zvariant::{Structure, Value, Str};
 ///
 /// // Create a Value from a tuple this time
-/// let v = Value::new((i16::max_value(), &quot;hello&quot;, true));
+/// let v = Value::new((i16::max_value(), "hello", true));
 ///
 /// // Same drill as previous example
 /// let ctxt = EncodingContext::&lt;byteorder::LE&gt;::new_dbus(0);
@@ -813,13 +814,13 @@
 /// let s = Structure::try_from(v).unwrap();
 /// assert_eq!(
 ///     &lt;(i16, Str, bool)&gt;::try_from(s).unwrap(),
-///     (i16::max_value(), Str::from(&quot;hello&quot;), true),
+///     (i16::max_value(), Str::from("hello"), true),
 /// );
 /// ```
 ///
 /// [D-Bus specification]: https://dbus.freedesktop.org/doc/dbus-specification.html#container-types
 </span><span class="attr">#[derive(Debug, Clone, PartialEq)]
-</span><span class="kw">pub enum </span>Value&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub enum </span>Value&lt;<span class="lifetime">'a</span>&gt; {
     <span class="comment">// Simple types
     </span>U8(u8),
     Bool(bool),
@@ -830,23 +831,23 @@
     I64(i64),
     U64(u64),
     F64(f64),
-    Str(Str&lt;<span class="lifetime">&#39;a</span>&gt;),
-    Signature(Signature&lt;<span class="lifetime">&#39;a</span>&gt;),
-    ObjectPath(ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;),
-    Value(Box&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;),
+    Str(Str&lt;<span class="lifetime">'a</span>&gt;),
+    Signature(Signature&lt;<span class="lifetime">'a</span>&gt;),
+    ObjectPath(ObjectPath&lt;<span class="lifetime">'a</span>&gt;),
+    Value(Box&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;),
 
     <span class="comment">// Container types
-    </span>Array(Array&lt;<span class="lifetime">&#39;a</span>&gt;),
-    Dict(Dict&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span>&gt;),
-    Structure(Structure&lt;<span class="lifetime">&#39;a</span>&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
-    </span>Maybe(Maybe&lt;<span class="lifetime">&#39;a</span>&gt;),
+    </span>Array(Array&lt;<span class="lifetime">'a</span>&gt;),
+    Dict(Dict&lt;<span class="lifetime">'a</span>, <span class="lifetime">'a</span>&gt;),
+    Structure(Structure&lt;<span class="lifetime">'a</span>&gt;),
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+    </span>Maybe(Maybe&lt;<span class="lifetime">'a</span>&gt;),
 
     <span class="attr">#[cfg(unix)]
     </span>Fd(Fd),
 }
 
-<span class="macro">assert_impl_all!</span>(Value&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(Value&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="macro">macro_rules! </span>serialize_value {
     (<span class="macro-nonterminal">$self</span>:ident <span class="macro-nonterminal">$serializer</span>:ident.<span class="macro-nonterminal">$method</span>:ident $(<span class="macro-nonterminal">$first_arg</span>:expr)<span class="kw-2">*</span>) =&gt; {
@@ -869,7 +870,7 @@
             </span>Value::Array(value) =&gt; <span class="macro-nonterminal">$serializer</span>.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$first_arg</span>,)* value),
             Value::Dict(value) =&gt; <span class="macro-nonterminal">$serializer</span>.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$first_arg</span>,)* value),
             Value::Structure(value) =&gt; <span class="macro-nonterminal">$serializer</span>.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$first_arg</span>,)* value),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>Value::Maybe(value) =&gt; <span class="macro-nonterminal">$serializer</span>.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$first_arg</span>,)* value),
 
             <span class="attr">#[cfg(unix)]
@@ -878,7 +879,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Value&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Value&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Make a [`Value`] for a given value.
     ///
     /// In general, you can use [`Into`] trait on basic types, except
@@ -890,7 +891,7 @@
     /// ```
     /// use zvariant::Value;
     ///
-    /// let s = Value::new(&quot;hello&quot;);
+    /// let s = Value::new("hello");
     /// let u: Value = 51.into();
     /// assert_ne!(s, u);
     /// ```
@@ -901,7 +902,7 @@
     </span><span class="kw">where
         </span>T: Into&lt;<span class="self">Self</span>&gt; + DynamicType,
     {
-        <span class="comment">// With specialization, we wouldn&#39;t have this
+        <span class="comment">// With specialization, we wouldn't have this
         </span><span class="kw">if </span>value.dynamic_signature() == VARIANT_SIGNATURE_STR {
             <span class="self">Self</span>::Value(Box::new(value.into()))
         } <span class="kw">else </span>{
@@ -911,8 +912,8 @@
 
     <span class="doccomment">/// Create an owned version of `self`.
     ///
-    /// Ideally, we should implement [`std::borrow::ToOwned`] trait for `Value`, but that&#39;s
-    /// implemented generically for us through `impl&lt;T: Clone&gt; ToOwned for T` and it&#39;s not what we
+    /// Ideally, we should implement [`std::borrow::ToOwned`] trait for `Value`, but that's
+    /// implemented generically for us through `impl&lt;T: Clone&gt; ToOwned for T` and it's not what we
     /// need/want.
     </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OwnedValue {
         OwnedValue(<span class="kw">match </span><span class="self">self </span>{
@@ -936,7 +937,7 @@
             Value::Array(v) =&gt; Value::Array(v.to_owned()),
             Value::Dict(v) =&gt; Value::Dict(v.to_owned()),
             Value::Structure(v) =&gt; Value::Structure(v.to_owned()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>Value::Maybe(v) =&gt; Value::Maybe(v.to_owned()),
             <span class="attr">#[cfg(unix)]
             </span>Value::Fd(v) =&gt; Value::Fd(<span class="kw-2">*</span>v),
@@ -944,7 +945,7 @@
     }
 
     <span class="doccomment">/// Get the signature of the enclosed value.
-    </span><span class="kw">pub fn </span>value_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">&#39;_</span>&gt; {
+    </span><span class="kw">pub fn </span>value_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             Value::U8(<span class="kw">_</span>) =&gt; u8::signature(),
             Value::Bool(<span class="kw">_</span>) =&gt; bool::signature(),
@@ -958,13 +959,13 @@
             Value::Str(<span class="kw">_</span>) =&gt; &lt;<span class="kw-2">&amp;</span>str&gt;::signature(),
             Value::Signature(<span class="kw">_</span>) =&gt; Signature::signature(),
             Value::ObjectPath(<span class="kw">_</span>) =&gt; ObjectPath::signature(),
-            Value::Value(<span class="kw">_</span>) =&gt; Signature::from_static_str_unchecked(<span class="string">&quot;v&quot;</span>),
+            Value::Value(<span class="kw">_</span>) =&gt; Signature::from_static_str_unchecked(<span class="string">"v"</span>),
 
             <span class="comment">// Container types
             </span>Value::Array(value) =&gt; value.full_signature().clone(),
             Value::Dict(value) =&gt; value.full_signature().clone(),
             Value::Structure(value) =&gt; value.full_signature().clone(),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>Value::Maybe(value) =&gt; value.full_signature().clone(),
 
             <span class="attr">#[cfg(unix)]
@@ -974,7 +975,7 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serialize_value_as_struct_field&lt;S&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         serializer: <span class="kw-2">&amp;mut </span>S,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), S::Error&gt;
     <span class="kw">where
@@ -1004,7 +1005,7 @@
         <span class="macro">serialize_value!</span>(<span class="self">self </span>serializer.serialize_element)
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serialize_value_as_some&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: Serializer,
@@ -1014,7 +1015,7 @@
 
     <span class="doccomment">/// Try to get the underlying type `T`.
     ///
-    /// Note that [`TryFrom&lt;Value&gt;`] is implemented for various types, and it&#39;s usually best to use
+    /// Note that [`TryFrom&lt;Value&gt;`] is implemented for various types, and it's usually best to use
     /// that instead. However, in generic code where you also want to unwrap [`Value::Value`],
     /// you should use this function (because [`TryFrom&lt;Value&gt;`] can not be implemented for `Value`
     /// itself as [`From&lt;Value&gt;`] is implicitly implemented for `Value`).
@@ -1025,9 +1026,9 @@
     /// use std::convert::TryFrom;
     /// use zvariant::{Result, Value};
     ///
-    /// fn value_vec_to_type_vec&lt;&#39;a, T&gt;(values: Vec&lt;Value&lt;&#39;a&gt;&gt;) -&gt; Result&lt;Vec&lt;T&gt;&gt;
+    /// fn value_vec_to_type_vec&lt;'a, T&gt;(values: Vec&lt;Value&lt;'a&gt;&gt;) -&gt; Result&lt;Vec&lt;T&gt;&gt;
     /// where
-    ///     T: TryFrom&lt;Value&lt;&#39;a&gt;&gt;,
+    ///     T: TryFrom&lt;Value&lt;'a&gt;&gt;,
     /// {
     ///     let mut res = vec![];
     ///     for value in values.into_iter() {
@@ -1037,7 +1038,7 @@
     ///     Ok(res)
     /// }
     ///
-    /// // Let&#39;s try u32 values first
+    /// // Let's try u32 values first
     /// let v = vec![Value::U32(42), Value::U32(43)];
     /// let v = value_vec_to_type_vec::&lt;u32&gt;(v).unwrap();
     /// assert_eq!(v[0], 42);
@@ -1055,7 +1056,7 @@
     /// [`From&lt;Value&gt;`]: https://doc.rust-lang.org/std/convert/trait.From.html
     </span><span class="kw">pub fn </span>downcast&lt;T: <span class="question-mark">?</span>Sized&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
     <span class="kw">where
-        </span>T: TryFrom&lt;Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>T: TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
     {
         <span class="kw">if let </span>Value::Value(v) = <span class="self">self </span>{
             T::try_from(<span class="kw-2">*</span>v).ok()
@@ -1066,7 +1067,7 @@
 
     <span class="doccomment">/// Try to get a reference to the underlying type `T`.
     ///
-    /// Same as [`downcast`] except it doesn&#39;t consume `self` and get a reference to the underlying
+    /// Same as [`downcast`] except it doesn't consume `self` and get a reference to the underlying
     /// value.
     ///
     /// # Examples
@@ -1075,9 +1076,9 @@
     /// use std::convert::TryFrom;
     /// use zvariant::{Result, Value};
     ///
-    /// fn value_vec_to_type_vec&lt;&#39;a, T&gt;(values: &amp;&#39;a Vec&lt;Value&lt;&#39;a&gt;&gt;) -&gt; Result&lt;Vec&lt;&amp;&#39;a T&gt;&gt;
+    /// fn value_vec_to_type_vec&lt;'a, T&gt;(values: &amp;'a Vec&lt;Value&lt;'a&gt;&gt;) -&gt; Result&lt;Vec&lt;&amp;'a T&gt;&gt;
     /// where
-    ///     &amp;&#39;a T: TryFrom&lt;&amp;&#39;a Value&lt;&#39;a&gt;&gt;,
+    ///     &amp;'a T: TryFrom&lt;&amp;'a Value&lt;'a&gt;&gt;,
     /// {
     ///     let mut res = vec![];
     ///     for value in values.into_iter() {
@@ -1087,7 +1088,7 @@
     ///     Ok(res)
     /// }
     ///
-    /// // Let&#39;s try u32 values first
+    /// // Let's try u32 values first
     /// let v = vec![Value::U32(42), Value::U32(43)];
     /// let v = value_vec_to_type_vec::&lt;u32&gt;(&amp;v).unwrap();
     /// assert_eq!(*v[0], 42);
@@ -1101,10 +1102,10 @@
     /// ```
     ///
     /// [`downcast`]: enum.Value.html#method.downcast
-    </span><span class="kw">pub fn </span>downcast_ref&lt;T&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T&gt;
+    </span><span class="kw">pub fn </span>downcast_ref&lt;T&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>T&gt;
     <span class="kw">where
         </span>T: <span class="question-mark">?</span>Sized,
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        <span class="kw-2">&amp;</span><span class="lifetime">'a </span>T: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
     {
         <span class="kw">if let </span>Value::Value(v) = <span class="self">self </span>{
             &lt;<span class="kw-2">&amp;</span>T&gt;::try_from(v).ok()
@@ -1114,27 +1115,27 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Serialize <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Serialize <span class="kw">for </span>Value&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: Serializer,
     {
-        <span class="comment">// Serializer implementation needs to ensure padding isn&#39;t added for Value.
-        </span><span class="kw">let </span><span class="kw-2">mut </span>structure = serializer.serialize_struct(<span class="string">&quot;zvariant::Value&quot;</span>, <span class="number">2</span>)<span class="question-mark">?</span>;
+        <span class="comment">// Serializer implementation needs to ensure padding isn't added for Value.
+        </span><span class="kw">let </span><span class="kw-2">mut </span>structure = serializer.serialize_struct(<span class="string">"zvariant::Value"</span>, <span class="number">2</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>signature = <span class="self">self</span>.value_signature();
-        structure.serialize_field(<span class="string">&quot;zvariant::Value::Signature&quot;</span>, <span class="kw-2">&amp;</span>signature)<span class="question-mark">?</span>;
+        structure.serialize_field(<span class="string">"zvariant::Value::Signature"</span>, <span class="kw-2">&amp;</span>signature)<span class="question-mark">?</span>;
 
-        <span class="self">self</span>.serialize_value_as_struct_field(<span class="string">&quot;zvariant::Value::Value&quot;</span>, <span class="kw-2">&amp;mut </span>structure)<span class="question-mark">?</span>;
+        <span class="self">self</span>.serialize_value_as_struct_field(<span class="string">"zvariant::Value::Value"</span>, <span class="kw-2">&amp;mut </span>structure)<span class="question-mark">?</span>;
 
         structure.end()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>: <span class="lifetime">'a</span>, <span class="lifetime">'a</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>visitor = ValueVisitor;
 
@@ -1142,49 +1143,49 @@
     }
 }
 
-<span class="comment">// Note that the Visitor implementations don&#39;t check for validity of the
-// signature. That&#39;s left to the Deserialize implementation of Signature
+<span class="comment">// Note that the Visitor implementations don't check for validity of the
+// signature. That's left to the Deserialize implementation of Signature
 // itself.
 
 </span><span class="kw">struct </span>ValueVisitor;
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ValueVisitor {
-    <span class="kw">type </span>Value = Value&lt;<span class="lifetime">&#39;de</span>&gt;;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ValueVisitor {
+    <span class="kw">type </span>Value = Value&lt;<span class="lifetime">'de</span>&gt;;
 
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        formatter.write_str(<span class="string">&quot;a Value&quot;</span>)
+    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        formatter.write_str(<span class="string">"a Value"</span>)
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>signature = visitor.next_element::&lt;Signature&lt;<span class="lifetime">&#39;_</span>&gt;&gt;()<span class="question-mark">?</span>.ok_or_else(|| {
-            Error::invalid_value(Unexpected::Other(<span class="string">&quot;nothing&quot;</span>), <span class="kw-2">&amp;</span><span class="string">&quot;a Value signature&quot;</span>)
+        <span class="kw">let </span>signature = visitor.next_element::&lt;Signature&lt;<span class="lifetime">'_</span>&gt;&gt;()<span class="question-mark">?</span>.ok_or_else(|| {
+            Error::invalid_value(Unexpected::Other(<span class="string">"nothing"</span>), <span class="kw-2">&amp;</span><span class="string">"a Value signature"</span>)
         })<span class="question-mark">?</span>;
-        <span class="kw">let </span>seed = ValueSeed::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+        <span class="kw">let </span>seed = ValueSeed::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt; {
             signature,
             phantom: PhantomData,
         };
 
         visitor
             .next_element_seed(seed)<span class="question-mark">?
-            </span>.ok_or_else(|| Error::invalid_value(Unexpected::Other(<span class="string">&quot;nothing&quot;</span>), <span class="kw-2">&amp;</span><span class="string">&quot;a Value value&quot;</span>))
+            </span>.ok_or_else(|| Error::invalid_value(Unexpected::Other(<span class="string">"nothing"</span>), <span class="kw-2">&amp;</span><span class="string">"a Value value"</span>))
     }
 
-    <span class="kw">fn </span>visit_map&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    <span class="kw">fn </span>visit_map&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: MapAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>(<span class="kw">_</span>, signature) = visitor
-            .next_entry::&lt;<span class="kw-2">&amp;</span>str, Signature&lt;<span class="lifetime">&#39;_</span>&gt;&gt;()<span class="question-mark">?
+            .next_entry::&lt;<span class="kw-2">&amp;</span>str, Signature&lt;<span class="lifetime">'_</span>&gt;&gt;()<span class="question-mark">?
             </span>.ok_or_else(|| {
-                Error::invalid_value(Unexpected::Other(<span class="string">&quot;nothing&quot;</span>), <span class="kw-2">&amp;</span><span class="string">&quot;a Value signature&quot;</span>)
+                Error::invalid_value(Unexpected::Other(<span class="string">"nothing"</span>), <span class="kw-2">&amp;</span><span class="string">"a Value signature"</span>)
             })<span class="question-mark">?</span>;
         <span class="kw">let _ </span>= visitor.next_key::&lt;<span class="kw-2">&amp;</span>str&gt;()<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>seed = ValueSeed::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+        <span class="kw">let </span>seed = ValueSeed::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt; {
             signature,
             phantom: PhantomData,
         };
@@ -1192,20 +1193,20 @@
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SignatureSeed&lt;<span class="lifetime">&#39;de</span>&gt; {
-    <span class="kw">pub </span>signature: Signature&lt;<span class="lifetime">&#39;de</span>&gt;,
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SignatureSeed&lt;<span class="lifetime">'de</span>&gt; {
+    <span class="kw">pub </span>signature: Signature&lt;<span class="lifetime">'de</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; SignatureSeed&lt;<span class="lifetime">&#39;de</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; SignatureSeed&lt;<span class="lifetime">'de</span>&gt; {
     <span class="attr">#[inline]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>visit_array&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Array&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>visit_array&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Array&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>element_signature = <span class="self">self</span>.signature.slice(<span class="number">1</span>..);
         <span class="kw">let </span><span class="kw-2">mut </span>array = Array::new_full_signature(<span class="self">self</span>.signature.clone());
 
-        <span class="kw">while let </span><span class="prelude-val">Some</span>(elem) = visitor.next_element_seed(ValueSeed::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+        <span class="kw">while let </span><span class="prelude-val">Some</span>(elem) = visitor.next_element_seed(ValueSeed::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt; {
             signature: element_signature.clone(),
             phantom: PhantomData,
         })<span class="question-mark">? </span>{
@@ -1217,9 +1218,9 @@
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>visit_struct&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Structure&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>visit_struct&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Structure&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span><span class="kw-2">mut </span>i = <span class="number">1</span>;
         <span class="kw">let </span>signature_end = <span class="self">self</span>.signature.len() - <span class="number">1</span>;
@@ -1231,7 +1232,7 @@
             <span class="kw">let </span>field_signature = fields_signature.slice(<span class="number">0</span>..len);
             i += field_signature.len();
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(field) = visitor.next_element_seed(ValueSeed::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(field) = visitor.next_element_seed(ValueSeed::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt; {
                 signature: field_signature,
                 phantom: PhantomData,
             })<span class="question-mark">? </span>{
@@ -1242,27 +1243,27 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; From&lt;ValueSeed&lt;<span class="lifetime">&#39;de</span>, T&gt;&gt; <span class="kw">for </span>SignatureSeed&lt;<span class="lifetime">&#39;de</span>&gt; {
-    <span class="kw">fn </span>from(seed: ValueSeed&lt;<span class="lifetime">&#39;de</span>, T&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, T&gt; From&lt;ValueSeed&lt;<span class="lifetime">'de</span>, T&gt;&gt; <span class="kw">for </span>SignatureSeed&lt;<span class="lifetime">'de</span>&gt; {
+    <span class="kw">fn </span>from(seed: ValueSeed&lt;<span class="lifetime">'de</span>, T&gt;) -&gt; <span class="self">Self </span>{
         SignatureSeed {
             signature: seed.signature,
         }
     }
 }
 
-<span class="kw">struct </span>ValueSeed&lt;<span class="lifetime">&#39;de</span>, T&gt; {
-    signature: Signature&lt;<span class="lifetime">&#39;de</span>&gt;,
+<span class="kw">struct </span>ValueSeed&lt;<span class="lifetime">'de</span>, T&gt; {
+    signature: Signature&lt;<span class="lifetime">'de</span>&gt;,
     phantom: PhantomData&lt;T&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; ValueSeed&lt;<span class="lifetime">&#39;de</span>, T&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, T&gt; ValueSeed&lt;<span class="lifetime">'de</span>, T&gt;
 <span class="kw">where
-    </span>T: Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;,
+    </span>T: Deserialize&lt;<span class="lifetime">'de</span>&gt;,
 {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_array&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">fn </span>visit_array&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         SignatureSeed::from(<span class="self">self</span>)
             .visit_array(visitor)
@@ -1270,9 +1271,9 @@
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_struct&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">fn </span>visit_struct&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         SignatureSeed::from(<span class="self">self</span>)
             .visit_struct(visitor)
@@ -1280,9 +1281,9 @@
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_variant&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">fn </span>visit_variant&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         ValueVisitor
             .visit_seq(visitor)
@@ -1293,7 +1294,7 @@
 <span class="macro">macro_rules! </span>value_seed_basic_method {
     (<span class="macro-nonterminal">$name</span>:ident, <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty</span>) =&gt; {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>&lt;E&gt;(<span class="self">self</span>, value: <span class="macro-nonterminal">$</span><span class="kw">type</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="macro-nonterminal">Value</span>&lt;<span class="lifetime">&#39;de</span>&gt;, E&gt;
+        </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>&lt;E&gt;(<span class="self">self</span>, value: <span class="macro-nonterminal">$</span><span class="kw">type</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="macro-nonterminal">Value</span>&lt;<span class="lifetime">'de</span>&gt;, E&gt;
         <span class="kw">where
             </span>E: serde::de::Error,
         {
@@ -1305,7 +1306,7 @@
 <span class="macro">macro_rules! </span>value_seed_str_method {
     (<span class="macro-nonterminal">$name</span>:ident, <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty</span>, <span class="macro-nonterminal">$constructor</span>:ident) =&gt; {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>&lt;E&gt;(<span class="self">self</span>, value: <span class="macro-nonterminal">$</span><span class="kw">type</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="macro-nonterminal">Value</span>&lt;<span class="lifetime">&#39;de</span>&gt;, E&gt;
+        </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>&lt;E&gt;(<span class="self">self</span>, value: <span class="macro-nonterminal">$</span><span class="kw">type</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="macro-nonterminal">Value</span>&lt;<span class="lifetime">'de</span>&gt;, E&gt;
         <span class="kw">where
             </span>E: serde::de::Error,
         {
@@ -1315,7 +1316,7 @@
                 ObjectPath::SIGNATURE_STR =&gt; <span class="prelude-val">Ok</span>(Value::ObjectPath(ObjectPath::<span class="macro-nonterminal">$constructor</span>(value))),
                 <span class="kw">_ </span>=&gt; {
                     <span class="kw">let </span>expected = <span class="macro">format!</span>(
-                        <span class="string">&quot;`{}`, `{}` or `{}`&quot;</span>,
+                        <span class="string">"`{}`, `{}` or `{}`"</span>,
                         &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_STR,
                         Signature::SIGNATURE_STR,
                         ObjectPath::SIGNATURE_STR,
@@ -1330,14 +1331,14 @@
     };
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ValueSeed&lt;<span class="lifetime">&#39;de</span>, T&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, T&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ValueSeed&lt;<span class="lifetime">'de</span>, T&gt;
 <span class="kw">where
-    </span>T: Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;,
+    </span>T: Deserialize&lt;<span class="lifetime">'de</span>&gt;,
 {
-    <span class="kw">type </span>Value = Value&lt;<span class="lifetime">&#39;de</span>&gt;;
+    <span class="kw">type </span>Value = Value&lt;<span class="lifetime">'de</span>&gt;;
 
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        formatter.write_str(<span class="string">&quot;a Value value&quot;</span>)
+    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        formatter.write_str(<span class="string">"a Value value"</span>)
     }
 
     <span class="macro">value_seed_basic_method!</span>(visit_bool, bool);
@@ -1350,18 +1351,18 @@
     <span class="macro">value_seed_basic_method!</span>(visit_f64, f64);
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_i32&lt;E&gt;(<span class="self">self</span>, value: i32) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, E&gt;
+    </span><span class="kw">fn </span>visit_i32&lt;E&gt;(<span class="self">self</span>, value: i32) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, E&gt;
     <span class="kw">where
         </span>E: serde::de::Error,
     {
         <span class="kw">let </span>v = <span class="kw">match </span><span class="self">self</span>.signature.as_bytes().first().ok_or_else(|| {
             Error::invalid_value(
-                Unexpected::Other(<span class="string">&quot;nothing&quot;</span>),
-                <span class="kw-2">&amp;</span><span class="string">&quot;i32 or fd signature character&quot;</span>,
+                Unexpected::Other(<span class="string">"nothing"</span>),
+                <span class="kw-2">&amp;</span><span class="string">"i32 or fd signature character"</span>,
             )
         })<span class="question-mark">? </span>{
             <span class="attr">#[cfg(unix)]
-            </span><span class="string">b&#39;h&#39; </span>=&gt; Fd::from(value).into(),
+            </span><span class="string">b'h' </span>=&gt; Fd::from(value).into(),
             <span class="kw">_ </span>=&gt; value.into(),
         };
 
@@ -1369,46 +1370,46 @@
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_str&lt;E&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, E&gt;
+    </span><span class="kw">fn </span>visit_str&lt;E&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, E&gt;
     <span class="kw">where
         </span>E: serde::de::Error,
     {
         <span class="self">self</span>.visit_string(String::from(value))
     }
 
-    <span class="macro">value_seed_str_method!</span>(visit_borrowed_str, <span class="kw-2">&amp;</span><span class="lifetime">&#39;de </span>str, from_str_unchecked);
+    <span class="macro">value_seed_str_method!</span>(visit_borrowed_str, <span class="kw-2">&amp;</span><span class="lifetime">'de </span>str, from_str_unchecked);
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: SeqAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">match </span><span class="self">self</span>.signature.as_bytes().first().ok_or_else(|| {
             Error::invalid_value(
-                Unexpected::Other(<span class="string">&quot;nothing&quot;</span>),
-                <span class="kw-2">&amp;</span><span class="string">&quot;Array or Struct signature character&quot;</span>,
+                Unexpected::Other(<span class="string">"nothing"</span>),
+                <span class="kw-2">&amp;</span><span class="string">"Array or Struct signature character"</span>,
             )
         })<span class="question-mark">? </span>{
-            <span class="comment">// For some reason rustc doesn&#39;t like us using ARRAY_SIGNATURE_CHAR const
-            </span><span class="string">b&#39;a&#39; </span>=&gt; <span class="self">self</span>.visit_array(visitor),
-            <span class="string">b&#39;(&#39; </span>=&gt; <span class="self">self</span>.visit_struct(visitor),
-            <span class="string">b&#39;v&#39; </span>=&gt; <span class="self">self</span>.visit_variant(visitor),
+            <span class="comment">// For some reason rustc doesn't like us using ARRAY_SIGNATURE_CHAR const
+            </span><span class="string">b'a' </span>=&gt; <span class="self">self</span>.visit_array(visitor),
+            <span class="string">b'(' </span>=&gt; <span class="self">self</span>.visit_struct(visitor),
+            <span class="string">b'v' </span>=&gt; <span class="self">self</span>.visit_variant(visitor),
             b =&gt; <span class="prelude-val">Err</span>(Error::invalid_value(
                 Unexpected::Char(<span class="kw-2">*</span>b <span class="kw">as </span>char),
-                <span class="kw-2">&amp;</span><span class="string">&quot;a Value signature&quot;</span>,
+                <span class="kw-2">&amp;</span><span class="string">"a Value signature"</span>,
             )),
         }
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_map&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">&#39;de</span>&gt;, V::Error&gt;
+    </span><span class="kw">fn </span>visit_map&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Value&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
     <span class="kw">where
-        </span>V: MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: MapAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">if </span><span class="self">self</span>.signature.len() &lt; <span class="number">5 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(
                 <span class="self">self</span>.signature.len(),
-                <span class="kw-2">&amp;</span><span class="string">&quot;&gt;= 5 characters in dict entry signature&quot;</span>,
+                <span class="kw-2">&amp;</span><span class="string">"&gt;= 5 characters in dict entry signature"</span>,
             ));
         }
         <span class="kw">let </span>key_signature = <span class="self">self</span>.signature.slice(<span class="number">2</span>..<span class="number">3</span>);
@@ -1417,11 +1418,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>dict = Dict::new_full_signature(<span class="self">self</span>.signature.clone());
 
         <span class="kw">while let </span><span class="prelude-val">Some</span>((key, value)) = visitor.next_entry_seed(
-            ValueSeed::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+            ValueSeed::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt; {
                 signature: key_signature.clone(),
                 phantom: PhantomData,
             },
-            ValueSeed::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+            ValueSeed::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt; {
                 signature: value_signature.clone(),
                 phantom: PhantomData,
             },
@@ -1433,10 +1434,10 @@
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    #[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">fn </span>visit_some&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>visitor = ValueSeed::&lt;T&gt; {
             signature: <span class="self">self</span>.signature.slice(<span class="number">1</span>..),
@@ -1448,15 +1449,15 @@
             .map(|v| Value::Maybe(Maybe::just_full_signature(v, <span class="self">self</span>.signature)))
     }
 
-    <span class="attr">#[cfg(not(feature = <span class="string">&quot;gvariant&quot;</span>))]
+    <span class="attr">#[cfg(not(feature = <span class="string">"gvariant"</span>))]
     </span><span class="kw">fn </span>visit_some&lt;D&gt;(<span class="self">self</span>, _deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="macro">panic!</span>(<span class="string">&quot;`Maybe` type is only supported for GVariant format but it&#39;s disabled&quot;</span>);
+        <span class="macro">panic!</span>(<span class="string">"`Maybe` type is only supported for GVariant format but it's disabled"</span>);
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">fn </span>visit_none&lt;E&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt;
     <span class="kw">where
         </span>E: Error,
@@ -1466,31 +1467,31 @@
         <span class="prelude-val">Ok</span>(Value::Maybe(value))
     }
 
-    <span class="attr">#[cfg(not(feature = <span class="string">&quot;gvariant&quot;</span>))]
+    <span class="attr">#[cfg(not(feature = <span class="string">"gvariant"</span>))]
     </span><span class="kw">fn </span>visit_none&lt;E&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt;
     <span class="kw">where
         </span>E: Error,
     {
-        <span class="macro">panic!</span>(<span class="string">&quot;`Maybe` type is only supported for GVariant format but it&#39;s disabled&quot;</span>);
+        <span class="macro">panic!</span>(<span class="string">"`Maybe` type is only supported for GVariant format but it's disabled"</span>);
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ValueSeed&lt;<span class="lifetime">&#39;de</span>, T&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, T&gt; DeserializeSeed&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ValueSeed&lt;<span class="lifetime">'de</span>, T&gt;
 <span class="kw">where
-    </span>T: Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;,
+    </span>T: Deserialize&lt;<span class="lifetime">'de</span>&gt;,
 {
-    <span class="kw">type </span>Value = Value&lt;<span class="lifetime">&#39;de</span>&gt;;
+    <span class="kw">type </span>Value = Value&lt;<span class="lifetime">'de</span>&gt;;
 
     <span class="kw">fn </span>deserialize&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         deserializer.deserialize_any(<span class="self">self</span>)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Type <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Type <span class="kw">for </span>Value&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         Signature::from_static_str_unchecked(VARIANT_SIGNATURE_STR)
     }
 }

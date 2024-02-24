@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-xml-rs-0.4.1/src/ser/var.rs`."><title>var.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serde_xml_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../serde_xml_rs/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-xml-rs-0.4.1/src/ser/var.rs`."><title>var.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serde_xml_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -109,31 +110,31 @@
 <span class="kw">use </span>error::{Error, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// An implementation of `SerializeMap` for serializing to XML.
-</span><span class="kw">pub struct </span>Map&lt;<span class="lifetime">&#39;w</span>, W&gt;
+</span><span class="kw">pub struct </span>Map&lt;<span class="lifetime">'w</span>, W&gt;
 <span class="kw">where
-    </span>W: <span class="lifetime">&#39;w </span>+ Write,
+    </span>W: <span class="lifetime">'w </span>+ Write,
 {
-    parent: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;,
+    parent: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;w</span>, W&gt; Map&lt;<span class="lifetime">&#39;w</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>, W&gt; Map&lt;<span class="lifetime">'w</span>, W&gt;
 <span class="kw">where
-    </span>W: <span class="lifetime">&#39;w </span>+ Write,
+    </span>W: <span class="lifetime">'w </span>+ Write,
 {
-    <span class="kw">pub fn </span>new(parent: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;) -&gt; Map&lt;<span class="lifetime">&#39;w</span>, W&gt; {
+    <span class="kw">pub fn </span>new(parent: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;) -&gt; Map&lt;<span class="lifetime">'w</span>, W&gt; {
         Map { parent }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;w</span>, W&gt; ser::SerializeMap <span class="kw">for </span>Map&lt;<span class="lifetime">&#39;w</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>, W&gt; ser::SerializeMap <span class="kw">for </span>Map&lt;<span class="lifetime">'w</span>, W&gt;
 <span class="kw">where
-    </span>W: <span class="lifetime">&#39;w </span>+ Write,
+    </span>W: <span class="lifetime">'w </span>+ Write,
 {
     <span class="kw">type </span><span class="prelude-val">Ok </span>= ();
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>serialize_key&lt;T: <span class="question-mark">?</span>Sized + Serialize&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="macro">panic!</span>(<span class="string">&quot;impossible to serialize the key on its own, please use serialize_entry()&quot;</span>)
+        <span class="macro">panic!</span>(<span class="string">"impossible to serialize the key on its own, please use serialize_entry()"</span>)
     }
 
     <span class="kw">fn </span>serialize_value&lt;T: <span class="question-mark">?</span>Sized + Serialize&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -150,58 +151,58 @@
         value: <span class="kw-2">&amp;</span>V,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="comment">// TODO: Is it possible to ensure our key is never a composite type?
-        // Anything which isn&#39;t a &quot;primitive&quot; would lead to malformed XML here...
-        </span><span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&lt;&quot;</span>)<span class="question-mark">?</span>;
+        // Anything which isn't a "primitive" would lead to malformed XML here...
+        </span><span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&lt;"</span>)<span class="question-mark">?</span>;
         key.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.parent)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&gt;&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&gt;"</span>)<span class="question-mark">?</span>;
 
         value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.parent)<span class="question-mark">?</span>;
 
-        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&lt;/&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&lt;/"</span>)<span class="question-mark">?</span>;
         key.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.parent)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&gt;&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&gt;"</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
 
 <span class="doccomment">/// An implementation of `SerializeStruct` for serializing to XML.
-</span><span class="kw">pub struct </span>Struct&lt;<span class="lifetime">&#39;w</span>, W&gt;
+</span><span class="kw">pub struct </span>Struct&lt;<span class="lifetime">'w</span>, W&gt;
 <span class="kw">where
-    </span>W: <span class="lifetime">&#39;w </span>+ Write,
+    </span>W: <span class="lifetime">'w </span>+ Write,
 {
-    parent: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;,
-    name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span>str,
+    parent: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;,
+    name: <span class="kw-2">&amp;</span><span class="lifetime">'w </span>str,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;w</span>, W&gt; Struct&lt;<span class="lifetime">&#39;w</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>, W&gt; Struct&lt;<span class="lifetime">'w</span>, W&gt;
 <span class="kw">where
-    </span>W: <span class="lifetime">&#39;w </span>+ Write,
+    </span>W: <span class="lifetime">'w </span>+ Write,
 {
-    <span class="kw">pub fn </span>new(parent: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;, name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span>str) -&gt; Struct&lt;<span class="lifetime">&#39;w</span>, W&gt; {
+    <span class="kw">pub fn </span>new(parent: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>Serializer&lt;W&gt;, name: <span class="kw-2">&amp;</span><span class="lifetime">'w </span>str) -&gt; Struct&lt;<span class="lifetime">'w</span>, W&gt; {
         Struct { parent, name }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;w</span>, W&gt; ser::SerializeStruct <span class="kw">for </span>Struct&lt;<span class="lifetime">&#39;w</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>, W&gt; ser::SerializeStruct <span class="kw">for </span>Struct&lt;<span class="lifetime">'w</span>, W&gt;
 <span class="kw">where
-    </span>W: <span class="lifetime">&#39;w </span>+ Write,
+    </span>W: <span class="lifetime">'w </span>+ Write,
 {
     <span class="kw">type </span><span class="prelude-val">Ok </span>= ();
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>serialize_field&lt;T: <span class="question-mark">?</span>Sized + Serialize&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         value: <span class="kw-2">&amp;</span>T,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&lt;{}&gt;&quot;</span>, key)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&lt;{}&gt;"</span>, key)<span class="question-mark">?</span>;
         value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.parent)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&lt;/{}&gt;&quot;</span>, key)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&lt;/{}&gt;"</span>, key)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok&gt; {
-        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">&quot;&lt;/{}&gt;&quot;</span>, <span class="self">self</span>.name).map_err(|e| e.into())
+        <span class="macro">write!</span>(<span class="self">self</span>.parent.writer, <span class="string">"&lt;/{}&gt;"</span>, <span class="self">self</span>.name).map_err(|e| e.into())
     }
 }
 </code></pre></div></section></main></body></html>

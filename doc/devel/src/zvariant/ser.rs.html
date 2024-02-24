@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/ser.rs`."><title>ser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/ser.rs`."><title>ser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -685,7 +686,7 @@
 <span class="attr">#[cfg(unix)]
 </span><span class="kw">use </span>std::os::unix::io::RawFd;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::gvariant::{<span class="self">self</span>, Serializer <span class="kw">as </span>GVSerializer};
 <span class="kw">use crate</span>::{
     container_depths::ContainerDepths,
@@ -726,10 +727,10 @@
 /// use zvariant::{EncodingContext, serialized_size};
 ///
 /// let ctxt = EncodingContext::&lt;byteorder::LE&gt;::new_dbus(0);
-/// let len = serialized_size(ctxt, &quot;hello world&quot;).unwrap();
+/// let len = serialized_size(ctxt, "hello world").unwrap();
 /// assert_eq!(len, 16);
 ///
-/// let len = serialized_size(ctxt, &amp;(&quot;hello world!&quot;, 42_u64)).unwrap();
+/// let len = serialized_size(ctxt, &amp;("hello world!", 42_u64)).unwrap();
 /// assert_eq!(len, 32);
 /// ```
 ///
@@ -771,7 +772,7 @@
 /// # Panics
 ///
 /// This function will panic if the value to serialize contains file descriptors. Use
-/// [`to_writer_fds`] if you&#39;d want to potentially pass FDs.
+/// [`to_writer_fds`] if you'd want to potentially pass FDs.
 ///
 /// # Examples
 ///
@@ -830,7 +831,7 @@
 /// # Panics
 ///
 /// This function will panic if the value to serialize contains file descriptors. Use
-/// [`to_bytes_fds`] if you&#39;d want to potentially pass FDs.
+/// [`to_bytes_fds`] if you'd want to potentially pass FDs.
 ///
 /// [`to_bytes_fds`]: fn.to_bytes_fds.html
 /// [`from_slice`]: fn.from_slice.html#examples
@@ -876,7 +877,7 @@
 </span><span class="kw">pub fn </span>to_writer_for_signature&lt;B, W, T: <span class="question-mark">?</span>Sized&gt;(
     writer: <span class="kw-2">&amp;mut </span>W,
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
     value: <span class="kw-2">&amp;</span>T,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;usize&gt;
 <span class="kw">where
@@ -888,7 +889,7 @@
     </span>{
         <span class="kw">let </span>(len, fds) = to_writer_fds_for_signature(writer, ctxt, signature, value)<span class="question-mark">?</span>;
         <span class="kw">if </span>!fds.is_empty() {
-            <span class="macro">panic!</span>(<span class="string">&quot;can&#39;t serialize with FDs&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"can't serialize with FDs"</span>)
         }
         <span class="prelude-val">Ok</span>(len)
     }
@@ -901,7 +902,7 @@
                 value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(ser.<span class="number">0</span>.bytes_written)
             }
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>EncodingFormat::GVariant =&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>ser = GVSerializer::&lt;B, W&gt;::new(signature, writer, ctxt);
                 value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
@@ -927,7 +928,7 @@
 </span><span class="kw">pub fn </span>to_writer_fds_for_signature&lt;B, W, T: <span class="question-mark">?</span>Sized&gt;(
     writer: <span class="kw-2">&amp;mut </span>W,
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
     value: <span class="kw-2">&amp;</span>T,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(usize, Vec&lt;RawFd&gt;)&gt;
 <span class="kw">where
@@ -942,7 +943,7 @@
             value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((ser.<span class="number">0</span>.bytes_written, fds))
         }
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>EncodingFormat::GVariant =&gt; {
             <span class="kw">let </span><span class="kw-2">mut </span>ser = GVSerializer::&lt;B, W&gt;::new(signature, writer, <span class="kw-2">&amp;mut </span>fds, ctxt);
             value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
@@ -960,14 +961,14 @@
 /// # Panics
 ///
 /// This function will panic if the value to serialize contains file descriptors. Use
-/// [`to_bytes_fds_for_signature`] if you&#39;d want to potentially pass FDs.
+/// [`to_bytes_fds_for_signature`] if you'd want to potentially pass FDs.
 ///
 /// [`to_bytes`]: fn.to_bytes.html
 /// [`Type`]: trait.Type.html
 /// [`from_slice_for_signature`]: fn.from_slice_for_signature.html#examples
 </span><span class="kw">pub fn </span>to_bytes_for_signature&lt;B, T: <span class="question-mark">?</span>Sized&gt;(
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
     value: <span class="kw-2">&amp;</span>T,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;&gt;
 <span class="kw">where
@@ -978,7 +979,7 @@
     </span>{
         <span class="kw">let </span>(bytes, fds) = to_bytes_fds_for_signature(ctxt, signature, value)<span class="question-mark">?</span>;
         <span class="kw">if </span>!fds.is_empty() {
-            <span class="macro">panic!</span>(<span class="string">&quot;can&#39;t serialize with FDs&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"can't serialize with FDs"</span>)
         }
         <span class="prelude-val">Ok</span>(bytes)
     }
@@ -1007,7 +1008,7 @@
 </span><span class="attr">#[cfg(unix)]
 </span><span class="kw">pub fn </span>to_bytes_fds_for_signature&lt;B, T: <span class="question-mark">?</span>Sized&gt;(
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
     value: <span class="kw-2">&amp;</span>T,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(Vec&lt;u8&gt;, Vec&lt;RawFd&gt;)&gt;
 <span class="kw">where
@@ -1020,16 +1021,16 @@
 }
 
 <span class="doccomment">/// Context for all our serializers and provides shared functionality.
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SerializerCommon&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SerializerCommon&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) ctxt: EncodingContext&lt;B&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) writer: <span class="kw-2">&amp;</span><span class="lifetime">&#39;ser </span><span class="kw-2">mut </span>W,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) writer: <span class="kw-2">&amp;</span><span class="lifetime">'ser </span><span class="kw-2">mut </span>W,
     <span class="kw">pub</span>(<span class="kw">crate</span>) bytes_written: usize,
     <span class="attr">#[cfg(unix)]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: <span class="kw-2">&amp;</span><span class="lifetime">&#39;ser </span><span class="kw-2">mut </span>Vec&lt;RawFd&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: <span class="kw-2">&amp;</span><span class="lifetime">'ser </span><span class="kw-2">mut </span>Vec&lt;RawFd&gt;,
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) sig_parser: SignatureParser&lt;<span class="lifetime">&#39;sig</span>&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) sig_parser: SignatureParser&lt;<span class="lifetime">'sig</span>&gt;,
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) value_sign: <span class="prelude-ty">Option</span>&lt;Signature&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) value_sign: <span class="prelude-ty">Option</span>&lt;Signature&lt;<span class="lifetime">'static</span>&gt;&gt;,
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) container_depths: ContainerDepths,
 
@@ -1038,31 +1039,31 @@
 
 <span class="doccomment">/// Our serialization implementation.
 ///
-/// Using this serializer involves an redirection to the actual serializer. It&#39;s best to use the
+/// Using this serializer involves an redirection to the actual serializer. It's best to use the
 /// serialization functions, e.g [`to_bytes`] or specific serializers, [`dbus::Serializer`] or
 /// [`zvariant::Serializer`].
-</span><span class="kw">pub enum </span>Serializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt; {
-    DBus(DBusSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
-    </span>GVariant(GVSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;),
+</span><span class="kw">pub enum </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt; {
+    DBus(DBusSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt;),
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+    </span>GVariant(GVSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt;),
 }
 
-<span class="macro">assert_impl_all!</span>(Serializer&lt;<span class="lifetime">&#39;_</span>, <span class="lifetime">&#39;_</span>, i32, i32&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(Serializer&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, i32, i32&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt; Serializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt; Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
     W: Write + Seek,
 {
     <span class="doccomment">/// Create a Serializer struct instance.
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">&#39;w</span>: <span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;ser</span>&gt;(
-        signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;sig</span>&gt;,
-        writer: <span class="kw-2">&amp;</span><span class="lifetime">&#39;w </span><span class="kw-2">mut </span>W,
-        <span class="attr">#[cfg(unix)] </span>fds: <span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span><span class="kw-2">mut </span>Vec&lt;RawFd&gt;,
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'w</span>: <span class="lifetime">'ser</span>, <span class="lifetime">'f</span>: <span class="lifetime">'ser</span>&gt;(
+        signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'sig</span>&gt;,
+        writer: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>W,
+        <span class="attr">#[cfg(unix)] </span>fds: <span class="kw-2">&amp;</span><span class="lifetime">'f </span><span class="kw-2">mut </span>Vec&lt;RawFd&gt;,
         ctxt: EncodingContext&lt;B&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span>ctxt.format() {
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>EncodingFormat::GVariant =&gt; <span class="self">Self</span>::GVariant(GVSerializer::new(
                 signature,
                 writer,
@@ -1082,16 +1083,16 @@
 
     <span class="doccomment">/// Unwrap the `Writer` reference from the `Serializer`.
     </span><span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;ser </span><span class="kw-2">mut </span>W {
+    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'ser </span><span class="kw-2">mut </span>W {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span><span class="self">Self</span>::GVariant(ser) =&gt; ser.<span class="number">0</span>.writer,
             <span class="self">Self</span>::DBus(ser) =&gt; ser.<span class="number">0</span>.writer,
         }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt; SerializerCommon&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt; SerializerCommon&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
     W: Write + Seek,
@@ -1132,14 +1133,14 @@
 
     <span class="doccomment">/// This starts the enum serialization.
     ///
-    /// It&#39;s up to the caller to do the rest: serialize the variant payload and skip the `).
+    /// It's up to the caller to do the rest: serialize the variant payload and skip the `).
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>prep_serialize_enum_variant(<span class="kw-2">&amp;mut </span><span class="self">self</span>, variant_index: u32) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="comment">// Encode enum variants as a struct with first field as variant index
         </span><span class="kw">let </span>signature = <span class="self">self</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
         <span class="kw">if </span><span class="self">self</span>.sig_parser.next_char()<span class="question-mark">? </span>!= STRUCT_SIG_START_CHAR {
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
                 signature.to_owned(),
-                <span class="macro">format!</span>(<span class="string">&quot;expected `{STRUCT_SIG_START_CHAR}`&quot;</span>),
+                <span class="macro">format!</span>(<span class="string">"expected `{STRUCT_SIG_START_CHAR}`"</span>),
             ));
         }
 
@@ -1161,7 +1162,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt; Write <span class="kw">for </span>SerializerCommon&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt; Write <span class="kw">for </span>SerializerCommon&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
     W: Write + Seek,
@@ -1194,7 +1195,7 @@
             </span>$(<span class="macro-nonterminal">$generic</span>: <span class="question-mark">?</span>Sized + Serialize),*
         {
             <span class="kw">match </span><span class="self">self </span>{
-                <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+                <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
                 </span>Serializer::GVariant(ser) =&gt; {
                     ser.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$arg</span>),<span class="kw-2">*</span>)$(.map(<span class="macro-nonterminal">$map::GVariant</span>))*
                 }
@@ -1206,7 +1207,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt; ser::Serializer <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, B, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt; ser::Serializer <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, B, W&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
     W: Write + Seek,
@@ -1214,13 +1215,13 @@
     <span class="kw">type </span><span class="prelude-val">Ok </span>= ();
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">type </span>SerializeSeq = SeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
-    <span class="kw">type </span>SerializeTuple = StructSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
-    <span class="kw">type </span>SerializeTupleStruct = StructSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
-    <span class="kw">type </span>SerializeTupleVariant = StructSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
-    <span class="kw">type </span>SerializeMap = SeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
-    <span class="kw">type </span>SerializeStruct = StructSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
-    <span class="kw">type </span>SerializeStructVariant = StructSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeSeq = SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeTuple = StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeTupleStruct = StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeTupleVariant = StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeMap = SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeStruct = StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
+    <span class="kw">type </span>SerializeStructVariant = StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;;
 
     <span class="macro">serialize_method!</span>(serialize_bool(b: bool));
     <span class="macro">serialize_method!</span>(serialize_i8(i: i8));
@@ -1239,35 +1240,35 @@
     <span class="macro">serialize_method!</span>(T; serialize_some(v: <span class="kw-2">&amp;</span>T));
     <span class="macro">serialize_method!</span>(serialize_none());
     <span class="macro">serialize_method!</span>(serialize_unit());
-    <span class="macro">serialize_method!</span>(serialize_unit_struct(s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str));
+    <span class="macro">serialize_method!</span>(serialize_unit_struct(s: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str));
     <span class="macro">serialize_method!</span>(serialize_unit_variant(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         i: u32,
-        v: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str
+        v: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str
     ));
-    <span class="macro">serialize_method!</span>(T; serialize_newtype_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, v: <span class="kw-2">&amp;</span>T));
-    <span class="macro">serialize_method!</span>(T; serialize_newtype_variant(n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, i: u32, va: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, v: <span class="kw-2">&amp;</span>T));
+    <span class="macro">serialize_method!</span>(T; serialize_newtype_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, v: <span class="kw-2">&amp;</span>T));
+    <span class="macro">serialize_method!</span>(T; serialize_newtype_variant(n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, i: u32, va: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, v: <span class="kw-2">&amp;</span>T));
     <span class="macro">serialize_method!</span>(; serialize_seq(l: <span class="prelude-ty">Option</span>&lt;usize&gt;) =&gt; <span class="self">Self</span>::SerializeSeq = SeqSerializer);
     <span class="macro">serialize_method!</span>(; serialize_tuple_variant(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         i: u32,
-        v: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        v: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         l: usize
     ) =&gt; <span class="self">Self</span>::SerializeTupleVariant = StructSerializer);
     <span class="macro">serialize_method!</span>(;serialize_struct_variant(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         i: u32,
-        v: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        v: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         l: usize
     ) =&gt; <span class="self">Self</span>::SerializeStructVariant = StructSerializer);
     <span class="macro">serialize_method!</span>(; serialize_tuple(l: usize) =&gt; <span class="self">Self</span>::SerializeTuple = StructSerializer);
     <span class="macro">serialize_method!</span>(; serialize_tuple_struct(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         l: usize
     ) =&gt; <span class="self">Self</span>::SerializeTupleStruct = StructSerializer);
     <span class="macro">serialize_method!</span>(; serialize_map(l: <span class="prelude-ty">Option</span>&lt;usize&gt;) =&gt; <span class="self">Self</span>::SerializeMap = SeqSerializer);
     <span class="macro">serialize_method!</span>(; serialize_struct(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         l: usize
     ) =&gt; <span class="self">Self</span>::SerializeStruct = StructSerializer);
 
@@ -1278,7 +1279,7 @@
 
 <span class="macro">macro_rules! </span>serialize_impl {
     (<span class="macro-nonterminal">$</span><span class="kw">trait</span>:<span class="macro-nonterminal">ident</span>, <span class="macro-nonterminal">$</span><span class="kw">impl</span>:<span class="macro-nonterminal">ident</span>, $(<span class="macro-nonterminal">$method</span>:ident($(<span class="macro-nonterminal">$arg</span>:ident: <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>))+) =&gt; {
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">$</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, <span class="macro-nonterminal">B</span>, W&gt;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">$</span><span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, <span class="macro-nonterminal">B</span>, W&gt;
         <span class="kw">where
             </span>B: byteorder::ByteOrder,
             W: Write + Seek,
@@ -1292,7 +1293,7 @@
                     </span><span class="macro-nonterminal">T</span>: <span class="question-mark">?</span>Sized + Serialize,
                 {
                     <span class="kw">match </span><span class="self">self </span>{
-                        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+                        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
                         </span><span class="macro-nonterminal">$</span><span class="kw">impl</span><span class="macro-nonterminal">::GVariant</span>(ser) =&gt; ser.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$arg</span>),<span class="kw-2">*</span>),
                         <span class="macro-nonterminal">$</span><span class="kw">impl</span><span class="macro-nonterminal">::DBus</span>(ser) =&gt; ser.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$arg</span>),<span class="kw-2">*</span>),
                     }
@@ -1301,7 +1302,7 @@
 
             <span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
                 <span class="kw">match </span><span class="self">self </span>{
-                    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+                    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
                     </span><span class="macro-nonterminal">$</span><span class="kw">impl</span><span class="macro-nonterminal">::GVariant</span>(ser) =&gt; ser.end(),
                     <span class="macro-nonterminal">$</span><span class="kw">impl</span><span class="macro-nonterminal">::DBus</span>(ser) =&gt; ser.end(),
                 }
@@ -1311,19 +1312,19 @@
 }
 
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">pub enum </span>SeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt; {
-    DBus(dbus::SeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
-    </span>GVariant(gvariant::SeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;),
+</span><span class="kw">pub enum </span>SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt; {
+    DBus(dbus::SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;),
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+    </span>GVariant(gvariant::SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;),
 }
 
 <span class="macro">serialize_impl!</span>(SerializeSeq, SeqSerializer, serialize_element(value: <span class="kw-2">&amp;</span>T));
 
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">pub enum </span>StructSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt; {
-    DBus(dbus::StructSeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
-    </span>GVariant(gvariant::StructSeqSerializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;b</span>, B, W&gt;),
+</span><span class="kw">pub enum </span>StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt; {
+    DBus(dbus::StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;),
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+    </span>GVariant(gvariant::StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, B, W&gt;),
 }
 
 <span class="macro">serialize_impl!</span>(SerializeTuple, StructSerializer, serialize_element(v: <span class="kw-2">&amp;</span>T));
@@ -1340,12 +1341,12 @@
 <span class="macro">serialize_impl!</span>(
     SerializeStruct,
     StructSerializer,
-    serialize_field(k: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, v: <span class="kw-2">&amp;</span>T)
+    serialize_field(k: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, v: <span class="kw-2">&amp;</span>T)
 );
 <span class="macro">serialize_impl!</span>(
     SerializeStructVariant,
     StructSerializer,
-    serialize_field(k: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, v: <span class="kw-2">&amp;</span>T)
+    serialize_field(k: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, v: <span class="kw-2">&amp;</span>T)
 );
 <span class="macro">serialize_impl!</span>(SerializeMap, SeqSerializer, serialize_key(v: <span class="kw-2">&amp;</span>T) serialize_value(v: <span class="kw-2">&amp;</span>T));
 </code></pre></div></section></main></body></html>

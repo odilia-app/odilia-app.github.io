@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_names-2.5.1/src/well_known_name.rs`."><title>well_known_name.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_names" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_names/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_names-2.5.1/src/well_known_name.rs`."><title>well_known_name.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_names" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus_names/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus_names"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -408,32 +409,32 @@
 /// use zbus_names::WellKnownName;
 ///
 /// // Valid well-known names.
-/// let name = WellKnownName::try_from(&quot;org.gnome.Service-for_you&quot;).unwrap();
-/// assert_eq!(name, &quot;org.gnome.Service-for_you&quot;);
-/// let name = WellKnownName::try_from(&quot;a.very.loooooooooooooooooo-ooooooo_0000o0ng.Name&quot;).unwrap();
-/// assert_eq!(name, &quot;a.very.loooooooooooooooooo-ooooooo_0000o0ng.Name&quot;);
+/// let name = WellKnownName::try_from("org.gnome.Service-for_you").unwrap();
+/// assert_eq!(name, "org.gnome.Service-for_you");
+/// let name = WellKnownName::try_from("a.very.loooooooooooooooooo-ooooooo_0000o0ng.Name").unwrap();
+/// assert_eq!(name, "a.very.loooooooooooooooooo-ooooooo_0000o0ng.Name");
 ///
 /// // Invalid well-known names
-/// WellKnownName::try_from(&quot;&quot;).unwrap_err();
-/// WellKnownName::try_from(&quot;double..dots&quot;).unwrap_err();
-/// WellKnownName::try_from(&quot;.&quot;).unwrap_err();
-/// WellKnownName::try_from(&quot;.start.with.dot&quot;).unwrap_err();
-/// WellKnownName::try_from(&quot;1st.element.starts.with.digit&quot;).unwrap_err();
-/// WellKnownName::try_from(&quot;the.2nd.element.starts.with.digit&quot;).unwrap_err();
-/// WellKnownName::try_from(&quot;no-dots&quot;).unwrap_err();
+/// WellKnownName::try_from("").unwrap_err();
+/// WellKnownName::try_from("double..dots").unwrap_err();
+/// WellKnownName::try_from(".").unwrap_err();
+/// WellKnownName::try_from(".start.with.dot").unwrap_err();
+/// WellKnownName::try_from("1st.element.starts.with.digit").unwrap_err();
+/// WellKnownName::try_from("the.2nd.element.starts.with.digit").unwrap_err();
+/// WellKnownName::try_from("no-dots").unwrap_err();
 /// ```
 ///
 /// [wbn]: https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-bus
 </span><span class="attr">#[derive(
     Clone, Debug, Hash, PartialEq, Eq, Serialize, Type, Value, PartialOrd, Ord, OwnedValue,
 )]
-</span><span class="kw">pub struct </span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt;(Str&lt;<span class="lifetime">&#39;name</span>&gt;);
+</span><span class="kw">pub struct </span>WellKnownName&lt;<span class="lifetime">'name</span>&gt;(Str&lt;<span class="lifetime">'name</span>&gt;);
 
-<span class="macro">assert_impl_all!</span>(WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(WellKnownName&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'name</span>&gt; WellKnownName&lt;<span class="lifetime">'name</span>&gt; {
     <span class="doccomment">/// A borrowed clone (never allocates, unlike clone).
-    </span><span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+    </span><span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
         WellKnownName(<span class="self">self</span>.<span class="number">0</span>.as_ref())
     }
 
@@ -446,18 +447,18 @@
     ///
     /// Since the passed string is not checked for correctness, prefer using the
     /// `TryFrom&lt;&amp;str&gt;` implementation.
-    </span><span class="kw">pub fn </span>from_str_unchecked(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;name </span>str) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>from_str_unchecked(name: <span class="kw-2">&amp;</span><span class="lifetime">'name </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(Str::from(name))
     }
 
-    <span class="doccomment">/// Same as `try_from`, except it takes a `&amp;&#39;static str`.
-    </span><span class="kw">pub fn </span>from_static_str(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="doccomment">/// Same as `try_from`, except it takes a `&amp;'static str`.
+    </span><span class="kw">pub fn </span>from_static_str(name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         ensure_correct_well_known_name(name)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(Str::from_static(name)))
     }
 
-    <span class="doccomment">/// Same as `from_str_unchecked`, except it takes a `&amp;&#39;static str`.
-    </span><span class="kw">pub const fn </span>from_static_str_unchecked(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Same as `from_str_unchecked`, except it takes a `&amp;'static str`.
+    </span><span class="kw">pub const fn </span>from_static_str_unchecked(name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(Str::from_static(name))
     }
 
@@ -470,17 +471,17 @@
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">'static</span>&gt; {
         WellKnownName(<span class="self">self</span>.<span class="number">0</span>.to_owned())
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">'static</span>&gt; {
         WellKnownName(<span class="self">self</span>.<span class="number">0</span>.into_owned())
     }
 }
 
-<span class="kw">impl </span>Deref <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>Deref <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">type </span>Target = str;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
@@ -488,59 +489,59 @@
     }
 }
 
-<span class="kw">impl </span>Borrow&lt;str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>Borrow&lt;str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.as_str()
     }
 }
 
-<span class="kw">impl </span>Display <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+<span class="kw">impl </span>Display <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
         Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.as_str(), f)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PartialEq&lt;str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; PartialEq&lt;str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>str) -&gt; bool {
         <span class="self">self</span>.as_str() == other
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PartialEq&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; PartialEq&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: &amp;&amp;str) -&gt; bool {
         <span class="self">self</span>.as_str() == <span class="kw-2">*</span>other
     }
 }
 
-<span class="kw">impl </span>PartialEq&lt;OwnedWellKnownName&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>PartialEq&lt;OwnedWellKnownName&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>OwnedWellKnownName) -&gt; bool {
         <span class="kw-2">*</span><span class="self">self </span>== other.<span class="number">0
     </span>}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;name</span>, <span class="lifetime">&#39;name</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>: <span class="lifetime">'name</span>, <span class="lifetime">'name</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'name</span>&gt; {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; core::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: serde::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>name = &lt;Cow&lt;<span class="lifetime">&#39;name</span>, str&gt;&gt;::deserialize(deserializer)<span class="question-mark">?</span>;
+        <span class="kw">let </span>name = &lt;Cow&lt;<span class="lifetime">'name</span>, str&gt;&gt;::deserialize(deserializer)<span class="question-mark">?</span>;
 
         <span class="self">Self</span>::try_from(name).map_err(|e| de::Error::custom(e.to_string()))
     }
 }
 
 <span class="doccomment">/// Try to create an `WellKnownName` from a string.
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;name </span>str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt; {
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'name</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'name </span>str&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'name</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;name </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">'name </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         ensure_correct_well_known_name(value)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from_str_unchecked(value))
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;String&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>TryFrom&lt;String&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: String) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -550,7 +551,7 @@
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;Arc&lt;str&gt;&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>TryFrom&lt;Arc&lt;str&gt;&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: Arc&lt;str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -560,10 +561,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; TryFrom&lt;Cow&lt;<span class="lifetime">&#39;name</span>, str&gt;&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'name</span>&gt; TryFrom&lt;Cow&lt;<span class="lifetime">'name</span>, str&gt;&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'name</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(value: Cow&lt;<span class="lifetime">&#39;name</span>, str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>try_from(value: Cow&lt;<span class="lifetime">'name</span>, str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>value {
             Cow::Borrowed(s) =&gt; <span class="self">Self</span>::try_from(s),
             Cow::Owned(s) =&gt; <span class="self">Self</span>::try_from(s),
@@ -574,7 +575,7 @@
 <span class="kw">fn </span>ensure_correct_well_known_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="comment">// Rules
     //
-    // * Only ASCII alphanumeric, `_` or &#39;-&#39;.
+    // * Only ASCII alphanumeric, `_` or '-'.
     // * Must not begin with a `.`.
     // * Must contain at least one `.`.
     // * Each element must:
@@ -583,17 +584,17 @@
     // * &lt;= 255 characters.
     </span><span class="kw">if </span>name.is_empty() {
         <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(String::from(
-            <span class="string">&quot;must contain at least 3 characters&quot;</span>,
+            <span class="string">"must contain at least 3 characters"</span>,
         )));
     } <span class="kw">else if </span>name.len() &lt; <span class="number">3 </span>{
         <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(<span class="macro">format!</span>(
-            <span class="string">&quot;`{}` is {} characters long, which is smaller than minimum allowed (3)&quot;</span>,
+            <span class="string">"`{}` is {} characters long, which is smaller than minimum allowed (3)"</span>,
             name,
             name.len(),
         )));
     } <span class="kw">else if </span>name.len() &gt; <span class="number">255 </span>{
         <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(<span class="macro">format!</span>(
-            <span class="string">&quot;`{}` is {} characters long, which is longer than maximum allowed (255)&quot;</span>,
+            <span class="string">"`{}` is {} characters long, which is longer than maximum allowed (255)"</span>,
             name,
             name.len(),
         )));
@@ -602,23 +603,23 @@
     <span class="kw">let </span><span class="kw-2">mut </span>prev = <span class="prelude-val">None</span>;
     <span class="kw">let </span><span class="kw-2">mut </span>no_dot = <span class="bool-val">true</span>;
     <span class="kw">for </span>c <span class="kw">in </span>name.chars() {
-        <span class="kw">if </span>c == <span class="string">&#39;.&#39; </span>{
-            <span class="kw">if </span>prev.is_none() || prev == <span class="prelude-val">Some</span>(<span class="string">&#39;.&#39;</span>) {
+        <span class="kw">if </span>c == <span class="string">'.' </span>{
+            <span class="kw">if </span>prev.is_none() || prev == <span class="prelude-val">Some</span>(<span class="string">'.'</span>) {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(String::from(
-                    <span class="string">&quot;must not contain a double `.`&quot;</span>,
+                    <span class="string">"must not contain a double `.`"</span>,
                 )));
             }
 
             <span class="kw">if </span>no_dot {
                 no_dot = <span class="bool-val">false</span>;
             }
-        } <span class="kw">else if </span>c.is_ascii_digit() &amp;&amp; (prev.is_none() || prev == <span class="prelude-val">Some</span>(<span class="string">&#39;.&#39;</span>)) {
+        } <span class="kw">else if </span>c.is_ascii_digit() &amp;&amp; (prev.is_none() || prev == <span class="prelude-val">Some</span>(<span class="string">'.'</span>)) {
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(String::from(
-                <span class="string">&quot;each element must not start with a digit&quot;</span>,
+                <span class="string">"each element must not start with a digit"</span>,
             )));
-        } <span class="kw">else if </span>!c.is_ascii_alphanumeric() &amp;&amp; c != <span class="string">&#39;_&#39; </span>&amp;&amp; c != <span class="string">&#39;-&#39; </span>{
+        } <span class="kw">else if </span>!c.is_ascii_alphanumeric() &amp;&amp; c != <span class="string">'_' </span>&amp;&amp; c != <span class="string">'-' </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(<span class="macro">format!</span>(
-                <span class="string">&quot;`{c}` character not allowed&quot;
+                <span class="string">"`{c}` character not allowed"
             </span>)));
         }
 
@@ -627,31 +628,31 @@
 
     <span class="kw">if </span>no_dot {
         <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidWellKnownName(String::from(
-            <span class="string">&quot;must contain at least 1 `.`&quot;</span>,
+            <span class="string">"must contain at least 1 `.`"</span>,
         )));
     }
 
     <span class="prelude-val">Ok</span>(())
 }
 
-<span class="doccomment">/// This never succeeds but is provided so it&#39;s easier to pass `Option::None` values for API
-/// requiring `Option&lt;TryInto&lt;impl BusName&gt;&gt;`, since type inference won&#39;t work here.
-</span><span class="kw">impl </span>TryFrom&lt;()&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="doccomment">/// This never succeeds but is provided so it's easier to pass `Option::None` values for API
+/// requiring `Option&lt;TryInto&lt;impl BusName&gt;&gt;`, since type inference won't work here.
+</span><span class="kw">impl </span>TryFrom&lt;()&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(_value: ()) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="macro">unreachable!</span>(<span class="string">&quot;Conversion from `()` is not meant to actually work&quot;</span>);
+        <span class="macro">unreachable!</span>(<span class="string">"Conversion from `()` is not meant to actually work"</span>);
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; From&lt;<span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt;&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt; {
-    <span class="kw">fn </span>from(name: <span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'name</span>&gt; From&lt;<span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">'name</span>&gt;&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'name</span>&gt; {
+    <span class="kw">fn </span>from(name: <span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">'name</span>&gt;) -&gt; <span class="self">Self </span>{
         name.clone()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;name</span>&gt; NoneValue <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;name</span>&gt; {
-    <span class="kw">type </span>NoneType = <span class="kw-2">&amp;</span><span class="lifetime">&#39;name </span>str;
+<span class="kw">impl</span>&lt;<span class="lifetime">'name</span>&gt; NoneValue <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'name</span>&gt; {
+    <span class="kw">type </span>NoneType = <span class="kw-2">&amp;</span><span class="lifetime">'name </span>str;
 
     <span class="kw">fn </span>null_value() -&gt; <span class="self">Self</span>::NoneType {
         &lt;<span class="kw-2">&amp;</span>str&gt;::default()
@@ -662,24 +663,24 @@
 </span><span class="attr">#[derive(
     Clone, Debug, Hash, PartialEq, Eq, Serialize, Type, Value, PartialOrd, Ord, OwnedValue,
 )]
-</span><span class="kw">pub struct </span>OwnedWellKnownName(<span class="attr">#[serde(borrow)] </span>WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt;);
+</span><span class="kw">pub struct </span>OwnedWellKnownName(<span class="attr">#[serde(borrow)] </span>WellKnownName&lt;<span class="lifetime">'static</span>&gt;);
 
 <span class="macro">assert_impl_all!</span>(OwnedWellKnownName: Send, Sync, Unpin);
 
 <span class="kw">impl </span>OwnedWellKnownName {
     <span class="doccomment">/// Convert to the inner `WellKnownName`, consuming `self`.
-    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; WellKnownName&lt;<span class="lifetime">'static</span>&gt; {
         <span class="self">self</span>.<span class="number">0
     </span>}
 
     <span class="doccomment">/// Get a reference to the inner `WellKnownName`.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">'static</span>&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
 }
 
 <span class="kw">impl </span>Deref <span class="kw">for </span>OwnedWellKnownName {
-    <span class="kw">type </span>Target = WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt;;
+    <span class="kw">type </span>Target = WellKnownName&lt;<span class="lifetime">'static</span>&gt;;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
@@ -699,30 +700,30 @@
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>OwnedWellKnownName {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
         WellKnownName::from(<span class="self">self</span>).fmt(f)
     }
 }
 
-<span class="kw">impl </span>From&lt;OwnedWellKnownName&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl </span>From&lt;OwnedWellKnownName&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'static</span>&gt; {
     <span class="kw">fn </span>from(name: OwnedWellKnownName) -&gt; <span class="self">Self </span>{
         name.into_inner()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;unowned</span>, <span class="lifetime">&#39;owned</span>: <span class="lifetime">&#39;unowned</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;owned </span>OwnedWellKnownName&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">&#39;unowned</span>&gt; {
-    <span class="kw">fn </span>from(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;owned </span>OwnedWellKnownName) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'unowned</span>, <span class="lifetime">'owned</span>: <span class="lifetime">'unowned</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'owned </span>OwnedWellKnownName&gt; <span class="kw">for </span>WellKnownName&lt;<span class="lifetime">'unowned</span>&gt; {
+    <span class="kw">fn </span>from(name: <span class="kw-2">&amp;</span><span class="lifetime">'owned </span>OwnedWellKnownName) -&gt; <span class="self">Self </span>{
         WellKnownName::from_str_unchecked(name.as_str())
     }
 }
 
-<span class="kw">impl </span>From&lt;WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; <span class="kw">for </span>OwnedWellKnownName {
-    <span class="kw">fn </span>from(name: WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span>From&lt;WellKnownName&lt;<span class="lifetime">'_</span>&gt;&gt; <span class="kw">for </span>OwnedWellKnownName {
+    <span class="kw">fn </span>from(name: WellKnownName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="self">Self </span>{
         OwnedWellKnownName(name.into_owned())
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str&gt; <span class="kw">for </span>OwnedWellKnownName {
+<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str&gt; <span class="kw">for </span>OwnedWellKnownName {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -746,10 +747,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>OwnedWellKnownName {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>OwnedWellKnownName {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; std::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: de::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         String::deserialize(deserializer)
             .and_then(|n| WellKnownName::try_from(n).map_err(|e| de::Error::custom(e.to_string())))
@@ -763,14 +764,14 @@
     }
 }
 
-<span class="kw">impl </span>PartialEq&lt;WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; <span class="kw">for </span>OwnedWellKnownName {
-    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; bool {
+<span class="kw">impl </span>PartialEq&lt;WellKnownName&lt;<span class="lifetime">'_</span>&gt;&gt; <span class="kw">for </span>OwnedWellKnownName {
+    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>WellKnownName&lt;<span class="lifetime">'_</span>&gt;) -&gt; bool {
         <span class="self">self</span>.<span class="number">0 </span>== <span class="kw-2">*</span>other
     }
 }
 
 <span class="kw">impl </span>NoneValue <span class="kw">for </span>OwnedWellKnownName {
-    <span class="kw">type </span>NoneType = &lt;WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; <span class="kw">as </span>NoneValue&gt;::NoneType;
+    <span class="kw">type </span>NoneType = &lt;WellKnownName&lt;<span class="lifetime">'static</span>&gt; <span class="kw">as </span>NoneValue&gt;::NoneType;
 
     <span class="kw">fn </span>null_value() -&gt; <span class="self">Self</span>::NoneType {
         WellKnownName::null_value()

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1895,9 +1896,9 @@
 </pre></div><pre class="rust"><code><span class="attr">#![allow(clippy::unusual_byte_groupings)]
 #![deny(rust_2018_idioms)]
 #![doc(
-    html_logo_url = <span class="string">&quot;https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png&quot;
+    html_logo_url = <span class="string">"https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png"
 </span>)]
-#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
+#![doc = <span class="macro">include_str!</span>(<span class="string">"../README.md"</span>)]
 #![doc(test(attr(
     warn(unused),
     deny(warnings),
@@ -1936,7 +1937,7 @@
 <span class="kw">pub use </span>de::<span class="kw-2">*</span>;
 
 <span class="kw">pub mod </span>dbus;
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">pub mod </span>gvariant;
 
 <span class="kw">mod </span>signature;
@@ -1948,9 +1949,9 @@
 <span class="kw">mod </span>structure;
 <span class="kw">pub use </span><span class="kw">crate</span>::structure::<span class="kw-2">*</span>;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">mod </span>maybe;
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::maybe::<span class="kw-2">*</span>;
 
 <span class="kw">mod </span>optional;
@@ -1981,9 +1982,9 @@
 <span class="kw">mod </span>owned_value;
 <span class="kw">pub use </span>owned_value::<span class="kw-2">*</span>;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">mod </span>framing_offset_size;
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">mod </span>framing_offsets;
 <span class="kw">mod </span>signature_parser;
 
@@ -2009,13 +2010,13 @@
         net::{IpAddr, Ipv4Addr, Ipv6Addr},
     };
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
     </span><span class="kw">use </span>arrayvec::{ArrayString, ArrayVec};
     <span class="kw">use </span>byteorder::{<span class="self">self</span>, ByteOrder, BE, LE};
-    <span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
     </span><span class="kw">use </span>std::str::FromStr;
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">use </span>glib::{Bytes, FromVariant, Variant};
     <span class="kw">use </span>serde::{Deserialize, Serialize};
 
@@ -2036,7 +2037,7 @@
     <span class="comment">// Test through both generic and specific API (wrt byte order)
     </span><span class="macro">macro_rules! </span>basic_type_test {
         (<span class="macro-nonterminal">$</span><span class="kw">trait</span>:<span class="macro-nonterminal">ty</span>, <span class="macro-nonterminal">$format</span>:ident, <span class="macro-nonterminal">$test_value</span>:expr, <span class="macro-nonterminal">$expected_len</span>:expr, <span class="macro-nonterminal">$expected_ty</span>:ty, <span class="macro-nonterminal">$align</span>:literal) =&gt; {{
-            <span class="comment">// Lie that we&#39;re starting at byte 1 in the overall message to test padding
+            <span class="comment">// Lie that we're starting at byte 1 in the overall message to test padding
             </span><span class="kw">let </span>ctxt = Context::&lt;<span class="macro-nonterminal">$</span><span class="kw">trait</span>&gt;<span class="macro-nonterminal">::new</span>(EncodingFormat::<span class="macro-nonterminal">$format</span>, <span class="number">1</span>);
             <span class="attr">#[cfg(unix)]
             </span><span class="kw">let </span>(encoded, fds) = to_bytes_fds(ctxt, <span class="kw-2">&amp;</span><span class="macro-nonterminal">$test_value</span>).unwrap();
@@ -2046,7 +2047,7 @@
             <span class="macro">assert_eq!</span>(
                 encoded.len(),
                 <span class="macro-nonterminal">$expected_len </span>+ padding,
-                <span class="string">&quot;invalid encoding using `to_bytes`&quot;
+                <span class="string">"invalid encoding using `to_bytes`"
             </span>);
             <span class="attr">#[cfg(unix)]
             </span><span class="kw">let </span>decoded: <span class="macro-nonterminal">$expected_ty </span>= from_slice_fds(<span class="kw-2">&amp;</span>encoded, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>fds), ctxt).unwrap();
@@ -2054,7 +2055,7 @@
             </span><span class="kw">let </span>decoded: <span class="macro-nonterminal">$expected_ty </span>= from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
             <span class="macro">assert!</span>(
                 decoded == <span class="macro-nonterminal">$test_value</span>,
-                <span class="string">&quot;invalid decoding using `from_slice`&quot;
+                <span class="string">"invalid decoding using `from_slice`"
             </span>);
 
             <span class="comment">// Now encode w/o padding
@@ -2066,7 +2067,7 @@
             <span class="macro">assert_eq!</span>(
                 encoded.len(),
                 <span class="macro-nonterminal">$expected_len</span>,
-                <span class="string">&quot;invalid encoding using `to_bytes`&quot;
+                <span class="string">"invalid encoding using `to_bytes`"
             </span>);
 
             encoded
@@ -2082,7 +2083,7 @@
             </span>);
 
             <span class="comment">// As Value
-            </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = <span class="macro-nonterminal">$test_value</span>.into();
+            </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = <span class="macro-nonterminal">$test_value</span>.into();
             <span class="macro">assert_eq!</span>(v.value_signature(), &lt;<span class="macro-nonterminal">$expected_ty</span>&gt;::SIGNATURE_STR);
             <span class="macro">assert_eq!</span>(v, Value::<span class="macro-nonterminal">$kind</span>(<span class="macro-nonterminal">$test_value</span>));
             <span class="macro">value_test!</span>(LE, <span class="macro-nonterminal">$format</span>, v, <span class="macro-nonterminal">$expected_value_len</span>);
@@ -2104,15 +2105,15 @@
             <span class="macro">assert_eq!</span>(
                 encoded.len(),
                 <span class="macro-nonterminal">$expected_len</span>,
-                <span class="string">&quot;invalid encoding using `to_bytes`&quot;
+                <span class="string">"invalid encoding using `to_bytes`"
             </span>);
             <span class="attr">#[cfg(unix)]
-            </span><span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice_fds(<span class="kw-2">&amp;</span>encoded, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>fds), ctxt).unwrap();
+            </span><span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice_fds(<span class="kw-2">&amp;</span>encoded, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>fds), ctxt).unwrap();
             <span class="attr">#[cfg(not(unix))]
-            </span><span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+            </span><span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
             <span class="macro">assert!</span>(
                 decoded == <span class="macro-nonterminal">$test_value</span>,
-                <span class="string">&quot;invalid decoding using `from_slice`&quot;
+                <span class="string">"invalid decoding using `from_slice`"
             </span>);
 
             encoded
@@ -2125,20 +2126,20 @@
         expected_len: usize,
         expected_value_len: usize,
     ) -&gt; Vec&lt;u8&gt; {
-        <span class="comment">// Lie that we&#39;re starting at byte 1 in the overall message to test padding
+        <span class="comment">// Lie that we're starting at byte 1 in the overall message to test padding
         </span><span class="kw">let </span>ctxt = Context::&lt;BE&gt;::new(format, <span class="number">1</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>value).unwrap();
         <span class="kw">let </span>padding = <span class="kw">crate</span>::padding_for_n_bytes(<span class="number">1</span>, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(
             encoded.len(),
             expected_len + padding,
-            <span class="string">&quot;invalid encoding using `to_bytes`&quot;
+            <span class="string">"invalid encoding using `to_bytes`"
         </span>);
 
         <span class="kw">let </span>decoded: f64 = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert!</span>(
             (decoded - value).abs() &lt; f64::EPSILON,
-            <span class="string">&quot;invalid decoding using `from_slice`&quot;
+            <span class="string">"invalid decoding using `from_slice`"
         </span>);
 
         <span class="comment">// Now encode w/o padding
@@ -2147,7 +2148,7 @@
         <span class="macro">assert_eq!</span>(
             encoded.len(),
             expected_len,
-            <span class="string">&quot;invalid encoding using `to_bytes`&quot;
+            <span class="string">"invalid encoding using `to_bytes`"
         </span>);
 
         f64_type_test_as_value(format, value, expected_value_len);
@@ -2155,7 +2156,7 @@
     }
 
     <span class="kw">fn </span>f64_type_test_as_value(format: EncodingFormat, value: f64, expected_value_len: usize) {
-        <span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = value.into();
+        <span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = value.into();
         <span class="macro">assert_eq!</span>(v.value_signature(), f64::SIGNATURE_STR);
         <span class="macro">assert_eq!</span>(v, Value::F64(value));
         f64_value_test(format, v.clone(), expected_value_len);
@@ -2163,22 +2164,22 @@
         <span class="macro">assert!</span>((v - value).abs() &lt; f64::EPSILON);
     }
 
-    <span class="kw">fn </span>f64_value_test(format: EncodingFormat, v: Value&lt;<span class="lifetime">&#39;_</span>&gt;, expected_value_len: usize) {
+    <span class="kw">fn </span>f64_value_test(format: EncodingFormat, v: Value&lt;<span class="lifetime">'_</span>&gt;, expected_value_len: usize) {
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new(format, <span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(
             encoded.len(),
             expected_value_len,
-            <span class="string">&quot;invalid encoding using `to_bytes`&quot;
+            <span class="string">"invalid encoding using `to_bytes`"
         </span>);
-        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="macro">assert!</span>(decoded == v, <span class="string">&quot;invalid decoding using `from_slice`&quot;</span>);
+        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="macro">assert!</span>(decoded == v, <span class="string">"invalid decoding using `from_slice`"</span>);
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">fn </span>decode_with_gvariant&lt;B, T&gt;(encoded: B) -&gt; T
     <span class="kw">where
-        </span>B: AsRef&lt;[u8]&gt; + Send + <span class="lifetime">&#39;static</span>,
+        </span>B: AsRef&lt;[u8]&gt; + Send + <span class="lifetime">'static</span>,
         T: glib::variant::FromVariant,
     {
         <span class="kw">let </span>bytes = Bytes::from_owned(encoded);
@@ -2188,13 +2189,13 @@
 
     <span class="comment">// All fixed size types have the same encoding in DBus and GVariant formats.
     //
-    // NB: Value (i-e VARIANT type) isn&#39;t a fixed size type.
+    // NB: Value (i-e VARIANT type) isn't a fixed size type.
 
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>u8_value() {
         <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(LE, DBus, <span class="number">77_u8</span>, <span class="number">1</span>, u8, <span class="number">1</span>, U8, <span class="number">4</span>);
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">1</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, u8&gt;(encoded), <span class="number">77u8</span>);
             <span class="macro">basic_type_test!</span>(LE, GVariant, <span class="number">77_u8</span>, <span class="number">1</span>, u8, <span class="number">1</span>, U8, <span class="number">3</span>);
@@ -2204,7 +2205,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>i8_value() {
         <span class="macro">basic_type_test!</span>(LE, DBus, <span class="number">77_i8</span>, <span class="number">2</span>, i8, <span class="number">2</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span><span class="macro">basic_type_test!</span>(LE, GVariant, <span class="number">77_i8</span>, <span class="number">2</span>, i8, <span class="number">2</span>);
     }
 
@@ -2212,7 +2213,7 @@
     #[test]
     </span><span class="kw">fn </span>fd_value() {
         <span class="macro">basic_type_test!</span>(LE, DBus, Fd::from(<span class="number">42</span>), <span class="number">4</span>, Fd, <span class="number">4</span>, Fd, <span class="number">8</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span><span class="macro">basic_type_test!</span>(LE, GVariant, Fd::from(<span class="number">42</span>), <span class="number">4</span>, Fd, <span class="number">4</span>, Fd, <span class="number">6</span>);
     }
 
@@ -2220,7 +2221,7 @@
     </span><span class="kw">fn </span>u16_value() {
         <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(BE, DBus, <span class="number">0xABBA_u16</span>, <span class="number">2</span>, u16, <span class="number">2</span>, U16, <span class="number">6</span>);
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">2</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, u16&gt;(encoded), <span class="number">0xBAAB_u16</span>);
             <span class="macro">basic_type_test!</span>(BE, GVariant, <span class="number">0xABBA_u16</span>, <span class="number">2</span>, u16, <span class="number">2</span>, U16, <span class="number">4</span>);
@@ -2231,7 +2232,7 @@
     </span><span class="kw">fn </span>i16_value() {
         <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(BE, DBus, -<span class="number">0xAB0_i16</span>, <span class="number">2</span>, i16, <span class="number">2</span>, I16, <span class="number">6</span>);
         <span class="macro">assert_eq!</span>(LE::read_i16(<span class="kw-2">&amp;</span>encoded), <span class="number">0x50F5_i16</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, i16&gt;(encoded), <span class="number">0x50F5_i16</span>);
             <span class="macro">basic_type_test!</span>(BE, GVariant, -<span class="number">0xAB0_i16</span>, <span class="number">2</span>, i16, <span class="number">2</span>, I16, <span class="number">4</span>);
@@ -2242,7 +2243,7 @@
     </span><span class="kw">fn </span>u32_value() {
         <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(BE, DBus, <span class="number">0xABBA_ABBA_u32</span>, <span class="number">4</span>, u32, <span class="number">4</span>, U32, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">4</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, u32&gt;(encoded), <span class="number">0xBAAB_BAAB_u32</span>);
             <span class="macro">basic_type_test!</span>(BE, GVariant, <span class="number">0xABBA_ABBA_u32</span>, <span class="number">4</span>, u32, <span class="number">4</span>, U32, <span class="number">6</span>);
@@ -2253,7 +2254,7 @@
     </span><span class="kw">fn </span>i32_value() {
         <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(BE, DBus, -<span class="number">0xABBA_AB0_i32</span>, <span class="number">4</span>, i32, <span class="number">4</span>, I32, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(LE::read_i32(<span class="kw-2">&amp;</span>encoded), <span class="number">0x5055_44F5_i32</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, i32&gt;(encoded), <span class="number">0x5055_44F5_i32</span>);
             <span class="macro">basic_type_test!</span>(BE, GVariant, -<span class="number">0xABBA_AB0_i32</span>, <span class="number">4</span>, i32, <span class="number">4</span>, I32, <span class="number">6</span>);
@@ -2266,7 +2267,7 @@
     </span><span class="kw">fn </span>i64_value() {
         <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(BE, DBus, -<span class="number">0xABBA_ABBA_ABBA_AB0_i64</span>, <span class="number">8</span>, i64, <span class="number">8</span>, I64, <span class="number">16</span>);
         <span class="macro">assert_eq!</span>(LE::read_i64(<span class="kw-2">&amp;</span>encoded), <span class="number">0x5055_4455_4455_44F5_i64</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert_eq!</span>(
                 decode_with_gvariant::&lt;<span class="kw">_</span>, i64&gt;(encoded),
@@ -2280,7 +2281,7 @@
     </span><span class="kw">fn </span>f64_value() {
         <span class="kw">let </span>encoded = f64_type_test(EncodingFormat::DBus, <span class="number">99999.99999_f64</span>, <span class="number">8</span>, <span class="number">16</span>);
         <span class="macro">assert!</span>((LE::read_f64(<span class="kw-2">&amp;</span>encoded) - -<span class="number">5.759340900185448e-128</span>).abs() &lt; f64::EPSILON);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="macro">assert!</span>(
                 (decode_with_gvariant::&lt;<span class="kw">_</span>, f64&gt;(encoded) - -<span class="number">5.759340900185448e-128</span>).abs()
@@ -2292,27 +2293,27 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>str_value() {
-        <span class="kw">let </span>string = String::from(<span class="string">&quot;hello world&quot;</span>);
+        <span class="kw">let </span>string = String::from(<span class="string">"hello world"</span>);
         <span class="macro">basic_type_test!</span>(LE, DBus, string, <span class="number">16</span>, String, <span class="number">4</span>);
         <span class="macro">basic_type_test!</span>(LE, DBus, string, <span class="number">16</span>, <span class="kw-2">&amp;</span>str, <span class="number">4</span>);
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(LE, GVariant, string, <span class="number">12</span>, String, <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, String&gt;(encoded), <span class="string">&quot;hello world&quot;</span>);
+            <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, String&gt;(encoded), <span class="string">"hello world"</span>);
         }
 
-        <span class="kw">let </span>string = <span class="string">&quot;hello world&quot;</span>;
+        <span class="kw">let </span>string = <span class="string">"hello world"</span>;
         <span class="macro">basic_type_test!</span>(LE, DBus, string, <span class="number">16</span>, <span class="kw-2">&amp;</span>str, <span class="number">4</span>);
         <span class="macro">basic_type_test!</span>(LE, DBus, string, <span class="number">16</span>, String, <span class="number">4</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = string.into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;s&quot;</span>);
-        <span class="macro">assert_eq!</span>(v, Value::new(<span class="string">&quot;hello world&quot;</span>));
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = string.into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"s"</span>);
+        <span class="macro">assert_eq!</span>(v, Value::new(<span class="string">"hello world"</span>));
         <span class="macro">value_test!</span>(LE, DBus, v, <span class="number">20</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>encoded = <span class="macro">value_test!</span>(LE, GVariant, v, <span class="number">14</span>);
 
@@ -2320,111 +2321,111 @@
             </span><span class="kw">let </span>bytes = Bytes::from_owned(encoded);
             <span class="kw">let </span>gv = Variant::from_bytes::&lt;Variant&gt;(<span class="kw-2">&amp;</span>bytes);
             <span class="kw">let </span>variant = gv.as_variant().unwrap();
-            <span class="macro">assert_eq!</span>(variant.str().unwrap(), <span class="string">&quot;hello world&quot;</span>);
+            <span class="macro">assert_eq!</span>(variant.str().unwrap(), <span class="string">"hello world"</span>);
         }
 
         <span class="kw">let </span>v: String = v.try_into().unwrap();
-        <span class="macro">assert_eq!</span>(v, <span class="string">&quot;hello world&quot;</span>);
+        <span class="macro">assert_eq!</span>(v, <span class="string">"hello world"</span>);
 
         <span class="comment">// Check for interior null bytes which are not allowed
         </span><span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="macro">assert!</span>(from_slice::&lt;<span class="kw">_</span>, <span class="kw-2">&amp;</span>str&gt;(<span class="string">b&quot;\x0b\0\0\0hello\0world\0&quot;</span>, ctxt).is_err());
-        <span class="macro">assert!</span>(to_bytes(ctxt, <span class="kw-2">&amp;</span><span class="string">&quot;hello\0world&quot;</span>).is_err());
+        <span class="macro">assert!</span>(from_slice::&lt;<span class="kw">_</span>, <span class="kw-2">&amp;</span>str&gt;(<span class="string">b"\x0b\0\0\0hello\0world\0"</span>, ctxt).is_err());
+        <span class="macro">assert!</span>(to_bytes(ctxt, <span class="kw-2">&amp;</span><span class="string">"hello\0world"</span>).is_err());
 
-        <span class="comment">// GVariant format doesn&#39;t allow null bytes either
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="comment">// GVariant format doesn't allow null bytes either
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
-            <span class="macro">assert!</span>(from_slice::&lt;<span class="kw">_</span>, <span class="kw-2">&amp;</span>str&gt;(<span class="string">b&quot;hello\0world\0&quot;</span>, ctxt).is_err());
-            <span class="macro">assert!</span>(to_bytes(ctxt, <span class="kw-2">&amp;</span><span class="string">&quot;hello\0world&quot;</span>).is_err());
+            <span class="macro">assert!</span>(from_slice::&lt;<span class="kw">_</span>, <span class="kw-2">&amp;</span>str&gt;(<span class="string">b"hello\0world\0"</span>, ctxt).is_err());
+            <span class="macro">assert!</span>(to_bytes(ctxt, <span class="kw-2">&amp;</span><span class="string">"hello\0world"</span>).is_err());
         }
 
         <span class="comment">// Characters are treated as strings
-        </span><span class="macro">basic_type_test!</span>(LE, DBus, <span class="string">&#39;c&#39;</span>, <span class="number">6</span>, char, <span class="number">4</span>);
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
-        </span><span class="macro">basic_type_test!</span>(LE, GVariant, <span class="string">&#39;c&#39;</span>, <span class="number">2</span>, char, <span class="number">1</span>);
+        </span><span class="macro">basic_type_test!</span>(LE, DBus, <span class="string">'c'</span>, <span class="number">6</span>, char, <span class="number">4</span>);
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+        </span><span class="macro">basic_type_test!</span>(LE, GVariant, <span class="string">'c'</span>, <span class="number">2</span>, char, <span class="number">1</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = <span class="string">&quot;c&quot;</span>.into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;s&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = <span class="string">"c"</span>.into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"s"</span>);
         <span class="kw">let </span>ctxt = Context::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes::&lt;LE, <span class="kw">_</span>&gt;(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">10</span>);
-        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(v, Value::new(<span class="string">&quot;c&quot;</span>));
+        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="macro">assert_eq!</span>(v, Value::new(<span class="string">"c"</span>));
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
     #[test]
     </span><span class="kw">fn </span>array_string_value() {
-        <span class="kw">let </span>s = ArrayString::&lt;<span class="number">32</span>&gt;::from_str(<span class="string">&quot;hello world!&quot;</span>).unwrap();
+        <span class="kw">let </span>s = ArrayString::&lt;<span class="number">32</span>&gt;::from_str(<span class="string">"hello world!"</span>).unwrap();
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>s).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">17</span>);
         <span class="kw">let </span>decoded: ArrayString&lt;<span class="number">32</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>decoded, <span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>decoded, <span class="string">"hello world!"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>signature_value() {
-        <span class="kw">let </span>sig = Signature::try_from(<span class="string">&quot;yys&quot;</span>).unwrap();
-        <span class="macro">basic_type_test!</span>(LE, DBus, sig, <span class="number">5</span>, Signature&lt;<span class="lifetime">&#39;_</span>&gt;, <span class="number">1</span>);
+        <span class="kw">let </span>sig = Signature::try_from(<span class="string">"yys"</span>).unwrap();
+        <span class="macro">basic_type_test!</span>(LE, DBus, sig, <span class="number">5</span>, Signature&lt;<span class="lifetime">'_</span>&gt;, <span class="number">1</span>);
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
-            <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(LE, GVariant, sig, <span class="number">4</span>, Signature&lt;<span class="lifetime">&#39;_</span>&gt;, <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, String&gt;(encoded), <span class="string">&quot;yys&quot;</span>);
+            <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(LE, GVariant, sig, <span class="number">4</span>, Signature&lt;<span class="lifetime">'_</span>&gt;, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, String&gt;(encoded), <span class="string">"yys"</span>);
         }
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = sig.into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;g&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = sig.into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"g"</span>);
         <span class="kw">let </span>encoded = <span class="macro">value_test!</span>(LE, DBus, v, <span class="number">8</span>);
         <span class="kw">let </span>ctxt = Context::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(v, Value::Signature(Signature::try_from(<span class="string">&quot;yys&quot;</span>).unwrap()));
+        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="macro">assert_eq!</span>(v, Value::Signature(Signature::try_from(<span class="string">"yys"</span>).unwrap()));
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>encoded = <span class="macro">value_test!</span>(LE, GVariant, v, <span class="number">6</span>);
             <span class="kw">let </span>ctxt = Context::new_gvariant(<span class="number">0</span>);
-            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-            <span class="macro">assert_eq!</span>(v, Value::Signature(Signature::try_from(<span class="string">&quot;yys&quot;</span>).unwrap()));
+            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+            <span class="macro">assert_eq!</span>(v, Value::Signature(Signature::try_from(<span class="string">"yys"</span>).unwrap()));
         }
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>object_path_value() {
-        <span class="kw">let </span>o = ObjectPath::try_from(<span class="string">&quot;/hello/world&quot;</span>).unwrap();
-        <span class="macro">basic_type_test!</span>(LE, DBus, o, <span class="number">17</span>, ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;, <span class="number">4</span>);
+        <span class="kw">let </span>o = ObjectPath::try_from(<span class="string">"/hello/world"</span>).unwrap();
+        <span class="macro">basic_type_test!</span>(LE, DBus, o, <span class="number">17</span>, ObjectPath&lt;<span class="lifetime">'_</span>&gt;, <span class="number">4</span>);
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
-            <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(LE, GVariant, o, <span class="number">13</span>, ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;, <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, String&gt;(encoded), <span class="string">&quot;/hello/world&quot;</span>);
+            <span class="kw">let </span>encoded = <span class="macro">basic_type_test!</span>(LE, GVariant, o, <span class="number">13</span>, ObjectPath&lt;<span class="lifetime">'_</span>&gt;, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(decode_with_gvariant::&lt;<span class="kw">_</span>, String&gt;(encoded), <span class="string">"/hello/world"</span>);
         }
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = o.into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;o&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = o.into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"o"</span>);
         <span class="kw">let </span>encoded = <span class="macro">value_test!</span>(LE, DBus, v, <span class="number">21</span>);
         <span class="kw">let </span>ctxt = Context::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(
             v,
-            Value::ObjectPath(ObjectPath::try_from(<span class="string">&quot;/hello/world&quot;</span>).unwrap())
+            Value::ObjectPath(ObjectPath::try_from(<span class="string">"/hello/world"</span>).unwrap())
         );
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>encoded = <span class="macro">value_test!</span>(LE, GVariant, v, <span class="number">15</span>);
             <span class="kw">let </span>ctxt = Context::new_gvariant(<span class="number">0</span>);
-            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
             <span class="macro">assert_eq!</span>(
                 v,
-                Value::ObjectPath(ObjectPath::try_from(<span class="string">&quot;/hello/world&quot;</span>).unwrap())
+                Value::ObjectPath(ObjectPath::try_from(<span class="string">"/hello/world"</span>).unwrap())
             );
         }
     }
@@ -2434,28 +2435,28 @@
     </span><span class="kw">fn </span>unit_fds() {
         <span class="kw">let </span>ctxt = Context::&lt;BE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>(encoded, fds) = to_bytes_fds(ctxt, <span class="kw-2">&amp;</span>()).unwrap();
-        <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">0</span>, <span class="string">&quot;invalid encoding using `to_bytes`&quot;</span>);
+        <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">0</span>, <span class="string">"invalid encoding using `to_bytes`"</span>);
         <span class="kw">let _</span>: () = from_slice_fds(<span class="kw-2">&amp;</span>encoded, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>fds), ctxt)
-            .expect(<span class="string">&quot;invalid decoding using `from_slice`&quot;</span>);
+            .expect(<span class="string">"invalid decoding using `from_slice`"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>unit() {
         <span class="kw">let </span>ctxt = Context::&lt;BE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>()).unwrap();
-        <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">0</span>, <span class="string">&quot;invalid encoding using `to_bytes`&quot;</span>);
-        <span class="kw">let _</span>: () = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).expect(<span class="string">&quot;invalid decoding using `from_slice`&quot;</span>);
+        <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">0</span>, <span class="string">"invalid encoding using `to_bytes`"</span>);
+        <span class="kw">let _</span>: () = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).expect(<span class="string">"invalid decoding using `from_slice`"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>array_value() {
-        <span class="comment">// Let&#39;s use D-Bus/GVariant terms
+        <span class="comment">// Let's use D-Bus/GVariant terms
 
         //
         // Array of u8
         //
         // First a normal Rust array that is actually serialized as a struct (thank you Serde!)
-        </span><span class="macro">assert_eq!</span>(&lt;[u8; <span class="number">2</span>]&gt;::signature(), <span class="string">&quot;(yy)&quot;</span>);
+        </span><span class="macro">assert_eq!</span>(&lt;[u8; <span class="number">2</span>]&gt;::signature(), <span class="string">"(yy)"</span>);
         <span class="kw">let </span>ay = [<span class="number">77u8</span>, <span class="number">88</span>];
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ay).unwrap();
@@ -2464,22 +2465,22 @@
         <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>decoded, <span class="kw-2">&amp;</span>[<span class="number">77u8</span>, <span class="number">88</span>]);
 
         <span class="comment">// Then rest of the tests just use ArrayVec or Vec
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
         </span><span class="kw">let </span>ay = ArrayVec::from([<span class="number">77u8</span>, <span class="number">88</span>]);
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;arrayvec&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"arrayvec"</span>))]
         </span><span class="kw">let </span>ay = <span class="macro">vec!</span>[<span class="number">77u8</span>, <span class="number">88</span>];
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ay).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">6</span>);
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
         </span><span class="kw">let </span>decoded: ArrayVec&lt;u8, <span class="number">2</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;arrayvec&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"arrayvec"</span>))]
         </span><span class="kw">let </span>decoded: Vec&lt;u8&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>decoded.as_slice(), <span class="kw-2">&amp;</span>[<span class="number">77u8</span>, <span class="number">88</span>]);
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ay).unwrap();
@@ -2495,13 +2496,13 @@
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = ay[..].into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;ay&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = ay[..].into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"ay"</span>);
         <span class="kw">let </span>encoded = to_bytes::&lt;LE, <span class="kw">_</span>&gt;(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">10</span>);
-        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Array(array) = v {
-            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">&quot;y&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">"y"</span>);
             <span class="macro">assert_eq!</span>(array.len(), <span class="number">2</span>);
             <span class="macro">assert_eq!</span>(array.get()[<span class="number">0</span>], Value::U8(<span class="number">77</span>));
             <span class="macro">assert_eq!</span>(array.get()[<span class="number">1</span>], Value::U8(<span class="number">88</span>));
@@ -2515,8 +2516,8 @@
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">6</span>);
 
         <span class="comment">// Vec as Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = Array::from(<span class="kw-2">&amp;</span>vec).into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;ay&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = Array::from(<span class="kw-2">&amp;</span>vec).into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"ay"</span>);
         <span class="kw">let </span>encoded = to_bytes::&lt;LE, <span class="kw">_</span>&gt;(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">10</span>);
 
@@ -2526,7 +2527,7 @@
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">8</span>);
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>at).unwrap();
@@ -2537,28 +2538,28 @@
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = at[..].into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;at&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = at[..].into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"at"</span>);
         <span class="kw">let </span>encoded = to_bytes::&lt;LE, <span class="kw">_</span>&gt;(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">8</span>);
-        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Array(array) = v {
-            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">&quot;t&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">"t"</span>);
             <span class="macro">assert_eq!</span>(array.len(), <span class="number">0</span>);
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>();
         }
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
-            <span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = at[..].into();
+            <span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = at[..].into();
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
             <span class="macro">assert_eq!</span>(gv_encoded.len(), <span class="number">3</span>);
-            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>gv_encoded, ctxt).unwrap();
+            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>gv_encoded, ctxt).unwrap();
             <span class="kw">if let </span>Value::Array(array) = v {
-                <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">&quot;t&quot;</span>);
+                <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">"t"</span>);
                 <span class="macro">assert_eq!</span>(array.len(), <span class="number">0</span>);
             } <span class="kw">else </span>{
                 <span class="macro">panic!</span>();
@@ -2574,14 +2575,14 @@
         <span class="comment">//
         // Array of strings
         //
-        // Can&#39;t use &#39;as&#39; as it&#39;s a keyword
-        </span><span class="kw">let </span>as_ = <span class="macro">vec!</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>, <span class="string">&quot;Now&quot;</span>, <span class="string">&quot;Bye!&quot;</span>];
+        // Can't use 'as' as it's a keyword
+        </span><span class="kw">let </span>as_ = <span class="macro">vec!</span>[<span class="string">"Hello"</span>, <span class="string">"World"</span>, <span class="string">"Now"</span>, <span class="string">"Bye!"</span>];
         <span class="kw">let </span>encoded = to_bytes::&lt;LE, <span class="kw">_</span>&gt;(ctxt, <span class="kw-2">&amp;</span>as_).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">45</span>);
         <span class="kw">let </span>decoded = from_slice::&lt;LE, Vec&lt;<span class="kw-2">&amp;</span>str&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded.len(), <span class="number">4</span>);
-        <span class="macro">assert_eq!</span>(decoded[<span class="number">0</span>], <span class="string">&quot;Hello&quot;</span>);
-        <span class="macro">assert_eq!</span>(decoded[<span class="number">1</span>], <span class="string">&quot;World&quot;</span>);
+        <span class="macro">assert_eq!</span>(decoded[<span class="number">0</span>], <span class="string">"Hello"</span>);
+        <span class="macro">assert_eq!</span>(decoded[<span class="number">1</span>], <span class="string">"World"</span>);
 
         <span class="kw">let </span>decoded = from_slice::&lt;LE, Vec&lt;String&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded.as_slice(), as_.as_slice());
@@ -2589,33 +2590,33 @@
         <span class="comment">// Decode just the second string
         </span><span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">14</span>);
         <span class="kw">let </span>decoded: <span class="kw-2">&amp;</span>str = from_slice(<span class="kw-2">&amp;</span>encoded[<span class="number">14</span>..], ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded, <span class="string">&quot;World&quot;</span>);
+        <span class="macro">assert_eq!</span>(decoded, <span class="string">"World"</span>);
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = as_[..].into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;as&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = as_[..].into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"as"</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">49</span>);
         <span class="kw">let </span>v = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Array(array) = v {
-            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">&quot;s&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">"s"</span>);
             <span class="macro">assert_eq!</span>(array.len(), <span class="number">4</span>);
-            <span class="macro">assert_eq!</span>(array.get()[<span class="number">0</span>], Value::new(<span class="string">&quot;Hello&quot;</span>));
-            <span class="macro">assert_eq!</span>(array.get()[<span class="number">1</span>], Value::new(<span class="string">&quot;World&quot;</span>));
+            <span class="macro">assert_eq!</span>(array.get()[<span class="number">0</span>], Value::new(<span class="string">"Hello"</span>));
+            <span class="macro">assert_eq!</span>(array.get()[<span class="number">1</span>], Value::new(<span class="string">"World"</span>));
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>();
         }
 
-        <span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = as_[..].into();
-        <span class="kw">let </span>a: Array&lt;<span class="lifetime">&#39;_</span>&gt; = v.try_into().unwrap();
+        <span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = as_[..].into();
+        <span class="kw">let </span>a: Array&lt;<span class="lifetime">'_</span>&gt; = v.try_into().unwrap();
         <span class="kw">let </span>_ve: Vec&lt;String&gt; = a.try_into().unwrap();
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
-            <span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = as_[..].into();
+            <span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = as_[..].into();
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
             <span class="macro">assert_eq!</span>(gv_encoded.len(), <span class="number">28</span>);
 
@@ -2624,12 +2625,12 @@
             <span class="kw">let </span>variant = Variant::from_bytes::&lt;Variant&gt;(<span class="kw-2">&amp;</span>bytes);
             <span class="macro">assert_eq!</span>(variant.n_children(), <span class="number">1</span>);
             <span class="kw">let </span>decoded: Vec&lt;String&gt; = variant.child_value(<span class="number">0</span>).get().unwrap();
-            <span class="macro">assert_eq!</span>(decoded[<span class="number">0</span>], <span class="string">&quot;Hello&quot;</span>);
-            <span class="macro">assert_eq!</span>(decoded[<span class="number">1</span>], <span class="string">&quot;World&quot;</span>);
+            <span class="macro">assert_eq!</span>(decoded[<span class="number">0</span>], <span class="string">"Hello"</span>);
+            <span class="macro">assert_eq!</span>(decoded[<span class="number">1</span>], <span class="string">"World"</span>);
         }
 
         <span class="comment">// Array of Struct, which in turn containin an Array (We gotta go deeper!)
-        // Signature: &quot;a(yu(xbxas)s)&quot;);
+        // Signature: "a(yu(xbxas)s)");
         </span><span class="kw">let </span>ar = <span class="macro">vec!</span>[(
             <span class="comment">// top-most simple fields
             </span>u8::max_value(),
@@ -2640,10 +2641,10 @@
                 <span class="bool-val">true</span>,
                 i64::max_value(),
                 <span class="comment">// 2nd level array field
-                </span><span class="kw-2">&amp;</span>[<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>][..],
+                </span><span class="kw-2">&amp;</span>[<span class="string">"Hello"</span>, <span class="string">"World"</span>][..],
             ),
             <span class="comment">// one more top-most simple field
-            </span><span class="string">&quot;hello&quot;</span>,
+            </span><span class="string">"hello"</span>,
         )];
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ar).unwrap();
@@ -2661,12 +2662,12 @@
         <span class="macro">assert_eq!</span>(inner_r.<span class="number">2</span>, i64::max_value());
         <span class="kw">let </span>as_ = <span class="kw-2">&amp;</span>inner_r.<span class="number">3</span>;
         <span class="macro">assert_eq!</span>(as_.len(), <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(as_[<span class="number">0</span>], <span class="string">&quot;Hello&quot;</span>);
-        <span class="macro">assert_eq!</span>(as_[<span class="number">1</span>], <span class="string">&quot;World&quot;</span>);
-        <span class="macro">assert_eq!</span>(r.<span class="number">3</span>, <span class="string">&quot;hello&quot;</span>);
+        <span class="macro">assert_eq!</span>(as_[<span class="number">0</span>], <span class="string">"Hello"</span>);
+        <span class="macro">assert_eq!</span>(as_[<span class="number">1</span>], <span class="string">"World"</span>);
+        <span class="macro">assert_eq!</span>(r.<span class="number">3</span>, <span class="string">"hello"</span>);
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ar).unwrap();
@@ -2686,9 +2687,9 @@
             <span class="macro">assert_eq!</span>(inner_r.<span class="number">2</span>, i64::max_value());
             <span class="kw">let </span>as_ = <span class="kw-2">&amp;</span>inner_r.<span class="number">3</span>;
             <span class="macro">assert_eq!</span>(as_.len(), <span class="number">2</span>);
-            <span class="macro">assert_eq!</span>(as_[<span class="number">0</span>], <span class="string">&quot;Hello&quot;</span>);
-            <span class="macro">assert_eq!</span>(as_[<span class="number">1</span>], <span class="string">&quot;World&quot;</span>);
-            <span class="macro">assert_eq!</span>(r.<span class="number">3</span>, <span class="string">&quot;hello&quot;</span>);
+            <span class="macro">assert_eq!</span>(as_[<span class="number">0</span>], <span class="string">"Hello"</span>);
+            <span class="macro">assert_eq!</span>(as_[<span class="number">1</span>], <span class="string">"World"</span>);
+            <span class="macro">assert_eq!</span>(r.<span class="number">3</span>, <span class="string">"hello"</span>);
 
             <span class="comment">// Check encoding against GLib
             </span><span class="kw">let </span>bytes = Bytes::from_owned(gv_encoded);
@@ -2704,13 +2705,13 @@
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = ar[..].into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;a(yu(xbxas)s)&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = ar[..].into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"a(yu(xbxas)s)"</span>);
         <span class="kw">let </span>encoded = to_bytes::&lt;LE, <span class="kw">_</span>&gt;(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">94</span>);
-        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Array(array) = v.clone() {
-            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">&quot;(yu(xbxas)s)&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">"(yu(xbxas)s)"</span>);
             <span class="macro">assert_eq!</span>(array.len(), <span class="number">1</span>);
             <span class="kw">let </span>r = <span class="kw-2">&amp;</span>array.get()[<span class="number">0</span>];
             <span class="kw">if let </span>Value::Structure(r) = r {
@@ -2724,15 +2725,15 @@
                     <span class="macro">assert_eq!</span>(fields[<span class="number">2</span>], Value::I64(i64::max_value()));
                     <span class="kw">if let </span>Value::Array(as_) = <span class="kw-2">&amp;</span>fields[<span class="number">3</span>] {
                         <span class="macro">assert_eq!</span>(as_.len(), <span class="number">2</span>);
-                        <span class="macro">assert_eq!</span>(as_.get()[<span class="number">0</span>], Value::new(<span class="string">&quot;Hello&quot;</span>));
-                        <span class="macro">assert_eq!</span>(as_.get()[<span class="number">1</span>], Value::new(<span class="string">&quot;World&quot;</span>));
+                        <span class="macro">assert_eq!</span>(as_.get()[<span class="number">0</span>], Value::new(<span class="string">"Hello"</span>));
+                        <span class="macro">assert_eq!</span>(as_.get()[<span class="number">1</span>], Value::new(<span class="string">"World"</span>));
                     } <span class="kw">else </span>{
                         <span class="macro">panic!</span>();
                     }
                 } <span class="kw">else </span>{
                     <span class="macro">panic!</span>();
                 }
-                <span class="macro">assert_eq!</span>(fields[<span class="number">3</span>], Value::new(<span class="string">&quot;hello&quot;</span>));
+                <span class="macro">assert_eq!</span>(fields[<span class="number">3</span>], Value::new(<span class="string">"hello"</span>));
             } <span class="kw">else </span>{
                 <span class="macro">panic!</span>();
             }
@@ -2741,16 +2742,16 @@
         }
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">use </span>rand::{distributions::Alphanumeric, thread_rng, Rng};
 
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
             <span class="macro">assert_eq!</span>(gv_encoded.len(), <span class="number">68</span>);
-            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>gv_encoded, ctxt).unwrap();
+            <span class="kw">let </span>v = from_slice::&lt;LE, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>gv_encoded, ctxt).unwrap();
             <span class="kw">if let </span>Value::Array(array) = v {
-                <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">&quot;(yu(xbxas)s)&quot;</span>);
+                <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>array.element_signature(), <span class="string">"(yu(xbxas)s)"</span>);
                 <span class="macro">assert_eq!</span>(array.len(), <span class="number">1</span>);
                 <span class="kw">let </span>r = <span class="kw-2">&amp;</span>array.get()[<span class="number">0</span>];
                 <span class="kw">if let </span>Value::Structure(r) = r {
@@ -2764,15 +2765,15 @@
                         <span class="macro">assert_eq!</span>(fields[<span class="number">2</span>], Value::I64(i64::max_value()));
                         <span class="kw">if let </span>Value::Array(as_) = <span class="kw-2">&amp;</span>fields[<span class="number">3</span>] {
                             <span class="macro">assert_eq!</span>(as_.len(), <span class="number">2</span>);
-                            <span class="macro">assert_eq!</span>(as_.get()[<span class="number">0</span>], Value::new(<span class="string">&quot;Hello&quot;</span>));
-                            <span class="macro">assert_eq!</span>(as_.get()[<span class="number">1</span>], Value::new(<span class="string">&quot;World&quot;</span>));
+                            <span class="macro">assert_eq!</span>(as_.get()[<span class="number">0</span>], Value::new(<span class="string">"Hello"</span>));
+                            <span class="macro">assert_eq!</span>(as_.get()[<span class="number">1</span>], Value::new(<span class="string">"World"</span>));
                         } <span class="kw">else </span>{
                             <span class="macro">panic!</span>();
                         }
                     } <span class="kw">else </span>{
                         <span class="macro">panic!</span>();
                     }
-                    <span class="macro">assert_eq!</span>(fields[<span class="number">3</span>], Value::new(<span class="string">&quot;hello&quot;</span>));
+                    <span class="macro">assert_eq!</span>(fields[<span class="number">3</span>], Value::new(<span class="string">"hello"</span>));
                 } <span class="kw">else </span>{
                     <span class="macro">panic!</span>();
                 }
@@ -2791,7 +2792,7 @@
             <span class="macro">assert_eq!</span>(r.<span class="number">1</span>, u32::max_value());
 
             <span class="kw">let </span><span class="kw-2">mut </span>rng = thread_rng();
-            <span class="comment">// Let&#39;s test GVariant ser/de of a 254 byte array with variable-width elements as to ensure
+            <span class="comment">// Let's test GVariant ser/de of a 254 byte array with variable-width elements as to ensure
             // no problems with non-normal BS of GVariant.
             </span><span class="kw">let </span>as_ = <span class="macro">vec!</span>[
                 (<span class="kw-2">&amp;mut </span>rng)
@@ -2806,7 +2807,7 @@
                     .collect::&lt;String&gt;(),
             ];
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>as_).unwrap();
-            <span class="comment">// 252 chars + 2 null terminator bytes doesn&#39;t leave room for 2 framing offset bytes so a
+            <span class="comment">// 252 chars + 2 null terminator bytes doesn't leave room for 2 framing offset bytes so a
             // 2-byte offset is chosen by the serializer.
             </span><span class="macro">assert_eq!</span>(gv_encoded.len(), <span class="number">258</span>);
 
@@ -2821,11 +2822,11 @@
             <span class="macro">assert_eq!</span>(as2, as_);
 
             <span class="comment">// Test conversion of Array of Value to Vec&lt;Value&gt;
-            </span><span class="kw">let </span>v = Value::new(<span class="macro">vec!</span>[Value::new(<span class="number">43</span>), Value::new(<span class="string">&quot;bonjour&quot;</span>)]);
-            <span class="kw">let </span>av = &lt;Array&lt;<span class="lifetime">&#39;_</span>&gt;&gt;::try_from(v).unwrap();
-            <span class="kw">let </span>av = &lt;Vec&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;&gt;::try_from(av).unwrap();
+            </span><span class="kw">let </span>v = Value::new(<span class="macro">vec!</span>[Value::new(<span class="number">43</span>), Value::new(<span class="string">"bonjour"</span>)]);
+            <span class="kw">let </span>av = &lt;Array&lt;<span class="lifetime">'_</span>&gt;&gt;::try_from(v).unwrap();
+            <span class="kw">let </span>av = &lt;Vec&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt;&gt;::try_from(av).unwrap();
             <span class="macro">assert_eq!</span>(av[<span class="number">0</span>], Value::new(<span class="number">43</span>));
-            <span class="macro">assert_eq!</span>(av[<span class="number">1</span>], Value::new(<span class="string">&quot;bonjour&quot;</span>));
+            <span class="macro">assert_eq!</span>(av[<span class="number">1</span>], Value::new(<span class="string">"bonjour"</span>));
 
             <span class="kw">let </span>vec = <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>];
             <span class="kw">let </span>val = Value::new(<span class="kw-2">&amp;</span>vec);
@@ -2836,15 +2837,15 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>struct_byte_array() {
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>value: (Vec&lt;u8&gt;, HashMap&lt;String, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;) = (Vec::new(), HashMap::new());
+        <span class="kw">let </span>value: (Vec&lt;u8&gt;, HashMap&lt;String, Value&lt;<span class="lifetime">'_</span>&gt;&gt;) = (Vec::new(), HashMap::new());
         <span class="kw">let </span>value = zvariant::to_bytes(ctxt, <span class="kw-2">&amp;</span>value).unwrap();
-        <span class="attr">#[cfg(feature = <span class="string">&quot;serde_bytes&quot;</span>)]
-        </span><span class="kw">let </span>(bytes, map): (<span class="kw-2">&amp;</span>serde_bytes::Bytes, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;) =
+        <span class="attr">#[cfg(feature = <span class="string">"serde_bytes"</span>)]
+        </span><span class="kw">let </span>(bytes, map): (<span class="kw-2">&amp;</span>serde_bytes::Bytes, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">'_</span>&gt;&gt;) =
             zvariant::from_slice(<span class="kw-2">&amp;</span>value, ctxt)
-                .expect(<span class="string">&quot;Could not deserialize serde_bytes::Bytes in struct.&quot;</span>);
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;serde_bytes&quot;</span>))]
-        </span><span class="kw">let </span>(bytes, map): (<span class="kw-2">&amp;</span>[u8], HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;) =
-            zvariant::from_slice(<span class="kw-2">&amp;</span>value, ctxt).expect(<span class="string">&quot;Could not deserialize u8 slice in struct&quot;</span>);
+                .expect(<span class="string">"Could not deserialize serde_bytes::Bytes in struct."</span>);
+        <span class="attr">#[cfg(not(feature = <span class="string">"serde_bytes"</span>))]
+        </span><span class="kw">let </span>(bytes, map): (<span class="kw-2">&amp;</span>[u8], HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">'_</span>&gt;&gt;) =
+            zvariant::from_slice(<span class="kw-2">&amp;</span>value, ctxt).expect(<span class="string">"Could not deserialize u8 slice in struct"</span>);
 
         <span class="macro">assert!</span>(bytes.is_empty());
         <span class="macro">assert!</span>(map.is_empty());
@@ -2853,16 +2854,16 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>struct_value() {
         <span class="comment">// Struct-&gt;Value
-        </span><span class="kw">let </span>s: Value&lt;<span class="lifetime">&#39;_</span>&gt; = (<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, (<span class="number">1</span>, <span class="number">2</span>)).into();
+        </span><span class="kw">let </span>s: Value&lt;<span class="lifetime">'_</span>&gt; = (<span class="string">"a"</span>, <span class="string">"b"</span>, (<span class="number">1</span>, <span class="number">2</span>)).into();
 
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>s).unwrap();
         <span class="macro">assert_eq!</span>(<span class="macro">dbg!</span>(encoded.len()), <span class="number">40</span>);
-        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="kw">let </span>s = &lt;Structure&lt;<span class="lifetime">&#39;_</span>&gt;&gt;::try_from(decoded).unwrap();
-        <span class="kw">let </span>outer = &lt;(Str&lt;<span class="lifetime">&#39;_</span>&gt;, Str&lt;<span class="lifetime">&#39;_</span>&gt;, Structure&lt;<span class="lifetime">&#39;_</span>&gt;)&gt;::try_from(s).unwrap();
-        <span class="macro">assert_eq!</span>(outer.<span class="number">0</span>, <span class="string">&quot;a&quot;</span>);
-        <span class="macro">assert_eq!</span>(outer.<span class="number">1</span>, <span class="string">&quot;b&quot;</span>);
+        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>s = &lt;Structure&lt;<span class="lifetime">'_</span>&gt;&gt;::try_from(decoded).unwrap();
+        <span class="kw">let </span>outer = &lt;(Str&lt;<span class="lifetime">'_</span>&gt;, Str&lt;<span class="lifetime">'_</span>&gt;, Structure&lt;<span class="lifetime">'_</span>&gt;)&gt;::try_from(s).unwrap();
+        <span class="macro">assert_eq!</span>(outer.<span class="number">0</span>, <span class="string">"a"</span>);
+        <span class="macro">assert_eq!</span>(outer.<span class="number">1</span>, <span class="string">"b"</span>);
 
         <span class="kw">let </span>inner = &lt;(i32, i32)&gt;::try_from(outer.<span class="number">2</span>).unwrap();
         <span class="macro">assert_eq!</span>(inner.<span class="number">0</span>, <span class="number">1</span>);
@@ -2876,14 +2877,14 @@
         <span class="kw">let </span>foo = Foo { val: <span class="number">99 </span>};
         <span class="kw">let </span>v = SerializeValue(<span class="kw-2">&amp;</span>foo);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
-        <span class="kw">let </span>decoded: DeserializeValue&lt;<span class="lifetime">&#39;_</span>, Foo&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: DeserializeValue&lt;<span class="lifetime">'_</span>, Foo&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded.<span class="number">0</span>, foo);
 
         <span class="comment">// Unit struct should be treated as a 0-sized tuple (the same as unit type)
         </span><span class="attr">#[derive(Serialize, Deserialize, Type, PartialEq, Debug)]
         </span><span class="kw">struct </span>Unit;
 
-        <span class="macro">assert_eq!</span>(Unit::signature(), <span class="string">&quot;&quot;</span>);
+        <span class="macro">assert_eq!</span>(Unit::signature(), <span class="string">""</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>Unit).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">0</span>);
         <span class="kw">let </span>_decoded: Unit = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
@@ -2892,7 +2893,7 @@
         </span><span class="attr">#[derive(Serialize, Deserialize, Type, PartialEq, Debug)]
         </span><span class="kw">struct </span>NoFields {}
 
-        <span class="macro">assert_eq!</span>(NoFields::signature(), <span class="string">&quot;y&quot;</span>);
+        <span class="macro">assert_eq!</span>(NoFields::signature(), <span class="string">"y"</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>NoFields {}).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">1</span>);
         <span class="kw">let </span>_decoded: NoFields = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
@@ -2914,75 +2915,75 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>dict_value() {
         <span class="kw">let </span><span class="kw-2">mut </span>map: HashMap&lt;i64, <span class="kw-2">&amp;</span>str&gt; = HashMap::new();
-        map.insert(<span class="number">1</span>, <span class="string">&quot;123&quot;</span>);
-        map.insert(<span class="number">2</span>, <span class="string">&quot;456&quot;</span>);
+        map.insert(<span class="number">1</span>, <span class="string">"123"</span>);
+        map.insert(<span class="number">2</span>, <span class="string">"456"</span>);
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>map).unwrap();
         <span class="macro">assert_eq!</span>(<span class="macro">dbg!</span>(encoded.len()), <span class="number">40</span>);
         <span class="kw">let </span>decoded: HashMap&lt;i64, <span class="kw-2">&amp;</span>str&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">&quot;123&quot;</span>);
-        <span class="macro">assert_eq!</span>(decoded[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">&quot;456&quot;</span>);
+        <span class="macro">assert_eq!</span>(decoded[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">"123"</span>);
+        <span class="macro">assert_eq!</span>(decoded[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">"456"</span>);
 
         <span class="comment">// GVariant format now
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>map).unwrap();
             <span class="macro">assert_eq!</span>(gv_encoded.len(), <span class="number">30</span>);
             <span class="kw">let </span>map: HashMap&lt;i64, <span class="kw-2">&amp;</span>str&gt; = from_slice(<span class="kw-2">&amp;</span>gv_encoded, ctxt).unwrap();
-            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">&quot;123&quot;</span>);
-            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">&quot;456&quot;</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">"123"</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">"456"</span>);
 
             <span class="comment">// Check encoding against GLib
             </span><span class="kw">let </span>bytes = Bytes::from_owned(gv_encoded);
             <span class="kw">let </span>variant = Variant::from_bytes::&lt;HashMap&lt;i64, <span class="kw-2">&amp;</span>str&gt;&gt;(<span class="kw-2">&amp;</span>bytes);
             <span class="macro">assert_eq!</span>(variant.n_children(), <span class="number">2</span>);
             <span class="kw">let </span>map: HashMap&lt;i64, String&gt; = HashMap::from_variant(<span class="kw-2">&amp;</span>variant).unwrap();
-            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">&quot;123&quot;</span>);
-            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">&quot;456&quot;</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">"123"</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">"456"</span>);
         }
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = Dict::from(map).into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;a{xs}&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = Dict::from(map).into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"a{xs}"</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">48</span>);
         <span class="comment">// Convert it back
-        </span><span class="kw">let </span>dict: Dict&lt;<span class="lifetime">&#39;_</span>, <span class="lifetime">&#39;_</span>&gt; = v.try_into().unwrap();
+        </span><span class="kw">let </span>dict: Dict&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt; = v.try_into().unwrap();
         <span class="kw">let </span>map: HashMap&lt;i64, String&gt; = dict.try_into().unwrap();
-        <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">&quot;123&quot;</span>);
-        <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">&quot;456&quot;</span>);
+        <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">1</span>], <span class="string">"123"</span>);
+        <span class="macro">assert_eq!</span>(map[<span class="kw-2">&amp;</span><span class="number">2</span>], <span class="string">"456"</span>);
         <span class="comment">// Also decode it back
         </span><span class="kw">let </span>v = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Dict(dict) = v {
-            <span class="macro">assert_eq!</span>(dict.get::&lt;i64, str&gt;(<span class="kw-2">&amp;</span><span class="number">1</span>).unwrap().unwrap(), <span class="string">&quot;123&quot;</span>);
-            <span class="macro">assert_eq!</span>(dict.get::&lt;i64, str&gt;(<span class="kw-2">&amp;</span><span class="number">2</span>).unwrap().unwrap(), <span class="string">&quot;456&quot;</span>);
+            <span class="macro">assert_eq!</span>(dict.get::&lt;i64, str&gt;(<span class="kw-2">&amp;</span><span class="number">1</span>).unwrap().unwrap(), <span class="string">"123"</span>);
+            <span class="macro">assert_eq!</span>(dict.get::&lt;i64, str&gt;(<span class="kw-2">&amp;</span><span class="number">2</span>).unwrap().unwrap(), <span class="string">"456"</span>);
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>();
         }
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>{
             <span class="comment">// GVariant-format requires framing offsets for dict entries with variable-length keys so
-            // let&#39;s test that.
+            // let's test that.
             </span><span class="kw">let </span><span class="kw-2">mut </span>map: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt; = HashMap::new();
-            map.insert(<span class="string">&quot;hi&quot;</span>, <span class="string">&quot;1234&quot;</span>);
-            map.insert(<span class="string">&quot;world&quot;</span>, <span class="string">&quot;561&quot;</span>);
+            map.insert(<span class="string">"hi"</span>, <span class="string">"1234"</span>);
+            map.insert(<span class="string">"world"</span>, <span class="string">"561"</span>);
             <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
             <span class="kw">let </span>gv_encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>map).unwrap();
             <span class="macro">assert_eq!</span>(gv_encoded.len(), <span class="number">22</span>);
             <span class="kw">let </span>map: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt; = from_slice(<span class="kw-2">&amp;</span>gv_encoded, ctxt).unwrap();
-            <span class="macro">assert_eq!</span>(map[<span class="string">&quot;hi&quot;</span>], <span class="string">&quot;1234&quot;</span>);
-            <span class="macro">assert_eq!</span>(map[<span class="string">&quot;world&quot;</span>], <span class="string">&quot;561&quot;</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="string">"hi"</span>], <span class="string">"1234"</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="string">"world"</span>], <span class="string">"561"</span>);
 
             <span class="comment">// Check encoding against GLib
             </span><span class="kw">let </span>bytes = Bytes::from_owned(gv_encoded);
             <span class="kw">let </span>variant = Variant::from_bytes::&lt;HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt;&gt;(<span class="kw-2">&amp;</span>bytes);
             <span class="macro">assert_eq!</span>(variant.n_children(), <span class="number">2</span>);
             <span class="kw">let </span>map: HashMap&lt;String, String&gt; = HashMap::from_variant(<span class="kw-2">&amp;</span>variant).unwrap();
-            <span class="macro">assert_eq!</span>(map[<span class="string">&quot;hi&quot;</span>], <span class="string">&quot;1234&quot;</span>);
-            <span class="macro">assert_eq!</span>(map[<span class="string">&quot;world&quot;</span>], <span class="string">&quot;561&quot;</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="string">"hi"</span>], <span class="string">"1234"</span>);
+            <span class="macro">assert_eq!</span>(map[<span class="string">"world"</span>], <span class="string">"561"</span>);
 
             <span class="comment">// Now the same but empty dict this time
             </span><span class="kw">let </span>map: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt; = HashMap::new();
@@ -2995,33 +2996,33 @@
 
         <span class="comment">// Now a hand-crafted Dict Value but with a Value as value
         </span><span class="kw">let </span><span class="kw-2">mut </span>dict = Dict::new(&lt;<span class="kw-2">&amp;</span>str&gt;::signature(), Value::signature());
-        dict.add(<span class="string">&quot;hello&quot;</span>, Value::new(<span class="string">&quot;there&quot;</span>)).unwrap();
-        dict.add(<span class="string">&quot;bye&quot;</span>, Value::new(<span class="string">&quot;now&quot;</span>)).unwrap();
-        <span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = dict.into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;a{sv}&quot;</span>);
+        dict.add(<span class="string">"hello"</span>, Value::new(<span class="string">"there"</span>)).unwrap();
+        dict.add(<span class="string">"bye"</span>, Value::new(<span class="string">"now"</span>)).unwrap();
+        <span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = dict.into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"a{sv}"</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(<span class="macro">dbg!</span>(encoded.len()), <span class="number">68</span>);
-        <span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Dict(dict) = v {
             <span class="macro">assert_eq!</span>(
-                <span class="kw-2">*</span>dict.get::&lt;<span class="kw">_</span>, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="string">&quot;hello&quot;</span>).unwrap().unwrap(),
-                Value::new(<span class="string">&quot;there&quot;</span>)
+                <span class="kw-2">*</span>dict.get::&lt;<span class="kw">_</span>, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="string">"hello"</span>).unwrap().unwrap(),
+                Value::new(<span class="string">"there"</span>)
             );
             <span class="macro">assert_eq!</span>(
-                <span class="kw-2">*</span>dict.get::&lt;<span class="kw">_</span>, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="string">&quot;bye&quot;</span>).unwrap().unwrap(),
-                Value::new(<span class="string">&quot;now&quot;</span>)
+                <span class="kw-2">*</span>dict.get::&lt;<span class="kw">_</span>, Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="string">"bye"</span>).unwrap().unwrap(),
+                Value::new(<span class="string">"now"</span>)
             );
 
             <span class="comment">// Try converting to a HashMap
-            </span><span class="kw">let </span>map = &lt;HashMap&lt;String, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;&gt;::try_from(dict).unwrap();
-            <span class="macro">assert_eq!</span>(map[<span class="string">&quot;hello&quot;</span>], Value::new(<span class="string">&quot;there&quot;</span>));
-            <span class="macro">assert_eq!</span>(map[<span class="string">&quot;bye&quot;</span>], Value::new(<span class="string">&quot;now&quot;</span>));
+            </span><span class="kw">let </span>map = &lt;HashMap&lt;String, Value&lt;<span class="lifetime">'_</span>&gt;&gt;&gt;::try_from(dict).unwrap();
+            <span class="macro">assert_eq!</span>(map[<span class="string">"hello"</span>], Value::new(<span class="string">"there"</span>));
+            <span class="macro">assert_eq!</span>(map[<span class="string">"bye"</span>], Value::new(<span class="string">"now"</span>));
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>();
         }
 
         <span class="attr">#[derive(SerializeDict, DeserializeDict, Type, PartialEq, Debug)]
-        #[zvariant(signature = <span class="string">&quot;a{sv}&quot;</span>)]
+        #[zvariant(signature = <span class="string">"a{sv}"</span>)]
         </span><span class="kw">struct </span>Test {
             process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
             group_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
@@ -3030,22 +3031,22 @@
         <span class="kw">let </span>test = Test {
             process_id: <span class="prelude-val">Some</span>(<span class="number">42</span>),
             group_id: <span class="prelude-val">None</span>,
-            user: <span class="string">&quot;me&quot;</span>.to_string(),
+            user: <span class="string">"me"</span>.to_string(),
         };
 
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>test).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">51</span>);
 
-        <span class="kw">let </span>decoded: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="macro">assert_eq!</span>(decoded[<span class="string">&quot;process_id&quot;</span>], Value::U32(<span class="number">42</span>));
-        <span class="macro">assert_eq!</span>(decoded[<span class="string">&quot;user&quot;</span>], Value::new(<span class="string">&quot;me&quot;</span>));
-        <span class="macro">assert!</span>(!decoded.contains_key(<span class="string">&quot;group_id&quot;</span>));
+        <span class="kw">let </span>decoded: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">'_</span>&gt;&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="macro">assert_eq!</span>(decoded[<span class="string">"process_id"</span>], Value::U32(<span class="number">42</span>));
+        <span class="macro">assert_eq!</span>(decoded[<span class="string">"user"</span>], Value::new(<span class="string">"me"</span>));
+        <span class="macro">assert!</span>(!decoded.contains_key(<span class="string">"group_id"</span>));
 
         <span class="kw">let </span>decoded: Test = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded, test);
 
         <span class="attr">#[derive(SerializeDict, DeserializeDict, Type, PartialEq, Debug)]
-        #[zvariant(signature = <span class="string">&quot;a{sv}&quot;</span>)]
+        #[zvariant(signature = <span class="string">"a{sv}"</span>)]
         </span><span class="kw">struct </span>TestMissing {
             process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
             group_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
@@ -3055,11 +3056,11 @@
         <span class="kw">let </span>decoded: <span class="prelude-ty">Result</span>&lt;TestMissing&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt);
         <span class="macro">assert_eq!</span>(
             decoded.unwrap_err(),
-            Error::Message(<span class="string">&quot;missing field `quota`&quot;</span>.to_string())
+            Error::Message(<span class="string">"missing field `quota`"</span>.to_string())
         );
 
         <span class="attr">#[derive(SerializeDict, DeserializeDict, Type, PartialEq, Debug)]
-        #[zvariant(signature = <span class="string">&quot;a{sv}&quot;</span>)]
+        #[zvariant(signature = <span class="string">"a{sv}"</span>)]
         </span><span class="kw">struct </span>TestSkipUnknown {
             process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
             group_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
@@ -3067,7 +3068,7 @@
         <span class="kw">let _</span>: TestSkipUnknown = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
 
         <span class="attr">#[derive(SerializeDict, DeserializeDict, Type, PartialEq, Debug)]
-        #[zvariant(deny_unknown_fields, signature = <span class="string">&quot;a{sv}&quot;</span>)]
+        #[zvariant(deny_unknown_fields, signature = <span class="string">"a{sv}"</span>)]
         </span><span class="kw">struct </span>TestUnknown {
             process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
             group_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
@@ -3075,7 +3076,7 @@
         <span class="kw">let </span>decoded: <span class="prelude-ty">Result</span>&lt;TestUnknown&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt);
         <span class="macro">assert_eq!</span>(
             decoded.unwrap_err(),
-            Error::Message(<span class="string">&quot;unknown field `user`, expected `process_id` or `group_id`&quot;</span>.to_string())
+            Error::Message(<span class="string">"unknown field `user`, expected `process_id` or `group_id`"</span>.to_string())
         );
     }
 
@@ -3097,8 +3098,8 @@
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = <span class="number">0xFEFE_u64</span>.into();
-        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;t&quot;</span>);
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = <span class="number">0xFEFE_u64</span>.into();
+        <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"t"</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">16</span>);
         <span class="kw">let </span>v = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
@@ -3110,16 +3111,16 @@
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">16</span>);
         <span class="kw">let </span>v = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Value(v) = v {
-            <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">&quot;t&quot;</span>);
+            <span class="macro">assert_eq!</span>(v.value_signature(), <span class="string">"t"</span>);
             <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>v, Value::U64(<span class="number">0xFEFE</span>));
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>();
         }
 
         <span class="comment">// Ensure Value works with other Serializer &amp; Deserializer
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = <span class="number">0xFEFE_u64</span>.into();
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = <span class="number">0xFEFE_u64</span>.into();
         <span class="kw">let </span>encoded = serde_json::to_string(<span class="kw-2">&amp;</span>v).unwrap();
-        <span class="kw">let </span>v = serde_json::from_str::&lt;Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded).unwrap();
+        <span class="kw">let </span>v = serde_json::from_str::&lt;Value&lt;<span class="lifetime">'_</span>&gt;&gt;(<span class="kw-2">&amp;</span>encoded).unwrap();
         <span class="macro">assert_eq!</span>(v, Value::U64(<span class="number">0xFEFE</span>));
     }
 
@@ -3143,7 +3144,7 @@
                 (Context::&lt;BE&gt;::new_dbus(<span class="number">3</span>), <span class="number">5</span>),
                 (Context::&lt;BE&gt;::new_dbus(<span class="number">4</span>), <span class="number">4</span>),
             ],
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>[
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">0</span>), <span class="number">4usize</span>),
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">1</span>), <span class="number">7</span>),
@@ -3152,7 +3153,7 @@
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">4</span>), <span class="number">4</span>),
             ],
         ];
-        <span class="kw">let </span>signature = <span class="string">&quot;u&quot;</span>.try_into().unwrap();
+        <span class="kw">let </span>signature = <span class="string">"u"</span>.try_into().unwrap();
         <span class="kw">for </span>ctxts_n_expected_len <span class="kw">in </span>ctxts_n_expected_lens {
             <span class="kw">for </span>(ctxt, expected_len) <span class="kw">in </span>ctxts_n_expected_len {
                 <span class="kw">let </span>encoded = to_bytes_for_signature(ctxt, <span class="kw-2">&amp;</span>signature, <span class="kw-2">&amp;</span>Unit::Variant2).unwrap();
@@ -3163,10 +3164,10 @@
         }
 
         <span class="attr">#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
-        </span><span class="kw">enum </span>NewType&lt;<span class="lifetime">&#39;s</span>&gt; {
-            Variant1(<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>str),
-            Variant2(<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>str),
-            Variant3(<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>str),
+        </span><span class="kw">enum </span>NewType&lt;<span class="lifetime">'s</span>&gt; {
+            Variant1(<span class="kw-2">&amp;</span><span class="lifetime">'s </span>str),
+            Variant2(<span class="kw-2">&amp;</span><span class="lifetime">'s </span>str),
+            Variant3(<span class="kw-2">&amp;</span><span class="lifetime">'s </span>str),
         }
 
         <span class="kw">let </span>ctxts_n_expected_lens = [
@@ -3177,7 +3178,7 @@
                 (Context::&lt;BE&gt;::new_dbus(<span class="number">3</span>), <span class="number">19</span>),
                 (Context::&lt;BE&gt;::new_dbus(<span class="number">4</span>), <span class="number">18</span>),
             ],
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>[
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">0</span>), <span class="number">10usize</span>),
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">1</span>), <span class="number">13</span>),
@@ -3186,15 +3187,15 @@
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">4</span>), <span class="number">10</span>),
             ],
         ];
-        <span class="kw">let </span>signature = <span class="string">&quot;(us)&quot;</span>.try_into().unwrap();
+        <span class="kw">let </span>signature = <span class="string">"(us)"</span>.try_into().unwrap();
         <span class="kw">for </span>ctxts_n_expected_len <span class="kw">in </span>ctxts_n_expected_lens {
             <span class="kw">for </span>(ctxt, expected_len) <span class="kw">in </span>ctxts_n_expected_len {
                 <span class="kw">let </span>encoded =
-                    to_bytes_for_signature(ctxt, <span class="kw-2">&amp;</span>signature, <span class="kw-2">&amp;</span>NewType::Variant2(<span class="string">&quot;hello&quot;</span>)).unwrap();
+                    to_bytes_for_signature(ctxt, <span class="kw-2">&amp;</span>signature, <span class="kw-2">&amp;</span>NewType::Variant2(<span class="string">"hello"</span>)).unwrap();
                 <span class="macro">assert_eq!</span>(encoded.len(), expected_len);
-                <span class="kw">let </span>decoded: NewType&lt;<span class="lifetime">&#39;_</span>&gt; =
+                <span class="kw">let </span>decoded: NewType&lt;<span class="lifetime">'_</span>&gt; =
                     from_slice_for_signature(<span class="kw-2">&amp;</span>encoded, ctxt, <span class="kw-2">&amp;</span>signature).unwrap();
-                <span class="macro">assert_eq!</span>(decoded, NewType::Variant2(<span class="string">&quot;hello&quot;</span>));
+                <span class="macro">assert_eq!</span>(decoded, NewType::Variant2(<span class="string">"hello"</span>));
             }
         }
 
@@ -3212,7 +3213,7 @@
                 (Context::&lt;BE&gt;::new_dbus(<span class="number">3</span>), <span class="number">21</span>),
                 (Context::&lt;BE&gt;::new_dbus(<span class="number">4</span>), <span class="number">20</span>),
             ],
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>[
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">0</span>), <span class="number">12usize</span>),
                 (Context::&lt;BE&gt;::new_gvariant(<span class="number">1</span>), <span class="number">15</span>),
@@ -3222,7 +3223,7 @@
             ],
         ];
         <span class="comment">// TODO: Provide convenience API to create complex signatures
-        </span><span class="kw">let </span>signature = <span class="string">&quot;(u(yu))&quot;</span>.try_into().unwrap();
+        </span><span class="kw">let </span>signature = <span class="string">"(u(yu))"</span>.try_into().unwrap();
         <span class="kw">for </span>ctxts_n_expected_len <span class="kw">in </span>ctxts_n_expected_lens {
             <span class="kw">for </span>(ctxt, expected_len) <span class="kw">in </span>ctxts_n_expected_len {
                 <span class="kw">let </span>encoded =
@@ -3248,22 +3249,22 @@
         <span class="kw">use </span>serde_repr::{Deserialize_repr, Serialize_repr};
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>Struct&lt;<span class="lifetime">&#39;s</span>&gt; {
+        </span><span class="kw">struct </span>Struct&lt;<span class="lifetime">'s</span>&gt; {
             field1: u16,
             field2: i64,
-            field3: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>str,
+            field3: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>str,
         }
 
-        <span class="macro">assert_eq!</span>(Struct::signature(), <span class="string">&quot;(qxs)&quot;</span>);
+        <span class="macro">assert_eq!</span>(Struct::signature(), <span class="string">"(qxs)"</span>);
         <span class="kw">let </span>s = Struct {
             field1: <span class="number">0xFF_FF</span>,
             field2: <span class="number">0xFF_FF_FF_FF_FF_FF</span>,
-            field3: <span class="string">&quot;hello&quot;</span>,
+            field3: <span class="string">"hello"</span>,
         };
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>s).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">26</span>);
-        <span class="kw">let </span>decoded: Struct&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Struct&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded, s);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type)]
@@ -3320,7 +3321,7 @@
         <span class="macro">assert_eq!</span>(decoded, NoReprEnum::Variant2);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, Debug, PartialEq)]
-        #[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
+        #[zvariant(signature = <span class="string">"s"</span>)]
         </span><span class="kw">enum </span>StrEnum {
             Variant1,
             Variant2,
@@ -3338,27 +3339,27 @@
             Variant1(f64),
             Variant2(f64),
         }
-        <span class="macro">assert_eq!</span>(NewType::signature(), <span class="string">&quot;(ud)&quot;</span>);
+        <span class="macro">assert_eq!</span>(NewType::signature(), <span class="string">"(ud)"</span>);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type)]
         </span><span class="kw">enum </span>StructFields {
-            Variant1(u16, i64, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str),
+            Variant1(u16, i64, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str),
             Variant2 {
                 field1: u16,
                 field2: i64,
-                field3: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+                field3: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
             },
         }
-        <span class="macro">assert_eq!</span>(StructFields::signature(), <span class="string">&quot;(u(qxs))&quot;</span>);
+        <span class="macro">assert_eq!</span>(StructFields::signature(), <span class="string">"(u(qxs))"</span>);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>AStruct&lt;<span class="lifetime">&#39;s</span>&gt; {
+        </span><span class="kw">struct </span>AStruct&lt;<span class="lifetime">'s</span>&gt; {
             field1: u16,
-            field2: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>[u8],
-            field3: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>[u8],
+            field2: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>[u8],
+            field3: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>[u8],
             field4: i64,
         }
-        <span class="macro">assert_eq!</span>(AStruct::signature(), <span class="string">&quot;(qayayx)&quot;</span>);
+        <span class="macro">assert_eq!</span>(AStruct::signature(), <span class="string">"(qayayx)"</span>);
         <span class="kw">let </span>s = AStruct {
             field1: <span class="number">0xFF_FF</span>,
             field2: <span class="kw-2">&amp;</span>[<span class="number">77u8</span>; <span class="number">8</span>],
@@ -3367,7 +3368,7 @@
         };
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>s).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">40</span>);
-        <span class="kw">let </span>decoded: AStruct&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: AStruct&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded, s);
     }
 
@@ -3384,16 +3385,16 @@
             <span class="macro">assert_eq!</span>(l, (<span class="number">4</span>, <span class="number">1</span>));
         }
 
-        <span class="kw">let </span>l = <span class="kw">crate</span>::serialized_size(ctxt, <span class="kw-2">&amp;</span>(<span class="string">&#39;a&#39;</span>, <span class="string">&quot;abc&quot;</span>, <span class="kw-2">&amp;</span>(<span class="number">1_u32</span>, <span class="number">2</span>))).unwrap();
+        <span class="kw">let </span>l = <span class="kw">crate</span>::serialized_size(ctxt, <span class="kw-2">&amp;</span>(<span class="string">'a'</span>, <span class="string">"abc"</span>, <span class="kw-2">&amp;</span>(<span class="number">1_u32</span>, <span class="number">2</span>))).unwrap();
         <span class="macro">assert_eq!</span>(l, <span class="number">24</span>);
 
         <span class="kw">let </span>v = <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>];
-        <span class="kw">let </span>l = <span class="kw">crate</span>::serialized_size(ctxt, <span class="kw-2">&amp;</span>(<span class="string">&#39;a&#39;</span>, <span class="string">&quot;abc&quot;</span>, <span class="kw-2">&amp;</span>v)).unwrap();
+        <span class="kw">let </span>l = <span class="kw">crate</span>::serialized_size(ctxt, <span class="kw-2">&amp;</span>(<span class="string">'a'</span>, <span class="string">"abc"</span>, <span class="kw-2">&amp;</span>v)).unwrap();
         <span class="macro">assert_eq!</span>(l, <span class="number">28</span>);
     }
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;serde_bytes&quot;</span>)]
+    #[cfg(feature = <span class="string">"serde_bytes"</span>)]
     </span><span class="kw">fn </span>serde_bytes() {
         <span class="kw">use </span>serde::{Deserialize, Serialize};
         <span class="kw">use </span>serde_bytes::<span class="kw-2">*</span>;
@@ -3406,13 +3407,13 @@
         <span class="macro">assert_eq!</span>(decoded.len(), <span class="number">1_000_000</span>);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>Struct&lt;<span class="lifetime">&#39;s</span>&gt; {
+        </span><span class="kw">struct </span>Struct&lt;<span class="lifetime">'s</span>&gt; {
             field1: u16,
-            <span class="attr">#[serde(with = <span class="string">&quot;serde_bytes&quot;</span>)]
-            </span>field2: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>[u8],
+            <span class="attr">#[serde(with = <span class="string">"serde_bytes"</span>)]
+            </span>field2: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>[u8],
             field3: i64,
         }
-        <span class="macro">assert_eq!</span>(Struct::signature(), <span class="string">&quot;(qayx)&quot;</span>);
+        <span class="macro">assert_eq!</span>(Struct::signature(), <span class="string">"(qayx)"</span>);
         <span class="kw">let </span>s = Struct {
             field1: <span class="number">0xFF_FF</span>,
             field2: <span class="kw-2">&amp;</span>[<span class="number">77u8</span>; <span class="number">512</span>],
@@ -3420,12 +3421,12 @@
         };
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>s).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">528</span>);
-        <span class="kw">let </span>decoded: Struct&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Struct&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded, s);
     }
 
     <span class="attr">#[test]
-    #[cfg(all(feature = <span class="string">&quot;serde_bytes&quot;</span>, feature = <span class="string">&quot;gvariant&quot;</span>))]
+    #[cfg(all(feature = <span class="string">"serde_bytes"</span>, feature = <span class="string">"gvariant"</span>))]
     </span><span class="kw">fn </span>serde_bytes_gvariant() {
         <span class="kw">use </span>serde::{Deserialize, Serialize};
         <span class="kw">use </span>serde_bytes::<span class="kw-2">*</span>;
@@ -3438,13 +3439,13 @@
         <span class="macro">assert_eq!</span>(decoded.len(), <span class="number">1_000_000</span>);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>Struct&lt;<span class="lifetime">&#39;s</span>&gt; {
+        </span><span class="kw">struct </span>Struct&lt;<span class="lifetime">'s</span>&gt; {
             field1: u16,
-            <span class="attr">#[serde(with = <span class="string">&quot;serde_bytes&quot;</span>)]
-            </span>field2: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>[u8],
+            <span class="attr">#[serde(with = <span class="string">"serde_bytes"</span>)]
+            </span>field2: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>[u8],
             field3: i64,
         }
-        <span class="macro">assert_eq!</span>(Struct::signature(), <span class="string">&quot;(qayx)&quot;</span>);
+        <span class="macro">assert_eq!</span>(Struct::signature(), <span class="string">"(qayx)"</span>);
         <span class="kw">let </span>s = Struct {
             field1: <span class="number">0xFF_FF</span>,
             field2: <span class="kw-2">&amp;</span>[<span class="number">77u8</span>; <span class="number">512</span>],
@@ -3452,12 +3453,12 @@
         };
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>s).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">530</span>);
-        <span class="kw">let </span>decoded: Struct&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Struct&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(decoded, s);
     }
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    #[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">fn </span>option_value() {
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
 
@@ -3474,10 +3475,10 @@
         <span class="macro">assert_eq!</span>(variant.get::&lt;<span class="prelude-ty">Option</span>&lt;i16&gt;&gt;().unwrap(), mn);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = mn.into();
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = mn.into();
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">5</span>);
-        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Maybe(maybe) = decoded {
             <span class="macro">assert_eq!</span>(maybe.get().unwrap(), mn);
         } <span class="kw">else </span>{
@@ -3503,7 +3504,7 @@
         <span class="macro">assert!</span>(variant.get::&lt;<span class="prelude-ty">Option</span>&lt;i16&gt;&gt;().unwrap().is_none());
 
         <span class="comment">// Next a Some variable-sized value
-        </span><span class="kw">let </span>ms = <span class="prelude-val">Some</span>(<span class="string">&quot;hello world&quot;</span>);
+        </span><span class="kw">let </span>ms = <span class="prelude-val">Some</span>(<span class="string">"hello world"</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ms).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">13</span>);
         <span class="kw">let </span>decoded: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
@@ -3518,10 +3519,10 @@
         );
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = ms.into();
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = ms.into();
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">16</span>);
-        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="kw">if let </span>Value::Maybe(maybe) = decoded {
             <span class="macro">assert_eq!</span>(maybe.get::&lt;String&gt;().unwrap().as_deref(), ms);
         } <span class="kw">else </span>{
@@ -3548,8 +3549,8 @@
 
         <span class="comment">// In a seq type
         </span><span class="kw">let </span>ams = <span class="macro">vec!</span>[
-            <span class="prelude-val">Some</span>(String::from(<span class="string">&quot;hello world&quot;</span>)),
-            <span class="prelude-val">Some</span>(String::from(<span class="string">&quot;bye world&quot;</span>)),
+            <span class="prelude-val">Some</span>(String::from(<span class="string">"hello world"</span>)),
+            <span class="prelude-val">Some</span>(String::from(<span class="string">"bye world"</span>)),
         ];
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>ams).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">26</span>);
@@ -3563,10 +3564,10 @@
         <span class="macro">assert_eq!</span>(decoded, ams);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = ams.clone().into();
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = ams.clone().into();
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">30</span>);
-        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(v, decoded);
 
         <span class="comment">// Check encoding against GLib
@@ -3577,7 +3578,7 @@
 
         <span class="comment">// In a struct
         </span><span class="kw">let </span>structure: (<span class="prelude-ty">Option</span>&lt;String&gt;, u64, <span class="prelude-ty">Option</span>&lt;String&gt;) =
-            (<span class="prelude-val">Some</span>(String::from(<span class="string">&quot;hello world&quot;</span>)), <span class="number">42u64</span>, <span class="prelude-val">None</span>);
+            (<span class="prelude-val">Some</span>(String::from(<span class="string">"hello world"</span>)), <span class="number">42u64</span>, <span class="prelude-val">None</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>structure).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">25</span>);
         <span class="kw">let </span>decoded: (<span class="prelude-ty">Option</span>&lt;String&gt;, u64, <span class="prelude-ty">Option</span>&lt;String&gt;) = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
@@ -3592,10 +3593,10 @@
         <span class="macro">assert_eq!</span>(decoded, structure);
 
         <span class="comment">// As Value
-        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">&#39;_</span>&gt; = structure.clone().into();
+        </span><span class="kw">let </span>v: Value&lt;<span class="lifetime">'_</span>&gt; = structure.clone().into();
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>v).unwrap();
         <span class="macro">assert_eq!</span>(encoded.len(), <span class="number">33</span>);
-        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="kw">let </span>decoded: Value&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
         <span class="macro">assert_eq!</span>(v, decoded);
 
         <span class="comment">// Check encoding against GLib
@@ -3613,7 +3614,7 @@
         <span class="kw">use </span>serde::{Deserialize, Serialize};
 
         <span class="kw">let </span><span class="kw-2">mut </span>hmap = HashMap::new();
-        hmap.insert(<span class="string">&quot;key&quot;</span>.into(), <span class="string">&quot;value&quot;</span>.into());
+        hmap.insert(<span class="string">"key"</span>.into(), <span class="string">"value"</span>.into());
 
         <span class="attr">#[derive(Type, Deserialize, Serialize, PartialEq, Debug)]
         </span><span class="kw">struct </span>Foo {
@@ -3621,7 +3622,7 @@
         }
 
         <span class="kw">let </span>foo = Foo { hmap };
-        <span class="macro">assert_eq!</span>(Foo::signature(), <span class="string">&quot;(a{ss})&quot;</span>);
+        <span class="macro">assert_eq!</span>(Foo::signature(), <span class="string">"(a{ss})"</span>);
 
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
         <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>foo, <span class="number">1</span>)).unwrap();
@@ -3631,22 +3632,22 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>issue_59() {
-        <span class="comment">// Ensure we don&#39;t panic on deserializing tuple of smaller than expected length.
+        <span class="comment">// Ensure we don't panic on deserializing tuple of smaller than expected length.
         </span><span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_dbus(<span class="number">0</span>);
-        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>(<span class="string">&quot;hello&quot;</span>,)).unwrap();
+        <span class="kw">let </span>encoded = to_bytes(ctxt, <span class="kw-2">&amp;</span>(<span class="string">"hello"</span>,)).unwrap();
         <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str)&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt);
         <span class="macro">assert!</span>(result.is_err());
     }
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+    #[cfg(feature = <span class="string">"gvariant"</span>)]
     </span><span class="kw">fn </span>issue_99() {
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>ZVStruct&lt;<span class="lifetime">&#39;s</span>&gt;(<span class="attr">#[serde(borrow)] </span>HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>str, Value&lt;<span class="lifetime">&#39;s</span>&gt;&gt;);
+        </span><span class="kw">struct </span>ZVStruct&lt;<span class="lifetime">'s</span>&gt;(<span class="attr">#[serde(borrow)] </span>HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'s </span>str, Value&lt;<span class="lifetime">'s</span>&gt;&gt;);
 
         <span class="kw">let </span><span class="kw-2">mut </span>dict = HashMap::new();
-        dict.insert(<span class="string">&quot;hi&quot;</span>, Value::from(<span class="string">&quot;hello&quot;</span>));
-        dict.insert(<span class="string">&quot;bye&quot;</span>, Value::from(<span class="string">&quot;then&quot;</span>));
+        dict.insert(<span class="string">"hi"</span>, Value::from(<span class="string">"hello"</span>));
+        dict.insert(<span class="string">"bye"</span>, Value::from(<span class="string">"then"</span>));
 
         <span class="kw">let </span>element = ZVStruct(dict);
 
@@ -3654,7 +3655,7 @@
         <span class="kw">let </span>signature = ZVStruct::signature();
 
         <span class="kw">let </span>encoded = to_bytes_for_signature(ctxt, <span class="kw-2">&amp;</span>signature, <span class="kw-2">&amp;</span>element).unwrap();
-        <span class="kw">let _</span>: ZVStruct&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice_for_signature(<span class="kw-2">&amp;</span>encoded, ctxt, <span class="kw-2">&amp;</span>signature).unwrap();
+        <span class="kw">let _</span>: ZVStruct&lt;<span class="lifetime">'_</span>&gt; = from_slice_for_signature(<span class="kw-2">&amp;</span>encoded, ctxt, <span class="kw-2">&amp;</span>signature).unwrap();
     }
 
     <span class="attr">#[test]
@@ -3672,26 +3673,26 @@
         <span class="macro">assert_eq!</span>(localhost_v6, decoded);
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;ostree-tests&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"ostree-tests"</span>)]
     #[test]
     </span><span class="kw">fn </span>ostree_de() {
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>Summary&lt;<span class="lifetime">&#39;a</span>&gt;(Vec&lt;Repo&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, <span class="attr">#[serde(borrow)] </span>HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;);
+        </span><span class="kw">struct </span>Summary&lt;<span class="lifetime">'a</span>&gt;(Vec&lt;Repo&lt;<span class="lifetime">'a</span>&gt;&gt;, <span class="attr">#[serde(borrow)] </span>HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str, Value&lt;<span class="lifetime">'a</span>&gt;&gt;);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>Repo&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, <span class="attr">#[serde(borrow)] </span>Metadata&lt;<span class="lifetime">&#39;a</span>&gt;);
+        </span><span class="kw">struct </span>Repo&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str, <span class="attr">#[serde(borrow)] </span>Metadata&lt;<span class="lifetime">'a</span>&gt;);
 
         <span class="attr">#[derive(Deserialize, Serialize, Type, PartialEq, Debug)]
-        </span><span class="kw">struct </span>Metadata&lt;<span class="lifetime">&#39;a</span>&gt;(u64, Vec&lt;u8&gt;, <span class="attr">#[serde(borrow)] </span>HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, Value&lt;<span class="lifetime">&#39;a</span>&gt;&gt;);
+        </span><span class="kw">struct </span>Metadata&lt;<span class="lifetime">'a</span>&gt;(u64, Vec&lt;u8&gt;, <span class="attr">#[serde(borrow)] </span>HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str, Value&lt;<span class="lifetime">'a</span>&gt;&gt;);
 
-        <span class="kw">let </span>encoded = std::fs::read(<span class="string">&quot;../test-data/flatpak-summary.dump&quot;</span>).unwrap();
+        <span class="kw">let </span>encoded = std::fs::read(<span class="string">"../test-data/flatpak-summary.dump"</span>).unwrap();
         <span class="kw">let </span>ctxt = Context::&lt;LE&gt;::new_gvariant(<span class="number">0</span>);
-        <span class="kw">let _</span>: Summary&lt;<span class="lifetime">&#39;_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
-        <span class="comment">// If we&#39;re able to deserialize all the data successfully, don&#39;t bother checking the summary data.
+        <span class="kw">let _</span>: Summary&lt;<span class="lifetime">'_</span>&gt; = from_slice(<span class="kw-2">&amp;</span>encoded, ctxt).unwrap();
+        <span class="comment">// If we're able to deserialize all the data successfully, don't bother checking the summary data.
     </span>}
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+    #[cfg(feature = <span class="string">"time"</span>)]
     </span><span class="kw">fn </span>time() {
         <span class="comment">// time::Date
         </span><span class="kw">let </span>date = time::Date::from_calendar_date(<span class="number">2011</span>, time::Month::June, <span class="number">21</span>).unwrap();

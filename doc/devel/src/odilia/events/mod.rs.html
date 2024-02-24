@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/events/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../odilia/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/events/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -211,6 +212,13 @@
 <a href="#211" id="211">211</a>
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
 </pre></div><pre class="rust"><code><span class="kw">mod </span>cache;
 <span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
@@ -238,7 +246,7 @@
 	dir: Direction,
 	role: Role,
 ) -&gt; OdiliaResult&lt;bool&gt; {
-	<span class="macro">tracing::debug!</span>(<span class="string">&quot;Structural nav call begins!&quot;</span>);
+	<span class="macro">tracing::debug!</span>(<span class="string">"Structural nav call begins!"</span>);
 	<span class="kw">let </span>curr = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
 		<span class="prelude-val">Some</span>(acc) =&gt; acc.into_accessible(state.atspi.connection()).<span class="kw">await</span><span class="question-mark">?</span>,
 		<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
@@ -269,10 +277,10 @@
 		<span class="kw">let </span>len = texti.character_count().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>text = texti.get_text(<span class="number">0</span>, len).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="comment">// saying awaits until it is done talking; you may want to spawn a task
-		</span>state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;{text}, {role}&quot;</span>)).<span class="kw">await</span>;
+		</span>state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">"{text}, {role}"</span>)).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
 	} <span class="kw">else </span>{
-		state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">&quot;No more {role}s&quot;</span>)).<span class="kw">await</span>;
+		state.say(Priority::Text, <span class="macro">format!</span>(<span class="string">"No more {role}s"</span>)).<span class="kw">await</span>;
 		<span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
 	}
 }
@@ -285,21 +293,21 @@
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
 		    sr_event = sr_events.recv() =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;SR Event received&quot;</span>);
+			<span class="macro">tracing::debug!</span>(<span class="string">"SR Event received"</span>);
 			<span class="kw">match </span>sr_event {
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::StructuralNavigation(dir, role)) =&gt; {
 				 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = structural_navigation(<span class="kw-2">&amp;</span>state, dir, role).<span class="kw">await </span>{
-				    <span class="macro">tracing::debug!</span>(error = %e, <span class="string">&quot;There was an error with the structural navigation call.&quot;</span>);
+				    <span class="macro">tracing::debug!</span>(error = %e, <span class="string">"There was an error with the structural navigation call."</span>);
 				} <span class="kw">else </span>{
-					<span class="macro">tracing::debug!</span>(<span class="string">&quot;Structural navigation successful!&quot;</span>);
+					<span class="macro">tracing::debug!</span>(<span class="string">"Structural navigation successful!"</span>);
 				}
 			    },
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::StopSpeech) =&gt; {
-			      <span class="macro">tracing::debug!</span>(<span class="string">&quot;Stopping speech!&quot;</span>);
+			      <span class="macro">tracing::debug!</span>(<span class="string">"Stopping speech!"</span>);
 			      <span class="kw">let _</span>: bool = state.stop_speech().<span class="kw">await</span>;
 			    },
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::ChangeMode(new_sr_mode)) =&gt; {
-						<span class="macro">tracing::debug!</span>(<span class="string">&quot;Changing mode to {:?}&quot;</span>, new_sr_mode);
+						<span class="macro">tracing::debug!</span>(<span class="string">"Changing mode to {:?}"</span>, new_sr_mode);
 						<span class="kw">let </span><span class="kw-2">mut </span>sr_mode = state.mode.lock().<span class="kw">await</span>;
 						<span class="kw-2">*</span>sr_mode = new_sr_mode;
 			    }
@@ -308,7 +316,7 @@
 			<span class="kw">continue</span>;
 		    }
 		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;sr_event cancelled&quot;</span>);
+			<span class="macro">tracing::debug!</span>(<span class="string">"sr_event cancelled"</span>);
 			<span class="kw">break</span>;
 		    }
 		}
@@ -316,7 +324,7 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="comment">//#[tracing::instrument(level = &quot;debug&quot;i, skip(state))]
+<span class="comment">//#[tracing::instrument(level = "debug"i, skip(state))]
 </span><span class="kw">pub async fn </span>receive(
 	state: Arc&lt;ScreenReaderState&gt;,
 	tx: Sender&lt;Event&gt;,
@@ -329,22 +337,22 @@
 		    event = events.next() =&gt; {
 			<span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(good_event)) = event {
 			    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = tx.send(good_event).<span class="kw">await </span>{
-				<span class="macro">tracing::error!</span>(error = %e, <span class="string">&quot;Error sending atspi event&quot;</span>);
+				<span class="macro">tracing::error!</span>(error = %e, <span class="string">"Error sending atspi event"</span>);
 			    }
 			} <span class="kw">else </span>{
-			    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Event is either None or an Error variant.&quot;</span>);
+			    <span class="macro">tracing::debug!</span>(<span class="string">"Event is either None or an Error variant."</span>);
 			}
 			<span class="kw">continue</span>;
 		    }
 		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
-			<span class="macro">tracing::debug!</span>(<span class="string">&quot;receive function is done&quot;</span>);
+			<span class="macro">tracing::debug!</span>(<span class="string">"receive function is done"</span>);
 			<span class="kw">break</span>;
 		    }
 		}
 	}
 }
 
-<span class="comment">//#[tracing::instrument(level = &quot;debug&quot;)]
+<span class="comment">//#[tracing::instrument(level = "debug")]
 </span><span class="kw">pub async fn </span>process(
 	state: Arc&lt;ScreenReaderState&gt;,
 	rx: <span class="kw-2">&amp;mut </span>Receiver&lt;Event&gt;,
@@ -361,13 +369,13 @@
 		);
 				},
 				<span class="prelude-val">None </span>=&gt; {
-				    <span class="macro">tracing::debug!</span>(<span class="string">&quot;Event was none.&quot;</span>);
+				    <span class="macro">tracing::debug!</span>(<span class="string">"Event was none."</span>);
 				}
 			    };
 			    <span class="kw">continue</span>;
 			}
 			<span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
-			    <span class="macro">tracing::debug!</span>(<span class="string">&quot;process function is done&quot;</span>);
+			    <span class="macro">tracing::debug!</span>(<span class="string">"process function is done"</span>);
 			    <span class="kw">break</span>;
 			}
 		    }
@@ -376,9 +384,9 @@
 
 <span class="kw">async fn </span>dispatch_wrapper(state: Arc&lt;ScreenReaderState&gt;, good_event: Event) {
 	<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatch(<span class="kw-2">&amp;</span>state, good_event).<span class="kw">await </span>{
-		<span class="macro">tracing::error!</span>(error = %e, <span class="string">&quot;Could not handle event&quot;</span>);
+		<span class="macro">tracing::error!</span>(error = %e, <span class="string">"Could not handle event"</span>);
 	} <span class="kw">else </span>{
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Event handled without error&quot;</span>);
+		<span class="macro">tracing::debug!</span>(<span class="string">"Event handled without error"</span>);
 	}
 }
 
@@ -394,7 +402,7 @@
 		Event::Cache(cache_event) =&gt; cache::dispatch(state, cache_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		other_event =&gt; {
 			<span class="macro">tracing::debug!</span>(
-				<span class="string">&quot;Ignoring event with unknown interface: {:#?}&quot;</span>,
+				<span class="string">"Ignoring event with unknown interface: {:#?}"</span>,
 				other_event
 			);
 		}
@@ -408,20 +416,27 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">pub mod </span>dispatch_tests {
 	<span class="kw">use </span><span class="kw">crate</span>::ScreenReaderState;
+	<span class="kw">use </span>eyre::Context;
 	<span class="kw">use </span>tokio::sync::mpsc::channel;
 
 	<span class="attr">#[tokio::test]
-	</span><span class="kw">async fn </span>test_full_cache() {
-		<span class="kw">let </span>state = generate_state().<span class="kw">await</span>;
+	</span><span class="kw">async fn </span>test_full_cache() -&gt; eyre::Result&lt;()&gt; {
+		<span class="kw">let </span>state = generate_state().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="macro">assert_eq!</span>(state.cache.by_id.len(), <span class="number">14_738</span>);
+		<span class="prelude-val">Ok</span>(())
 	}
 
-	<span class="kw">pub async fn </span>generate_state() -&gt; ScreenReaderState {
+	<span class="kw">pub async fn </span>generate_state() -&gt; eyre::Result&lt;ScreenReaderState&gt; {
 		<span class="kw">let </span>(send, _recv) = channel(<span class="number">32</span>);
-		<span class="kw">let </span>cache = serde_json::from_str(<span class="macro">include_str!</span>(<span class="string">&quot;wcag_cache_items.json&quot;</span>)).unwrap();
-		<span class="kw">let </span>state = ScreenReaderState::new(send).<span class="kw">await</span>.unwrap();
-		state.cache.add_all(cache).unwrap();
-		state
+		<span class="kw">let </span>cache = serde_json::from_str(<span class="macro">include_str!</span>(<span class="string">"wcag_cache_items.json"</span>))
+			.context(<span class="string">"unable to load cache data from json file"</span>)<span class="question-mark">?</span>;
+		<span class="kw">let </span>state = ScreenReaderState::new(send)
+			.<span class="kw">await
+			</span>.context(<span class="string">"unable to realise screenreader state"</span>)<span class="question-mark">?</span>;
+		state.cache
+			.add_all(cache)
+			.context(<span class="string">"unable to add cache to the system"</span>)<span class="question-mark">?</span>;
+		<span class="prelude-val">Ok</span>(state)
 	}
 }
 </code></pre></div></section></main></body></html>

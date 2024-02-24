@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["dispatch","load_complete"],"static":["CALLSITE","META"]};
+window.SIDEBAR_ITEMS = {"fn":["dispatch","load_complete"]};

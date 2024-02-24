@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ordered-stream-0.2.0/src/join.rs`."><title>join.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ordered_stream" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ordered_stream/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ordered-stream-0.2.0/src/join.rs`."><title>join.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ordered_stream" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -547,7 +548,7 @@
 
 <span class="doccomment">/// Join two streams while preserving the overall ordering of elements.
 ///
-/// You can think of this as implementing the &quot;merge&quot; step of a merge sort on the two streams,
+/// You can think of this as implementing the "merge" step of a merge sort on the two streams,
 /// producing a single stream that is sorted given two sorted streams.  If the streams return
 /// [`PollResult::NoneBefore`] as intended, then the joined stream will be able to produce items
 /// when only one of the sources has unblocked.
@@ -628,7 +629,7 @@
                     // NoneBefore
                     </span><span class="prelude-val">Some</span>(o)
                 } <span class="kw">else if </span>retry {
-                    <span class="comment">// A retry will not improve matters, so don&#39;t bother
+                    <span class="comment">// A retry will not improve matters, so don't bother
                     </span><span class="kw">return </span><span class="bool-val">false</span>;
                 } <span class="kw">else </span>{
                     <span class="prelude-val">Some</span>(u)
@@ -747,7 +748,7 @@
 
     <span class="kw">fn </span>poll_next_before(
         <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
         before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
     ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>this = <span class="self">self</span>.project();
@@ -759,8 +760,8 @@
         <span class="kw">if </span>poll_b.update(before, poll_a.ordering(), <span class="bool-val">false</span>, |ordering| {
             this.stream_b.as_mut().poll_next_before(cx, ordering)
         }) {
-            <span class="comment">// If B just got an item, it&#39;s possible that A already knows that it won&#39;t have any
-            // items before that item; we couldn&#39;t ask that question before.  Ask it now.
+            <span class="comment">// If B just got an item, it's possible that A already knows that it won't have any
+            // items before that item; we couldn't ask that question before.  Ask it now.
             </span>poll_a.update(before, poll_b.ordering(), <span class="bool-val">true</span>, |ordering| {
                 this.stream_a.as_mut().poll_next_before(cx, ordering)
             });
@@ -801,7 +802,7 @@
                 b.into()
             }
 
-            <span class="comment">// If one side is pending, we can&#39;t return Ready until that gets resolved.  Because we
+            <span class="comment">// If one side is pending, we can't return Ready until that gets resolved.  Because we
             // have already requested that our child streams wake us when it is possible to make
             // any kind of progress, we meet the requirements to return Poll::Pending.
             </span>(PollState::Item(a, t), PollState::Pending) =&gt; {
@@ -820,15 +821,15 @@
             </span>(PollState::NoneBefore, PollState::NoneBefore) =&gt; Poll::Ready(PollResult::NoneBefore),
 
             (PollState::Item(data, ordering), PollState::NoneBefore) =&gt; {
-                <span class="comment">// B was polled using either the Some value of (before) or using A&#39;s ordering.
+                <span class="comment">// B was polled using either the Some value of (before) or using A's ordering.
                 //
-                // If before is set and is earlier than A&#39;s ordering, then B might later produce a
-                // value with (bt &gt;= before &amp;&amp; bt &lt; at), so we can&#39;t return A&#39;s item yet and must
+                // If before is set and is earlier than A's ordering, then B might later produce a
+                // value with (bt &gt;= before &amp;&amp; bt &lt; at), so we can't return A's item yet and must
                 // buffer it.  However, we can return None because neither stream will produce
                 // items before the ordering passed in before.
                 //
-                // If before is either None or after A&#39;s ordering, B&#39;s NoneBefore return represents a
-                // promise to not produce an item before A&#39;s, so we can return A&#39;s item now.
+                // If before is either None or after A's ordering, B's NoneBefore return represents a
+                // promise to not produce an item before A's, so we can return A's item now.
                 </span><span class="kw">match </span>before {
                     <span class="prelude-val">Some</span>(before) <span class="kw">if </span>ordering &gt; <span class="kw-2">*</span>before =&gt; {
                         <span class="kw-2">*</span>this.state = JoinState::A(data, ordering);
@@ -839,10 +840,10 @@
             }
 
             (PollState::NoneBefore, PollState::Item(data, ordering)) =&gt; {
-                <span class="comment">// A was polled using either the Some value of (before) or using B&#39;s ordering.
+                <span class="comment">// A was polled using either the Some value of (before) or using B's ordering.
                 //
                 // By a mirror of the above argument, this NoneBefore result gives us permission to
-                // produce either B&#39;s item or NoneBefore.
+                // produce either B's item or NoneBefore.
                 </span><span class="kw">match </span>before {
                     <span class="prelude-val">Some</span>(before) <span class="kw">if </span>ordering &gt; <span class="kw-2">*</span>before =&gt; {
                         <span class="kw-2">*</span>this.state = JoinState::B(data, ordering);
@@ -854,7 +855,7 @@
         }
     }
 
-    <span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
+    <span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
         <span class="kw">let </span>(a, b) = <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.state {
             JoinState::None =&gt; (<span class="self">self</span>.stream_a.position_hint(), <span class="self">self</span>.stream_b.position_hint()),
             JoinState::A(<span class="kw">_</span>, t) =&gt; (
@@ -962,7 +963,7 @@
                 <span class="kw">type </span>Data = Message;
                 <span class="kw">fn </span>poll_next_before(
                     <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-                    <span class="kw">_</span>: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+                    <span class="kw">_</span>: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
                     before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
                 ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
                     <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.get() {

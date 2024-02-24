@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.19/src/kv/value.rs`."><title>value.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="log" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../log/index.html"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.19/src/kv/value.rs`."><title>value.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="log" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../../log/index.html"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="log"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1035,12 +1036,12 @@
 
 <span class="kw">extern crate </span>value_bag;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
 </span><span class="kw">extern crate </span>sval;
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
 </span><span class="kw">extern crate </span>sval_ref;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
 </span><span class="kw">extern crate </span>serde;
 
 <span class="kw">use </span><span class="self">self</span>::value_bag::ValueBag;
@@ -1053,7 +1054,7 @@
     </span><span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Value;
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ToValue <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; ToValue <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span>T
 <span class="kw">where
     </span>T: ToValue + <span class="question-mark">?</span>Sized,
 {
@@ -1062,7 +1063,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; ToValue <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; ToValue <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
     <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Value {
         Value {
             inner: <span class="self">self</span>.inner.clone(),
@@ -1087,7 +1088,7 @@
 }
 
 <span class="doccomment">/// Get a value from an error.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
 #[macro_export]
 </span><span class="macro">macro_rules! </span>as_error {
     (<span class="macro-nonterminal">$capture</span>:expr) =&gt; {
@@ -1095,7 +1096,7 @@
     };
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
 </span><span class="doccomment">/// Get a value from a type implementing `serde::Serialize`.
 </span><span class="attr">#[macro_export]
 </span><span class="macro">macro_rules! </span>as_serde {
@@ -1105,7 +1106,7 @@
 }
 
 <span class="doccomment">/// Get a value from a type implementing `sval::Value`.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
 #[macro_export]
 </span><span class="macro">macro_rules! </span>as_sval {
     (<span class="macro-nonterminal">$capture</span>:expr) =&gt; {
@@ -1127,7 +1128,7 @@
 /// ## Using the `Value::capture_*` methods
 ///
 /// `Value` offers a few constructor methods that capture values of different kinds.
-/// These methods require a `T: &#39;static` to support downcasting.
+/// These methods require a `T: 'static` to support downcasting.
 ///
 /// ```
 /// use log::kv::Value;
@@ -1140,7 +1141,7 @@
 /// ## Using the `Value::from_*` methods
 ///
 /// `Value` offers a few constructor methods that capture values of different kinds.
-/// These methods don&#39;t require `T: &#39;static`, but can&#39;t support downcasting.
+/// These methods don't require `T: 'static`, but can't support downcasting.
 ///
 /// ```
 /// use log::kv::Value;
@@ -1153,7 +1154,7 @@
 /// ## Using the `ToValue` trait
 ///
 /// The `ToValue` trait can be used to capture values generically.
-/// It&#39;s the bound used by `Source`.
+/// It's the bound used by `Source`.
 ///
 /// ```
 /// # use log::kv::ToValue;
@@ -1182,13 +1183,13 @@
 ///
 /// assert_eq!(Some(42), value.to_i64());
 /// ```
-</span><span class="kw">pub struct </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    inner: ValueBag&lt;<span class="lifetime">&#39;v</span>&gt;,
+</span><span class="kw">pub struct </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    inner: ValueBag&lt;<span class="lifetime">'v</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
     <span class="doccomment">/// Get a value from a type implementing `ToValue`.
-    </span><span class="kw">pub fn </span>from_any&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="kw">pub fn </span>from_any&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: ToValue,
     {
@@ -1196,9 +1197,9 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `std::fmt::Debug`.
-    </span><span class="kw">pub fn </span>capture_debug&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="kw">pub fn </span>capture_debug&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: fmt::Debug + <span class="lifetime">&#39;static</span>,
+        </span>T: fmt::Debug + <span class="lifetime">'static</span>,
     {
         Value {
             inner: ValueBag::capture_debug(value),
@@ -1206,9 +1207,9 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `std::fmt::Display`.
-    </span><span class="kw">pub fn </span>capture_display&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="kw">pub fn </span>capture_display&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: fmt::Display + <span class="lifetime">&#39;static</span>,
+        </span>T: fmt::Display + <span class="lifetime">'static</span>,
     {
         Value {
             inner: ValueBag::capture_display(value),
@@ -1216,21 +1217,21 @@
     }
 
     <span class="doccomment">/// Get a value from an error.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
-    </span><span class="kw">pub fn </span>capture_error&lt;T&gt;(err: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
+    </span><span class="kw">pub fn </span>capture_error&lt;T&gt;(err: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: std::error::Error + <span class="lifetime">&#39;static</span>,
+        </span>T: std::error::Error + <span class="lifetime">'static</span>,
     {
         Value {
             inner: ValueBag::capture_error(err),
         }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
     </span><span class="doccomment">/// Get a value from a type implementing `serde::Serialize`.
-    </span><span class="kw">pub fn </span>capture_serde&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="kw">pub fn </span>capture_serde&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: <span class="self">self</span>::serde::Serialize + <span class="lifetime">&#39;static</span>,
+        </span>T: <span class="self">self</span>::serde::Serialize + <span class="lifetime">'static</span>,
     {
         Value {
             inner: ValueBag::capture_serde1(value),
@@ -1238,10 +1239,10 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `sval::Value`.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
-    </span><span class="kw">pub fn </span>capture_sval&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
+    </span><span class="kw">pub fn </span>capture_sval&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: <span class="self">self</span>::sval::Value + <span class="lifetime">&#39;static</span>,
+        </span>T: <span class="self">self</span>::sval::Value + <span class="lifetime">'static</span>,
     {
         Value {
             inner: ValueBag::capture_sval2(value),
@@ -1249,7 +1250,7 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `std::fmt::Debug`.
-    </span><span class="kw">pub fn </span>from_debug&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="kw">pub fn </span>from_debug&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: fmt::Debug,
     {
@@ -1259,7 +1260,7 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `std::fmt::Display`.
-    </span><span class="kw">pub fn </span>from_display&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="kw">pub fn </span>from_display&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: fmt::Display,
     {
@@ -1269,8 +1270,8 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `serde::Serialize`.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
-    </span><span class="kw">pub fn </span>from_serde&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
+    </span><span class="kw">pub fn </span>from_serde&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: <span class="self">self</span>::serde::Serialize,
     {
@@ -1280,8 +1281,8 @@
     }
 
     <span class="doccomment">/// Get a value from a type implementing `sval::Value`.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
-    </span><span class="kw">pub fn </span>from_sval&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>T) -&gt; <span class="self">Self
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
+    </span><span class="kw">pub fn </span>from_sval&lt;T&gt;(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: <span class="self">self</span>::sval::Value,
     {
@@ -1291,22 +1292,22 @@
     }
 
     <span class="doccomment">/// Get a value from a dynamic `std::fmt::Debug`.
-    </span><span class="kw">pub fn </span>from_dyn_debug(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="kw">dyn </span>fmt::Debug) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>from_dyn_debug(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="kw">dyn </span>fmt::Debug) -&gt; <span class="self">Self </span>{
         Value {
             inner: ValueBag::from_dyn_debug(value),
         }
     }
 
     <span class="doccomment">/// Get a value from a dynamic `std::fmt::Display`.
-    </span><span class="kw">pub fn </span>from_dyn_display(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="kw">dyn </span>fmt::Display) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>from_dyn_display(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="kw">dyn </span>fmt::Display) -&gt; <span class="self">Self </span>{
         Value {
             inner: ValueBag::from_dyn_display(value),
         }
     }
 
     <span class="doccomment">/// Get a value from a dynamic error.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
-    </span><span class="kw">pub fn </span>from_dyn_error(err: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)) -&gt; <span class="self">Self </span>{
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
+    </span><span class="kw">pub fn </span>from_dyn_error(err: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>)) -&gt; <span class="self">Self </span>{
         Value {
             inner: ValueBag::from_dyn_error(err),
         }
@@ -1315,7 +1316,7 @@
     <span class="doccomment">/// Get a value from an internal primitive.
     </span><span class="kw">fn </span>from_value_bag&lt;T&gt;(value: T) -&gt; <span class="self">Self
     </span><span class="kw">where
-        </span>T: Into&lt;ValueBag&lt;<span class="lifetime">&#39;v</span>&gt;&gt;,
+        </span>T: Into&lt;ValueBag&lt;<span class="lifetime">'v</span>&gt;&gt;,
     {
         Value {
             inner: value.into(),
@@ -1323,22 +1324,22 @@
     }
 
     <span class="doccomment">/// Check whether this value can be downcast to `T`.
-    </span><span class="kw">pub fn </span>is&lt;T: <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    </span><span class="kw">pub fn </span>is&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.inner.is::&lt;T&gt;()
     }
 
     <span class="doccomment">/// Try downcast this value to `T`.
-    </span><span class="kw">pub fn </span>downcast_ref&lt;T: <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
+    </span><span class="kw">pub fn </span>downcast_ref&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
         <span class="self">self</span>.inner.downcast_ref::&lt;T&gt;()
     }
 
     <span class="doccomment">/// Inspect this value using a simple visitor.
-    </span><span class="kw">pub fn </span>visit(<span class="kw-2">&amp;</span><span class="self">self</span>, visitor: <span class="kw">impl </span>Visit&lt;<span class="lifetime">&#39;v</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="kw">pub fn </span>visit(<span class="kw-2">&amp;</span><span class="self">self</span>, visitor: <span class="kw">impl </span>Visit&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">struct </span>Visitor&lt;V&gt;(V);
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>, V&gt; value_bag::visit::Visit&lt;<span class="lifetime">&#39;v</span>&gt; <span class="kw">for </span>Visitor&lt;V&gt;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>, V&gt; value_bag::visit::Visit&lt;<span class="lifetime">'v</span>&gt; <span class="kw">for </span>Visitor&lt;V&gt;
         <span class="kw">where
-            </span>V: Visit&lt;<span class="lifetime">&#39;v</span>&gt;,
+            </span>V: Visit&lt;<span class="lifetime">'v</span>&gt;,
         {
             <span class="kw">fn </span>visit_any(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: ValueBag) -&gt; <span class="prelude-ty">Result</span>&lt;(), value_bag::Error&gt; {
                 <span class="self">self</span>.<span class="number">0
@@ -1374,7 +1375,7 @@
                 <span class="self">self</span>.<span class="number">0</span>.visit_str(value).map_err(Error::into_value)
             }
 
-            <span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), value_bag::Error&gt; {
+            <span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), value_bag::Error&gt; {
                 <span class="self">self</span>.<span class="number">0</span>.visit_borrowed_str(value).map_err(Error::into_value)
             }
 
@@ -1382,18 +1383,18 @@
                 <span class="self">self</span>.<span class="number">0</span>.visit_char(value).map_err(Error::into_value)
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
             </span><span class="kw">fn </span>visit_error(
                 <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-                err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>),
+                err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>),
             ) -&gt; <span class="prelude-ty">Result</span>&lt;(), value_bag::Error&gt; {
                 <span class="self">self</span>.<span class="number">0</span>.visit_error(err).map_err(Error::into_value)
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
             </span><span class="kw">fn </span>visit_borrowed_error(
                 <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-                err: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>),
+                err: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>),
             ) -&gt; <span class="prelude-ty">Result</span>&lt;(), value_bag::Error&gt; {
                 <span class="self">self</span>.<span class="number">0</span>.visit_borrowed_error(err).map_err(Error::into_value)
             }
@@ -1405,13 +1406,13 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; fmt::Debug <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; fmt::Debug <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         fmt::Debug::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, f)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; fmt::Display <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; fmt::Display <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         fmt::Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, f)
     }
@@ -1429,15 +1430,15 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
-</span><span class="kw">impl </span>ToValue <span class="kw">for dyn </span>std::error::Error + <span class="lifetime">&#39;static </span>{
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
+</span><span class="kw">impl </span>ToValue <span class="kw">for dyn </span>std::error::Error + <span class="lifetime">'static </span>{
     <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Value {
         Value::from_dyn_error(<span class="self">self</span>)
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; <span class="self">self</span>::serde::Serialize <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; <span class="self">self</span>::serde::Serialize <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, s: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: <span class="self">self</span>::serde::Serializer,
@@ -1446,19 +1447,19 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; <span class="self">self</span>::sval::Value <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>stream&lt;<span class="lifetime">&#39;sval</span>, S: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">&#39;sval</span>&gt; + <span class="question-mark">?</span>Sized&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;sval </span><span class="self">self</span>,
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; <span class="self">self</span>::sval::Value <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>stream&lt;<span class="lifetime">'sval</span>, S: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">'sval</span>&gt; + <span class="question-mark">?</span>Sized&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'sval </span><span class="self">self</span>,
         stream: <span class="kw-2">&amp;mut </span>S,
     ) -&gt; <span class="self">self</span>::sval::Result {
         <span class="self">self</span>::sval::Value::stream(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, stream)
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; <span class="self">self</span>::sval_ref::ValueRef&lt;<span class="lifetime">&#39;v</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>stream_ref&lt;S: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">&#39;v</span>&gt; + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, stream: <span class="kw-2">&amp;mut </span>S) -&gt; <span class="self">self</span>::sval::Result {
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; <span class="self">self</span>::sval_ref::ValueRef&lt;<span class="lifetime">'v</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>stream_ref&lt;S: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">'v</span>&gt; + <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, stream: <span class="kw-2">&amp;mut </span>S) -&gt; <span class="self">self</span>::sval::Result {
         <span class="self">self</span>::sval_ref::ValueRef::stream_ref(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, stream)
     }
 }
@@ -1493,33 +1494,33 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>str&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>str) -&gt; <span class="self">Self </span>{
         Value::from_value_bag(value)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>u128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>u128) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>u128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>u128) -&gt; <span class="self">Self </span>{
         Value::from_value_bag(value)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>i128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>i128) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>i128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>i128) -&gt; <span class="self">Self </span>{
         Value::from_value_bag(value)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>std::num::NonZeroU128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>from(v: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>std::num::NonZeroU128) -&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>std::num::NonZeroU128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>from(v: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>std::num::NonZeroU128) -&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
         <span class="comment">// SAFETY: `NonZeroU128` and `u128` have the same ABI
         </span>Value::from_value_bag(<span class="kw">unsafe </span>{ std::mem::transmute::&lt;<span class="kw-2">&amp;</span>std::num::NonZeroU128, <span class="kw-2">&amp;</span>u128&gt;(v) })
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>std::num::NonZeroI128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-    <span class="kw">fn </span>from(v: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>std::num::NonZeroI128) -&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>std::num::NonZeroI128&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+    <span class="kw">fn </span>from(v: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>std::num::NonZeroI128) -&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
         <span class="comment">// SAFETY: `NonZeroI128` and `i128` have the same ABI
         </span>Value::from_value_bag(<span class="kw">unsafe </span>{ std::mem::transmute::&lt;<span class="kw-2">&amp;</span>std::num::NonZeroI128, <span class="kw-2">&amp;</span>i128&gt;(v) })
     }
@@ -1552,7 +1553,7 @@
                 }
             }
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="macro-nonterminal">$into_ty</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+            <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="macro-nonterminal">$into_ty</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
                 <span class="kw">fn </span>from(value: <span class="macro-nonterminal">$into_ty</span>) -&gt; <span class="self">Self </span>{
                     Value::from_value_bag(value)
                 }
@@ -1570,7 +1571,7 @@
                 }
             }
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;std::num::<span class="macro-nonterminal">$into_ty</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+            <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;std::num::<span class="macro-nonterminal">$into_ty</span>&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
                 <span class="kw">fn </span>from(value: std::num::<span class="macro-nonterminal">$into_ty</span>) -&gt; <span class="self">Self </span>{
                     Value::from(value.get())
                 }
@@ -1581,7 +1582,7 @@
 
 <span class="macro">macro_rules! </span>impl_value_to_primitive {
     ($(<span class="attr">#[doc = <span class="macro-nonterminal">$doc</span>:tt] </span><span class="macro-nonterminal">$into_name</span>:ident -&gt; <span class="macro-nonterminal">$into_ty</span>:ty,)<span class="kw-2">*</span>) =&gt; {
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
             $(
                 <span class="attr">#[doc = <span class="macro-nonterminal">$doc</span>]
                 </span><span class="kw">pub fn </span><span class="macro-nonterminal">$into_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="macro-nonterminal">$into_ty</span>&gt; {
@@ -1601,26 +1602,26 @@
 ];
 
 <span class="macro">impl_value_to_primitive!</span>[
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `u64`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `u64`."</span>]
     </span>to_u64 -&gt; u64,
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `i64`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `i64`."</span>]
     </span>to_i64 -&gt; i64,
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `u128`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `u128`."</span>]
     </span>to_u128 -&gt; u128,
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `i128`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `i128`."</span>]
     </span>to_i128 -&gt; i128,
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `f64`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `f64`."</span>]
     </span>to_f64 -&gt; f64,
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `char`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `char`."</span>]
     </span>to_char -&gt; char,
-    <span class="attr">#[doc = <span class="string">&quot;Try convert this value into a `bool`.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Try convert this value into a `bool`."</span>]
     </span>to_bool -&gt; bool,
 ];
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
     <span class="doccomment">/// Try convert this value into an error.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
-    </span><span class="kw">pub fn </span>to_borrowed_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)&gt; {
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
+    </span><span class="kw">pub fn </span>to_borrowed_error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>)&gt; {
         <span class="self">self</span>.inner.to_borrowed_error()
     }
 
@@ -1630,7 +1631,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
 </span><span class="kw">mod </span>std_support {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
@@ -1651,32 +1652,32 @@
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; ToValue <span class="kw">for </span>Cow&lt;<span class="lifetime">&#39;v</span>, str&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; ToValue <span class="kw">for </span>Cow&lt;<span class="lifetime">'v</span>, str&gt; {
         <span class="kw">fn </span>to_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Value {
             Value::from(<span class="kw-2">&amp;**</span><span class="self">self</span>)
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
         <span class="doccomment">/// Try convert this value into a string.
         </span><span class="kw">pub fn </span>to_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Cow&lt;str&gt;&gt; {
             <span class="self">self</span>.inner.to_str()
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>String&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">&#39;v</span>&gt; {
-        <span class="kw">fn </span>from(v: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>String) -&gt; <span class="self">Self </span>{
+    <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>String&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'v</span>&gt; {
+        <span class="kw">fn </span>from(v: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>String) -&gt; <span class="self">Self </span>{
             Value::from(<span class="kw-2">&amp;**</span>v)
         }
     }
 }
 
 <span class="doccomment">/// A visitor for a `Value`.
-</span><span class="kw">pub trait </span>Visit&lt;<span class="lifetime">&#39;v</span>&gt; {
+</span><span class="kw">pub trait </span>Visit&lt;<span class="lifetime">'v</span>&gt; {
     <span class="doccomment">/// Visit a `Value`.
     ///
     /// This is the only required method on `Visit` and acts as a fallback for any
-    /// more specific methods that aren&#39;t overridden.
+    /// more specific methods that aren't overridden.
     /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
     /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
     </span><span class="kw">fn </span>visit_any(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Value) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
@@ -1717,7 +1718,7 @@
     }
 
     <span class="doccomment">/// Visit a string.
-    </span><span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.visit_str(value)
     }
 
@@ -1728,24 +1729,24 @@
     }
 
     <span class="doccomment">/// Visit an error.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
-    </span><span class="kw">fn </span>visit_error(<span class="kw-2">&amp;mut </span><span class="self">self</span>, err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
+    </span><span class="kw">fn </span>visit_error(<span class="kw-2">&amp;mut </span><span class="self">self</span>, err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>)) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.visit_any(Value::from_dyn_error(err))
     }
 
     <span class="doccomment">/// Visit an error.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
     </span><span class="kw">fn </span>visit_borrowed_error(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        err: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>),
+        err: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>),
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.visit_any(Value::from_dyn_error(err))
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;v</span>, T: <span class="question-mark">?</span>Sized&gt; Visit&lt;<span class="lifetime">&#39;v</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>T
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'v</span>, T: <span class="question-mark">?</span>Sized&gt; Visit&lt;<span class="lifetime">'v</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T
 <span class="kw">where
-    </span>T: Visit&lt;<span class="lifetime">&#39;v</span>&gt;,
+    </span>T: Visit&lt;<span class="lifetime">'v</span>&gt;,
 {
     <span class="kw">fn </span>visit_any(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Value) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).visit_any(value)
@@ -1779,7 +1780,7 @@
         (<span class="kw-2">**</span><span class="self">self</span>).visit_str(value)
     }
 
-    <span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).visit_borrowed_str(value)
     }
 
@@ -1787,15 +1788,15 @@
         (<span class="kw-2">**</span><span class="self">self</span>).visit_char(value)
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
-    </span><span class="kw">fn </span>visit_error(<span class="kw-2">&amp;mut </span><span class="self">self</span>, err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
+    </span><span class="kw">fn </span>visit_error(<span class="kw-2">&amp;mut </span><span class="self">self</span>, err: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>)) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).visit_error(err)
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
     </span><span class="kw">fn </span>visit_borrowed_error(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        err: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>),
+        err: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>),
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).visit_borrowed_error(err)
     }
@@ -1807,13 +1808,13 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span><span class="kw">super</span>::value_bag::test::TestToken <span class="kw">as </span>Token;
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Value&lt;<span class="lifetime">&#39;v</span>&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Value&lt;<span class="lifetime">'v</span>&gt; {
         <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>to_token(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Token {
             <span class="self">self</span>.inner.to_test_token()
         }
     }
 
-    <span class="kw">fn </span>unsigned() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+    <span class="kw">fn </span>unsigned() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">'static</span>&gt;&gt; {
         <span class="macro">vec!</span>[
             Value::from(<span class="number">8u8</span>),
             Value::from(<span class="number">16u16</span>),
@@ -1829,7 +1830,7 @@
         .into_iter()
     }
 
-    <span class="kw">fn </span>signed() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+    <span class="kw">fn </span>signed() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">'static</span>&gt;&gt; {
         <span class="macro">vec!</span>[
             Value::from(-<span class="number">8i8</span>),
             Value::from(-<span class="number">16i16</span>),
@@ -1845,20 +1846,20 @@
         .into_iter()
     }
 
-    <span class="kw">fn </span>float() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+    <span class="kw">fn </span>float() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">'static</span>&gt;&gt; {
         <span class="macro">vec!</span>[Value::from(<span class="number">32.32f32</span>), Value::from(<span class="number">64.64f64</span>)].into_iter()
     }
 
-    <span class="kw">fn </span>bool() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+    <span class="kw">fn </span>bool() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">'static</span>&gt;&gt; {
         <span class="macro">vec!</span>[Value::from(<span class="bool-val">true</span>), Value::from(<span class="bool-val">false</span>)].into_iter()
     }
 
-    <span class="kw">fn </span>str() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
-        <span class="macro">vec!</span>[Value::from(<span class="string">&quot;a string&quot;</span>), Value::from(<span class="string">&quot;a loong string&quot;</span>)].into_iter()
+    <span class="kw">fn </span>str() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">'static</span>&gt;&gt; {
+        <span class="macro">vec!</span>[Value::from(<span class="string">"a string"</span>), Value::from(<span class="string">"a loong string"</span>)].into_iter()
     }
 
-    <span class="kw">fn </span>char() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
-        <span class="macro">vec!</span>[Value::from(<span class="string">&#39;a&#39;</span>), Value::from(<span class="string">&#39;⛰&#39;</span>)].into_iter()
+    <span class="kw">fn </span>char() -&gt; <span class="kw">impl </span>Iterator&lt;Item = Value&lt;<span class="lifetime">'static</span>&gt;&gt; {
+        <span class="macro">vec!</span>[Value::from(<span class="string">'a'</span>), Value::from(<span class="string">'⛰'</span>)].into_iter()
     }
 
     <span class="attr">#[test]
@@ -1870,7 +1871,7 @@
         <span class="macro">assert!</span>(Value::from_debug(<span class="kw-2">&amp;</span><span class="number">42</span>).to_u64().is_none());
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
     #[test]
     </span><span class="kw">fn </span>test_capture_error() {
         <span class="kw">let </span>err = std::io::Error::from(std::io::ErrorKind::Other);
@@ -1879,7 +1880,7 @@
         <span class="macro">assert!</span>(Value::from_dyn_error(<span class="kw-2">&amp;</span>err).to_borrowed_error().is_some());
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
     #[test]
     </span><span class="kw">fn </span>test_capture_serde() {
         <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="number">42u64</span>), Value::capture_serde(<span class="kw-2">&amp;</span><span class="number">42</span>).to_u64());
@@ -1887,7 +1888,7 @@
         <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="number">42u64</span>), Value::from_serde(<span class="kw-2">&amp;</span><span class="number">42</span>).to_u64());
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
     #[test]
     </span><span class="kw">fn </span>test_capture_sval() {
         <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="number">42u64</span>), Value::capture_sval(<span class="kw-2">&amp;</span><span class="number">42</span>).to_u64());
@@ -1897,15 +1898,15 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_to_value_display() {
-        <span class="macro">assert_eq!</span>(<span class="number">42u64</span>.to_value().to_string(), <span class="string">&quot;42&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="number">42i64</span>.to_value().to_string(), <span class="string">&quot;42&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="number">42.01f64</span>.to_value().to_string(), <span class="string">&quot;42.01&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="bool-val">true</span>.to_value().to_string(), <span class="string">&quot;true&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="string">&#39;a&#39;</span>.to_value().to_string(), <span class="string">&quot;a&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;a loong string&quot;</span>.to_value().to_string(), <span class="string">&quot;a loong string&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>).to_value().to_string(), <span class="string">&quot;true&quot;</span>);
-        <span class="macro">assert_eq!</span>(().to_value().to_string(), <span class="string">&quot;None&quot;</span>);
-        <span class="macro">assert_eq!</span>(Option::None::&lt;bool&gt;.to_value().to_string(), <span class="string">&quot;None&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="number">42u64</span>.to_value().to_string(), <span class="string">"42"</span>);
+        <span class="macro">assert_eq!</span>(<span class="number">42i64</span>.to_value().to_string(), <span class="string">"42"</span>);
+        <span class="macro">assert_eq!</span>(<span class="number">42.01f64</span>.to_value().to_string(), <span class="string">"42.01"</span>);
+        <span class="macro">assert_eq!</span>(<span class="bool-val">true</span>.to_value().to_string(), <span class="string">"true"</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">'a'</span>.to_value().to_string(), <span class="string">"a"</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">"a loong string"</span>.to_value().to_string(), <span class="string">"a loong string"</span>);
+        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>).to_value().to_string(), <span class="string">"true"</span>);
+        <span class="macro">assert_eq!</span>(().to_value().to_string(), <span class="string">"None"</span>);
+        <span class="macro">assert_eq!</span>(Option::None::&lt;bool&gt;.to_value().to_string(), <span class="string">"None"</span>);
     }
 
     <span class="attr">#[test]
@@ -1914,10 +1915,10 @@
         <span class="macro">assert_eq!</span>(<span class="number">42i64</span>.to_value().to_token(), Token::I64(<span class="number">42</span>));
         <span class="macro">assert_eq!</span>(<span class="number">42.01f64</span>.to_value().to_token(), Token::F64(<span class="number">42.01</span>));
         <span class="macro">assert_eq!</span>(<span class="bool-val">true</span>.to_value().to_token(), Token::Bool(<span class="bool-val">true</span>));
-        <span class="macro">assert_eq!</span>(<span class="string">&#39;a&#39;</span>.to_value().to_token(), Token::Char(<span class="string">&#39;a&#39;</span>));
+        <span class="macro">assert_eq!</span>(<span class="string">'a'</span>.to_value().to_token(), Token::Char(<span class="string">'a'</span>));
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;a loong string&quot;</span>.to_value().to_token(),
-            Token::Str(<span class="string">&quot;a loong string&quot;</span>.into())
+            <span class="string">"a loong string"</span>.to_value().to_token(),
+            Token::Str(<span class="string">"a loong string"</span>.into())
         );
         <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>).to_value().to_token(), Token::Bool(<span class="bool-val">true</span>));
         <span class="macro">assert_eq!</span>(().to_value().to_token(), Token::None);
@@ -1951,22 +1952,22 @@
         <span class="kw">for </span>v <span class="kw">in </span>str() {
             <span class="macro">assert!</span>(v.to_borrowed_str().is_some());
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
             </span><span class="macro">assert!</span>(v.to_str().is_some());
         }
 
-        <span class="kw">let </span>short_lived = String::from(<span class="string">&quot;short lived&quot;</span>);
+        <span class="kw">let </span>short_lived = String::from(<span class="string">"short lived"</span>);
         <span class="kw">let </span>v = Value::from(<span class="kw-2">&amp;*</span>short_lived);
 
         <span class="macro">assert!</span>(v.to_borrowed_str().is_some());
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
         </span><span class="macro">assert!</span>(v.to_str().is_some());
 
         <span class="kw">for </span>v <span class="kw">in </span>unsigned().chain(signed()).chain(float()).chain(bool()) {
             <span class="macro">assert!</span>(v.to_borrowed_str().is_none());
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_std&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"kv_unstable_std"</span>)]
             </span><span class="macro">assert!</span>(v.to_str().is_none());
         }
     }
@@ -2011,16 +2012,16 @@
         <span class="kw">let </span>v = Value::capture_debug(<span class="kw-2">&amp;</span>Foo(<span class="number">42</span>));
 
         <span class="macro">assert!</span>(v.is::&lt;Foo&gt;());
-        <span class="macro">assert_eq!</span>(<span class="number">42u64</span>, v.downcast_ref::&lt;Foo&gt;().expect(<span class="string">&quot;invalid downcast&quot;</span>).<span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="number">42u64</span>, v.downcast_ref::&lt;Foo&gt;().expect(<span class="string">"invalid downcast"</span>).<span class="number">0</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_visit_integer() {
         <span class="kw">struct </span>Extract(<span class="prelude-ty">Option</span>&lt;u64&gt;);
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Visit&lt;<span class="lifetime">&#39;v</span>&gt; <span class="kw">for </span>Extract {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Visit&lt;<span class="lifetime">'v</span>&gt; <span class="kw">for </span>Extract {
             <span class="kw">fn </span>visit_any(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Value) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-                <span class="macro">unimplemented!</span>(<span class="string">&quot;unexpected value: {:?}&quot;</span>, value)
+                <span class="macro">unimplemented!</span>(<span class="string">"unexpected value: {:?}"</span>, value)
             }
 
             <span class="kw">fn </span>visit_u64(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: u64) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
@@ -2038,14 +2039,14 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_visit_borrowed_str() {
-        <span class="kw">struct </span>Extract&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str&gt;);
+        <span class="kw">struct </span>Extract&lt;<span class="lifetime">'v</span>&gt;(<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>str&gt;);
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;v</span>&gt; Visit&lt;<span class="lifetime">&#39;v</span>&gt; <span class="kw">for </span>Extract&lt;<span class="lifetime">&#39;v</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'v</span>&gt; Visit&lt;<span class="lifetime">'v</span>&gt; <span class="kw">for </span>Extract&lt;<span class="lifetime">'v</span>&gt; {
             <span class="kw">fn </span>visit_any(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Value) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-                <span class="macro">unimplemented!</span>(<span class="string">&quot;unexpected value: {:?}&quot;</span>, value)
+                <span class="macro">unimplemented!</span>(<span class="string">"unexpected value: {:?}"</span>, value)
             }
 
-            <span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+            <span class="kw">fn </span>visit_borrowed_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
                 <span class="self">self</span>.<span class="number">0 </span>= <span class="prelude-val">Some</span>(value);
 
                 <span class="prelude-val">Ok</span>(())
@@ -2054,10 +2055,10 @@
 
         <span class="kw">let </span><span class="kw-2">mut </span>extract = Extract(<span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>short_lived = String::from(<span class="string">&quot;A short-lived string&quot;</span>);
+        <span class="kw">let </span>short_lived = String::from(<span class="string">"A short-lived string"</span>);
         Value::from(<span class="kw-2">&amp;*</span>short_lived).visit(<span class="kw-2">&amp;mut </span>extract).unwrap();
 
-        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;A short-lived string&quot;</span>), extract.<span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(<span class="string">"A short-lived string"</span>), extract.<span class="number">0</span>);
     }
 }
 </code></pre></div></section></main></body></html>

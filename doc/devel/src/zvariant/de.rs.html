@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/de.rs`."><title>de.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/de.rs`."><title>de.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -656,7 +657,7 @@
 <span class="attr">#[cfg(unix)]
 </span><span class="kw">use </span>std::os::unix::io::RawFd;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::gvariant::Deserializer <span class="kw">as </span>GVDeserializer;
 <span class="kw">use crate</span>::{
     container_depths::ContainerDepths, dbus::Deserializer <span class="kw">as </span>DBusDeserializer,
@@ -689,14 +690,14 @@
 ///
 /// [`from_slice`]: fn.from_slice.html
 </span><span class="attr">#[cfg(unix)]
-</span><span class="kw">pub fn </span>from_slice_fds&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;r</span>: <span class="lifetime">&#39;d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_fds&lt;<span class="lifetime">'d</span>, <span class="lifetime">'r</span>: <span class="lifetime">'d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
     fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[RawFd]&gt;,
     ctxt: EncodingContext&lt;B&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: Deserialize&lt;<span class="lifetime">&#39;d</span>&gt; + Type,
+    T: Deserialize&lt;<span class="lifetime">'d</span>&gt; + Type,
 {
     <span class="kw">let </span>signature = T::signature();
     from_slice_fds_for_signature(bytes, fds, ctxt, <span class="kw-2">&amp;</span>signature)
@@ -713,17 +714,17 @@
 /// use zvariant::EncodingContext;
 ///
 /// let ctxt = EncodingContext::&lt;byteorder::LE&gt;::new_dbus(0);
-/// let encoded = to_bytes(ctxt, &quot;hello world&quot;).unwrap();
+/// let encoded = to_bytes(ctxt, "hello world").unwrap();
 /// let decoded: &amp;str = from_slice(&amp;encoded, ctxt).unwrap();
-/// assert_eq!(decoded, &quot;hello world&quot;);
+/// assert_eq!(decoded, "hello world");
 /// ```
 ///
 /// [`Fd`]: struct.Fd.html
 /// [`from_slice_fds`]: fn.from_slice_fds.html
-</span><span class="kw">pub fn </span>from_slice&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;r</span>: <span class="lifetime">&#39;d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[u8], ctxt: EncodingContext&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
+</span><span class="kw">pub fn </span>from_slice&lt;<span class="lifetime">'d</span>, <span class="lifetime">'r</span>: <span class="lifetime">'d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8], ctxt: EncodingContext&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: Deserialize&lt;<span class="lifetime">&#39;d</span>&gt; + Type,
+    T: Deserialize&lt;<span class="lifetime">'d</span>&gt; + Type,
 {
     <span class="kw">let </span>signature = T::signature();
     from_slice_for_signature(bytes, ctxt, <span class="kw-2">&amp;</span>signature)
@@ -737,7 +738,7 @@
 ///
 /// # Examples
 ///
-/// While `Type` derive supports enums, for this example, let&#39;s supposed it doesn&#39;t and we don&#39;t
+/// While `Type` derive supports enums, for this example, let's supposed it doesn't and we don't
 /// want to manually implement `Type` trait either:
 ///
 /// ```
@@ -755,25 +756,25 @@
 ///     Variant3,
 /// }
 ///
-/// let signature = &quot;u&quot;.try_into().unwrap();
+/// let signature = "u".try_into().unwrap();
 /// let encoded = to_bytes_for_signature(ctxt, &amp;signature, &amp;Unit::Variant2).unwrap();
 /// assert_eq!(encoded.len(), 4);
 /// let decoded: Unit = from_slice_for_signature(&amp;encoded, ctxt, &amp;signature).unwrap();
 /// assert_eq!(decoded, Unit::Variant2);
 ///
 /// #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
-/// enum NewType&lt;&#39;s&gt; {
-///     Variant1(&amp;&#39;s str),
-///     Variant2(&amp;&#39;s str),
-///     Variant3(&amp;&#39;s str),
+/// enum NewType&lt;'s&gt; {
+///     Variant1(&amp;'s str),
+///     Variant2(&amp;'s str),
+///     Variant3(&amp;'s str),
 /// }
 ///
-/// let signature = &quot;(us)&quot;.try_into().unwrap();
+/// let signature = "(us)".try_into().unwrap();
 /// let encoded =
-///     to_bytes_for_signature(ctxt, &amp;signature, &amp;NewType::Variant2(&quot;hello&quot;)).unwrap();
+///     to_bytes_for_signature(ctxt, &amp;signature, &amp;NewType::Variant2("hello")).unwrap();
 /// assert_eq!(encoded.len(), 14);
-/// let decoded: NewType&lt;&#39;_&gt; = from_slice_for_signature(&amp;encoded, ctxt, &amp;signature).unwrap();
-/// assert_eq!(decoded, NewType::Variant2(&quot;hello&quot;));
+/// let decoded: NewType&lt;'_&gt; = from_slice_for_signature(&amp;encoded, ctxt, &amp;signature).unwrap();
+/// assert_eq!(decoded, NewType::Variant2("hello"));
 ///
 /// #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 /// enum Structs {
@@ -782,7 +783,7 @@
 /// }
 ///
 /// // TODO: Provide convenience API to create complex signatures
-/// let signature = &quot;(u(yt))&quot;.try_into().unwrap();
+/// let signature = "(u(yt))".try_into().unwrap();
 /// let encoded = to_bytes_for_signature(ctxt, &amp;signature, &amp;Structs::Tuple(42, 42)).unwrap();
 /// assert_eq!(encoded.len(), 24);
 /// let decoded: Structs = from_slice_for_signature(&amp;encoded, ctxt, &amp;signature).unwrap();
@@ -799,14 +800,14 @@
 /// [`Fd`]: struct.Fd.html
 /// [`from_slice_fds_for_signature`]: fn.from_slice_fds_for_signature.html
 </span><span class="comment">// TODO: Return number of bytes parsed?
-</span><span class="kw">pub fn </span>from_slice_for_signature&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;r</span>: <span class="lifetime">&#39;d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_for_signature&lt;<span class="lifetime">'d</span>, <span class="lifetime">'r</span>: <span class="lifetime">'d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: Deserialize&lt;<span class="lifetime">&#39;d</span>&gt;,
+    T: Deserialize&lt;<span class="lifetime">'d</span>&gt;,
 {
     _from_slice_fds_for_signature(
         bytes,
@@ -829,31 +830,31 @@
 /// [`from_slice_for_signature`]: fn.from_slice_for_signature.html
 </span><span class="comment">// TODO: Return number of bytes parsed?
 </span><span class="attr">#[cfg(unix)]
-</span><span class="kw">pub fn </span>from_slice_fds_for_signature&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;r</span>: <span class="lifetime">&#39;d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_fds_for_signature&lt;<span class="lifetime">'d</span>, <span class="lifetime">'r</span>: <span class="lifetime">'d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
     fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[RawFd]&gt;,
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: Deserialize&lt;<span class="lifetime">&#39;d</span>&gt;,
+    T: Deserialize&lt;<span class="lifetime">'d</span>&gt;,
 {
     _from_slice_fds_for_signature(bytes, fds, ctxt, signature)
 }
 
-<span class="kw">fn </span>_from_slice_fds_for_signature&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;r</span>: <span class="lifetime">&#39;d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[u8],
+<span class="kw">fn </span>_from_slice_fds_for_signature&lt;<span class="lifetime">'d</span>, <span class="lifetime">'r</span>: <span class="lifetime">'d</span>, B, T: <span class="question-mark">?</span>Sized&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
     <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[RawFd]&gt;,
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;_</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: Deserialize&lt;<span class="lifetime">&#39;d</span>&gt;,
+    T: Deserialize&lt;<span class="lifetime">'d</span>&gt;,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>de = <span class="kw">match </span>ctxt.format() {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>EncodingFormat::GVariant =&gt; Deserializer::GVariant(GVDeserializer::new(
             bytes,
             <span class="attr">#[cfg(unix)]
@@ -879,14 +880,14 @@
 /// Please note that actual file descriptors are not part of the encoding and need to be transferred
 /// via an out-of-band platform specific mechanism. The encoding only contain the indices of the
 /// file descriptors and hence the reason, caller must pass a slice of file descriptors.
-</span><span class="kw">pub fn </span>from_slice_for_dynamic_signature&lt;<span class="lifetime">&#39;d</span>, B, T&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_for_dynamic_signature&lt;<span class="lifetime">'d</span>, B, T&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'d </span>[u8],
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;d</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'d</span>&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: DynamicDeserialize&lt;<span class="lifetime">&#39;d</span>&gt;,
+    T: DynamicDeserialize&lt;<span class="lifetime">'d</span>&gt;,
 {
     <span class="kw">let </span>seed = T::deserializer_for_signature(signature)<span class="question-mark">?</span>;
 
@@ -902,15 +903,15 @@
 ///
 /// This function is not available on Windows.
 </span><span class="attr">#[cfg(unix)]
-</span><span class="kw">pub fn </span>from_slice_fds_for_dynamic_signature&lt;<span class="lifetime">&#39;d</span>, B, T&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_fds_for_dynamic_signature&lt;<span class="lifetime">'d</span>, B, T&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'d </span>[u8],
     fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[RawFd]&gt;,
     ctxt: EncodingContext&lt;B&gt;,
-    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;d</span>&gt;,
+    signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'d</span>&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    T: DynamicDeserialize&lt;<span class="lifetime">&#39;d</span>&gt;,
+    T: DynamicDeserialize&lt;<span class="lifetime">'d</span>&gt;,
 {
     <span class="kw">let </span>seed = T::deserializer_for_signature(signature)<span class="question-mark">?</span>;
 
@@ -923,14 +924,14 @@
 /// Please note that actual file descriptors are not part of the encoding and need to be transferred
 /// via an out-of-band platform specific mechanism. The encoding only contain the indices of the
 /// file descriptors and hence the reason, caller must pass a slice of file descriptors.
-</span><span class="kw">pub fn </span>from_slice_with_seed&lt;<span class="lifetime">&#39;d</span>, B, S&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_with_seed&lt;<span class="lifetime">'d</span>, B, S&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'d </span>[u8],
     ctxt: EncodingContext&lt;B&gt;,
     seed: S,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;S::Value&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    S: DeserializeSeed&lt;<span class="lifetime">&#39;d</span>&gt; + DynamicType,
+    S: DeserializeSeed&lt;<span class="lifetime">'d</span>&gt; + DynamicType,
 {
     _from_slice_fds_with_seed(
         bytes,
@@ -950,33 +951,33 @@
 ///
 /// This function is not available on Windows.
 </span><span class="attr">#[cfg(unix)]
-</span><span class="kw">pub fn </span>from_slice_fds_with_seed&lt;<span class="lifetime">&#39;d</span>, B, S&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span>[u8],
+</span><span class="kw">pub fn </span>from_slice_fds_with_seed&lt;<span class="lifetime">'d</span>, B, S&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'d </span>[u8],
     fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[RawFd]&gt;,
     ctxt: EncodingContext&lt;B&gt;,
     seed: S,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;S::Value&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    S: DeserializeSeed&lt;<span class="lifetime">&#39;d</span>&gt; + DynamicType,
+    S: DeserializeSeed&lt;<span class="lifetime">'d</span>&gt; + DynamicType,
 {
     _from_slice_fds_with_seed(bytes, fds, ctxt, seed)
 }
 
-<span class="kw">fn </span>_from_slice_fds_with_seed&lt;<span class="lifetime">&#39;d</span>, B, S&gt;(
-    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span>[u8],
+<span class="kw">fn </span>_from_slice_fds_with_seed&lt;<span class="lifetime">'d</span>, B, S&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">'d </span>[u8],
     <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[RawFd]&gt;,
     ctxt: EncodingContext&lt;B&gt;,
     seed: S,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;S::Value&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    S: DeserializeSeed&lt;<span class="lifetime">&#39;d</span>&gt; + DynamicType,
+    S: DeserializeSeed&lt;<span class="lifetime">'d</span>&gt; + DynamicType,
 {
     <span class="kw">let </span>signature = S::dynamic_signature(<span class="kw-2">&amp;</span>seed).to_owned();
 
     <span class="kw">let </span><span class="kw-2">mut </span>de = <span class="kw">match </span>ctxt.format() {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>EncodingFormat::GVariant =&gt; Deserializer::GVariant(GVDeserializer::new(
             bytes,
             <span class="attr">#[cfg(unix)]
@@ -998,18 +999,18 @@
 
 <span class="doccomment">/// Our deserialization implementation.
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>DeserializerCommon&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>DeserializerCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) ctxt: EncodingContext&lt;B&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;de </span>[u8],
+    <span class="kw">pub</span>(<span class="kw">crate</span>) bytes: <span class="kw-2">&amp;</span><span class="lifetime">'de </span>[u8],
 
     <span class="attr">#[cfg(unix)]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>[RawFd]&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'f </span>[RawFd]&gt;,
     <span class="attr">#[cfg(not(unix))]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>()&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'f </span>()&gt;,
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) pos: usize,
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) sig_parser: SignatureParser&lt;<span class="lifetime">&#39;sig</span>&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) sig_parser: SignatureParser&lt;<span class="lifetime">'sig</span>&gt;,
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) container_depths: ContainerDepths,
 
@@ -1018,32 +1019,32 @@
 
 <span class="doccomment">/// Our deserialization implementation.
 ///
-/// Using this deserializer involves an redirection to the actual deserializer. It&#39;s best
+/// Using this deserializer involves an redirection to the actual deserializer. It's best
 /// to use the serialization functions, e.g [`crate::to_bytes`] or specific serializers,
 /// [`crate::dbus::Deserializer`] or [`crate::zvariant::Deserializer`].
-</span><span class="kw">pub enum </span>Deserializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt; {
-    DBus(DBusDeserializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
-    </span>GVariant(GVDeserializer&lt;<span class="lifetime">&#39;ser</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;),
+</span><span class="kw">pub enum </span>Deserializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; {
+    DBus(DBusDeserializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;),
+    <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+    </span>GVariant(GVDeserializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;),
 }
 
-<span class="macro">assert_impl_all!</span>(Deserializer&lt;<span class="lifetime">&#39;_</span>, <span class="lifetime">&#39;_</span>, <span class="lifetime">&#39;_</span>, u8&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(Deserializer&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, u8&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt; Deserializer&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
 {
     <span class="doccomment">/// Create a Deserializer struct instance.
     ///
     /// On Windows, there is no `fds` argument.
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">&#39;r</span>: <span class="lifetime">&#39;de</span>&gt;(
-        bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[u8],
-        <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;f </span>[RawFd]&gt;,
-        signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">&#39;sig</span>&gt;,
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'r</span>: <span class="lifetime">'de</span>&gt;(
+        bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
+        <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'f </span>[RawFd]&gt;,
+        signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'sig</span>&gt;,
         ctxt: EncodingContext&lt;B&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span>ctxt.format() {
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>EncodingFormat::GVariant =&gt; <span class="self">Self</span>::GVariant(GVDeserializer::new(
                 bytes,
                 <span class="attr">#[cfg(unix)]
@@ -1062,7 +1063,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt; DeserializerCommon&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; DeserializerCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
 {
@@ -1080,7 +1081,7 @@
             <span class="kw">if </span><span class="self">self</span>.pos + padding &gt; <span class="self">self</span>.bytes.len() {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(
                     <span class="self">self</span>.bytes.len(),
-                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&gt;= {}&quot;</span>, <span class="self">self</span>.pos + padding).as_str(),
+                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"&gt;= {}"</span>, <span class="self">self</span>.pos + padding).as_str(),
                 ));
             }
 
@@ -1106,11 +1107,11 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">pub fn </span>next_slice(<span class="kw-2">&amp;mut </span><span class="self">self</span>, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;de </span>[u8]&gt; {
+    <span class="kw">pub fn </span>next_slice(<span class="kw-2">&amp;mut </span><span class="self">self</span>, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'de </span>[u8]&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + len &gt; <span class="self">self</span>.bytes.len() {
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(
                 <span class="self">self</span>.bytes.len(),
-                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&gt;= {}&quot;</span>, <span class="self">self</span>.pos + len).as_str(),
+                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"&gt;= {}"</span>, <span class="self">self</span>.pos + len).as_str(),
             ));
         }
 
@@ -1139,10 +1140,10 @@
         <span class="attr">#[inline]
         </span><span class="kw">fn </span><span class="macro-nonterminal">$method</span>&lt;V&gt;(<span class="self">self</span>, $(<span class="macro-nonterminal">$arg</span>: <span class="macro-nonterminal">$</span><span class="kw">type</span>,)* <span class="macro-nonterminal">visitor</span>: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
         <span class="kw">where
-            </span>V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;,
+            </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
         {
             <span class="kw">match </span><span class="self">self </span>{
-                <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+                <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
                 </span>Deserializer::GVariant(de) =&gt; {
                     de.<span class="macro-nonterminal">$method</span>($(<span class="macro-nonterminal">$arg</span>,)* visitor)
                 }
@@ -1154,7 +1155,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt; de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; de::Deserializer&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
 {
@@ -1179,19 +1180,19 @@
     <span class="macro">deserialize_method!</span>(deserialize_byte_buf());
     <span class="macro">deserialize_method!</span>(deserialize_option());
     <span class="macro">deserialize_method!</span>(deserialize_unit());
-    <span class="macro">deserialize_method!</span>(deserialize_unit_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str));
-    <span class="macro">deserialize_method!</span>(deserialize_newtype_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str));
+    <span class="macro">deserialize_method!</span>(deserialize_unit_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str));
+    <span class="macro">deserialize_method!</span>(deserialize_newtype_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str));
     <span class="macro">deserialize_method!</span>(deserialize_seq());
     <span class="macro">deserialize_method!</span>(deserialize_map());
     <span class="macro">deserialize_method!</span>(deserialize_tuple(n: usize));
-    <span class="macro">deserialize_method!</span>(deserialize_tuple_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, l: usize));
+    <span class="macro">deserialize_method!</span>(deserialize_tuple_struct(n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, l: usize));
     <span class="macro">deserialize_method!</span>(deserialize_struct(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
-        f: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str]
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+        f: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str]
     ));
     <span class="macro">deserialize_method!</span>(deserialize_enum(
-        n: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
-        f: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str]
+        n: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
+        f: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str]
     ));
     <span class="macro">deserialize_method!</span>(deserialize_identifier());
     <span class="macro">deserialize_method!</span>(deserialize_ignored_any());
@@ -1208,14 +1209,14 @@
     Done,
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>deserialize_any&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, D, V&gt;(
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>deserialize_any&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, D, V&gt;(
     de: D,
     next_char: char,
     visitor: V,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
 <span class="kw">where
-    </span>D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>, Error = Error&gt;,
-    V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;,
+    </span>D: de::Deserializer&lt;<span class="lifetime">'de</span>, Error = Error&gt;,
+    V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
 {
     <span class="kw">match </span>next_char {
         u8::SIGNATURE_CHAR =&gt; de.deserialize_u8(visitor),
@@ -1235,35 +1236,35 @@
         VARIANT_SIGNATURE_CHAR =&gt; de.deserialize_seq(visitor),
         ARRAY_SIGNATURE_CHAR =&gt; de.deserialize_seq(visitor),
         STRUCT_SIG_START_CHAR =&gt; de.deserialize_seq(visitor),
-        <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
         </span>MAYBE_SIGNATURE_CHAR =&gt; de.deserialize_option(visitor),
         c =&gt; <span class="prelude-val">Err</span>(de::Error::invalid_value(
             de::Unexpected::Char(c),
-            <span class="kw-2">&amp;</span><span class="string">&quot;a valid signature character&quot;</span>,
+            <span class="kw-2">&amp;</span><span class="string">"a valid signature character"</span>,
         )),
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait </span>GetDeserializeCommon&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait </span>GetDeserializeCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
 {
-    <span class="kw">fn </span>common_mut&lt;<span class="lifetime">&#39;d</span>&gt;(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;d </span><span class="kw-2">mut </span>DeserializerCommon&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;
+    <span class="kw">fn </span>common_mut&lt;<span class="lifetime">'d</span>&gt;(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>DeserializerCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
     <span class="kw">where
-        </span><span class="self">Self</span>: <span class="lifetime">&#39;d</span>;
+        </span><span class="self">Self</span>: <span class="lifetime">'d</span>;
 }
 
 <span class="comment">// Enum handling is very generic so it can be here and specific deserializers can use this.
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Enum&lt;B, D&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) de: D,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
     <span class="kw">pub</span>(<span class="kw">crate</span>) phantom: PhantomData&lt;B&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B, D&gt; VariantAccess&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Enum&lt;B, D&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B, D&gt; VariantAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>Enum&lt;B, D&gt;
 <span class="kw">where
     </span>B: byteorder::ByteOrder,
-    D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>, Error = Error&gt; + GetDeserializeCommon&lt;<span class="lifetime">&#39;de</span>, <span class="lifetime">&#39;sig</span>, <span class="lifetime">&#39;f</span>, B&gt;,
+    D: de::Deserializer&lt;<span class="lifetime">'de</span>, Error = Error&gt; + GetDeserializeCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;,
 {
     <span class="kw">type </span>Error = Error;
 
@@ -1273,21 +1274,21 @@
 
     <span class="kw">fn </span>newtype_variant_seed&lt;T&gt;(<span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value&gt;
     <span class="kw">where
-        </span>T: DeserializeSeed&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
         seed.deserialize(<span class="self">self</span>.de)
     }
 
     <span class="kw">fn </span>tuple_variant&lt;V&gt;(<span class="self">self</span>, _len: usize, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
     <span class="kw">where
-        </span>V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
         de::Deserializer::deserialize_struct(<span class="self">self</span>.de, <span class="self">self</span>.name, <span class="kw-2">&amp;</span>[], visitor)
     }
 
-    <span class="kw">fn </span>struct_variant&lt;V&gt;(<span class="self">self</span>, fields: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str], visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
+    <span class="kw">fn </span>struct_variant&lt;V&gt;(<span class="self">self</span>, fields: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str], visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
     <span class="kw">where
-        </span>V: Visitor&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
         de::Deserializer::deserialize_struct(<span class="self">self</span>.de, <span class="self">self</span>.name, fields, visitor)
     }

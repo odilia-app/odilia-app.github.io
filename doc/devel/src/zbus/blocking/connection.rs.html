@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/blocking/connection.rs`."><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/blocking/connection.rs`."><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -348,13 +349,13 @@
 
 <span class="doccomment">/// A blocking wrapper of [`zbus::Connection`].
 ///
-/// Most of the API is very similar to [`zbus::Connection`], except it&#39;s blocking. One
+/// Most of the API is very similar to [`zbus::Connection`], except it's blocking. One
 /// notable difference is that there is no equivalent of [`Sink`] implementation provided.
 ///
 /// [`Sink`]: https://docs.rs/futures/0.3.17/futures/sink/trait.Sink.html
 </span><span class="attr">#[derive(derivative::Derivative, Clone)]
 #[derivative(Debug)]
-#[must_use = <span class="string">&quot;Dropping a `Connection` will close the underlying socket.&quot;</span>]
+#[must_use = <span class="string">"Dropping a `Connection` will close the underlying socket."</span>]
 </span><span class="kw">pub struct </span>Connection {
     inner: <span class="kw">crate</span>::Connection,
 }
@@ -382,7 +383,7 @@
         <span class="self">self</span>.inner.set_max_queued(max)
     }
 
-    <span class="doccomment">/// The server&#39;s GUID.
+    <span class="doccomment">/// The server's GUID.
     </span><span class="kw">pub fn </span>server_guid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.inner.server_guid()
     }
@@ -412,7 +413,7 @@
     ///
     /// [`receive_message`]: struct.Connection.html#method.receive_message
     /// [`MethodError`]: enum.Error.html#variant.MethodError
-    </span><span class="kw">pub fn </span>call_method&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;p</span>, <span class="lifetime">&#39;i</span>, <span class="lifetime">&#39;m</span>, D, P, I, M, B&gt;(
+    </span><span class="kw">pub fn </span>call_method&lt;<span class="lifetime">'d</span>, <span class="lifetime">'p</span>, <span class="lifetime">'i</span>, <span class="lifetime">'m</span>, D, P, I, M, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         destination: <span class="prelude-ty">Option</span>&lt;D&gt;,
         path: P,
@@ -421,10 +422,10 @@
         body: <span class="kw-2">&amp;</span>B,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;
     <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">&#39;d</span>&gt;&gt;,
-        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;p</span>&gt;&gt;,
-        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">&#39;i</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
+        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'d</span>&gt;&gt;,
+        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
+        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
+        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
         D::Error: Into&lt;Error&gt;,
         P::Error: Into&lt;Error&gt;,
         I::Error: Into&lt;Error&gt;,
@@ -440,7 +441,7 @@
     <span class="doccomment">/// Emit a signal.
     ///
     /// Create a signal message, and send it over the connection.
-    </span><span class="kw">pub fn </span>emit_signal&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;p</span>, <span class="lifetime">&#39;i</span>, <span class="lifetime">&#39;m</span>, D, P, I, M, B&gt;(
+    </span><span class="kw">pub fn </span>emit_signal&lt;<span class="lifetime">'d</span>, <span class="lifetime">'p</span>, <span class="lifetime">'i</span>, <span class="lifetime">'m</span>, D, P, I, M, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         destination: <span class="prelude-ty">Option</span>&lt;D&gt;,
         path: P,
@@ -449,10 +450,10 @@
         body: <span class="kw-2">&amp;</span>B,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">&#39;d</span>&gt;&gt;,
-        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;p</span>&gt;&gt;,
-        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">&#39;i</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
+        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'d</span>&gt;&gt;,
+        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
+        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
+        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
         D::Error: Into&lt;Error&gt;,
         P::Error: Into&lt;Error&gt;,
         I::Error: Into&lt;Error&gt;,
@@ -484,10 +485,10 @@
     /// with the given `error_name` and `body`.
     ///
     /// Returns the message serial number.
-    </span><span class="kw">pub fn </span>reply_error&lt;<span class="lifetime">&#39;e</span>, E, B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>Message, error_name: E, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;
+    </span><span class="kw">pub fn </span>reply_error&lt;<span class="lifetime">'e</span>, E, B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>Message, error_name: E, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;
     <span class="kw">where
         </span>B: serde::ser::Serialize + zvariant::DynamicType,
-        E: TryInto&lt;ErrorName&lt;<span class="lifetime">&#39;e</span>&gt;&gt;,
+        E: TryInto&lt;ErrorName&lt;<span class="lifetime">'e</span>&gt;&gt;,
         E::Error: Into&lt;Error&gt;,
     {
         block_on(<span class="self">self</span>.inner.reply_error(call, error_name, body))
@@ -501,7 +502,7 @@
     /// Returns the message serial number.
     </span><span class="kw">pub fn </span>reply_dbus_error(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        call: <span class="kw-2">&amp;</span>zbus::MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
+        call: <span class="kw-2">&amp;</span>zbus::MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
         err: <span class="kw">impl </span>DBusError,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt; {
         block_on(<span class="self">self</span>.inner.reply_dbus_error(call, err))
@@ -511,9 +512,9 @@
     ///
     /// Blocking version of [`crate::Connection::request_name`]. See docs there for more details
     /// and caveats.
-    </span><span class="kw">pub fn </span>request_name&lt;<span class="lifetime">&#39;w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    </span><span class="kw">pub fn </span>request_name&lt;<span class="lifetime">'w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
-        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt;&gt;,
+        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">'w</span>&gt;&gt;,
         W::Error: Into&lt;Error&gt;,
     {
         block_on(<span class="self">self</span>.inner.request_name(well_known_name))
@@ -523,13 +524,13 @@
     ///
     /// Blocking version of [`crate::Connection::request_name_with_flags`]. See docs there for more
     /// details and caveats.
-    </span><span class="kw">pub fn </span>request_name_with_flags&lt;<span class="lifetime">&#39;w</span>, W&gt;(
+    </span><span class="kw">pub fn </span>request_name_with_flags&lt;<span class="lifetime">'w</span>, W&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         well_known_name: W,
         flags: BitFlags&lt;RequestNameFlags&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RequestNameReply&gt;
     <span class="kw">where
-        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt;&gt;,
+        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">'w</span>&gt;&gt;,
         W::Error: Into&lt;Error&gt;,
     {
         block_on(<span class="self">self</span>.inner.request_name_with_flags(well_known_name, flags))
@@ -543,9 +544,9 @@
     /// Unless an error is encountered, returns `Ok(true)` if name was previously registered with
     /// the bus through `self` and it has now been successfully deregistered, `Ok(false)` if name
     /// was not previously registered or already deregistered.
-    </span><span class="kw">pub fn </span>release_name&lt;<span class="lifetime">&#39;w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt;
+    </span><span class="kw">pub fn </span>release_name&lt;<span class="lifetime">'w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt;
     <span class="kw">where
-        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt;&gt;,
+        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">'w</span>&gt;&gt;,
         W::Error: Into&lt;Error&gt;,
     {
         block_on(<span class="self">self</span>.inner.release_name(well_known_name))
@@ -561,7 +562,7 @@
     <span class="doccomment">/// Get a reference to the associated [`ObjectServer`].
     ///
     /// The `ObjectServer` is created on-demand.
-    </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">&#39;_ </span>{
+    </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">'_ </span>{
         <span class="self">self</span>.inner.sync_object_server(<span class="bool-val">true</span>, <span class="prelude-val">None</span>)
     }
 
@@ -604,13 +605,13 @@
 <span class="attr">#[cfg(all(test, unix))]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>ntest::timeout;
-    <span class="attr">#[cfg(all(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    <span class="attr">#[cfg(all(unix, not(feature = <span class="string">"tokio"</span>)))]
     </span><span class="kw">use </span>std::os::unix::net::UnixStream;
     <span class="kw">use </span>std::thread;
     <span class="kw">use </span>test_log::test;
-    <span class="attr">#[cfg(all(unix, feature = <span class="string">&quot;tokio&quot;</span>))]
+    <span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
     </span><span class="kw">use </span>tokio::net::UnixStream;
-    <span class="attr">#[cfg(all(windows, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    <span class="attr">#[cfg(all(windows, not(feature = <span class="string">"tokio"</span>)))]
     </span><span class="kw">use </span>uds_windows::UnixStream;
 
     <span class="kw">use crate</span>::{
@@ -635,9 +636,9 @@
                 .unwrap();
             rx.recv().unwrap();
             <span class="kw">let </span>reply = c
-                .call_method(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;org.zbus.p2p&quot;</span>), <span class="string">&quot;Test&quot;</span>, <span class="kw-2">&amp;</span>())
+                .call_method(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"/"</span>, <span class="prelude-val">Some</span>(<span class="string">"org.zbus.p2p"</span>), <span class="string">"Test"</span>, <span class="kw-2">&amp;</span>())
                 .unwrap();
-            <span class="macro">assert_eq!</span>(reply.to_string(), <span class="string">&quot;Method return&quot;</span>);
+            <span class="macro">assert_eq!</span>(reply.to_string(), <span class="string">"Method return"</span>);
             <span class="kw">let </span>val: String = reply.body().unwrap();
             val
         });
@@ -647,13 +648,13 @@
         <span class="kw">let </span><span class="kw-2">mut </span>s = MessageIterator::from(<span class="kw-2">&amp;</span>c);
         tx.send(()).unwrap();
         <span class="kw">let </span>m = s.next().unwrap().unwrap();
-        <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">&quot;Method call Test&quot;</span>);
-        c.reply(<span class="kw-2">&amp;</span>m, <span class="kw-2">&amp;</span>(<span class="string">&quot;yay&quot;</span>)).unwrap();
+        <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">"Method call Test"</span>);
+        c.reply(<span class="kw-2">&amp;</span>m, <span class="kw-2">&amp;</span>(<span class="string">"yay"</span>)).unwrap();
 
         <span class="kw">for _ in </span>s {}
 
-        <span class="kw">let </span>val = server_thread.join().expect(<span class="string">&quot;failed to join server thread&quot;</span>);
-        <span class="macro">assert_eq!</span>(val, <span class="string">&quot;yay&quot;</span>);
+        <span class="kw">let </span>val = server_thread.join().expect(<span class="string">"failed to join server thread"</span>);
+        <span class="macro">assert_eq!</span>(val, <span class="string">"yay"</span>);
 
         <span class="comment">// there was some activity
         </span>listener.wait();

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/eyre-0.6.8/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="eyre" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../eyre/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/eyre-0.6.8/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="eyre" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1249,15 +1250,15 @@
 //!
 //! ## Custom Report Handlers
 //!
-//! The heart of this crate is it&#39;s ability to swap out the Handler type to change
+//! The heart of this crate is it's ability to swap out the Handler type to change
 //! what information is carried alongside errors and how the end report is
 //! formatted. This crate is meant to be used alongside companion crates that
-//! customize it&#39;s behavior. Below is a list of known crates that export report
+//! customize it's behavior. Below is a list of known crates that export report
 //! handlers for eyre and short summaries of what features they provide.
 //!
-//! - [`stable-eyre`]: Switches the backtrace type from `std`&#39;s to `backtrace-rs`&#39;s
+//! - [`stable-eyre`]: Switches the backtrace type from `std`'s to `backtrace-rs`'s
 //!   so that it can be captured on stable. The report format is identical to
-//!   `DefaultHandler`&#39;s report format.
+//!   `DefaultHandler`'s report format.
 //! - [`color-eyre`]: Captures a `backtrace::Backtrace` and a
 //!   `tracing_error::SpanTrace`. Provides a `Section` trait for attaching warnings
 //!   and suggestions to error reports. The end report is then pretty printed with
@@ -1281,7 +1282,7 @@
 //!
 //! - You export an undocumented error interface that is otherwise still
 //! accessible via downcast, making it hard for users to react to specific
-//! errors while not preventing them from depending on details you didn&#39;t mean
+//! errors while not preventing them from depending on details you didn't mean
 //! to make part of your public API.
 //!   - This in turn makes the error types of all libraries you use a part of
 //!   your public API as well, and makes changing any of those libraries into an
@@ -1318,7 +1319,7 @@
 //!   use eyre::Result;
 //!
 //!   fn get_cluster_info() -&gt; Result&lt;ClusterMap&gt; {
-//!       let config = std::fs::read_to_string(&quot;cluster.json&quot;)?;
+//!       let config = std::fs::read_to_string("cluster.json")?;
 //!       let map: ClusterMap = serde_json::from_str(&amp;config)?;
 //!       Ok(map)
 //!   }
@@ -1328,7 +1329,7 @@
 //!
 //! - Wrap a lower level error with a new error created from a message to help the
 //!   person troubleshooting understand what the chain of failures that occured. A
-//!   low-level error like &quot;No such file or directory&quot; can be annoying to debug
+//!   low-level error like "No such file or directory" can be annoying to debug
 //!   without more information about what higher level step the application was in
 //!   the middle of.
 //!
@@ -1351,12 +1352,12 @@
 //!       # };
 //!       #
 //!       # let it = It;
-//!       # let path = &quot;./path/to/instrs.json&quot;;
+//!       # let path = "./path/to/instrs.json";
 //!       #
-//!       it.detach().wrap_err(&quot;Failed to detach the important thing&quot;)?;
+//!       it.detach().wrap_err("Failed to detach the important thing")?;
 //!
 //!       let content = std::fs::read(path)
-//!           .wrap_err_with(|| format!(&quot;Failed to read instrs from {}&quot;, path))?;
+//!           .wrap_err_with(|| format!("Failed to read instrs from {}", path))?;
 //!       #
 //!       # const _: &amp;str = stringify! {
 //!       ...
@@ -1396,10 +1397,10 @@
 //!   #
 //!   # const REDACTED_CONTENT: () = ();
 //!   #
-//!   # #[cfg(not(feature = &quot;auto-install&quot;))]
+//!   # #[cfg(not(feature = "auto-install"))]
 //!   # eyre::set_hook(Box::new(eyre::DefaultHandler::default_with)).unwrap();
 //!   #
-//!   # let error: Report = eyre!(&quot;...&quot;);
+//!   # let error: Report = eyre!("...");
 //!   # let root_cause = &amp;error;
 //!   #
 //!   # let ret =
@@ -1438,12 +1439,12 @@
 //!
 //!   #[derive(Error, Debug)]
 //!   pub enum FormatError {
-//!       #[error(&quot;Invalid header (expected {expected:?}, got {found:?})&quot;)]
+//!       #[error("Invalid header (expected {expected:?}, got {found:?})")]
 //!       InvalidHeader {
 //!           expected: String,
 //!           found: String,
 //!       },
-//!       #[error(&quot;Missing attribute: {0}&quot;)]
+//!       #[error("Missing attribute: {0}")]
 //!       MissingAttribute(String),
 //!   }
 //!   ```
@@ -1455,8 +1456,8 @@
 //!   # use eyre::{eyre, Result};
 //!   #
 //!   # fn demo() -&gt; Result&lt;()&gt; {
-//!   #     let missing = &quot;...&quot;;
-//!   return Err(eyre!(&quot;Missing attribute: {}&quot;, missing));
+//!   #     let missing = "...";
+//!   return Err(eyre!("Missing attribute: {}", missing));
 //!   #     Ok(())
 //!   # }
 //!   ```
@@ -1467,9 +1468,9 @@
 //!   # use eyre::{eyre, Result};
 //!   #
 //!   # fn demo() -&gt; Result&lt;()&gt; {
-//!   #     let missing = &quot;...&quot;;
+//!   #     let missing = "...";
 //!   # #[cfg(not(eyre_no_fmt_args_capture))]
-//!   return Err(eyre!(&quot;Missing attribute: {missing}&quot;));
+//!   return Err(eyre!("Missing attribute: {missing}"));
 //!   #     Ok(())
 //!   # }
 //!   ```
@@ -1477,27 +1478,27 @@
 //! ## No-std support
 //!
 //! **NOTE**: tests are currently broken for `no_std` so I cannot guarantee that
-//! everything works still. I&#39;m waiting for upstream fixes to be merged rather than
+//! everything works still. I'm waiting for upstream fixes to be merged rather than
 //! fixing them myself, so bear with me.
 //!
 //! In no_std mode, the same API is almost all available and works the same way. To
-//! depend on Eyre in no_std mode, disable our default enabled &quot;std&quot; feature in
+//! depend on Eyre in no_std mode, disable our default enabled "std" feature in
 //! Cargo.toml. A global allocator is required.
 //!
 //! ```toml
 //! [dependencies]
-//! eyre = { version = &quot;0.6&quot;, default-features = false }
+//! eyre = { version = "0.6", default-features = false }
 //! ```
 //!
 //! Since the `?`-based error conversions would normally rely on the
 //! `std::error::Error` trait which is only available through std, no_std mode will
 //! require an explicit `.map_err(Report::msg)` when working with a non-Eyre error
-//! type inside a function that returns Eyre&#39;s error type.
+//! type inside a function that returns Eyre's error type.
 //!
 //! ## Comparison to failure
 //!
 //! The `eyre::Report` type works something like `failure::Error`, but unlike
-//! failure ours is built around the standard library&#39;s `std::error::Error` trait
+//! failure ours is built around the standard library's `std::error::Error` trait
 //! rather than a separate trait `failure::Fail`. The standard library has adopted
 //! the necessary improvements for this to be possible as part of [RFC 2504].
 //!
@@ -1505,10 +1506,10 @@
 //!
 //! ## Comparison to thiserror
 //!
-//! Use `eyre` if you don&#39;t think you&#39;ll do anything with an error other than
+//! Use `eyre` if you don't think you'll do anything with an error other than
 //! report it. This is common in application code. Use `thiserror` if you think
 //! you need an error type that can be handled via match or reported. This is
-//! common in library crates where you don&#39;t know how your users will handle
+//! common in library crates where you don't know how your users will handle
 //! your errors.
 //!
 //! [thiserror]: https://github.com/dtolnay/thiserror
@@ -1523,7 +1524,7 @@
 //!
 //! As part of renaming `Context` to `WrapErr` we also intentionally do not
 //! implement `WrapErr` for `Option`. This decision was made because `wrap_err`
-//! implies that you&#39;re creating a new error that saves the old error as its
+//! implies that you're creating a new error that saves the old error as its
 //! `source`. With `Option` there is no source error to wrap, so `wrap_err` ends up
 //! being somewhat meaningless.
 //!
@@ -1535,7 +1536,7 @@
 //! use anyhow::Context;
 //!
 //! let opt: Option&lt;()&gt; = None;
-//! let result = opt.context(&quot;new error message&quot;);
+//! let result = opt.context("new error message");
 //! ```
 //!
 //! With `eyre` we want users to write:
@@ -1543,11 +1544,11 @@
 //! ```rust
 //! use eyre::{eyre, Result};
 //!
-//! # #[cfg(not(feature = &quot;auto-install&quot;))]
+//! # #[cfg(not(feature = "auto-install"))]
 //! # eyre::set_hook(Box::new(eyre::DefaultHandler::default_with)).unwrap();
 //! #
 //! let opt: Option&lt;()&gt; = None;
-//! let result: Result&lt;()&gt; = opt.ok_or_else(|| eyre!(&quot;new error message&quot;));
+//! let result: Result&lt;()&gt; = opt.ok_or_else(|| eyre!("new error message"));
 //! ```
 //!
 //! **NOTE**: However, to help with porting we do provide a `ContextCompat` trait which
@@ -1568,7 +1569,7 @@
 //! [`simple-eyre`]: https://github.com/yaahc/simple-eyre
 //! [`color-spantrace`]: https://github.com/yaahc/color-spantrace
 //! [`color-backtrace`]: https://github.com/athre0z/color-backtrace
-</span><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://docs.rs/eyre/0.6.8&quot;</span>)]
+</span><span class="attr">#![doc(html_root_url = <span class="string">"https://docs.rs/eyre/0.6.8"</span>)]
 #![warn(
     missing_debug_implementations,
     missing_docs,
@@ -1639,7 +1640,7 @@
 /// `Report` works a lot like `Box&lt;dyn std::error::Error&gt;`, but with these
 /// differences:
 ///
-/// - `Report` requires that the error is `Send`, `Sync`, and `&#39;static`.
+/// - `Report` requires that the error is `Send`, `Sync`, and `'static`.
 /// - `Report` guarantees that a backtrace is available, even if the underlying
 ///   error type does not provide one.
 /// - `Report` is represented as a narrow pointer &amp;mdash; exactly one word in
@@ -1647,7 +1648,7 @@
 ///
 /// # Display representations
 ///
-/// When you print an error object using &quot;{}&quot; or to_string(), only the outermost underlying error
+/// When you print an error object using "{}" or to_string(), only the outermost underlying error
 /// is printed, not any of the lower level causes. This is exactly as if you had called the Display
 /// impl of the error from which you constructed your eyre::Report.
 ///
@@ -1655,14 +1656,14 @@
 /// Failed to read instrs from ./path/to/instrs.json
 /// ```
 ///
-/// To print causes as well using eyre&#39;s default formatting of causes, use the
-/// alternate selector &quot;{:#}&quot;.
+/// To print causes as well using eyre's default formatting of causes, use the
+/// alternate selector "{:#}".
 ///
 /// ```console
 /// Failed to read instrs from ./path/to/instrs.json: No such file or directory (os error 2)
 /// ```
 ///
-/// The Debug format &quot;{:?}&quot; includes your backtrace if one was captured. Note
+/// The Debug format "{:?}" includes your backtrace if one was captured. Note
 /// that this is the representation you get by default if you return an error
 /// from `fn main` instead of printing it explicitly yourself.
 ///
@@ -1688,15 +1689,15 @@
 ///    7: _start
 /// ```
 ///
-/// To see a conventional struct-style Debug representation, use &quot;{:#?}&quot;.
+/// To see a conventional struct-style Debug representation, use "{:#?}".
 ///
 /// ```console
 /// Error {
-///     msg: &quot;Failed to read instrs from ./path/to/instrs.json&quot;,
+///     msg: "Failed to read instrs from ./path/to/instrs.json",
 ///     source: Os {
 ///         code: 2,
 ///         kind: NotFound,
-///         message: &quot;No such file or directory&quot;,
+///         message: "No such file or directory",
 ///     },
 /// }
 /// ```
@@ -1713,7 +1714,7 @@
 }
 
 <span class="kw">type </span>ErrorHook =
-    Box&lt;<span class="kw">dyn </span>Fn(<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>)) -&gt; Box&lt;<span class="kw">dyn </span>EyreHandler&gt; + Sync + Send + <span class="lifetime">&#39;static</span>&gt;;
+    Box&lt;<span class="kw">dyn </span>Fn(<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>)) -&gt; Box&lt;<span class="kw">dyn </span>EyreHandler&gt; + Sync + Send + <span class="lifetime">'static</span>&gt;;
 
 <span class="kw">static </span>HOOK: OnceCell&lt;ErrorHook&gt; = OnceCell::new();
 
@@ -1722,8 +1723,8 @@
 </span><span class="kw">pub struct </span>InstallError;
 
 <span class="kw">impl </span>core::fmt::Display <span class="kw">for </span>InstallError {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; core::fmt::Result {
-        f.write_str(<span class="string">&quot;cannot install provided ErrorHook, a hook has already been installed&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; core::fmt::Result {
+        f.write_str(<span class="string">"cannot install provided ErrorHook, a hook has already been installed"</span>)
     }
 }
 
@@ -1753,11 +1754,11 @@
 ///     install().unwrap();
 ///
 ///     // construct a report with, hopefully, our custom handler!
-///     let mut report = eyre::eyre!(&quot;hello from custom error town!&quot;);
+///     let mut report = eyre::eyre!("hello from custom error town!");
 ///
 ///     // manually set the custom msg for this report after it has been constructed
 ///     if let Some(handler) = report.handler_mut().downcast_mut::&lt;Handler&gt;() {
-///         handler.custom_msg = Some(&quot;you&#39;re the best users, you know that right???&quot;);
+///         handler.custom_msg = Some("you're the best users, you know that right???");
 ///     }
 ///
 ///     // print that shit!!
@@ -1766,8 +1767,8 @@
 ///
 /// // define a handler that captures backtraces unless told not to
 /// fn install() -&gt; Result&lt;(), impl Error&gt; {
-///     let capture_backtrace = std::env::var(&quot;RUST_BACKWARDS_TRACE&quot;)
-///         .map(|val| val != &quot;0&quot;)
+///     let capture_backtrace = std::env::var("RUST_BACKWARDS_TRACE")
+///         .map(|val| val != "0")
 ///         .unwrap_or(true);
 ///
 ///     let hook = Hook { capture_backtrace };
@@ -1780,7 +1781,7 @@
 /// }
 ///
 /// impl Hook {
-///     fn make_handler(&amp;self, _error: &amp;(dyn Error + &#39;static)) -&gt; Handler {
+///     fn make_handler(&amp;self, _error: &amp;(dyn Error + 'static)) -&gt; Handler {
 ///         let backtrace = if self.capture_backtrace {
 ///             Some(Backtrace::new())
 ///         } else {
@@ -1798,11 +1799,11 @@
 ///     // custom configured backtrace capture
 ///     backtrace: Option&lt;Backtrace&gt;,
 ///     // customizable message payload associated with reports
-///     custom_msg: Option&lt;&amp;&#39;static str&gt;,
+///     custom_msg: Option&lt;&amp;'static str&gt;,
 /// }
 ///
 /// impl EyreHandler for Handler {
-///     fn debug(&amp;self, error: &amp;(dyn Error + &#39;static), f: &amp;mut fmt::Formatter&lt;&#39;_&gt;) -&gt; fmt::Result {
+///     fn debug(&amp;self, error: &amp;(dyn Error + 'static), f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
 ///         if f.alternate() {
 ///             return fmt::Debug::fmt(error, f);
 ///         }
@@ -1810,15 +1811,15 @@
 ///         let errors = iter::successors(Some(error), |error| (*error).source());
 ///
 ///         for (ind, error) in errors.enumerate() {
-///             write!(f, &quot;\n{:&gt;4}: {}&quot;, ind, error)?;
+///             write!(f, "\n{:&gt;4}: {}", ind, error)?;
 ///         }
 ///
 ///         if let Some(backtrace) = self.backtrace.as_ref() {
-///             writeln!(f, &quot;\n\nBacktrace:\n{:?}&quot;, backtrace)?;
+///             writeln!(f, "\n\nBacktrace:\n{:?}", backtrace)?;
 ///         }
 ///
 ///         if let Some(msg) = self.custom_msg.as_ref() {
-///             writeln!(f, &quot;\n\n{}&quot;, msg)?;
+///             writeln!(f, "\n\n{}", msg)?;
 ///         }
 ///
 ///         Ok(())
@@ -1831,14 +1832,14 @@
 
 <span class="attr">#[cfg_attr(track_caller, track_caller)]
 #[cfg_attr(not(track_caller), allow(unused_mut))]
-</span><span class="kw">fn </span>capture_handler(error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>)) -&gt; Box&lt;<span class="kw">dyn </span>EyreHandler&gt; {
-    <span class="attr">#[cfg(not(feature = <span class="string">&quot;auto-install&quot;</span>))]
+</span><span class="kw">fn </span>capture_handler(error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>)) -&gt; Box&lt;<span class="kw">dyn </span>EyreHandler&gt; {
+    <span class="attr">#[cfg(not(feature = <span class="string">"auto-install"</span>))]
     </span><span class="kw">let </span>hook = HOOK
         .get()
-        .expect(<span class="string">&quot;a handler must always be installed if the `auto-install` feature is disabled&quot;</span>)
+        .expect(<span class="string">"a handler must always be installed if the `auto-install` feature is disabled"</span>)
         .as_ref();
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;auto-install&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"auto-install"</span>)]
     </span><span class="kw">let </span>hook = HOOK
         .get_or_init(|| Box::new(DefaultHandler::default_with))
         .as_ref();
@@ -1907,8 +1908,8 @@
     /// impl EyreHandler for Handler {
     ///     fn debug(
     ///         &amp;self,
-    ///         error: &amp;(dyn Error + &#39;static),
-    ///         f: &amp;mut core::fmt::Formatter&lt;&#39;_&gt;,
+    ///         error: &amp;(dyn Error + 'static),
+    ///         f: &amp;mut core::fmt::Formatter&lt;'_&gt;,
     ///     ) -&gt; core::fmt::Result {
     ///         use core::fmt::Write as _;
     ///
@@ -1916,24 +1917,24 @@
     ///             return core::fmt::Debug::fmt(error, f);
     ///         }
     ///
-    ///         write!(f, &quot;{}&quot;, error)?;
+    ///         write!(f, "{}", error)?;
     ///
     ///         if let Some(cause) = error.source() {
-    ///             write!(f, &quot;\n\nCaused by:&quot;)?;
+    ///             write!(f, "\n\nCaused by:")?;
     ///             let multiple = cause.source().is_some();
     ///
     ///             for (n, error) in Chain::new(cause).enumerate() {
     ///                 writeln!(f)?;
     ///                 if multiple {
-    ///                     write!(indented(f).ind(n), &quot;{}&quot;, error)?;
+    ///                     write!(indented(f).ind(n), "{}", error)?;
     ///                 } else {
-    ///                     write!(indented(f), &quot;{}&quot;, error)?;
+    ///                     write!(indented(f), "{}", error)?;
     ///                 }
     ///             }
     ///         }
     ///
     ///         let backtrace = &amp;self.backtrace;
-    ///         write!(f, &quot;\n\nStack backtrace:\n{:?}&quot;, backtrace)?;
+    ///         write!(f, "\n\nStack backtrace:\n{:?}", backtrace)?;
     ///
     ///         Ok(())
     ///     }
@@ -1941,21 +1942,21 @@
     /// ```
     </span><span class="kw">fn </span>debug(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>),
-        f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;,
+        error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>),
+        f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; core::fmt::Result;
 
     <span class="doccomment">/// Override for the `Display` format
     </span><span class="kw">fn </span>display(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>),
-        f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;,
+        error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>),
+        f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; core::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, error)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(f, <span class="string">"{}"</span>, error)<span class="question-mark">?</span>;
 
         <span class="kw">if </span>f.alternate() {
             <span class="kw">for </span>cause <span class="kw">in </span><span class="kw">crate</span>::chain::Chain::new(error).skip(<span class="number">1</span>) {
-                <span class="macro">write!</span>(f, <span class="string">&quot;: {}&quot;</span>, cause)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">": {}"</span>, cause)<span class="question-mark">?</span>;
             }
         }
 
@@ -1964,7 +1965,7 @@
 
     <span class="doccomment">/// Store the location of the caller who constructed this error report
     </span><span class="attr">#[allow(unused_variables)]
-    </span><span class="kw">fn </span>track_caller(<span class="kw-2">&amp;mut </span><span class="self">self</span>, location: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>std::panic::Location&lt;<span class="lifetime">&#39;static</span>&gt;) {}
+    </span><span class="kw">fn </span>track_caller(<span class="kw-2">&amp;mut </span><span class="self">self</span>, location: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>std::panic::Location&lt;<span class="lifetime">'static</span>&gt;) {}
 }
 
 <span class="doccomment">/// The default provided error report handler for `eyre::Report`.
@@ -1975,7 +1976,7 @@
 </span><span class="kw">pub struct </span>DefaultHandler {
     backtrace: <span class="prelude-ty">Option</span>&lt;Backtrace&gt;,
     <span class="attr">#[cfg(track_caller)]
-    </span>location: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>std::panic::Location&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+    </span>location: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>std::panic::Location&lt;<span class="lifetime">'static</span>&gt;&gt;,
 }
 
 <span class="kw">impl </span>DefaultHandler {
@@ -1996,8 +1997,8 @@
     /// use eyre::{DefaultHandler, eyre, InstallError, Result, set_hook};
     ///
     /// fn main() -&gt; Result&lt;()&gt; {
-    ///     install_default().expect(&quot;default handler inexplicably already installed&quot;);
-    ///     Err(eyre!(&quot;hello from default error city!&quot;))
+    ///     install_default().expect("default handler inexplicably already installed");
+    ///     Err(eyre!("hello from default error city!"))
     /// }
     ///
     /// fn install_default() -&gt; Result&lt;(), InstallError&gt; {
@@ -2006,8 +2007,8 @@
     ///
     /// ```
     </span><span class="attr">#[allow(unused_variables)]
-    #[cfg_attr(not(feature = <span class="string">&quot;auto-install&quot;</span>), allow(dead_code))]
-    </span><span class="kw">pub fn </span>default_with(error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>)) -&gt; Box&lt;<span class="kw">dyn </span>EyreHandler&gt; {
+    #[cfg_attr(not(feature = <span class="string">"auto-install"</span>), allow(dead_code))]
+    </span><span class="kw">pub fn </span>default_with(error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>)) -&gt; Box&lt;<span class="kw">dyn </span>EyreHandler&gt; {
         <span class="kw">let </span>backtrace = <span class="macro">backtrace_if_absent!</span>(error);
 
         Box::new(<span class="self">Self </span>{
@@ -2019,13 +2020,13 @@
 }
 
 <span class="kw">impl </span>core::fmt::Debug <span class="kw">for </span>DefaultHandler {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; core::fmt::Result {
-        f.debug_struct(<span class="string">&quot;DefaultHandler&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; core::fmt::Result {
+        f.debug_struct(<span class="string">"DefaultHandler"</span>)
             .field(
-                <span class="string">&quot;backtrace&quot;</span>,
+                <span class="string">"backtrace"</span>,
                 <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.backtrace {
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="kw-2">&amp;</span><span class="string">&quot;Some(Backtrace { ... })&quot;</span>,
-                    <span class="prelude-val">None </span>=&gt; <span class="kw-2">&amp;</span><span class="string">&quot;None&quot;</span>,
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="kw-2">&amp;</span><span class="string">"Some(Backtrace { ... })"</span>,
+                    <span class="prelude-val">None </span>=&gt; <span class="kw-2">&amp;</span><span class="string">"None"</span>,
                 },
             )
             .finish()
@@ -2035,8 +2036,8 @@
 <span class="kw">impl </span>EyreHandler <span class="kw">for </span>DefaultHandler {
     <span class="kw">fn </span>debug(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>),
-        f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;,
+        error: <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>),
+        f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; core::fmt::Result {
         <span class="kw">use </span>core::fmt::Write <span class="kw">as _</span>;
 
@@ -2044,26 +2045,26 @@
             <span class="kw">return </span>core::fmt::Debug::fmt(error, f);
         }
 
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, error)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(f, <span class="string">"{}"</span>, error)<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(cause) = error.source() {
-            <span class="macro">write!</span>(f, <span class="string">&quot;\n\nCaused by:&quot;</span>)<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(f, <span class="string">"\n\nCaused by:"</span>)<span class="question-mark">?</span>;
             <span class="kw">let </span>multiple = cause.source().is_some();
             <span class="kw">for </span>(n, error) <span class="kw">in </span><span class="kw">crate</span>::chain::Chain::new(cause).enumerate() {
                 <span class="macro">writeln!</span>(f)<span class="question-mark">?</span>;
                 <span class="kw">if </span>multiple {
-                    <span class="macro">write!</span>(indenter::indented(f).ind(n), <span class="string">&quot;{}&quot;</span>, error)<span class="question-mark">?</span>;
+                    <span class="macro">write!</span>(indenter::indented(f).ind(n), <span class="string">"{}"</span>, error)<span class="question-mark">?</span>;
                 } <span class="kw">else </span>{
-                    <span class="macro">write!</span>(indenter::indented(f), <span class="string">&quot;{}&quot;</span>, error)<span class="question-mark">?</span>;
+                    <span class="macro">write!</span>(indenter::indented(f), <span class="string">"{}"</span>, error)<span class="question-mark">?</span>;
                 }
             }
         }
 
-        <span class="attr">#[cfg(all(track_caller, feature = <span class="string">&quot;track-caller&quot;</span>))]
+        <span class="attr">#[cfg(all(track_caller, feature = <span class="string">"track-caller"</span>))]
         </span>{
             <span class="kw">if let </span><span class="prelude-val">Some</span>(location) = <span class="self">self</span>.location {
-                <span class="macro">write!</span>(f, <span class="string">&quot;\n\nLocation:\n&quot;</span>)<span class="question-mark">?</span>;
-                <span class="macro">write!</span>(indenter::indented(f), <span class="string">&quot;{}&quot;</span>, location)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"\n\nLocation:\n"</span>)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(indenter::indented(f), <span class="string">"{}"</span>, location)<span class="question-mark">?</span>;
             }
         }
 
@@ -2075,9 +2076,9 @@
                 </span>.backtrace
                 .as_ref()
                 .or_else(|| error.backtrace())
-                .expect(<span class="string">&quot;backtrace capture failed&quot;</span>);
+                .expect(<span class="string">"backtrace capture failed"</span>);
             <span class="kw">if let </span>BacktraceStatus::Captured = backtrace.status() {
-                <span class="macro">write!</span>(f, <span class="string">&quot;\n\nStack backtrace:\n{}&quot;</span>, backtrace)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"\n\nStack backtrace:\n{}"</span>, backtrace)<span class="question-mark">?</span>;
             }
         }
 
@@ -2085,7 +2086,7 @@
     }
 
     <span class="attr">#[cfg(track_caller)]
-    </span><span class="kw">fn </span>track_caller(<span class="kw-2">&amp;mut </span><span class="self">self</span>, location: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>std::panic::Location&lt;<span class="lifetime">&#39;static</span>&gt;) {
+    </span><span class="kw">fn </span>track_caller(<span class="kw-2">&amp;mut </span><span class="self">self</span>, location: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>std::panic::Location&lt;<span class="lifetime">'static</span>&gt;) {
         <span class="self">self</span>.location = <span class="prelude-val">Some</span>(location);
     }
 }
@@ -2111,8 +2112,8 @@
 /// ```
 </span><span class="attr">#[derive(Clone)]
 #[allow(missing_debug_implementations)]
-</span><span class="kw">pub struct </span>Chain&lt;<span class="lifetime">&#39;a</span>&gt; {
-    state: <span class="kw">crate</span>::chain::ChainState&lt;<span class="lifetime">&#39;a</span>&gt;,
+</span><span class="kw">pub struct </span>Chain&lt;<span class="lifetime">'a</span>&gt; {
+    state: <span class="kw">crate</span>::chain::ChainState&lt;<span class="lifetime">'a</span>&gt;,
 }
 
 <span class="doccomment">/// type alias for `Result&lt;T, Report&gt;`
@@ -2157,9 +2158,9 @@
 ///
 /// fn main() -&gt; Result&lt;()&gt; {
 ///     # return Ok(());
-///     let config = std::fs::read_to_string(&quot;cluster.json&quot;)?;
+///     let config = std::fs::read_to_string("cluster.json")?;
 ///     let map: ClusterMap = serde_json::from_str(&amp;config)?;
-///     println!(&quot;cluster info: {:#?}&quot;, map);
+///     println!("cluster info: {:#?}", map);
 ///     Ok(())
 /// }
 /// ```
@@ -2182,7 +2183,7 @@
 /// }
 ///
 /// impl ImportantThing {
-///     # const IGNORE: &amp;&#39;static str = stringify! {
+///     # const IGNORE: &amp;'static str = stringify! {
 ///     pub fn detach(&amp;mut self) -&gt; Result&lt;()&gt; {...}
 ///     # };
 ///     # fn detach(&amp;mut self) -&gt; Result&lt;()&gt; {
@@ -2191,11 +2192,11 @@
 /// }
 ///
 /// pub fn do_it(mut it: ImportantThing) -&gt; Result&lt;Vec&lt;u8&gt;&gt; {
-///     it.detach().wrap_err(&quot;Failed to detach the important thing&quot;)?;
+///     it.detach().wrap_err("Failed to detach the important thing")?;
 ///
 ///     let path = &amp;it.path;
 ///     let content = fs::read(path)
-///         .wrap_err_with(|| format!(&quot;Failed to read instrs from {}&quot;, path.display()))?;
+///         .wrap_err_with(|| format!("Failed to read instrs from {}", path.display()))?;
 ///
 ///     Ok(content)
 /// }
@@ -2211,10 +2212,10 @@
 ///     No such file or directory (os error 2)
 /// ```
 ///
-/// # Wrapping Types That Don&#39;t impl `Error` (e.g. `&amp;str` and `Box&lt;dyn Error&gt;`)
+/// # Wrapping Types That Don't impl `Error` (e.g. `&amp;str` and `Box&lt;dyn Error&gt;`)
 ///
-/// Due to restrictions for coherence `Report` cannot impl `From` for types that don&#39;t impl
-/// `Error`. Attempts to do so will give &quot;this type might implement Error in the future&quot; as an
+/// Due to restrictions for coherence `Report` cannot impl `From` for types that don't impl
+/// `Error`. Attempts to do so will give "this type might implement Error in the future" as an
 /// error. As such, `wrap_err`, which uses `From` under the hood, cannot be used to wrap these
 /// types. Instead we encourage you to use the combinators provided for `Result` in `std`/`core`.
 ///
@@ -2224,8 +2225,8 @@
 /// use std::error::Error;
 /// use eyre::{WrapErr, Report};
 ///
-/// fn wrap_example(err: Result&lt;(), Box&lt;dyn Error + Send + Sync + &#39;static&gt;&gt;) -&gt; Result&lt;(), Report&gt; {
-///     err.wrap_err(&quot;saw a downstream error&quot;)
+/// fn wrap_example(err: Result&lt;(), Box&lt;dyn Error + Send + Sync + 'static&gt;&gt;) -&gt; Result&lt;(), Report&gt; {
+///     err.wrap_err("saw a downstream error")
 /// }
 /// ```
 ///
@@ -2235,8 +2236,8 @@
 /// use std::error::Error;
 /// use eyre::{WrapErr, Report, eyre};
 ///
-/// fn wrap_example(err: Result&lt;(), Box&lt;dyn Error + Send + Sync + &#39;static&gt;&gt;) -&gt; Result&lt;(), Report&gt; {
-///     err.map_err(|e| eyre!(e)).wrap_err(&quot;saw a downstream error&quot;)
+/// fn wrap_example(err: Result&lt;(), Box&lt;dyn Error + Send + Sync + 'static&gt;&gt;) -&gt; Result&lt;(), Report&gt; {
+///     err.map_err(|e| eyre!(e)).wrap_err("saw a downstream error")
 /// }
 /// ```
 ///
@@ -2245,7 +2246,7 @@
 /// After attaching a message of type `D` onto an error of type `E`, the resulting
 /// `eyre::Report` may be downcast to `D` **or** to `E`.
 ///
-/// That is, in codebases that rely on downcasting, Eyre&#39;s wrap_err supports
+/// That is, in codebases that rely on downcasting, Eyre's wrap_err supports
 /// both of the following use cases:
 ///
 ///   - **Attaching messages whose type is insignificant onto errors whose type
@@ -2262,7 +2263,7 @@
 ///     # use thiserror::Error;
 ///     #
 ///     # #[derive(Error, Debug)]
-///     # #[error(&quot;???&quot;)]
+///     # #[error("???")]
 ///     # struct SuspiciousError;
 ///     #
 ///     # fn helper() -&gt; Result&lt;()&gt; {
@@ -2272,7 +2273,7 @@
 ///     use eyre::{WrapErr, Result};
 ///
 ///     fn do_it() -&gt; Result&lt;()&gt; {
-///         helper().wrap_err(&quot;Failed to complete the work&quot;)?;
+///         helper().wrap_err("Failed to complete the work")?;
 ///         # const IGNORE: &amp;str = stringify! {
 ///         ...
 ///         # };
@@ -2280,7 +2281,7 @@
 ///     }
 ///
 ///     fn main() {
-///         # #[cfg(not(feature = &quot;auto-install&quot;))]
+///         # #[cfg(not(feature = "auto-install"))]
 ///         # eyre::set_hook(Box::new(eyre::DefaultHandler::default_with)).unwrap();
 ///         let err = do_it().unwrap_err();
 ///         if let Some(e) = err.downcast_ref::&lt;SuspiciousError&gt;() {
@@ -2288,7 +2289,7 @@
 ///             // correctly succeed even with the message in between.
 ///             # return;
 ///         }
-///         # panic!(&quot;expected downcast to succeed&quot;);
+///         # panic!("expected downcast to succeed");
 ///     }
 ///     ```
 ///
@@ -2304,11 +2305,11 @@
 ///     # use thiserror::Error;
 ///     #
 ///     # #[derive(Error, Debug)]
-///     # #[error(&quot;???&quot;)]
+///     # #[error("???")]
 ///     # struct HelperFailed;
 ///     #
 ///     # fn helper() -&gt; Result&lt;()&gt; {
-///     #     bail!(&quot;no such file or directory&quot;);
+///     #     bail!("no such file or directory");
 ///     # }
 ///     #
 ///     use eyre::{WrapErr, Result};
@@ -2322,7 +2323,7 @@
 ///     }
 ///
 ///     fn main() {
-///         # #[cfg(not(feature = &quot;auto-install&quot;))]
+///         # #[cfg(not(feature = "auto-install"))]
 ///         # eyre::set_hook(Box::new(eyre::DefaultHandler::default_with)).unwrap();
 ///         let err = do_it().unwrap_err();
 ///         if let Some(e) = err.downcast_ref::&lt;HelperFailed&gt;() {
@@ -2331,7 +2332,7 @@
 ///             // that error.
 ///             # return;
 ///         }
-///         # panic!(&quot;expected downcast to succeed&quot;);
+///         # panic!("expected downcast to succeed");
 ///     }
 ///     ```
 </span><span class="kw">pub trait </span>WrapErr&lt;T, E&gt;: context::private::Sealed {
@@ -2339,27 +2340,27 @@
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>wrap_err&lt;D&gt;(<span class="self">self</span>, msg: D) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>;
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>;
 
     <span class="doccomment">/// Wrap the error value with a new adhoc error that is evaluated lazily
     /// only once an error does occur.
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>wrap_err_with&lt;D, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>,
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>,
         F: FnOnce() -&gt; D;
 
     <span class="doccomment">/// Compatibility re-export of wrap_err for interopt with `anyhow`
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>context&lt;D&gt;(<span class="self">self</span>, msg: D) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>;
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>;
 
     <span class="doccomment">/// Compatibility re-export of wrap_err_with for interopt with `anyhow`
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>with_context&lt;D, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>,
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>,
         F: FnOnce() -&gt; D;
 }
 
@@ -2368,17 +2369,17 @@
 /// This trait is sealed and cannot be implemented for types outside of
 /// `eyre`.
 ///
-/// ## Why Doesn&#39;t `Eyre` impl `WrapErr` for `Option`?
+/// ## Why Doesn't `Eyre` impl `WrapErr` for `Option`?
 ///
-/// `eyre` doesn&#39;t impl `WrapErr` for `Option` because `wrap_err` implies that you&#39;re creating a
+/// `eyre` doesn't impl `WrapErr` for `Option` because `wrap_err` implies that you're creating a
 /// new error that saves the previous error as its `source`. Calling `wrap_err` on an `Option` is
 /// meaningless because there is no source error. `anyhow` avoids this issue by using a different
-/// mental model where you&#39;re adding &quot;context&quot; to an error, though this not a mental model for
+/// mental model where you're adding "context" to an error, though this not a mental model for
 /// error handling that `eyre` agrees with.
 ///
 /// Instead, `eyre` encourages users to think of each error as distinct, where the previous error
-/// is the context being saved by the new error, which is backwards compared to anyhow&#39;s model. In
-/// this model you&#39;re encouraged to use combinators provided by `std` for `Option` to convert an
+/// is the context being saved by the new error, which is backwards compared to anyhow's model. In
+/// this model you're encouraged to use combinators provided by `std` for `Option` to convert an
 /// option to a `Result`
 ///
 /// # Example
@@ -2391,7 +2392,7 @@
 /// fn get_thing(mut things: impl Iterator&lt;Item = u32&gt;) -&gt; eyre::Result&lt;u32&gt; {
 ///     things
 ///         .find(|&amp;thing| thing == 42)
-///         .context(&quot;the thing wasnt in the list&quot;)
+///         .context("the thing wasnt in the list")
 /// }
 /// ```
 ///
@@ -2403,7 +2404,7 @@
 /// fn get_thing(mut things: impl Iterator&lt;Item = u32&gt;) -&gt; eyre::Result&lt;u32&gt; {
 ///     things
 ///         .find(|&amp;thing| thing == 42)
-///         .ok_or_else(|| eyre!(&quot;the thing wasnt in the list&quot;))
+///         .ok_or_else(|| eyre!("the thing wasnt in the list"))
 /// }
 /// ```
 </span><span class="kw">pub trait </span>ContextCompat&lt;T&gt;: context::private::Sealed {
@@ -2412,27 +2413,27 @@
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>context&lt;D&gt;(<span class="self">self</span>, msg: D) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>;
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>;
 
     <span class="doccomment">/// Compatibility version of `wrap_err_with` for creating new errors with new source on `Option`
     /// when porting from `anyhow`
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>with_context&lt;D, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>,
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>,
         F: FnOnce() -&gt; D;
 
     <span class="doccomment">/// Compatibility re-export of `context` for porting from `anyhow` to `eyre`
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>wrap_err&lt;D&gt;(<span class="self">self</span>, msg: D) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>;
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>;
 
     <span class="doccomment">/// Compatibility re-export of `with_context` for porting from `anyhow` to `eyre`
     </span><span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">fn </span>wrap_err_with&lt;D, F&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;T, Report&gt;
     <span class="kw">where
-        </span>D: Display + Send + Sync + <span class="lifetime">&#39;static</span>,
+        </span>D: Display + Send + Sync + <span class="lifetime">'static</span>,
         F: FnOnce() -&gt; D;
 }
 
@@ -2457,7 +2458,7 @@
     <span class="attr">#[cfg_attr(track_caller, track_caller)]
     </span><span class="kw">pub fn </span>new_adhoc&lt;M&gt;(message: M) -&gt; Report
     <span class="kw">where
-        </span>M: Display + Debug + Send + Sync + <span class="lifetime">&#39;static</span>,
+        </span>M: Display + Debug + Send + Sync + <span class="lifetime">'static</span>,
     {
         Report::from_adhoc(message)
     }
@@ -2465,17 +2466,17 @@
     <span class="attr">#[doc(hidden)]
     #[cold]
     #[cfg_attr(track_caller, track_caller)]
-    </span><span class="kw">pub fn </span>format_err(args: Arguments&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Report {
+    </span><span class="kw">pub fn </span>format_err(args: Arguments&lt;<span class="lifetime">'_</span>&gt;) -&gt; Report {
         <span class="attr">#[cfg(eyre_no_fmt_arguments_as_str)]
         </span><span class="kw">let </span>fmt_arguments_as_str: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; = <span class="prelude-val">None</span>;
         <span class="attr">#[cfg(not(eyre_no_fmt_arguments_as_str))]
         </span><span class="kw">let </span>fmt_arguments_as_str = args.as_str();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(message) = fmt_arguments_as_str {
-            <span class="comment">// eyre!(&quot;literal&quot;), can downcast to &amp;&#39;static str
+            <span class="comment">// eyre!("literal"), can downcast to &amp;'static str
             </span>Report::msg(message)
         } <span class="kw">else </span>{
-            <span class="comment">// eyre!(&quot;interpolate {var}&quot;), can downcast to String
+            <span class="comment">// eyre!("interpolate {var}"), can downcast to String
             </span>Report::msg(fmt::format(args))
         }
     }

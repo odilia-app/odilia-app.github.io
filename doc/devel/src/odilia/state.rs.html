@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/state.rs`."><title>state.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../odilia/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/state.rs`."><title>state.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -305,7 +306,7 @@
 <span class="attr">#[allow(clippy::module_name_repetitions)]
 </span><span class="kw">pub struct </span>ScreenReaderState {
 	<span class="kw">pub </span>atspi: AccessibilityConnection,
-	<span class="kw">pub </span>dbus: DBusProxy&lt;<span class="lifetime">&#39;static</span>&gt;,
+	<span class="kw">pub </span>dbus: DBusProxy&lt;<span class="lifetime">'static</span>&gt;,
 	<span class="kw">pub </span>ssip: Sender&lt;SSIPRequest&gt;,
 	<span class="kw">pub </span>config: ApplicationConfig,
 	<span class="kw">pub </span>previous_caret_position: AtomicI32,
@@ -320,29 +321,29 @@
 	</span><span class="kw">pub async fn </span>new(ssip: Sender&lt;SSIPRequest&gt;) -&gt; eyre::Result&lt;ScreenReaderState&gt; {
 		<span class="kw">let </span>atspi = AccessibilityConnection::open()
 			.<span class="kw">await
-			</span>.wrap_err(<span class="string">&quot;Could not connect to at-spi bus&quot;</span>)<span class="question-mark">?</span>;
+			</span>.wrap_err(<span class="string">"Could not connect to at-spi bus"</span>)<span class="question-mark">?</span>;
 		<span class="kw">let </span>dbus = DBusProxy::new(atspi.connection())
 			.<span class="kw">await
-			</span>.wrap_err(<span class="string">&quot;Failed to create org.freedesktop.DBus proxy&quot;</span>)<span class="question-mark">?</span>;
+			</span>.wrap_err(<span class="string">"Failed to create org.freedesktop.DBus proxy"</span>)<span class="question-mark">?</span>;
 
-		<span class="kw">let </span>mode = Mutex::new(ScreenReaderMode { name: <span class="string">&quot;CommandMode&quot;</span>.to_string() });
+		<span class="kw">let </span>mode = Mutex::new(ScreenReaderMode { name: <span class="string">"CommandMode"</span>.to_string() });
 
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;Reading configuration&quot;</span>);
-		<span class="kw">let </span>xdg_dirs = xdg::BaseDirectories::with_prefix(<span class="string">&quot;odilia&quot;</span>).expect(
-            <span class="string">&quot;unable to find the odilia config directory according to the xdg dirs specification&quot;</span>,
+		<span class="macro">tracing::debug!</span>(<span class="string">"Reading configuration"</span>);
+		<span class="kw">let </span>xdg_dirs = xdg::BaseDirectories::with_prefix(<span class="string">"odilia"</span>).expect(
+            <span class="string">"unable to find the odilia config directory according to the xdg dirs specification"</span>,
         );
-		<span class="kw">let </span>config_path = xdg_dirs.place_config_file(<span class="string">&quot;config.toml&quot;</span>).expect(
-			<span class="string">&quot;unable to place configuration file. Maybe your system is readonly?&quot;</span>,
+		<span class="kw">let </span>config_path = xdg_dirs.place_config_file(<span class="string">"config.toml"</span>).expect(
+			<span class="string">"unable to place configuration file. Maybe your system is readonly?"</span>,
 		);
 		<span class="kw">if </span>!config_path.exists() {
-			fs::write(<span class="kw-2">&amp;</span>config_path, <span class="macro">include_str!</span>(<span class="string">&quot;../config.toml&quot;</span>))
-				.expect(<span class="string">&quot;Unable to copy default config file.&quot;</span>);
+			fs::write(<span class="kw-2">&amp;</span>config_path, <span class="macro">include_str!</span>(<span class="string">"../config.toml"</span>))
+				.expect(<span class="string">"Unable to copy default config file."</span>);
 		}
 		<span class="kw">let </span>config_path = config_path.to_str().ok_or(ConfigError::PathNotFound)<span class="question-mark">?</span>.to_owned();
-		<span class="macro">tracing::debug!</span>(path=%config_path, <span class="string">&quot;loading configuration file&quot;</span>);
+		<span class="macro">tracing::debug!</span>(path=%config_path, <span class="string">"loading configuration file"</span>);
 		<span class="kw">let </span>config = ApplicationConfig::new(<span class="kw-2">&amp;</span>config_path)
-			.wrap_err(<span class="string">&quot;unable to load configuration file&quot;</span>)<span class="question-mark">?</span>;
-		<span class="macro">tracing::debug!</span>(<span class="string">&quot;configuration loaded successfully&quot;</span>);
+			.wrap_err(<span class="string">"unable to load configuration file"</span>)<span class="question-mark">?</span>;
+		<span class="macro">tracing::debug!</span>(<span class="string">"configuration loaded successfully"</span>);
 
 		<span class="kw">let </span>previous_caret_position = AtomicI32::new(<span class="number">0</span>);
 		<span class="kw">let </span>accessible_history = Mutex::new(CircularQueue::with_capacity(<span class="number">16</span>));
@@ -366,7 +367,7 @@
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		atspi_cache_item: atspi_common::CacheItem,
 	) -&gt; OdiliaResult&lt;CacheItem&gt; {
-		<span class="kw">let </span>prim = atspi_cache_item.object.clone().try_into()<span class="question-mark">?</span>;
+		<span class="kw">let </span>prim = atspi_cache_item.object.clone().into();
 		<span class="kw">if </span><span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).is_none() {
 			<span class="self">self</span>.cache.add(CacheItem::from_atspi_cache_item(
 				atspi_cache_item,
@@ -377,7 +378,7 @@
 		}
 		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
-	<span class="kw">pub async fn </span>get_or_create_event_object_to_cache&lt;<span class="lifetime">&#39;a</span>, T: GenericEvent&lt;<span class="lifetime">&#39;a</span>&gt;&gt;(
+	<span class="kw">pub async fn </span>get_or_create_event_object_to_cache&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; OdiliaResult&lt;CacheItem&gt; {
@@ -397,7 +398,7 @@
 	</span><span class="attr">#[allow(dead_code)]
 	</span><span class="kw">pub async fn </span>generate_speech_string(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		acc: AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;,
+		acc: AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;,
 		select: TextSelectionArea,
 	) -&gt; OdiliaResult&lt;String&gt; {
 		<span class="kw">let </span>acc_text = acc.to_text().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -429,7 +430,7 @@
 			<span class="kw">let </span>child_start = usize::try_from(child_hyper.start_index().<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
 			<span class="kw">let </span>child_end = usize::try_from(child_hyper.end_index().<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
 			<span class="kw">let </span>child_text = <span class="macro">format!</span>(
-				<span class="string">&quot;{}, {}&quot;</span>,
+				<span class="string">"{}, {}"</span>,
 				child.name().<span class="kw">await</span><span class="question-mark">?</span>,
 				child.get_role_name().<span class="kw">await</span><span class="question-mark">?
 			</span>);
@@ -475,8 +476,8 @@
 		<span class="kw">if </span><span class="self">self</span>.ssip.send(SSIPRequest::Speak).<span class="kw">await</span>.is_err() {
 			<span class="kw">return </span><span class="bool-val">false</span>;
 		}
-		<span class="comment">// this crashed ssip-client because the connection is automatically stopped when invalid text is sent; since the period character on a line by itself is the stop character, there&#39;s not much we can do except filter it out explicitly.
-		</span><span class="kw">if </span>text == <span class="kw-2">*</span><span class="string">&quot;.&quot; </span>{
+		<span class="comment">// this crashed ssip-client because the connection is automatically stopped when invalid text is sent; since the period character on a line by itself is the stop character, there's not much we can do except filter it out explicitly.
+		</span><span class="kw">if </span>text == <span class="kw-2">*</span><span class="string">"." </span>{
 			<span class="kw">return </span><span class="bool-val">false</span>;
 		}
 		<span class="kw">if </span><span class="self">self</span>.ssip
@@ -500,7 +501,7 @@
 		history.push(event);
 	}
 
-	<span class="kw">pub async fn </span>history_item&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;AccessiblePrimitive&gt; {
+	<span class="kw">pub async fn </span>history_item&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;AccessiblePrimitive&gt; {
 		<span class="kw">let </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
 		history.iter().nth(index).cloned()
 	}
@@ -510,11 +511,11 @@
 		<span class="kw">let </span><span class="kw-2">mut </span>history = <span class="self">self</span>.accessible_history.lock().<span class="kw">await</span>;
 		history.push(new_a11y);
 	}
-	<span class="kw">pub async fn </span>build_cache&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, dest: UniqueName&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; OdiliaResult&lt;CacheProxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
-		<span class="macro">debug!</span>(<span class="string">&quot;CACHE SENDER: {dest}&quot;</span>);
+	<span class="kw">pub async fn </span>build_cache&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, dest: UniqueName&lt;<span class="lifetime">'a</span>&gt;) -&gt; OdiliaResult&lt;CacheProxy&lt;<span class="lifetime">'a</span>&gt;&gt; {
+		<span class="macro">debug!</span>(<span class="string">"CACHE SENDER: {dest}"</span>);
 		<span class="prelude-val">Ok</span>(CacheProxy::builder(<span class="self">self</span>.connection())
 			.destination(dest)<span class="question-mark">?
-			</span>.path(ObjectPath::from_static_str(<span class="string">&quot;/org/a11y/atspi/cache&quot;</span>)<span class="question-mark">?</span>)<span class="question-mark">?
+			</span>.path(ObjectPath::from_static_str(<span class="string">"/org/a11y/atspi/cache"</span>)<span class="question-mark">?</span>)<span class="question-mark">?
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}
@@ -532,10 +533,10 @@
 			.get_or_create(<span class="kw-2">&amp;</span>accessible_proxy, Arc::downgrade(<span class="kw-2">&amp;</span><span class="self">self</span>.cache))
 			.<span class="kw">await
 	</span>}
-	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">&#39;a</span>, T: GenericEvent&lt;<span class="lifetime">&#39;a</span>&gt;&gt;(
+	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
-	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;&gt; {
 		<span class="kw">let </span>sender = event.sender().to_owned();
 		<span class="kw">let </span>path = event.path().to_owned();
 		<span class="prelude-val">Ok</span>(AccessibleProxy::builder(<span class="self">self</span>.connection())
@@ -548,7 +549,7 @@
 	<span class="kw">pub async fn </span>add_cache_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>cache_rule = MatchRule::builder()
 			.msg_type(MessageType::Signal)
-			.interface(<span class="string">&quot;org.a11y.atspi.Cache&quot;</span>)<span class="question-mark">?
+			.interface(<span class="string">"org.a11y.atspi.Cache"</span>)<span class="question-mark">?
 			</span>.build();
 		<span class="self">self</span>.dbus.add_match_rule(cache_rule).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(())

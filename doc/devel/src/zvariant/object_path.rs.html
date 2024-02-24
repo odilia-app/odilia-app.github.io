@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/object_path.rs`."><title>object_path.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/object_path.rs`."><title>object_path.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -410,28 +411,28 @@
 /// use zvariant::ObjectPath;
 ///
 /// // Valid object paths
-/// let o = ObjectPath::try_from(&quot;/&quot;).unwrap();
-/// assert_eq!(o, &quot;/&quot;);
-/// let o = ObjectPath::try_from(&quot;/Path/t0/0bject&quot;).unwrap();
-/// assert_eq!(o, &quot;/Path/t0/0bject&quot;);
-/// let o = ObjectPath::try_from(&quot;/a/very/looooooooooooooooooooooooo0000o0ng/path&quot;).unwrap();
-/// assert_eq!(o, &quot;/a/very/looooooooooooooooooooooooo0000o0ng/path&quot;);
+/// let o = ObjectPath::try_from("/").unwrap();
+/// assert_eq!(o, "/");
+/// let o = ObjectPath::try_from("/Path/t0/0bject").unwrap();
+/// assert_eq!(o, "/Path/t0/0bject");
+/// let o = ObjectPath::try_from("/a/very/looooooooooooooooooooooooo0000o0ng/path").unwrap();
+/// assert_eq!(o, "/a/very/looooooooooooooooooooooooo0000o0ng/path");
 ///
 /// // Invalid object paths
-/// ObjectPath::try_from(&quot;&quot;).unwrap_err();
-/// ObjectPath::try_from(&quot;/double//slashes/&quot;).unwrap_err();
-/// ObjectPath::try_from(&quot;.&quot;).unwrap_err();
-/// ObjectPath::try_from(&quot;/end/with/slash/&quot;).unwrap_err();
-/// ObjectPath::try_from(&quot;/ha.d&quot;).unwrap_err();
+/// ObjectPath::try_from("").unwrap_err();
+/// ObjectPath::try_from("/double//slashes/").unwrap_err();
+/// ObjectPath::try_from(".").unwrap_err();
+/// ObjectPath::try_from("/end/with/slash/").unwrap_err();
+/// ObjectPath::try_from("/ha.d").unwrap_err();
 /// ```
 </span><span class="attr">#[derive(PartialEq, Eq, Hash, Clone)]
-</span><span class="kw">pub struct </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;(Str&lt;<span class="lifetime">&#39;a</span>&gt;);
+</span><span class="kw">pub struct </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt;(Str&lt;<span class="lifetime">'a</span>&gt;);
 
-<span class="macro">assert_impl_all!</span>(ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(ObjectPath&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// A borrowed clone (this never allocates, unlike clone).
-    </span><span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+    </span><span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
         ObjectPath(<span class="self">self</span>.<span class="number">0</span>.as_ref())
     }
 
@@ -453,7 +454,7 @@
     /// # Safety
     ///
     /// See [`std::str::from_utf8_unchecked`].
-    </span><span class="kw">pub unsafe fn </span>from_bytes_unchecked&lt;<span class="lifetime">&#39;s</span>: <span class="lifetime">&#39;a</span>&gt;(bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>[u8]) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub unsafe fn </span>from_bytes_unchecked&lt;<span class="lifetime">'s</span>: <span class="lifetime">'a</span>&gt;(bytes: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(std::str::from_utf8_unchecked(bytes).into())
     }
 
@@ -461,19 +462,19 @@
     ///
     /// Since the passed string is not checked for correctness, prefer using the
     /// `TryFrom&lt;&amp;str&gt;` implementation.
-    </span><span class="kw">pub fn </span>from_str_unchecked&lt;<span class="lifetime">&#39;s</span>: <span class="lifetime">&#39;a</span>&gt;(path: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>str) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>from_str_unchecked&lt;<span class="lifetime">'s</span>: <span class="lifetime">'a</span>&gt;(path: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(path.into())
     }
 
-    <span class="doccomment">/// Same as `try_from`, except it takes a `&amp;&#39;static str`.
-    </span><span class="kw">pub fn </span>from_static_str(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="doccomment">/// Same as `try_from`, except it takes a `&amp;'static str`.
+    </span><span class="kw">pub fn </span>from_static_str(name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         ensure_correct_object_path_str(name.as_bytes())<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from_static_str_unchecked(name))
     }
 
-    <span class="doccomment">/// Same as `from_str_unchecked`, except it takes a `&amp;&#39;static str`.
-    </span><span class="kw">pub const fn </span>from_static_str_unchecked(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="self">Self </span>{
+    <span class="doccomment">/// Same as `from_str_unchecked`, except it takes a `&amp;'static str`.
+    </span><span class="kw">pub const fn </span>from_static_str_unchecked(name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>(Str::from_static(name))
     }
 
@@ -485,7 +486,7 @@
         <span class="self">Self</span>(path.into())
     }
 
-    <span class="doccomment">/// the object path&#39;s length.
+    <span class="doccomment">/// the object path's length.
     </span><span class="kw">pub fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.<span class="number">0</span>.len()
     }
@@ -496,45 +497,45 @@
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'static</span>&gt; {
         ObjectPath(<span class="self">self</span>.<span class="number">0</span>.to_owned())
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'static</span>&gt; {
         ObjectPath(<span class="self">self</span>.<span class="number">0</span>.into_owned())
     }
 }
 
-<span class="kw">impl </span>std::default::Default <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>std::default::Default <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        ObjectPath::from_str_unchecked(<span class="string">&quot;/&quot;</span>)
+        ObjectPath::from_str_unchecked(<span class="string">"/"</span>)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Basic <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">const </span>SIGNATURE_CHAR: char = <span class="string">&#39;o&#39;</span>;
-    <span class="kw">const </span>SIGNATURE_STR: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;o&quot;</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Basic <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">const </span>SIGNATURE_CHAR: char = <span class="string">'o'</span>;
+    <span class="kw">const </span>SIGNATURE_STR: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"o"</span>;
 
     <span class="kw">fn </span>alignment(format: EncodingFormat) -&gt; usize {
         <span class="kw">match </span>format {
             EncodingFormat::DBus =&gt; &lt;<span class="kw-2">&amp;</span>str&gt;::alignment(format),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
             </span>EncodingFormat::GVariant =&gt; <span class="number">1</span>,
         }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Type <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Type <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         Signature::from_static_str_unchecked(<span class="self">Self</span>::SIGNATURE_STR)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         ensure_correct_object_path_str(value)<span class="question-mark">?</span>;
 
         <span class="comment">// SAFETY: ensure_correct_object_path_str checks UTF-8
@@ -543,15 +544,15 @@
 }
 
 <span class="doccomment">/// Try to create an ObjectPath from a string.
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="self">Self</span>::try_from(value.as_bytes())
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;String&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;String&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: String) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -561,10 +562,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;Cow&lt;<span class="lifetime">&#39;a</span>, str&gt;&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;Cow&lt;<span class="lifetime">'a</span>, str&gt;&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(value: Cow&lt;<span class="lifetime">&#39;a</span>, str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>try_from(value: Cow&lt;<span class="lifetime">'a</span>, str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>value {
             Cow::Borrowed(s) =&gt; <span class="self">Self</span>::try_from(s),
             Cow::Owned(s) =&gt; <span class="self">Self</span>::try_from(s),
@@ -572,13 +573,13 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;o</span>&gt; From&lt;<span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;o</span>&gt;&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;o</span>&gt; {
-    <span class="kw">fn </span>from(o: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;o</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'o</span>&gt; From&lt;<span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'o</span>&gt;&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'o</span>&gt; {
+    <span class="kw">fn </span>from(o: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'o</span>&gt;) -&gt; <span class="self">Self </span>{
         o.clone()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; std::ops::Deref <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; std::ops::Deref <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Target = str;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
@@ -586,31 +587,31 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PartialEq&lt;str&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; PartialEq&lt;str&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>str) -&gt; bool {
         <span class="self">self</span>.as_str() == other
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PartialEq&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; PartialEq&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: &amp;&amp;str) -&gt; bool {
         <span class="self">self</span>.as_str() == <span class="kw-2">*</span>other
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Debug <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        f.debug_tuple(<span class="string">&quot;ObjectPath&quot;</span>).field(<span class="kw-2">&amp;</span><span class="self">self</span>.as_str()).finish()
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Debug <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_tuple(<span class="string">"ObjectPath"</span>).field(<span class="kw-2">&amp;</span><span class="self">self</span>.as_str()).finish()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; std::fmt::Display <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; std::fmt::Display <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         std::fmt::Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.as_str(), f)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Serialize <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Serialize <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; core::result::Result&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: Serializer,
@@ -619,10 +620,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;a</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>: <span class="lifetime">'a</span>, <span class="lifetime">'a</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; core::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>visitor = ObjectPathVisitor;
 
@@ -632,15 +633,15 @@
 
 <span class="kw">struct </span>ObjectPathVisitor;
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ObjectPathVisitor {
-    <span class="kw">type </span>Value = ObjectPath&lt;<span class="lifetime">&#39;de</span>&gt;;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ObjectPathVisitor {
+    <span class="kw">type </span>Value = ObjectPath&lt;<span class="lifetime">'de</span>&gt;;
 
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        formatter.write_str(<span class="string">&quot;an ObjectPath&quot;</span>)
+    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        formatter.write_str(<span class="string">"an ObjectPath"</span>)
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_borrowed_str&lt;E&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;de </span>str) -&gt; core::result::Result&lt;ObjectPath&lt;<span class="lifetime">&#39;de</span>&gt;, E&gt;
+    </span><span class="kw">fn </span>visit_borrowed_str&lt;E&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">'de </span>str) -&gt; core::result::Result&lt;ObjectPath&lt;<span class="lifetime">'de</span>&gt;, E&gt;
     <span class="kw">where
         </span>E: serde::de::Error,
     {
@@ -649,7 +650,7 @@
 }
 
 <span class="kw">fn </span>ensure_correct_object_path_str(path: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">let </span><span class="kw-2">mut </span>prev = <span class="string">b&#39;\0&#39;</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>prev = <span class="string">b'\0'</span>;
 
     <span class="comment">// Rules
     //
@@ -657,33 +658,33 @@
     // * First character must be `/`
     // * No trailing `/`
     // * No `//`
-    // * Only ASCII alphanumeric, `_` or &#39;/&#39;
+    // * Only ASCII alphanumeric, `_` or '/'
     </span><span class="kw">if </span>path.is_empty() {
-        <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="string">&quot;&gt; 0 character&quot;</span>));
+        <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="string">"&gt; 0 character"</span>));
     }
 
     <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..path.len() {
         <span class="kw">let </span>c = path[i];
 
-        <span class="kw">if </span>i == <span class="number">0 </span>&amp;&amp; c != <span class="string">b&#39;/&#39; </span>{
+        <span class="kw">if </span>i == <span class="number">0 </span>&amp;&amp; c != <span class="string">b'/' </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_value(
                 serde::de::Unexpected::Char(c <span class="kw">as </span>char),
-                <span class="kw-2">&amp;</span><span class="string">&quot;/&quot;</span>,
+                <span class="kw-2">&amp;</span><span class="string">"/"</span>,
             ));
-        } <span class="kw">else if </span>c == <span class="string">b&#39;/&#39; </span>&amp;&amp; prev == <span class="string">b&#39;/&#39; </span>{
+        } <span class="kw">else if </span>c == <span class="string">b'/' </span>&amp;&amp; prev == <span class="string">b'/' </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_value(
-                serde::de::Unexpected::Str(<span class="string">&quot;//&quot;</span>),
-                <span class="kw-2">&amp;</span><span class="string">&quot;/&quot;</span>,
+                serde::de::Unexpected::Str(<span class="string">"//"</span>),
+                <span class="kw-2">&amp;</span><span class="string">"/"</span>,
             ));
-        } <span class="kw">else if </span>path.len() &gt; <span class="number">1 </span>&amp;&amp; i == (path.len() - <span class="number">1</span>) &amp;&amp; c == <span class="string">b&#39;/&#39; </span>{
+        } <span class="kw">else if </span>path.len() &gt; <span class="number">1 </span>&amp;&amp; i == (path.len() - <span class="number">1</span>) &amp;&amp; c == <span class="string">b'/' </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_value(
-                serde::de::Unexpected::Char(<span class="string">&#39;/&#39;</span>),
-                <span class="kw-2">&amp;</span><span class="string">&quot;an alphanumeric character or `_`&quot;</span>,
+                serde::de::Unexpected::Char(<span class="string">'/'</span>),
+                <span class="kw-2">&amp;</span><span class="string">"an alphanumeric character or `_`"</span>,
             ));
-        } <span class="kw">else if </span>!c.is_ascii_alphanumeric() &amp;&amp; c != <span class="string">b&#39;/&#39; </span>&amp;&amp; c != <span class="string">b&#39;_&#39; </span>{
+        } <span class="kw">else if </span>!c.is_ascii_alphanumeric() &amp;&amp; c != <span class="string">b'/' </span>&amp;&amp; c != <span class="string">b'_' </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_value(
                 serde::de::Unexpected::Char(c <span class="kw">as </span>char),
-                <span class="kw-2">&amp;</span><span class="string">&quot;an alphanumeric character, `_` or `/`&quot;</span>,
+                <span class="kw-2">&amp;</span><span class="string">"an alphanumeric character, `_` or `/`"</span>,
             ));
         }
         prev = c;
@@ -694,49 +695,49 @@
 
 <span class="doccomment">/// Owned [`ObjectPath`](struct.ObjectPath.html)
 </span><span class="attr">#[derive(Debug, Default, Clone, PartialEq, Eq, Hash, serde::Serialize, Type)]
-</span><span class="kw">pub struct </span>OwnedObjectPath(ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt;);
+</span><span class="kw">pub struct </span>OwnedObjectPath(ObjectPath&lt;<span class="lifetime">'static</span>&gt;);
 
 <span class="macro">assert_impl_all!</span>(OwnedObjectPath: Send, Sync, Unpin);
 
 <span class="kw">impl </span>OwnedObjectPath {
-    <span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'static</span>&gt; {
         <span class="self">self</span>.<span class="number">0
     </span>}
 }
 
 <span class="kw">impl </span>std::ops::Deref <span class="kw">for </span>OwnedObjectPath {
-    <span class="kw">type </span>Target = ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt;;
+    <span class="kw">type </span>Target = ObjectPath&lt;<span class="lifetime">'static</span>&gt;;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
 }
 
-<span class="kw">impl </span>std::convert::From&lt;OwnedObjectPath&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl </span>std::convert::From&lt;OwnedObjectPath&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'static</span>&gt; {
     <span class="kw">fn </span>from(o: OwnedObjectPath) -&gt; <span class="self">Self </span>{
         o.into_inner()
     }
 }
 
-<span class="kw">impl </span>std::convert::From&lt;OwnedObjectPath&gt; <span class="kw">for </span><span class="kw">crate</span>::Value&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl </span>std::convert::From&lt;OwnedObjectPath&gt; <span class="kw">for </span><span class="kw">crate</span>::Value&lt;<span class="lifetime">'static</span>&gt; {
     <span class="kw">fn </span>from(o: OwnedObjectPath) -&gt; <span class="self">Self </span>{
         o.into_inner().into()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;unowned</span>, <span class="lifetime">&#39;owned</span>: <span class="lifetime">&#39;unowned</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;owned </span>OwnedObjectPath&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">&#39;unowned</span>&gt; {
-    <span class="kw">fn </span>from(o: <span class="kw-2">&amp;</span><span class="lifetime">&#39;owned </span>OwnedObjectPath) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'unowned</span>, <span class="lifetime">'owned</span>: <span class="lifetime">'unowned</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'owned </span>OwnedObjectPath&gt; <span class="kw">for </span>ObjectPath&lt;<span class="lifetime">'unowned</span>&gt; {
+    <span class="kw">fn </span>from(o: <span class="kw-2">&amp;</span><span class="lifetime">'owned </span>OwnedObjectPath) -&gt; <span class="self">Self </span>{
         ObjectPath::from_str_unchecked(o.as_str())
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; std::convert::From&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt; <span class="kw">for </span>OwnedObjectPath {
-    <span class="kw">fn </span>from(o: ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; std::convert::From&lt;ObjectPath&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>OwnedObjectPath {
+    <span class="kw">fn </span>from(o: ObjectPath&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
         OwnedObjectPath(o.into_owned())
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str&gt; <span class="kw">for </span>OwnedObjectPath {
+<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str&gt; <span class="kw">for </span>OwnedObjectPath {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -752,10 +753,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>OwnedObjectPath {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>OwnedObjectPath {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; core::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         String::deserialize(deserializer)
             .and_then(|s| ObjectPath::try_from(s).map_err(|e| de::Error::custom(e.to_string())))
@@ -764,7 +765,7 @@
 }
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>OwnedObjectPath {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         std::fmt::Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.as_str(), f)
     }
 }
@@ -776,7 +777,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>owned_from_reader() {
         <span class="comment">// See https://github.com/dbus2/zbus/issues/287
-        </span><span class="kw">let </span>json_str = <span class="string">&quot;\&quot;/some/path\&quot;&quot;</span>;
+        </span><span class="kw">let </span>json_str = <span class="string">"\"/some/path\""</span>;
         serde_json::de::from_reader::&lt;<span class="kw">_</span>, OwnedObjectPath&gt;(json_str.as_bytes()).unwrap();
     }
 }

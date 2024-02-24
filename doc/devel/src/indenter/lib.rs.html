@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/indenter-0.3.3/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="indenter" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../indenter/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/indenter-0.3.3/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="indenter" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -549,7 +550,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! indenter = &quot;0.2&quot;
+//! indenter = "0.2"
 //! ```
 //!
 //! # Examples
@@ -564,16 +565,16 @@
 //! use core::fmt::{self, Write};
 //! use indenter::indented;
 //!
-//! struct ErrorReporter&lt;&#39;a&gt;(&amp;&#39;a dyn Error);
+//! struct ErrorReporter&lt;'a&gt;(&amp;'a dyn Error);
 //!
-//! impl fmt::Debug for ErrorReporter&lt;&#39;_&gt; {
-//!     fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;&#39;_&gt;) -&gt; fmt::Result {
+//! impl fmt::Debug for ErrorReporter&lt;'_&gt; {
+//!     fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
 //!         let mut source = Some(self.0);
 //!         let mut i = 0;
 //!
 //!         while let Some(error) = source {
 //!             writeln!(f)?;
-//!             write!(indented(f).ind(i), &quot;{}&quot;, error)?;
+//!             write!(indented(f).ind(i), "{}", error)?;
 //!
 //!             source = error.source();
 //!             i += 1;
@@ -584,7 +585,7 @@
 //! }
 //! ```
 //!
-//! ## &quot;Dedenting&quot; (removing common leading indendation)
+//! ## "Dedenting" (removing common leading indendation)
 //!
 //! This type is intended primarily for formatting source code. For example, when
 //! generating code.
@@ -592,47 +593,47 @@
 //! This type requires the feature `std`.
 //!
 //! ```rust
-//! # #[cfg(feature = &quot;std&quot;)]
+//! # #[cfg(feature = "std")]
 //! # fn main() {
 //! use std::error::Error;
 //! use core::fmt::{self, Write};
 //! use indenter::CodeFormatter;
 //!
 //! let mut output = String::new();
-//! let mut f = CodeFormatter::new(&amp;mut output, &quot;    &quot;);
+//! let mut f = CodeFormatter::new(&amp;mut output, "    ");
 //!
 //! write!(
 //!     f,
-//!     r#&quot;
+//!     r#"
 //!     Hello
 //!         World
-//!     &quot;#,
+//!     "#,
 //! );
 //!
-//! assert_eq!(output, &quot;Hello\n    World\n&quot;);
+//! assert_eq!(output, "Hello\n    World\n");
 //!
 //! let mut output = String::new();
-//! let mut f = CodeFormatter::new(&amp;mut output, &quot;    &quot;);
+//! let mut f = CodeFormatter::new(&amp;mut output, "    ");
 //!
 //! // it can also indent...
 //! f.indent(2);
 //!
 //! write!(
 //!     f,
-//!     r#&quot;
+//!     r#"
 //!     Hello
 //!         World
-//!     &quot;#,
+//!     "#,
 //! );
 //!
-//! assert_eq!(output, &quot;        Hello\n            World\n&quot;);
+//! assert_eq!(output, "        Hello\n            World\n");
 //! # }
-//! # #[cfg(not(feature = &quot;std&quot;))]
+//! # #[cfg(not(feature = "std"))]
 //! # fn main() {
 //! # }
 //! ```
-</span><span class="attr">#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), no_std)]
-#![doc(html_root_url = <span class="string">&quot;https://docs.rs/indenter/0.3.3&quot;</span>)]
+</span><span class="attr">#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
+#![doc(html_root_url = <span class="string">"https://docs.rs/indenter/0.3.3"</span>)]
 #![warn(
     missing_debug_implementations,
     missing_docs,
@@ -660,13 +661,13 @@
 
 <span class="doccomment">/// The set of supported formats for indentation
 </span><span class="attr">#[allow(missing_debug_implementations)]
-</span><span class="kw">pub enum </span>Format&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub enum </span>Format&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Insert uniform indentation before every line
     ///
     /// This format takes a static string as input and inserts it after every newline
     </span>Uniform {
         <span class="doccomment">/// The string to insert as indentation
-        </span>indentation: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        </span>indentation: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
     },
     <span class="doccomment">/// Inserts a number before the first line
     ///
@@ -681,7 +682,7 @@
     /// Custom indenters are passed the current line number and the buffer to be written to as args
     </span>Custom {
         <span class="doccomment">/// The custom indenter
-        </span>inserter: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Inserter,
+        </span>inserter: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Inserter,
     },
 }
 
@@ -695,10 +696,10 @@
 /// splits on newlines giving slices into the original string. Finally we alternate writing these
 /// lines and the specified indentation to the output buffer.
 </span><span class="attr">#[allow(missing_debug_implementations)]
-</span><span class="kw">pub struct </span>Indented&lt;<span class="lifetime">&#39;a</span>, D: <span class="question-mark">?</span>Sized&gt; {
-    inner: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>D,
+</span><span class="kw">pub struct </span>Indented&lt;<span class="lifetime">'a</span>, D: <span class="question-mark">?</span>Sized&gt; {
+    inner: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>D,
     needs_indent: bool,
-    format: Format&lt;<span class="lifetime">&#39;a</span>&gt;,
+    format: Format&lt;<span class="lifetime">'a</span>&gt;,
 }
 
 <span class="doccomment">/// A callback for `Format::Custom` used to insert indenation after a new line
@@ -706,15 +707,15 @@
 /// The first argument is the line number within the output, starting from 0
 </span><span class="kw">pub type </span>Inserter = <span class="kw">dyn </span>FnMut(usize, <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>fmt::Write) -&gt; fmt::Result;
 
-<span class="kw">impl </span>Format&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>Format&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>insert_indentation(<span class="kw-2">&amp;mut </span><span class="self">self</span>, line: usize, f: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>fmt::Write) -&gt; fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
-            Format::Uniform { indentation } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, indentation),
+            Format::Uniform { indentation } =&gt; <span class="macro">write!</span>(f, <span class="string">"{}"</span>, indentation),
             Format::Numbered { ind } =&gt; {
                 <span class="kw">if </span>line == <span class="number">0 </span>{
-                    <span class="macro">write!</span>(f, <span class="string">&quot;{: &gt;4}: &quot;</span>, ind)
+                    <span class="macro">write!</span>(f, <span class="string">"{: &gt;4}: "</span>, ind)
                 } <span class="kw">else </span>{
-                    <span class="macro">write!</span>(f, <span class="string">&quot;      &quot;</span>)
+                    <span class="macro">write!</span>(f, <span class="string">"      "</span>)
                 }
             }
             Format::Custom { inserter } =&gt; inserter(line, f),
@@ -722,37 +723,37 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, D&gt; Indented&lt;<span class="lifetime">&#39;a</span>, D&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, D&gt; Indented&lt;<span class="lifetime">'a</span>, D&gt; {
     <span class="doccomment">/// Sets the format to `Format::Numbered` with the provided index
     </span><span class="kw">pub fn </span>ind(<span class="self">self</span>, ind: usize) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.with_format(Format::Numbered { ind })
     }
 
     <span class="doccomment">/// Sets the format to `Format::Uniform` with the provided static string
-    </span><span class="kw">pub fn </span>with_str(<span class="self">self</span>, indentation: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>with_str(<span class="self">self</span>, indentation: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.with_format(Format::Uniform { indentation })
     }
 
     <span class="doccomment">/// Construct an indenter with a user defined format
-    </span><span class="kw">pub fn </span>with_format(<span class="kw-2">mut </span><span class="self">self</span>, format: Format&lt;<span class="lifetime">&#39;a</span>&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>with_format(<span class="kw-2">mut </span><span class="self">self</span>, format: Format&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.format = format;
         <span class="self">self
     </span>}
 }
 
-<span class="kw">impl</span>&lt;T&gt; fmt::Write <span class="kw">for </span>Indented&lt;<span class="lifetime">&#39;_</span>, T&gt;
+<span class="kw">impl</span>&lt;T&gt; fmt::Write <span class="kw">for </span>Indented&lt;<span class="lifetime">'_</span>, T&gt;
 <span class="kw">where
     </span>T: fmt::Write + <span class="question-mark">?</span>Sized,
 {
     <span class="kw">fn </span>write_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, s: <span class="kw-2">&amp;</span>str) -&gt; fmt::Result {
-        <span class="kw">for </span>(ind, line) <span class="kw">in </span>s.split(<span class="string">&#39;\n&#39;</span>).enumerate() {
+        <span class="kw">for </span>(ind, line) <span class="kw">in </span>s.split(<span class="string">'\n'</span>).enumerate() {
             <span class="kw">if </span>ind &gt; <span class="number">0 </span>{
-                <span class="self">self</span>.inner.write_char(<span class="string">&#39;\n&#39;</span>)<span class="question-mark">?</span>;
+                <span class="self">self</span>.inner.write_char(<span class="string">'\n'</span>)<span class="question-mark">?</span>;
                 <span class="self">self</span>.needs_indent = <span class="bool-val">true</span>;
             }
 
             <span class="kw">if </span><span class="self">self</span>.needs_indent {
-                <span class="comment">// Don&#39;t render the line unless its actually got text on it
+                <span class="comment">// Don't render the line unless its actually got text on it
                 </span><span class="kw">if </span>line.is_empty() {
                     <span class="kw">continue</span>;
                 }
@@ -761,7 +762,7 @@
                 <span class="self">self</span>.needs_indent = <span class="bool-val">false</span>;
             }
 
-            <span class="self">self</span>.inner.write_fmt(<span class="macro">format_args!</span>(<span class="string">&quot;{}&quot;</span>, line))<span class="question-mark">?</span>;
+            <span class="self">self</span>.inner.write_fmt(<span class="macro">format_args!</span>(<span class="string">"{}"</span>, line))<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -769,12 +770,12 @@
 }
 
 <span class="doccomment">/// Helper function for creating a default indenter
-</span><span class="kw">pub fn </span>indented&lt;D: <span class="question-mark">?</span>Sized&gt;(f: <span class="kw-2">&amp;mut </span>D) -&gt; Indented&lt;<span class="lifetime">&#39;_</span>, D&gt; {
+</span><span class="kw">pub fn </span>indented&lt;D: <span class="question-mark">?</span>Sized&gt;(f: <span class="kw-2">&amp;mut </span>D) -&gt; Indented&lt;<span class="lifetime">'_</span>, D&gt; {
     Indented {
         inner: f,
         needs_indent: <span class="bool-val">true</span>,
         format: Format::Uniform {
-            indentation: <span class="string">&quot;    &quot;</span>,
+            indentation: <span class="string">"    "</span>,
         },
     }
 }
@@ -785,24 +786,24 @@
 ///
 /// This type allocates a string once to get the formatted result and then uses the internal
 /// formatter efficiently to: first dedent the output, then re-indent to the desired level.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 #[allow(missing_debug_implementations)]
-</span><span class="kw">pub struct </span>CodeFormatter&lt;<span class="lifetime">&#39;a</span>, T&gt; {
-    f: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>T,
+</span><span class="kw">pub struct </span>CodeFormatter&lt;<span class="lifetime">'a</span>, T&gt; {
+    f: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T,
     level: u32,
     indentation: String,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: fmt::Write&gt; fmt::Write <span class="kw">for </span>CodeFormatter&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: fmt::Write&gt; fmt::Write <span class="kw">for </span>CodeFormatter&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="kw">fn </span>write_str(<span class="kw-2">&amp;mut </span><span class="self">self</span>, input: <span class="kw-2">&amp;</span>str) -&gt; fmt::Result {
         <span class="kw">let </span>input = <span class="kw">match </span>input.chars().next() {
-            <span class="prelude-val">Some</span>(<span class="string">&#39;\n&#39;</span>) =&gt; <span class="kw-2">&amp;</span>input[<span class="number">1</span>..],
+            <span class="prelude-val">Some</span>(<span class="string">'\n'</span>) =&gt; <span class="kw-2">&amp;</span>input[<span class="number">1</span>..],
             <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="self">self</span>.f.write_str(input),
         };
 
         <span class="kw">let </span>min = input
-            .split(<span class="string">&#39;\n&#39;</span>)
+            .split(<span class="string">'\n'</span>)
             .map(|line| line.chars().take_while(char::is_ascii_whitespace).count())
             .filter(|count| <span class="kw-2">*</span>count &gt; <span class="number">0</span>)
             .min()
@@ -810,7 +811,7 @@
 
         <span class="kw">let </span>input = input.trim_end_matches(|c| char::is_ascii_whitespace(<span class="kw-2">&amp;</span>c));
 
-        <span class="kw">for </span>line <span class="kw">in </span>input.split(<span class="string">&#39;\n&#39;</span>) {
+        <span class="kw">for </span>line <span class="kw">in </span>input.split(<span class="string">'\n'</span>) {
             <span class="kw">if </span>line.len().saturating_sub(min) &gt; <span class="number">0 </span>{
                 <span class="kw">for _ in </span><span class="number">0</span>..<span class="self">self</span>.level {
                     <span class="self">self</span>.f.write_str(<span class="kw-2">&amp;</span><span class="self">self</span>.indentation)<span class="question-mark">?</span>;
@@ -822,22 +823,22 @@
             } <span class="kw">else </span>{
                 <span class="self">self</span>.f.write_str(<span class="kw-2">&amp;</span>line)<span class="question-mark">?</span>;
             }
-            <span class="self">self</span>.f.write_char(<span class="string">&#39;\n&#39;</span>)<span class="question-mark">?</span>;
+            <span class="self">self</span>.f.write_char(<span class="string">'\n'</span>)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn </span>write_fmt(<span class="kw-2">&amp;mut </span><span class="self">self</span>, args: fmt::Arguments&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+    <span class="kw">fn </span>write_fmt(<span class="kw-2">&amp;mut </span><span class="self">self</span>, args: fmt::Arguments&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
         <span class="self">self</span>.write_str(<span class="kw-2">&amp;</span>args.to_string())
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: fmt::Write&gt; CodeFormatter&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: fmt::Write&gt; CodeFormatter&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="doccomment">/// Wrap the formatter `f`, use `indentation` as base string indentation and return a new
     /// formatter that implements `std::fmt::Write` that can be used with the macro `write!()`
-    </span><span class="kw">pub fn </span>new&lt;S: Into&lt;String&gt;&gt;(f: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>T, indentation: S) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new&lt;S: Into&lt;String&gt;&gt;(f: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T, indentation: S) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             f,
             level: <span class="number">0</span>,
@@ -871,8 +872,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>one_digit() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;   2: verify\n      this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"   2: verify\n      this"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>output = String::new();
 
         indented(<span class="kw-2">&amp;mut </span>output).ind(<span class="number">2</span>).write_str(input).unwrap();
@@ -882,8 +883,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>two_digits() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;  12: verify\n      this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"  12: verify\n      this"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>output = String::new();
 
         indented(<span class="kw-2">&amp;mut </span>output).ind(<span class="number">12</span>).write_str(input).unwrap();
@@ -893,8 +894,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>no_digits() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;    verify\n    this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"    verify\n    this"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>output = String::new();
 
         indented(<span class="kw-2">&amp;mut </span>output).write_str(input).unwrap();
@@ -904,12 +905,12 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>with_str() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;...verify\n...this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"...verify\n...this"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>output = String::new();
 
         indented(<span class="kw-2">&amp;mut </span>output)
-            .with_str(<span class="string">&quot;...&quot;</span>)
+            .with_str(<span class="string">"..."</span>)
             .write_str(input)
             .unwrap();
 
@@ -918,8 +919,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>dyn_write() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;    verify\n    this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"    verify\n    this"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>output = String::new();
         <span class="kw">let </span>writer: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>core::fmt::Write = <span class="kw-2">&amp;mut </span>output;
 
@@ -930,8 +931,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>nice_api() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;   1: verify\n       this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"   1: verify\n       this"</span>;
         <span class="kw">let </span>output = <span class="kw-2">&amp;mut </span>String::new();
         <span class="kw">let </span>n = <span class="number">1</span>;
 
@@ -939,13 +940,13 @@
             indented(output).with_format(Format::Custom {
                 inserter: <span class="kw-2">&amp;mut </span><span class="kw">move </span>|line_no, f| {
                     <span class="kw">if </span>line_no == <span class="number">0 </span>{
-                        <span class="macro">write!</span>(f, <span class="string">&quot;{: &gt;4}: &quot;</span>, n)
+                        <span class="macro">write!</span>(f, <span class="string">"{: &gt;4}: "</span>, n)
                     } <span class="kw">else </span>{
-                        <span class="macro">write!</span>(f, <span class="string">&quot;       &quot;</span>)
+                        <span class="macro">write!</span>(f, <span class="string">"       "</span>)
                     }
                 }
             }),
-            <span class="string">&quot;{}&quot;</span>,
+            <span class="string">"{}"</span>,
             input
         )
         .unwrap();
@@ -955,13 +956,13 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>nice_api_2() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;  verify\n  this&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis"</span>;
+        <span class="kw">let </span>expected = <span class="string">"  verify\n  this"</span>;
         <span class="kw">let </span>output = <span class="kw-2">&amp;mut </span>String::new();
 
         <span class="macro">write!</span>(
-            indented(output).with_format(Format::Uniform { indentation: <span class="string">&quot;  &quot; </span>}),
-            <span class="string">&quot;{}&quot;</span>,
+            indented(output).with_format(Format::Uniform { indentation: <span class="string">"  " </span>}),
+            <span class="string">"{}"</span>,
             input
         )
         .unwrap();
@@ -971,28 +972,28 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>trailing_newlines() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis\n&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;  verify\n  this\n&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis\n"</span>;
+        <span class="kw">let </span>expected = <span class="string">"  verify\n  this\n"</span>;
         <span class="kw">let </span>output = <span class="kw-2">&amp;mut </span>String::new();
 
-        <span class="macro">write!</span>(indented(output).with_str(<span class="string">&quot;  &quot;</span>), <span class="string">&quot;{}&quot;</span>, input).unwrap();
+        <span class="macro">write!</span>(indented(output).with_str(<span class="string">"  "</span>), <span class="string">"{}"</span>, input).unwrap();
 
         <span class="macro">assert_eq!</span>(expected, output);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>several_interpolations() {
-        <span class="kw">let </span>input = <span class="string">&quot;verify\nthis\n&quot;</span>;
-        <span class="kw">let </span>expected = <span class="string">&quot;  verify\n  this\n   and verify\n  this\n&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"verify\nthis\n"</span>;
+        <span class="kw">let </span>expected = <span class="string">"  verify\n  this\n   and verify\n  this\n"</span>;
         <span class="kw">let </span>output = <span class="kw-2">&amp;mut </span>String::new();
 
-        <span class="macro">write!</span>(indented(output).with_str(<span class="string">&quot;  &quot;</span>), <span class="string">&quot;{} and {}&quot;</span>, input, input).unwrap();
+        <span class="macro">write!</span>(indented(output).with_str(<span class="string">"  "</span>), <span class="string">"{} and {}"</span>, input, input).unwrap();
 
         <span class="macro">assert_eq!</span>(expected, output);
     }
 }
 
-<span class="attr">#[cfg(all(test, feature = <span class="string">&quot;std&quot;</span>))]
+<span class="attr">#[cfg(all(test, feature = <span class="string">"std"</span>))]
 </span><span class="kw">mod </span>tests_std {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span>core::fmt::Write <span class="kw">as _</span>;
@@ -1000,10 +1001,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>dedent() {
         <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;    &quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">"    "</span>);
         <span class="macro">write!</span>(
             f,
-            <span class="string">r#&quot;
+            <span class="string">r#"
             struct Foo;
 
             impl Foo {{
@@ -1011,42 +1012,42 @@
                     todo!()
                 }}
             }}
-            &quot;#</span>,
+            "#</span>,
         )
         .unwrap();
         <span class="macro">assert_eq!</span>(
             s,
-            <span class="string">&quot;struct Foo;\n\nimpl Foo {\n    fn foo() {\n        todo!()\n    }\n}\n&quot;
+            <span class="string">"struct Foo;\n\nimpl Foo {\n    fn foo() {\n        todo!()\n    }\n}\n"
         </span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;    &quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">"    "</span>);
         <span class="macro">write!</span>(
             f,
-            <span class="string">r#&quot;
+            <span class="string">r#"
             struct Foo;
 
             impl Foo {{
                 fn foo() {{
                     todo!()
                 }}
-            }}&quot;#</span>,
+            }}"#</span>,
         )
         .unwrap();
         <span class="macro">assert_eq!</span>(
             s,
-            <span class="string">&quot;struct Foo;\n\nimpl Foo {\n    fn foo() {\n        todo!()\n    }\n}\n&quot;
+            <span class="string">"struct Foo;\n\nimpl Foo {\n    fn foo() {\n        todo!()\n    }\n}\n"
         </span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>indent() {
         <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;    &quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">"    "</span>);
         f.indent(<span class="number">1</span>);
         <span class="macro">write!</span>(
             f,
-            <span class="string">r#&quot;
+            <span class="string">r#"
             struct Foo;
 
             impl Foo {{
@@ -1054,32 +1055,32 @@
                     todo!()
                 }}
             }}
-            &quot;#</span>,
+            "#</span>,
         )
         .unwrap();
-        <span class="macro">assert_eq!</span>(s, <span class="string">&quot;    struct Foo;\n\n    impl Foo {\n        fn foo() {\n            todo!()\n        }\n    }\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(s, <span class="string">"    struct Foo;\n\n    impl Foo {\n        fn foo() {\n            todo!()\n        }\n    }\n"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>inline() {
         <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;    &quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">"    "</span>);
         <span class="macro">write!</span>(
             f,
-            <span class="string">r#&quot;struct Foo;
+            <span class="string">r#"struct Foo;
             fn foo() {{
-            }}&quot;#</span>,
+            }}"#</span>,
         )
         .unwrap();
-        <span class="macro">assert_eq!</span>(s, <span class="string">&quot;struct Foo;\n            fn foo() {\n            }&quot;</span>);
+        <span class="macro">assert_eq!</span>(s, <span class="string">"struct Foo;\n            fn foo() {\n            }"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>split_prefix() {
         <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;    &quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>f = CodeFormatter::new(<span class="kw-2">&amp;mut </span>s, <span class="string">"    "</span>);
         <span class="macro">writeln!</span>(f).unwrap();
-        <span class="macro">assert_eq!</span>(s, <span class="string">&quot;\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(s, <span class="string">"\n"</span>);
     }
 }
 </code></pre></div></section></main></body></html>

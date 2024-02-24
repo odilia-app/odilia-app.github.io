@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1026,9 +1027,9 @@
 <a href="#1026" id="1026">1026</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(rust_2018_idioms)]
 #![doc(
-    html_logo_url = <span class="string">&quot;https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png&quot;
+    html_logo_url = <span class="string">"https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png"
 </span>)]
-#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
+#![doc = <span class="macro">include_str!</span>(<span class="string">"../README.md"</span>)]
 #![doc(test(attr(
     warn(unused),
     deny(warnings),
@@ -1039,23 +1040,23 @@
 #[cfg(doctest)]
 </span><span class="kw">mod </span>doctests {
     <span class="comment">// Book markdown checks
-    </span><span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/client.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/concepts.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/connection.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/contributors.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/introduction.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/server.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/blocking.md&quot;</span>);
-    <span class="macro">doc_comment::doctest!</span>(<span class="string">&quot;../../book/src/faq.md&quot;</span>);
+    </span><span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/client.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/concepts.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/connection.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/contributors.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/introduction.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/server.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/blocking.md"</span>);
+    <span class="macro">doc_comment::doctest!</span>(<span class="string">"../../book/src/faq.md"</span>);
 }
 
-<span class="attr">#[cfg(all(not(feature = <span class="string">&quot;async-io&quot;</span>), not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+<span class="attr">#[cfg(all(not(feature = <span class="string">"async-io"</span>), not(feature = <span class="string">"tokio"</span>)))]
 </span><span class="kw">mod </span>error_message {
     <span class="attr">#[cfg(windows)]
-    </span><span class="macro">compile_error!</span>(<span class="string">&quot;Either \&quot;async-io\&quot; (default) or \&quot;tokio\&quot; must be enabled. On Windows \&quot;async-io\&quot; is (currently) required for UNIX socket support&quot;</span>);
+    </span><span class="macro">compile_error!</span>(<span class="string">"Either \"async-io\" (default) or \"tokio\" must be enabled. On Windows \"async-io\" is (currently) required for UNIX socket support"</span>);
 
     <span class="attr">#[cfg(not(windows))]
-    </span><span class="macro">compile_error!</span>(<span class="string">&quot;Either \&quot;async-io\&quot; (default) or \&quot;tokio\&quot; must be enabled.&quot;</span>);
+    </span><span class="macro">compile_error!</span>(<span class="string">"Either \"async-io\" (default) or \"tokio\" must be enabled."</span>);
 }
 
 <span class="attr">#[cfg(windows)]
@@ -1124,10 +1125,10 @@
 
 <span class="kw">pub mod </span>blocking;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;xml&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
 </span><span class="kw">pub mod </span>xml;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;quick-xml&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
 </span><span class="kw">pub mod </span>quick_xml;
 
 <span class="kw">pub use </span>zbus_macros::{dbus_interface, dbus_proxy, DBusError};
@@ -1183,23 +1184,23 @@
     };
 
     <span class="kw">fn </span>is_gdbus_test() -&gt; bool {
-        std::env::var_os(<span class="string">&quot;ZBUS_GDBUS_TEST&quot;</span>).is_some()
+        std::env::var_os(<span class="string">"ZBUS_GDBUS_TEST"</span>).is_some()
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>msg() {
         <span class="kw">let </span><span class="kw-2">mut </span>m = Message::method(
             <span class="prelude-val">None</span>::&lt;()&gt;,
-            <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-            <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-            <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus.Peer&quot;</span>),
-            <span class="string">&quot;GetMachineId&quot;</span>,
+            <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+            <span class="string">"/org/freedesktop/DBus"</span>,
+            <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus.Peer"</span>),
+            <span class="string">"GetMachineId"</span>,
             <span class="kw-2">&amp;</span>(),
         )
         .unwrap();
-        <span class="macro">assert_eq!</span>(m.path().unwrap(), <span class="string">&quot;/org/freedesktop/DBus&quot;</span>);
-        <span class="macro">assert_eq!</span>(m.interface().unwrap(), <span class="string">&quot;org.freedesktop.DBus.Peer&quot;</span>);
-        <span class="macro">assert_eq!</span>(m.member().unwrap(), <span class="string">&quot;GetMachineId&quot;</span>);
+        <span class="macro">assert_eq!</span>(m.path().unwrap(), <span class="string">"/org/freedesktop/DBus"</span>);
+        <span class="macro">assert_eq!</span>(m.interface().unwrap(), <span class="string">"org.freedesktop.DBus.Peer"</span>);
+        <span class="macro">assert_eq!</span>(m.member().unwrap(), <span class="string">"GetMachineId"</span>);
         m.modify_primary_header(|primary| {
             primary.set_flags(BitFlags::from(MessageFlags::NoAutoStart));
             primary.serial_num_or_init(|| <span class="number">11</span>);
@@ -1218,7 +1219,7 @@
     </span><span class="kw">fn </span>basic_connection() {
         <span class="kw">let </span>connection = blocking::Connection::session()
             .map_err(|e| {
-                <span class="macro">debug!</span>(<span class="string">&quot;error: {}&quot;</span>, e);
+                <span class="macro">debug!</span>(<span class="string">"error: {}"</span>, e);
 
                 e
             })
@@ -1226,14 +1227,14 @@
         <span class="comment">// Hello method is already called during connection creation so subsequent calls are expected to fail but only
         // with a D-Bus error.
         </span><span class="kw">match </span>connection.call_method(
-            <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-            <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-            <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-            <span class="string">&quot;Hello&quot;</span>,
+            <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+            <span class="string">"/org/freedesktop/DBus"</span>,
+            <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+            <span class="string">"Hello"</span>,
             <span class="kw-2">&amp;</span>(),
         ) {
             <span class="prelude-val">Err</span>(<span class="kw">crate</span>::Error::MethodError(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>)) =&gt; (),
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, e),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">"{}"</span>, e),
 
             <span class="comment">// GDBus allows the method to be called multiple times
             </span><span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="kw">if </span>is_gdbus_test() =&gt; (),
@@ -1253,16 +1254,16 @@
 
         <span class="kw">match </span>connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;Hello&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"Hello"</span>,
                 <span class="kw-2">&amp;</span>(),
             )
             .<span class="kw">await
         </span>{
             <span class="prelude-val">Err</span>(<span class="kw">crate</span>::Error::MethodError(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>)) =&gt; (),
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, e),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">"{}"</span>, e),
 
             <span class="comment">// GDBus allows the method to be called multiple times
             </span><span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="kw">if </span>is_gdbus_test() =&gt; (),
@@ -1273,7 +1274,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="attr">#[cfg(all(unix, not(target_os = <span class="string">&quot;macos&quot;</span>)))]
+    <span class="attr">#[cfg(all(unix, not(target_os = <span class="string">"macos"</span>)))]
     #[test]
     #[timeout(<span class="number">15000</span>)]
     </span><span class="kw">fn </span>fdpass_systemd() {
@@ -1281,10 +1282,10 @@
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.systemd1&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/systemd1&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.systemd1.Manager&quot;</span>),
-                <span class="string">&quot;DumpByFileDescriptor&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.systemd1"</span>),
+                <span class="string">"/org/freedesktop/systemd1"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.systemd1.Manager"</span>),
+                <span class="string">"DumpByFileDescriptor"</span>,
                 <span class="kw-2">&amp;</span>(),
             )
             .unwrap();
@@ -1307,7 +1308,7 @@
     </span><span class="kw">fn </span>freedesktop_api() {
         <span class="kw">let </span>connection = blocking::Connection::session()
             .map_err(|e| {
-                <span class="macro">debug!</span>(<span class="string">&quot;error: {}&quot;</span>, e);
+                <span class="macro">debug!</span>(<span class="string">"error: {}"</span>, e);
 
                 e
             })
@@ -1315,27 +1316,27 @@
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;RequestName&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"RequestName"</span>,
                 <span class="kw-2">&amp;</span>(
-                    <span class="string">&quot;org.freedesktop.zbus.sync&quot;</span>,
+                    <span class="string">"org.freedesktop.zbus.sync"</span>,
                     BitFlags::from(RequestNameFlags::ReplaceExisting),
                 ),
             )
             .unwrap();
 
-        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">&quot;u&quot;</span>).unwrap());
+        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">"u"</span>).unwrap());
         <span class="kw">let </span>reply: RequestNameReply = reply.body().unwrap();
         <span class="macro">assert_eq!</span>(reply, RequestNameReply::PrimaryOwner);
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;GetId&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"GetId"</span>,
                 <span class="kw-2">&amp;</span>(),
             )
             .unwrap();
@@ -1345,15 +1346,15 @@
             .map(|s| s == &lt;<span class="kw-2">&amp;</span>str&gt;::signature())
             .unwrap());
         <span class="kw">let </span>id: <span class="kw-2">&amp;</span>str = reply.body().unwrap();
-        <span class="macro">debug!</span>(<span class="string">&quot;Unique ID of the bus: {}&quot;</span>, id);
+        <span class="macro">debug!</span>(<span class="string">"Unique ID of the bus: {}"</span>, id);
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;NameHasOwner&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="string">&quot;org.freedesktop.zbus.sync&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"NameHasOwner"</span>,
+                <span class="kw-2">&amp;</span><span class="string">"org.freedesktop.zbus.sync"</span>,
             )
             .unwrap();
 
@@ -1365,11 +1366,11 @@
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;GetNameOwner&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="string">&quot;org.freedesktop.zbus.sync&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"GetNameOwner"</span>,
+                <span class="kw-2">&amp;</span><span class="string">"org.freedesktop.zbus.sync"</span>,
             )
             .unwrap();
 
@@ -1378,35 +1379,35 @@
             .map(|s| s == &lt;<span class="kw-2">&amp;</span>str&gt;::signature())
             .unwrap());
         <span class="macro">assert_eq!</span>(
-            reply.body::&lt;UniqueName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;().unwrap(),
+            reply.body::&lt;UniqueName&lt;<span class="lifetime">'_</span>&gt;&gt;().unwrap(),
             <span class="kw-2">*</span>connection.unique_name().unwrap(),
         );
 
-        <span class="comment">// GDBus doesn&#39;t provide this method
+        <span class="comment">// GDBus doesn't provide this method
         </span><span class="kw">if </span>is_gdbus_test() {
             <span class="kw">return</span>;
         }
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;GetConnectionCredentials&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="string">&quot;org.freedesktop.DBus&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"GetConnectionCredentials"</span>,
+                <span class="kw-2">&amp;</span><span class="string">"org.freedesktop.DBus"</span>,
             )
             .unwrap();
 
-        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">&quot;a{sv}&quot;</span>).unwrap());
+        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">"a{sv}"</span>).unwrap());
         <span class="kw">let </span>hashmap: HashMap&lt;<span class="kw-2">&amp;</span>str, OwnedValue&gt; = reply.body().unwrap();
 
-        <span class="kw">let </span>pid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">&quot;ProcessID&quot;</span>]).try_into().unwrap();
-        <span class="macro">debug!</span>(<span class="string">&quot;DBus bus PID: {}&quot;</span>, pid);
+        <span class="kw">let </span>pid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">"ProcessID"</span>]).try_into().unwrap();
+        <span class="macro">debug!</span>(<span class="string">"DBus bus PID: {}"</span>, pid);
 
         <span class="attr">#[cfg(unix)]
         </span>{
-            <span class="kw">let </span>uid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">&quot;UnixUserID&quot;</span>]).try_into().unwrap();
-            <span class="macro">debug!</span>(<span class="string">&quot;DBus bus UID: {}&quot;</span>, uid);
+            <span class="kw">let </span>uid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">"UnixUserID"</span>]).try_into().unwrap();
+            <span class="macro">debug!</span>(<span class="string">"DBus bus UID: {}"</span>, uid);
         }
     }
 
@@ -1422,28 +1423,28 @@
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;RequestName&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"RequestName"</span>,
                 <span class="kw-2">&amp;</span>(
-                    <span class="string">&quot;org.freedesktop.zbus.async&quot;</span>,
+                    <span class="string">"org.freedesktop.zbus.async"</span>,
                     BitFlags::from(RequestNameFlags::ReplaceExisting),
                 ),
             )
             .<span class="kw">await
             </span>.unwrap();
 
-        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">&quot;u&quot;</span>).unwrap());
+        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">"u"</span>).unwrap());
         <span class="kw">let </span>reply: RequestNameReply = reply.body().unwrap();
         <span class="macro">assert_eq!</span>(reply, RequestNameReply::PrimaryOwner);
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;GetId&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"GetId"</span>,
                 <span class="kw-2">&amp;</span>(),
             )
             .<span class="kw">await
@@ -1454,15 +1455,15 @@
             .map(|s| s == &lt;<span class="kw-2">&amp;</span>str&gt;::signature())
             .unwrap());
         <span class="kw">let </span>id: <span class="kw-2">&amp;</span>str = reply.body().unwrap();
-        <span class="macro">debug!</span>(<span class="string">&quot;Unique ID of the bus: {}&quot;</span>, id);
+        <span class="macro">debug!</span>(<span class="string">"Unique ID of the bus: {}"</span>, id);
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;NameHasOwner&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="string">&quot;org.freedesktop.zbus.async&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"NameHasOwner"</span>,
+                <span class="kw-2">&amp;</span><span class="string">"org.freedesktop.zbus.async"</span>,
             )
             .<span class="kw">await
             </span>.unwrap();
@@ -1475,11 +1476,11 @@
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;GetNameOwner&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="string">&quot;org.freedesktop.zbus.async&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"GetNameOwner"</span>,
+                <span class="kw-2">&amp;</span><span class="string">"org.freedesktop.zbus.async"</span>,
             )
             .<span class="kw">await
             </span>.unwrap();
@@ -1489,36 +1490,36 @@
             .map(|s| s == &lt;<span class="kw-2">&amp;</span>str&gt;::signature())
             .unwrap());
         <span class="macro">assert_eq!</span>(
-            reply.body::&lt;UniqueName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;().unwrap(),
+            reply.body::&lt;UniqueName&lt;<span class="lifetime">'_</span>&gt;&gt;().unwrap(),
             <span class="kw-2">*</span>connection.unique_name().unwrap(),
         );
 
-        <span class="comment">// GDBus doesn&#39;t provide this method
+        <span class="comment">// GDBus doesn't provide this method
         </span><span class="kw">if </span>is_gdbus_test() {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         }
 
         <span class="kw">let </span>reply = connection
             .call_method(
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;/org/freedesktop/DBus&quot;</span>,
-                <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.DBus&quot;</span>),
-                <span class="string">&quot;GetConnectionCredentials&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="string">&quot;org.freedesktop.DBus&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"/org/freedesktop/DBus"</span>,
+                <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.DBus"</span>),
+                <span class="string">"GetConnectionCredentials"</span>,
+                <span class="kw-2">&amp;</span><span class="string">"org.freedesktop.DBus"</span>,
             )
             .<span class="kw">await
             </span>.unwrap();
 
-        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">&quot;a{sv}&quot;</span>).unwrap());
+        <span class="macro">assert!</span>(reply.body_signature().map(|s| s == <span class="string">"a{sv}"</span>).unwrap());
         <span class="kw">let </span>hashmap: HashMap&lt;<span class="kw-2">&amp;</span>str, OwnedValue&gt; = reply.body().unwrap();
 
-        <span class="kw">let </span>pid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">&quot;ProcessID&quot;</span>]).try_into().unwrap();
-        <span class="macro">debug!</span>(<span class="string">&quot;DBus bus PID: {}&quot;</span>, pid);
+        <span class="kw">let </span>pid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">"ProcessID"</span>]).try_into().unwrap();
+        <span class="macro">debug!</span>(<span class="string">"DBus bus PID: {}"</span>, pid);
 
         <span class="attr">#[cfg(unix)]
         </span>{
-            <span class="kw">let </span>uid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">&quot;UnixUserID&quot;</span>]).try_into().unwrap();
-            <span class="macro">debug!</span>(<span class="string">&quot;DBus bus UID: {}&quot;</span>, uid);
+            <span class="kw">let </span>uid: u32 = (<span class="kw-2">&amp;</span>hashmap[<span class="string">"UnixUserID"</span>]).try_into().unwrap();
+            <span class="macro">debug!</span>(<span class="string">"DBus bus UID: {}"</span>, uid);
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -1537,13 +1538,13 @@
 
         <span class="comment">// Send a message as client before service starts to process messages
         </span><span class="kw">let </span>client_conn = blocking::Connection::session().unwrap();
-        <span class="kw">let </span>destination = conn.unique_name().map(UniqueName::&lt;<span class="lifetime">&#39;_</span>&gt;::from);
+        <span class="kw">let </span>destination = conn.unique_name().map(UniqueName::&lt;<span class="lifetime">'_</span>&gt;::from);
         <span class="kw">let </span>msg = Message::method(
             <span class="prelude-val">None</span>::&lt;()&gt;,
             destination,
-            <span class="string">&quot;/org/freedesktop/Issue68&quot;</span>,
-            <span class="prelude-val">Some</span>(<span class="string">&quot;org.freedesktop.Issue68&quot;</span>),
-            <span class="string">&quot;Ping&quot;</span>,
+            <span class="string">"/org/freedesktop/Issue68"</span>,
+            <span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.Issue68"</span>),
+            <span class="string">"Ping"</span>,
             <span class="kw-2">&amp;</span>(),
         )
         .unwrap();
@@ -1575,16 +1576,16 @@
         </span><span class="kw">use </span>zvariant::{ObjectPath, Value};
 
         <span class="kw">struct </span>Secret;
-        <span class="attr">#[<span class="kw">super</span>::dbus_interface(name = <span class="string">&quot;org.freedesktop.Secret.Service&quot;</span>)]
+        <span class="attr">#[<span class="kw">super</span>::dbus_interface(name = <span class="string">"org.freedesktop.Secret.Service"</span>)]
         </span><span class="kw">impl </span>Secret {
             <span class="kw">fn </span>open_session(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
                 _algorithm: <span class="kw-2">&amp;</span>str,
-                input: Value&lt;<span class="lifetime">&#39;_</span>&gt;,
+                input: Value&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; zbus::fdo::Result&lt;(OwnedValue, OwnedObjectPath)&gt; {
                 <span class="prelude-val">Ok</span>((
                     OwnedValue::from(input),
-                    ObjectPath::try_from(<span class="string">&quot;/org/freedesktop/secrets/Blah&quot;</span>)
+                    ObjectPath::try_from(<span class="string">"/org/freedesktop/secrets/Blah"</span>)
                         .unwrap()
                         .into(),
                 ))
@@ -1594,7 +1595,7 @@
         <span class="kw">let </span>secret = Secret;
         <span class="kw">let </span>conn = blocking::ConnectionBuilder::session()
             .unwrap()
-            .serve_at(<span class="string">&quot;/org/freedesktop/secrets&quot;</span>, secret)
+            .serve_at(<span class="string">"/org/freedesktop/secrets"</span>, secret)
             .unwrap()
             .build()
             .unwrap();
@@ -1603,7 +1604,7 @@
         {
             <span class="kw">let </span>conn = blocking::Connection::session().unwrap();
             <span class="attr">#[<span class="kw">super</span>::dbus_proxy(
-                interface = <span class="string">&quot;org.freedesktop.Secret.Service&quot;</span>,
+                interface = <span class="string">"org.freedesktop.Secret.Service"</span>,
                 assume_defaults = <span class="bool-val">true</span>,
                 gen_async = <span class="bool-val">false
             </span>)]
@@ -1611,21 +1612,21 @@
                 <span class="kw">fn </span>open_session(
                     <span class="kw-2">&amp;</span><span class="self">self</span>,
                     algorithm: <span class="kw-2">&amp;</span>str,
-                    input: <span class="kw-2">&amp;</span>zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;,
+                    input: <span class="kw-2">&amp;</span>zvariant::Value&lt;<span class="lifetime">'_</span>&gt;,
                 ) -&gt; zbus::Result&lt;(OwnedValue, OwnedObjectPath)&gt;;
             }
 
             <span class="kw">let </span>proxy = SecretProxy::builder(<span class="kw-2">&amp;</span>conn)
                 .destination(UniqueName::from(service_name))
                 .unwrap()
-                .path(<span class="string">&quot;/org/freedesktop/secrets&quot;</span>)
+                .path(<span class="string">"/org/freedesktop/secrets"</span>)
                 .unwrap()
                 .build()
                 .unwrap();
 
-            <span class="macro">trace!</span>(<span class="string">&quot;Calling open_session&quot;</span>);
-            proxy.open_session(<span class="string">&quot;plain&quot;</span>, <span class="kw-2">&amp;</span>Value::from(<span class="string">&quot;&quot;</span>)).unwrap();
-            <span class="macro">trace!</span>(<span class="string">&quot;Called open_session&quot;</span>);
+            <span class="macro">trace!</span>(<span class="string">"Calling open_session"</span>);
+            proxy.open_session(<span class="string">"plain"</span>, <span class="kw-2">&amp;</span>Value::from(<span class="string">""</span>)).unwrap();
+            <span class="macro">trace!</span>(<span class="string">"Called open_session"</span>);
         };
     }
 
@@ -1637,7 +1638,7 @@
     </span><span class="kw">fn </span>issue_121() {
         <span class="kw">use </span><span class="kw">crate</span>::dbus_proxy;
 
-        <span class="attr">#[dbus_proxy(interface = <span class="string">&quot;org.freedesktop.IBus&quot;</span>, assume_defaults = <span class="bool-val">true</span>)]
+        <span class="attr">#[dbus_proxy(interface = <span class="string">"org.freedesktop.IBus"</span>, assume_defaults = <span class="bool-val">true</span>)]
         </span><span class="kw">trait </span>IBus {
             <span class="doccomment">/// CurrentInputContext property
             </span><span class="attr">#[dbus_proxy(property)]
@@ -1671,7 +1672,7 @@
                 <span class="kw">let </span>msg = m.unwrap();
                 <span class="kw">let </span>hdr = msg.header().unwrap();
 
-                <span class="kw">if </span>hdr.member().unwrap().map(|m| m.as_str()) == <span class="prelude-val">Some</span>(<span class="string">&quot;ZBusIssue122&quot;</span>) {
+                <span class="kw">if </span>hdr.member().unwrap().map(|m| m.as_str()) == <span class="prelude-val">Some</span>(<span class="string">"ZBusIssue122"</span>) {
                     <span class="kw">break</span>;
                 }
             }
@@ -1683,17 +1684,17 @@
         <span class="kw">while </span>!<span class="kw-2">*</span>started {
             started = cvar.wait(started).unwrap();
         }
-        <span class="comment">// Still give it some milliseconds to ensure it&#39;s already blocking on receive_message call
+        <span class="comment">// Still give it some milliseconds to ensure it's already blocking on receive_message call
         // when we send a message.
         </span>std::thread::sleep(std::time::Duration::from_millis(<span class="number">100</span>));
 
-        <span class="kw">let </span>destination = conn.unique_name().map(UniqueName::&lt;<span class="lifetime">&#39;_</span>&gt;::from);
+        <span class="kw">let </span>destination = conn.unique_name().map(UniqueName::&lt;<span class="lifetime">'_</span>&gt;::from);
         <span class="kw">let </span>msg = Message::method(
             <span class="prelude-val">None</span>::&lt;()&gt;,
             destination,
-            <span class="string">&quot;/does/not/matter&quot;</span>,
+            <span class="string">"/does/not/matter"</span>,
             <span class="prelude-val">None</span>::&lt;()&gt;,
-            <span class="string">&quot;ZBusIssue122&quot;</span>,
+            <span class="string">"ZBusIssue122"</span>,
             <span class="kw-2">&amp;</span>(),
         )
         .unwrap();
@@ -1731,15 +1732,15 @@
     </span><span class="kw">fn </span>issue173() {
         <span class="comment">// Tests the fix for https://github.com/dbus2/zbus/issues/173
         //
-        // The issue is caused by proxy not keeping track of its destination&#39;s owner changes
+        // The issue is caused by proxy not keeping track of its destination's owner changes
         // (service restart) and failing to receive signals as a result.
         </span><span class="kw">let </span>(tx, rx) = channel();
         <span class="kw">let </span>child = std::thread::spawn(<span class="kw">move </span>|| {
             <span class="kw">let </span>conn = blocking::Connection::session().unwrap();
             <span class="attr">#[<span class="kw">super</span>::dbus_proxy(
-                interface = <span class="string">&quot;org.freedesktop.zbus.ComeAndGo&quot;</span>,
-                default_service = <span class="string">&quot;org.freedesktop.zbus.ComeAndGo&quot;</span>,
-                default_path = <span class="string">&quot;/org/freedesktop/zbus/ComeAndGo&quot;
+                interface = <span class="string">"org.freedesktop.zbus.ComeAndGo"</span>,
+                default_service = <span class="string">"org.freedesktop.zbus.ComeAndGo"</span>,
+                default_path = <span class="string">"/org/freedesktop/zbus/ComeAndGo"
             </span>)]
             </span><span class="kw">trait </span>ComeAndGo {
                 <span class="attr">#[dbus_proxy(signal)]
@@ -1758,33 +1759,33 @@
         });
 
         <span class="kw">struct </span>ComeAndGo;
-        <span class="attr">#[<span class="kw">super</span>::dbus_interface(name = <span class="string">&quot;org.freedesktop.zbus.ComeAndGo&quot;</span>)]
+        <span class="attr">#[<span class="kw">super</span>::dbus_interface(name = <span class="string">"org.freedesktop.zbus.ComeAndGo"</span>)]
         </span><span class="kw">impl </span>ComeAndGo {
             <span class="attr">#[dbus_interface(signal)]
-            </span><span class="kw">async fn </span>the_signal(signal_ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; zbus::Result&lt;()&gt;;
+            </span><span class="kw">async fn </span>the_signal(signal_ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;) -&gt; zbus::Result&lt;()&gt;;
         }
 
         rx.recv().unwrap();
         <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
             <span class="kw">let </span>conn = blocking::ConnectionBuilder::session()
                 .unwrap()
-                .serve_at(<span class="string">&quot;/org/freedesktop/zbus/ComeAndGo&quot;</span>, ComeAndGo)
+                .serve_at(<span class="string">"/org/freedesktop/zbus/ComeAndGo"</span>, ComeAndGo)
                 .unwrap()
-                .name(<span class="string">&quot;org.freedesktop.zbus.ComeAndGo&quot;</span>)
+                .name(<span class="string">"org.freedesktop.zbus.ComeAndGo"</span>)
                 .unwrap()
                 .build()
                 .unwrap();
 
             <span class="kw">let </span>iface_ref = conn
                 .object_server()
-                .interface::&lt;<span class="kw">_</span>, ComeAndGo&gt;(<span class="string">&quot;/org/freedesktop/zbus/ComeAndGo&quot;</span>)
+                .interface::&lt;<span class="kw">_</span>, ComeAndGo&gt;(<span class="string">"/org/freedesktop/zbus/ComeAndGo"</span>)
                 .unwrap();
             block_on(ComeAndGo::the_signal(iface_ref.signal_context())).unwrap();
 
             rx.recv().unwrap();
 
             <span class="comment">// Now we release the name ownership to use a different connection (i-e new unique name).
-            </span>conn.release_name(<span class="string">&quot;org.freedesktop.zbus.ComeAndGo&quot;</span>).unwrap();
+            </span>conn.release_name(<span class="string">"org.freedesktop.zbus.ComeAndGo"</span>).unwrap();
         }
 
         child.join().unwrap();
@@ -1802,7 +1803,7 @@
         // and without caching.
         </span><span class="attr">#[derive(Default)]
         </span><span class="kw">struct </span>ServiceUncachedPropertyTest(bool);
-        <span class="attr">#[<span class="kw">crate</span>::dbus_interface(name = <span class="string">&quot;org.freedesktop.zbus.UncachedPropertyTest&quot;</span>)]
+        <span class="attr">#[<span class="kw">crate</span>::dbus_interface(name = <span class="string">"org.freedesktop.zbus.UncachedPropertyTest"</span>)]
         </span><span class="kw">impl </span>ServiceUncachedPropertyTest {
             <span class="attr">#[dbus_interface(property)]
             </span><span class="kw">fn </span>cached_prop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1819,15 +1820,15 @@
         }
 
         <span class="attr">#[<span class="kw">crate</span>::dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.zbus.UncachedPropertyTest&quot;</span>,
-            default_service = <span class="string">&quot;org.freedesktop.zbus.UncachedPropertyTest&quot;</span>,
-            default_path = <span class="string">&quot;/org/freedesktop/zbus/UncachedPropertyTest&quot;
+            interface = <span class="string">"org.freedesktop.zbus.UncachedPropertyTest"</span>,
+            default_service = <span class="string">"org.freedesktop.zbus.UncachedPropertyTest"</span>,
+            default_path = <span class="string">"/org/freedesktop/zbus/UncachedPropertyTest"
         </span>)]
         </span><span class="kw">trait </span>UncachedPropertyTest {
             <span class="attr">#[dbus_proxy(property)]
             </span><span class="kw">fn </span>cached_prop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;bool&gt;;
 
-            <span class="attr">#[dbus_proxy(property(emits_changed_signal = <span class="string">&quot;false&quot;</span>))]
+            <span class="attr">#[dbus_proxy(property(emits_changed_signal = <span class="string">"false"</span>))]
             </span><span class="kw">fn </span>uncached_prop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;bool&gt;;
 
             <span class="kw">fn </span>set_inner_to_true(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;()&gt;;
@@ -1836,7 +1837,7 @@
         <span class="kw">let </span>service = <span class="kw">crate</span>::ConnectionBuilder::session()
             .unwrap()
             .serve_at(
-                <span class="string">&quot;/org/freedesktop/zbus/UncachedPropertyTest&quot;</span>,
+                <span class="string">"/org/freedesktop/zbus/UncachedPropertyTest"</span>,
                 ServiceUncachedPropertyTest(<span class="bool-val">false</span>),
             )
             .unwrap()
@@ -1874,14 +1875,14 @@
     <span class="attr">#[test]
     #[timeout(<span class="number">15000</span>)]
     </span><span class="kw">fn </span>issue_260() {
-        <span class="comment">// Low-level server example in the book doesn&#39;t work. The reason was that
+        <span class="comment">// Low-level server example in the book doesn't work. The reason was that
         // `Connection::request_name` implicitly created the associated `ObjectServer` to avoid
         // #68. This meant that the `ObjectServer` ended up replying to the incoming method call
         // with an error, before the service code could do so.
         </span>block_on(<span class="kw">async </span>{
             <span class="kw">let </span>connection = Connection::session().<span class="kw">await</span><span class="question-mark">?</span>;
 
-            connection.request_name(<span class="string">&quot;org.zbus.Issue260&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+            connection.request_name(<span class="string">"org.zbus.Issue260"</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 
             <span class="macro">futures_util::try_join!</span>(
                 issue_260_service(<span class="kw-2">&amp;</span>connection),
@@ -1916,23 +1917,23 @@
     <span class="kw">async fn </span>issue_260_client(connection: <span class="kw-2">&amp;</span>Connection) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         zbus::Proxy::new(
             connection,
-            <span class="string">&quot;org.zbus.Issue260&quot;</span>,
-            <span class="string">&quot;/org/zbus/Issue260&quot;</span>,
-            <span class="string">&quot;org.zbus.Issue260&quot;</span>,
+            <span class="string">"org.zbus.Issue260"</span>,
+            <span class="string">"/org/zbus/Issue260"</span>,
+            <span class="string">"org.zbus.Issue260"</span>,
         )
         .<span class="kw">await</span><span class="question-mark">?
-        </span>.call(<span class="string">&quot;Whatever&quot;</span>, <span class="kw-2">&amp;</span>())
+        </span>.call(<span class="string">"Whatever"</span>, <span class="kw-2">&amp;</span>())
         .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="attr">#[test(tokio::test(flavor = <span class="string">&quot;multi_thread&quot;</span>, worker_threads = <span class="number">2</span>))]
+    <span class="attr">#[test(tokio::test(flavor = <span class="string">"multi_thread"</span>, worker_threads = <span class="number">2</span>))]
     </span><span class="comment">// Issue specific to tokio runtime.
-    </span><span class="attr">#[cfg(all(unix, feature = <span class="string">&quot;tokio&quot;</span>))]
+    </span><span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
     #[instrument]
     </span><span class="kw">async fn </span>issue_279() {
         <span class="comment">// On failure to read from the socket, we were closing the error channel from the sender
-        // side and since the underlying tokio API doesn&#39;t provide a `close` method on the sender,
+        // side and since the underlying tokio API doesn't provide a `close` method on the sender,
         // the async-channel abstraction was achieving this through calling `close` on receiver,
         // which is behind an async mutex and we end up with a deadlock.
         </span><span class="kw">use crate</span>::{ConnectionBuilder, MessageStream};
@@ -1956,9 +1957,9 @@
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(next_msg_fut.<span class="kw">await</span>, <span class="prelude-val">Err</span>(<span class="kw">_</span>)));
     }
 
-    <span class="attr">#[test(tokio::test(flavor = <span class="string">&quot;multi_thread&quot;</span>))]
+    <span class="attr">#[test(tokio::test(flavor = <span class="string">"multi_thread"</span>))]
     </span><span class="comment">// Issue specific to tokio runtime.
-    </span><span class="attr">#[cfg(all(unix, feature = <span class="string">&quot;tokio&quot;</span>))]
+    </span><span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
     #[instrument]
     </span><span class="kw">async fn </span>issue_310() {
         <span class="comment">// The issue was we were deadlocking on fetching the new property value after invalidation.
@@ -1970,19 +1971,19 @@
 
         <span class="kw">struct </span>Station(u64);
 
-        <span class="attr">#[zbus::dbus_interface(name = <span class="string">&quot;net.connman.iwd.Station&quot;</span>)]
+        <span class="attr">#[zbus::dbus_interface(name = <span class="string">"net.connman.iwd.Station"</span>)]
         </span><span class="kw">impl </span>Station {
             <span class="attr">#[dbus_interface(property)]
             </span><span class="kw">fn </span>connected_network(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OwnedObjectPath {
-                <span class="macro">format!</span>(<span class="string">&quot;/net/connman/iwd/0/33/Network/{}&quot;</span>, <span class="self">self</span>.<span class="number">0</span>)
+                <span class="macro">format!</span>(<span class="string">"/net/connman/iwd/0/33/Network/{}"</span>, <span class="self">self</span>.<span class="number">0</span>)
                     .try_into()
                     .unwrap()
             }
         }
 
         <span class="attr">#[zbus::dbus_proxy(
-            interface = <span class="string">&quot;net.connman.iwd.Station&quot;</span>,
-            default_service = <span class="string">&quot;net.connman.iwd&quot;
+            interface = <span class="string">"net.connman.iwd.Station"</span>,
+            default_service = <span class="string">"net.connman.iwd"
         </span>)]
         </span><span class="kw">trait </span>Station {
             <span class="attr">#[dbus_proxy(property)]
@@ -1990,9 +1991,9 @@
         }
         <span class="kw">let </span>connection = ConnectionBuilder::session()
             .unwrap()
-            .serve_at(<span class="string">&quot;/net/connman/iwd/0/33&quot;</span>, Station(<span class="number">0</span>))
+            .serve_at(<span class="string">"/net/connman/iwd/0/33"</span>, Station(<span class="number">0</span>))
             .unwrap()
-            .name(<span class="string">&quot;net.connman.iwd&quot;</span>)
+            .name(<span class="string">"net.connman.iwd"</span>)
             .unwrap()
             .build()
             .<span class="kw">await
@@ -2005,7 +2006,7 @@
                 <span class="kw">let </span>listener = event_clone.listen();
                 <span class="kw">let </span>iface_ref = conn_clone
                     .object_server()
-                    .interface::&lt;<span class="kw">_</span>, Station&gt;(<span class="string">&quot;/net/connman/iwd/0/33&quot;</span>)
+                    .interface::&lt;<span class="kw">_</span>, Station&gt;(<span class="string">"/net/connman/iwd/0/33"</span>)
                     .<span class="kw">await
                     </span>.unwrap();
 
@@ -2026,7 +2027,7 @@
         });
 
         <span class="kw">let </span>station = StationProxy::builder(<span class="kw-2">&amp;</span>connection)
-            .path(<span class="string">&quot;/net/connman/iwd/0/33&quot;</span>)
+            .path(<span class="string">"/net/connman/iwd/0/33"</span>)
             .unwrap()
             .build()
             .<span class="kw">await
@@ -2039,11 +2040,11 @@
             <span class="kw">let </span>change = changes.next().<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>path = change.get().<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>received: u64 = path
-                .split(<span class="string">&#39;/&#39;</span>)
+                .split(<span class="string">'/'</span>)
                 .last()
                 .unwrap()
                 .parse()
-                .expect(<span class="string">&quot;invalid path&quot;</span>);
+                .expect(<span class="string">"invalid path"</span>);
             <span class="macro">assert!</span>(received &gt;= last_received);
             last_received = received;
             event.notify(<span class="number">1</span>);

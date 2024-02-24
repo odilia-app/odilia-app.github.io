@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winnow-0.4.1/src/character/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winnow" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../winnow/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winnow-0.4.1/src/character/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winnow" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1831,11 +1832,11 @@
 <span class="kw">use </span><span class="kw">crate</span>::IResult;
 <span class="kw">use </span><span class="kw">crate</span>::Parser;
 
-<span class="doccomment">/// Recognizes the string &quot;\r\n&quot;.
+<span class="doccomment">/// Recognizes the string "\r\n".
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data.
+/// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
 ///
 /// # Example
 ///
@@ -1846,34 +1847,34 @@
 ///     crlf(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;\r\nc&quot;), Ok((&quot;c&quot;, &quot;\r\n&quot;)));
-/// assert_eq!(parser(&quot;ab\r\nc&quot;), Err(ErrMode::Backtrack(Error::new(&quot;ab\r\nc&quot;, ErrorKind::Tag))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Tag))));
+/// assert_eq!(parser("\r\nc"), Ok(("c", "\r\n")));
+/// assert_eq!(parser("ab\r\nc"), Err(ErrMode::Backtrack(Error::new("ab\r\nc", ErrorKind::Tag))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Tag))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::crlf;
-/// assert_eq!(crlf::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;\r\nc&quot;)), Ok((Partial::new(&quot;c&quot;), &quot;\r\n&quot;)));
-/// assert_eq!(crlf::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;ab\r\nc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;ab\r\nc&quot;), ErrorKind::Tag))));
-/// assert_eq!(crlf::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(2))));
+/// assert_eq!(crlf::&lt;_, Error&lt;_&gt;&gt;(Partial::new("\r\nc")), Ok((Partial::new("c"), "\r\n")));
+/// assert_eq!(crlf::&lt;_, Error&lt;_&gt;&gt;(Partial::new("ab\r\nc")), Err(ErrMode::Backtrack(Error::new(Partial::new("ab\r\nc"), ErrorKind::Tag))));
+/// assert_eq!(crlf::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(2))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>crlf&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
 {
-    trace(<span class="string">&quot;crlf&quot;</span>, <span class="kw">move </span>|input: I| <span class="string">&quot;\r\n&quot;</span>.parse_next(input)).parse_next(input)
+    trace(<span class="string">"crlf"</span>, <span class="kw">move </span>|input: I| <span class="string">"\r\n"</span>.parse_next(input)).parse_next(input)
 }
 
-<span class="doccomment">/// Recognizes a string of any char except &#39;\r\n&#39; or &#39;\n&#39;.
+<span class="doccomment">/// Recognizes a string of any char except '\r\n' or '\n'.
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data.
+/// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
 ///
 /// # Example
 ///
@@ -1884,33 +1885,33 @@
 ///     not_line_ending(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;ab\r\nc&quot;), Ok((&quot;\r\nc&quot;, &quot;ab&quot;)));
-/// assert_eq!(parser(&quot;ab\nc&quot;), Ok((&quot;\nc&quot;, &quot;ab&quot;)));
-/// assert_eq!(parser(&quot;abc&quot;), Ok((&quot;&quot;, &quot;abc&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;a\rb\nc&quot;), Err(ErrMode::Backtrack(Error { input: &quot;a\rb\nc&quot;, kind: ErrorKind::Tag })));
-/// assert_eq!(parser(&quot;a\rbc&quot;), Err(ErrMode::Backtrack(Error { input: &quot;a\rbc&quot;, kind: ErrorKind::Tag })));
+/// assert_eq!(parser("ab\r\nc"), Ok(("\r\nc", "ab")));
+/// assert_eq!(parser("ab\nc"), Ok(("\nc", "ab")));
+/// assert_eq!(parser("abc"), Ok(("", "abc")));
+/// assert_eq!(parser(""), Ok(("", "")));
+/// assert_eq!(parser("a\rb\nc"), Err(ErrMode::Backtrack(Error { input: "a\rb\nc", kind: ErrorKind::Tag })));
+/// assert_eq!(parser("a\rbc"), Err(ErrMode::Backtrack(Error { input: "a\rbc", kind: ErrorKind::Tag })));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::{Error, ErrorKind}, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::not_line_ending;
-/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;ab\r\nc&quot;)), Ok((Partial::new(&quot;\r\nc&quot;), &quot;ab&quot;)));
-/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;abc&quot;)), Err(ErrMode::Incomplete(Needed::Unknown)));
-/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::Unknown)));
-/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;a\rb\nc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;a\rb\nc&quot;), ErrorKind::Tag ))));
-/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;a\rbc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;a\rbc&quot;), ErrorKind::Tag ))));
+/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("ab\r\nc")), Ok((Partial::new("\r\nc"), "ab")));
+/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("abc")), Err(ErrMode::Incomplete(Needed::Unknown)));
+/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::Unknown)));
+/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("a\rb\nc")), Err(ErrMode::Backtrack(Error::new(Partial::new("a\rb\nc"), ErrorKind::Tag ))));
+/// assert_eq!(not_line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("a\rbc")), Err(ErrMode::Backtrack(Error::new(Partial::new("a\rbc"), ErrorKind::Tag ))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>not_line_ending&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream + AsBStr,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;not_line_ending&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"not_line_ending"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">if </span>input.is_partial() {
             streaming_not_line_ending(input)
         } <span class="kw">else </span>{
@@ -1925,20 +1926,20 @@
 ) -&gt; IResult&lt;T, &lt;T <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>T: Stream + AsBStr,
-    T: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    T: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
     &lt;T <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
     <span class="kw">match </span>input.offset_for(|item| {
         <span class="kw">let </span>c = item.as_char();
-        c == <span class="string">&#39;\r&#39; </span>|| c == <span class="string">&#39;\n&#39;
+        c == <span class="string">'\r' </span>|| c == <span class="string">'\n'
     </span>}) {
         <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::Unknown)),
         <span class="prelude-val">Some</span>(offset) =&gt; {
             <span class="kw">let </span>(new_input, res) = input.next_slice(offset);
             <span class="kw">let </span>bytes = new_input.as_bstr();
             <span class="kw">let </span>nth = bytes[<span class="number">0</span>];
-            <span class="kw">if </span>nth == <span class="string">b&#39;\r&#39; </span>{
-                <span class="kw">let </span>comp = new_input.compare(<span class="string">&quot;\r\n&quot;</span>);
+            <span class="kw">if </span>nth == <span class="string">b'\r' </span>{
+                <span class="kw">let </span>comp = new_input.compare(<span class="string">"\r\n"</span>);
                 <span class="kw">match </span>comp {
                     <span class="comment">//FIXME: calculate the right index
                     </span>CompareResult::Ok =&gt; {}
@@ -1961,20 +1962,20 @@
 ) -&gt; IResult&lt;T, &lt;T <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>T: Stream + AsBStr,
-    T: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    T: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
     &lt;T <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
     <span class="kw">match </span>input.offset_for(|item| {
         <span class="kw">let </span>c = item.as_char();
-        c == <span class="string">&#39;\r&#39; </span>|| c == <span class="string">&#39;\n&#39;
+        c == <span class="string">'\r' </span>|| c == <span class="string">'\n'
     </span>}) {
         <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(input.next_slice(input.eof_offset())),
         <span class="prelude-val">Some</span>(offset) =&gt; {
             <span class="kw">let </span>(new_input, res) = input.next_slice(offset);
             <span class="kw">let </span>bytes = new_input.as_bstr();
             <span class="kw">let </span>nth = bytes[<span class="number">0</span>];
-            <span class="kw">if </span>nth == <span class="string">b&#39;\r&#39; </span>{
-                <span class="kw">let </span>comp = new_input.compare(<span class="string">&quot;\r\n&quot;</span>);
+            <span class="kw">if </span>nth == <span class="string">b'\r' </span>{
+                <span class="kw">let </span>comp = new_input.compare(<span class="string">"\r\n"</span>);
                 <span class="kw">match </span>comp {
                     <span class="comment">//FIXME: calculate the right index
                     </span>CompareResult::Ok =&gt; {}
@@ -1989,11 +1990,11 @@
     }
 }
 
-<span class="doccomment">/// Recognizes an end of line (both &#39;\n&#39; and &#39;\r\n&#39;).
+<span class="doccomment">/// Recognizes an end of line (both '\n' and '\r\n').
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data.
+/// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
 ///
 /// # Example
 ///
@@ -2004,37 +2005,37 @@
 ///     line_ending(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;\r\nc&quot;), Ok((&quot;c&quot;, &quot;\r\n&quot;)));
-/// assert_eq!(parser(&quot;ab\r\nc&quot;), Err(ErrMode::Backtrack(Error::new(&quot;ab\r\nc&quot;, ErrorKind::Tag))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Tag))));
+/// assert_eq!(parser("\r\nc"), Ok(("c", "\r\n")));
+/// assert_eq!(parser("ab\r\nc"), Err(ErrMode::Backtrack(Error::new("ab\r\nc", ErrorKind::Tag))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Tag))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::line_ending;
-/// assert_eq!(line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;\r\nc&quot;)), Ok((Partial::new(&quot;c&quot;), &quot;\r\n&quot;)));
-/// assert_eq!(line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;ab\r\nc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;ab\r\nc&quot;), ErrorKind::Tag))));
-/// assert_eq!(line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("\r\nc")), Ok((Partial::new("c"), "\r\n")));
+/// assert_eq!(line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("ab\r\nc")), Err(ErrMode::Backtrack(Error::new(Partial::new("ab\r\nc"), ErrorKind::Tag))));
+/// assert_eq!(line_ending::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>line_ending&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
 {
-    trace(<span class="string">&quot;line_ending&quot;</span>, <span class="kw">move </span>|input: I| {
-        alt((<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;\r\n&quot;</span>)).parse_next(input)
+    trace(<span class="string">"line_ending"</span>, <span class="kw">move </span>|input: I| {
+        alt((<span class="string">"\n"</span>, <span class="string">"\r\n"</span>)).parse_next(input)
     })
     .parse_next(input)
 }
 
-<span class="doccomment">/// Matches a newline character &#39;\n&#39;.
+<span class="doccomment">/// Matches a newline character '\n'.
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data.
+/// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
 ///
 /// # Example
 ///
@@ -2045,18 +2046,18 @@
 ///     newline(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;\nc&quot;), Ok((&quot;c&quot;, &#39;\n&#39;)));
-/// assert_eq!(parser(&quot;\r\nc&quot;), Err(ErrMode::Backtrack(Error::new(&quot;\r\nc&quot;, ErrorKind::Verify))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Token))));
+/// assert_eq!(parser("\nc"), Ok(("c", '\n')));
+/// assert_eq!(parser("\r\nc"), Err(ErrMode::Backtrack(Error::new("\r\nc", ErrorKind::Verify))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Token))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::newline;
-/// assert_eq!(newline::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;\nc&quot;)), Ok((Partial::new(&quot;c&quot;), &#39;\n&#39;)));
-/// assert_eq!(newline::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;\r\nc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;\r\nc&quot;), ErrorKind::Verify))));
-/// assert_eq!(newline::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(newline::&lt;_, Error&lt;_&gt;&gt;(Partial::new("\nc")), Ok((Partial::new("c"), '\n')));
+/// assert_eq!(newline::&lt;_, Error&lt;_&gt;&gt;(Partial::new("\r\nc")), Err(ErrMode::Backtrack(Error::new(Partial::new("\r\nc"), ErrorKind::Verify))));
+/// assert_eq!(newline::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>newline&lt;I, Error: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, char, Error&gt;
@@ -2065,18 +2066,18 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
 {
-    trace(<span class="string">&quot;newline&quot;</span>, <span class="kw">move </span>|input: I| {
-        <span class="string">&#39;\n&#39;</span>.map(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.as_char())
+    trace(<span class="string">"newline"</span>, <span class="kw">move </span>|input: I| {
+        <span class="string">'\n'</span>.map(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.as_char())
             .parse_next(input)
     })
     .parse_next(input)
 }
 
-<span class="doccomment">/// Matches a tab character &#39;\t&#39;.
+<span class="doccomment">/// Matches a tab character '\t'.
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data.
+/// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
 ///
 /// # Example
 ///
@@ -2087,18 +2088,18 @@
 ///     tab(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;\tc&quot;), Ok((&quot;c&quot;, &#39;\t&#39;)));
-/// assert_eq!(parser(&quot;\r\nc&quot;), Err(ErrMode::Backtrack(Error::new(&quot;\r\nc&quot;, ErrorKind::Verify))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Token))));
+/// assert_eq!(parser("\tc"), Ok(("c", '\t')));
+/// assert_eq!(parser("\r\nc"), Err(ErrMode::Backtrack(Error::new("\r\nc", ErrorKind::Verify))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Token))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::tab;
-/// assert_eq!(tab::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;\tc&quot;)), Ok((Partial::new(&quot;c&quot;), &#39;\t&#39;)));
-/// assert_eq!(tab::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;\r\nc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;\r\nc&quot;), ErrorKind::Verify))));
-/// assert_eq!(tab::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(tab::&lt;_, Error&lt;_&gt;&gt;(Partial::new("\tc")), Ok((Partial::new("c"), '\t')));
+/// assert_eq!(tab::&lt;_, Error&lt;_&gt;&gt;(Partial::new("\r\nc")), Err(ErrMode::Backtrack(Error::new(Partial::new("\r\nc"), ErrorKind::Verify))));
+/// assert_eq!(tab::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>tab&lt;I, Error: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, char, Error&gt;
@@ -2107,8 +2108,8 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
 {
-    trace(<span class="string">&quot;tab&quot;</span>, <span class="kw">move </span>|input: I| {
-        <span class="string">&#39;\t&#39;</span>.map(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.as_char())
+    trace(<span class="string">"tab"</span>, <span class="kw">move </span>|input: I| {
+        <span class="string">'\t'</span>.map(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.as_char())
             .parse_next(input)
     })
     .parse_next(input)
@@ -2119,7 +2120,7 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non
 /// alphabetic character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphabetic character).
 ///
 /// # Example
@@ -2131,18 +2132,18 @@
 ///     alpha0(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;ab1c&quot;), Ok((&quot;1c&quot;, &quot;ab&quot;)));
-/// assert_eq!(parser(&quot;1c&quot;), Ok((&quot;1c&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser("ab1c"), Ok(("1c", "ab")));
+/// assert_eq!(parser("1c"), Ok(("1c", "")));
+/// assert_eq!(parser(""), Ok(("", "")));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::alpha0;
-/// assert_eq!(alpha0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;ab1c&quot;)), Ok((Partial::new(&quot;1c&quot;), &quot;ab&quot;)));
-/// assert_eq!(alpha0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;1c&quot;)), Ok((Partial::new(&quot;1c&quot;), &quot;&quot;)));
-/// assert_eq!(alpha0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(alpha0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("ab1c")), Ok((Partial::new("1c"), "ab")));
+/// assert_eq!(alpha0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("1c")), Ok((Partial::new("1c"), "")));
+/// assert_eq!(alpha0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>alpha0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2151,7 +2152,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;alpha0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"alpha0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_alpha()).parse_next(input)
     })
     .parse_next(input)
@@ -2159,10 +2160,10 @@
 
 <span class="doccomment">/// Recognizes one or more lowercase and uppercase ASCII alphabetic characters: a-z, A-Z
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found  (a non alphabetic character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphabetic character).
 ///
 /// # Example
@@ -2174,18 +2175,18 @@
 ///     alpha1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;aB1c&quot;), Ok((&quot;1c&quot;, &quot;aB&quot;)));
-/// assert_eq!(parser(&quot;1c&quot;), Err(ErrMode::Backtrack(Error::new(&quot;1c&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser("aB1c"), Ok(("1c", "aB")));
+/// assert_eq!(parser("1c"), Err(ErrMode::Backtrack(Error::new("1c", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::alpha1;
-/// assert_eq!(alpha1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;aB1c&quot;)), Ok((Partial::new(&quot;1c&quot;), &quot;aB&quot;)));
-/// assert_eq!(alpha1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;1c&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;1c&quot;), ErrorKind::Slice))));
-/// assert_eq!(alpha1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(alpha1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("aB1c")), Ok((Partial::new("1c"), "aB")));
+/// assert_eq!(alpha1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("1c")), Err(ErrMode::Backtrack(Error::new(Partial::new("1c"), ErrorKind::Slice))));
+/// assert_eq!(alpha1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>alpha1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2194,7 +2195,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;alpha1&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"alpha1"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_alpha()).parse_next(input)
     })
     .parse_next(input)
@@ -2202,10 +2203,10 @@
 
 <span class="doccomment">/// Recognizes zero or more ASCII numerical characters: 0-9
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non digit character).
 ///
 /// # Example
@@ -2217,19 +2218,19 @@
 ///     digit0(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21c&quot;), Ok((&quot;c&quot;, &quot;21&quot;)));
-/// assert_eq!(parser(&quot;21&quot;), Ok((&quot;&quot;, &quot;21&quot;)));
-/// assert_eq!(parser(&quot;a21c&quot;), Ok((&quot;a21c&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser("21c"), Ok(("c", "21")));
+/// assert_eq!(parser("21"), Ok(("", "21")));
+/// assert_eq!(parser("a21c"), Ok(("a21c", "")));
+/// assert_eq!(parser(""), Ok(("", "")));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::digit0;
-/// assert_eq!(digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21c&quot;)), Ok((Partial::new(&quot;c&quot;), &quot;21&quot;)));
-/// assert_eq!(digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;a21c&quot;)), Ok((Partial::new(&quot;a21c&quot;), &quot;&quot;)));
-/// assert_eq!(digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21c")), Ok((Partial::new("c"), "21")));
+/// assert_eq!(digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("a21c")), Ok((Partial::new("a21c"), "")));
+/// assert_eq!(digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>digit0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2238,7 +2239,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;digit0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"digit0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_dec_digit()).parse_next(input)
     })
     .parse_next(input)
@@ -2246,10 +2247,10 @@
 
 <span class="doccomment">/// Recognizes one or more ASCII numerical characters: 0-9
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non digit character).
 ///
 /// # Example
@@ -2261,18 +2262,18 @@
 ///     digit1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21c&quot;), Ok((&quot;c&quot;, &quot;21&quot;)));
-/// assert_eq!(parser(&quot;c1&quot;), Err(ErrMode::Backtrack(Error::new(&quot;c1&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser("21c"), Ok(("c", "21")));
+/// assert_eq!(parser("c1"), Err(ErrMode::Backtrack(Error::new("c1", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::digit1;
-/// assert_eq!(digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21c&quot;)), Ok((Partial::new(&quot;c&quot;), &quot;21&quot;)));
-/// assert_eq!(digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;c1&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;c1&quot;), ErrorKind::Slice))));
-/// assert_eq!(digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21c")), Ok((Partial::new("c"), "21")));
+/// assert_eq!(digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("c1")), Err(ErrMode::Backtrack(Error::new(Partial::new("c1"), ErrorKind::Slice))));
+/// assert_eq!(digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 ///
 /// ## Parsing an integer
@@ -2286,9 +2287,9 @@
 ///   digit1.map_res(str::parse).parse_next(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;416&quot;), Ok((&quot;&quot;, 416)));
-/// assert_eq!(parser(&quot;12b&quot;), Ok((&quot;b&quot;, 12)));
-/// assert!(parser(&quot;b&quot;).is_err());
+/// assert_eq!(parser("416"), Ok(("", 416)));
+/// assert_eq!(parser("12b"), Ok(("b", 12)));
+/// assert!(parser("b").is_err());
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>digit1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2297,7 +2298,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;digit1&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"digit1"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_dec_digit()).parse_next(input)
     })
     .parse_next(input)
@@ -2307,7 +2308,7 @@
 ///
 /// *Complete version*: Will return the whole input if no terminating token is found (a non hexadecimal digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non hexadecimal digit character).
 ///
 /// # Example
@@ -2319,18 +2320,18 @@
 ///     hex_digit0(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21cZ&quot;), Ok((&quot;Z&quot;, &quot;21c&quot;)));
-/// assert_eq!(parser(&quot;Z21c&quot;), Ok((&quot;Z21c&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser("21cZ"), Ok(("Z", "21c")));
+/// assert_eq!(parser("Z21c"), Ok(("Z21c", "")));
+/// assert_eq!(parser(""), Ok(("", "")));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::hex_digit0;
-/// assert_eq!(hex_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21cZ&quot;)), Ok((Partial::new(&quot;Z&quot;), &quot;21c&quot;)));
-/// assert_eq!(hex_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;Z21c&quot;)), Ok((Partial::new(&quot;Z21c&quot;), &quot;&quot;)));
-/// assert_eq!(hex_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(hex_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21cZ")), Ok((Partial::new("Z"), "21c")));
+/// assert_eq!(hex_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("Z21c")), Ok((Partial::new("Z21c"), "")));
+/// assert_eq!(hex_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>hex_digit0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2339,7 +2340,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;hex_digit0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"hex_digit0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_hex_digit()).parse_next(input)
     })
     .parse_next(input)
@@ -2347,10 +2348,10 @@
 
 <span class="doccomment">/// Recognizes one or more ASCII hexadecimal numerical characters: 0-9, A-F, a-f
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non hexadecimal digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non hexadecimal digit character).
 ///
 /// # Example
@@ -2362,18 +2363,18 @@
 ///     hex_digit1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21cZ&quot;), Ok((&quot;Z&quot;, &quot;21c&quot;)));
-/// assert_eq!(parser(&quot;H2&quot;), Err(ErrMode::Backtrack(Error::new(&quot;H2&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser("21cZ"), Ok(("Z", "21c")));
+/// assert_eq!(parser("H2"), Err(ErrMode::Backtrack(Error::new("H2", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::hex_digit1;
-/// assert_eq!(hex_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21cZ&quot;)), Ok((Partial::new(&quot;Z&quot;), &quot;21c&quot;)));
-/// assert_eq!(hex_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;H2&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;H2&quot;), ErrorKind::Slice))));
-/// assert_eq!(hex_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(hex_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21cZ")), Ok((Partial::new("Z"), "21c")));
+/// assert_eq!(hex_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("H2")), Err(ErrMode::Backtrack(Error::new(Partial::new("H2"), ErrorKind::Slice))));
+/// assert_eq!(hex_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>hex_digit1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2382,7 +2383,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;hex_digit1&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"hex_digit1"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_hex_digit()).parse_next(input)
     })
     .parse_next(input)
@@ -2393,7 +2394,7 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non octal
 /// digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non octal digit character).
 ///
 /// # Example
@@ -2405,18 +2406,18 @@
 ///     oct_digit0(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21cZ&quot;), Ok((&quot;cZ&quot;, &quot;21&quot;)));
-/// assert_eq!(parser(&quot;Z21c&quot;), Ok((&quot;Z21c&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser("21cZ"), Ok(("cZ", "21")));
+/// assert_eq!(parser("Z21c"), Ok(("Z21c", "")));
+/// assert_eq!(parser(""), Ok(("", "")));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::oct_digit0;
-/// assert_eq!(oct_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21cZ&quot;)), Ok((Partial::new(&quot;cZ&quot;), &quot;21&quot;)));
-/// assert_eq!(oct_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;Z21c&quot;)), Ok((Partial::new(&quot;Z21c&quot;), &quot;&quot;)));
-/// assert_eq!(oct_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(oct_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21cZ")), Ok((Partial::new("cZ"), "21")));
+/// assert_eq!(oct_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("Z21c")), Ok((Partial::new("Z21c"), "")));
+/// assert_eq!(oct_digit0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>oct_digit0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2425,7 +2426,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;oct_digit0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"oct_digit0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_oct_digit()).parse_next(input)
     })
     .parse_next(input)
@@ -2433,10 +2434,10 @@
 
 <span class="doccomment">/// Recognizes one or more octal characters: 0-7
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non octal digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non octal digit character).
 ///
 /// # Example
@@ -2448,18 +2449,18 @@
 ///     oct_digit1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21cZ&quot;), Ok((&quot;cZ&quot;, &quot;21&quot;)));
-/// assert_eq!(parser(&quot;H2&quot;), Err(ErrMode::Backtrack(Error::new(&quot;H2&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser("21cZ"), Ok(("cZ", "21")));
+/// assert_eq!(parser("H2"), Err(ErrMode::Backtrack(Error::new("H2", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::oct_digit1;
-/// assert_eq!(oct_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21cZ&quot;)), Ok((Partial::new(&quot;cZ&quot;), &quot;21&quot;)));
-/// assert_eq!(oct_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;H2&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;H2&quot;), ErrorKind::Slice))));
-/// assert_eq!(oct_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(oct_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21cZ")), Ok((Partial::new("cZ"), "21")));
+/// assert_eq!(oct_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("H2")), Err(ErrMode::Backtrack(Error::new(Partial::new("H2"), ErrorKind::Slice))));
+/// assert_eq!(oct_digit1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>oct_digit1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2468,7 +2469,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;oct_digit0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"oct_digit0"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_oct_digit()).parse_next(input)
     })
     .parse_next(input)
@@ -2479,7 +2480,7 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non
 /// alphanumerical character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphanumerical character).
 ///
 /// # Example
@@ -2491,18 +2492,18 @@
 ///     alphanumeric0(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21cZ%1&quot;), Ok((&quot;%1&quot;, &quot;21cZ&quot;)));
-/// assert_eq!(parser(&quot;&amp;Z21c&quot;), Ok((&quot;&amp;Z21c&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser("21cZ%1"), Ok(("%1", "21cZ")));
+/// assert_eq!(parser("&amp;Z21c"), Ok(("&amp;Z21c", "")));
+/// assert_eq!(parser(""), Ok(("", "")));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::alphanumeric0;
-/// assert_eq!(alphanumeric0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21cZ%1&quot;)), Ok((Partial::new(&quot;%1&quot;), &quot;21cZ&quot;)));
-/// assert_eq!(alphanumeric0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&amp;Z21c&quot;)), Ok((Partial::new(&quot;&amp;Z21c&quot;), &quot;&quot;)));
-/// assert_eq!(alphanumeric0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(alphanumeric0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21cZ%1")), Ok((Partial::new("%1"), "21cZ")));
+/// assert_eq!(alphanumeric0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("&amp;Z21c")), Ok((Partial::new("&amp;Z21c"), "")));
+/// assert_eq!(alphanumeric0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>alphanumeric0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2511,7 +2512,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;alphanumeric0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"alphanumeric0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_alphanum()).parse_next(input)
     })
     .parse_next(input)
@@ -2519,10 +2520,10 @@
 
 <span class="doccomment">/// Recognizes one or more ASCII numerical and alphabetic characters: 0-9, a-z, A-Z
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non alphanumerical character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphanumerical character).
 ///
 /// # Example
@@ -2534,18 +2535,18 @@
 ///     alphanumeric1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;21cZ%1&quot;), Ok((&quot;%1&quot;, &quot;21cZ&quot;)));
-/// assert_eq!(parser(&quot;&amp;H2&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&amp;H2&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser("21cZ%1"), Ok(("%1", "21cZ")));
+/// assert_eq!(parser("&amp;H2"), Err(ErrMode::Backtrack(Error::new("&amp;H2", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::alphanumeric1;
-/// assert_eq!(alphanumeric1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;21cZ%1&quot;)), Ok((Partial::new(&quot;%1&quot;), &quot;21cZ&quot;)));
-/// assert_eq!(alphanumeric1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&amp;H2&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;&amp;H2&quot;), ErrorKind::Slice))));
-/// assert_eq!(alphanumeric1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(alphanumeric1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("21cZ%1")), Ok((Partial::new("%1"), "21cZ")));
+/// assert_eq!(alphanumeric1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("&amp;H2")), Err(ErrMode::Backtrack(Error::new(Partial::new("&amp;H2"), ErrorKind::Slice))));
+/// assert_eq!(alphanumeric1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>alphanumeric1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2554,7 +2555,7 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
 {
-    trace(<span class="string">&quot;alphanumeric1&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"alphanumeric1"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| c.is_alphanum()).parse_next(input)
     })
     .parse_next(input)
@@ -2565,7 +2566,7 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non space
 /// character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
 ///
 /// # Example
@@ -2574,9 +2575,9 @@
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::space0;
-/// assert_eq!(space0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot; \t21c&quot;)), Ok((Partial::new(&quot;21c&quot;), &quot; \t&quot;)));
-/// assert_eq!(space0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;Z21c&quot;)), Ok((Partial::new(&quot;Z21c&quot;), &quot;&quot;)));
-/// assert_eq!(space0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(space0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(" \t21c")), Ok((Partial::new("21c"), " \t")));
+/// assert_eq!(space0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("Z21c")), Ok((Partial::new("Z21c"), "")));
+/// assert_eq!(space0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>space0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2585,10 +2586,10 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
 {
-    trace(<span class="string">&quot;space0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"space0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| {
             <span class="kw">let </span>ch = c.as_char();
-            <span class="macro">matches!</span>(ch, <span class="string">&#39; &#39; </span>| <span class="string">&#39;\t&#39;</span>)
+            <span class="macro">matches!</span>(ch, <span class="string">' ' </span>| <span class="string">'\t'</span>)
         })
         .parse_next(input)
     })
@@ -2597,10 +2598,10 @@
 
 <span class="doccomment">/// Recognizes one or more spaces and tabs.
 ///
-/// *Complete version*: Will return an error if there&#39;s not enough input data,
+/// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non space character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
 ///
 /// # Example
@@ -2612,18 +2613,18 @@
 ///     space1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot; \t21c&quot;), Ok((&quot;21c&quot;, &quot; \t&quot;)));
-/// assert_eq!(parser(&quot;H2&quot;), Err(ErrMode::Backtrack(Error::new(&quot;H2&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser(" \t21c"), Ok(("21c", " \t")));
+/// assert_eq!(parser("H2"), Err(ErrMode::Backtrack(Error::new("H2", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::space1;
-/// assert_eq!(space1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot; \t21c&quot;)), Ok((Partial::new(&quot;21c&quot;), &quot; \t&quot;)));
-/// assert_eq!(space1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;H2&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;H2&quot;), ErrorKind::Slice))));
-/// assert_eq!(space1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(space1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(" \t21c")), Ok((Partial::new("21c"), " \t")));
+/// assert_eq!(space1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("H2")), Err(ErrMode::Backtrack(Error::new(Partial::new("H2"), ErrorKind::Slice))));
+/// assert_eq!(space1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>space1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2632,10 +2633,10 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
 {
-    trace(<span class="string">&quot;space1&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"space1"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| {
             <span class="kw">let </span>ch = c.as_char();
-            <span class="macro">matches!</span>(ch, <span class="string">&#39; &#39; </span>| <span class="string">&#39;\t&#39;</span>)
+            <span class="macro">matches!</span>(ch, <span class="string">' ' </span>| <span class="string">'\t'</span>)
         })
         .parse_next(input)
     })
@@ -2647,7 +2648,7 @@
 /// *Complete version*: will return the whole input if no terminating token is found (a non space
 /// character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
 ///
 /// # Example
@@ -2659,18 +2660,18 @@
 ///     multispace0(input)
 /// }
 ///
-/// assert_eq!(parser(&quot; \t\n\r21c&quot;), Ok((&quot;21c&quot;, &quot; \t\n\r&quot;)));
-/// assert_eq!(parser(&quot;Z21c&quot;), Ok((&quot;Z21c&quot;, &quot;&quot;)));
-/// assert_eq!(parser(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser(" \t\n\r21c"), Ok(("21c", " \t\n\r")));
+/// assert_eq!(parser("Z21c"), Ok(("Z21c", "")));
+/// assert_eq!(parser(""), Ok(("", "")));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::multispace0;
-/// assert_eq!(multispace0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot; \t\n\r21c&quot;)), Ok((Partial::new(&quot;21c&quot;), &quot; \t\n\r&quot;)));
-/// assert_eq!(multispace0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;Z21c&quot;)), Ok((Partial::new(&quot;Z21c&quot;), &quot;&quot;)));
-/// assert_eq!(multispace0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(multispace0::&lt;_, Error&lt;_&gt;&gt;(Partial::new(" \t\n\r21c")), Ok((Partial::new("21c"), " \t\n\r")));
+/// assert_eq!(multispace0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("Z21c")), Ok((Partial::new("Z21c"), "")));
+/// assert_eq!(multispace0::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>multispace0&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2679,10 +2680,10 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
 {
-    trace(<span class="string">&quot;multispace0&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"multispace0"</span>, <span class="kw">move </span>|input: I| {
         take_while0(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| {
             <span class="kw">let </span>ch = c.as_char();
-            <span class="macro">matches!</span>(ch, <span class="string">&#39; &#39; </span>| <span class="string">&#39;\t&#39; </span>| <span class="string">&#39;\r&#39; </span>| <span class="string">&#39;\n&#39;</span>)
+            <span class="macro">matches!</span>(ch, <span class="string">' ' </span>| <span class="string">'\t' </span>| <span class="string">'\r' </span>| <span class="string">'\n'</span>)
         })
         .parse_next(input)
     })
@@ -2691,10 +2692,10 @@
 
 <span class="doccomment">/// Recognizes one or more spaces, tabs, carriage returns and line feeds.
 ///
-/// *Complete version*: will return an error if there&#39;s not enough input data,
+/// *Complete version*: will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non space character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data,
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
 ///
 /// # Example
@@ -2706,18 +2707,18 @@
 ///     multispace1(input)
 /// }
 ///
-/// assert_eq!(parser(&quot; \t\n\r21c&quot;), Ok((&quot;21c&quot;, &quot; \t\n\r&quot;)));
-/// assert_eq!(parser(&quot;H2&quot;), Err(ErrMode::Backtrack(Error::new(&quot;H2&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(&quot;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser(" \t\n\r21c"), Ok(("21c", " \t\n\r")));
+/// assert_eq!(parser("H2"), Err(ErrMode::Backtrack(Error::new("H2", ErrorKind::Slice))));
+/// assert_eq!(parser(""), Err(ErrMode::Backtrack(Error::new("", ErrorKind::Slice))));
 /// ```
 ///
 /// ```
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult, error::Needed};
 /// # use winnow::Partial;
 /// # use winnow::character::multispace1;
-/// assert_eq!(multispace1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot; \t\n\r21c&quot;)), Ok((Partial::new(&quot;21c&quot;), &quot; \t\n\r&quot;)));
-/// assert_eq!(multispace1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;H2&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;H2&quot;), ErrorKind::Slice))));
-/// assert_eq!(multispace1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(&quot;&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(multispace1::&lt;_, Error&lt;_&gt;&gt;(Partial::new(" \t\n\r21c")), Ok((Partial::new("21c"), " \t\n\r")));
+/// assert_eq!(multispace1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("H2")), Err(ErrMode::Backtrack(Error::new(Partial::new("H2"), ErrorKind::Slice))));
+/// assert_eq!(multispace1::&lt;_, Error&lt;_&gt;&gt;(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
 </span><span class="kw">pub fn </span>multispace1&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
@@ -2726,10 +2727,10 @@
     I: Stream,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
 {
-    trace(<span class="string">&quot;multispace1&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"multispace1"</span>, <span class="kw">move </span>|input: I| {
         take_while1(|c: &lt;I <span class="kw">as </span>Stream&gt;::Token| {
             <span class="kw">let </span>ch = c.as_char();
-            <span class="macro">matches!</span>(ch, <span class="string">&#39; &#39; </span>| <span class="string">&#39;\t&#39; </span>| <span class="string">&#39;\r&#39; </span>| <span class="string">&#39;\n&#39;</span>)
+            <span class="macro">matches!</span>(ch, <span class="string">' ' </span>| <span class="string">'\t' </span>| <span class="string">'\r' </span>| <span class="string">'\n'</span>)
         })
         .parse_next(input)
     })
@@ -2740,12 +2741,12 @@
 ///
 /// *Complete version*: can parse until the end of input.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
-</span><span class="attr">#[doc(alias = <span class="string">&quot;u8&quot;</span>)]
-#[doc(alias = <span class="string">&quot;u16&quot;</span>)]
-#[doc(alias = <span class="string">&quot;u32&quot;</span>)]
-#[doc(alias = <span class="string">&quot;u64&quot;</span>)]
-#[doc(alias = <span class="string">&quot;u128&quot;</span>)]
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+</span><span class="attr">#[doc(alias = <span class="string">"u8"</span>)]
+#[doc(alias = <span class="string">"u16"</span>)]
+#[doc(alias = <span class="string">"u32"</span>)]
+#[doc(alias = <span class="string">"u64"</span>)]
+#[doc(alias = <span class="string">"u128"</span>)]
 </span><span class="kw">pub fn </span>dec_uint&lt;I, O, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, O, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
@@ -2753,7 +2754,7 @@
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
     O: Uint,
 {
-    trace(<span class="string">&quot;dec_uint&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"dec_uint"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">if </span>input.eof_offset() == <span class="number">0 </span>{
             <span class="kw">if </span>input.is_partial() {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::new(<span class="number">1</span>)));
@@ -2893,12 +2894,12 @@
 ///
 /// *Complete version*: can parse until the end of input.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there&#39;s not enough input data.
-</span><span class="attr">#[doc(alias = <span class="string">&quot;i8&quot;</span>)]
-#[doc(alias = <span class="string">&quot;i16&quot;</span>)]
-#[doc(alias = <span class="string">&quot;i32&quot;</span>)]
-#[doc(alias = <span class="string">&quot;i64&quot;</span>)]
-#[doc(alias = <span class="string">&quot;i128&quot;</span>)]
+/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+</span><span class="attr">#[doc(alias = <span class="string">"i8"</span>)]
+#[doc(alias = <span class="string">"i16"</span>)]
+#[doc(alias = <span class="string">"i32"</span>)]
+#[doc(alias = <span class="string">"i64"</span>)]
+#[doc(alias = <span class="string">"i128"</span>)]
 </span><span class="kw">pub fn </span>dec_int&lt;I, O, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, O, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
@@ -2906,13 +2907,13 @@
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
     O: Int,
 {
-    trace(<span class="string">&quot;dec_int&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"dec_int"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">fn </span>sign(token: <span class="kw">impl </span>AsChar) -&gt; bool {
             <span class="kw">let </span>token = token.as_char();
-            token == <span class="string">&#39;+&#39; </span>|| token == <span class="string">&#39;-&#39;
+            token == <span class="string">'+' </span>|| token == <span class="string">'-'
         </span>}
         <span class="kw">let </span>(input, sign) = opt(<span class="kw">crate</span>::bytes::one_of(sign).map(AsChar::as_char))
-            .map(|c| c != <span class="prelude-val">Some</span>(<span class="string">&#39;-&#39;</span>))
+            .map(|c| c != <span class="prelude-val">Some</span>(<span class="string">'-'</span>))
             .parse_next(input)<span class="question-mark">?</span>;
 
         <span class="kw">if </span>input.eof_offset() == <span class="number">0 </span>{
@@ -3011,9 +3012,9 @@
 ///   hex_uint(s)
 /// }
 ///
-/// assert_eq!(parser(&amp;b&quot;01AE&quot;[..]), Ok((&amp;b&quot;&quot;[..], 0x01AE)));
-/// assert_eq!(parser(&amp;b&quot;abc&quot;[..]), Ok((&amp;b&quot;&quot;[..], 0x0ABC)));
-/// assert_eq!(parser(&amp;b&quot;ggg&quot;[..]), Err(ErrMode::Backtrack(Error::new(&amp;b&quot;ggg&quot;[..], ErrorKind::Slice))));
+/// assert_eq!(parser(&amp;b"01AE"[..]), Ok((&amp;b""[..], 0x01AE)));
+/// assert_eq!(parser(&amp;b"abc"[..]), Ok((&amp;b""[..], 0x0ABC)));
+/// assert_eq!(parser(&amp;b"ggg"[..]), Err(ErrMode::Backtrack(Error::new(&amp;b"ggg"[..], ErrorKind::Slice))));
 /// ```
 ///
 /// ```rust
@@ -3026,9 +3027,9 @@
 ///   hex_uint(s)
 /// }
 ///
-/// assert_eq!(parser(Partial::new(&amp;b&quot;01AE;&quot;[..])), Ok((Partial::new(&amp;b&quot;;&quot;[..]), 0x01AE)));
-/// assert_eq!(parser(Partial::new(&amp;b&quot;abc&quot;[..])), Err(ErrMode::Incomplete(Needed::new(1))));
-/// assert_eq!(parser(Partial::new(&amp;b&quot;ggg&quot;[..])), Err(ErrMode::Backtrack(Error::new(Partial::new(&amp;b&quot;ggg&quot;[..]), ErrorKind::Slice))));
+/// assert_eq!(parser(Partial::new(&amp;b"01AE;"[..])), Ok((Partial::new(&amp;b";"[..]), 0x01AE)));
+/// assert_eq!(parser(Partial::new(&amp;b"abc"[..])), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(parser(Partial::new(&amp;b"ggg"[..])), Err(ErrMode::Backtrack(Error::new(Partial::new(&amp;b"ggg"[..]), ErrorKind::Slice))));
 /// ```
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>hex_uint&lt;I, O, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, O, E&gt;
@@ -3039,11 +3040,11 @@
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
     &lt;I <span class="kw">as </span>Stream&gt;::Slice: AsBStr,
 {
-    trace(<span class="string">&quot;hex_uint&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"hex_uint"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">let </span>invalid_offset = input
             .offset_for(|c| {
                 <span class="kw">let </span>c = c.as_char();
-                !<span class="string">&quot;0123456789abcdefABCDEF&quot;</span>.contains(c)
+                !<span class="string">"0123456789abcdefABCDEF"</span>.contains(c)
             })
             .unwrap_or_else(|| input.eof_offset());
         <span class="kw">let </span>max_nibbles = O::max_nibbles(sealed::SealedMarker);
@@ -3146,10 +3147,10 @@
 ///   float(s)
 /// }
 ///
-/// assert_eq!(parser(&quot;11e-1&quot;), Ok((&quot;&quot;, 1.1)));
-/// assert_eq!(parser(&quot;123E-02&quot;), Ok((&quot;&quot;, 1.23)));
-/// assert_eq!(parser(&quot;123K-01&quot;), Ok((&quot;K-01&quot;, 123.0)));
-/// assert_eq!(parser(&quot;abc&quot;), Err(ErrMode::Backtrack(Error::new(&quot;abc&quot;, ErrorKind::Tag))));
+/// assert_eq!(parser("11e-1"), Ok(("", 1.1)));
+/// assert_eq!(parser("123E-02"), Ok(("", 1.23)));
+/// assert_eq!(parser("123K-01"), Ok(("K-01", 123.0)));
+/// assert_eq!(parser("abc"), Err(ErrMode::Backtrack(Error::new("abc", ErrorKind::Tag))));
 /// ```
 ///
 /// ```rust
@@ -3163,27 +3164,27 @@
 ///   float(s)
 /// }
 ///
-/// assert_eq!(parser(Partial::new(&quot;11e-1 &quot;)), Ok((Partial::new(&quot; &quot;), 1.1)));
-/// assert_eq!(parser(Partial::new(&quot;11e-1&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
-/// assert_eq!(parser(Partial::new(&quot;123E-02&quot;)), Err(ErrMode::Incomplete(Needed::new(1))));
-/// assert_eq!(parser(Partial::new(&quot;123K-01&quot;)), Ok((Partial::new(&quot;K-01&quot;), 123.0)));
-/// assert_eq!(parser(Partial::new(&quot;abc&quot;)), Err(ErrMode::Backtrack(Error::new(Partial::new(&quot;abc&quot;), ErrorKind::Tag))));
+/// assert_eq!(parser(Partial::new("11e-1 ")), Ok((Partial::new(" "), 1.1)));
+/// assert_eq!(parser(Partial::new("11e-1")), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(parser(Partial::new("123E-02")), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(parser(Partial::new("123K-01")), Ok((Partial::new("K-01"), 123.0)));
+/// assert_eq!(parser(Partial::new("abc")), Err(ErrMode::Backtrack(Error::new(Partial::new("abc"), ErrorKind::Tag))));
 /// ```
 </span><span class="attr">#[inline(always)]
-#[doc(alias = <span class="string">&quot;f32&quot;</span>)]
-#[doc(alias = <span class="string">&quot;double&quot;</span>)]
+#[doc(alias = <span class="string">"f32"</span>)]
+#[doc(alias = <span class="string">"double"</span>)]
 </span><span class="kw">pub fn </span>float&lt;I, O, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, O, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Offset + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    I: Offset + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Slice: ParseSlice&lt;O&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
     &lt;I <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
     I: AsBStr,
-    <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str: ContainsToken&lt;&lt;I <span class="kw">as </span>Stream&gt;::Token&gt;,
+    <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str: ContainsToken&lt;&lt;I <span class="kw">as </span>Stream&gt;::Token&gt;,
 {
-    trace(<span class="string">&quot;float&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"float"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">let </span>(i, s) = recognize_float_or_exceptions(input)<span class="question-mark">?</span>;
         <span class="kw">match </span>s.parse_slice() {
             <span class="prelude-val">Some</span>(f) =&gt; <span class="prelude-val">Ok</span>((i, f)),
@@ -3199,17 +3200,17 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Offset + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    I: Offset + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
     &lt;I <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
     I: AsBStr,
-    <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str: ContainsToken&lt;&lt;I <span class="kw">as </span>Stream&gt;::Token&gt;,
+    <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str: ContainsToken&lt;&lt;I <span class="kw">as </span>Stream&gt;::Token&gt;,
 {
     alt((
         recognize_float,
-        <span class="kw">crate</span>::bytes::tag_no_case(<span class="string">&quot;nan&quot;</span>),
-        <span class="kw">crate</span>::bytes::tag_no_case(<span class="string">&quot;inf&quot;</span>),
-        <span class="kw">crate</span>::bytes::tag_no_case(<span class="string">&quot;infinity&quot;</span>),
+        <span class="kw">crate</span>::bytes::tag_no_case(<span class="string">"nan"</span>),
+        <span class="kw">crate</span>::bytes::tag_no_case(<span class="string">"inf"</span>),
+        <span class="kw">crate</span>::bytes::tag_no_case(<span class="string">"infinity"</span>),
     ))
     .parse_next(input)
 }
@@ -3218,19 +3219,19 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Offset + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt;,
+    I: Offset + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Copy,
     &lt;I <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
     I: AsBStr,
-    <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str: ContainsToken&lt;&lt;I <span class="kw">as </span>Stream&gt;::Token&gt;,
+    <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str: ContainsToken&lt;&lt;I <span class="kw">as </span>Stream&gt;::Token&gt;,
 {
     (
-        opt(one_of(<span class="string">&quot;+-&quot;</span>)),
+        opt(one_of(<span class="string">"+-"</span>)),
         alt((
-            (digit1, opt((<span class="string">&#39;.&#39;</span>, opt(digit1)))).map(|<span class="kw">_</span>| ()),
-            (<span class="string">&#39;.&#39;</span>, digit1).map(|<span class="kw">_</span>| ()),
+            (digit1, opt((<span class="string">'.'</span>, opt(digit1)))).map(|<span class="kw">_</span>| ()),
+            (<span class="string">'.'</span>, digit1).map(|<span class="kw">_</span>| ()),
         )),
-        opt((one_of(<span class="string">&quot;eE&quot;</span>), opt(one_of(<span class="string">&quot;+-&quot;</span>)), cut_err(digit1))),
+        opt((one_of(<span class="string">"eE"</span>), opt(one_of(<span class="string">"+-"</span>)), cut_err(digit1))),
     )
         .recognize()
         .parse_next(input)
@@ -3252,11 +3253,11 @@
 /// use winnow::bytes::one_of;
 ///
 /// fn esc(s: &amp;str) -&gt; IResult&lt;&amp;str, &amp;str&gt; {
-///   escaped(digit1, &#39;\\&#39;, one_of(r#&quot;&quot;n\&quot;#)).parse_next(s)
+///   escaped(digit1, '\\', one_of(r#""n\"#)).parse_next(s)
 /// }
 ///
-/// assert_eq!(esc(&quot;123;&quot;), Ok((&quot;;&quot;, &quot;123&quot;)));
-/// assert_eq!(esc(r#&quot;12\&quot;34;&quot;#), Ok((&quot;;&quot;, r#&quot;12\&quot;34&quot;#)));
+/// assert_eq!(esc("123;"), Ok((";", "123")));
+/// assert_eq!(esc(r#"12\"34;"#), Ok((";", r#"12\"34"#)));
 /// ```
 ///
 /// ```rust
@@ -3268,14 +3269,14 @@
 /// use winnow::bytes::one_of;
 ///
 /// fn esc(s: Partial&lt;&amp;str&gt;) -&gt; IResult&lt;Partial&lt;&amp;str&gt;, &amp;str&gt; {
-///   escaped(digit1, &#39;\\&#39;, one_of(&quot;\&quot;n\\&quot;)).parse_next(s)
+///   escaped(digit1, '\\', one_of("\"n\\")).parse_next(s)
 /// }
 ///
-/// assert_eq!(esc(Partial::new(&quot;123;&quot;)), Ok((Partial::new(&quot;;&quot;), &quot;123&quot;)));
-/// assert_eq!(esc(Partial::new(&quot;12\\\&quot;34;&quot;)), Ok((Partial::new(&quot;;&quot;), &quot;12\\\&quot;34&quot;)));
+/// assert_eq!(esc(Partial::new("123;")), Ok((Partial::new(";"), "123")));
+/// assert_eq!(esc(Partial::new("12\\\"34;")), Ok((Partial::new(";"), "12\\\"34")));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>escaped&lt;<span class="lifetime">&#39;a</span>, I: <span class="lifetime">&#39;a</span>, Error, F, G, O1, O2&gt;(
+</span><span class="kw">pub fn </span>escaped&lt;<span class="lifetime">'a</span>, I: <span class="lifetime">'a</span>, Error, F, G, O1, O2&gt;(
     <span class="kw-2">mut </span>normal: F,
     control_char: char,
     <span class="kw-2">mut </span>escapable: G,
@@ -3288,7 +3289,7 @@
     G: Parser&lt;I, O2, Error&gt;,
     Error: ParseError&lt;I&gt;,
 {
-    trace(<span class="string">&quot;escaped&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"escaped"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">if </span>input.is_partial() {
             streaming_escaped_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>escapable)
         } <span class="kw">else </span>{
@@ -3327,7 +3328,7 @@
                 }
             }
             <span class="prelude-val">Err</span>(ErrMode::Backtrack(<span class="kw">_</span>)) =&gt; {
-                <span class="kw">if </span>i.next_token().expect(<span class="string">&quot;eof_offset &gt; 0&quot;</span>).<span class="number">1</span>.as_char() == control_char {
+                <span class="kw">if </span>i.next_token().expect(<span class="string">"eof_offset &gt; 0"</span>).<span class="number">1</span>.as_char() == control_char {
                     <span class="kw">let </span>next = control_char.len_utf8();
                     <span class="kw">match </span>escapable.parse_next(i.next_slice(next).<span class="number">0</span>) {
                         <span class="prelude-val">Ok</span>((i2, <span class="kw">_</span>)) =&gt; {
@@ -3353,7 +3354,7 @@
     <span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::Unknown))
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>complete_escaped_internal&lt;<span class="lifetime">&#39;a</span>, I: <span class="lifetime">&#39;a</span>, Error, F, G, O1, O2&gt;(
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>complete_escaped_internal&lt;<span class="lifetime">'a</span>, I: <span class="lifetime">'a</span>, Error, F, G, O1, O2&gt;(
     input: I,
     normal: <span class="kw-2">&amp;mut </span>F,
     control_char: char,
@@ -3385,7 +3386,7 @@
                 }
             }
             <span class="prelude-val">Err</span>(ErrMode::Backtrack(<span class="kw">_</span>)) =&gt; {
-                <span class="kw">if </span>i.next_token().expect(<span class="string">&quot;eof_offset &gt; 0&quot;</span>).<span class="number">1</span>.as_char() == control_char {
+                <span class="kw">if </span>i.next_token().expect(<span class="string">"eof_offset &gt; 0"</span>).<span class="number">1</span>.as_char() == control_char {
                     <span class="kw">let </span>next = control_char.len_utf8();
                     <span class="kw">match </span>escapable.parse_next(i.next_slice(next).<span class="number">0</span>) {
                         <span class="prelude-val">Ok</span>((i2, <span class="kw">_</span>)) =&gt; {
@@ -3433,17 +3434,17 @@
 /// fn parser(input: &amp;str) -&gt; IResult&lt;&amp;str, String&gt; {
 ///   escaped_transform(
 ///     alpha1,
-///     &#39;\\&#39;,
+///     '\\',
 ///     alt((
-///       &quot;\\&quot;.value(&quot;\\&quot;),
-///       &quot;\&quot;&quot;.value(&quot;\&quot;&quot;),
-///       &quot;n&quot;.value(&quot;\n&quot;),
+///       "\\".value("\\"),
+///       "\"".value("\""),
+///       "n".value("\n"),
 ///     ))
 ///   ).parse_next(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;ab\\\&quot;cd&quot;), Ok((&quot;&quot;, String::from(&quot;ab\&quot;cd&quot;))));
-/// assert_eq!(parser(&quot;ab\\ncd&quot;), Ok((&quot;&quot;, String::from(&quot;ab\ncd&quot;))));
+/// assert_eq!(parser("ab\\\"cd"), Ok(("", String::from("ab\"cd"))));
+/// assert_eq!(parser("ab\\ncd"), Ok(("", String::from("ab\ncd"))));
 /// ```
 ///
 /// ```
@@ -3459,18 +3460,18 @@
 /// fn parser(input: Partial&lt;&amp;str&gt;) -&gt; IResult&lt;Partial&lt;&amp;str&gt;, String&gt; {
 ///   escaped_transform(
 ///     alpha1,
-///     &#39;\\&#39;,
+///     '\\',
 ///     alt((
-///       &quot;\\&quot;.value(&quot;\\&quot;),
-///       &quot;\&quot;&quot;.value(&quot;\&quot;&quot;),
-///       &quot;n&quot;.value(&quot;\n&quot;),
+///       "\\".value("\\"),
+///       "\"".value("\""),
+///       "n".value("\n"),
 ///     ))
 ///   ).parse_next(input)
 /// }
 ///
-/// assert_eq!(parser(Partial::new(&quot;ab\\\&quot;cd\&quot;&quot;)), Ok((Partial::new(&quot;\&quot;&quot;), String::from(&quot;ab\&quot;cd&quot;))));
+/// assert_eq!(parser(Partial::new("ab\\\"cd\"")), Ok((Partial::new("\""), String::from("ab\"cd"))));
 /// ```
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"alloc"</span>)]
 #[inline(always)]
 </span><span class="kw">pub fn </span>escaped_transform&lt;I, Error, F, G, Output&gt;(
     <span class="kw-2">mut </span>normal: F,
@@ -3486,7 +3487,7 @@
     G: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
     Error: ParseError&lt;I&gt;,
 {
-    trace(<span class="string">&quot;escaped_transform&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"escaped_transform"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">if </span>input.is_partial() {
             streaming_escaped_transform_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>transform)
         } <span class="kw">else </span>{
@@ -3495,7 +3496,7 @@
     })
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"alloc"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>streaming_escaped_transform_internal&lt;I, Error, F, G, Output&gt;(
     input: I,
     normal: <span class="kw-2">&amp;mut </span>F,
@@ -3530,7 +3531,7 @@
                 }
             }
             <span class="prelude-val">Err</span>(ErrMode::Backtrack(<span class="kw">_</span>)) =&gt; {
-                <span class="kw">if </span>remainder.next_token().expect(<span class="string">&quot;eof_offset &gt; 0&quot;</span>).<span class="number">1</span>.as_char() == control_char {
+                <span class="kw">if </span>remainder.next_token().expect(<span class="string">"eof_offset &gt; 0"</span>).<span class="number">1</span>.as_char() == control_char {
                     <span class="kw">let </span>next = offset + control_char.len_utf8();
                     <span class="kw">match </span>transform.parse_next(i.next_slice(next).<span class="number">0</span>) {
                         <span class="prelude-val">Ok</span>((i2, o)) =&gt; {
@@ -3553,7 +3554,7 @@
     <span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::Unknown))
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"alloc"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>complete_escaped_transform_internal&lt;I, Error, F, G, Output&gt;(
     input: I,
     normal: <span class="kw-2">&amp;mut </span>F,
@@ -3588,7 +3589,7 @@
                 }
             }
             <span class="prelude-val">Err</span>(ErrMode::Backtrack(<span class="kw">_</span>)) =&gt; {
-                <span class="kw">if </span>remainder.next_token().expect(<span class="string">&quot;eof_offset &gt; 0&quot;</span>).<span class="number">1</span>.as_char() == control_char {
+                <span class="kw">if </span>remainder.next_token().expect(<span class="string">"eof_offset &gt; 0"</span>).<span class="number">1</span>.as_char() == control_char {
                     <span class="kw">let </span>next = offset + control_char.len_utf8();
                     <span class="kw">match </span>transform.parse_next(i.next_slice(next).<span class="number">0</span>) {
                         <span class="prelude-val">Ok</span>((i2, o)) =&gt; {

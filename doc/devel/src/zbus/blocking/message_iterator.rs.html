@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/blocking/message_iterator.rs`."><title>message_iterator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/blocking/message_iterator.rs`."><title>message_iterator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -164,7 +165,7 @@
 <span class="doccomment">/// A blocking wrapper of [`crate::MessageStream`].
 ///
 /// Just like [`crate::MessageStream`] must be continuously polled, you must continuously iterate
-/// over this type until it&#39;s consumed or dropped.
+/// over this type until it's consumed or dropped.
 </span><span class="attr">#[derive(derivative::Derivative, Clone)]
 #[derivative(Debug)]
 </span><span class="kw">pub struct </span>MessageIterator {
@@ -180,12 +181,12 @@
 <span class="kw">impl </span>MessageIterator {
     <span class="doccomment">/// Get a reference to the underlying async message stream.
     </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">crate</span>::MessageStream {
-        <span class="self">self</span>.azync.as_ref().expect(<span class="string">&quot;Inner stream is `None`&quot;</span>)
+        <span class="self">self</span>.azync.as_ref().expect(<span class="string">"Inner stream is `None`"</span>)
     }
 
     <span class="doccomment">/// Get the underlying async message stream, consuming `self`.
     </span><span class="kw">pub fn </span>into_inner(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::MessageStream {
-        <span class="self">self</span>.azync.take().expect(<span class="string">&quot;Inner stream is `None`&quot;</span>)
+        <span class="self">self</span>.azync.take().expect(<span class="string">"Inner stream is `None`"</span>)
     }
 
     <span class="doccomment">/// Create a message iterator for the given match rule.
@@ -202,38 +203,38 @@
     /// let conn = Connection::session()?;
     /// let rule = MatchRule::builder()
     ///     .msg_type(zbus::MessageType::Signal)
-    ///     .sender(&quot;org.freedesktop.DBus&quot;)?
-    ///     .interface(&quot;org.freedesktop.DBus&quot;)?
-    ///     .member(&quot;NameOwnerChanged&quot;)?
-    ///     .add_arg(&quot;org.freedesktop.zbus.MatchRuleIteratorTest42&quot;)?
+    ///     .sender("org.freedesktop.DBus")?
+    ///     .interface("org.freedesktop.DBus")?
+    ///     .member("NameOwnerChanged")?
+    ///     .add_arg("org.freedesktop.zbus.MatchRuleIteratorTest42")?
     ///     .build();
     /// let mut iter = MessageIterator::for_match_rule(
     ///     rule,
     ///     &amp;conn,
-    ///     // For such a specific match rule, we don&#39;t need a big queue.
+    ///     // For such a specific match rule, we don't need a big queue.
     ///     Some(1),
     /// )?;
     ///
-    /// let rule_str = &quot;type=&#39;signal&#39;,sender=&#39;org.freedesktop.DBus&#39;,\
-    ///                 interface=&#39;org.freedesktop.DBus&#39;,member=&#39;NameOwnerChanged&#39;,\
-    ///                 arg0=&#39;org.freedesktop.zbus.MatchRuleIteratorTest42&#39;&quot;;
+    /// let rule_str = "type='signal',sender='org.freedesktop.DBus',\
+    ///                 interface='org.freedesktop.DBus',member='NameOwnerChanged',\
+    ///                 arg0='org.freedesktop.zbus.MatchRuleIteratorTest42'";
     /// assert_eq!(
     ///     iter.match_rule().map(|r| r.to_string()).as_deref(),
     ///     Some(rule_str),
     /// );
     ///
-    /// // We register 2 names, starting with the uninteresting one. If `iter` wasn&#39;t filtering
-    /// // messages based on the match rule, we&#39;d receive method return call for each of these 2
+    /// // We register 2 names, starting with the uninteresting one. If `iter` wasn't filtering
+    /// // messages based on the match rule, we'd receive method return call for each of these 2
     /// // calls first.
     /// //
     /// // Note that the `NameOwnerChanged` signal will not be sent by the bus  for the first name
     /// // we register since we setup an arg filter.
-    /// conn.request_name(&quot;org.freedesktop.zbus.MatchRuleIteratorTest44&quot;)?;
-    /// conn.request_name(&quot;org.freedesktop.zbus.MatchRuleIteratorTest42&quot;)?;
+    /// conn.request_name("org.freedesktop.zbus.MatchRuleIteratorTest44")?;
+    /// conn.request_name("org.freedesktop.zbus.MatchRuleIteratorTest42")?;
     ///
     /// let msg = iter.next().unwrap()?;
     /// let signal = NameOwnerChanged::from_message(msg).unwrap();
-    /// assert_eq!(signal.args()?.name(), &quot;org.freedesktop.zbus.MatchRuleIteratorTest42&quot;);
+    /// assert_eq!(signal.args()?.name(), "org.freedesktop.zbus.MatchRuleIteratorTest42");
     ///
     ///# Ok(())
     ///# }
@@ -257,10 +258,10 @@
     }
 
     <span class="doccomment">/// The associated match rule, if any.
-    </span><span class="kw">pub fn </span>match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MatchRule&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.azync
             .as_ref()
-            .expect(<span class="string">&quot;Inner stream is `None`&quot;</span>)
+            .expect(<span class="string">"Inner stream is `None`"</span>)
             .match_rule()
     }
 }
@@ -269,7 +270,7 @@
     <span class="kw">type </span>Item = <span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;;
 
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
-        block_on(<span class="self">self</span>.azync.as_mut().expect(<span class="string">&quot;Inner stream is `None`&quot;</span>).next())
+        block_on(<span class="self">self</span>.azync.as_mut().expect(<span class="string">"Inner stream is `None`"</span>).next())
     }
 }
 
@@ -290,7 +291,7 @@
 <span class="kw">impl </span>From&lt;MessageIterator&gt; <span class="kw">for </span>Connection {
     <span class="kw">fn </span>from(<span class="kw-2">mut </span>iter: MessageIterator) -&gt; Connection {
         Connection::from(<span class="kw">crate</span>::Connection::from(
-            iter.azync.take().expect(<span class="string">&quot;Inner stream is `None`&quot;</span>),
+            iter.azync.take().expect(<span class="string">"Inner stream is `None`"</span>),
         ))
     }
 }
@@ -298,7 +299,7 @@
 <span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>MessageIterator&gt; <span class="kw">for </span>Connection {
     <span class="kw">fn </span>from(iter: <span class="kw-2">&amp;</span>MessageIterator) -&gt; Connection {
         Connection::from(<span class="kw">crate</span>::Connection::from(
-            iter.azync.as_ref().expect(<span class="string">&quot;Inner stream is `None`&quot;</span>),
+            iter.azync.as_ref().expect(<span class="string">"Inner stream is `None`"</span>),
         ))
     }
 }

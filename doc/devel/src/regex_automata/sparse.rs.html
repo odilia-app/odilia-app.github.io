@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-automata-0.1.10/src/sparse.rs`."><title>sparse.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="regex_automata" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../regex_automata/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-automata-0.1.10/src/sparse.rs`."><title>sparse.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="regex_automata" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1254,27 +1255,27 @@
 <a href="#1254" id="1254">1254</a>
 <a href="#1255" id="1255">1255</a>
 <a href="#1256" id="1256">1256</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>core::fmt;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>core::iter;
 <span class="kw">use </span>core::marker::PhantomData;
 <span class="kw">use </span>core::mem::size_of;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>std::collections::HashMap;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>byteorder::{BigEndian, LittleEndian};
 <span class="kw">use </span>byteorder::{ByteOrder, NativeEndian};
 
 <span class="kw">use </span>classes::ByteClasses;
 <span class="kw">use </span>dense;
 <span class="kw">use </span>dfa::DFA;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>error::{Error, <span class="prelude-ty">Result</span>};
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">use </span>state_id::{dead_id, usize_to_state_id, write_state_id_bytes, StateID};
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;std&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"std"</span>))]
 </span><span class="kw">use </span>state_id::{dead_id, StateID};
 
 <span class="doccomment">/// A sparse table-based deterministic finite automaton (DFA).
@@ -1304,8 +1305,8 @@
 /// # State size
 ///
 /// A `SparseDFA` has two type parameters, `T` and `S`. `T` corresponds to
-/// the type of the DFA&#39;s transition table while `S` corresponds to the
-/// representation used for the DFA&#39;s state identifiers as described by the
+/// the type of the DFA's transition table while `S` corresponds to the
+/// representation used for the DFA's state identifiers as described by the
 /// [`StateID`](trait.StateID.html) trait. This type parameter is typically
 /// `usize`, but other valid choices provided by this crate include `u8`,
 /// `u16`, `u32` and `u64`. The primary reason for choosing a different state
@@ -1333,7 +1334,7 @@
 /// This DFA is defined as a non-exhaustive enumeration of different types of
 /// dense DFAs. All of the variants use the same internal representation
 /// for the transition table, but they vary in how the transition table is
-/// read. A DFA&#39;s specific variant depends on the configuration options set via
+/// read. A DFA's specific variant depends on the configuration options set via
 /// [`dense::Builder`](dense/struct.Builder.html). The default variant is
 /// `ByteClass`.
 ///
@@ -1346,8 +1347,8 @@
 /// use regex_automata::{DFA, SparseDFA};
 ///
 /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-/// let dfa = SparseDFA::new(&quot;foo[0-9]+&quot;)?;
-/// assert_eq!(Some(8), dfa.find(b&quot;foo12345&quot;));
+/// let dfa = SparseDFA::new("foo[0-9]+")?;
+/// assert_eq!(Some(8), dfa.find(b"foo12345"));
 /// # Ok(()) }; example().unwrap()
 /// ```
 ///
@@ -1359,7 +1360,7 @@
 /// this branch should be pushed up a layer in the code since walking the
 /// transitions of a DFA is usually a hot path. If you do need to use these
 /// lower level methods in performance critical code, then you should match on
-/// the variants of this DFA and use each variant&#39;s implementation of the `DFA`
+/// the variants of this DFA and use each variant's implementation of the `DFA`
 /// trait directly.
 </span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub enum </span>SparseDFA&lt;T: AsRef&lt;[u8]&gt;, S: StateID = usize&gt; {
@@ -1373,20 +1374,20 @@
     ///
     /// Unlike dense DFAs, sparse DFAs do not tend to benefit nearly as much
     /// from using byte classes. In some cases, using byte classes can even
-    /// marginally increase the size of a sparse DFA&#39;s transition table. The
-    /// reason for this is that a sparse DFA already compacts each state&#39;s
+    /// marginally increase the size of a sparse DFA's transition table. The
+    /// reason for this is that a sparse DFA already compacts each state's
     /// transitions separate from whether byte classes are used.
     </span>ByteClass(ByteClass&lt;T, S&gt;),
     <span class="doccomment">/// Hints that destructuring should not be exhaustive.
     ///
     /// This enum may grow additional variants, so this makes sure clients
-    /// don&#39;t count on exhaustive matching. (Otherwise, adding a new variant
+    /// don't count on exhaustive matching. (Otherwise, adding a new variant
     /// could break existing code.)
     </span><span class="attr">#[doc(hidden)]
     </span>__Nonexhaustive,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl </span>SparseDFA&lt;Vec&lt;u8&gt;, usize&gt; {
     <span class="doccomment">/// Parse the given regular expression using a default configuration and
     /// return the corresponding sparse DFA.
@@ -1407,8 +1408,8 @@
     /// use regex_automata::{DFA, SparseDFA};
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let dfa = SparseDFA::new(&quot;foo[0-9]+bar&quot;)?;
-    /// assert_eq!(Some(11), dfa.find(b&quot;foo12345bar&quot;));
+    /// let dfa = SparseDFA::new("foo[0-9]+bar")?;
+    /// assert_eq!(Some(11), dfa.find(b"foo12345bar"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>new(pattern: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;SparseDFA&lt;Vec&lt;u8&gt;, usize&gt;&gt; {
@@ -1418,7 +1419,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl</span>&lt;S: StateID&gt; SparseDFA&lt;Vec&lt;u8&gt;, S&gt; {
     <span class="doccomment">/// Create a new empty sparse DFA that never matches any input.
     ///
@@ -1432,8 +1433,8 @@
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
     /// let dfa: SparseDFA&lt;Vec&lt;u8&gt;, usize&gt; = SparseDFA::empty();
-    /// assert_eq!(None, dfa.find(b&quot;&quot;));
-    /// assert_eq!(None, dfa.find(b&quot;foo&quot;));
+    /// assert_eq!(None, dfa.find(b""));
+    /// assert_eq!(None, dfa.find(b"foo"));
     /// # Ok(()) }; example().unwrap()
     /// ```
     </span><span class="kw">pub fn </span>empty() -&gt; SparseDFA&lt;Vec&lt;u8&gt;, S&gt; {
@@ -1451,7 +1452,7 @@
     <span class="doccomment">/// Cheaply return a borrowed version of this sparse DFA. Specifically, the
     /// DFA returned always uses `&amp;[u8]` for its transition table while keeping
     /// the same state identifier representation.
-    </span><span class="kw">pub fn </span>as_ref&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; SparseDFA&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8], S&gt; {
+    </span><span class="kw">pub fn </span>as_ref&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; SparseDFA&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8], S&gt; {
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
             SparseDFA::Standard(Standard(<span class="kw-2">ref </span>r)) =&gt; {
                 SparseDFA::Standard(Standard(r.as_ref()))
@@ -1469,7 +1470,7 @@
     ///
     /// Effectively, this returns a sparse DFA whose transition table lives
     /// on the heap.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
     </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; SparseDFA&lt;Vec&lt;u8&gt;, S&gt; {
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
             SparseDFA::Standard(Standard(<span class="kw-2">ref </span>r)) =&gt; {
@@ -1485,7 +1486,7 @@
     <span class="doccomment">/// Returns the memory usage, in bytes, of this DFA.
     ///
     /// The memory usage is computed based on the number of bytes used to
-    /// represent this DFA&#39;s transition table. This typically corresponds to
+    /// represent this DFA's transition table. This typically corresponds to
     /// heap memory usage.
     ///
     /// This does **not** include the stack size used up by this DFA. To
@@ -1505,7 +1506,7 @@
 
 <span class="doccomment">/// Routines for converting a sparse DFA to other representations, such as
 /// smaller state identifiers or raw bytes suitable for persistent storage.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl</span>&lt;T: AsRef&lt;[u8]&gt;, S: StateID&gt; SparseDFA&lt;T, S&gt; {
     <span class="doccomment">/// Create a new sparse DFA whose match semantics are equivalent to
     /// this DFA, but attempt to use `u8` for the representation of state
@@ -1533,7 +1534,7 @@
     /// identifiers in this DFA, then this returns an error.
     ///
     /// This is a convenience routine for `to_sized::&lt;u32&gt;()`.
-    </span><span class="attr">#[cfg(any(target_pointer_width = <span class="string">&quot;32&quot;</span>, target_pointer_width = <span class="string">&quot;64&quot;</span>))]
+    </span><span class="attr">#[cfg(any(target_pointer_width = <span class="string">"32"</span>, target_pointer_width = <span class="string">"64"</span>))]
     </span><span class="kw">pub fn </span>to_u32(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SparseDFA&lt;Vec&lt;u8&gt;, u32&gt;&gt; {
         <span class="self">self</span>.to_sized()
     }
@@ -1544,7 +1545,7 @@
     /// identifiers in this DFA, then this returns an error.
     ///
     /// This is a convenience routine for `to_sized::&lt;u64&gt;()`.
-    </span><span class="attr">#[cfg(target_pointer_width = <span class="string">&quot;64&quot;</span>)]
+    </span><span class="attr">#[cfg(target_pointer_width = <span class="string">"64"</span>)]
     </span><span class="kw">pub fn </span>to_u64(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SparseDFA&lt;Vec&lt;u8&gt;, u64&gt;&gt; {
         <span class="self">self</span>.to_sized()
     }
@@ -1598,7 +1599,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: StateID&gt; SparseDFA&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8], S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, S: StateID&gt; SparseDFA&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8], S&gt; {
     <span class="doccomment">/// Deserialize a sparse DFA with a specific state identifier
     /// representation.
     ///
@@ -1645,7 +1646,7 @@
     /// This example shows how to serialize a DFA to raw bytes, deserialize it
     /// and then use it for searching. Note that we first convert the DFA to
     /// using `u16` for its state identifier representation before serializing
-    /// it. While this isn&#39;t strictly necessary, it&#39;s good practice in order to
+    /// it. While this isn't strictly necessary, it's good practice in order to
     /// decrease the size of the DFA and to avoid platform specific pitfalls
     /// such as differing pointer sizes.
     ///
@@ -1653,17 +1654,17 @@
     /// use regex_automata::{DFA, DenseDFA, SparseDFA};
     ///
     /// # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-    /// let sparse = SparseDFA::new(&quot;foo[0-9]+&quot;)?;
+    /// let sparse = SparseDFA::new("foo[0-9]+")?;
     /// let bytes = sparse.to_u16()?.to_bytes_native_endian()?;
     ///
     /// let dfa: SparseDFA&lt;&amp;[u8], u16&gt; = unsafe {
     ///     SparseDFA::from_bytes(&amp;bytes)
     /// };
     ///
-    /// assert_eq!(Some(8), dfa.find(b&quot;foo12345&quot;));
+    /// assert_eq!(Some(8), dfa.find(b"foo12345"));
     /// # Ok(()) }; example().unwrap()
     /// ```
-    </span><span class="kw">pub unsafe fn </span>from_bytes(buf: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]) -&gt; SparseDFA&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8], S&gt; {
+    </span><span class="kw">pub unsafe fn </span>from_bytes(buf: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]) -&gt; SparseDFA&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8], S&gt; {
         Repr::from_bytes(buf).into_sparse_dfa()
     }
 }
@@ -1713,8 +1714,8 @@
     <span class="comment">// We specialize the following methods because it lets us lift the
     // case analysis between the different types of sparse DFAs. Instead of
     // doing the case analysis for every transition, we do it once before
-    // searching. For sparse DFAs, this doesn&#39;t seem to benefit performance as
-    // much as it does for the dense DFAs, but it&#39;s easy to do so we might as
+    // searching. For sparse DFAs, this doesn't seem to benefit performance as
+    // much as it does for the dense DFAs, but it's easy to do so we might as
     // well do it.
 
     </span><span class="attr">#[inline]
@@ -1756,11 +1757,11 @@
 
 <span class="doccomment">/// A standard sparse DFA that does not use premultiplication or byte classes.
 ///
-/// Generally, it isn&#39;t necessary to use this type directly, since a
+/// Generally, it isn't necessary to use this type directly, since a
 /// `SparseDFA` can be used for searching directly. One possible reason why
 /// one might want to use this type directly is if you are implementing your
-/// own search routines by walking a DFA&#39;s transitions directly. In that case,
-/// you&#39;ll want to use this type (or any of the other DFA variant types)
+/// own search routines by walking a DFA's transitions directly. In that case,
+/// you'll want to use this type (or any of the other DFA variant types)
 /// directly, since they implement `next_state` more efficiently.
 </span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Standard&lt;T: AsRef&lt;[u8]&gt;, S: StateID = usize&gt;(Repr&lt;T, S&gt;);
@@ -1813,15 +1814,15 @@
 ///
 /// Unlike dense DFAs, sparse DFAs do not tend to benefit nearly as much from
 /// using byte classes. In some cases, using byte classes can even marginally
-/// increase the size of a sparse DFA&#39;s transition table. The reason for this
-/// is that a sparse DFA already compacts each state&#39;s transitions separate
+/// increase the size of a sparse DFA's transition table. The reason for this
+/// is that a sparse DFA already compacts each state's transitions separate
 /// from whether byte classes are used.
 ///
-/// Generally, it isn&#39;t necessary to use this type directly, since a
+/// Generally, it isn't necessary to use this type directly, since a
 /// `SparseDFA` can be used for searching directly. One possible reason why
 /// one might want to use this type directly is if you are implementing your
-/// own search routines by walking a DFA&#39;s transitions directly. In that case,
-/// you&#39;ll want to use this type (or any of the other DFA variant types)
+/// own search routines by walking a DFA's transitions directly. In that case,
+/// you'll want to use this type (or any of the other DFA variant types)
 /// directly, since they implement `next_state` more efficiently.
 </span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>ByteClass&lt;T: AsRef&lt;[u8]&gt;, S: StateID = usize&gt;(Repr&lt;T, S&gt;);
@@ -1869,7 +1870,7 @@
 <span class="doccomment">/// The underlying representation of a sparse DFA. This is shared by all of
 /// the different variants of a sparse DFA.
 </span><span class="attr">#[derive(Clone)]
-#[cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), derive(Debug))]
+#[cfg_attr(not(feature = <span class="string">"std"</span>), derive(Debug))]
 </span><span class="kw">struct </span>Repr&lt;T: AsRef&lt;[u8]&gt;, S: StateID = usize&gt; {
     anchored: bool,
     start: S,
@@ -1888,7 +1889,7 @@
         }
     }
 
-    <span class="kw">fn </span>as_ref&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; Repr&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8], S&gt; {
+    <span class="kw">fn </span>as_ref&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; Repr&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8], S&gt; {
         Repr {
             anchored: <span class="self">self</span>.anchored,
             start: <span class="self">self</span>.start,
@@ -1899,7 +1900,7 @@
         }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
     </span><span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Repr&lt;Vec&lt;u8&gt;, S&gt; {
         Repr {
             anchored: <span class="self">self</span>.anchored,
@@ -1913,10 +1914,10 @@
 
     <span class="doccomment">/// Return a convenient representation of the given state.
     ///
-    /// This is marked as inline because it doesn&#39;t seem to get inlined
+    /// This is marked as inline because it doesn't seem to get inlined
     /// otherwise, which leads to a fairly significant performance loss (~25%).
     </span><span class="attr">#[inline]
-    </span><span class="kw">fn </span>state&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, id: S) -&gt; State&lt;<span class="lifetime">&#39;a</span>, S&gt; {
+    </span><span class="kw">fn </span>state&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, id: S) -&gt; State&lt;<span class="lifetime">'a</span>, S&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>pos = id.to_usize();
         <span class="kw">let </span>ntrans = NativeEndian::read_u16(<span class="kw-2">&amp;</span><span class="self">self</span>.trans()[pos..]) <span class="kw">as </span>usize;
         pos += <span class="number">2</span>;
@@ -1930,8 +1931,8 @@
     ///
     /// The iterator returned yields tuples, where the first element is the
     /// state ID and the second element is the state itself.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-    </span><span class="kw">fn </span>states&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; StateIter&lt;<span class="lifetime">&#39;a</span>, T, S&gt; {
+    </span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+    </span><span class="kw">fn </span>states&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; StateIter&lt;<span class="lifetime">'a</span>, T, S&gt; {
         StateIter { dfa: <span class="self">self</span>, id: dead_id() }
     }
 
@@ -1967,11 +1968,11 @@
     /// DFA, but attempt to use `A` for the representation of state
     /// identifiers. If `A` is insufficient to represent all state identifiers
     /// in this DFA, then this returns an error.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
     </span><span class="kw">fn </span>to_sized&lt;A: StateID&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Repr&lt;Vec&lt;u8&gt;, A&gt;&gt; {
         <span class="comment">// To build the new DFA, we proceed much like the initial construction
         // of the sparse DFA. Namely, since the state ID size is changing,
-        // we don&#39;t actually know all of our state IDs until we&#39;ve allocated
+        // we don't actually know all of our state IDs until we've allocated
         // all necessary space. So we do one pass that allocates all of the
         // storage we need, and then another pass to fill in the transitions.
 
@@ -2019,10 +2020,10 @@
     /// requirement.
     ///
     /// Unlike dense DFAs, the result is not necessarily aligned since a
-    /// sparse DFA&#39;s transition table is always read as a sequence of bytes.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    /// sparse DFA's transition table is always read as a sequence of bytes.
+    </span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
     </span><span class="kw">fn </span>to_bytes&lt;A: ByteOrder&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;&gt; {
-        <span class="kw">let </span>label = <span class="string">b&quot;rust-regex-automata-sparse-dfa\x00&quot;</span>;
+        <span class="kw">let </span>label = <span class="string">b"rust-regex-automata-sparse-dfa\x00"</span>;
         <span class="kw">let </span>size =
             <span class="comment">// For human readable label.
             </span>label.len()
@@ -2064,7 +2065,7 @@
         </span><span class="kw">let </span>state_size = size_of::&lt;S&gt;();
         <span class="kw">if </span>![<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>].contains(<span class="kw-2">&amp;</span>state_size) {
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::serialize(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                <span class="string">&quot;state size of {} not supported, must be 1, 2, 4 or 8&quot;</span>,
+                <span class="string">"state size of {} not supported, must be 1, 2, 4 or 8"</span>,
                 state_size
             )));
         }
@@ -2103,18 +2104,18 @@
             }
         }
 
-        <span class="macro">assert_eq!</span>(size, i, <span class="string">&quot;expected to consume entire buffer&quot;</span>);
+        <span class="macro">assert_eq!</span>(size, i, <span class="string">"expected to consume entire buffer"</span>);
 
         <span class="prelude-val">Ok</span>(buf)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: StateID&gt; Repr&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8], S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, S: StateID&gt; Repr&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8], S&gt; {
     <span class="doccomment">/// The implementation for deserializing a sparse DFA from raw bytes.
-    </span><span class="kw">unsafe fn </span>from_bytes(<span class="kw-2">mut </span>buf: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]) -&gt; Repr&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8], S&gt; {
+    </span><span class="kw">unsafe fn </span>from_bytes(<span class="kw-2">mut </span>buf: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]) -&gt; Repr&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8], S&gt; {
         <span class="comment">// skip over label
-        </span><span class="kw">match </span>buf.iter().position(|<span class="kw-2">&amp;</span>b| b == <span class="string">b&#39;\x00&#39;</span>) {
-            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;could not find label&quot;</span>),
+        </span><span class="kw">match </span>buf.iter().position(|<span class="kw-2">&amp;</span>b| b == <span class="string">b'\x00'</span>) {
+            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"could not find label"</span>),
             <span class="prelude-val">Some</span>(i) =&gt; buf = <span class="kw-2">&amp;</span>buf[i + <span class="number">1</span>..],
         }
 
@@ -2123,9 +2124,9 @@
         buf = <span class="kw-2">&amp;</span>buf[<span class="number">2</span>..];
         <span class="kw">if </span>endian_check != <span class="number">0xFEFF </span>{
             <span class="macro">panic!</span>(
-                <span class="string">&quot;endianness mismatch, expected 0xFEFF but got 0x{:X}. \
+                <span class="string">"endianness mismatch, expected 0xFEFF but got 0x{:X}. \
                  are you trying to load a SparseDFA serialized with a \
-                 different endianness?&quot;</span>,
+                 different endianness?"</span>,
                 endian_check,
             );
         }
@@ -2135,7 +2136,7 @@
         buf = <span class="kw-2">&amp;</span>buf[<span class="number">2</span>..];
         <span class="kw">if </span>version != <span class="number">1 </span>{
             <span class="macro">panic!</span>(
-                <span class="string">&quot;expected version 1, but found unsupported version {}&quot;</span>,
+                <span class="string">"expected version 1, but found unsupported version {}"</span>,
                 version,
             );
         }
@@ -2144,8 +2145,8 @@
         </span><span class="kw">let </span>state_size = NativeEndian::read_u16(buf) <span class="kw">as </span>usize;
         <span class="kw">if </span>state_size != size_of::&lt;S&gt;() {
             <span class="macro">panic!</span>(
-                <span class="string">&quot;state size of SparseDFA ({}) does not match \
-                 requested state size ({})&quot;</span>,
+                <span class="string">"state size of SparseDFA ({}) does not match \
+                 requested state size ({})"</span>,
                 state_size,
                 size_of::&lt;S&gt;(),
             );
@@ -2183,17 +2184,17 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl</span>&lt;S: StateID&gt; Repr&lt;Vec&lt;u8&gt;, S&gt; {
     <span class="doccomment">/// The implementation for constructing a sparse DFA from a dense DFA.
     </span><span class="kw">fn </span>from_dense_sized&lt;T: AsRef&lt;[S]&gt;, A: StateID&gt;(
         dfa: <span class="kw-2">&amp;</span>dense::Repr&lt;T, S&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Repr&lt;Vec&lt;u8&gt;, A&gt;&gt; {
         <span class="comment">// In order to build the transition table, we need to be able to write
-        // state identifiers for each of the &quot;next&quot; transitions in each state.
+        // state identifiers for each of the "next" transitions in each state.
         // Our state identifiers correspond to the byte offset in the
         // transition table at which the state is encoded. Therefore, we do not
-        // actually know what the state identifiers are until we&#39;ve allocated
+        // actually know what the state identifiers are until we've allocated
         // exactly as much space as we need for each state. Thus, construction
         // of the transition table happens in two passes.
         //
@@ -2251,7 +2252,7 @@
     }
 
     <span class="doccomment">/// Return a convenient mutable representation of the given state.
-    </span><span class="kw">fn </span>state_mut&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>, id: S) -&gt; StateMut&lt;<span class="lifetime">&#39;a</span>, S&gt; {
+    </span><span class="kw">fn </span>state_mut&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>, id: S) -&gt; StateMut&lt;<span class="lifetime">'a</span>, S&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>pos = id.to_usize();
         <span class="kw">let </span>ntrans = NativeEndian::read_u16(<span class="kw-2">&amp;</span><span class="self">self</span>.trans[pos..]) <span class="kw">as </span>usize;
         pos += <span class="number">2</span>;
@@ -2263,40 +2264,40 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl</span>&lt;T: AsRef&lt;[u8]&gt;, S: StateID&gt; fmt::Debug <span class="kw">for </span>Repr&lt;T, S&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         <span class="kw">fn </span>state_status&lt;T: AsRef&lt;[u8]&gt;, S: StateID&gt;(
             dfa: <span class="kw-2">&amp;</span>Repr&lt;T, S&gt;,
             id: S,
-        ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+        ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
             <span class="kw">if </span>id == dead_id() {
                 <span class="kw">if </span>dfa.is_match_state(id) {
-                    <span class="string">&quot;D*&quot;
+                    <span class="string">"D*"
                 </span>} <span class="kw">else </span>{
-                    <span class="string">&quot;D &quot;
+                    <span class="string">"D "
                 </span>}
             } <span class="kw">else if </span>id == dfa.start_state() {
                 <span class="kw">if </span>dfa.is_match_state(id) {
-                    <span class="string">&quot;&gt;*&quot;
+                    <span class="string">"&gt;*"
                 </span>} <span class="kw">else </span>{
-                    <span class="string">&quot;&gt; &quot;
+                    <span class="string">"&gt; "
                 </span>}
             } <span class="kw">else </span>{
                 <span class="kw">if </span>dfa.is_match_state(id) {
-                    <span class="string">&quot; *&quot;
+                    <span class="string">" *"
                 </span>} <span class="kw">else </span>{
-                    <span class="string">&quot;  &quot;
+                    <span class="string">"  "
                 </span>}
             }
         }
 
-        <span class="macro">writeln!</span>(f, <span class="string">&quot;SparseDFA(&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">writeln!</span>(f, <span class="string">"SparseDFA("</span>)<span class="question-mark">?</span>;
         <span class="kw">for </span>(id, state) <span class="kw">in </span><span class="self">self</span>.states() {
             <span class="kw">let </span>status = state_status(<span class="self">self</span>, id);
-            <span class="macro">writeln!</span>(f, <span class="string">&quot;{}{:06}: {:?}&quot;</span>, status, id.to_usize(), state)<span class="question-mark">?</span>;
+            <span class="macro">writeln!</span>(f, <span class="string">"{}{:06}: {:?}"</span>, status, id.to_usize(), state)<span class="question-mark">?</span>;
         }
-        <span class="macro">writeln!</span>(f, <span class="string">&quot;)&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">writeln!</span>(f, <span class="string">")"</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
@@ -2305,18 +2306,18 @@
 ///
 /// This iterator yields tuples, where the first element is the state ID and
 /// the second element is the state itself.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 #[derive(Debug)]
-</span><span class="kw">struct </span>StateIter&lt;<span class="lifetime">&#39;a</span>, T: AsRef&lt;[u8]&gt; + <span class="lifetime">&#39;a</span>, S: StateID + <span class="lifetime">&#39;a </span>= usize&gt; {
-    dfa: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Repr&lt;T, S&gt;,
+</span><span class="kw">struct </span>StateIter&lt;<span class="lifetime">'a</span>, T: AsRef&lt;[u8]&gt; + <span class="lifetime">'a</span>, S: StateID + <span class="lifetime">'a </span>= usize&gt; {
+    dfa: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Repr&lt;T, S&gt;,
     id: S,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: AsRef&lt;[u8]&gt;, S: StateID&gt; Iterator <span class="kw">for </span>StateIter&lt;<span class="lifetime">&#39;a</span>, T, S&gt; {
-    <span class="kw">type </span>Item = (S, State&lt;<span class="lifetime">&#39;a</span>, S&gt;);
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: AsRef&lt;[u8]&gt;, S: StateID&gt; Iterator <span class="kw">for </span>StateIter&lt;<span class="lifetime">'a</span>, T, S&gt; {
+    <span class="kw">type </span>Item = (S, State&lt;<span class="lifetime">'a</span>, S&gt;);
 
-    <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(S, State&lt;<span class="lifetime">&#39;a</span>, S&gt;)&gt; {
+    <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(S, State&lt;<span class="lifetime">'a</span>, S&gt;)&gt; {
         <span class="kw">if </span><span class="self">self</span>.id.to_usize() &gt;= <span class="self">self</span>.dfa.trans().len() {
             <span class="kw">return </span><span class="prelude-val">None</span>;
         }
@@ -2330,10 +2331,10 @@
 <span class="doccomment">/// A representation of a sparse DFA state that can be cheaply materialized
 /// from a state identifier.
 </span><span class="attr">#[derive(Clone)]
-</span><span class="kw">struct </span>State&lt;<span class="lifetime">&#39;a</span>, S: StateID = usize&gt; {
+</span><span class="kw">struct </span>State&lt;<span class="lifetime">'a</span>, S: StateID = usize&gt; {
     <span class="doccomment">/// The state identifier representation used by the DFA from which this
     /// state was extracted. Since our transition table is compacted in a
-    /// &amp;[u8], we don&#39;t actually use the state ID type parameter explicitly
+    /// &amp;[u8], we don't actually use the state ID type parameter explicitly
     /// anywhere, so we fake it. This prevents callers from using an incorrect
     /// state ID representation to read from this state.
     </span>_state_id_repr: PhantomData&lt;S&gt;,
@@ -2342,14 +2343,14 @@
     <span class="doccomment">/// Pairs of input ranges, where there is one pair for each transition.
     /// Each pair specifies an inclusive start and end byte range for the
     /// corresponding transition.
-    </span>input_ranges: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8],
+    </span>input_ranges: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8],
     <span class="doccomment">/// Transitions to the next state. This slice contains native endian
     /// encoded state identifiers, with `S` as the representation. Thus, there
     /// are `ntrans * size_of::&lt;S&gt;()` bytes in this slice.
-    </span>next: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8],
+    </span>next: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8],
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: StateID&gt; State&lt;<span class="lifetime">&#39;a</span>, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, S: StateID&gt; State&lt;<span class="lifetime">'a</span>, S&gt; {
     <span class="doccomment">/// Searches for the next transition given an input byte. If no such
     /// transition could be found, then a dead state is returned.
     </span><span class="kw">fn </span>next(<span class="kw-2">&amp;</span><span class="self">self</span>, input: u8) -&gt; S {
@@ -2364,9 +2365,9 @@
                 <span class="kw">return </span><span class="self">self</span>.next_at(i);
             }
             <span class="comment">// We could bail early with an extra branch: if input &lt; b1, then
-            // we know we&#39;ll never find a matching transition. Interestingly,
+            // we know we'll never find a matching transition. Interestingly,
             // this extra branch seems to not help performance, or will even
-            // hurt it. It&#39;s likely very dependent on the DFA itself and what
+            // hurt it. It's likely very dependent on the DFA itself and what
             // is being searched.
         </span>}
         dead_id()
@@ -2385,14 +2386,14 @@
 
     <span class="doccomment">/// Return the total number of bytes that this state consumes in its
     /// encoded form.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
     </span><span class="kw">fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="number">2 </span>+ (<span class="self">self</span>.ntrans * <span class="number">2</span>) + (<span class="self">self</span>.ntrans * size_of::&lt;S&gt;())
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: StateID&gt; fmt::Debug <span class="kw">for </span>State&lt;<span class="lifetime">&#39;a</span>, S&gt; {
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, S: StateID&gt; fmt::Debug <span class="kw">for </span>State&lt;<span class="lifetime">'a</span>, S&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         <span class="kw">let </span><span class="kw-2">mut </span>transitions = <span class="macro">vec!</span>[];
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="self">self</span>.ntrans {
@@ -2404,30 +2405,30 @@
             <span class="kw">let </span>(start, end) = <span class="self">self</span>.range(i);
             <span class="kw">if </span>start == end {
                 transitions.push(<span class="macro">format!</span>(
-                    <span class="string">&quot;{} =&gt; {}&quot;</span>,
+                    <span class="string">"{} =&gt; {}"</span>,
                     escape(start),
                     next.to_usize()
                 ));
             } <span class="kw">else </span>{
                 transitions.push(<span class="macro">format!</span>(
-                    <span class="string">&quot;{}-{} =&gt; {}&quot;</span>,
+                    <span class="string">"{}-{} =&gt; {}"</span>,
                     escape(start),
                     escape(end),
                     next.to_usize(),
                 ));
             }
         }
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, transitions.join(<span class="string">&quot;, &quot;</span>))
+        <span class="macro">write!</span>(f, <span class="string">"{}"</span>, transitions.join(<span class="string">", "</span>))
     }
 }
 
 <span class="doccomment">/// A representation of a mutable sparse DFA state that can be cheaply
 /// materialized from a state identifier.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">struct </span>StateMut&lt;<span class="lifetime">&#39;a</span>, S: StateID = usize&gt; {
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">struct </span>StateMut&lt;<span class="lifetime">'a</span>, S: StateID = usize&gt; {
     <span class="doccomment">/// The state identifier representation used by the DFA from which this
     /// state was extracted. Since our transition table is compacted in a
-    /// &amp;[u8], we don&#39;t actually use the state ID type parameter explicitly
+    /// &amp;[u8], we don't actually use the state ID type parameter explicitly
     /// anywhere, so we fake it. This prevents callers from using an incorrect
     /// state ID representation to read from this state.
     </span>_state_id_repr: PhantomData&lt;S&gt;,
@@ -2436,23 +2437,23 @@
     <span class="doccomment">/// Pairs of input ranges, where there is one pair for each transition.
     /// Each pair specifies an inclusive start and end byte range for the
     /// corresponding transition.
-    </span>input_ranges: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[u8],
+    </span>input_ranges: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[u8],
     <span class="doccomment">/// Transitions to the next state. This slice contains native endian
     /// encoded state identifiers, with `S` as the representation. Thus, there
     /// are `ntrans * size_of::&lt;S&gt;()` bytes in this slice.
-    </span>next: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[u8],
+    </span>next: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[u8],
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: StateID&gt; StateMut&lt;<span class="lifetime">&#39;a</span>, S&gt; {
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, S: StateID&gt; StateMut&lt;<span class="lifetime">'a</span>, S&gt; {
     <span class="doccomment">/// Sets the ith transition to the given state.
     </span><span class="kw">fn </span>set_next_at(<span class="kw-2">&amp;mut </span><span class="self">self</span>, i: usize, next: S) {
         next.write_bytes(<span class="kw-2">&amp;mut </span><span class="self">self</span>.next[i * size_of::&lt;S&gt;()..]);
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, S: StateID&gt; fmt::Debug <span class="kw">for </span>StateMut&lt;<span class="lifetime">&#39;a</span>, S&gt; {
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, S: StateID&gt; fmt::Debug <span class="kw">for </span>StateMut&lt;<span class="lifetime">'a</span>, S&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         <span class="kw">let </span>state = State {
             _state_id_repr: <span class="self">self</span>._state_id_repr,
@@ -2465,14 +2466,14 @@
 }
 
 <span class="doccomment">/// Return the given byte as its escaped string form.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">fn </span>escape(b: u8) -&gt; String {
     <span class="kw">use </span>std::ascii;
 
     String::from_utf8(ascii::escape_default(b).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()).unwrap()
 }
 
-<span class="doccomment">/// A binary search routine specialized specifically to a sparse DFA state&#39;s
+<span class="doccomment">/// A binary search routine specialized specifically to a sparse DFA state's
 /// transitions. Specifically, the transitions are defined as a set of pairs
 /// of input bytes that delineate an inclusive range of bytes. If the input
 /// byte is in the range, then the corresponding transition is a match.
@@ -2486,15 +2487,15 @@
 /// of a boost on non-ASCII haystacks to be worth it. However, we leave it here
 /// for posterity in case we can find a way to use it.
 ///
-/// In theory, we could use the standard library&#39;s search routine if we could
-/// cast a `&amp;[u8]` to a `&amp;[(u8, u8)]`, but I don&#39;t believe this is currently
-/// guaranteed to be safe and is thus UB (since I don&#39;t think the in-memory
+/// In theory, we could use the standard library's search routine if we could
+/// cast a `&amp;[u8]` to a `&amp;[(u8, u8)]`, but I don't believe this is currently
+/// guaranteed to be safe and is thus UB (since I don't think the in-memory
 /// representation of `(u8, u8)` has been nailed down).
 </span><span class="attr">#[inline(always)]
 #[allow(dead_code)]
 </span><span class="kw">fn </span>binary_search_ranges(ranges: <span class="kw-2">&amp;</span>[u8], needle: u8) -&gt; <span class="prelude-ty">Option</span>&lt;usize&gt; {
-    <span class="macro">debug_assert!</span>(ranges.len() % <span class="number">2 </span>== <span class="number">0</span>, <span class="string">&quot;ranges must have even length&quot;</span>);
-    <span class="macro">debug_assert!</span>(ranges.len() &lt;= <span class="number">512</span>, <span class="string">&quot;ranges should be short&quot;</span>);
+    <span class="macro">debug_assert!</span>(ranges.len() % <span class="number">2 </span>== <span class="number">0</span>, <span class="string">"ranges must have even length"</span>);
+    <span class="macro">debug_assert!</span>(ranges.len() &lt;= <span class="number">512</span>, <span class="string">"ranges should be short"</span>);
 
     <span class="kw">let </span>(<span class="kw-2">mut </span>left, <span class="kw-2">mut </span>right) = (<span class="number">0</span>, ranges.len() / <span class="number">2</span>);
     <span class="kw">while </span>left &lt; right {

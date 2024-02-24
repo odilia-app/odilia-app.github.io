@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/connection.rs`."><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/connection.rs`."><title>connection.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1840,7 +1841,7 @@
     </span>cap_unix_fd: bool,
     bus_conn: bool,
     unique_name: OnceCell&lt;OwnedUniqueName&gt;,
-    registered_names: Mutex&lt;HashMap&lt;WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt;, NameStatus&gt;&gt;,
+    registered_names: Mutex&lt;HashMap&lt;WellKnownName&lt;<span class="lifetime">'static</span>&gt;, NameStatus&gt;&gt;,
 
     raw_conn: Arc&lt;sync::Mutex&lt;RawConnection&lt;Box&lt;<span class="kw">dyn </span>Socket&gt;&gt;&gt;&gt;,
 
@@ -1848,7 +1849,7 @@
     </span>serial: AtomicU32,
 
     <span class="comment">// Our executor
-    </span>executor: Executor&lt;<span class="lifetime">&#39;static</span>&gt;,
+    </span>executor: Executor&lt;<span class="lifetime">'static</span>&gt;,
 
     <span class="comment">// Socket reader task
     </span><span class="attr">#[allow(unused)]
@@ -1892,7 +1893,7 @@
 /// `Connection` keeps internal queues of incoming message. The default capacity of each of these is
 /// 64. The capacity of the main (unfiltered) queue is configurable through the [`set_max_queued`]
 /// method. When the queue is full, no more messages can be received until room is created for more.
-/// This is why it&#39;s important to ensure that all [`crate::MessageStream`] and
+/// This is why it's important to ensure that all [`crate::MessageStream`] and
 /// [`crate::blocking::MessageIterator`] instances are continuously polled and iterated on,
 /// respectively.
 ///
@@ -1934,23 +1935,23 @@
 ///
 /// let reply = connection
 ///     .call_method(
-///         Some(&quot;org.freedesktop.DBus&quot;),
-///         &quot;/org/freedesktop/DBus&quot;,
-///         Some(&quot;org.freedesktop.DBus&quot;),
-///         &quot;GetId&quot;,
+///         Some("org.freedesktop.DBus"),
+///         "/org/freedesktop/DBus",
+///         Some("org.freedesktop.DBus"),
+///         "GetId",
 ///         &amp;(),
 ///     )
 ///     .await?;
 ///
 /// let id: &amp;str = reply.body()?;
-/// println!(&quot;Unique ID of the bus: {}&quot;, id);
+/// println!("Unique ID of the bus: {}", id);
 ///# Ok::&lt;(), zbus::Error&gt;(())
 ///# }).unwrap();
 /// ```
 ///
 /// #### Monitoring all messages
 ///
-/// Let&#39;s eavesdrop on the session bus 😈 using the [Monitor] interface:
+/// Let's eavesdrop on the session bus 😈 using the [Monitor] interface:
 ///
 /// ```rust,no_run
 ///# zbus::block_on(async {
@@ -1961,17 +1962,17 @@
 ///
 /// connection
 ///     .call_method(
-///         Some(&quot;org.freedesktop.DBus&quot;),
-///         &quot;/org/freedesktop/DBus&quot;,
-///         Some(&quot;org.freedesktop.DBus.Monitoring&quot;),
-///         &quot;BecomeMonitor&quot;,
+///         Some("org.freedesktop.DBus"),
+///         "/org/freedesktop/DBus",
+///         Some("org.freedesktop.DBus.Monitoring"),
+///         "BecomeMonitor",
 ///         &amp;(&amp;[] as &amp;[&amp;str], 0u32),
 ///     )
 ///     .await?;
 ///
 /// let mut stream = MessageStream::from(connection);
 /// while let Some(msg) = stream.try_next().await? {
-///     println!(&quot;Got message: {}&quot;, msg);
+///     println!("Got message: {}", msg);
 /// }
 ///
 ///# Ok::&lt;(), zbus::Error&gt;(())
@@ -1985,14 +1986,14 @@
 /// Got message: Signal NameLost from org.freedesktop.DBus
 /// Got message: Method call GetConnectionUnixProcessID from :1.1324
 /// Got message: Error org.freedesktop.DBus.Error.NameHasNoOwner:
-///              Could not get PID of name &#39;:1.1332&#39;: no such name from org.freedesktop.DBus
+///              Could not get PID of name ':1.1332': no such name from org.freedesktop.DBus
 /// Got message: Method call AddMatch from :1.918
 /// Got message: Method return from org.freedesktop.DBus
 /// ```
 ///
 /// [Monitor]: https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-become-monitor
 </span><span class="attr">#[derive(Clone, Debug)]
-#[must_use = <span class="string">&quot;Dropping a `Connection` will close the underlying socket.&quot;</span>]
+#[must_use = <span class="string">"Dropping a `Connection` will close the underlying socket."</span>]
 </span><span class="kw">pub struct </span>Connection {
     <span class="kw">pub</span>(<span class="kw">crate</span>) inner: Arc&lt;ConnectionInner&gt;,
 }
@@ -2013,11 +2014,11 @@
 <span class="kw">impl </span>Future <span class="kw">for </span>PendingMethodCall {
     <span class="kw">type </span>Output = <span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;;
 
-    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
+    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
         <span class="self">self</span>.poll_before(cx, <span class="prelude-val">None</span>).map(|ret| {
             ret.map(|(<span class="kw">_</span>, r)| r).unwrap_or_else(|| {
                 <span class="prelude-val">Err</span>(<span class="kw">crate</span>::Error::InputOutput(
-                    io::Error::new(ErrorKind::BrokenPipe, <span class="string">&quot;socket closed&quot;</span>).into(),
+                    io::Error::new(ErrorKind::BrokenPipe, <span class="string">"socket closed"</span>).into(),
                 ))
             })
         })
@@ -2030,7 +2031,7 @@
 
     <span class="kw">fn </span>poll_before(
         <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
         before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
     ) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;(<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Output)&gt;&gt; {
         <span class="kw">let </span>this = <span class="self">self</span>.get_mut();
@@ -2083,9 +2084,9 @@
     </span><span class="kw">pub async fn </span>send_message(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut </span>msg: Message) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt; {
         <span class="kw">let </span>serial = <span class="self">self</span>.assign_serial_num(<span class="kw-2">&amp;mut </span>msg)<span class="question-mark">?</span>;
 
-        <span class="macro">trace!</span>(<span class="string">&quot;Sending message: {:?}&quot;</span>, msg);
+        <span class="macro">trace!</span>(<span class="string">"Sending message: {:?}"</span>, msg);
         (<span class="kw-2">&amp;mut &amp;*</span><span class="self">self</span>).send(msg).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="macro">trace!</span>(<span class="string">&quot;Sent message with serial: {}&quot;</span>, serial);
+        <span class="macro">trace!</span>(<span class="string">"Sent message with serial: {}"</span>, serial);
 
         <span class="prelude-val">Ok</span>(serial)
     }
@@ -2096,7 +2097,7 @@
     ///
     /// On successful reply, an `Ok(Message)` is returned. On error, an `Err` is returned. D-Bus
     /// error replies are returned as [`Error::MethodError`].
-    </span><span class="kw">pub async fn </span>call_method&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;p</span>, <span class="lifetime">&#39;i</span>, <span class="lifetime">&#39;m</span>, D, P, I, M, B&gt;(
+    </span><span class="kw">pub async fn </span>call_method&lt;<span class="lifetime">'d</span>, <span class="lifetime">'p</span>, <span class="lifetime">'i</span>, <span class="lifetime">'m</span>, D, P, I, M, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         destination: <span class="prelude-ty">Option</span>&lt;D&gt;,
         path: P,
@@ -2105,10 +2106,10 @@
         body: <span class="kw-2">&amp;</span>B,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;Message&gt;&gt;
     <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">&#39;d</span>&gt;&gt;,
-        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;p</span>&gt;&gt;,
-        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">&#39;i</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
+        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'d</span>&gt;&gt;,
+        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
+        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
+        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
         D::Error: Into&lt;Error&gt;,
         P::Error: Into&lt;Error&gt;,
         I::Error: Into&lt;Error&gt;,
@@ -2124,21 +2125,21 @@
             body,
         )
         .<span class="kw">await</span><span class="question-mark">?
-        </span>.expect(<span class="string">&quot;no reply&quot;</span>)
+        </span>.expect(<span class="string">"no reply"</span>)
         .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Send a method call.
     ///
     /// Send the given message, which must be a method call, over the connection and return an
-    /// object that allows the reply to be retrieved.  Typically you&#39;d want to use
+    /// object that allows the reply to be retrieved.  Typically you'd want to use
     /// [`Connection::call_method`] instead.
     ///
     /// If the `flags` do not contain `MethodFlags::NoReplyExpected`, the return value is
     /// guaranteed to be `Ok(Some(_))`, if there was no error encountered.
     ///
     /// INTERNAL NOTE: If this method is ever made pub, flags should become `BitFlags&lt;MethodFlags&gt;`.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>call_method_raw&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;p</span>, <span class="lifetime">&#39;i</span>, <span class="lifetime">&#39;m</span>, D, P, I, M, B&gt;(
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>call_method_raw&lt;<span class="lifetime">'d</span>, <span class="lifetime">'p</span>, <span class="lifetime">'i</span>, <span class="lifetime">'m</span>, D, P, I, M, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         destination: <span class="prelude-ty">Option</span>&lt;D&gt;,
         path: P,
@@ -2148,10 +2149,10 @@
         body: <span class="kw-2">&amp;</span>B,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;PendingMethodCall&gt;&gt;
     <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">&#39;d</span>&gt;&gt;,
-        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;p</span>&gt;&gt;,
-        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">&#39;i</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
+        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'d</span>&gt;&gt;,
+        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
+        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
+        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
         D::Error: Into&lt;Error&gt;,
         P::Error: Into&lt;Error&gt;,
         I::Error: Into&lt;Error&gt;,
@@ -2176,7 +2177,7 @@
         <span class="kw">let </span>msg_receiver = <span class="self">self</span>.inner.method_return_receiver.activate_cloned();
         <span class="kw">let </span>stream = <span class="prelude-val">Some</span>(MessageStream::for_subscription_channel(
             msg_receiver,
-            <span class="comment">// This is a lie but we only use the stream internally so it&#39;s fine.
+            <span class="comment">// This is a lie but we only use the stream internally so it's fine.
             </span><span class="prelude-val">None</span>,
             <span class="self">self</span>,
         ));
@@ -2191,7 +2192,7 @@
     <span class="doccomment">/// Emit a signal.
     ///
     /// Create a signal message, and send it over the connection.
-    </span><span class="kw">pub async fn </span>emit_signal&lt;<span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;p</span>, <span class="lifetime">&#39;i</span>, <span class="lifetime">&#39;m</span>, D, P, I, M, B&gt;(
+    </span><span class="kw">pub async fn </span>emit_signal&lt;<span class="lifetime">'d</span>, <span class="lifetime">'p</span>, <span class="lifetime">'i</span>, <span class="lifetime">'m</span>, D, P, I, M, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         destination: <span class="prelude-ty">Option</span>&lt;D&gt;,
         path: P,
@@ -2200,10 +2201,10 @@
         body: <span class="kw-2">&amp;</span>B,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">&#39;d</span>&gt;&gt;,
-        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;p</span>&gt;&gt;,
-        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">&#39;i</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
+        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'d</span>&gt;&gt;,
+        P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
+        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
+        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
         D::Error: Into&lt;Error&gt;,
         P::Error: Into&lt;Error&gt;,
         I::Error: Into&lt;Error&gt;,
@@ -2242,7 +2243,7 @@
     /// with the given `error_name` and `body`.
     ///
     /// Returns the message serial number.
-    </span><span class="kw">pub async fn </span>reply_error&lt;<span class="lifetime">&#39;e</span>, E, B&gt;(
+    </span><span class="kw">pub async fn </span>reply_error&lt;<span class="lifetime">'e</span>, E, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         call: <span class="kw-2">&amp;</span>Message,
         error_name: E,
@@ -2250,7 +2251,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;
     <span class="kw">where
         </span>B: serde::ser::Serialize + zvariant::DynamicType,
-        E: TryInto&lt;ErrorName&lt;<span class="lifetime">&#39;e</span>&gt;&gt;,
+        E: TryInto&lt;ErrorName&lt;<span class="lifetime">'e</span>&gt;&gt;,
         E::Error: Into&lt;Error&gt;,
     {
         <span class="kw">let </span>m = Message::method_error(<span class="self">self</span>.unique_name(), call, error_name, body)<span class="question-mark">?</span>;
@@ -2265,7 +2266,7 @@
     /// Returns the message serial number.
     </span><span class="kw">pub async fn </span>reply_dbus_error(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        call: <span class="kw-2">&amp;</span>zbus::MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
+        call: <span class="kw-2">&amp;</span>zbus::MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
         err: <span class="kw">impl </span>DBusError,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt; {
         <span class="kw">let </span>m = err.create_reply(call);
@@ -2284,7 +2285,7 @@
     /// [`RequestNameFlags::ReplaceExisting`] and [`RequestNameFlags::DoNotQueue`] flags) since that
     /// is the most typical case. If that is not what you want, you should use
     /// [`Connection::request_name_with_flags`] instead (but make sure then that name is requested
-    /// **after** you&#39;ve setup your service implementation with the `ObjectServer`).
+    /// **after** you've setup your service implementation with the `ObjectServer`).
     ///
     /// # Caveats
     ///
@@ -2301,9 +2302,9 @@
     /// # Errors
     ///
     /// Fails with `zbus::Error::NameTaken` if the name is already owned by another peer.
-    </span><span class="kw">pub async fn </span>request_name&lt;<span class="lifetime">&#39;w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    </span><span class="kw">pub async fn </span>request_name&lt;<span class="lifetime">'w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
-        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt;&gt;,
+        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">'w</span>&gt;&gt;,
         W::Error: Into&lt;Error&gt;,
     {
         <span class="self">self</span>.request_name_with_flags(
@@ -2336,7 +2337,7 @@
     /// use enumflags2::BitFlags;
     /// use futures_util::stream::StreamExt;
     ///
-    /// let name = &quot;org.freedesktop.zbus.QueuedNameTest&quot;;
+    /// let name = "org.freedesktop.zbus.QueuedNameTest";
     /// let conn1 = Connection::session().await?;
     /// // This should just work right away.
     /// conn1.request_name(name).await?;
@@ -2346,7 +2347,7 @@
     /// // implicit with `request_name` method.
     /// assert!(conn2.request_name(name).await.is_err());
     ///
-    /// // Now let&#39;s try w/o `DoNotQueue` and we should be queued.
+    /// // Now let's try w/o `DoNotQueue` and we should be queued.
     /// let reply = conn2
     ///     .request_name_with_flags(name, RequestNameFlags::AllowReplacement.into())
     ///     .await?;
@@ -2362,7 +2363,7 @@
     ///     .receive_name_acquired()
     ///     .await?;
     /// assert!(conn1.release_name(name).await?);
-    /// // This would have waited forever if `conn1` hadn&#39;t just release the name.
+    /// // This would have waited forever if `conn1` hadn't just release the name.
     /// let acquired = acquired_stream.next().await.unwrap();
     /// assert_eq!(acquired.args().unwrap().name, name);
     ///
@@ -2385,20 +2386,20 @@
     /// * Same as that of [`Connection::request_name`].
     /// * If you wish to track changes to name ownership after this call, make sure that the
     /// [`fdo::NameAcquired`] and/or [`fdo::NameLostStream`] instance(s) are created **before**
-    /// calling this method. Otherwise, you may loose the signal if it&#39;s emitted after this call but
+    /// calling this method. Otherwise, you may loose the signal if it's emitted after this call but
     /// just before the stream instance get created.
-    </span><span class="kw">pub async fn </span>request_name_with_flags&lt;<span class="lifetime">&#39;w</span>, W&gt;(
+    </span><span class="kw">pub async fn </span>request_name_with_flags&lt;<span class="lifetime">'w</span>, W&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         well_known_name: W,
         flags: BitFlags&lt;RequestNameFlags&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RequestNameReply&gt;
     <span class="kw">where
-        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt;&gt;,
+        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">'w</span>&gt;&gt;,
         W::Error: Into&lt;Error&gt;,
     {
         <span class="kw">let </span>well_known_name = well_known_name.try_into().map_err(Into::into)<span class="question-mark">?</span>;
         <span class="comment">// We keep the lock until the end of this function so that the (possibly) spawned task
-        // doesn&#39;t end up accessing the name entry before it&#39;s inserted.
+        // doesn't end up accessing the name entry before it's inserted.
         </span><span class="kw">let </span><span class="kw-2">mut </span>names = <span class="self">self</span>.inner.registered_names.lock().<span class="kw">await</span>;
 
         <span class="kw">match </span>names.get(<span class="kw-2">&amp;</span>well_known_name) {
@@ -2422,7 +2423,7 @@
         <span class="kw">let </span>reply = dbus_proxy
             .request_name(well_known_name.clone(), flags)
             .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>lost_task_name = <span class="macro">format!</span>(<span class="string">&quot;monitor name {well_known_name} lost&quot;</span>);
+        <span class="kw">let </span>lost_task_name = <span class="macro">format!</span>(<span class="string">"monitor name {well_known_name} lost"</span>);
         <span class="kw">let </span>name_lost_fut = <span class="kw">if </span>flags.contains(RequestNameFlags::AllowReplacement) {
             <span class="kw">let </span>weak_conn = WeakConnection::from(<span class="self">self</span>);
             <span class="kw">let </span>well_known_name = well_known_name.to_owned();
@@ -2439,8 +2440,8 @@
                             <span class="prelude-val">Some</span>(signal) =&gt; <span class="kw">match </span>signal.args() {
                                 <span class="prelude-val">Ok</span>(args) <span class="kw">if </span>args.name == well_known_name =&gt; {
                                     <span class="macro">tracing::info!</span>(
-                                        <span class="string">&quot;Connection `{}` lost name `{}`&quot;</span>,
-                                        <span class="comment">// SAFETY: This is bus connection so unique name can&#39;t be None.
+                                        <span class="string">"Connection `{}` lost name `{}`"</span>,
+                                        <span class="comment">// SAFETY: This is bus connection so unique name can't be None.
                                         </span>inner.unique_name.get().unwrap(),
                                         well_known_name
                                     );
@@ -2449,13 +2450,13 @@
                                     <span class="kw">break</span>;
                                 }
                                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
-                                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">&quot;Failed to parse `NameLost` signal: {}&quot;</span>, e),
+                                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">"Failed to parse `NameLost` signal: {}"</span>, e),
                             },
                             <span class="prelude-val">None </span>=&gt; {
-                                <span class="macro">trace!</span>(<span class="string">&quot;`NameLost` signal stream closed&quot;</span>);
+                                <span class="macro">trace!</span>(<span class="string">"`NameLost` signal stream closed"</span>);
                                 <span class="comment">// This is a very strange state we end up in. Now the name is question
                                 // remains in the queue forever. Maybe we can do better here but I
-                                // think it&#39;s a very unlikely scenario anyway.
+                                // think it's a very unlikely scenario anyway.
                                 //
                                 // Can happen if the connection is lost/dropped but then the whole
                                 // `Connection` instance will go away soon anyway and hence this
@@ -2465,7 +2466,7 @@
                         }
                     }
                 }
-                .instrument(<span class="macro">info_span!</span>(<span class="string">&quot;{}&quot;</span>, lost_task_name)),
+                .instrument(<span class="macro">info_span!</span>(<span class="string">"{}"</span>, lost_task_name)),
             )
         } <span class="kw">else </span>{
             <span class="prelude-val">None
@@ -2474,7 +2475,7 @@
             RequestNameReply::InQueue =&gt; {
                 <span class="kw">let </span>weak_conn = WeakConnection::from(<span class="self">self</span>);
                 <span class="kw">let </span>well_known_name = well_known_name.to_owned();
-                <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;monitor name {well_known_name} acquired&quot;</span>);
+                <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">"monitor name {well_known_name} acquired"</span>);
                 <span class="kw">let </span>task = <span class="self">self</span>.executor().spawn(
                     <span class="kw">async move </span>{
                         <span class="kw">loop </span>{
@@ -2498,17 +2499,17 @@
                                         <span class="comment">// else the name was released in the meantime. :shrug:
                                     </span>}
                                     <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
-                                    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">&quot;Failed to parse `NameAcquired` signal: {}&quot;</span>, e),
+                                    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">"Failed to parse `NameAcquired` signal: {}"</span>, e),
                                 },
                                 <span class="prelude-val">None </span>=&gt; {
-                                    <span class="macro">trace!</span>(<span class="string">&quot;`NameAcquired` signal stream closed&quot;</span>);
+                                    <span class="macro">trace!</span>(<span class="string">"`NameAcquired` signal stream closed"</span>);
                                     <span class="comment">// See comment above for similar state in case of `NameLost` stream.
                                     </span><span class="kw">break</span>;
                                 }
                             }
                         }
                     }
-                    .instrument(<span class="macro">info_span!</span>(<span class="string">&quot;{}&quot;</span>, task_name)),
+                    .instrument(<span class="macro">info_span!</span>(<span class="string">"{}"</span>, task_name)),
                     <span class="kw-2">&amp;</span>task_name,
                 );
 
@@ -2535,12 +2536,12 @@
     /// Unless an error is encountered, returns `Ok(true)` if name was previously registered with
     /// the bus through `self` and it has now been successfully deregistered, `Ok(false)` if name
     /// was not previously registered or already deregistered.
-    </span><span class="kw">pub async fn </span>release_name&lt;<span class="lifetime">&#39;w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt;
+    </span><span class="kw">pub async fn </span>release_name&lt;<span class="lifetime">'w</span>, W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, well_known_name: W) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt;
     <span class="kw">where
-        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt;&gt;,
+        </span>W: TryInto&lt;WellKnownName&lt;<span class="lifetime">'w</span>&gt;&gt;,
         W::Error: Into&lt;Error&gt;,
     {
-        <span class="kw">let </span>well_known_name: WellKnownName&lt;<span class="lifetime">&#39;w</span>&gt; = well_known_name.try_into().map_err(Into::into)<span class="question-mark">?</span>;
+        <span class="kw">let </span>well_known_name: WellKnownName&lt;<span class="lifetime">'w</span>&gt; = well_known_name.try_into().map_err(Into::into)<span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>names = <span class="self">self</span>.inner.registered_names.lock().<span class="kw">await</span>;
         <span class="comment">// FIXME: Should be possible to avoid cloning/allocation here
         </span><span class="kw">if </span>names.remove(<span class="kw-2">&amp;</span>well_known_name.to_owned()).is_none() {
@@ -2594,7 +2595,7 @@
     /// # Panics
     ///
     /// This method panics if the unique name is already set. It will always panic if the connection
-    /// is to a message bus as it&#39;s the bus that assigns peers their unique names. This is mainly
+    /// is to a message bus as it's the bus that assigns peers their unique names. This is mainly
     /// provided for bus implementations. All other users should not need to use this method.
     </span><span class="kw">pub fn </span>set_unique_name&lt;U&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, unique_name: U) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
@@ -2605,7 +2606,7 @@
         <span class="self">self</span>.inner
             .unique_name
             .set(name)
-            .expect(<span class="string">&quot;unique name already set&quot;</span>);
+            .expect(<span class="string">"unique name already set"</span>);
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -2620,7 +2621,7 @@
         <span class="self">self</span>.inner.msg_receiver.clone().set_capacity(max);
     }
 
-    <span class="doccomment">/// The server&#39;s GUID.
+    <span class="doccomment">/// The server's GUID.
     </span><span class="kw">pub fn </span>server_guid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.inner.server_guid.as_str()
     }
@@ -2628,18 +2629,18 @@
     <span class="doccomment">/// The underlying executor.
     ///
     /// When a connection is built with internal_executor set to false, zbus will not spawn a
-    /// thread to run the executor. You&#39;re responsible to continuously [tick the executor][tte].
+    /// thread to run the executor. You're responsible to continuously [tick the executor][tte].
     /// Failure to do so will result in hangs.
     ///
     /// # Examples
     ///
-    /// Here is how one would typically run the zbus executor through async-std&#39;s single-threaded
+    /// Here is how one would typically run the zbus executor through async-std's single-threaded
     /// scheduler:
     ///
     /// ```
     ///# // Disable on windows because somehow it triggers a stack overflow there:
     ///# // https://gitlab.freedesktop.org/zeenix/zbus/-/jobs/34023494
-    ///# #[cfg(all(not(feature = &quot;tokio&quot;), not(target_os = &quot;windows&quot;)))]
+    ///# #[cfg(all(not(feature = "tokio"), not(target_os = "windows")))]
     ///# {
     /// use zbus::ConnectionBuilder;
     /// use async_std::task::{block_on, spawn};
@@ -2655,7 +2656,7 @@
     ///         .unwrap()
     ///         .internal_executor(false)
     ///#         // This is only for testing a deadlock that used to happen with this combo.
-    ///#         .serve_at(&quot;/some/iface&quot;, SomeIface)
+    ///#         .serve_at("/some/iface", SomeIface)
     ///#         .unwrap()
     ///         .build()
     ///         .await
@@ -2681,7 +2682,7 @@
     /// `async-io` was required to enable tight `tokio` integration.
     ///
     /// [tte]: https://docs.rs/async-executor/1.4.1/async_executor/struct.Executor.html#method.tick
-    </span><span class="kw">pub fn </span>executor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Executor&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>executor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Executor&lt;<span class="lifetime">'static</span>&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.inner.executor
     }
 
@@ -2692,11 +2693,11 @@
     /// **Note**: Once the `ObjectServer` is created, it will be replying to all method calls
     /// received on `self`. If you want to manually reply to method calls, do not use this
     /// method (or any of the `ObjectServer` related API).
-    </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">&#39;_ </span>{
+    </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">'_ </span>{
         <span class="comment">// FIXME: Maybe it makes sense after all to implement Deref&lt;Target= ObjectServer&gt; for
         // crate::ObjectServer instead of this wrapper?
-        </span><span class="kw">struct </span>Wrapper&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>blocking::ObjectServer);
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Deref <span class="kw">for </span>Wrapper&lt;<span class="lifetime">&#39;a</span>&gt; {
+        </span><span class="kw">struct </span>Wrapper&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>blocking::ObjectServer);
+        <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Deref <span class="kw">for </span>Wrapper&lt;<span class="lifetime">'a</span>&gt; {
             <span class="kw">type </span>Target = ObjectServer;
 
             <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
@@ -2732,31 +2733,31 @@
     <span class="attr">#[instrument(skip(<span class="self">self</span>))]
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>start_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>, started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;) {
         <span class="self">self</span>.inner.object_server_dispatch_task.get_or_init(|| {
-            <span class="macro">trace!</span>(<span class="string">&quot;starting ObjectServer task&quot;</span>);
+            <span class="macro">trace!</span>(<span class="string">"starting ObjectServer task"</span>);
             <span class="kw">let </span>weak_conn = WeakConnection::from(<span class="self">self</span>);
 
-            <span class="kw">let </span>obj_server_task_name = <span class="string">&quot;ObjectServer task&quot;</span>;
+            <span class="kw">let </span>obj_server_task_name = <span class="string">"ObjectServer task"</span>;
             <span class="self">self</span>.inner.executor.spawn(
                 <span class="kw">async move </span>{
                     <span class="kw">let </span><span class="kw-2">mut </span>stream = <span class="kw">match </span>weak_conn.upgrade() {
                         <span class="prelude-val">Some</span>(conn) =&gt; {
                             <span class="kw">let </span><span class="kw-2">mut </span>builder = MatchRule::builder().msg_type(MessageType::MethodCall);
                             <span class="kw">if let </span><span class="prelude-val">Some</span>(unique_name) = conn.unique_name() {
-                                builder = builder.destination(<span class="kw-2">&amp;**</span>unique_name).expect(<span class="string">&quot;unique name&quot;</span>);
+                                builder = builder.destination(<span class="kw-2">&amp;**</span>unique_name).expect(<span class="string">"unique name"</span>);
                             }
                             <span class="kw">let </span>rule = builder.build();
                             <span class="kw">match </span>conn.add_match(rule.into(), <span class="prelude-val">None</span>).<span class="kw">await </span>{
                                 <span class="prelude-val">Ok</span>(stream) =&gt; stream,
                                 <span class="prelude-val">Err</span>(e) =&gt; {
                                     <span class="comment">// Very unlikely but can happen I guess if connection is closed.
-                                    </span><span class="macro">debug!</span>(<span class="string">&quot;Failed to create message stream: {}&quot;</span>, e);
+                                    </span><span class="macro">debug!</span>(<span class="string">"Failed to create message stream: {}"</span>, e);
 
                                     <span class="kw">return</span>;
                                 }
                             }
                         }
                         <span class="prelude-val">None </span>=&gt; {
-                            <span class="macro">trace!</span>(<span class="string">&quot;Connection is gone, stopping associated object server task&quot;</span>);
+                            <span class="macro">trace!</span>(<span class="string">"Connection is gone, stopping associated object server task"</span>);
 
                             <span class="kw">return</span>;
                         }
@@ -2765,10 +2766,10 @@
                         started_event.notify(<span class="number">1</span>);
                     }
 
-                    <span class="macro">trace!</span>(<span class="string">&quot;waiting for incoming method call messages..&quot;</span>);
+                    <span class="macro">trace!</span>(<span class="string">"waiting for incoming method call messages.."</span>);
                     <span class="kw">while let </span><span class="prelude-val">Some</span>(msg) = stream.next().<span class="kw">await</span>.and_then(|m| {
                         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="kw-2">&amp;</span>m {
-                            <span class="macro">debug!</span>(<span class="string">&quot;Error while reading from object server stream: {:?}&quot;</span>, e);
+                            <span class="macro">debug!</span>(<span class="string">"Error while reading from object server stream: {:?}"</span>, e);
                         }
                         m.ok()
                     }) {
@@ -2776,7 +2777,7 @@
                             <span class="kw">let </span>hdr = <span class="kw">match </span>msg.header() {
                                 <span class="prelude-val">Ok</span>(hdr) =&gt; hdr,
                                 <span class="prelude-val">Err</span>(e) =&gt; {
-                                    <span class="macro">warn!</span>(<span class="string">&quot;Failed to parse header: {}&quot;</span>, e);
+                                    <span class="macro">warn!</span>(<span class="string">"Failed to parse header: {}"</span>, e);
 
                                     <span class="kw">continue</span>;
                                 }
@@ -2786,16 +2787,16 @@
                                 </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>))) | <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; (),
                                 <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(BusName::WellKnown(dest))) =&gt; {
                                     <span class="kw">let </span>names = conn.inner.registered_names.lock().<span class="kw">await</span>;
-                                    <span class="comment">// destination doesn&#39;t matter if no name has been registered
-                                    // (probably means name it&#39;s registered through external means).
+                                    <span class="comment">// destination doesn't matter if no name has been registered
+                                    // (probably means name it's registered through external means).
                                     </span><span class="kw">if </span>!names.is_empty() &amp;&amp; !names.contains_key(dest) {
-                                        <span class="macro">trace!</span>(<span class="string">&quot;Got a method call for a different destination: {}&quot;</span>, dest);
+                                        <span class="macro">trace!</span>(<span class="string">"Got a method call for a different destination: {}"</span>, dest);
 
                                         <span class="kw">continue</span>;
                                     }
                                 }
                                 <span class="prelude-val">Err</span>(e) =&gt; {
-                                    <span class="macro">warn!</span>(<span class="string">&quot;Failed to parse destination: {}&quot;</span>, e);
+                                    <span class="macro">warn!</span>(<span class="string">"Failed to parse destination: {}"</span>, e);
 
                                     <span class="kw">continue</span>;
                                 }
@@ -2803,38 +2804,38 @@
                             <span class="kw">let </span>member = <span class="kw">match </span>msg.member() {
                                 <span class="prelude-val">Some</span>(member) =&gt; member,
                                 <span class="prelude-val">None </span>=&gt; {
-                                    <span class="macro">warn!</span>(<span class="string">&quot;Got a method call with no `MEMBER` field: {}&quot;</span>, msg);
+                                    <span class="macro">warn!</span>(<span class="string">"Got a method call with no `MEMBER` field: {}"</span>, msg);
 
                                     <span class="kw">continue</span>;
                                 }
                             };
-                            <span class="macro">trace!</span>(<span class="string">&quot;Got `{}`. Will spawn a task for dispatch..&quot;</span>, msg);
+                            <span class="macro">trace!</span>(<span class="string">"Got `{}`. Will spawn a task for dispatch.."</span>, msg);
                             <span class="kw">let </span>executor = conn.inner.executor.clone();
-                            <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;`{member}` method dispatcher&quot;</span>);
+                            <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">"`{member}` method dispatcher"</span>);
                             executor
                                 .spawn(
                                     <span class="kw">async move </span>{
-                                        <span class="macro">trace!</span>(<span class="string">&quot;spawned a task to dispatch `{}`.&quot;</span>, msg);
+                                        <span class="macro">trace!</span>(<span class="string">"spawned a task to dispatch `{}`."</span>, msg);
                                         <span class="kw">let </span>server = conn.object_server();
                                         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = server.dispatch_message(<span class="kw-2">&amp;</span>msg).<span class="kw">await </span>{
                                             <span class="macro">debug!</span>(
-                                                <span class="string">&quot;Error dispatching message. Message: {:?}, error: {:?}&quot;</span>,
+                                                <span class="string">"Error dispatching message. Message: {:?}, error: {:?}"</span>,
                                                 msg, e
                                             );
                                         }
                                     }
-                                    .instrument(<span class="macro">trace_span!</span>(<span class="string">&quot;{}&quot;</span>, task_name)),
+                                    .instrument(<span class="macro">trace_span!</span>(<span class="string">"{}"</span>, task_name)),
                                     <span class="kw-2">&amp;</span>task_name,
                                 )
                                 .detach();
                         } <span class="kw">else </span>{
                             <span class="comment">// If connection is completely gone, no reason to keep running the task anymore.
-                            </span><span class="macro">trace!</span>(<span class="string">&quot;Connection is gone, stopping associated object server task&quot;</span>);
+                            </span><span class="macro">trace!</span>(<span class="string">"Connection is gone, stopping associated object server task"</span>);
                             <span class="kw">break</span>;
                         }
                     }
                 }
-                .instrument(<span class="macro">info_span!</span>(<span class="string">&quot;{}&quot;</span>, obj_server_task_name)),
+                .instrument(<span class="macro">info_span!</span>(<span class="string">"{}"</span>, obj_server_task_name)),
                 obj_server_task_name,
             )
         });
@@ -2851,7 +2852,7 @@
             <span class="comment">// This only happens if socket reader task has errored out.
             </span><span class="kw">return </span><span class="prelude-val">Err</span>(Error::InputOutput(Arc::new(io::Error::new(
                 io::ErrorKind::BrokenPipe,
-                <span class="string">&quot;Socket reader task has errored out&quot;</span>,
+                <span class="string">"Socket reader task has errored out"</span>,
             ))));
         }
 
@@ -2927,9 +2928,9 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>queue_remove_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: OwnedMatchRule) {
         <span class="kw">let </span>conn = <span class="self">self</span>.clone();
-        <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">&quot;Remove match `{}`&quot;</span>, rule.to_string());
+        <span class="kw">let </span>task_name = <span class="macro">format!</span>(<span class="string">"Remove match `{}`"</span>, rule.to_string());
         <span class="kw">let </span>remove_match =
-            <span class="kw">async move </span>{ conn.remove_match(rule).<span class="kw">await </span>}.instrument(<span class="macro">trace_span!</span>(<span class="string">&quot;{}&quot;</span>, task_name));
+            <span class="kw">async move </span>{ conn.remove_match(rule).<span class="kw">await </span>}.instrument(<span class="macro">trace_span!</span>(<span class="string">"{}"</span>, task_name));
         <span class="self">self</span>.inner.executor.spawn(remove_match, <span class="kw-2">&amp;</span>task_name).detach()
     }
 
@@ -2945,7 +2946,7 @@
             .unique_name
             .set(name)
             <span class="comment">// programmer (probably our) error if this fails.
-            </span>.expect(<span class="string">&quot;Attempted to set unique_name twice&quot;</span>);
+            </span>.expect(<span class="string">"Attempted to set unique_name twice"</span>);
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -3046,21 +3047,21 @@
         <span class="self">self</span>.inner
             .raw_conn
             .lock()
-            .expect(<span class="string">&quot;poisoned lock&quot;</span>)
+            .expect(<span class="string">"poisoned lock"</span>)
             .monitor_activity()
     }
 
     <span class="doccomment">/// Returns the peer process ID, or Ok(None) if it cannot be returned for the associated socket.
     </span><span class="attr">#[deprecated(
-        since = <span class="string">&quot;3.13.0&quot;</span>,
-        note = <span class="string">&quot;Use `peer_credentials` instead, which returns `ConnectionCredentials` which includes
-                the peer PID.&quot;
+        since = <span class="string">"3.13.0"</span>,
+        note = <span class="string">"Use `peer_credentials` instead, which returns `ConnectionCredentials` which includes
+                the peer PID."
     </span>)]
     </span><span class="kw">pub fn </span>peer_pid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; io::Result&lt;<span class="prelude-ty">Option</span>&lt;u32&gt;&gt; {
         <span class="self">self</span>.inner
             .raw_conn
             .lock()
-            .expect(<span class="string">&quot;poisoned lock&quot;</span>)
+            .expect(<span class="string">"poisoned lock"</span>)
             .socket()
             .peer_pid()
     }
@@ -3075,7 +3076,7 @@
     /// Currently `unix_group_ids` and `linux_security_label` fields are not populated.
     </span><span class="attr">#[allow(deprecated)]
     </span><span class="kw">pub async fn </span>peer_credentials(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; io::Result&lt;ConnectionCredentials&gt; {
-        <span class="kw">let </span>raw_conn = <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">&quot;poisoned lock&quot;</span>);
+        <span class="kw">let </span>raw_conn = <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">"poisoned lock"</span>);
         <span class="kw">let </span>socket = raw_conn.socket();
 
         <span class="prelude-val">Ok</span>(ConnectionCredentials {
@@ -3084,7 +3085,7 @@
             </span>unix_user_id: socket.uid()<span class="question-mark">?</span>,
             <span class="attr">#[cfg(not(unix))]
             </span>unix_user_id: <span class="prelude-val">None</span>,
-            <span class="comment">// Should we beother providing all the groups of user? What&#39;s the use case?
+            <span class="comment">// Should we beother providing all the groups of user? What's the use case?
             </span>unix_group_ids: <span class="prelude-val">None</span>,
             <span class="attr">#[cfg(windows)]
             </span>windows_sid: socket.peer_sid(),
@@ -3103,7 +3104,7 @@
                 SocketReader::new(inner.raw_conn.clone(), inner.msg_senders.clone())
                     .spawn(<span class="kw-2">&amp;</span>inner.executor),
             )
-            .expect(<span class="string">&quot;Attempted to set `socket_reader_task` twice&quot;</span>);
+            .expect(<span class="string">"Attempted to set `socket_reader_task` twice"</span>);
     }
 }
 
@@ -3113,7 +3114,7 @@
 {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>poll_ready(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
+    <span class="kw">fn </span>poll_ready(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
         &lt;<span class="kw-2">&amp;</span>Connection <span class="kw">as </span>Sink&lt;Arc&lt;Message&gt;&gt;&gt;::poll_ready(Pin::new(<span class="kw-2">&amp;mut &amp;*</span><span class="self">self</span>), cx)
     }
 
@@ -3121,22 +3122,22 @@
         Pin::new(<span class="kw-2">&amp;mut &amp;*</span><span class="self">self</span>).start_send(msg)
     }
 
-    <span class="kw">fn </span>poll_flush(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
+    <span class="kw">fn </span>poll_flush(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
         &lt;<span class="kw-2">&amp;</span>Connection <span class="kw">as </span>Sink&lt;Arc&lt;Message&gt;&gt;&gt;::poll_flush(Pin::new(<span class="kw-2">&amp;mut &amp;*</span><span class="self">self</span>), cx)
     }
 
-    <span class="kw">fn </span>poll_close(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
+    <span class="kw">fn </span>poll_close(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
         &lt;<span class="kw-2">&amp;</span>Connection <span class="kw">as </span>Sink&lt;Arc&lt;Message&gt;&gt;&gt;::poll_close(Pin::new(<span class="kw-2">&amp;mut &amp;*</span><span class="self">self</span>), cx)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; Sink&lt;T&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Connection
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; Sink&lt;T&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span>Connection
 <span class="kw">where
     </span>T: Into&lt;Arc&lt;Message&gt;&gt;,
 {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>poll_ready(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, _cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
+    <span class="kw">fn </span>poll_ready(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, _cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
         <span class="comment">// TODO: We should have a max queue length in raw::Socket for outgoing messages.
         </span>Poll::Ready(<span class="prelude-val">Ok</span>(()))
     }
@@ -3152,18 +3153,18 @@
         <span class="self">self</span>.inner
             .raw_conn
             .lock()
-            .expect(<span class="string">&quot;poisoned lock&quot;</span>)
+            .expect(<span class="string">"poisoned lock"</span>)
             .enqueue_message(msg);
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn </span>poll_flush(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
-        <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">&quot;poisoned lock&quot;</span>).flush(cx)
+    <span class="kw">fn </span>poll_flush(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
+        <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">"poisoned lock"</span>).flush(cx)
     }
 
-    <span class="kw">fn </span>poll_close(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>raw_conn = <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">&quot;poisoned lock&quot;</span>);
+    <span class="kw">fn </span>poll_close(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;()&gt;&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>raw_conn = <span class="self">self</span>.inner.raw_conn.lock().expect(<span class="string">"poisoned lock"</span>);
         <span class="kw">let </span>res = raw_conn.flush(cx);
         <span class="kw">match </span><span class="macro">ready!</span>(res) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
@@ -3232,7 +3233,7 @@
         <span class="kw">let </span>forward2 = MessageStream::from(<span class="kw-2">&amp;</span>client2).forward(server1);
         <span class="kw">let </span>_forward_task = client1.executor().spawn(
             <span class="kw">async move </span>{ <span class="macro">futures_util::try_join!</span>(forward1, forward2) },
-            <span class="string">&quot;forward_task&quot;</span>,
+            <span class="string">"forward_task"</span>,
         );
 
         <span class="kw">let </span>server_ready = Event::new();
@@ -3245,16 +3246,16 @@
             server_ready.notify(<span class="number">1</span>);
             <span class="kw">let </span>method = <span class="kw">loop </span>{
                 <span class="kw">let </span>m = stream.try_next().<span class="kw">await</span><span class="question-mark">?</span>.unwrap();
-                <span class="kw">if </span>m.to_string() == <span class="string">&quot;Method call Test&quot; </span>{
+                <span class="kw">if </span>m.to_string() == <span class="string">"Method call Test" </span>{
                     <span class="kw">break </span>m;
                 }
             };
 
             <span class="comment">// Send another message first to check the queueing function on client side.
             </span>server2
-                .emit_signal(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="string">&quot;org.zbus.p2p&quot;</span>, <span class="string">&quot;ASignalForYou&quot;</span>, <span class="kw-2">&amp;</span>())
+                .emit_signal(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"/"</span>, <span class="string">"org.zbus.p2p"</span>, <span class="string">"ASignalForYou"</span>, <span class="kw-2">&amp;</span>())
                 .<span class="kw">await</span><span class="question-mark">?</span>;
-            server2.reply(<span class="kw-2">&amp;</span>method, <span class="kw-2">&amp;</span>(<span class="string">&quot;yay&quot;</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+            server2.reply(<span class="kw-2">&amp;</span>method, <span class="kw-2">&amp;</span>(<span class="string">"yay"</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
             client_done_listener.<span class="kw">await</span>;
 
             <span class="prelude-val">Ok</span>(())
@@ -3264,18 +3265,18 @@
             <span class="kw">let </span><span class="kw-2">mut </span>stream = MessageStream::from(<span class="kw-2">&amp;</span>client1);
             server_ready_listener.<span class="kw">await</span>;
             <span class="kw">let </span>reply = client1
-                .call_method(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;org.zbus.p2p&quot;</span>), <span class="string">&quot;Test&quot;</span>, <span class="kw-2">&amp;</span>())
+                .call_method(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"/"</span>, <span class="prelude-val">Some</span>(<span class="string">"org.zbus.p2p"</span>), <span class="string">"Test"</span>, <span class="kw-2">&amp;</span>())
                 .<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="macro">assert_eq!</span>(reply.to_string(), <span class="string">&quot;Method return&quot;</span>);
-            <span class="comment">// Check we didn&#39;t miss the signal that was sent during the call.
+            <span class="macro">assert_eq!</span>(reply.to_string(), <span class="string">"Method return"</span>);
+            <span class="comment">// Check we didn't miss the signal that was sent during the call.
             </span><span class="kw">let </span>m = stream.try_next().<span class="kw">await</span><span class="question-mark">?</span>.unwrap();
             client_done.notify(<span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">&quot;Signal ASignalForYou&quot;</span>);
+            <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">"Signal ASignalForYou"</span>);
             reply.body::&lt;String&gt;()
         };
 
         <span class="kw">let </span>(val, <span class="kw">_</span>) = <span class="macro">futures_util::try_join!</span>(client_future, server_future,)<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(val, <span class="string">&quot;yay&quot;</span>);
+        <span class="macro">assert_eq!</span>(val, <span class="string">"yay"</span>);
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -3296,9 +3297,9 @@
     <span class="kw">async fn </span>tcp_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
         <span class="kw">let </span>guid = Guid::generate();
 
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
         </span><span class="kw">let </span>(server_conn_builder, client_conn_builder) = {
-            <span class="kw">let </span>listener = std::net::TcpListener::bind(<span class="string">&quot;127.0.0.1:0&quot;</span>).unwrap();
+            <span class="kw">let </span>listener = std::net::TcpListener::bind(<span class="string">"127.0.0.1:0"</span>).unwrap();
             <span class="kw">let </span>addr = listener.local_addr().unwrap();
             <span class="kw">let </span>p1 = std::net::TcpStream::connect(addr).unwrap();
             <span class="kw">let </span>p0 = listener.incoming().next().unwrap().unwrap();
@@ -3312,9 +3313,9 @@
             )
         };
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;tokio&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
         </span><span class="kw">let </span>(server_conn_builder, client_conn_builder) = {
-            <span class="kw">let </span>listener = tokio::net::TcpListener::bind(<span class="string">&quot;127.0.0.1:0&quot;</span>).<span class="kw">await</span>.unwrap();
+            <span class="kw">let </span>listener = tokio::net::TcpListener::bind(<span class="string">"127.0.0.1:0"</span>).<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>addr = listener.local_addr().unwrap();
             <span class="kw">let </span>p1 = tokio::net::TcpStream::connect(addr).<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>p0 = listener.accept().<span class="kw">await</span>.unwrap().<span class="number">0</span>;
@@ -3348,11 +3349,11 @@
 
     <span class="attr">#[cfg(unix)]
     </span><span class="kw">async fn </span>unix_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;tokio&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
         </span><span class="kw">use </span>std::os::unix::net::UnixStream;
-        <span class="attr">#[cfg(feature = <span class="string">&quot;tokio&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
         </span><span class="kw">use </span>tokio::net::UnixStream;
-        <span class="attr">#[cfg(all(windows, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        <span class="attr">#[cfg(all(windows, not(feature = <span class="string">"tokio"</span>)))]
         </span><span class="kw">use </span>uds_windows::UnixStream;
 
         <span class="kw">let </span>guid = Guid::generate();
@@ -3368,10 +3369,10 @@
         )
     }
 
-    <span class="comment">// Compile-test only since we don&#39;t have a VM setup to run this with/in.
+    <span class="comment">// Compile-test only since we don't have a VM setup to run this with/in.
     </span><span class="attr">#[cfg(any(
-        all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)),
-        feature = <span class="string">&quot;tokio-vsock&quot;
+        all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+        feature = <span class="string">"tokio-vsock"
     </span>))]
     #[test]
     #[timeout(<span class="number">15000</span>)]
@@ -3381,8 +3382,8 @@
     }
 
     <span class="attr">#[cfg(any(
-        all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)),
-        feature = <span class="string">&quot;tokio-vsock&quot;
+        all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+        feature = <span class="string">"tokio-vsock"
     </span>))]
     </span><span class="kw">async fn </span>test_vsock_p2p() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">let </span>(server1, client1) = vsock_p2p_pipe().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -3391,7 +3392,7 @@
         test_p2p(server1, client1, server2, client2).<span class="kw">await
     </span>}
 
-    <span class="attr">#[cfg(all(feature = <span class="string">&quot;vsock&quot;</span>, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
     </span><span class="kw">async fn </span>vsock_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
         <span class="kw">let </span>guid = Guid::generate();
 
@@ -3410,7 +3411,7 @@
         )
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;tokio-vsock&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
     </span><span class="kw">async fn </span>vsock_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
         <span class="kw">let </span>guid = Guid::generate();
 
@@ -3443,25 +3444,25 @@
         }
     }
 
-    <span class="attr">#[cfg(all(windows, feature = <span class="string">&quot;windows-gdbus&quot;</span>))]
+    <span class="attr">#[cfg(all(windows, feature = <span class="string">"windows-gdbus"</span>))]
     #[test]
     </span><span class="kw">fn </span>connect_gdbus_session_bus() {
         <span class="kw">let </span>addr = <span class="kw">crate</span>::win32::windows_autolaunch_bus_address()
-            .expect(<span class="string">&quot;Unable to get GDBus session bus address&quot;</span>);
+            .expect(<span class="string">"Unable to get GDBus session bus address"</span>);
 
-        <span class="kw">crate</span>::block_on(<span class="kw">async </span>{ addr.connect().<span class="kw">await </span>}).expect(<span class="string">&quot;Unable to connect to session bus&quot;</span>);
+        <span class="kw">crate</span>::block_on(<span class="kw">async </span>{ addr.connect().<span class="kw">await </span>}).expect(<span class="string">"Unable to connect to session bus"</span>);
     }
 
-    <span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
+    <span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
     #[test]
     </span><span class="kw">fn </span>connect_launchd_session_bus() {
         <span class="kw">crate</span>::block_on(<span class="kw">async </span>{
-            <span class="kw">let </span>addr = <span class="kw">crate</span>::address::macos_launchd_bus_address(<span class="string">&quot;DBUS_LAUNCHD_SESSION_BUS_SOCKET&quot;</span>)
+            <span class="kw">let </span>addr = <span class="kw">crate</span>::address::macos_launchd_bus_address(<span class="string">"DBUS_LAUNCHD_SESSION_BUS_SOCKET"</span>)
                 .<span class="kw">await
-                </span>.expect(<span class="string">&quot;Unable to get Launchd session bus address&quot;</span>);
+                </span>.expect(<span class="string">"Unable to get Launchd session bus address"</span>);
             addr.connect().<span class="kw">await
         </span>})
-        .expect(<span class="string">&quot;Unable to connect to session bus&quot;</span>);
+        .expect(<span class="string">"Unable to connect to session bus"</span>);
     }
 
     <span class="attr">#[test]
@@ -3476,16 +3477,16 @@
         <span class="attr">#[derive(Default)]
         </span><span class="kw">struct </span>MyInterface {}
 
-        <span class="attr">#[<span class="kw">crate</span>::dbus_interface(name = <span class="string">&quot;dev.peelz.FooBar.Baz&quot;</span>)]
+        <span class="attr">#[<span class="kw">crate</span>::dbus_interface(name = <span class="string">"dev.peelz.FooBar.Baz"</span>)]
         </span><span class="kw">impl </span>MyInterface {
             <span class="kw">fn </span>do_thing(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
         }
-        <span class="kw">let </span>name = <span class="string">&quot;dev.peelz.foobar&quot;</span>;
+        <span class="kw">let </span>name = <span class="string">"dev.peelz.foobar"</span>;
         <span class="kw">let </span>connection = ConnectionBuilder::session()
             .unwrap()
             .name(name)
             .unwrap()
-            .serve_at(<span class="string">&quot;/dev/peelz/FooBar&quot;</span>, MyInterface::default())
+            .serve_at(<span class="string">"/dev/peelz/FooBar"</span>, MyInterface::default())
             .unwrap()
             .build()
             .<span class="kw">await
@@ -3494,7 +3495,7 @@
         <span class="kw">let </span>connection2 = Connection::session().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>dbus = DBusProxy::new(<span class="kw-2">&amp;</span>connection2).<span class="kw">await</span>.unwrap();
         <span class="kw">let </span><span class="kw-2">mut </span>stream = dbus
-            .receive_name_owner_changed_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, name), (<span class="number">2</span>, <span class="string">&quot;&quot;</span>)])
+            .receive_name_owner_changed_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, name), (<span class="number">2</span>, <span class="string">""</span>)])
             .<span class="kw">await
             </span>.unwrap();
 
@@ -3503,12 +3504,12 @@
         <span class="comment">// If the connection is not dropped, this will hang forever.
         </span>stream.next().<span class="kw">await</span>.unwrap();
 
-        <span class="comment">// Let&#39;s still make sure the name is gone.
+        <span class="comment">// Let's still make sure the name is gone.
         </span><span class="kw">let </span>name_has_owner = dbus.name_has_owner(name.try_into().unwrap()).<span class="kw">await</span>.unwrap();
         <span class="macro">assert!</span>(!name_has_owner);
     }
 
-    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">"tokio"</span>)))]
     #[test]
     #[timeout(<span class="number">15000</span>)]
     </span><span class="kw">fn </span>unix_p2p_cookie_auth() {
@@ -3524,12 +3525,12 @@
         };
         <span class="kw">use </span>xdg_home::home_dir;
 
-        <span class="kw">let </span>cookie_context = <span class="string">&quot;zbus-test-cookie-context&quot;</span>;
+        <span class="kw">let </span>cookie_context = <span class="string">"zbus-test-cookie-context"</span>;
         <span class="kw">let </span>cookie_id = <span class="number">123456789</span>;
-        <span class="kw">let </span>cookie = hex::encode(<span class="string">b&quot;our cookie&quot;</span>);
+        <span class="kw">let </span>cookie = hex::encode(<span class="string">b"our cookie"</span>);
 
         <span class="comment">// Ensure cookie directory exists.
-        </span><span class="kw">let </span>cookie_dir = home_dir().unwrap().join(<span class="string">&quot;.dbus-keyrings&quot;</span>);
+        </span><span class="kw">let </span>cookie_dir = home_dir().unwrap().join(<span class="string">".dbus-keyrings"</span>);
         create_dir_all(<span class="kw-2">&amp;</span>cookie_dir).unwrap();
         <span class="attr">#[cfg(unix)]
         </span>set_permissions(<span class="kw-2">&amp;</span>cookie_dir, Permissions::from_mode(<span class="number">0o700</span>)).unwrap();
@@ -3537,7 +3538,7 @@
         <span class="comment">// Create a cookie file.
         </span><span class="kw">let </span>cookie_file = cookie_dir.join(cookie_context);
         <span class="kw">let </span>ts = Time::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
-        <span class="kw">let </span>cookie_entry = <span class="macro">format!</span>(<span class="string">&quot;{cookie_id} {ts} {cookie}&quot;</span>);
+        <span class="kw">let </span>cookie_entry = <span class="macro">format!</span>(<span class="string">"{cookie_id} {ts} {cookie}"</span>);
         write(<span class="kw-2">&amp;</span>cookie_file, cookie_entry).unwrap();
 
         <span class="comment">// Explicit cookie ID.
@@ -3552,16 +3553,16 @@
         res2.unwrap();
     }
 
-    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">"tokio"</span>)))]
     </span><span class="kw">async fn </span>test_unix_p2p_cookie_auth(
-        cookie_context: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+        cookie_context: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         cookie_id: <span class="prelude-ty">Option</span>&lt;usize&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="attr">#[cfg(all(unix, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        <span class="attr">#[cfg(all(unix, not(feature = <span class="string">"tokio"</span>)))]
         </span><span class="kw">use </span>std::os::unix::net::UnixStream;
-        <span class="attr">#[cfg(all(unix, feature = <span class="string">&quot;tokio&quot;</span>))]
+        <span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
         </span><span class="kw">use </span>tokio::net::UnixStream;
-        <span class="attr">#[cfg(all(windows, not(feature = <span class="string">&quot;tokio&quot;</span>)))]
+        <span class="attr">#[cfg(all(windows, not(feature = <span class="string">"tokio"</span>)))]
         </span><span class="kw">use </span>uds_windows::UnixStream;
 
         <span class="kw">let </span>guid = Guid::generate();

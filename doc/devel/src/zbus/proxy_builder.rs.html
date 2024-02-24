@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/proxy_builder.rs`."><title>proxy_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/proxy_builder.rs`."><title>proxy_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -241,7 +242,7 @@
     <span class="doccomment">/// Cache properties. The properties will be cached upfront as part of the proxy
     /// creation.
     </span>Yes,
-    <span class="doccomment">/// Don&#39;t cache properties.
+    <span class="doccomment">/// Don't cache properties.
     </span>No,
     <span class="doccomment">/// Cache properties but only populate the cache on the first read of a property (default).
     </span>Lazily,
@@ -255,17 +256,17 @@
 
 <span class="doccomment">/// Builder for proxies.
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>ProxyBuilder&lt;<span class="lifetime">&#39;a</span>, T = ()&gt; {
+</span><span class="kw">pub struct </span>ProxyBuilder&lt;<span class="lifetime">'a</span>, T = ()&gt; {
     conn: Connection,
-    destination: <span class="prelude-ty">Option</span>&lt;BusName&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
-    path: <span class="prelude-ty">Option</span>&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
-    interface: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+    destination: <span class="prelude-ty">Option</span>&lt;BusName&lt;<span class="lifetime">'a</span>&gt;&gt;,
+    path: <span class="prelude-ty">Option</span>&lt;ObjectPath&lt;<span class="lifetime">'a</span>&gt;&gt;,
+    interface: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">'a</span>&gt;&gt;,
     proxy_type: PhantomData&lt;T&gt;,
     cache: CacheProperties,
-    uncached_properties: <span class="prelude-ty">Option</span>&lt;HashSet&lt;Str&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt;,
+    uncached_properties: <span class="prelude-ty">Option</span>&lt;HashSet&lt;Str&lt;<span class="lifetime">'a</span>&gt;&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; Clone <span class="kw">for </span>ProxyBuilder&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; Clone <span class="kw">for </span>ProxyBuilder&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             conn: <span class="self">self</span>.conn.clone(),
@@ -279,9 +280,9 @@
     }
 }
 
-<span class="macro">assert_impl_all!</span>(ProxyBuilder&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(ProxyBuilder&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ProxyBuilder&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; ProxyBuilder&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="doccomment">/// Create a new [`ProxyBuilder`] for the given connection.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new_bare(conn: <span class="kw-2">&amp;</span>Connection) -&gt; <span class="self">Self </span>{
@@ -297,11 +298,11 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ProxyBuilder&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; ProxyBuilder&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="doccomment">/// Set the proxy destination address.
     </span><span class="kw">pub fn </span>destination&lt;D&gt;(<span class="kw-2">mut </span><span class="self">self</span>, destination: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
     <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'a</span>&gt;&gt;,
         D::Error: Into&lt;Error&gt;,
     {
         <span class="self">self</span>.destination = <span class="prelude-val">Some</span>(destination.try_into().map_err(Into::into)<span class="question-mark">?</span>);
@@ -311,7 +312,7 @@
     <span class="doccomment">/// Set the proxy path.
     </span><span class="kw">pub fn </span>path&lt;P&gt;(<span class="kw-2">mut </span><span class="self">self</span>, path: P) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
     <span class="kw">where
-        </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'a</span>&gt;&gt;,
         P::Error: Into&lt;Error&gt;,
     {
         <span class="self">self</span>.path = <span class="prelude-val">Some</span>(path.try_into().map_err(Into::into)<span class="question-mark">?</span>);
@@ -321,7 +322,7 @@
     <span class="doccomment">/// Set the proxy interface.
     </span><span class="kw">pub fn </span>interface&lt;I&gt;(<span class="kw-2">mut </span><span class="self">self</span>, interface: I) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
     <span class="kw">where
-        </span>I: TryInto&lt;InterfaceName&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'a</span>&gt;&gt;,
         I::Error: Into&lt;Error&gt;,
     {
         <span class="self">self</span>.interface = <span class="prelude-val">Some</span>(interface.try_into().map_err(Into::into)<span class="question-mark">?</span>);
@@ -337,20 +338,20 @@
 
     <span class="doccomment">/// Specify a set of properties (by name) which should be excluded from caching.
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>uncached_properties(<span class="kw-2">mut </span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str]) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>uncached_properties(<span class="kw-2">mut </span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str]) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.uncached_properties
             .replace(properties.iter().map(|p| Str::from(<span class="kw-2">*</span>p)).collect());
 
         <span class="self">self
     </span>}
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>build_internal(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Proxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>build_internal(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Proxy&lt;<span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">let </span>conn = <span class="self">self</span>.conn;
         <span class="kw">let </span>destination = <span class="self">self
             </span>.destination
-            .ok_or(Error::MissingParameter(<span class="string">&quot;destination&quot;</span>))<span class="question-mark">?</span>;
-        <span class="kw">let </span>path = <span class="self">self</span>.path.ok_or(Error::MissingParameter(<span class="string">&quot;path&quot;</span>))<span class="question-mark">?</span>;
-        <span class="kw">let </span>interface = <span class="self">self</span>.interface.ok_or(Error::MissingParameter(<span class="string">&quot;interface&quot;</span>))<span class="question-mark">?</span>;
+            .ok_or(Error::MissingParameter(<span class="string">"destination"</span>))<span class="question-mark">?</span>;
+        <span class="kw">let </span>path = <span class="self">self</span>.path.ok_or(Error::MissingParameter(<span class="string">"path"</span>))<span class="question-mark">?</span>;
+        <span class="kw">let </span>interface = <span class="self">self</span>.interface.ok_or(Error::MissingParameter(<span class="string">"interface"</span>))<span class="question-mark">?</span>;
         <span class="kw">let </span>cache = <span class="self">self</span>.cache;
         <span class="kw">let </span>uncached_properties = <span class="self">self</span>.uncached_properties.unwrap_or_default();
 
@@ -374,7 +375,7 @@
     /// [`Error::MissingParameter`] is returned.
     </span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T&gt;
     <span class="kw">where
-        </span>T: From&lt;Proxy&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+        </span>T: From&lt;Proxy&lt;<span class="lifetime">'a</span>&gt;&gt;,
     {
         <span class="kw">let </span>cache_upfront = <span class="self">self</span>.cache == CacheProperties::Yes;
         <span class="kw">let </span>proxy = <span class="self">self</span>.build_internal()<span class="question-mark">?</span>;
@@ -382,7 +383,7 @@
         <span class="kw">if </span>cache_upfront {
             proxy
                 .get_property_cache()
-                .expect(<span class="string">&quot;properties cache not initialized&quot;</span>)
+                .expect(<span class="string">"properties cache not initialized"</span>)
                 .ready()
                 .<span class="kw">await</span><span class="question-mark">?</span>;
         }
@@ -391,7 +392,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; ProxyBuilder&lt;<span class="lifetime">&#39;a</span>, T&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; ProxyBuilder&lt;<span class="lifetime">'a</span>, T&gt;
 <span class="kw">where
     </span>T: ProxyDefault,
 {
@@ -400,10 +401,10 @@
     </span><span class="kw">pub fn </span>new(conn: <span class="kw-2">&amp;</span>Connection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             conn: conn.clone(),
-            destination: <span class="prelude-val">Some</span>(BusName::from_static_str(T::DESTINATION).expect(<span class="string">&quot;invalid bus name&quot;</span>)),
-            path: <span class="prelude-val">Some</span>(ObjectPath::from_static_str(T::PATH).expect(<span class="string">&quot;invalid default path&quot;</span>)),
+            destination: <span class="prelude-val">Some</span>(BusName::from_static_str(T::DESTINATION).expect(<span class="string">"invalid bus name"</span>)),
+            path: <span class="prelude-val">Some</span>(ObjectPath::from_static_str(T::PATH).expect(<span class="string">"invalid default path"</span>)),
             interface: <span class="prelude-val">Some</span>(
-                InterfaceName::from_static_str(T::INTERFACE).expect(<span class="string">&quot;invalid interface name&quot;</span>),
+                InterfaceName::from_static_str(T::INTERFACE).expect(<span class="string">"invalid interface name"</span>),
             ),
             cache: CacheProperties::default(),
             uncached_properties: <span class="prelude-val">None</span>,
@@ -419,9 +420,9 @@
 ///
 /// [`dbus_proxy`]: attr.dbus_proxy.html
 </span><span class="kw">pub trait </span>ProxyDefault {
-    <span class="kw">const </span>INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
-    <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
-    <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
+    <span class="kw">const </span>INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str;
+    <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str;
+    <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str;
 }
 
 <span class="attr">#[cfg(test)]
@@ -438,12 +439,12 @@
     <span class="kw">async fn </span>builder_async() {
         <span class="kw">let </span>conn = Connection::session().<span class="kw">await</span>.unwrap();
 
-        <span class="kw">let </span>builder = ProxyBuilder::&lt;Proxy&lt;<span class="lifetime">&#39;_</span>&gt;&gt;::new_bare(<span class="kw-2">&amp;</span>conn)
-            .destination(<span class="string">&quot;org.freedesktop.DBus&quot;</span>)
+        <span class="kw">let </span>builder = ProxyBuilder::&lt;Proxy&lt;<span class="lifetime">'_</span>&gt;&gt;::new_bare(<span class="kw-2">&amp;</span>conn)
+            .destination(<span class="string">"org.freedesktop.DBus"</span>)
             .unwrap()
-            .path(<span class="string">&quot;/some/path&quot;</span>)
+            .path(<span class="string">"/some/path"</span>)
             .unwrap()
-            .interface(<span class="string">&quot;org.freedesktop.Interface&quot;</span>)
+            .interface(<span class="string">"org.freedesktop.Interface"</span>)
             .unwrap()
             .cache_properties(CacheProperties::No);
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(

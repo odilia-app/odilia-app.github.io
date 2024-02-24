@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/type.rs`."><title>type.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.14.0/src/type.rs`."><title>type.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -553,7 +554,7 @@
 /// container types, such as, arrays, slices, tuples, [`Vec`] and [`HashMap`]. For easy
 /// implementation for custom types, use `Type` derive macro from [zvariant_derive] crate.
 ///
-/// If your type&#39;s signature cannot be determined statically, you should implement the
+/// If your type's signature cannot be determined statically, you should implement the
 /// [DynamicType] trait instead, which is otherwise automatically implemented if you implement this
 /// trait.
 ///
@@ -574,13 +575,13 @@
     /// use std::collections::HashMap;
     /// use zvariant::Type;
     ///
-    /// assert_eq!(u32::signature(), &quot;u&quot;);
-    /// assert_eq!(String::signature(), &quot;s&quot;);
-    /// assert_eq!(&lt;(u32, &amp;str, u64)&gt;::signature(), &quot;(ust)&quot;);
-    /// assert_eq!(&lt;(u32, &amp;str, &amp;[u64])&gt;::signature(), &quot;(usat)&quot;);
-    /// assert_eq!(&lt;HashMap&lt;u8, &amp;str&gt;&gt;::signature(), &quot;a{ys}&quot;);
+    /// assert_eq!(u32::signature(), "u");
+    /// assert_eq!(String::signature(), "s");
+    /// assert_eq!(&lt;(u32, &amp;str, u64)&gt;::signature(), "(ust)");
+    /// assert_eq!(&lt;(u32, &amp;str, &amp;[u64])&gt;::signature(), "(usat)");
+    /// assert_eq!(&lt;HashMap&lt;u8, &amp;str&gt;&gt;::signature(), "a{ys}");
     /// ```
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt;;
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt;;
 }
 
 <span class="doccomment">/// Types with dynamic signatures.
@@ -592,7 +593,7 @@
     <span class="doccomment">/// Get the signature for the implementing type.
     ///
     /// See [Type::signature] for details.
-    </span><span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">&#39;_</span>&gt;;
+    </span><span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt;;
 }
 
 <span class="doccomment">/// Types that deserialize based on dynamic signatures.
@@ -600,14 +601,14 @@
 /// Prefer implementing [Type] and [Deserialize] if possible, but if the actual signature of your
 /// type cannot be determined until runtime, you should implement this type to support
 /// deserialization given a signature.
-</span><span class="kw">pub trait </span>DynamicDeserialize&lt;<span class="lifetime">&#39;de</span>&gt;: DynamicType {
+</span><span class="kw">pub trait </span>DynamicDeserialize&lt;<span class="lifetime">'de</span>&gt;: DynamicType {
     <span class="doccomment">/// A [DeserializeSeed] implementation for this type.
-    </span><span class="kw">type </span>Deserializer: DeserializeSeed&lt;<span class="lifetime">&#39;de</span>, Value = <span class="self">Self</span>&gt; + DynamicType;
+    </span><span class="kw">type </span>Deserializer: DeserializeSeed&lt;<span class="lifetime">'de</span>, Value = <span class="self">Self</span>&gt; + DynamicType;
 
     <span class="doccomment">/// Get a deserializer compatible with this signature.
     </span><span class="kw">fn </span>deserializer_for_signature&lt;S&gt;(signature: S) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt;
     <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">&#39;de</span>&gt;&gt;,
+        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'de</span>&gt;&gt;,
         S::Error: Into&lt;zvariant::Error&gt;;
 }
 
@@ -615,7 +616,7 @@
 <span class="kw">where
     </span>T: Type + <span class="question-mark">?</span>Sized,
 {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">&#39;_</span>&gt; {
+    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
         &lt;T <span class="kw">as </span>Type&gt;::signature()
     }
 }
@@ -624,20 +625,20 @@
 <span class="kw">where
     </span>T: Type + <span class="question-mark">?</span>Sized,
 {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         T::signature()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>, T&gt; DynamicDeserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>T
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, T&gt; DynamicDeserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>T
 <span class="kw">where
-    </span>T: Type + <span class="question-mark">?</span>Sized + Deserialize&lt;<span class="lifetime">&#39;de</span>&gt;,
+    </span>T: Type + <span class="question-mark">?</span>Sized + Deserialize&lt;<span class="lifetime">'de</span>&gt;,
 {
     <span class="kw">type </span>Deserializer = PhantomData&lt;T&gt;;
 
     <span class="kw">fn </span>deserializer_for_signature&lt;S&gt;(signature: S) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt;
     <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">&#39;de</span>&gt;&gt;,
+        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'de</span>&gt;&gt;,
         S::Error: Into&lt;zvariant::Error&gt;,
     {
         <span class="kw">let </span><span class="kw-2">mut </span>expected = &lt;T <span class="kw">as </span>Type&gt;::signature();
@@ -668,7 +669,7 @@
             <span class="kw">let </span>expected = &lt;T <span class="kw">as </span>Type&gt;::signature();
             <span class="prelude-val">Err</span>(zvariant::Error::SignatureMismatch(
                 original.to_owned(),
-                <span class="macro">format!</span>(<span class="string">&quot;`{expected}`&quot;</span>),
+                <span class="macro">format!</span>(<span class="string">"`{expected}`"</span>),
             ))
         }
     }
@@ -681,8 +682,8 @@
             </span>T: Type,
         {
             <span class="attr">#[inline]
-            </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-                Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">&quot;a{}&quot;</span>, T::signature()))
+            </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+                Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">"a{}"</span>, T::signature()))
             }
         }
     };
@@ -691,21 +692,21 @@
 <span class="macro">array_type!</span>([T]);
 <span class="macro">array_type!</span>(Vec&lt;T&gt;);
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
 </span><span class="kw">impl</span>&lt;T, <span class="kw">const </span>CAP: usize&gt; Type <span class="kw">for </span>arrayvec::ArrayVec&lt;T, CAP&gt;
 <span class="kw">where
     </span>T: Type,
 {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;[T]&gt;::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;arrayvec&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"arrayvec"</span>)]
 </span><span class="kw">impl</span>&lt;<span class="kw">const </span>CAP: usize&gt; Type <span class="kw">for </span>arrayvec::ArrayString&lt;CAP&gt; {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;<span class="kw-2">&amp;</span>str&gt;::signature()
     }
 }
@@ -713,8 +714,8 @@
 <span class="comment">// Empty type deserves empty signature
 </span><span class="kw">impl </span>Type <span class="kw">for </span>() {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        Signature::from_static_str_unchecked(<span class="string">&quot;&quot;</span>)
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+        Signature::from_static_str_unchecked(<span class="string">""</span>)
     }
 }
 
@@ -725,7 +726,7 @@
     ) =&gt; {
         <span class="kw">impl </span>&lt;$(<span class="macro-nonterminal">$desc</span>)+ {
             <span class="attr">#[inline]
-            </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+            </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
                 &lt;<span class="macro-nonterminal">$</span><span class="kw">type</span>&gt;<span class="macro-nonterminal">::signature</span>()
             }
         }
@@ -734,21 +735,21 @@
 
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span><span class="kw-2">&amp;</span>T);
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span><span class="kw-2">&amp;mut </span>T);
-<span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type + ToOwned&gt; Type <span class="kw">for </span>Cow&lt;<span class="lifetime">&#39;_</span>, T&gt;);
+<span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type + ToOwned&gt; Type <span class="kw">for </span>Cow&lt;<span class="lifetime">'_</span>, T&gt;);
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span>Arc&lt;T&gt;);
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span>Mutex&lt;T&gt;);
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span>RwLock&lt;T&gt;);
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span>Box&lt;T&gt;);
 <span class="macro">deref_impl!</span>(T, &lt;T: <span class="question-mark">?</span>Sized + Type&gt; Type <span class="kw">for </span>Rc&lt;T&gt;);
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;gvariant&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
 </span><span class="kw">impl</span>&lt;T&gt; Type <span class="kw">for </span><span class="prelude-ty">Option</span>&lt;T&gt;
 <span class="kw">where
     </span>T: Type,
 {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">&quot;m{}&quot;</span>, T::signature()))
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+        Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">"m{}"</span>, T::signature()))
     }
 }
 
@@ -762,7 +763,7 @@
                 </span>$(<span class="macro-nonterminal">$name</span>: Type,)+
             {
                 <span class="attr">#[inline]
-                </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+                </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
                     <span class="kw">let </span><span class="kw-2">mut </span>sig = String::with_capacity(<span class="number">255</span>);
                     sig.push(STRUCT_SIG_START_CHAR);
                     $(
@@ -799,7 +800,7 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 
 // Arrays are serialized as tuples/structs by Serde so we treat them as such too even though
-// it&#39;s very strange. Slices and arrayvec::ArrayVec can be used anyway so I guess it&#39;s no big
+// it's very strange. Slices and arrayvec::ArrayVec can be used anyway so I guess it's no big
 // deal.
 </span><span class="kw">impl</span>&lt;T, <span class="kw">const </span>N: usize&gt; Type <span class="kw">for </span>[T; N]
 <span class="kw">where
@@ -807,7 +808,7 @@
 {
     <span class="attr">#[inline]
     #[allow(clippy::reversed_empty_ranges)]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>sig = String::with_capacity(<span class="number">255</span>);
         sig.push(STRUCT_SIG_START_CHAR);
         <span class="kw">for _ in </span><span class="number">0</span>..N {
@@ -837,8 +838,8 @@
             $(<span class="macro-nonterminal">$typaram</span>: <span class="macro-nonterminal">$bound</span>,)*
         {
             <span class="attr">#[inline]
-            </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-                Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">&quot;a{{{}{}}}&quot;</span>, K::signature(), V::signature()))
+            </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+                Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">"a{{{}{}}}"</span>, K::signature(), V::signature()))
             }
         }
     }
@@ -848,14 +849,14 @@
 <span class="macro">map_impl!</span>(HashMap&lt;K: Eq + Hash, V, H: BuildHasher&gt;);
 
 <span class="kw">impl </span>Type <span class="kw">for </span>Duration {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;(u64, u32)&gt;::signature()
     }
 }
 
 <span class="kw">impl </span>Type <span class="kw">for </span>SystemTime {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;(
             <span class="comment">// seconds
             </span>u64,
@@ -867,48 +868,48 @@
 
 <span class="kw">impl </span>Type <span class="kw">for </span>Ipv4Addr {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;(u32, <span class="kw-2">&amp;</span>[u8])&gt;::signature()
     }
 }
 
 <span class="kw">impl </span>Type <span class="kw">for </span>Ipv6Addr {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;(u32, <span class="kw-2">&amp;</span>[u8])&gt;::signature()
     }
 }
 
 <span class="kw">impl </span>Type <span class="kw">for </span>IpAddr {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;(u32, <span class="kw-2">&amp;</span>[u8])&gt;::signature()
     }
 }
 
 <span class="comment">// BitFlags
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;enumflags2&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"enumflags2"</span>)]
 </span><span class="kw">impl</span>&lt;F&gt; Type <span class="kw">for </span>enumflags2::BitFlags&lt;F&gt;
 <span class="kw">where
     </span>F: Type + enumflags2::BitFlag,
 {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         F::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde_bytes&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"serde_bytes"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>serde_bytes::Bytes {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        Signature::from_static_str_unchecked(<span class="string">&quot;ay&quot;</span>)
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+        Signature::from_static_str_unchecked(<span class="string">"ay"</span>)
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde_bytes&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"serde_bytes"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>serde_bytes::ByteBuf {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        Signature::from_static_str_unchecked(<span class="string">&quot;ay&quot;</span>)
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+        Signature::from_static_str_unchecked(<span class="string">"ay"</span>)
     }
 }
 
@@ -916,7 +917,7 @@
 </span><span class="macro">macro_rules! </span>static_str_type {
     (<span class="macro-nonterminal">$ty</span>:ty) =&gt; {
         <span class="kw">impl </span>Type <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
-            <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+            <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
                 &lt;<span class="kw-2">&amp;</span>str&gt;::signature()
             }
         }
@@ -926,39 +927,39 @@
 <span class="macro">static_str_type!</span>(Path);
 <span class="macro">static_str_type!</span>(PathBuf);
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;uuid&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"uuid"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>uuid::Uuid {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-        Signature::from_static_str_unchecked(<span class="string">&quot;ay&quot;</span>)
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
+        Signature::from_static_str_unchecked(<span class="string">"ay"</span>)
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;url&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"url"</span>)]
 </span><span class="macro">static_str_type!</span>(url::Url);
 
 <span class="comment">// FIXME: Ignoring the `serde-human-readable` feature of `time` crate in these impls:
 // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L110
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::Date {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as a (year, ordinal) tuple:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L92
         </span>&lt;(i32, u16)&gt;::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::Duration {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as a (whole seconds, nanoseconds) tuple:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L119
         </span>&lt;(i64, i32)&gt;::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::OffsetDateTime {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as a tuple:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L155
         </span>&lt;(
@@ -984,9 +985,9 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::PrimitiveDateTime {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as a tuple:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L200
         </span>&lt;(
@@ -1006,9 +1007,9 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::Time {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as a tuple:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L246
         </span>&lt;(
@@ -1024,43 +1025,43 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::UtcOffset {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as a (whole hours, minutes past hour, seconds past minute) tuple:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L282
         </span>&lt;(i8, i8, i8)&gt;::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::Weekday {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as number from Monday:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L312
         </span>u8::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;time&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"time"</span>)]
 </span><span class="kw">impl </span>Type <span class="kw">for </span>time::Month {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="comment">// Serialized as month number:
         // https://github.com/time-rs/time/blob/f9398b9598757508ca3815694f23203843e0011b/src/serde/mod.rs#L337
         </span>u8::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;chrono&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"chrono"</span>)]
 </span><span class="kw">impl</span>&lt;Tz: chrono::TimeZone&gt; Type <span class="kw">for </span>chrono::DateTime&lt;Tz&gt; {
-    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+    <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         &lt;<span class="kw-2">&amp;</span>str&gt;::signature()
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;chrono&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"chrono"</span>)]
 </span><span class="macro">static_str_type!</span>(chrono::NaiveDateTime);
-<span class="attr">#[cfg(feature = <span class="string">&quot;chrono&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"chrono"</span>)]
 </span><span class="macro">static_str_type!</span>(chrono::NaiveTime);
 
 <span class="comment">// TODO: Blanket implementation for more types: https://github.com/serde-rs/serde/blob/master/serde/src/ser/impls.rs

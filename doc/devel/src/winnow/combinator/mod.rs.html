@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winnow-0.4.1/src/combinator/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winnow" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../winnow/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winnow-0.4.1/src/combinator/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winnow" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1475,49 +1476,49 @@
 //!
 //! ## Basic elements
 //!
-//! Those are used to recognize the lowest level elements of your grammar, like, &quot;here is a dot&quot;, or &quot;here is an big endian integer&quot;.
+//! Those are used to recognize the lowest level elements of your grammar, like, "here is a dot", or "here is an big endian integer".
 //!
 //! | combinator | usage | input | output | comment |
 //! |---|---|---|---|---|
-//! | [`one_of`][crate::bytes::one_of] | `one_of(&quot;abc&quot;)` |  `&quot;abc&quot;` | `Ok((&quot;bc&quot;, &#39;a&#39;))` |Matches one of the provided characters (works with non ASCII characters too)|
-//! | [`none_of`][crate::bytes::none_of] | `none_of(&quot;abc&quot;)` |  `&quot;xyab&quot;` | `Ok((&quot;yab&quot;, &#39;x&#39;))` |Matches anything but the provided characters|
-//! | [`tag`][crate::bytes::tag] | `&quot;hello&quot;` |  `&quot;hello world&quot;` | `Ok((&quot; world&quot;, &quot;hello&quot;))` |Recognizes a specific suite of characters or bytes|
-//! | [`tag_no_case`][crate::bytes::tag_no_case] | `tag_no_case(&quot;hello&quot;)` |  `&quot;HeLLo World&quot;` | `Ok((&quot; World&quot;, &quot;HeLLo&quot;))` |Case insensitive comparison. Note that case insensitive comparison is not well defined for unicode, and that you might have bad surprises|
-//! | [`take`][crate::bytes::take] | `take(4)` |  `&quot;hello&quot;` | `Ok((&quot;o&quot;, &quot;hell&quot;))` |Takes a specific number of bytes or characters|
-//! | [`take_while0`][crate::bytes::take_while0] | `take_while0(is_alphabetic)` |  `&quot;abc123&quot;` | `Ok((&quot;123&quot;, &quot;abc&quot;))` |Returns the longest list of bytes for which the provided pattern matches. `take_while1` does the same, but must return at least one character|
-//! | [`take_till0`][crate::bytes::take_till0] | `take_till0(is_alphabetic)` |  `&quot;123abc&quot;` | `Ok((&quot;abc&quot;, &quot;123&quot;))` |Returns the longest list of bytes or characters until the provided pattern matches. `take_till1` does the same, but must return at least one character. This is the reverse behaviour from `take_while0`: `take_till(f)` is equivalent to `take_while0(\|c\| !f(c))`|
-//! | [`take_until0`][crate::bytes::take_until0] | `take_until0(&quot;world&quot;)` |  `&quot;Hello world&quot;` | `Ok((&quot;world&quot;, &quot;Hello &quot;))` |Returns the longest list of bytes or characters until the provided tag is found. `take_until1` does the same, but must return at least one character|
+//! | [`one_of`][crate::bytes::one_of] | `one_of("abc")` |  `"abc"` | `Ok(("bc", 'a'))` |Matches one of the provided characters (works with non ASCII characters too)|
+//! | [`none_of`][crate::bytes::none_of] | `none_of("abc")` |  `"xyab"` | `Ok(("yab", 'x'))` |Matches anything but the provided characters|
+//! | [`tag`][crate::bytes::tag] | `"hello"` |  `"hello world"` | `Ok((" world", "hello"))` |Recognizes a specific suite of characters or bytes|
+//! | [`tag_no_case`][crate::bytes::tag_no_case] | `tag_no_case("hello")` |  `"HeLLo World"` | `Ok((" World", "HeLLo"))` |Case insensitive comparison. Note that case insensitive comparison is not well defined for unicode, and that you might have bad surprises|
+//! | [`take`][crate::bytes::take] | `take(4)` |  `"hello"` | `Ok(("o", "hell"))` |Takes a specific number of bytes or characters|
+//! | [`take_while0`][crate::bytes::take_while0] | `take_while0(is_alphabetic)` |  `"abc123"` | `Ok(("123", "abc"))` |Returns the longest list of bytes for which the provided pattern matches. `take_while1` does the same, but must return at least one character|
+//! | [`take_till0`][crate::bytes::take_till0] | `take_till0(is_alphabetic)` |  `"123abc"` | `Ok(("abc", "123"))` |Returns the longest list of bytes or characters until the provided pattern matches. `take_till1` does the same, but must return at least one character. This is the reverse behaviour from `take_while0`: `take_till(f)` is equivalent to `take_while0(\|c\| !f(c))`|
+//! | [`take_until0`][crate::bytes::take_until0] | `take_until0("world")` |  `"Hello world"` | `Ok(("world", "Hello "))` |Returns the longest list of bytes or characters until the provided tag is found. `take_until1` does the same, but must return at least one character|
 //!
 //! ## Choice combinators
 //!
 //! | combinator | usage | input | output | comment |
 //! |---|---|---|---|---|
-//! | [`alt`][crate::branch::alt] | `alt((&quot;ab&quot;, &quot;cd&quot;))` |  `&quot;cdef&quot;` | `Ok((&quot;ef&quot;, &quot;cd&quot;))` |Try a list of parsers and return the result of the first successful one|
+//! | [`alt`][crate::branch::alt] | `alt(("ab", "cd"))` |  `"cdef"` | `Ok(("ef", "cd"))` |Try a list of parsers and return the result of the first successful one|
 //! | [`dispatch`][crate::branch::dispatch] | \- | \- | \- | `match` for parsers |
-//! | [`permutation`][crate::branch::permutation] | `permutation((&quot;ab&quot;, &quot;cd&quot;, &quot;12&quot;))` | `&quot;cd12abc&quot;` | `Ok((&quot;c&quot;, (&quot;ab&quot;, &quot;cd&quot;, &quot;12&quot;))` |Succeeds when all its child parser have succeeded, whatever the order|
+//! | [`permutation`][crate::branch::permutation] | `permutation(("ab", "cd", "12"))` | `"cd12abc"` | `Ok(("c", ("ab", "cd", "12"))` |Succeeds when all its child parser have succeeded, whatever the order|
 //!
 //! ## Sequence combinators
 //!
 //! | combinator | usage | input | output | comment |
 //! |---|---|---|---|---|
-//! | [`(...)` (tuples)][crate::Parser] | `(&quot;ab&quot;, &quot;XY&quot;, take(1))` | `&quot;abXYZ!&quot;` | `Ok((&quot;!&quot;, (&quot;ab&quot;, &quot;XY&quot;, &quot;Z&quot;)))` |Chains parsers and assemble the sub results in a tuple. You can use as many child parsers as you can put elements in a tuple|
-//! | [`delimited`][crate::sequence::delimited] | `delimited(char(&#39;(&#39;), take(2), char(&#39;)&#39;))` | `&quot;(ab)cd&quot;` | `Ok((&quot;cd&quot;, &quot;ab&quot;))` ||
-//! | [`preceded`][crate::sequence::preceded] | `preceded(&quot;ab&quot;, &quot;XY&quot;)` | `&quot;abXYZ&quot;` | `Ok((&quot;Z&quot;, &quot;XY&quot;))` ||
-//! | [`terminated`][crate::sequence::terminated] | `terminated(&quot;ab&quot;, &quot;XY&quot;)` | `&quot;abXYZ&quot;` | `Ok((&quot;Z&quot;, &quot;ab&quot;))` ||
-//! | [`separated_pair`][crate::sequence::separated_pair] | `separated_pair(&quot;hello&quot;, char(&#39;,&#39;), &quot;world&quot;)` | `&quot;hello,world!&quot;` | `Ok((&quot;!&quot;, (&quot;hello&quot;, &quot;world&quot;)))` ||
+//! | [`(...)` (tuples)][crate::Parser] | `("ab", "XY", take(1))` | `"abXYZ!"` | `Ok(("!", ("ab", "XY", "Z")))` |Chains parsers and assemble the sub results in a tuple. You can use as many child parsers as you can put elements in a tuple|
+//! | [`delimited`][crate::sequence::delimited] | `delimited(char('('), take(2), char(')'))` | `"(ab)cd"` | `Ok(("cd", "ab"))` ||
+//! | [`preceded`][crate::sequence::preceded] | `preceded("ab", "XY")` | `"abXYZ"` | `Ok(("Z", "XY"))` ||
+//! | [`terminated`][crate::sequence::terminated] | `terminated("ab", "XY")` | `"abXYZ"` | `Ok(("Z", "ab"))` ||
+//! | [`separated_pair`][crate::sequence::separated_pair] | `separated_pair("hello", char(','), "world")` | `"hello,world!"` | `Ok(("!", ("hello", "world")))` ||
 //!
 //! ## Applying a parser multiple times
 //!
 //! | combinator | usage | input | output | comment |
 //! |---|---|---|---|---|
-//! | [`count`][crate::multi::count] | `count(take(2), 3)` | `&quot;abcdefgh&quot;` | `Ok((&quot;gh&quot;, vec![&quot;ab&quot;, &quot;cd&quot;, &quot;ef&quot;]))` |Applies the child parser a specified number of times|
-//! | [`many0`][crate::multi::many0] | `many0(&quot;ab&quot;)` |  `&quot;abababc&quot;` | `Ok((&quot;c&quot;, vec![&quot;ab&quot;, &quot;ab&quot;, &quot;ab&quot;]))` |Applies the parser 0 or more times and returns the list of results in a Vec. `many1` does the same operation but must return at least one element|
-//! | [`many_m_n`][crate::multi::many_m_n] | `many_m_n(1, 3, &quot;ab&quot;)` | `&quot;ababc&quot;` | `Ok((&quot;c&quot;, vec![&quot;ab&quot;, &quot;ab&quot;]))` |Applies the parser between m and n times (n included) and returns the list of results in a Vec|
-//! | [`many_till0`][crate::multi::many_till0] | `many_till0(tag( &quot;ab&quot; ), tag( &quot;ef&quot; ))` | `&quot;ababefg&quot;` | `Ok((&quot;g&quot;, (vec![&quot;ab&quot;, &quot;ab&quot;], &quot;ef&quot;)))` |Applies the first parser until the second applies. Returns a tuple containing the list of results from the first in a Vec and the result of the second|
-//! | [`separated0`][crate::multi::separated0] | `separated0(&quot;ab&quot;, &quot;,&quot;)` | `&quot;ab,ab,ab.&quot;` | `Ok((&quot;.&quot;, vec![&quot;ab&quot;, &quot;ab&quot;, &quot;ab&quot;]))` |`separated1` works like `separated0` but must returns at least one element|
+//! | [`count`][crate::multi::count] | `count(take(2), 3)` | `"abcdefgh"` | `Ok(("gh", vec!["ab", "cd", "ef"]))` |Applies the child parser a specified number of times|
+//! | [`many0`][crate::multi::many0] | `many0("ab")` |  `"abababc"` | `Ok(("c", vec!["ab", "ab", "ab"]))` |Applies the parser 0 or more times and returns the list of results in a Vec. `many1` does the same operation but must return at least one element|
+//! | [`many_m_n`][crate::multi::many_m_n] | `many_m_n(1, 3, "ab")` | `"ababc"` | `Ok(("c", vec!["ab", "ab"]))` |Applies the parser between m and n times (n included) and returns the list of results in a Vec|
+//! | [`many_till0`][crate::multi::many_till0] | `many_till0(tag( "ab" ), tag( "ef" ))` | `"ababefg"` | `Ok(("g", (vec!["ab", "ab"], "ef")))` |Applies the first parser until the second applies. Returns a tuple containing the list of results from the first in a Vec and the result of the second|
+//! | [`separated0`][crate::multi::separated0] | `separated0("ab", ",")` | `"ab,ab,ab."` | `Ok((".", vec!["ab", "ab", "ab"]))` |`separated1` works like `separated0` but must returns at least one element|
 //! | [`fold_many0`][crate::multi::fold_many0] | `fold_many0(be_u8, \|\| 0, \|acc, item\| acc + item)` | `[1, 2, 3]` | `Ok(([], 6))` |Applies the parser 0 or more times and folds the list of return values. The `fold_many1` version must apply the child parser at least one time|
 //! | [`fold_many_m_n`][crate::multi::fold_many_m_n] | `fold_many_m_n(1, 2, be_u8, \|\| 0, \|acc, item\| acc + item)` | `[1, 2, 3]` | `Ok(([3], 3))` |Applies the parser between m and n times (n included) and folds the list of return value|
-//! | [`length_count`][crate::multi::length_count] | `length_count(number, &quot;ab&quot;)` | `&quot;2ababab&quot;` | `Ok((&quot;ab&quot;, vec![&quot;ab&quot;, &quot;ab&quot;]))` |Gets a number from the first parser, then applies the second parser that many times|
+//! | [`length_count`][crate::multi::length_count] | `length_count(number, "ab")` | `"2ababab"` | `Ok(("ab", vec!["ab", "ab"]))` |Gets a number from the first parser, then applies the second parser that many times|
 //!
 //! ## Partial related
 //!
@@ -1647,15 +1648,15 @@
 /// # use winnow::error::ErrorKind;
 /// # use winnow::error::Error;
 /// use winnow::combinator::rest;
-/// assert_eq!(rest::&lt;_,Error&lt;_&gt;&gt;(&quot;abc&quot;), Ok((&quot;&quot;, &quot;abc&quot;)));
-/// assert_eq!(rest::&lt;_,Error&lt;_&gt;&gt;(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(rest::&lt;_,Error&lt;_&gt;&gt;("abc"), Ok(("", "abc")));
+/// assert_eq!(rest::&lt;_,Error&lt;_&gt;&gt;(""), Ok(("", "")));
 /// ```
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>rest&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>I: Stream,
 {
-    trace(<span class="string">&quot;rest&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"rest"</span>, <span class="kw">move </span>|input: I| {
         <span class="prelude-val">Ok</span>(input.next_slice(input.eof_offset()))
     })
     .parse_next(input)
@@ -1671,15 +1672,15 @@
 /// # use winnow::error::ErrorKind;
 /// # use winnow::error::Error;
 /// use winnow::combinator::rest_len;
-/// assert_eq!(rest_len::&lt;_,Error&lt;_&gt;&gt;(&quot;abc&quot;), Ok((&quot;abc&quot;, 3)));
-/// assert_eq!(rest_len::&lt;_,Error&lt;_&gt;&gt;(&quot;&quot;), Ok((&quot;&quot;, 0)));
+/// assert_eq!(rest_len::&lt;_,Error&lt;_&gt;&gt;("abc"), Ok(("abc", 3)));
+/// assert_eq!(rest_len::&lt;_,Error&lt;_&gt;&gt;(""), Ok(("", 0)));
 /// ```
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>rest_len&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, usize, E&gt;
 <span class="kw">where
     </span>I: Stream,
 {
-    trace(<span class="string">&quot;rest_len&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"rest_len"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">let </span>len = input.eof_offset();
         <span class="prelude-val">Ok</span>((input, len))
     })
@@ -1688,17 +1689,17 @@
 
 <span class="doccomment">/// Implementation of [`Parser::by_ref`][Parser::by_ref]
 </span><span class="attr">#[cfg_attr(nightly, warn(rustdoc::missing_doc_code_examples))]
-</span><span class="kw">pub struct </span>ByRef&lt;<span class="lifetime">&#39;p</span>, P&gt; {
-    p: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><span class="kw-2">mut </span>P,
+</span><span class="kw">pub struct </span>ByRef&lt;<span class="lifetime">'p</span>, P&gt; {
+    p: <span class="kw-2">&amp;</span><span class="lifetime">'p </span><span class="kw-2">mut </span>P,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;p</span>, P&gt; ByRef&lt;<span class="lifetime">&#39;p</span>, P&gt; {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(p: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><span class="kw-2">mut </span>P) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'p</span>, P&gt; ByRef&lt;<span class="lifetime">'p</span>, P&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(p: <span class="kw-2">&amp;</span><span class="lifetime">'p </span><span class="kw-2">mut </span>P) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ p }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;p</span>, I, O, E, P: Parser&lt;I, O, E&gt;&gt; Parser&lt;I, O, E&gt; <span class="kw">for </span>ByRef&lt;<span class="lifetime">&#39;p</span>, P&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'p</span>, I, O, E, P: Parser&lt;I, O, E&gt;&gt; Parser&lt;I, O, E&gt; <span class="kw">for </span>ByRef&lt;<span class="lifetime">'p</span>, P&gt; {
     <span class="kw">fn </span>parse_next(<span class="kw-2">&amp;mut </span><span class="self">self</span>, i: I) -&gt; IResult&lt;I, O, E&gt; {
         <span class="self">self</span>.p.parse_next(i)
     }
@@ -1801,7 +1802,7 @@
             <span class="prelude-val">Ok</span>(o2) =&gt; <span class="prelude-val">Ok</span>((input, o2)),
             <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(ErrMode::from_external_error(i, ErrorKind::Verify, e)),
         };
-        trace_result(<span class="string">&quot;verify&quot;</span>, <span class="kw-2">&amp;</span>res);
+        trace_result(<span class="string">"verify"</span>, <span class="kw-2">&amp;</span>res);
         res
     }
 }
@@ -1856,7 +1857,7 @@
             <span class="prelude-val">Some</span>(o2) =&gt; <span class="prelude-val">Ok</span>((input, o2)),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(ErrMode::from_error_kind(i, ErrorKind::Verify)),
         };
-        trace_result(<span class="string">&quot;verify&quot;</span>, <span class="kw-2">&amp;</span>res);
+        trace_result(<span class="string">"verify"</span>, <span class="kw-2">&amp;</span>res);
         res
     }
 }
@@ -1957,7 +1958,7 @@
         <span class="kw">let </span>res = o
             .parse_slice()
             .ok_or_else(|| ErrMode::from_error_kind(input, ErrorKind::Verify));
-        trace_result(<span class="string">&quot;verify&quot;</span>, <span class="kw-2">&amp;</span>res);
+        trace_result(<span class="string">"verify"</span>, <span class="kw-2">&amp;</span>res);
         <span class="prelude-val">Ok</span>((i, res<span class="question-mark">?</span>))
     }
 }
@@ -2027,15 +2028,15 @@
 ///   opt(alpha1).parse_next(i)
 /// }
 ///
-/// assert_eq!(parser(&quot;abcd;&quot;), Ok((&quot;;&quot;, Some(&quot;abcd&quot;))));
-/// assert_eq!(parser(&quot;123;&quot;), Ok((&quot;123;&quot;, None)));
+/// assert_eq!(parser("abcd;"), Ok((";", Some("abcd"))));
+/// assert_eq!(parser("123;"), Ok(("123;", None)));
 /// # }
 /// ```
 </span><span class="kw">pub fn </span>opt&lt;I: Stream, O, E: ParseError&lt;I&gt;, F&gt;(<span class="kw-2">mut </span>f: F) -&gt; <span class="kw">impl </span>Parser&lt;I, <span class="prelude-ty">Option</span>&lt;O&gt;, E&gt;
 <span class="kw">where
     </span>F: Parser&lt;I, O, E&gt;,
 {
-    trace(<span class="string">&quot;opt&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"opt"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">let </span>i = input.clone();
         <span class="kw">match </span>f.parse_next(input) {
             <span class="prelude-val">Ok</span>((i, o)) =&gt; <span class="prelude-val">Ok</span>((i, <span class="prelude-val">Some</span>(o))),
@@ -2060,10 +2061,10 @@
 ///   cond(b, alpha1).parse_next(i)
 /// }
 ///
-/// assert_eq!(parser(true, &quot;abcd;&quot;), Ok((&quot;;&quot;, Some(&quot;abcd&quot;))));
-/// assert_eq!(parser(false, &quot;abcd;&quot;), Ok((&quot;abcd;&quot;, None)));
-/// assert_eq!(parser(true, &quot;123;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;123;&quot;, ErrorKind::Slice))));
-/// assert_eq!(parser(false, &quot;123;&quot;), Ok((&quot;123;&quot;, None)));
+/// assert_eq!(parser(true, "abcd;"), Ok((";", Some("abcd"))));
+/// assert_eq!(parser(false, "abcd;"), Ok(("abcd;", None)));
+/// assert_eq!(parser(true, "123;"), Err(ErrMode::Backtrack(Error::new("123;", ErrorKind::Slice))));
+/// assert_eq!(parser(false, "123;"), Ok(("123;", None)));
 /// # }
 /// ```
 </span><span class="kw">pub fn </span>cond&lt;I, O, E: ParseError&lt;I&gt;, F&gt;(b: bool, <span class="kw-2">mut </span>f: F) -&gt; <span class="kw">impl </span>Parser&lt;I, <span class="prelude-ty">Option</span>&lt;O&gt;, E&gt;
@@ -2071,7 +2072,7 @@
     </span>I: Stream,
     F: Parser&lt;I, O, E&gt;,
 {
-    trace(<span class="string">&quot;cond&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"cond"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">if </span>b {
             <span class="kw">match </span>f.parse_next(input) {
                 <span class="prelude-val">Ok</span>((i, o)) =&gt; <span class="prelude-val">Ok</span>((i, <span class="prelude-val">Some</span>(o))),
@@ -2096,17 +2097,17 @@
 ///
 /// let mut parser = peek(alpha1);
 ///
-/// assert_eq!(parser.parse_next(&quot;abcd;&quot;), Ok((&quot;abcd;&quot;, &quot;abcd&quot;)));
-/// assert_eq!(parser.parse_next(&quot;123;&quot;), Err(ErrMode::Backtrack(Error::new(&quot;123;&quot;, ErrorKind::Slice))));
+/// assert_eq!(parser.parse_next("abcd;"), Ok(("abcd;", "abcd")));
+/// assert_eq!(parser.parse_next("123;"), Err(ErrMode::Backtrack(Error::new("123;", ErrorKind::Slice))));
 /// # }
 /// ```
-</span><span class="attr">#[doc(alias = <span class="string">&quot;look_ahead&quot;</span>)]
-#[doc(alias = <span class="string">&quot;rewind&quot;</span>)]
+</span><span class="attr">#[doc(alias = <span class="string">"look_ahead"</span>)]
+#[doc(alias = <span class="string">"rewind"</span>)]
 </span><span class="kw">pub fn </span>peek&lt;I: Stream, O, E: ParseError&lt;I&gt;, F&gt;(<span class="kw-2">mut </span>f: F) -&gt; <span class="kw">impl </span>Parser&lt;I, O, E&gt;
 <span class="kw">where
     </span>F: Parser&lt;I, O, E&gt;,
 {
-    trace(<span class="string">&quot;peek&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"peek"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">let </span>i = input.clone();
         <span class="kw">match </span>f.parse_next(input) {
             <span class="prelude-val">Ok</span>((<span class="kw">_</span>, o)) =&gt; <span class="prelude-val">Ok</span>((i, o)),
@@ -2128,16 +2129,16 @@
 /// # use winnow::prelude::*;
 ///
 /// let mut parser = eof;
-/// assert_eq!(parser.parse_next(&quot;abc&quot;), Err(ErrMode::Backtrack(Error::new(&quot;abc&quot;, ErrorKind::Eof))));
-/// assert_eq!(parser.parse_next(&quot;&quot;), Ok((&quot;&quot;, &quot;&quot;)));
+/// assert_eq!(parser.parse_next("abc"), Err(ErrMode::Backtrack(Error::new("abc", ErrorKind::Eof))));
+/// assert_eq!(parser.parse_next(""), Ok(("", "")));
 /// ```
-</span><span class="attr">#[doc(alias = <span class="string">&quot;end&quot;</span>)]
-#[doc(alias = <span class="string">&quot;eoi&quot;</span>)]
+</span><span class="attr">#[doc(alias = <span class="string">"end"</span>)]
+#[doc(alias = <span class="string">"eoi"</span>)]
 </span><span class="kw">pub fn </span>eof&lt;I, E: ParseError&lt;I&gt;&gt;(input: I) -&gt; IResult&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>I: Stream,
 {
-    trace(<span class="string">&quot;eof&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"eof"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">if </span>input.eof_offset() == <span class="number">0 </span>{
             <span class="prelude-val">Ok</span>(input.next_slice(<span class="number">0</span>))
         } <span class="kw">else </span>{
@@ -2166,7 +2167,7 @@
     E: ParseError&lt;I&gt;,
 {
     <span class="kw">fn </span>parse_next(<span class="kw-2">&amp;mut </span><span class="self">self</span>, input: I) -&gt; IResult&lt;I, O, E&gt; {
-        trace(<span class="string">&quot;complete_err&quot;</span>, |input: I| {
+        trace(<span class="string">"complete_err"</span>, |input: I| {
             <span class="kw">let </span>i = input.clone();
             <span class="kw">match </span>(<span class="self">self</span>.f).parse_next(input) {
                 <span class="prelude-val">Err</span>(ErrMode::Incomplete(<span class="kw">_</span>)) =&gt; {
@@ -2237,7 +2238,7 @@
         } <span class="kw">else </span>{
             <span class="prelude-val">Err</span>(ErrMode::from_error_kind(i, ErrorKind::Verify))
         };
-        trace_result(<span class="string">&quot;verify&quot;</span>, <span class="kw-2">&amp;</span>res);
+        trace_result(<span class="string">"verify"</span>, <span class="kw-2">&amp;</span>res);
         res
     }
 }
@@ -2334,15 +2335,15 @@
 ///
 /// let mut parser = not(alpha1);
 ///
-/// assert_eq!(parser.parse_next(&quot;123&quot;), Ok((&quot;123&quot;, ())));
-/// assert_eq!(parser.parse_next(&quot;abcd&quot;), Err(ErrMode::Backtrack(Error::new(&quot;abcd&quot;, ErrorKind::Not))));
+/// assert_eq!(parser.parse_next("123"), Ok(("123", ())));
+/// assert_eq!(parser.parse_next("abcd"), Err(ErrMode::Backtrack(Error::new("abcd", ErrorKind::Not))));
 /// # }
 /// ```
 </span><span class="kw">pub fn </span>not&lt;I: Stream, O, E: ParseError&lt;I&gt;, F&gt;(<span class="kw-2">mut </span>parser: F) -&gt; <span class="kw">impl </span>Parser&lt;I, (), E&gt;
 <span class="kw">where
     </span>F: Parser&lt;I, O, E&gt;,
 {
-    trace(<span class="string">&quot;not&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"not"</span>, <span class="kw">move </span>|input: I| {
         <span class="kw">let </span>i = input.clone();
         <span class="kw">match </span>parser.parse_next(input) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(ErrMode::from_error_kind(i, ErrorKind::Not)),
@@ -2549,14 +2550,14 @@
 ///
 /// fn parser(input: &amp;str) -&gt; IResult&lt;&amp;str, &amp;str&gt; {
 ///   alt((
-///     preceded(one_of(&quot;+-&quot;), digit1),
+///     preceded(one_of("+-"), digit1),
 ///     rest
 ///   )).parse_next(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;+10 ab&quot;), Ok((&quot; ab&quot;, &quot;10&quot;)));
-/// assert_eq!(parser(&quot;ab&quot;), Ok((&quot;&quot;, &quot;ab&quot;)));
-/// assert_eq!(parser(&quot;+&quot;), Ok((&quot;&quot;, &quot;+&quot;)));
+/// assert_eq!(parser("+10 ab"), Ok((" ab", "10")));
+/// assert_eq!(parser("ab"), Ok(("", "ab")));
+/// assert_eq!(parser("+"), Ok(("", "+")));
 /// # }
 /// ```
 ///
@@ -2574,14 +2575,14 @@
 ///
 /// fn parser(input: &amp;str) -&gt; IResult&lt;&amp;str, &amp;str&gt; {
 ///   alt((
-///     preceded(one_of(&quot;+-&quot;), cut_err(digit1)),
+///     preceded(one_of("+-"), cut_err(digit1)),
 ///     rest
 ///   )).parse_next(input)
 /// }
 ///
-/// assert_eq!(parser(&quot;+10 ab&quot;), Ok((&quot; ab&quot;, &quot;10&quot;)));
-/// assert_eq!(parser(&quot;ab&quot;), Ok((&quot;&quot;, &quot;ab&quot;)));
-/// assert_eq!(parser(&quot;+&quot;), Err(ErrMode::Cut(Error { input: &quot;&quot;, kind: ErrorKind::Slice })));
+/// assert_eq!(parser("+10 ab"), Ok((" ab", "10")));
+/// assert_eq!(parser("ab"), Ok(("", "ab")));
+/// assert_eq!(parser("+"), Err(ErrMode::Cut(Error { input: "", kind: ErrorKind::Slice })));
 /// # }
 /// ```
 </span><span class="kw">pub fn </span>cut_err&lt;I, O, E: ParseError&lt;I&gt;, F&gt;(<span class="kw-2">mut </span>parser: F) -&gt; <span class="kw">impl </span>Parser&lt;I, O, E&gt;
@@ -2589,7 +2590,7 @@
     </span>I: Stream,
     F: Parser&lt;I, O, E&gt;,
 {
-    trace(<span class="string">&quot;cut_err&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"cut_err"</span>, <span class="kw">move </span>|input: I| {
         parser.parse_next(input).map_err(|e| e.cut())
     })
 }
@@ -2603,7 +2604,7 @@
     </span>I: Stream,
     F: Parser&lt;I, O, E&gt;,
 {
-    trace(<span class="string">&quot;backtrack_err&quot;</span>, <span class="kw">move </span>|input: I| {
+    trace(<span class="string">"backtrack_err"</span>, <span class="kw">move </span>|input: I| {
         parser.parse_next(input).map_err(|e| e.backtrack())
     })
 }
@@ -2632,7 +2633,7 @@
     </span>I: Stream,
 {
     <span class="attr">#![allow(clippy::todo)]
-    </span>trace(<span class="string">&quot;todo&quot;</span>, <span class="kw">move </span>|_input: I| <span class="macro">todo!</span>(<span class="string">&quot;unimplemented parse&quot;</span>)).parse_next(input)
+    </span>trace(<span class="string">"todo"</span>, <span class="kw">move </span>|_input: I| <span class="macro">todo!</span>(<span class="string">"unimplemented parse"</span>)).parse_next(input)
 }
 
 <span class="doccomment">/// Implementation of [`Parser::output_into`]
@@ -2725,7 +2726,7 @@
 
 <span class="doccomment">/// Creates an iterator from input data and a parser.
 ///
-/// Call the iterator&#39;s [`ParserIterator::finish`] method to get the remaining input if successful,
+/// Call the iterator's [`ParserIterator::finish`] method to get the remaining input if successful,
 /// or the error value if we encountered an error.
 ///
 /// On [`ErrMode::Backtrack`], iteration will stop.  To instead chain an error up, see [`cut_err`].
@@ -2736,14 +2737,14 @@
 /// use winnow::{combinator::iterator, IResult, bytes::tag, character::alpha1, sequence::terminated};
 /// use std::collections::HashMap;
 ///
-/// let data = &quot;abc|defg|hijkl|mnopqr|123&quot;;
-/// let mut it = iterator(data, terminated(alpha1, &quot;|&quot;));
+/// let data = "abc|defg|hijkl|mnopqr|123";
+/// let mut it = iterator(data, terminated(alpha1, "|"));
 ///
 /// let parsed = it.map(|v| (v, v.len())).collect::&lt;HashMap&lt;_,_&gt;&gt;();
 /// let res: IResult&lt;_,_&gt; = it.finish();
 ///
-/// assert_eq!(parsed, [(&quot;abc&quot;, 3usize), (&quot;defg&quot;, 4), (&quot;hijkl&quot;, 5), (&quot;mnopqr&quot;, 6)].iter().cloned().collect());
-/// assert_eq!(res, Ok((&quot;123&quot;, ())));
+/// assert_eq!(parsed, [("abc", 3usize), ("defg", 4), ("hijkl", 5), ("mnopqr", 6)].iter().cloned().collect());
+/// assert_eq!(res, Ok(("123", ())));
 /// ```
 </span><span class="kw">pub fn </span>iterator&lt;I, O, E, F&gt;(input: I, parser: F) -&gt; ParserIterator&lt;F, I, O, E&gt;
 <span class="kw">where
@@ -2786,7 +2787,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, F, I, O, E&gt; core::iter::Iterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ParserIterator&lt;F, I, O, E&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, F, I, O, E&gt; core::iter::Iterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ParserIterator&lt;F, I, O, E&gt;
 <span class="kw">where
     </span>F: Parser&lt;I, O, E&gt;,
     I: Stream,
@@ -2845,23 +2846,23 @@
 /// use winnow::combinator::success;
 ///
 /// let mut parser = success::&lt;_,_,Error&lt;_&gt;&gt;(10);
-/// assert_eq!(parser.parse_next(&quot;xyz&quot;), Ok((&quot;xyz&quot;, 10)));
+/// assert_eq!(parser.parse_next("xyz"), Ok(("xyz", 10)));
 ///
 /// fn sign(input: &amp;str) -&gt; IResult&lt;&amp;str, isize&gt; {
 ///     alt((
-///         &#39;-&#39;.value(-1),
-///         &#39;+&#39;.value(1),
+///         '-'.value(-1),
+///         '+'.value(1),
 ///         success::&lt;_,_,Error&lt;_&gt;&gt;(1)
 ///     )).parse_next(input)
 /// }
-/// assert_eq!(sign(&quot;+10&quot;), Ok((&quot;10&quot;, 1)));
-/// assert_eq!(sign(&quot;-10&quot;), Ok((&quot;10&quot;, -1)));
-/// assert_eq!(sign(&quot;10&quot;), Ok((&quot;10&quot;, 1)));
+/// assert_eq!(sign("+10"), Ok(("10", 1)));
+/// assert_eq!(sign("-10"), Ok(("10", -1)));
+/// assert_eq!(sign("10"), Ok(("10", 1)));
 /// ```
-</span><span class="attr">#[doc(alias = <span class="string">&quot;value&quot;</span>)]
-#[doc(alias = <span class="string">&quot;empty&quot;</span>)]
+</span><span class="attr">#[doc(alias = <span class="string">"value"</span>)]
+#[doc(alias = <span class="string">"empty"</span>)]
 </span><span class="kw">pub fn </span>success&lt;I: Stream, O: Clone, E: ParseError&lt;I&gt;&gt;(val: O) -&gt; <span class="kw">impl </span>Parser&lt;I, O, E&gt; {
-    trace(<span class="string">&quot;success&quot;</span>, <span class="kw">move </span>|input: I| <span class="prelude-val">Ok</span>((input, val.clone())))
+    trace(<span class="string">"success"</span>, <span class="kw">move </span>|input: I| <span class="prelude-val">Ok</span>((input, val.clone())))
 }
 
 <span class="doccomment">/// A parser which always fails.
@@ -2875,12 +2876,12 @@
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::Error, IResult};
 /// use winnow::combinator::fail;
 ///
-/// let s = &quot;string&quot;;
+/// let s = "string";
 /// assert_eq!(fail::&lt;_, &amp;str, _&gt;(s), Err(ErrMode::Backtrack(Error::new(s, ErrorKind::Fail))));
 /// ```
-</span><span class="attr">#[doc(alias = <span class="string">&quot;unexpected&quot;</span>)]
+</span><span class="attr">#[doc(alias = <span class="string">"unexpected"</span>)]
 </span><span class="kw">pub fn </span>fail&lt;I: Stream, O, E: ParseError&lt;I&gt;&gt;(i: I) -&gt; IResult&lt;I, O, E&gt; {
-    trace(<span class="string">&quot;fail&quot;</span>, |i| {
+    trace(<span class="string">"fail"</span>, |i| {
         <span class="prelude-val">Err</span>(ErrMode::from_error_kind(i, ErrorKind::Fail))
     })
     .parse_next(i)
@@ -2928,10 +2929,10 @@
     C: Clone + <span class="kw">crate</span>::lib::std::fmt::Debug,
 {
     <span class="kw">fn </span>parse_next(<span class="kw-2">&amp;mut </span><span class="self">self</span>, i: I) -&gt; IResult&lt;I, O, E&gt; {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;debug&quot;</span>)]
-        </span><span class="kw">let </span>name = <span class="macro">format!</span>(<span class="string">&quot;context={:?}&quot;</span>, <span class="self">self</span>.context);
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;debug&quot;</span>))]
-        </span><span class="kw">let </span>name = <span class="string">&quot;context&quot;</span>;
+        <span class="attr">#[cfg(feature = <span class="string">"debug"</span>)]
+        </span><span class="kw">let </span>name = <span class="macro">format!</span>(<span class="string">"context={:?}"</span>, <span class="self">self</span>.context);
+        <span class="attr">#[cfg(not(feature = <span class="string">"debug"</span>))]
+        </span><span class="kw">let </span>name = <span class="string">"context"</span>;
         trace(name, <span class="kw">move </span>|i: I| {
             (<span class="self">self</span>.parser)
                 .parse_next(i.clone())

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/polling-2.8.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="polling" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../polling/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/polling-2.8.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="polling" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -699,7 +700,7 @@
 //! - [IOCP](https://learn.microsoft.com/en-us/windows/win32/fileio/i-o-completion-ports): Windows, Wine (version 7.13+)
 //!
 //! By default, polling is done in oneshot mode, which means interest in I/O events needs to
-//! be re-enabled after an event is delivered if we&#39;re interested in the next event of the same
+//! be re-enabled after an event is delivered if we're interested in the next event of the same
 //! kind. However, level and edge triggered modes are also available for certain operating
 //! systems. See the documentation of the [`PollMode`] type for more information.
 //!
@@ -712,7 +713,7 @@
 //! use std::net::TcpListener;
 //!
 //! // Create a TCP listener.
-//! let socket = TcpListener::bind(&quot;127.0.0.1:8000&quot;)?;
+//! let socket = TcpListener::bind("127.0.0.1:8000")?;
 //! socket.set_nonblocking(true)?;
 //! let key = 7; // Arbitrary key identifying the socket.
 //!
@@ -739,8 +740,8 @@
 //! # std::io::Result::Ok(())
 //! ```
 
-</span><span class="attr">#![cfg(feature = <span class="string">&quot;std&quot;</span>)]
-#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), no_std)]
+</span><span class="attr">#![cfg(feature = <span class="string">"std"</span>)]
+#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 #![warn(missing_docs, missing_debug_implementations, rust_2018_idioms)]
 #![allow(clippy::useless_conversion, clippy::unnecessary_cast)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
@@ -773,40 +774,40 @@
     </span><span class="kw">if </span><span class="attr">#[cfg(polling_test_poll_backend)] </span>{
         <span class="kw">mod </span>poll;
         <span class="kw">use </span>poll <span class="kw">as </span>sys;
-    } <span class="kw">else if </span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;linux&quot;</span>, target_os = <span class="string">&quot;android&quot;</span>))] </span>{
+    } <span class="kw">else if </span><span class="attr">#[cfg(any(target_os = <span class="string">"linux"</span>, target_os = <span class="string">"android"</span>))] </span>{
         <span class="kw">mod </span>epoll;
         <span class="kw">use </span>epoll <span class="kw">as </span>sys;
     } <span class="kw">else if </span><span class="attr">#[cfg(any(
-        target_os = <span class="string">&quot;illumos&quot;</span>,
-        target_os = <span class="string">&quot;solaris&quot;</span>,
+        target_os = <span class="string">"illumos"</span>,
+        target_os = <span class="string">"solaris"</span>,
     ))] </span>{
         <span class="kw">mod </span>port;
         <span class="kw">use </span>port <span class="kw">as </span>sys;
     } <span class="kw">else if </span><span class="attr">#[cfg(any(
-        target_os = <span class="string">&quot;macos&quot;</span>,
-        target_os = <span class="string">&quot;ios&quot;</span>,
-        target_os = <span class="string">&quot;tvos&quot;</span>,
-        target_os = <span class="string">&quot;watchos&quot;</span>,
-        target_os = <span class="string">&quot;freebsd&quot;</span>,
-        target_os = <span class="string">&quot;netbsd&quot;</span>,
-        target_os = <span class="string">&quot;openbsd&quot;</span>,
-        target_os = <span class="string">&quot;dragonfly&quot;</span>,
+        target_os = <span class="string">"macos"</span>,
+        target_os = <span class="string">"ios"</span>,
+        target_os = <span class="string">"tvos"</span>,
+        target_os = <span class="string">"watchos"</span>,
+        target_os = <span class="string">"freebsd"</span>,
+        target_os = <span class="string">"netbsd"</span>,
+        target_os = <span class="string">"openbsd"</span>,
+        target_os = <span class="string">"dragonfly"</span>,
     ))] </span>{
         <span class="kw">mod </span>kqueue;
         <span class="kw">use </span>kqueue <span class="kw">as </span>sys;
     } <span class="kw">else if </span><span class="attr">#[cfg(any(
-        target_os = <span class="string">&quot;vxworks&quot;</span>,
-        target_os = <span class="string">&quot;fuchsia&quot;</span>,
-        target_os = <span class="string">&quot;horizon&quot;</span>,
+        target_os = <span class="string">"vxworks"</span>,
+        target_os = <span class="string">"fuchsia"</span>,
+        target_os = <span class="string">"horizon"</span>,
         unix,
     ))] </span>{
         <span class="kw">mod </span>poll;
         <span class="kw">use </span>poll <span class="kw">as </span>sys;
-    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">&quot;windows&quot;</span>)] </span>{
+    } <span class="kw">else if </span><span class="attr">#[cfg(target_os = <span class="string">"windows"</span>)] </span>{
         <span class="kw">mod </span>iocp;
         <span class="kw">use </span>iocp <span class="kw">as </span>sys;
     } <span class="kw">else </span>{
-        <span class="macro">compile_error!</span>(<span class="string">&quot;polling does not support this target OS&quot;</span>);
+        <span class="macro">compile_error!</span>(<span class="string">"polling does not support this target OS"</span>);
     }
 }
 
@@ -955,7 +956,7 @@
     <span class="doccomment">/// Adds a file descriptor or socket to the poller.
     ///
     /// A file descriptor or socket is considered readable or writable when a read or write
-    /// operation on it would not block. This doesn&#39;t mean the read or write operation will
+    /// operation on it would not block. This doesn't mean the read or write operation will
     /// succeed, it only means the operation will return immediately.
     ///
     /// If interest is set in both readability and writability, the two kinds of events might be
@@ -967,10 +968,10 @@
     /// - `Event { key: 7, readable: false, writable: true }`
     ///
     /// Note that interest in I/O events needs to be re-enabled using
-    /// [`modify()`][`Poller::modify()`] again after an event is delivered if we&#39;re interested in
+    /// [`modify()`][`Poller::modify()`] again after an event is delivered if we're interested in
     /// the next event of the same kind.
     ///
-    /// Don&#39;t forget to [`delete()`][`Poller::delete()`] the file descriptor or socket when it is
+    /// Don't forget to [`delete()`][`Poller::delete()`] the file descriptor or socket when it is
     /// no longer used!
     ///
     /// # Errors
@@ -987,7 +988,7 @@
     /// ```no_run
     /// use polling::{Event, Poller};
     ///
-    /// let source = std::net::TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// let source = std::net::TcpListener::bind("127.0.0.1:0")?;
     /// source.set_nonblocking(true)?;
     /// let key = 7;
     ///
@@ -1017,7 +1018,7 @@
         <span class="kw">if </span>interest.key == NOTIFY_KEY {
             <span class="kw">return </span><span class="prelude-val">Err</span>(io::Error::new(
                 io::ErrorKind::InvalidInput,
-                <span class="string">&quot;the key is not allowed to be `usize::MAX`&quot;</span>,
+                <span class="string">"the key is not allowed to be `usize::MAX`"</span>,
             ));
         }
         <span class="self">self</span>.poller.add(source.raw(), interest, mode)
@@ -1032,7 +1033,7 @@
     /// [`add()`][`Poller::add()`].
     ///
     /// Note that interest in I/O events needs to be re-enabled using
-    /// [`modify()`][`Poller::modify()`] again after an event is delivered if we&#39;re interested in
+    /// [`modify()`][`Poller::modify()`] again after an event is delivered if we're interested in
     /// the next event of the same kind.
     ///
     /// # Errors
@@ -1048,7 +1049,7 @@
     ///
     /// ```no_run
     /// # use polling::{Event, Poller};
-    /// # let source = std::net::TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// # let source = std::net::TcpListener::bind("127.0.0.1:0")?;
     /// # let key = 7;
     /// # let poller = Poller::new()?;
     /// # poller.add(&amp;source, Event::none(key))?;
@@ -1060,7 +1061,7 @@
     ///
     /// ```no_run
     /// # use polling::{Event, Poller};
-    /// # let source = std::net::TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// # let source = std::net::TcpListener::bind("127.0.0.1:0")?;
     /// # let key = 7;
     /// # let poller = Poller::new()?;
     /// # poller.add(&amp;source, Event::none(key))?;
@@ -1074,7 +1075,7 @@
     /// # use polling::{Event, Poller};
     /// # let poller = Poller::new()?;
     /// # let key = 7;
-    /// # let source = std::net::TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// # let source = std::net::TcpListener::bind("127.0.0.1:0")?;
     /// # poller.add(&amp;source, Event::none(key))?;
     /// poller.modify(&amp;source, Event::writable(key))?;
     /// # std::io::Result::Ok(())
@@ -1084,7 +1085,7 @@
     ///
     /// ```no_run
     /// # use polling::{Event, Poller};
-    /// # let source = std::net::TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// # let source = std::net::TcpListener::bind("127.0.0.1:0")?;
     /// # let key = 7;
     /// # let poller = Poller::new()?;
     /// # poller.add(&amp;source, Event::none(key))?;
@@ -1119,7 +1120,7 @@
         <span class="kw">if </span>interest.key == NOTIFY_KEY {
             <span class="kw">return </span><span class="prelude-val">Err</span>(io::Error::new(
                 io::ErrorKind::InvalidInput,
-                <span class="string">&quot;the key is not allowed to be `usize::MAX`&quot;</span>,
+                <span class="string">"the key is not allowed to be `usize::MAX`"</span>,
             ));
         }
         <span class="self">self</span>.poller.modify(source.raw(), interest, mode)
@@ -1136,7 +1137,7 @@
     /// use polling::{Event, Poller};
     /// use std::net::TcpListener;
     ///
-    /// let socket = TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// let socket = TcpListener::bind("127.0.0.1:0")?;
     /// socket.set_nonblocking(true)?;
     /// let key = 7;
     ///
@@ -1174,7 +1175,7 @@
     /// use std::net::TcpListener;
     /// use std::time::Duration;
     ///
-    /// let socket = TcpListener::bind(&quot;127.0.0.1:0&quot;)?;
+    /// let socket = TcpListener::bind("127.0.0.1:0")?;
     /// socket.set_nonblocking(true)?;
     /// let key = 7;
     ///
@@ -1186,7 +1187,7 @@
     /// # std::io::Result::Ok(())
     /// ```
     </span><span class="kw">pub fn </span>wait(<span class="kw-2">&amp;</span><span class="self">self</span>, events: <span class="kw-2">&amp;mut </span>Vec&lt;Event&gt;, timeout: <span class="prelude-ty">Option</span>&lt;Duration&gt;) -&gt; io::Result&lt;usize&gt; {
-        <span class="macro">log::trace!</span>(<span class="string">&quot;Poller::wait(_, {:?})&quot;</span>, timeout);
+        <span class="macro">log::trace!</span>(<span class="string">"Poller::wait(_, {:?})"</span>, timeout);
 
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>lock) = <span class="self">self</span>.events.try_lock() {
             <span class="comment">// Wait for I/O events.
@@ -1200,7 +1201,7 @@
             events.extend(lock.iter().filter(|ev| ev.key != usize::MAX));
             <span class="prelude-val">Ok</span>(events.len() - len)
         } <span class="kw">else </span>{
-            <span class="macro">log::trace!</span>(<span class="string">&quot;wait: skipping because another thread is already waiting on I/O&quot;</span>);
+            <span class="macro">log::trace!</span>(<span class="string">"wait: skipping because another thread is already waiting on I/O"</span>);
             <span class="prelude-val">Ok</span>(<span class="number">0</span>)
         }
     }
@@ -1228,7 +1229,7 @@
     /// # std::io::Result::Ok(())
     /// ```
     </span><span class="kw">pub fn </span>notify(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; io::Result&lt;()&gt; {
-        <span class="macro">log::trace!</span>(<span class="string">&quot;Poller::notify()&quot;</span>);
+        <span class="macro">log::trace!</span>(<span class="string">"Poller::notify()"</span>);
         <span class="kw">if </span><span class="self">self
             </span>.notified
             .compare_exchange(<span class="bool-val">false</span>, <span class="bool-val">true</span>, Ordering::SeqCst, Ordering::SeqCst)
@@ -1242,36 +1243,36 @@
 
 <span class="attr">#[cfg(all(
     any(
-        target_os = <span class="string">&quot;linux&quot;</span>,
-        target_os = <span class="string">&quot;android&quot;</span>,
-        target_os = <span class="string">&quot;illumos&quot;</span>,
-        target_os = <span class="string">&quot;solaris&quot;</span>,
-        target_os = <span class="string">&quot;macos&quot;</span>,
-        target_os = <span class="string">&quot;ios&quot;</span>,
-        target_os = <span class="string">&quot;tvos&quot;</span>,
-        target_os = <span class="string">&quot;watchos&quot;</span>,
-        target_os = <span class="string">&quot;freebsd&quot;</span>,
-        target_os = <span class="string">&quot;netbsd&quot;</span>,
-        target_os = <span class="string">&quot;openbsd&quot;</span>,
-        target_os = <span class="string">&quot;dragonfly&quot;</span>,
+        target_os = <span class="string">"linux"</span>,
+        target_os = <span class="string">"android"</span>,
+        target_os = <span class="string">"illumos"</span>,
+        target_os = <span class="string">"solaris"</span>,
+        target_os = <span class="string">"macos"</span>,
+        target_os = <span class="string">"ios"</span>,
+        target_os = <span class="string">"tvos"</span>,
+        target_os = <span class="string">"watchos"</span>,
+        target_os = <span class="string">"freebsd"</span>,
+        target_os = <span class="string">"netbsd"</span>,
+        target_os = <span class="string">"openbsd"</span>,
+        target_os = <span class="string">"dragonfly"</span>,
     ),
     not(polling_test_poll_backend),
 ))]
 #[cfg_attr(
     docsrs,
     doc(cfg(any(
-        target_os = <span class="string">&quot;linux&quot;</span>,
-        target_os = <span class="string">&quot;android&quot;</span>,
-        target_os = <span class="string">&quot;illumos&quot;</span>,
-        target_os = <span class="string">&quot;solaris&quot;</span>,
-        target_os = <span class="string">&quot;macos&quot;</span>,
-        target_os = <span class="string">&quot;ios&quot;</span>,
-        target_os = <span class="string">&quot;tvos&quot;</span>,
-        target_os = <span class="string">&quot;watchos&quot;</span>,
-        target_os = <span class="string">&quot;freebsd&quot;</span>,
-        target_os = <span class="string">&quot;netbsd&quot;</span>,
-        target_os = <span class="string">&quot;openbsd&quot;</span>,
-        target_os = <span class="string">&quot;dragonfly&quot;</span>,
+        target_os = <span class="string">"linux"</span>,
+        target_os = <span class="string">"android"</span>,
+        target_os = <span class="string">"illumos"</span>,
+        target_os = <span class="string">"solaris"</span>,
+        target_os = <span class="string">"macos"</span>,
+        target_os = <span class="string">"ios"</span>,
+        target_os = <span class="string">"tvos"</span>,
+        target_os = <span class="string">"watchos"</span>,
+        target_os = <span class="string">"freebsd"</span>,
+        target_os = <span class="string">"netbsd"</span>,
+        target_os = <span class="string">"openbsd"</span>,
+        target_os = <span class="string">"dragonfly"</span>,
     )))
 )]
 </span><span class="kw">mod </span>raw_fd_impl {
@@ -1289,7 +1290,7 @@
 
     <span class="attr">#[cfg(not(polling_no_io_safety))]
     </span><span class="kw">impl </span>AsFd <span class="kw">for </span>Poller {
-        <span class="kw">fn </span>as_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedFd&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw">fn </span>as_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedFd&lt;<span class="lifetime">'_</span>&gt; {
             <span class="self">self</span>.poller.as_fd()
         }
     }
@@ -1312,14 +1313,14 @@
 
     <span class="attr">#[cfg(not(polling_no_io_safety))]
     </span><span class="kw">impl </span>AsHandle <span class="kw">for </span>Poller {
-        <span class="kw">fn </span>as_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedHandle&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw">fn </span>as_handle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedHandle&lt;<span class="lifetime">'_</span>&gt; {
             <span class="self">self</span>.poller.as_handle()
         }
     }
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>Poller {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
         <span class="self">self</span>.poller.fmt(f)
     }
 }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/fdo.rs`."><title>fdo.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/fdo.rs`."><title>fdo.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1076,8 +1077,8 @@
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Introspectable` interface.
         </span><span class="attr">#[dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.DBus.Introspectable&quot;</span>,
-            default_path = <span class="string">&quot;/&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus.Introspectable"</span>,
+            default_path = <span class="string">"/"</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
@@ -1090,25 +1091,25 @@
 }
 
 <span class="macro">gen_introspectable_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(IntrospectableProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(IntrospectableProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="doccomment">/// Server-side implementation for the `org.freedesktop.DBus.Introspectable` interface.
 /// This interface is implemented automatically for any object registered to the
 /// [ObjectServer](crate::ObjectServer).
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Introspectable;
 
-<span class="attr">#[dbus_interface(name = <span class="string">&quot;org.freedesktop.DBus.Introspectable&quot;</span>)]
+<span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.Introspectable"</span>)]
 </span><span class="kw">impl </span>Introspectable {
     <span class="kw">async fn </span>introspect(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;String&gt; {
         <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>node = root
             .get_child(path)
-            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">&quot;Unknown object &#39;{path}&#39;&quot;</span>)))<span class="question-mark">?</span>;
+            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">"Unknown object '{path}'"</span>)))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(node.introspect().<span class="kw">await</span>)
     }
@@ -1119,7 +1120,7 @@
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Properties` interface.
         </span><span class="attr">#[dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.DBus.Properties&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus.Properties"</span>,
             assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
@@ -1128,29 +1129,29 @@
             <span class="doccomment">/// Get a property value.
             </span><span class="kw">async fn </span>get(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
+                interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
                 property_name: <span class="kw-2">&amp;</span>str,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedValue&gt;;
 
             <span class="doccomment">/// Set a property value.
             </span><span class="kw">async fn </span>set(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
+                interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
                 property_name: <span class="kw-2">&amp;</span>str,
-                value: <span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">&#39;_</span>&gt;,
+                value: <span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Get all properties.
             </span><span class="kw">async fn </span>get_all(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
+                interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, OwnedValue&gt;&gt;;
 
             <span class="attr">#[dbus_proxy(signal)]
             </span><span class="kw">async fn </span>properties_changed(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
-                changed_properties: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;,
+                interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
+                changed_properties: HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">'_</span>&gt;&gt;,
                 invalidated_properties: Vec&lt;<span class="kw-2">&amp;</span>str&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
         }
@@ -1158,7 +1159,7 @@
 }
 
 <span class="macro">gen_properties_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(PropertiesProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(PropertiesProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="doccomment">/// Server-side implementation for the `org.freedesktop.DBus.Properties` interface.
 /// This interface is implemented automatically for any object registered to the
@@ -1167,14 +1168,14 @@
 
 <span class="macro">assert_impl_all!</span>(Properties: Send, Sync, Unpin);
 
-<span class="attr">#[dbus_interface(name = <span class="string">&quot;org.freedesktop.DBus.Properties&quot;</span>)]
+<span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.Properties"</span>)]
 </span><span class="kw">impl </span>Properties {
     <span class="kw">async fn </span>get(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
+        interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
         property_name: <span class="kw-2">&amp;</span>str,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedValue&gt; {
         <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
@@ -1182,25 +1183,25 @@
             .get_child(path)
             .and_then(|node| node.interface_lock(interface_name.as_ref()))
             .ok_or_else(|| {
-                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{interface_name}&#39;&quot;</span>))
+                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">"Unknown interface '{interface_name}'"</span>))
             })<span class="question-mark">?</span>;
 
         <span class="kw">let </span>res = iface.read().<span class="kw">await</span>.get(property_name).<span class="kw">await</span>;
         res.unwrap_or_else(|| {
             <span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
-                <span class="string">&quot;Unknown property &#39;{property_name}&#39;&quot;
+                <span class="string">"Unknown property '{property_name}'"
             </span>)))
         })
     }
 
     <span class="kw">async fn </span>set(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
+        interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
         property_name: <span class="kw-2">&amp;</span>str,
-        value: Value&lt;<span class="lifetime">&#39;_</span>&gt;,
+        value: Value&lt;<span class="lifetime">'_</span>&gt;,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
-        <span class="attr">#[zbus(signal_context)] </span>ctxt: SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
+        <span class="attr">#[zbus(signal_context)] </span>ctxt: SignalContext&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
@@ -1208,14 +1209,14 @@
             .get_child(path)
             .and_then(|node| node.interface_lock(interface_name.as_ref()))
             .ok_or_else(|| {
-                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{interface_name}&#39;&quot;</span>))
+                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">"Unknown interface '{interface_name}'"</span>))
             })<span class="question-mark">?</span>;
 
         <span class="kw">match </span>iface.read().<span class="kw">await</span>.set(property_name, <span class="kw-2">&amp;</span>value, <span class="kw-2">&amp;</span>ctxt) {
             zbus::DispatchResult::RequiresMut =&gt; {}
             zbus::DispatchResult::NotFound =&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
-                    <span class="string">&quot;Unknown property &#39;{property_name}&#39;&quot;
+                    <span class="string">"Unknown property '{property_name}'"
                 </span>)));
             }
             zbus::DispatchResult::Async(f) =&gt; {
@@ -1229,16 +1230,16 @@
             .<span class="kw">await</span>;
         res.unwrap_or_else(|| {
             <span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
-                <span class="string">&quot;Unknown property &#39;{property_name}&#39;&quot;
+                <span class="string">"Unknown property '{property_name}'"
             </span>)))
         })
     }
 
     <span class="kw">async fn </span>get_all(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
+        interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, OwnedValue&gt;&gt; {
         <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
@@ -1246,7 +1247,7 @@
             .get_child(path)
             .and_then(|node| node.interface_lock(interface_name.as_ref()))
             .ok_or_else(|| {
-                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">&quot;Unknown interface &#39;{interface_name}&#39;&quot;</span>))
+                Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">"Unknown interface '{interface_name}'"</span>))
             })<span class="question-mark">?</span>;
 
         <span class="kw">let </span>res = iface.read().<span class="kw">await</span>.get_all().<span class="kw">await</span>;
@@ -1257,9 +1258,9 @@
     </span><span class="attr">#[dbus_interface(signal)]
     #[rustfmt::skip]
     </span><span class="kw">pub async fn </span>properties_changed(
-        ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
-        interface_name: InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;,
-        changed_properties: <span class="kw-2">&amp;</span>HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;,
+        ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;,
+        interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
+        changed_properties: <span class="kw-2">&amp;</span>HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'_</span>&gt;&gt;,
         invalidated_properties: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str],
     ) -&gt; zbus::Result&lt;()&gt;;
 }
@@ -1277,7 +1278,7 @@
         /// Please use [`PropertiesProxy::receive_properties_changed`] to monitor changes to properties on
         /// objects.
         </span><span class="attr">#[dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.DBus.ObjectManager&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus.ObjectManager"</span>,
             assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
@@ -1285,7 +1286,7 @@
         </span><span class="kw">trait </span>ObjectManager {
             <span class="doccomment">/// The return value of this method is a dict whose keys are object paths. All returned object
             /// paths are children of the object path implementing this interface, i.e. their object paths
-            /// start with the ObjectManager&#39;s object path plus &#39;/&#39;.
+            /// start with the ObjectManager's object path plus '/'.
             ///
             /// Each value is a dict whose keys are interfaces names. Each value in this inner dict is the
             /// same dict that would be returned by the org.freedesktop.DBus.Properties.GetAll() method for
@@ -1299,8 +1300,8 @@
             </span><span class="attr">#[dbus_proxy(signal)]
             </span><span class="kw">fn </span>interfaces_added(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                object_path: ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;,
-                interfaces_and_properties: HashMap&lt;<span class="kw-2">&amp;</span>str, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;&gt;,
+                object_path: ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
+                interfaces_and_properties: HashMap&lt;<span class="kw-2">&amp;</span>str, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">'_</span>&gt;&gt;&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// This signal is emitted whenever an object is removed or it loses one or more interfaces.
@@ -1308,7 +1309,7 @@
             </span><span class="attr">#[dbus_proxy(signal)]
             </span><span class="kw">fn </span>interfaces_removed(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                object_path: ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;,
+                object_path: ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
                 interfaces: Vec&lt;<span class="kw-2">&amp;</span>str&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
         }
@@ -1316,7 +1317,7 @@
 }
 
 <span class="macro">gen_object_manager_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(ObjectManagerProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(ObjectManagerProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="doccomment">/// Service-side [Object Manager][om] interface implementation.
 ///
@@ -1335,18 +1336,18 @@
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>ObjectManager;
 
-<span class="attr">#[dbus_interface(name = <span class="string">&quot;org.freedesktop.DBus.ObjectManager&quot;</span>)]
+<span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.ObjectManager"</span>)]
 </span><span class="kw">impl </span>ObjectManager {
     <span class="kw">async fn </span>get_managed_objects(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;ManagedObjects&gt; {
         <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>node = root
             .get_child(path)
-            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">&quot;Unknown object &#39;{path}&#39;&quot;</span>)))<span class="question-mark">?</span>;
+            .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">"Unknown object '{path}'"</span>)))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(node.get_managed_objects().<span class="kw">await</span>)
     }
@@ -1356,18 +1357,18 @@
     /// interfaces and properties (if any) that have been added to the given object path.
     </span><span class="attr">#[dbus_interface(signal)]
     </span><span class="kw">pub async fn </span>interfaces_added(
-        ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
-        object_path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;,
-        interfaces_and_properties: <span class="kw-2">&amp;</span>HashMap&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">&#39;_</span>&gt;&gt;&gt;,
+        ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;,
+        object_path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
+        interfaces_and_properties: <span class="kw-2">&amp;</span>HashMap&lt;InterfaceName&lt;<span class="lifetime">'_</span>&gt;, HashMap&lt;<span class="kw-2">&amp;</span>str, Value&lt;<span class="lifetime">'_</span>&gt;&gt;&gt;,
     ) -&gt; zbus::Result&lt;()&gt;;
 
     <span class="doccomment">/// This signal is emitted whenever an object is removed or it loses one or more interfaces.
     /// The `interfaces` parameters contains a list of the interfaces that were removed.
     </span><span class="attr">#[dbus_interface(signal)]
     </span><span class="kw">pub async fn </span>interfaces_removed(
-        ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
-        object_path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;,
-        interfaces: <span class="kw-2">&amp;</span>[InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;],
+        ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;,
+        object_path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
+        interfaces: <span class="kw-2">&amp;</span>[InterfaceName&lt;<span class="lifetime">'_</span>&gt;],
     ) -&gt; zbus::Result&lt;()&gt;;
 }
 
@@ -1376,7 +1377,7 @@
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Peer` interface.
         </span><span class="attr">#[dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.DBus.Peer&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus.Peer"</span>,
             assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
@@ -1397,26 +1398,26 @@
 }
 
 <span class="macro">gen_peer_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(PeerProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(PeerProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Peer;
 
 <span class="doccomment">/// Server-side implementation for the `org.freedesktop.DBus.Peer` interface.
 /// This interface is implemented automatically for any object registered to the
 /// [ObjectServer](crate::ObjectServer).
-</span><span class="attr">#[dbus_interface(name = <span class="string">&quot;org.freedesktop.DBus.Peer&quot;</span>)]
+</span><span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.Peer"</span>)]
 </span><span class="kw">impl </span>Peer {
     <span class="kw">fn </span>ping(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
 
     <span class="kw">fn </span>get_machine_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>id = <span class="kw">match </span>std::fs::read_to_string(<span class="string">&quot;/var/lib/dbus/machine-id&quot;</span>) {
+        <span class="kw">let </span><span class="kw-2">mut </span>id = <span class="kw">match </span>std::fs::read_to_string(<span class="string">"/var/lib/dbus/machine-id"</span>) {
             <span class="prelude-val">Ok</span>(id) =&gt; id,
             <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="kw">if let </span><span class="prelude-val">Ok</span>(id) = std::fs::read_to_string(<span class="string">&quot;/etc/machine-id&quot;</span>) {
+                <span class="kw">if let </span><span class="prelude-val">Ok</span>(id) = std::fs::read_to_string(<span class="string">"/etc/machine-id"</span>) {
                     id
                 } <span class="kw">else </span>{
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::IOError(<span class="macro">format!</span>(
-                        <span class="string">&quot;Failed to read from /var/lib/dbus/machine-id or /etc/machine-id: {e}&quot;
+                        <span class="string">"Failed to read from /var/lib/dbus/machine-id or /etc/machine-id: {e}"
                     </span>)));
                 }
             }
@@ -1433,7 +1434,7 @@
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Monitoring` interface.
         </span><span class="attr">#[dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.DBus.Monitoring&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus.Monitoring"</span>,
             assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
@@ -1447,14 +1448,14 @@
 }
 
 <span class="macro">gen_monitoring_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(MonitoringProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(MonitoringProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="attr">#[rustfmt::skip]
 </span><span class="macro">macro_rules! </span>gen_stats_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Stats` interface.
         </span><span class="attr">#[dbus_proxy(
-            interface = <span class="string">&quot;org.freedesktop.DBus.Debug.Stats&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus.Debug.Stats"</span>,
             assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
@@ -1473,7 +1474,7 @@
 }
 
 <span class="macro">gen_stats_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(StatsProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(StatsProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="doccomment">/// The flags used by the bus [`request_name`] method.
 ///
@@ -1573,29 +1574,29 @@
 /// particular security framework), or if the values of those credentials cannot be represented as
 /// documented here, then those credentials are omitted.
 ///
-/// **Note**: unknown keys, in particular those with &quot;.&quot; that are not from the specification, will
+/// **Note**: unknown keys, in particular those with "." that are not from the specification, will
 /// be ignored. Use your own implementation or contribute your keys here, or in the specification.
 </span><span class="attr">#[derive(Debug, Default, DeserializeDict, PartialEq, Eq, SerializeDict, Type)]
-#[zvariant(signature = <span class="string">&quot;a{sv}&quot;</span>)]
+#[zvariant(signature = <span class="string">"a{sv}"</span>)]
 </span><span class="kw">pub struct </span>ConnectionCredentials {
-    <span class="attr">#[zvariant(rename = <span class="string">&quot;UnixUserID&quot;</span>)]
-    #[deprecated(since = <span class="string">&quot;3.13.0&quot;</span>, note = <span class="string">&quot;Use `unix_user_id` method&quot;</span>)]
+    <span class="attr">#[zvariant(rename = <span class="string">"UnixUserID"</span>)]
+    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `unix_user_id` method"</span>)]
     </span><span class="kw">pub </span>unix_user_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 
-    <span class="attr">#[zvariant(rename = <span class="string">&quot;UnixGroupIDs&quot;</span>)]
-    #[deprecated(since = <span class="string">&quot;3.13.0&quot;</span>, note = <span class="string">&quot;Use `unix_group_ids` method&quot;</span>)]
+    <span class="attr">#[zvariant(rename = <span class="string">"UnixGroupIDs"</span>)]
+    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `unix_group_ids` method"</span>)]
     </span><span class="kw">pub </span>unix_group_ids: <span class="prelude-ty">Option</span>&lt;Vec&lt;u32&gt;&gt;,
 
-    <span class="attr">#[zvariant(rename = <span class="string">&quot;ProcessID&quot;</span>)]
-    #[deprecated(since = <span class="string">&quot;3.13.0&quot;</span>, note = <span class="string">&quot;Use `process_id` method&quot;</span>)]
+    <span class="attr">#[zvariant(rename = <span class="string">"ProcessID"</span>)]
+    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `process_id` method"</span>)]
     </span><span class="kw">pub </span>process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 
-    <span class="attr">#[zvariant(rename = <span class="string">&quot;WindowsSID&quot;</span>)]
-    #[deprecated(since = <span class="string">&quot;3.13.0&quot;</span>, note = <span class="string">&quot;Use `windows_sid` method&quot;</span>)]
+    <span class="attr">#[zvariant(rename = <span class="string">"WindowsSID"</span>)]
+    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `windows_sid` method"</span>)]
     </span><span class="kw">pub </span>windows_sid: <span class="prelude-ty">Option</span>&lt;String&gt;,
 
-    <span class="attr">#[zvariant(rename = <span class="string">&quot;LinuxSecurityLabel&quot;</span>)]
-    #[deprecated(since = <span class="string">&quot;3.13.0&quot;</span>, note = <span class="string">&quot;Use `linux_security_label` method&quot;</span>)]
+    <span class="attr">#[zvariant(rename = <span class="string">"LinuxSecurityLabel"</span>)]
+    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `linux_security_label` method"</span>)]
     </span><span class="kw">pub </span>linux_security_label: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
 }
 
@@ -1608,7 +1609,7 @@
 
     <span class="doccomment">/// The numeric Unix group IDs (including both the primary group and the supplementary groups),
     /// as defined by POSIX, in numerically sorted order. This array is either complete or absent:
-    /// if the message bus is able to determine some but not all of the caller&#39;s groups, or if one
+    /// if the message bus is able to determine some but not all of the caller's groups, or if one
     /// of the groups is not representable in a UINT32, it must not add this credential to the
     /// dictionary.
     </span><span class="kw">pub fn </span>unix_group_ids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Vec&lt;u32&gt;&gt; {
@@ -1623,7 +1624,7 @@
 
     <span class="doccomment">/// The Windows security identifier in its string form, e.g.
     /// `S-1-5-21-3623811015-3361044348-30300820-1013` for a domain or local computer user or
-    /// &quot;S-1-5-18` for the LOCAL_SYSTEM user.
+    /// "S-1-5-18` for the LOCAL_SYSTEM user.
     </span><span class="kw">pub fn </span>windows_sid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>String&gt; {
         <span class="self">self</span>.windows_sid.as_ref()
     }
@@ -1633,7 +1634,7 @@
     /// ASCII-compatible encoding, followed by a single zero byte.
     ///
     /// For example, the SELinux context `system_u:system_r:init_t:s0` (a string of length 27) would
-    /// be encoded as 28 bytes ending with `&#39;:&#39;, &#39;s&#39;, &#39;0&#39;, &#39;\x00&#39;`
+    /// be encoded as 28 bytes ending with `':', 's', '0', '\x00'`
     ///
     /// On SELinux systems this is the SELinux context, as output by `ps -Z` or `ls -Z`. Typical values
     /// might include `system_u:system_r:init_t:s0`,
@@ -1700,47 +1701,47 @@
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus` interface.
         </span><span class="attr">#[dbus_proxy(
             assume_defaults = <span class="bool-val">true</span>,
-            interface = <span class="string">&quot;org.freedesktop.DBus&quot;</span>,
+            interface = <span class="string">"org.freedesktop.DBus"</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
         </span><span class="kw">trait </span>DBus {
             <span class="doccomment">/// Adds a match rule to match messages going through the message bus
-            </span><span class="attr">#[deprecated(since = <span class="string">&quot;3.5.0&quot;</span>, note = <span class="string">&quot;Use `add_match_rule` instead&quot;</span>)]
+            </span><span class="attr">#[deprecated(since = <span class="string">"3.5.0"</span>, note = <span class="string">"Use `add_match_rule` instead"</span>)]
             </span><span class="kw">fn </span>add_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Adds a match rule to match messages going through the message bus
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">&quot;AddMatch&quot;</span>)]
-            </span><span class="kw">fn </span>add_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
+            </span><span class="attr">#[dbus_proxy(name = <span class="string">"AddMatch"</span>)]
+            </span><span class="kw">fn </span>add_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Returns auditing data used by Solaris ADT, in an unspecified binary format.
-            </span><span class="kw">fn </span>get_adt_audit_session_data(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;&gt;;
+            </span><span class="kw">fn </span>get_adt_audit_session_data(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;&gt;;
 
             <span class="doccomment">/// Returns as many credentials as possible for the process connected to the server.
             </span><span class="kw">fn </span>get_connection_credentials(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                bus_name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;,
+                bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;ConnectionCredentials&gt;;
 
             <span class="doccomment">/// Returns the security context used by SELinux, in an unspecified format.
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">&quot;GetConnectionSELinuxSecurityContext&quot;</span>)]
+            </span><span class="attr">#[dbus_proxy(name = <span class="string">"GetConnectionSELinuxSecurityContext"</span>)]
             </span><span class="kw">fn </span>get_connection_selinux_security_context(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                bus_name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;,
+                bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;&gt;;
 
             <span class="doccomment">/// Returns the Unix process ID of the process connected to the server.
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">&quot;GetConnectionUnixProcessID&quot;</span>)]
-            </span><span class="kw">fn </span>get_connection_unix_process_id(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
+            </span><span class="attr">#[dbus_proxy(name = <span class="string">"GetConnectionUnixProcessID"</span>)]
+            </span><span class="kw">fn </span>get_connection_unix_process_id(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
 
             <span class="doccomment">/// Returns the Unix user ID of the process connected to the server.
-            </span><span class="kw">fn </span>get_connection_unix_user(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
+            </span><span class="kw">fn </span>get_connection_unix_user(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
 
             <span class="doccomment">/// Gets the unique ID of the bus.
             </span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String&gt;;
 
             <span class="doccomment">/// Returns the unique connection name of the primary owner of the name given.
-            </span><span class="kw">fn </span>get_name_owner(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedUniqueName&gt;;
+            </span><span class="kw">fn </span>get_name_owner(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedUniqueName&gt;;
 
             <span class="doccomment">/// Returns the unique name assigned to the connection.
             </span><span class="kw">fn </span>hello(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedUniqueName&gt;;
@@ -1752,58 +1753,58 @@
             </span><span class="kw">fn </span>list_names(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;OwnedBusName&gt;&gt;;
 
             <span class="doccomment">/// List the connections currently queued for a bus name.
-            </span><span class="kw">fn </span>list_queued_owners(<span class="kw-2">&amp;</span><span class="self">self</span>, name: WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;OwnedUniqueName&gt;&gt;;
+            </span><span class="kw">fn </span>list_queued_owners(<span class="kw-2">&amp;</span><span class="self">self</span>, name: WellKnownName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;OwnedUniqueName&gt;&gt;;
 
             <span class="doccomment">/// Checks if the specified name exists (currently has an owner).
-            </span><span class="kw">fn </span>name_has_owner(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt;;
+            </span><span class="kw">fn </span>name_has_owner(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt;;
 
-            <span class="doccomment">/// Ask the message bus to release the method caller&#39;s claim to the given name.
-            </span><span class="kw">fn </span>release_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;ReleaseNameReply&gt;;
+            <span class="doccomment">/// Ask the message bus to release the method caller's claim to the given name.
+            </span><span class="kw">fn </span>release_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: WellKnownName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;ReleaseNameReply&gt;;
 
             <span class="doccomment">/// Reload server configuration.
             </span><span class="kw">fn </span>reload_config(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Removes the first rule that matches.
-            </span><span class="attr">#[deprecated(since = <span class="string">&quot;3.5.0&quot;</span>, note = <span class="string">&quot;Use `remove_match_rule` instead&quot;</span>)]
+            </span><span class="attr">#[deprecated(since = <span class="string">"3.5.0"</span>, note = <span class="string">"Use `remove_match_rule` instead"</span>)]
             </span><span class="kw">fn </span>remove_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Removes the first rule that matches.
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">&quot;RemoveMatch&quot;</span>)]
-            </span><span class="kw">fn </span>remove_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
+            </span><span class="attr">#[dbus_proxy(name = <span class="string">"RemoveMatch"</span>)]
+            </span><span class="kw">fn </span>remove_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Ask the message bus to assign the given name to the method caller.
             </span><span class="kw">fn </span>request_name(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                name: WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;,
+                name: WellKnownName&lt;<span class="lifetime">'_</span>&gt;,
                 flags: BitFlags&lt;RequestNameFlags&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;RequestNameReply&gt;;
 
             <span class="doccomment">/// Tries to launch the executable associated with a name (service
             /// activation), as an explicit request.
-            </span><span class="kw">fn </span>start_service_by_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: WellKnownName&lt;<span class="lifetime">&#39;_</span>&gt;, flags: u32) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
+            </span><span class="kw">fn </span>start_service_by_name(<span class="kw-2">&amp;</span><span class="self">self</span>, name: WellKnownName&lt;<span class="lifetime">'_</span>&gt;, flags: u32) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
 
             <span class="doccomment">/// This method adds to or modifies that environment when activating services.
             </span><span class="kw">fn </span>update_activation_environment(<span class="kw-2">&amp;</span><span class="self">self</span>, environment: HashMap&lt;<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str&gt;)
                 -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// This signal indicates that the owner of a name has
-            /// changed. It&#39;s also the signal to use to detect the appearance
+            /// changed. It's also the signal to use to detect the appearance
             /// of new names on the bus.
             </span><span class="attr">#[dbus_proxy(signal)]
             </span><span class="kw">fn </span>name_owner_changed(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;,
-                old_owner: Optional&lt;UniqueName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;,
-                new_owner: Optional&lt;UniqueName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;,
+                name: BusName&lt;<span class="lifetime">'_</span>&gt;,
+                old_owner: Optional&lt;UniqueName&lt;<span class="lifetime">'_</span>&gt;&gt;,
+                new_owner: Optional&lt;UniqueName&lt;<span class="lifetime">'_</span>&gt;&gt;,
             );
 
             <span class="doccomment">/// This signal is sent to a specific application when it loses ownership of a name.
             </span><span class="attr">#[dbus_proxy(signal)]
-            </span><span class="kw">fn </span>name_lost(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;);
+            </span><span class="kw">fn </span>name_lost(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;);
 
             <span class="doccomment">/// This signal is sent to a specific application when it gains ownership of a name.
             </span><span class="attr">#[dbus_proxy(signal)]
-            </span><span class="kw">fn </span>name_acquired(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">&#39;_</span>&gt;);
+            </span><span class="kw">fn </span>name_acquired(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;);
 
             <span class="doccomment">/// This property lists abstract “features” provided by the message bus, and can be used by
             /// clients to detect the capabilities of the message bus with which they are communicating.
@@ -1829,27 +1830,27 @@
 }
 
 <span class="macro">gen_dbus_proxy!</span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>);
-<span class="macro">assert_impl_all!</span>(DBusProxy&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(DBusProxy&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="doccomment">/// Errors from &lt;https://gitlab.freedesktop.org/dbus/dbus/-/blob/master/dbus/dbus-protocol.h&gt;
 </span><span class="attr">#[derive(Clone, Debug, DBusError, PartialEq)]
-#[dbus_error(prefix = <span class="string">&quot;org.freedesktop.DBus.Error&quot;</span>, impl_display = <span class="bool-val">true</span>)]
+#[dbus_error(prefix = <span class="string">"org.freedesktop.DBus.Error"</span>, impl_display = <span class="bool-val">true</span>)]
 #[allow(clippy::upper_case_acronyms)]
 </span><span class="kw">pub enum </span>Error {
     <span class="doccomment">/// Unknown or fall-through ZBus error.
     </span><span class="attr">#[dbus_error(zbus_error)]
     </span>ZBus(zbus::Error),
 
-    <span class="doccomment">/// A generic error; &quot;something went wrong&quot; - see the error message for more.
+    <span class="doccomment">/// A generic error; "something went wrong" - see the error message for more.
     </span>Failed(String),
 
     <span class="doccomment">/// There was not enough memory to complete an operation.
     </span>NoMemory(String),
 
-    <span class="doccomment">/// The bus doesn&#39;t know how to launch a service to supply the bus name you wanted.
+    <span class="doccomment">/// The bus doesn't know how to launch a service to supply the bus name you wanted.
     </span>ServiceUnknown(String),
 
-    <span class="doccomment">/// The bus name you referenced doesn&#39;t exist (i.e. no application owns it).
+    <span class="doccomment">/// The bus name you referenced doesn't exist (i.e. no application owns it).
     </span>NameHasNoOwner(String),
 
     <span class="doccomment">/// No reply to a message expecting one, usually means a timeout occurred.
@@ -1861,16 +1862,16 @@
     <span class="doccomment">/// A D-Bus bus address was malformed.
     </span>BadAddress(String),
 
-    <span class="doccomment">/// Requested operation isn&#39;t supported (like ENOSYS on UNIX).
+    <span class="doccomment">/// Requested operation isn't supported (like ENOSYS on UNIX).
     </span>NotSupported(String),
 
     <span class="doccomment">/// Some limited resource is exhausted.
     </span>LimitsExceeded(String),
 
-    <span class="doccomment">/// Security restrictions don&#39;t allow doing what you&#39;re trying to do.
+    <span class="doccomment">/// Security restrictions don't allow doing what you're trying to do.
     </span>AccessDenied(String),
 
-    <span class="doccomment">/// Authentication didn&#39;t work.
+    <span class="doccomment">/// Authentication didn't work.
     </span>AuthFailed(String),
 
     <span class="doccomment">/// Unable to connect to server (probably caused by ECONNREFUSED on a socket).
@@ -1883,10 +1884,10 @@
     <span class="doccomment">/// No network access (probably ENETUNREACH on a socket).
     </span>NoNetwork(String),
 
-    <span class="doccomment">/// Can&#39;t bind a socket since its address is in use (i.e. EADDRINUSE).
+    <span class="doccomment">/// Can't bind a socket since its address is in use (i.e. EADDRINUSE).
     </span>AddressInUse(String),
 
-    <span class="doccomment">/// The connection is disconnected and you&#39;re trying to use it.
+    <span class="doccomment">/// The connection is disconnected and you're trying to use it.
     </span>Disconnected(String),
 
     <span class="doccomment">/// Invalid arguments passed to a method call.
@@ -1895,19 +1896,19 @@
     <span class="doccomment">/// Missing file.
     </span>FileNotFound(String),
 
-    <span class="doccomment">/// Existing file and the operation you&#39;re using does not silently overwrite.
+    <span class="doccomment">/// Existing file and the operation you're using does not silently overwrite.
     </span>FileExists(String),
 
-    <span class="doccomment">/// Method name you invoked isn&#39;t known by the object you invoked it on.
+    <span class="doccomment">/// Method name you invoked isn't known by the object you invoked it on.
     </span>UnknownMethod(String),
 
-    <span class="doccomment">/// Object you invoked a method on isn&#39;t known.
+    <span class="doccomment">/// Object you invoked a method on isn't known.
     </span>UnknownObject(String),
 
-    <span class="doccomment">/// Interface you invoked a method on isn&#39;t known by the object.
+    <span class="doccomment">/// Interface you invoked a method on isn't known by the object.
     </span>UnknownInterface(String),
 
-    <span class="doccomment">/// Property you tried to access isn&#39;t known by the object.
+    <span class="doccomment">/// Property you tried to access isn't known by the object.
     </span>UnknownProperty(String),
 
     <span class="doccomment">/// Property you tried to set is read-only.
@@ -1916,61 +1917,61 @@
     <span class="doccomment">/// Certain timeout errors, e.g. while starting a service.
     </span>TimedOut(String),
 
-    <span class="doccomment">/// Tried to remove or modify a match rule that didn&#39;t exist.
+    <span class="doccomment">/// Tried to remove or modify a match rule that didn't exist.
     </span>MatchRuleNotFound(String),
 
-    <span class="doccomment">/// The match rule isn&#39;t syntactically valid.
+    <span class="doccomment">/// The match rule isn't syntactically valid.
     </span>MatchRuleInvalid(String),
 
     <span class="doccomment">/// While starting a new process, the exec() call failed.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ExecFailed&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ExecFailed"</span>)]
     </span>SpawnExecFailed(String),
 
     <span class="doccomment">/// While starting a new process, the fork() call failed.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ForkFailed&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ForkFailed"</span>)]
     </span>SpawnForkFailed(String),
 
     <span class="doccomment">/// While starting a new process, the child exited with a status code.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ChildExited&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ChildExited"</span>)]
     </span>SpawnChildExited(String),
 
     <span class="doccomment">/// While starting a new process, the child exited on a signal.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ChildSignaled&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ChildSignaled"</span>)]
     </span>SpawnChildSignaled(String),
 
     <span class="doccomment">/// While starting a new process, something went wrong.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.Failed&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.Failed"</span>)]
     </span>SpawnFailed(String),
 
     <span class="doccomment">/// We failed to setup the environment correctly.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.FailedToSetup&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.FailedToSetup"</span>)]
     </span>SpawnFailedToSetup(String),
 
     <span class="doccomment">/// We failed to setup the config parser correctly.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ConfigInvalid&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ConfigInvalid"</span>)]
     </span>SpawnConfigInvalid(String),
 
     <span class="doccomment">/// Bus name was not valid.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ServiceNotValid&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ServiceNotValid"</span>)]
     </span>SpawnServiceNotValid(String),
 
     <span class="doccomment">/// Service file not found in system-services directory.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.ServiceNotFound&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ServiceNotFound"</span>)]
     </span>SpawnServiceNotFound(String),
 
     <span class="doccomment">/// Permissions are incorrect on the setuid helper.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.PermissionsInvalid&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.PermissionsInvalid"</span>)]
     </span>SpawnPermissionsInvalid(String),
 
     <span class="doccomment">/// Service file invalid (Name, User or Exec missing).
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.FileInvalid&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.FileInvalid"</span>)]
     </span>SpawnFileInvalid(String),
 
     <span class="doccomment">/// There was not enough memory to complete the operation.
-    </span><span class="attr">#[dbus_error(name = <span class="string">&quot;Spawn.NoMemory&quot;</span>)]
+    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.NoMemory"</span>)]
     </span>SpawnNoMemory(String),
 
-    <span class="doccomment">/// Tried to get a UNIX process ID and it wasn&#39;t available.
+    <span class="doccomment">/// Tried to get a UNIX process ID and it wasn't available.
     </span>UnixProcessIdUnknown(String),
 
     <span class="doccomment">/// A type signature is not valid.
@@ -1979,13 +1980,13 @@
     <span class="doccomment">/// A file contains invalid syntax or is otherwise broken.
     </span>InvalidFileContent(String),
 
-    <span class="doccomment">/// Asked for SELinux security context and it wasn&#39;t available.
+    <span class="doccomment">/// Asked for SELinux security context and it wasn't available.
     </span>SELinuxSecurityContextUnknown(String),
 
-    <span class="doccomment">/// Asked for ADT audit data and it wasn&#39;t available.
+    <span class="doccomment">/// Asked for ADT audit data and it wasn't available.
     </span>AdtAuditDataUnknown(String),
 
-    <span class="doccomment">/// There&#39;s already an object with the requested object path.
+    <span class="doccomment">/// There's already an object with the requested object path.
     </span>ObjectPathInUse(String),
 
     <span class="doccomment">/// The message meta data does not match the payload. e.g. expected number of file descriptors
@@ -2019,19 +2020,19 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>error_from_zerror() {
-        <span class="kw">let </span>m = Message::method(<span class="prelude-val">Some</span>(<span class="string">&quot;:1.2&quot;</span>), <span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;/&quot;</span>, <span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">&quot;foo&quot;</span>, <span class="kw-2">&amp;</span>()).unwrap();
+        <span class="kw">let </span>m = Message::method(<span class="prelude-val">Some</span>(<span class="string">":1.2"</span>), <span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"/"</span>, <span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"foo"</span>, <span class="kw-2">&amp;</span>()).unwrap();
         <span class="kw">let </span>m = Message::method_error(
             <span class="prelude-val">None</span>::&lt;()&gt;,
             <span class="kw-2">&amp;</span>m,
-            <span class="string">&quot;org.freedesktop.DBus.Error.TimedOut&quot;</span>,
-            <span class="kw-2">&amp;</span>(<span class="string">&quot;so long&quot;</span>),
+            <span class="string">"org.freedesktop.DBus.Error.TimedOut"</span>,
+            <span class="kw-2">&amp;</span>(<span class="string">"so long"</span>),
         )
         .unwrap();
         <span class="kw">let </span>e: Error = m.into();
         <span class="kw">let </span>e: fdo::Error = e.try_into().unwrap();
-        <span class="macro">assert_eq!</span>(e, fdo::Error::TimedOut(<span class="string">&quot;so long&quot;</span>.to_string()),);
-        <span class="macro">assert_eq!</span>(e.name(), <span class="string">&quot;org.freedesktop.DBus.Error.TimedOut&quot;</span>);
-        <span class="macro">assert_eq!</span>(e.description(), <span class="prelude-val">Some</span>(<span class="string">&quot;so long&quot;</span>));
+        <span class="macro">assert_eq!</span>(e, fdo::Error::TimedOut(<span class="string">"so long"</span>.to_string()),);
+        <span class="macro">assert_eq!</span>(e.name(), <span class="string">"org.freedesktop.DBus.Error.TimedOut"</span>);
+        <span class="macro">assert_eq!</span>(e.description(), <span class="prelude-val">Some</span>(<span class="string">"so long"</span>));
     }
 
     <span class="attr">#[test]
@@ -2054,7 +2055,7 @@
 
         <span class="comment">// Register a well-known name with the session bus and ensure we get the appropriate
         // signals called for that.
-        </span><span class="kw">let </span>well_known = <span class="string">&quot;org.freedesktop.zbus.FdoSignalStreamTest&quot;</span>;
+        </span><span class="kw">let </span>well_known = <span class="string">"org.freedesktop.zbus.FdoSignalStreamTest"</span>;
         <span class="kw">let </span>unique_name = conn.unique_name().unwrap();
         <span class="kw">let </span>owner_change_stream = proxy
             .receive_name_owner_changed_with_args(<span class="kw-2">&amp;</span>[(<span class="number">0</span>, well_known), (<span class="number">2</span>, unique_name.as_str())])
@@ -2067,7 +2068,7 @@
             </span>.unwrap();
         <span class="kw">let </span><span class="kw-2">mut </span>stream = owner_change_stream.zip(name_acquired_stream);
 
-        <span class="kw">let </span>well_known: WellKnownName&lt;<span class="lifetime">&#39;static</span>&gt; = well_known.try_into().unwrap();
+        <span class="kw">let </span>well_known: WellKnownName&lt;<span class="lifetime">'static</span>&gt; = well_known.try_into().unwrap();
         proxy
             .request_name(
                 well_known.as_ref(),

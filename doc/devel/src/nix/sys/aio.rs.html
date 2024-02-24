@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/nix-0.26.2/src/sys/aio.rs`."><title>aio.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../nix/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/nix-0.26.2/src/sys/aio.rs`."><title>aio.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1264,7 +1265,7 @@
 //! [`cancel`](trait.Aio.html#method.cancel) or
 //! [`aio_cancel_all`](fn.aio_cancel_all.html), though the operating system may
 //! not support this for all filesystems and devices.
-</span><span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
+</span><span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
 </span><span class="kw">use </span>std::io::{IoSlice, IoSliceMut};
 <span class="kw">use </span>std::{
     convert::TryFrom,
@@ -1294,11 +1295,11 @@
         <span class="doccomment">/// do it like `fsync`
         </span>O_SYNC,
         <span class="doccomment">/// on supported operating systems only, do it like `fdatasync`
-        </span><span class="attr">#[cfg(any(target_os = <span class="string">&quot;ios&quot;</span>,
-                  target_os = <span class="string">&quot;linux&quot;</span>,
-                  target_os = <span class="string">&quot;macos&quot;</span>,
-                  target_os = <span class="string">&quot;netbsd&quot;</span>,
-                  target_os = <span class="string">&quot;openbsd&quot;</span>))]
+        </span><span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>,
+                  target_os = <span class="string">"linux"</span>,
+                  target_os = <span class="string">"macos"</span>,
+                  target_os = <span class="string">"netbsd"</span>,
+                  target_os = <span class="string">"openbsd"</span>))]
         #[cfg_attr(docsrs, doc(cfg(all())))]
         </span>O_DSYNC
     }
@@ -1341,7 +1342,7 @@
 <span class="doccomment">/// Base class for all AIO operations.  Should only be used directly when
 /// checking for completion.
 </span><span class="comment">// We could create some kind of AsPinnedMut trait, and implement it for all aio
-// ops, allowing the crate&#39;s users to get pinned references to `AioCb`.  That
+// ops, allowing the crate's users to get pinned references to `AioCb`.  That
 // could save some code for things like polling methods.  But IMHO it would
 // provide polymorphism at the wrong level.  Instead, the best place for
 // polymorphism is at the level of `Futures`.
@@ -1350,10 +1351,10 @@
     aiocb: LibcAiocb,
     <span class="doccomment">/// Could this `AioCb` potentially have any in-kernel state?
     </span><span class="comment">// It would be really nice to perform the in-progress check entirely at
-    // compile time.  But I can&#39;t figure out how, because:
+    // compile time.  But I can't figure out how, because:
     // * Future::poll takes a `Pin&lt;&amp;mut self&gt;` rather than `self`, and
-    // * Rust&#39;s lack of an equivalent of C++&#39;s Guaranteed Copy Elision means
-    //   that there&#39;s no way to write an AioCb constructor that neither boxes
+    // * Rust's lack of an equivalent of C++'s Guaranteed Copy Elision means
+    //   that there's no way to write an AioCb constructor that neither boxes
     //   the object itself, nor moves it during return.
     </span>in_progress: bool,
 }
@@ -1379,7 +1380,7 @@
             libc::AIO_NOTCANCELED =&gt; <span class="prelude-val">Ok</span>(AioCancelStat::AioNotCanceled),
             libc::AIO_ALLDONE =&gt; <span class="prelude-val">Ok</span>(AioCancelStat::AioAllDone),
             -<span class="number">1 </span>=&gt; <span class="prelude-val">Err</span>(Errno::last()),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown aio_cancel return value&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"unknown aio_cancel return value"</span>),
         }
     }
 
@@ -1404,7 +1405,7 @@
             <span class="number">0 </span>=&gt; <span class="prelude-val">Ok</span>(()),
             num <span class="kw">if </span>num &gt; <span class="number">0 </span>=&gt; <span class="prelude-val">Err</span>(Errno::from_i32(num)),
             -<span class="number">1 </span>=&gt; <span class="prelude-val">Err</span>(Errno::last()),
-            num =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown aio_error return value {:?}&quot;</span>, num),
+            num =&gt; <span class="macro">panic!</span>(<span class="string">"unknown aio_error return value {:?}"</span>, num),
         }
     }
 
@@ -1420,11 +1421,11 @@
     /// not yet been submitted.
     </span><span class="comment">// Takes a normal reference rather than a pinned one because this method is
     // normally called before the object needs to be pinned, that is, before
-    // it&#39;s been submitted to the kernel.
+    // it's been submitted to the kernel.
     </span><span class="kw">fn </span>set_sigev_notify(<span class="kw-2">&amp;mut </span><span class="self">self</span>, sigev_notify: SigevNotify) {
         <span class="macro">assert!</span>(
             !<span class="self">self</span>.in_progress,
-            <span class="string">&quot;Can&#39;t change notification settings for an in-progress operation&quot;
+            <span class="string">"Can't change notification settings for an in-progress operation"
         </span>);
         <span class="self">self</span>.aiocb.<span class="number">0</span>.aio_sigevent = SigEvent::new(sigev_notify).sigevent();
     }
@@ -1432,9 +1433,9 @@
 
 <span class="kw">impl </span>Debug <span class="kw">for </span>AioCb {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        fmt.debug_struct(<span class="string">&quot;AioCb&quot;</span>)
-            .field(<span class="string">&quot;aiocb&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.aiocb.<span class="number">0</span>)
-            .field(<span class="string">&quot;in_progress&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.in_progress)
+        fmt.debug_struct(<span class="string">"AioCb"</span>)
+            .field(<span class="string">"aiocb"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.aiocb.<span class="number">0</span>)
+            .field(<span class="string">"in_progress"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.in_progress)
             .finish()
     }
 }
@@ -1445,7 +1446,7 @@
     </span><span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="macro">assert!</span>(
             thread::panicking() || !<span class="self">self</span>.in_progress,
-            <span class="string">&quot;Dropped an in-progress AioCb&quot;
+            <span class="string">"Dropped an in-progress AioCb"
         </span>);
     }
 }
@@ -1477,7 +1478,7 @@
     /// # Examples
     ///
     /// Cancel an outstanding aio operation.  Note that we must still call
-    /// `aio_return` to free resources, even though we don&#39;t care about the
+    /// `aio_return` to free resources, even though we don't care about the
     /// result.
     ///
     /// ```
@@ -1489,7 +1490,7 @@
     /// # use std::io::Write;
     /// # use std::os::unix::io::AsRawFd;
     /// # use tempfile::tempfile;
-    /// let wbuf = b&quot;CDEF&quot;;
+    /// let wbuf = b"CDEF";
     /// let mut f = tempfile().unwrap();
     /// let mut aiocb = Box::pin(AioWrite::new(f.as_raw_fd(),
     ///     2,   //offset
@@ -1530,7 +1531,7 @@
     /// # use std::{thread, time};
     /// # use std::os::unix::io::AsRawFd;
     /// # use tempfile::tempfile;
-    /// const WBUF: &amp;[u8] = b&quot;abcdef123456&quot;;
+    /// const WBUF: &amp;[u8] = b"abcdef123456";
     /// let mut f = tempfile().unwrap();
     /// let mut aiocb = Box::pin(AioWrite::new(f.as_raw_fd(),
     ///     2,   //offset
@@ -1571,12 +1572,12 @@
     /// let mut aiof = Box::pin(AioFsync::new(f.as_raw_fd(), AioFsyncMode::O_SYNC,
     ///     0, SigevNone));
     /// assert!(!aiof.as_mut().in_progress());
-    /// aiof.as_mut().submit().expect(&quot;aio_fsync failed early&quot;);
+    /// aiof.as_mut().submit().expect("aio_fsync failed early");
     /// assert!(aiof.as_mut().in_progress());
     /// while (aiof.as_mut().error() == Err(Errno::EINPROGRESS)) {
     ///     thread::sleep(time::Duration::from_millis(10));
     /// }
-    /// aiof.as_mut().aio_return().expect(&quot;aio_fsync failed late&quot;);
+    /// aiof.as_mut().aio_return().expect("aio_fsync failed late");
     /// assert!(!aiof.as_mut().in_progress());
     /// ```
     </span><span class="kw">fn </span>in_progress(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
@@ -1662,11 +1663,11 @@
 /// let f = tempfile().unwrap();
 /// let mut aiof = Box::pin(AioFsync::new(f.as_raw_fd(), AioFsyncMode::O_SYNC,
 ///     0, SigevNone));
-/// aiof.as_mut().submit().expect(&quot;aio_fsync failed early&quot;);
+/// aiof.as_mut().submit().expect("aio_fsync failed early");
 /// while (aiof.as_mut().error() == Err(Errno::EINPROGRESS)) {
 ///     thread::sleep(time::Duration::from_millis(10));
 /// }
-/// aiof.as_mut().aio_return().expect(&quot;aio_fsync failed late&quot;);
+/// aiof.as_mut().aio_return().expect("aio_fsync failed late");
 /// ```
 </span><span class="attr">#[derive(Debug)]
 #[repr(transparent)]
@@ -1678,7 +1679,7 @@
 <span class="kw">impl </span>AioFsync {
     <span class="macro">unsafe_pinned!</span>(aiocb: AioCb);
 
-    <span class="doccomment">/// Returns the operation&#39;s fsync mode: data and metadata or data only?
+    <span class="doccomment">/// Returns the operation's fsync mode: data and metadata or data only?
     </span><span class="kw">pub fn </span>mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; AioFsyncMode {
         AioFsyncMode::try_from(<span class="self">self</span>.aiocb.aiocb.<span class="number">0</span>.aio_lio_opcode).unwrap()
     }
@@ -1690,7 +1691,7 @@
     /// * `fd`:           File descriptor to sync.
     /// * `mode`:         Whether to sync file metadata too, or just data.
     /// * `prio`:         If POSIX Prioritized IO is supported, then the
-    ///                   operation will be prioritized at the process&#39;s
+    ///                   operation will be prioritized at the process's
     ///                   priority level minus `prio`.
     /// * `sigev_notify`: Determines how you will be notified of event
     ///                   completion.
@@ -1702,7 +1703,7 @@
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>aiocb = AioCb::common_init(fd, prio, sigev_notify);
         <span class="comment">// To save some memory, store mode in an unused field of the AioCb.
-        // True it isn&#39;t very much memory, but downstream creates will likely
+        // True it isn't very much memory, but downstream creates will likely
         // create an enum containing this and other AioCb variants and pack
         // those enums into data structures like Vec, so it adds up.
         </span>aiocb.aiocb.<span class="number">0</span>.aio_lio_opcode = mode <span class="kw">as </span>libc::c_int;
@@ -1732,7 +1733,7 @@
     }
 }
 
-<span class="comment">// AioFsync does not need AsMut, since it can&#39;t be used with lio_listio
+<span class="comment">// AioFsync does not need AsMut, since it can't be used with lio_listio
 
 </span><span class="kw">impl </span>AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioFsync {
     <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>libc::aiocb {
@@ -1758,7 +1759,7 @@
 /// # use std::io::Write;
 /// # use std::os::unix::io::AsRawFd;
 /// # use tempfile::tempfile;
-/// const INITIAL: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const INITIAL: &amp;[u8] = b"abcdef123456";
 /// const LEN: usize = 4;
 /// let mut rbuf = vec![0; LEN];
 /// let mut f = tempfile().unwrap();
@@ -1779,17 +1780,17 @@
 ///     }
 ///     assert_eq!(aior.as_mut().aio_return().unwrap(), LEN);
 /// }
-/// assert_eq!(rbuf, b&quot;cdef&quot;);
+/// assert_eq!(rbuf, b"cdef");
 /// ```
 </span><span class="attr">#[derive(Debug)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span>AioRead&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>AioRead&lt;<span class="lifetime">'a</span>&gt; {
     aiocb: AioCb,
-    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]&gt;,
+    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]&gt;,
     _pin: PhantomPinned,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AioRead&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AioRead&lt;<span class="lifetime">'a</span>&gt; {
     <span class="macro">unsafe_pinned!</span>(aiocb: AioCb);
 
     <span class="doccomment">/// Returns the requested length of the aio operation in bytes
@@ -1809,14 +1810,14 @@
     /// * `offs`:         File offset
     /// * `buf`:          A memory buffer.  It must outlive the `AioRead`.
     /// * `prio`:         If POSIX Prioritized IO is supported, then the
-    ///                   operation will be prioritized at the process&#39;s
+    ///                   operation will be prioritized at the process's
     ///                   priority level minus `prio`
     /// * `sigev_notify`: Determines how you will be notified of event
     ///                   completion.
     </span><span class="kw">pub fn </span>new(
         fd: RawFd,
         offs: off_t,
-        buf: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[u8],
+        buf: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[u8],
         prio: i32,
         sigev_notify: SigevNotify,
     ) -&gt; <span class="self">Self </span>{
@@ -1838,19 +1839,19 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Aio <span class="kw">for </span>AioRead&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Aio <span class="kw">for </span>AioRead&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Output = usize;
 
     <span class="macro">aio_methods!</span>(aio_read);
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioRead&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioRead&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>libc::aiocb {
         <span class="kw-2">&amp;mut </span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioRead&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioRead&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>libc::aiocb {
         <span class="kw-2">&amp;</span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
@@ -1865,8 +1866,8 @@
 /// # Examples
 ///
 ///
-</span><span class="attr">#[cfg_attr(fbsd14, doc = <span class="string">&quot; ```&quot;</span>)]
-#[cfg_attr(not(fbsd14), doc = <span class="string">&quot; ```no_run&quot;</span>)]
+</span><span class="attr">#[cfg_attr(fbsd14, doc = <span class="string">" ```"</span>)]
+#[cfg_attr(not(fbsd14), doc = <span class="string">" ```no_run"</span>)]
 </span><span class="doccomment">/// # use nix::errno::Errno;
 /// # use nix::Error;
 /// # use nix::sys::aio::*;
@@ -1875,7 +1876,7 @@
 /// # use std::io::{IoSliceMut, Write};
 /// # use std::os::unix::io::AsRawFd;
 /// # use tempfile::tempfile;
-/// const INITIAL: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const INITIAL: &amp;[u8] = b"abcdef123456";
 /// let mut rbuf0 = vec![0; 4];
 /// let mut rbuf1 = vec![0; 2];
 /// let expected_len = rbuf0.len() + rbuf1.len();
@@ -1898,20 +1899,20 @@
 ///     }
 ///     assert_eq!(aior.as_mut().aio_return().unwrap(), expected_len);
 /// }
-/// assert_eq!(rbuf0, b&quot;cdef&quot;);
-/// assert_eq!(rbuf1, b&quot;12&quot;);
+/// assert_eq!(rbuf0, b"cdef");
+/// assert_eq!(rbuf1, b"12");
 /// ```
-</span><span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
+</span><span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
 #[derive(Debug)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span>AioReadv&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>AioReadv&lt;<span class="lifetime">'a</span>&gt; {
     aiocb: AioCb,
-    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]]&gt;,
+    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]]&gt;,
     _pin: PhantomPinned,
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AioReadv&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AioReadv&lt;<span class="lifetime">'a</span>&gt; {
     <span class="macro">unsafe_pinned!</span>(aiocb: AioCb);
 
     <span class="doccomment">/// Returns the number of buffers the operation will read into.
@@ -1928,14 +1929,14 @@
     /// * `bufs`:         A scatter/gather list of memory buffers.  They must
     ///                   outlive the `AioReadv`.
     /// * `prio`:         If POSIX Prioritized IO is supported, then the
-    ///                   operation will be prioritized at the process&#39;s
+    ///                   operation will be prioritized at the process's
     ///                   priority level minus `prio`
     /// * `sigev_notify`: Determines how you will be notified of event
     ///                   completion.
     </span><span class="kw">pub fn </span>new(
         fd: RawFd,
         offs: off_t,
-        bufs: <span class="kw-2">&amp;mut </span>[IoSliceMut&lt;<span class="lifetime">&#39;a</span>&gt;],
+        bufs: <span class="kw-2">&amp;mut </span>[IoSliceMut&lt;<span class="lifetime">'a</span>&gt;],
         prio: i32,
         sigev_notify: SigevNotify,
     ) -&gt; <span class="self">Self </span>{
@@ -1959,22 +1960,22 @@
     }
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Aio <span class="kw">for </span>AioReadv&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Aio <span class="kw">for </span>AioReadv&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Output = usize;
 
     <span class="macro">aio_methods!</span>(aio_readv);
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioReadv&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioReadv&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>libc::aiocb {
         <span class="kw-2">&amp;mut </span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioReadv&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioReadv&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>libc::aiocb {
         <span class="kw-2">&amp;</span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
@@ -1996,7 +1997,7 @@
 /// # use std::{thread, time};
 /// # use std::os::unix::io::AsRawFd;
 /// # use tempfile::tempfile;
-/// const WBUF: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const WBUF: &amp;[u8] = b"abcdef123456";
 /// let mut f = tempfile().unwrap();
 /// let mut aiow = Box::pin(
 ///     AioWrite::new(
@@ -2015,13 +2016,13 @@
 /// ```
 </span><span class="attr">#[derive(Debug)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span>AioWrite&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>AioWrite&lt;<span class="lifetime">'a</span>&gt; {
     aiocb: AioCb,
-    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]&gt;,
+    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]&gt;,
     _pin: PhantomPinned,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AioWrite&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AioWrite&lt;<span class="lifetime">'a</span>&gt; {
     <span class="macro">unsafe_pinned!</span>(aiocb: AioCb);
 
     <span class="doccomment">/// Returns the requested length of the aio operation in bytes
@@ -2041,14 +2042,14 @@
     /// * `offs`:         File offset
     /// * `buf`:          A memory buffer.  It must outlive the `AioWrite`.
     /// * `prio`:         If POSIX Prioritized IO is supported, then the
-    ///                   operation will be prioritized at the process&#39;s
+    ///                   operation will be prioritized at the process's
     ///                   priority level minus `prio`
     /// * `sigev_notify`: Determines how you will be notified of event
     ///                   completion.
     </span><span class="kw">pub fn </span>new(
         fd: RawFd,
         offs: off_t,
-        buf: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8],
+        buf: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8],
         prio: i32,
         sigev_notify: SigevNotify,
     ) -&gt; <span class="self">Self </span>{
@@ -2056,7 +2057,7 @@
         aiocb.aiocb.<span class="number">0</span>.aio_nbytes = buf.len();
         <span class="comment">// casting an immutable buffer to a mutable pointer looks unsafe,
         // but technically its only unsafe to dereference it, not to create
-        // it.  Type Safety guarantees that we&#39;ll never pass aiocb to
+        // it.  Type Safety guarantees that we'll never pass aiocb to
         // aio_read or aio_readv.
         </span>aiocb.aiocb.<span class="number">0</span>.aio_buf = buf.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>c_void;
         aiocb.aiocb.<span class="number">0</span>.aio_lio_opcode = libc::LIO_WRITE;
@@ -2074,19 +2075,19 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Aio <span class="kw">for </span>AioWrite&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Aio <span class="kw">for </span>AioWrite&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Output = usize;
 
     <span class="macro">aio_methods!</span>(aio_write);
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioWrite&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioWrite&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>libc::aiocb {
         <span class="kw-2">&amp;mut </span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioWrite&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioWrite&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>libc::aiocb {
         <span class="kw-2">&amp;</span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
@@ -2100,8 +2101,8 @@
 ///
 /// # Examples
 ///
-</span><span class="attr">#[cfg_attr(fbsd14, doc = <span class="string">&quot; ```&quot;</span>)]
-#[cfg_attr(not(fbsd14), doc = <span class="string">&quot; ```no_run&quot;</span>)]
+</span><span class="attr">#[cfg_attr(fbsd14, doc = <span class="string">" ```"</span>)]
+#[cfg_attr(not(fbsd14), doc = <span class="string">" ```no_run"</span>)]
 </span><span class="doccomment">/// # use nix::errno::Errno;
 /// # use nix::Error;
 /// # use nix::sys::aio::*;
@@ -2110,8 +2111,8 @@
 /// # use std::io::IoSlice;
 /// # use std::os::unix::io::AsRawFd;
 /// # use tempfile::tempfile;
-/// const wbuf0: &amp;[u8] = b&quot;abcdef&quot;;
-/// const wbuf1: &amp;[u8] = b&quot;123456&quot;;
+/// const wbuf0: &amp;[u8] = b"abcdef";
+/// const wbuf1: &amp;[u8] = b"123456";
 /// let len = wbuf0.len() + wbuf1.len();
 /// let wbufs = [IoSlice::new(wbuf0), IoSlice::new(wbuf1)];
 /// let mut f = tempfile().unwrap();
@@ -2130,17 +2131,17 @@
 /// }
 /// assert_eq!(aiow.as_mut().aio_return().unwrap(), len);
 /// ```
-</span><span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
+</span><span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
 #[derive(Debug)]
 #[repr(transparent)]
-</span><span class="kw">pub struct </span>AioWritev&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>AioWritev&lt;<span class="lifetime">'a</span>&gt; {
     aiocb: AioCb,
-    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8]]&gt;,
+    _data: PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[<span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]]&gt;,
     _pin: PhantomPinned,
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AioWritev&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AioWritev&lt;<span class="lifetime">'a</span>&gt; {
     <span class="macro">unsafe_pinned!</span>(aiocb: AioCb);
 
     <span class="doccomment">/// Returns the number of buffers the operation will read into.
@@ -2157,14 +2158,14 @@
     /// * `bufs`:         A scatter/gather list of memory buffers.  They must
     ///                   outlive the `AioWritev`.
     /// * `prio`:         If POSIX Prioritized IO is supported, then the
-    ///                   operation will be prioritized at the process&#39;s
+    ///                   operation will be prioritized at the process's
     ///                   priority level minus `prio`
     /// * `sigev_notify`: Determines how you will be notified of event
     ///                   completion.
     </span><span class="kw">pub fn </span>new(
         fd: RawFd,
         offs: off_t,
-        bufs: <span class="kw-2">&amp;</span>[IoSlice&lt;<span class="lifetime">&#39;a</span>&gt;],
+        bufs: <span class="kw-2">&amp;</span>[IoSlice&lt;<span class="lifetime">'a</span>&gt;],
         prio: i32,
         sigev_notify: SigevNotify,
     ) -&gt; <span class="self">Self </span>{
@@ -2174,7 +2175,7 @@
         </span>aiocb.aiocb.<span class="number">0</span>.aio_nbytes = bufs.len();
         <span class="comment">// casting an immutable buffer to a mutable pointer looks unsafe,
         // but technically its only unsafe to dereference it, not to create
-        // it.  Type Safety guarantees that we&#39;ll never pass aiocb to
+        // it.  Type Safety guarantees that we'll never pass aiocb to
         // aio_read or aio_readv.
         </span>aiocb.aiocb.<span class="number">0</span>.aio_buf = bufs.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>c_void;
         aiocb.aiocb.<span class="number">0</span>.aio_lio_opcode = libc::LIO_WRITEV;
@@ -2192,22 +2193,22 @@
     }
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Aio <span class="kw">for </span>AioWritev&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Aio <span class="kw">for </span>AioWritev&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Output = usize;
 
     <span class="macro">aio_methods!</span>(aio_writev);
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioWritev&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsMut&lt;libc::aiocb&gt; <span class="kw">for </span>AioWritev&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>libc::aiocb {
         <span class="kw-2">&amp;mut </span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioWritev&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; AsRef&lt;libc::aiocb&gt; <span class="kw">for </span>AioWritev&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>libc::aiocb {
         <span class="kw-2">&amp;</span><span class="self">self</span>.aiocb.aiocb.<span class="number">0
     </span>}
@@ -2229,7 +2230,7 @@
 /// # use std::io::Write;
 /// # use std::os::unix::io::AsRawFd;
 /// # use tempfile::tempfile;
-/// let wbuf = b&quot;CDEF&quot;;
+/// let wbuf = b"CDEF";
 /// let mut f = tempfile().unwrap();
 /// let mut aiocb = Box::pin(AioWrite::new(f.as_raw_fd(),
 ///     2,   //offset
@@ -2256,7 +2257,7 @@
         libc::AIO_NOTCANCELED =&gt; <span class="prelude-val">Ok</span>(AioCancelStat::AioNotCanceled),
         libc::AIO_ALLDONE =&gt; <span class="prelude-val">Ok</span>(AioCancelStat::AioAllDone),
         -<span class="number">1 </span>=&gt; <span class="prelude-val">Err</span>(Errno::last()),
-        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;unknown aio_cancel return value&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"unknown aio_cancel return value"</span>),
     }
 }
 
@@ -2274,7 +2275,7 @@
 /// # use nix::sys::signal::SigevNotify;
 /// # use std::os::unix::io::AsRawFd;
 /// # use tempfile::tempfile;
-/// const WBUF: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const WBUF: &amp;[u8] = b"abcdef123456";
 /// let mut f = tempfile().unwrap();
 /// let mut aiocb = Box::pin(AioWrite::new(f.as_raw_fd(),
 ///     2,   //offset
@@ -2282,7 +2283,7 @@
 ///     0,   //priority
 ///     SigevNotify::SigevNone));
 /// aiocb.as_mut().submit().unwrap();
-/// aio_suspend(&amp;[&amp;*aiocb], None).expect(&quot;aio_suspend failed&quot;);
+/// aio_suspend(&amp;[&amp;*aiocb], None).expect("aio_suspend failed");
 /// assert_eq!(aiocb.as_mut().aio_return().unwrap() as usize, WBUF.len());
 /// ```
 /// # References
@@ -2319,7 +2320,7 @@
 /// # use nix::sys::aio::*;
 /// # use nix::sys::signal::SigevNotify;
 /// # use tempfile::tempfile;
-/// const WBUF: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const WBUF: &amp;[u8] = b"abcdef123456";
 /// let mut f = tempfile().unwrap();
 /// let mut aiow = Box::pin(AioWrite::new(
 ///     f.as_raw_fd(),
@@ -2346,7 +2347,7 @@
 /// # use nix::sys::aio::*;
 /// # use nix::sys::signal::SigevNotify;
 /// # use tempfile::tempfile;
-/// const WBUF: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const WBUF: &amp;[u8] = b"abcdef123456";
 /// let mut f = tempfile().unwrap();
 /// let mut aiow = Box::pin(AioWrite::new(
 ///     f.as_raw_fd(),
@@ -2395,7 +2396,7 @@
 /// SIGNALED.store(false, Ordering::Relaxed);
 /// unsafe { sigaction(Signal::SIGUSR2, &amp;sa) }.unwrap();
 ///
-/// const WBUF: &amp;[u8] = b&quot;abcdef123456&quot;;
+/// const WBUF: &amp;[u8] = b"abcdef123456";
 /// let mut f = tempfile().unwrap();
 /// let mut aiow = Box::pin(AioWrite::new(
 ///     f.as_raw_fd(),
@@ -2458,7 +2459,7 @@
         );
     }
 
-    <span class="attr">#[cfg(target_os = <span class="string">&quot;freebsd&quot;</span>)]
+    <span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
     #[test]
     </span><span class="kw">fn </span>casting_vectored() {
         <span class="kw">let </span>sev = SigevNotify::SigevNone;

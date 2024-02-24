@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.13.1/src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.13.1/src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus_macros"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1173,11 +1174,11 @@
 };
 <span class="kw">use </span>zvariant_utils::{case, def_attrs};
 
-<span class="comment">// FIXME: The list name should once be &quot;zbus&quot; instead of &quot;dbus_proxy&quot; (like in serde).
+<span class="comment">// FIXME: The list name should once be "zbus" instead of "dbus_proxy" (like in serde).
 </span><span class="macro">def_attrs! </span>{
     <span class="kw">crate </span>dbus_proxy;
 
-    <span class="kw">pub </span>ImplAttributes(<span class="string">&quot;impl block&quot;</span>) {
+    <span class="kw">pub </span>ImplAttributes(<span class="string">"impl block"</span>) {
         interface str,
         name str,
         assume_defaults bool,
@@ -1189,10 +1190,10 @@
         gen_blocking bool
     };
 
-    <span class="kw">pub </span>MethodAttributes(<span class="string">&quot;method&quot;</span>) {
+    <span class="kw">pub </span>MethodAttributes(<span class="string">"method"</span>) {
         name str,
         property {
-            <span class="kw">pub </span>PropertyAttributes(<span class="string">&quot;property&quot;</span>) {
+            <span class="kw">pub </span>PropertyAttributes(<span class="string">"property"</span>) {
                 emits_changed_signal str
             }
         },
@@ -1245,7 +1246,7 @@
         (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
         (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; <span class="prelude-val">Err</span>(syn::Error::new(
             input.span(),
-            <span class="string">&quot;both `interface` and `name` attributes shouldn&#39;t be specified at the same time&quot;</span>,
+            <span class="string">"both `interface` and `name` attributes shouldn't be specified at the same time"</span>,
         )),
     }<span class="question-mark">?</span>;
     <span class="kw">let </span>gen_async = gen_async.unwrap_or(<span class="bool-val">true</span>);
@@ -1254,24 +1255,24 @@
     <span class="comment">// Some sanity checks
     </span><span class="macro">assert!</span>(
         gen_blocking || gen_async,
-        <span class="string">&quot;Can&#39;t disable both asynchronous and blocking proxy. 😸&quot;</span>,
+        <span class="string">"Can't disable both asynchronous and blocking proxy. 😸"</span>,
     );
     <span class="macro">assert!</span>(
         gen_blocking || blocking_name.is_none(),
-        <span class="string">&quot;Can&#39;t set blocking proxy&#39;s name if you disabled it. 😸&quot;</span>,
+        <span class="string">"Can't set blocking proxy's name if you disabled it. 😸"</span>,
     );
     <span class="macro">assert!</span>(
         gen_async || async_name.is_none(),
-        <span class="string">&quot;Can&#39;t set asynchronous proxy&#39;s name if you disabled it. 😸&quot;</span>,
+        <span class="string">"Can't set asynchronous proxy's name if you disabled it. 😸"</span>,
     );
 
     <span class="kw">let </span>blocking_proxy = <span class="kw">if </span>gen_blocking {
         <span class="kw">let </span>proxy_name = blocking_name.unwrap_or_else(|| {
             <span class="kw">if </span>gen_async {
-                <span class="macro">format!</span>(<span class="string">&quot;{}ProxyBlocking&quot;</span>, input.ident)
+                <span class="macro">format!</span>(<span class="string">"{}ProxyBlocking"</span>, input.ident)
             } <span class="kw">else </span>{
                 <span class="comment">// When only generating blocking proxy, there is no need for a suffix.
-                </span><span class="macro">format!</span>(<span class="string">&quot;{}Proxy&quot;</span>, input.ident)
+                </span><span class="macro">format!</span>(<span class="string">"{}Proxy"</span>, input.ident)
             }
         });
         create_proxy(
@@ -1290,7 +1291,7 @@
         <span class="macro">quote! </span>{}
     };
     <span class="kw">let </span>async_proxy = <span class="kw">if </span>gen_async {
-        <span class="kw">let </span>proxy_name = async_name.unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;{}Proxy&quot;</span>, input.ident));
+        <span class="kw">let </span>proxy_name = async_name.unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">"{}Proxy"</span>, input.ident));
         create_proxy(
             <span class="kw-2">&amp;</span>input,
             iface_name.as_deref(),
@@ -1328,23 +1329,23 @@
     <span class="kw">let </span>other_attrs: Vec&lt;<span class="kw">_</span>&gt; = input
         .attrs
         .iter()
-        .filter(|a| !a.path.is_ident(<span class="string">&quot;dbus_proxy&quot;</span>))
+        .filter(|a| !a.path.is_ident(<span class="string">"dbus_proxy"</span>))
         .collect();
     <span class="kw">let </span>proxy_name = Ident::new(proxy_name, Span::call_site());
     <span class="kw">let </span>ident = input.ident.to_string();
     <span class="kw">let </span>iface_name = iface_name
         .map(ToString::to_string)
-        .unwrap_or(<span class="macro">format!</span>(<span class="string">&quot;org.freedesktop.{ident}&quot;</span>));
+        .unwrap_or(<span class="macro">format!</span>(<span class="string">"org.freedesktop.{ident}"</span>));
     <span class="kw">if </span>assume_defaults.is_none() &amp;&amp; default_path.is_none() &amp;&amp; default_service.is_none() {
         <span class="macro">eprintln!</span>(
-            <span class="string">&quot;#[dbus_proxy(...)] macro invocation on &#39;{proxy_name}&#39; without explicit defaults. Please set &#39;assume_defaults = true&#39;, or configure default path/service directly.&quot;
+            <span class="string">"#[dbus_proxy(...)] macro invocation on '{proxy_name}' without explicit defaults. Please set 'assume_defaults = true', or configure default path/service directly."
         </span>);
     };
     <span class="kw">let </span>assume_defaults = assume_defaults.unwrap_or(<span class="bool-val">true</span>);
     <span class="kw">let </span>(default_path, default_service) = <span class="kw">if </span>assume_defaults {
         <span class="kw">let </span>path = default_path
             .map(ToString::to_string)
-            .or_else(|| <span class="prelude-val">Some</span>(<span class="macro">format!</span>(<span class="string">&quot;/org/freedesktop/{ident}&quot;</span>)));
+            .or_else(|| <span class="prelude-val">Some</span>(<span class="macro">format!</span>(<span class="string">"/org/freedesktop/{ident}"</span>)));
         <span class="kw">let </span>svc = default_service
             .map(ToString::to_string)
             .or_else(|| <span class="prelude-val">Some</span>(iface_name.clone()));
@@ -1374,7 +1375,7 @@
             <span class="kw">let </span>member_name = attrs.name.take().unwrap_or_else(|| {
                 case::pascal_or_camel_case(
                     <span class="kw">if </span>is_property &amp;&amp; has_inputs {
-                        <span class="macro">assert!</span>(method_name.starts_with(<span class="string">&quot;set_&quot;</span>));
+                        <span class="macro">assert!</span>(method_name.starts_with(<span class="string">"set_"</span>));
                         <span class="kw-2">&amp;</span>method_name[<span class="number">4</span>..]
                     } <span class="kw">else </span>{
                         <span class="kw-2">&amp;</span>method_name
@@ -1443,16 +1444,16 @@
         (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; {
             <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{
                 #builder::new_bare(conn)
-                    .interface(#iface_name).expect(<span class="string">&quot;invalid interface name&quot;</span>)
+                    .interface(#iface_name).expect(<span class="string">"invalid interface name"</span>)
             };
             <span class="kw">let </span>proxydefault_impl = TokenStream::new();
             <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
                 <span class="doccomment">/// Creates a new proxy with the given service destination and path.
-                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;D, P&gt;(conn: <span class="kw-2">&amp;</span>#connection, destination: D, path: P) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt;&gt;
+                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;D, P&gt;(conn: <span class="kw-2">&amp;</span>#connection, destination: D, path: P) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt;
                 <span class="kw">where
-                    </span>D: ::std::convert::TryInto&lt;#zbus::names::BusName&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+                    </span>D: ::std::convert::TryInto&lt;#zbus::names::BusName&lt;<span class="lifetime">'static</span>&gt;&gt;,
                     D::Error: ::std::convert::Into&lt;#zbus::Error&gt;,
-                    P: ::std::convert::TryInto&lt;#zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+                    P: ::std::convert::TryInto&lt;#zbus::zvariant::ObjectPath&lt;<span class="lifetime">'static</span>&gt;&gt;,
                     P::Error: ::std::convert::Into&lt;#zbus::Error&gt;,
                 {
                     <span class="kw">let </span>obj_path = path.try_into().map_err(::std::convert::Into::into)<span class="question-mark">?</span>;
@@ -1468,15 +1469,15 @@
         (<span class="prelude-val">Some</span>(path), <span class="prelude-val">None</span>) =&gt; {
             <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{
                 #builder::new_bare(conn)
-                    .interface(#iface_name).expect(<span class="string">&quot;invalid interface name&quot;</span>)
-                    .path(#path).expect(<span class="string">&quot;invalid default path&quot;</span>)
+                    .interface(#iface_name).expect(<span class="string">"invalid interface name"</span>)
+                    .path(#path).expect(<span class="string">"invalid default path"</span>)
             };
             <span class="kw">let </span>proxydefault_impl = TokenStream::new();
             <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
                 <span class="doccomment">/// Creates a new proxy with the given destination, and the default path.
-                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;D&gt;(conn: <span class="kw-2">&amp;</span>#connection, destination: D) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt;&gt;
+                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;D&gt;(conn: <span class="kw-2">&amp;</span>#connection, destination: D) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt;
                 <span class="kw">where
-                    </span>D: ::std::convert::TryInto&lt;#zbus::names::BusName&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+                    </span>D: ::std::convert::TryInto&lt;#zbus::names::BusName&lt;<span class="lifetime">'static</span>&gt;&gt;,
                     D::Error: ::std::convert::Into&lt;#zbus::Error&gt;,
                 {
                     <span class="kw">let </span>obj_dest = destination.try_into().map_err(::std::convert::Into::into)<span class="question-mark">?</span>;
@@ -1491,15 +1492,15 @@
         (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(dest)) =&gt; {
             <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{
                 #builder::new_bare(conn)
-                    .interface(#iface_name).expect(<span class="string">&quot;invalid interface name&quot;</span>)
-                    .destination(#dest).expect(<span class="string">&quot;invalid destination bus name&quot;</span>)
+                    .interface(#iface_name).expect(<span class="string">"invalid interface name"</span>)
+                    .destination(#dest).expect(<span class="string">"invalid destination bus name"</span>)
             };
             <span class="kw">let </span>proxydefault_impl = TokenStream::new();
             <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
                 <span class="doccomment">/// Creates a new proxy with the given path, and the default destination.
-                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;P&gt;(conn: <span class="kw-2">&amp;</span>#connection, path: P) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt;&gt;
+                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;P&gt;(conn: <span class="kw-2">&amp;</span>#connection, path: P) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt;
                 <span class="kw">where
-                    </span>P: ::std::convert::TryInto&lt;#zbus::zvariant::ObjectPath&lt;<span class="lifetime">&#39;static</span>&gt;&gt;,
+                    </span>P: ::std::convert::TryInto&lt;#zbus::zvariant::ObjectPath&lt;<span class="lifetime">'static</span>&gt;&gt;,
                     P::Error: ::std::convert::Into&lt;#zbus::Error&gt;,
                 {
                     <span class="kw">let </span>obj_path = path.try_into().map_err(::std::convert::Into::into)<span class="question-mark">?</span>;
@@ -1514,15 +1515,15 @@
         (<span class="prelude-val">Some</span>(path), <span class="prelude-val">Some</span>(svc)) =&gt; {
             <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{ #builder::new(conn) };
             <span class="kw">let </span>proxydefault_impl = <span class="macro">quote! </span>{
-                <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; #zbus::ProxyDefault <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;a</span>&gt; {
-                    <span class="kw">const </span>INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = #iface_name;
-                    <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = #svc;
-                    <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = #path;
+                <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; #zbus::ProxyDefault <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'a</span>&gt; {
+                    <span class="kw">const </span>INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = #iface_name;
+                    <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = #svc;
+                    <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = #path;
                 }
             };
             <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
                 <span class="doccomment">/// Creates a new proxy with the default service and path.
-                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new(conn: <span class="kw-2">&amp;</span>#connection) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt;&gt; {
+                </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new(conn: <span class="kw-2">&amp;</span>#connection) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt; {
                     <span class="self">Self</span>::builder(conn).build()#wait
                 }
             };
@@ -1535,13 +1536,13 @@
 
         #(#other_attrs)*
         <span class="attr">#[derive(Clone, Debug)]
-        </span><span class="kw">pub struct </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt;(#proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt;);
+        </span><span class="kw">pub struct </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt;(#proxy_struct&lt;<span class="lifetime">'c</span>&gt;);
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; #proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; #proxy_name&lt;<span class="lifetime">'c</span>&gt; {
             #proxy_method_new
 
             <span class="doccomment">/// Returns a customizable builder for this proxy.
-            </span><span class="kw">pub fn </span>builder(conn: <span class="kw-2">&amp;</span>#connection) -&gt; #builder&lt;<span class="lifetime">&#39;c</span>, <span class="self">Self</span>&gt; {
+            </span><span class="kw">pub fn </span>builder(conn: <span class="kw-2">&amp;</span>#connection) -&gt; #builder&lt;<span class="lifetime">'c</span>, <span class="self">Self</span>&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>builder = #builder_new;
                 <span class="kw">if </span>#has_properties {
                     <span class="kw">let </span>uncached = <span class="macro">vec!</span>[#(#uncached_properties),<span class="kw-2">*</span>];
@@ -1553,57 +1554,57 @@
             }
 
             <span class="doccomment">/// Consumes `self`, returning the underlying `zbus::Proxy`.
-            </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; #proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt; {
+            </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; #proxy_struct&lt;<span class="lifetime">'c</span>&gt; {
                 <span class="self">self</span>.<span class="number">0
             </span>}
 
             <span class="doccomment">/// The reference to the underlying `zbus::Proxy`.
-            </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>#proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt; {
+            </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>#proxy_struct&lt;<span class="lifetime">'c</span>&gt; {
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
             </span>}
 
             #methods
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; ::std::convert::From&lt;#zbus::Proxy&lt;<span class="lifetime">&#39;c</span>&gt;&gt; <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
-            <span class="kw">fn </span>from(proxy: #zbus::Proxy&lt;<span class="lifetime">&#39;c</span>&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; ::std::convert::From&lt;#zbus::Proxy&lt;<span class="lifetime">'c</span>&gt;&gt; <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
+            <span class="kw">fn </span>from(proxy: #zbus::Proxy&lt;<span class="lifetime">'c</span>&gt;) -&gt; <span class="self">Self </span>{
                 #proxy_name(::std::convert::Into::into(proxy))
             }
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; ::std::ops::Deref <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
-            <span class="kw">type </span>Target = #proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt;;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; ::std::ops::Deref <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
+            <span class="kw">type </span>Target = #proxy_struct&lt;<span class="lifetime">'c</span>&gt;;
 
             <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
             </span>}
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; ::std::ops::DerefMut <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; ::std::ops::DerefMut <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
             <span class="kw">fn </span>deref_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self</span>::Target {
                 <span class="kw-2">&amp;mut </span><span class="self">self</span>.<span class="number">0
             </span>}
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; ::std::convert::AsRef&lt;#proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt;&gt; <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
-            <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>#proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; ::std::convert::AsRef&lt;#proxy_struct&lt;<span class="lifetime">'c</span>&gt;&gt; <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
+            <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>#proxy_struct&lt;<span class="lifetime">'c</span>&gt; {
                 <span class="kw-2">&amp;*</span><span class="self">self
             </span>}
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; ::std::convert::AsMut&lt;#proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt;&gt; <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
-            <span class="kw">fn </span>as_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>#proxy_struct&lt;<span class="lifetime">&#39;c</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; ::std::convert::AsMut&lt;#proxy_struct&lt;<span class="lifetime">'c</span>&gt;&gt; <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
+            <span class="kw">fn </span>as_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>#proxy_struct&lt;<span class="lifetime">'c</span>&gt; {
                 <span class="kw-2">&amp;mut *</span><span class="self">self
             </span>}
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; #zbus::zvariant::Type <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
-            <span class="kw">fn </span>signature() -&gt; #zbus::zvariant::Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; #zbus::zvariant::Type <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
+            <span class="kw">fn </span>signature() -&gt; #zbus::zvariant::Signature&lt;<span class="lifetime">'static</span>&gt; {
                 #zbus::zvariant::OwnedObjectPath::signature()
             }
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;c</span>&gt; #zbus::export::serde::ser::Serialize <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">&#39;c</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'c</span>&gt; #zbus::export::serde::ser::Serialize <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'c</span>&gt; {
             <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; ::std::result::Result&lt;S::Ok, S::Error&gt;
             <span class="kw">where
                 </span>S: #zbus::export::serde::ser::Serializer,
@@ -1635,7 +1636,7 @@
     <span class="kw">let </span>other_attrs: Vec&lt;<span class="kw">_</span>&gt; = m
         .attrs
         .iter()
-        .filter(|a| !a.path.is_ident(<span class="string">&quot;dbus_proxy&quot;</span>))
+        .filter(|a| !a.path.is_ident(<span class="string">"dbus_proxy"</span>))
         .collect();
     <span class="kw">let </span>args: Vec&lt;<span class="kw">_</span>&gt; = m
         .sig
@@ -1647,18 +1648,18 @@
 
     <span class="kw">let </span>proxy_object = attrs.object.as_ref().map(|o| {
         <span class="kw">if </span><span class="kw-2">*</span>blocking {
-            <span class="comment">// FIXME: for some reason Rust doesn&#39;t let us move `blocking_proxy_object` so we&#39;ve to clone.
+            <span class="comment">// FIXME: for some reason Rust doesn't let us move `blocking_proxy_object` so we've to clone.
             </span>attrs
                 .blocking_object
                 .as_ref()
                 .cloned()
-                .unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;{o}ProxyBlocking&quot;</span>))
+                .unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">"{o}ProxyBlocking"</span>))
         } <span class="kw">else </span>{
             attrs
                 .async_object
                 .as_ref()
                 .cloned()
-                .unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;{o}Proxy&quot;</span>))
+                .unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">"{o}Proxy"</span>))
         }
     });
     <span class="kw">let </span>no_reply = attrs.no_reply;
@@ -1705,11 +1706,11 @@
     {
         <span class="kw">let </span>is_input_type = inputs.iter().any(|arg| {
             <span class="comment">// FIXME: We want to only require `Serialize` from input types and `DeserializeOwned`
-            // from output types but since we don&#39;t have type introspection, we employ this
+            // from output types but since we don't have type introspection, we employ this
             // workaround of regex matching on string reprepresention of the the types to figure out
             // which generic types are input types.
             </span><span class="kw">if let </span>FnArg::Typed(pat) = arg {
-                <span class="kw">let </span>pattern = <span class="macro">format!</span>(<span class="string">&quot;&amp; *{}&quot;</span>, param.to_token_stream());
+                <span class="kw">let </span>pattern = <span class="macro">format!</span>(<span class="string">"&amp; *{}"</span>, param.to_token_stream());
                 <span class="kw">let </span>regex = Regex::new(<span class="kw-2">&amp;</span>pattern).unwrap();
                 regex.is_match(<span class="kw-2">&amp;</span>pat.ty.to_token_stream().to_string())
             } <span class="kw">else </span>{
@@ -1730,7 +1731,7 @@
     <span class="kw">if let </span><span class="prelude-val">Some</span>(proxy_name) = proxy_object {
         <span class="kw">let </span>proxy = Ident::new(<span class="kw-2">&amp;</span>proxy_name, Span::call_site());
         <span class="kw">let </span>signature = <span class="macro">quote! </span>{
-            <span class="kw">fn </span>#method#ty_generics(#inputs) -&gt; #zbus::Result&lt;#proxy&lt;<span class="lifetime">&#39;c</span>&gt;&gt;
+            <span class="kw">fn </span>#method#ty_generics(#inputs) -&gt; #zbus::Result&lt;#proxy&lt;<span class="lifetime">'c</span>&gt;&gt;
             #where_clause
         };
 
@@ -1751,8 +1752,8 @@
         }
     } <span class="kw">else </span>{
         <span class="kw">let </span>body = <span class="kw">if </span>args.len() == <span class="number">1 </span>{
-            <span class="comment">// Wrap single arg in a tuple so if it&#39;s a struct/tuple itself, zbus will only remove
-            // the &#39;()&#39; from the signature that we add and not the actual intended ones.
+            <span class="comment">// Wrap single arg in a tuple so if it's a struct/tuple itself, zbus will only remove
+            // the '()' from the signature that we add and not the actual intended ones.
             </span><span class="kw">let </span>arg = <span class="kw-2">&amp;</span>args[<span class="number">0</span>];
             <span class="macro">quote! </span>{
                 <span class="kw-2">&amp;</span>(#arg,)
@@ -1828,13 +1829,13 @@
         <span class="kw">use </span>PropertyEmitsChangedSignal::<span class="kw-2">*</span>;
 
         <span class="kw">match </span>s {
-            <span class="string">&quot;true&quot; </span>=&gt; <span class="prelude-val">Ok</span>(True),
-            <span class="string">&quot;invalidates&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Invalidates),
-            <span class="string">&quot;const&quot; </span>=&gt; <span class="prelude-val">Ok</span>(Const),
-            <span class="string">&quot;false&quot; </span>=&gt; <span class="prelude-val">Ok</span>(False),
+            <span class="string">"true" </span>=&gt; <span class="prelude-val">Ok</span>(True),
+            <span class="string">"invalidates" </span>=&gt; <span class="prelude-val">Ok</span>(Invalidates),
+            <span class="string">"const" </span>=&gt; <span class="prelude-val">Ok</span>(Const),
+            <span class="string">"false" </span>=&gt; <span class="prelude-val">Ok</span>(False),
             other =&gt; <span class="prelude-val">Err</span>(syn::Error::new(
                 span,
-                <span class="macro">format!</span>(<span class="string">&quot;invalid value \&quot;{other}\&quot; for attribute `property(emits_changed_signal)`&quot;</span>),
+                <span class="macro">format!</span>(<span class="string">"invalid value \"{other}\" for attribute `property(emits_changed_signal)`"</span>),
             )),
         }
     }
@@ -1856,7 +1857,7 @@
     <span class="kw">let </span>other_attrs: Vec&lt;<span class="kw">_</span>&gt; = m
         .attrs
         .iter()
-        .filter(|a| !a.path.is_ident(<span class="string">&quot;dbus_proxy&quot;</span>))
+        .filter(|a| !a.path.is_ident(<span class="string">"dbus_proxy"</span>))
         .collect();
     <span class="kw">let </span>signature = <span class="kw-2">&amp;</span>m.sig;
     <span class="kw">if </span>signature.inputs.len() &gt; <span class="number">1 </span>{
@@ -1887,26 +1888,26 @@
 
         <span class="kw">let </span>(proxy_name, prop_stream) = <span class="kw">if </span><span class="kw-2">*</span>blocking {
             (
-                <span class="string">&quot;zbus::blocking::Proxy&quot;</span>,
+                <span class="string">"zbus::blocking::Proxy"</span>,
                 <span class="macro">quote! </span>{ #zbus::blocking::PropertyIterator },
             )
         } <span class="kw">else </span>{
-            (<span class="string">&quot;zbus::Proxy&quot;</span>, <span class="macro">quote! </span>{ #zbus::PropertyStream })
+            (<span class="string">"zbus::Proxy"</span>, <span class="macro">quote! </span>{ #zbus::PropertyStream })
         };
 
         <span class="kw">let </span>receive_method = <span class="kw">match </span>emits_changed_signal {
             PropertyEmitsChangedSignal::True | PropertyEmitsChangedSignal::Invalidates =&gt; {
                 <span class="kw">let </span>(<span class="kw">_</span>, ty_generics, where_clause) = m.sig.generics.split_for_impl();
-                <span class="kw">let </span>receive = <span class="macro">format_ident!</span>(<span class="string">&quot;receive_{}_changed&quot;</span>, method_name);
+                <span class="kw">let </span>receive = <span class="macro">format_ident!</span>(<span class="string">"receive_{}_changed"</span>, method_name);
                 <span class="kw">let </span>gen_doc = <span class="macro">format!</span>(
-                    <span class="string">&quot;Create a stream for the `{property_name}` property changes. \
-                This is a convenient wrapper around [`{proxy_name}::receive_property_changed`].&quot;
+                    <span class="string">"Create a stream for the `{property_name}` property changes. \
+                This is a convenient wrapper around [`{proxy_name}::receive_property_changed`]."
                 </span>);
                 <span class="macro">quote! </span>{
                     <span class="attr">#[doc = #gen_doc]
                     </span><span class="kw">pub </span>#usage <span class="kw">fn </span>#receive#ty_generics(
                         <span class="kw-2">&amp;</span><span class="self">self
-                    </span>) -&gt; #prop_stream&lt;<span class="lifetime">&#39;c</span>, &lt;#ret_type <span class="kw">as </span>#zbus::ResultAdapter&gt;::Ok&gt;
+                    </span>) -&gt; #prop_stream&lt;<span class="lifetime">'c</span>, &lt;#ret_type <span class="kw">as </span>#zbus::ResultAdapter&gt;::Ok&gt;
                     #where_clause
                     {
                         <span class="self">self</span>.<span class="number">0</span>.receive_property_changed(#property_name)#wait
@@ -1922,9 +1923,9 @@
             PropertyEmitsChangedSignal::True
             | PropertyEmitsChangedSignal::Invalidates
             | PropertyEmitsChangedSignal::Const =&gt; {
-                <span class="kw">let </span>cached_getter = <span class="macro">format_ident!</span>(<span class="string">&quot;cached_{}&quot;</span>, method_name);
+                <span class="kw">let </span>cached_getter = <span class="macro">format_ident!</span>(<span class="string">"cached_{}"</span>, method_name);
                 <span class="kw">let </span>cached_doc = <span class="macro">format!</span>(
-                    <span class="string">&quot; Get the cached value of the `{property_name}` property, or `None` if the property is not cached.&quot;</span>,
+                    <span class="string">" Get the cached value of the `{property_name}` property, or `None` if the property is not cached."</span>,
                 );
                 <span class="macro">quote! </span>{
                     <span class="attr">#[doc = #cached_doc]
@@ -1958,12 +1959,12 @@
 <span class="kw">impl </span>Fold <span class="kw">for </span>SetLifetimeS {
     <span class="kw">fn </span>fold_type_reference(<span class="kw-2">&amp;mut </span><span class="self">self</span>, node: syn::TypeReference) -&gt; syn::TypeReference {
         <span class="kw">let </span><span class="kw-2">mut </span>t = syn::fold::fold_type_reference(<span class="self">self</span>, node);
-        t.lifetime = <span class="prelude-val">Some</span>(syn::Lifetime::new(<span class="string">&quot;&#39;s&quot;</span>, Span::call_site()));
+        t.lifetime = <span class="prelude-val">Some</span>(syn::Lifetime::new(<span class="string">"'s"</span>, Span::call_site()));
         t
     }
 
     <span class="kw">fn </span>fold_lifetime(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _node: syn::Lifetime) -&gt; syn::Lifetime {
-        syn::Lifetime::new(<span class="string">&quot;&#39;s&quot;</span>, Span::call_site())
+        syn::Lifetime::new(<span class="string">"'s"</span>, Span::call_site())
     }
 }
 
@@ -1985,7 +1986,7 @@
     <span class="kw">let </span>other_attrs: Vec&lt;<span class="kw">_</span>&gt; = method
         .attrs
         .iter()
-        .filter(|a| !a.path.is_ident(<span class="string">&quot;dbus_proxy&quot;</span>))
+        .filter(|a| !a.path.is_ident(<span class="string">"dbus_proxy"</span>))
         .collect();
     <span class="kw">let </span>input_types: Vec&lt;<span class="kw">_</span>&gt; = method
         .sig
@@ -2027,9 +2028,9 @@
     {
         where_clause
                 .predicates
-                .push(<span class="macro">parse_quote!</span>(#param: #zbus::export::serde::de::Deserialize&lt;<span class="lifetime">&#39;s</span>&gt; + #zbus::zvariant::Type + ::std::fmt::Debug));
+                .push(<span class="macro">parse_quote!</span>(#param: #zbus::export::serde::de::Deserialize&lt;<span class="lifetime">'s</span>&gt; + #zbus::zvariant::Type + ::std::fmt::Debug));
     }
-    generics.params.push(<span class="macro">parse_quote!</span>(<span class="lifetime">&#39;s</span>));
+    generics.params.push(<span class="macro">parse_quote!</span>(<span class="lifetime">'s</span>));
     <span class="kw">let </span>(impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
     <span class="kw">let </span>(
@@ -2041,38 +2042,38 @@
         signal_type,
     ) = <span class="kw">if </span><span class="kw-2">*</span>blocking {
         (
-            <span class="string">&quot;zbus::blocking::Proxy&quot;</span>,
-            <span class="string">&quot;https://docs.rs/zbus/latest/zbus/blocking/struct.Proxy.html#method.receive_signal&quot;</span>,
-            <span class="string">&quot;https://docs.rs/zbus/latest/zbus/blocking/struct.Proxy.html#method.receive_signal_with_args&quot;</span>,
-            <span class="string">&quot;Iterator&quot;</span>,
-            <span class="string">&quot;https://doc.rust-lang.org/std/iter/trait.Iterator.html&quot;</span>,
+            <span class="string">"zbus::blocking::Proxy"</span>,
+            <span class="string">"https://docs.rs/zbus/latest/zbus/blocking/struct.Proxy.html#method.receive_signal"</span>,
+            <span class="string">"https://docs.rs/zbus/latest/zbus/blocking/struct.Proxy.html#method.receive_signal_with_args"</span>,
+            <span class="string">"Iterator"</span>,
+            <span class="string">"https://doc.rust-lang.org/std/iter/trait.Iterator.html"</span>,
             <span class="macro">quote! </span>{ blocking::SignalIterator },
         )
     } <span class="kw">else </span>{
         (
-            <span class="string">&quot;zbus::Proxy&quot;</span>,
-            <span class="string">&quot;https://docs.rs/zbus/latest/zbus/struct.Proxy.html#method.receive_signal&quot;</span>,
-            <span class="string">&quot;https://docs.rs/zbus/latest/zbus/struct.Proxy.html#method.receive_signal_with_args&quot;</span>,
-            <span class="string">&quot;Stream&quot;</span>,
-            <span class="string">&quot;https://docs.rs/futures/0.3.15/futures/stream/trait.Stream.html&quot;</span>,
+            <span class="string">"zbus::Proxy"</span>,
+            <span class="string">"https://docs.rs/zbus/latest/zbus/struct.Proxy.html#method.receive_signal"</span>,
+            <span class="string">"https://docs.rs/zbus/latest/zbus/struct.Proxy.html#method.receive_signal_with_args"</span>,
+            <span class="string">"Stream"</span>,
+            <span class="string">"https://docs.rs/futures/0.3.15/futures/stream/trait.Stream.html"</span>,
             <span class="macro">quote! </span>{ SignalStream },
         )
     };
-    <span class="kw">let </span>receiver_name = <span class="macro">format_ident!</span>(<span class="string">&quot;receive_{snake_case_name}&quot;</span>);
-    <span class="kw">let </span>receiver_with_args_name = <span class="macro">format_ident!</span>(<span class="string">&quot;receive_{snake_case_name}_with_args&quot;</span>);
-    <span class="kw">let </span>stream_name = <span class="macro">format_ident!</span>(<span class="string">&quot;{signal_name}{trait_name}&quot;</span>);
-    <span class="kw">let </span>signal_args = <span class="macro">format_ident!</span>(<span class="string">&quot;{signal_name}Args&quot;</span>);
-    <span class="kw">let </span>signal_name_ident = <span class="macro">format_ident!</span>(<span class="string">&quot;{signal_name}&quot;</span>);
+    <span class="kw">let </span>receiver_name = <span class="macro">format_ident!</span>(<span class="string">"receive_{snake_case_name}"</span>);
+    <span class="kw">let </span>receiver_with_args_name = <span class="macro">format_ident!</span>(<span class="string">"receive_{snake_case_name}_with_args"</span>);
+    <span class="kw">let </span>stream_name = <span class="macro">format_ident!</span>(<span class="string">"{signal_name}{trait_name}"</span>);
+    <span class="kw">let </span>signal_args = <span class="macro">format_ident!</span>(<span class="string">"{signal_name}Args"</span>);
+    <span class="kw">let </span>signal_name_ident = <span class="macro">format_ident!</span>(<span class="string">"{signal_name}"</span>);
 
     <span class="kw">let </span>receive_gen_doc = <span class="macro">format!</span>(
-        <span class="string">&quot;Create a stream that receives `{signal_name}` signals.\n\
+        <span class="string">"Create a stream that receives `{signal_name}` signals.\n\
             \n\
-            This a convenient wrapper around [`{proxy_path}::receive_signal`]({receive_signal_link}).&quot;</span>,
+            This a convenient wrapper around [`{proxy_path}::receive_signal`]({receive_signal_link})."</span>,
     );
     <span class="kw">let </span>receive_with_args_gen_doc = <span class="macro">format!</span>(
-        <span class="string">&quot;Create a stream that receives `{signal_name}` signals.\n\
+        <span class="string">"Create a stream that receives `{signal_name}` signals.\n\
             \n\
-            This a convenient wrapper around [`{proxy_path}::receive_signal_with_args`]({receive_signal_with_args_link}).&quot;</span>,
+            This a convenient wrapper around [`{proxy_path}::receive_signal_with_args`]({receive_signal_with_args_link})."</span>,
     );
     <span class="kw">let </span>receive_signal_with_args = <span class="kw">if </span>args.is_empty() {
         <span class="macro">quote!</span>()
@@ -2080,7 +2081,7 @@
         <span class="macro">quote! </span>{
             <span class="attr">#[doc = #receive_with_args_gen_doc]
             </span>#(#other_attrs)*
-            <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_with_args_name(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="kw-2">&amp;</span>[(u8, <span class="kw-2">&amp;</span>str)]) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">&#39;static</span>&gt;&gt;
+            <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_with_args_name(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="kw-2">&amp;</span>[(u8, <span class="kw-2">&amp;</span>str)]) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">'static</span>&gt;&gt;
             {
                 <span class="self">self</span>.receive_signal_with_args(#signal_name, args)#wait.map(#stream_name)
             }
@@ -2089,7 +2090,7 @@
     <span class="kw">let </span>receive_signal = <span class="macro">quote! </span>{
         <span class="attr">#[doc = #receive_gen_doc]
         </span>#(#other_attrs)*
-        <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">&#39;static</span>&gt;&gt;
+        <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">'static</span>&gt;&gt;
         {
             <span class="self">self</span>.receive_signal(#signal_name)#wait.map(#stream_name)
         }
@@ -2098,14 +2099,14 @@
     };
 
     <span class="kw">let </span>stream_gen_doc = <span class="macro">format!</span>(
-        <span class="string">&quot;A [`{trait_name}`] implementation that yields [`{signal_name}`] signals.\n\
+        <span class="string">"A [`{trait_name}`] implementation that yields [`{signal_name}`] signals.\n\
             \n\
             Use [`{proxy_name}::{receiver_name}`] to create an instance of this type.\n\
             \n\
-            [`{trait_name}`]: {trait_link}&quot;</span>,
+            [`{trait_name}`]: {trait_link}"</span>,
     );
-    <span class="kw">let </span>signal_args_gen_doc = <span class="macro">format!</span>(<span class="string">&quot;`{signal_name}` signal arguments.&quot;</span>);
-    <span class="kw">let </span>args_struct_gen_doc = <span class="macro">format!</span>(<span class="string">&quot;A `{signal_name}` signal.&quot;</span>);
+    <span class="kw">let </span>signal_args_gen_doc = <span class="macro">format!</span>(<span class="string">"`{signal_name}` signal arguments."</span>);
+    <span class="kw">let </span>args_struct_gen_doc = <span class="macro">format!</span>(<span class="string">"A `{signal_name}` signal."</span>);
     <span class="kw">let </span>args_struct_decl = <span class="kw">if </span>gen_sig_args {
         <span class="macro">quote! </span>{
             <span class="attr">#[doc = #args_struct_gen_doc]
@@ -2133,9 +2134,9 @@
             }
 
             <span class="kw">impl </span>#signal_name_ident {
-                <span class="attr">#[doc = <span class="string">&quot;Try to construct a &quot;</span>]
+                <span class="attr">#[doc = <span class="string">"Try to construct a "</span>]
                 #[doc = #signal_name]
-                #[doc = <span class="string">&quot; from a [::zbus::Message].&quot;</span>]
+                #[doc = <span class="string">" from a [::zbus::Message]."</span>]
                 </span><span class="kw">pub fn </span>from_message&lt;M&gt;(msg: M) -&gt; ::std::option::Option&lt;<span class="self">Self</span>&gt;
                 <span class="kw">where
                     </span>M: ::std::convert::Into&lt;::std::sync::Arc&lt;#zbus::Message&gt;&gt;,
@@ -2169,7 +2170,7 @@
         <span class="macro">quote! </span>{
             <span class="kw">impl </span>#signal_name_ident {
                 <span class="doccomment">/// Retrieve the signal arguments.
-                </span><span class="kw">pub fn </span>args#ty_generics(<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span><span class="self">self</span>) -&gt; #zbus::Result&lt;#signal_args #ty_generics&gt;
+                </span><span class="kw">pub fn </span>args#ty_generics(<span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="self">self</span>) -&gt; #zbus::Result&lt;#signal_args #ty_generics&gt;
                 #where_clause
                 {
                     ::std::convert::TryFrom::try_from(<span class="kw-2">&amp;**</span><span class="self">self</span>)
@@ -2178,7 +2179,7 @@
 
             <span class="attr">#[doc = #signal_args_gen_doc]
             </span><span class="kw">pub struct </span>#signal_args #ty_generics {
-                phantom: std::marker::PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>()&gt;,
+                phantom: std::marker::PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'s </span>()&gt;,
                 #(
                     <span class="kw">pub </span>#args: #input_types_s
                  ),*
@@ -2197,7 +2198,7 @@
             <span class="kw">impl </span>#impl_generics std::fmt::Debug <span class="kw">for </span>#signal_args #ty_generics
                 #where_clause
             {
-                <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+                <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
                     f.debug_struct(#signal_name)
                     #(
                      .field(<span class="macro">stringify!</span>(#args), <span class="kw-2">&amp;</span><span class="self">self</span>.#args)
@@ -2206,12 +2207,12 @@
                 }
             }
 
-            <span class="kw">impl </span>#impl_generics ::std::convert::TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>#zbus::Message&gt; <span class="kw">for </span>#signal_args #ty_generics
+            <span class="kw">impl </span>#impl_generics ::std::convert::TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'s </span>#zbus::Message&gt; <span class="kw">for </span>#signal_args #ty_generics
                 #where_clause
             {
                 <span class="kw">type </span>Error = #zbus::Error;
 
-                <span class="kw">fn </span>try_from(message: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>#zbus::Message) -&gt; #zbus::Result&lt;<span class="self">Self</span>&gt; {
+                <span class="kw">fn </span>try_from(message: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>#zbus::Message) -&gt; #zbus::Result&lt;<span class="self">Self</span>&gt; {
                     message.body::&lt;(#(#input_types),<span class="kw-2">*</span>)&gt;()
                         .map_err(::std::convert::Into::into)
                         .map(|args| {
@@ -2226,7 +2227,7 @@
     };
     <span class="kw">let </span>stream_impl = <span class="kw">if </span><span class="kw-2">*</span>blocking {
         <span class="macro">quote! </span>{
-            <span class="kw">impl </span>::std::iter::Iterator <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;_</span>&gt; {
+            <span class="kw">impl </span>::std::iter::Iterator <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">type </span>Item = #signal_name_ident;
 
                 <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ::std::option::Option&lt;<span class="self">Self</span>::Item&gt; {
@@ -2237,12 +2238,12 @@
         }
     } <span class="kw">else </span>{
         <span class="macro">quote! </span>{
-            <span class="kw">impl </span>#zbus::export::futures_core::stream::Stream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;_</span>&gt; {
+            <span class="kw">impl </span>#zbus::export::futures_core::stream::Stream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">type </span>Item = #signal_name_ident;
 
                 <span class="kw">fn </span>poll_next(
                     <span class="self">self</span>: ::std::pin::Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-                    cx: <span class="kw-2">&amp;mut </span>::std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+                    cx: <span class="kw-2">&amp;mut </span>::std::task::Context&lt;<span class="lifetime">'_</span>&gt;,
                     ) -&gt; ::std::task::Poll&lt;::std::option::Option&lt;<span class="self">Self</span>::Item&gt;&gt; {
                     #zbus::export::futures_core::stream::Stream::poll_next(
                         ::std::pin::Pin::new(<span class="kw-2">&amp;mut </span><span class="self">self</span>.get_mut().<span class="number">0</span>),
@@ -2252,13 +2253,13 @@
                 }
             }
 
-            <span class="kw">impl </span>#zbus::export::ordered_stream::OrderedStream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;_</span>&gt; {
+            <span class="kw">impl </span>#zbus::export::ordered_stream::OrderedStream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">type </span>Data = #signal_name_ident;
                 <span class="kw">type </span>Ordering = #zbus::MessageSequence;
 
                 <span class="kw">fn </span>poll_next_before(
                     <span class="self">self</span>: ::std::pin::Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-                    cx: <span class="kw-2">&amp;mut </span>::std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+                    cx: <span class="kw-2">&amp;mut </span>::std::task::Context&lt;<span class="lifetime">'_</span>&gt;,
                     before: ::std::option::Option&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;
                     ) -&gt; ::std::task::Poll&lt;#zbus::export::ordered_stream::PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
                     #zbus::export::ordered_stream::OrderedStream::poll_next_before(
@@ -2270,14 +2271,14 @@
                 }
             }
 
-            <span class="kw">impl </span>#zbus::export::futures_core::stream::FusedStream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;_</span>&gt; {
+            <span class="kw">impl </span>#zbus::export::futures_core::stream::FusedStream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">fn </span>is_terminated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
                     <span class="self">self</span>.<span class="number">0</span>.is_terminated()
                 }
             }
 
             <span class="attr">#[#zbus::export::async_trait::async_trait]
-            </span><span class="kw">impl </span>#zbus::AsyncDrop <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;_</span>&gt; {
+            </span><span class="kw">impl </span>#zbus::AsyncDrop <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">async fn </span>async_drop(<span class="self">self</span>) {
                     <span class="self">self</span>.<span class="number">0</span>.async_drop().<span class="kw">await
                 </span>}
@@ -2287,33 +2288,33 @@
     <span class="kw">let </span>stream_types = <span class="macro">quote! </span>{
         <span class="attr">#[doc = #stream_gen_doc]
         #[derive(Debug)]
-        </span><span class="kw">pub struct </span>#stream_name&lt;<span class="lifetime">&#39;a</span>&gt;(#zbus::#signal_type&lt;<span class="lifetime">&#39;a</span>&gt;);
+        </span><span class="kw">pub struct </span>#stream_name&lt;<span class="lifetime">'a</span>&gt;(#zbus::#signal_type&lt;<span class="lifetime">'a</span>&gt;);
 
         #<span class="macro">zbus::export::static_assertions::assert_impl_all!</span>(
-            #stream_name&lt;<span class="lifetime">&#39;_</span>&gt;: ::std::marker::Send, ::std::marker::Unpin
+            #stream_name&lt;<span class="lifetime">'_</span>&gt;: ::std::marker::Send, ::std::marker::Unpin
         );
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; #stream_name&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; #stream_name&lt;<span class="lifetime">'a</span>&gt; {
             <span class="doccomment">/// Consumes `self`, returning the underlying `zbus::#signal_type`.
-            </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; #zbus::#signal_type&lt;<span class="lifetime">&#39;a</span>&gt; {
+            </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; #zbus::#signal_type&lt;<span class="lifetime">'a</span>&gt; {
                 <span class="self">self</span>.<span class="number">0
             </span>}
 
             <span class="doccomment">/// The reference to the underlying `zbus::#signal_type`.
-            </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; &amp; #zbus::#signal_type&lt;<span class="lifetime">&#39;a</span>&gt; {
+            </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; &amp; #zbus::#signal_type&lt;<span class="lifetime">'a</span>&gt; {
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
             </span>}
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; std::ops::Deref <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;a</span>&gt; {
-            <span class="kw">type </span>Target = #zbus::#signal_type&lt;<span class="lifetime">&#39;a</span>&gt;;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; std::ops::Deref <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'a</span>&gt; {
+            <span class="kw">type </span>Target = #zbus::#signal_type&lt;<span class="lifetime">'a</span>&gt;;
 
             <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
             </span>}
         }
 
-        <span class="kw">impl </span>::std::ops::DerefMut <span class="kw">for </span>#stream_name&lt;<span class="lifetime">&#39;_</span>&gt; {
+        <span class="kw">impl </span>::std::ops::DerefMut <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
             <span class="kw">fn </span>deref_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self</span>::Target {
                 <span class="kw-2">&amp;mut </span><span class="self">self</span>.<span class="number">0
             </span>}

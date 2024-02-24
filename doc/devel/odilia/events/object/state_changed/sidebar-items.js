@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["COUNT"],"fn":["dispatch","focused","update_state"],"static":["CALLSITE","META"]};
+window.SIDEBAR_ITEMS = {"fn":["dispatch","focused","update_state"]};

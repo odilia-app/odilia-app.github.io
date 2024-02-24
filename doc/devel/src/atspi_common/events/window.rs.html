@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/events/window.rs`."><title>window.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../atspi_common/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/events/window.rs`."><title>window.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1317,7 +1318,7 @@
 <span class="macro">event_wrapper_test_cases!</span>(WindowEvents, MoveEvent);
 
 <span class="kw">impl </span>HasMatchRule <span class="kw">for </span>WindowEvents {
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;&quot;</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"type='signal',interface='org.a11y.atspi.Event.Window'"</span>;
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
@@ -1416,22 +1417,22 @@
 	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>PropertyChangeEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;PropertyChange&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;PropertyChange&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>PropertyChangeEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"PropertyChange"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='PropertyChange'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, property: body.kind })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1447,27 +1448,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::PropertyChange(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>MinimizeEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Minimize&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Minimize&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>MinimizeEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Minimize"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Minimize'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1483,27 +1484,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Minimize(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>MaximizeEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Maximize&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Maximize&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>MaximizeEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Maximize"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Maximize'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1519,27 +1520,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Maximize(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>RestoreEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Restore&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Restore&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RestoreEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Restore"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Restore'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1555,27 +1556,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Restore(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>CloseEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Close&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Close&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>CloseEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Close"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Close'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1591,27 +1592,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Close(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>CreateEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Create&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Create&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>CreateEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Create"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Create'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1627,27 +1628,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Create(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>ReparentEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Reparent&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Reparent&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ReparentEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Reparent"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Reparent'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1663,27 +1664,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Reparent(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>DesktopCreateEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;DesktopCreate&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;DesktopCreate&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DesktopCreateEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"DesktopCreate"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='DesktopCreate'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1699,27 +1700,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::DesktopCreate(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>DesktopDestroyEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;DesktopDestroy&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;DesktopDestroy&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DesktopDestroyEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"DesktopDestroy"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='DesktopDestroy'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1735,27 +1736,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::DesktopDestroy(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>DestroyEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Destroy&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Destroy&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DestroyEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Destroy"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Destroy'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1771,27 +1772,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Destroy(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>ActivateEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Activate&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Activate&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ActivateEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Activate"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Activate'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1807,27 +1808,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Activate(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>DeactivateEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Deactivate&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Deactivate&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DeactivateEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Deactivate"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Deactivate'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1843,27 +1844,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Deactivate(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>RaiseEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Raise&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Raise&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RaiseEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Raise"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Raise'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1879,27 +1880,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Raise(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>LowerEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Lower&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Lower&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LowerEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Lower"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Lower'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1915,27 +1916,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Lower(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>MoveEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Move&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Move&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>MoveEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Move"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Move'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1951,27 +1952,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Move(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>ResizeEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Resize&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Resize&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ResizeEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Resize"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Resize'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -1987,27 +1988,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Resize(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>ShadeEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Shade&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Shade&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ShadeEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Shade"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Shade'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -2023,27 +2024,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Shade(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>UUshadeEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;uUshade&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;uUshade&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>UUshadeEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"uUshade"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='uUshade'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -2059,27 +2060,27 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::UUshade(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>RestyleEvent {
-	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Restyle&quot;</span>;
-	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;org.a11y.atspi.Event.Window&quot;</span>;
-	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str =
-		<span class="string">&quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Restyle&#39;&quot;</span>;
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RestyleEvent {
+	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Restyle"</span>;
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
+	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
+		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Window',member='Restyle'"</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.name.clone().into()
 	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt; {
+	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
@@ -2095,39 +2096,39 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	 if let Event::Window(WindowEvents::Restyle(inner_event)) = event {
 			Ok(inner_event)
 		} else {
-			Err(AtspiError::Conversion(&quot;Invalid type&quot;))
+			Err(AtspiError::Conversion("Invalid type"))
 		}
 	}
 }*/
 
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;zbus&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>WindowEvents {
 	<span class="kw">type </span>Error = AtspiError;
 	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>member = ev
 			.member()
-			.ok_or(AtspiError::MemberMatch(<span class="string">&quot;Event without member&quot;</span>.into()))<span class="question-mark">?</span>;
+			.ok_or(AtspiError::MemberMatch(<span class="string">"Event without member"</span>.into()))<span class="question-mark">?</span>;
 		<span class="kw">match </span>member.as_str() {
-			<span class="string">&quot;PropertyChange&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::PropertyChange(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Minimize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Minimize(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Maximize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Maximize(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Restore&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restore(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Close&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Close(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Create&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Create(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Reparent&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Reparent(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;DesktopCreate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopCreate(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;DesktopDestroy&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopDestroy(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Destroy&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Destroy(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Activate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Activate(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Deactivate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Deactivate(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Raise&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Raise(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Lower&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Lower(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Move&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Move(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Resize&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Resize(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Shade&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Shade(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;uUshade&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::UUshade(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">&quot;Restyle&quot; </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restyle(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">&quot;No matching member for Window&quot;</span>.into())),
+			<span class="string">"PropertyChange" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::PropertyChange(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Minimize" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Minimize(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Maximize" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Maximize(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Restore" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restore(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Close" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Close(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Create" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Create(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Reparent" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Reparent(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"DesktopCreate" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopCreate(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"DesktopDestroy" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::DesktopDestroy(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Destroy" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Destroy(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Activate" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Activate(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Deactivate" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Deactivate(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Raise" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Raise(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Lower" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Lower(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Move" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Move(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Resize" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Resize(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Shade" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Shade(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"uUshade" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::UUshade(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="string">"Restyle" </span>=&gt; <span class="prelude-val">Ok</span>(WindowEvents::Restyle(ev.try_into()<span class="question-mark">?</span>)),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">"No matching member for Window"</span>.into())),
 		}
 	}
 }
@@ -2452,120 +2453,120 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 }
 
 <span class="comment">/*impl HasMatchRule for PropertyChangeEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;PropertyChange&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='PropertyChange'";
 }*/
 /*impl HasMatchRule for MinimizeEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Minimize&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Minimize'";
 }*/
 /*impl HasMatchRule for MaximizeEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Maximize&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Maximize'";
 }*/
 /*impl HasMatchRule for RestoreEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Restore&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Restore'";
 }*/
 /*impl HasMatchRule for CloseEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Close&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Close'";
 }*/
 /*impl HasMatchRule for CreateEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Create&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Create'";
 }*/
 /*impl HasMatchRule for ReparentEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Reparent&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Reparent'";
 }*/
 /*impl HasMatchRule for DesktopCreateEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;DesktopCreate&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='DesktopCreate'";
 }*/
 /*impl HasMatchRule for DesktopDestroyEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;DesktopDestroy&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='DesktopDestroy'";
 }*/
 /*impl HasMatchRule for DestroyEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Destroy&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Destroy'";
 }*/
 /*impl HasMatchRule for ActivateEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Activate&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Activate'";
 }*/
 /*impl HasMatchRule for DeactivateEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Deactivate&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Deactivate'";
 }*/
 /*impl HasMatchRule for RaiseEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Raise&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Raise'";
 }*/
 /*impl HasMatchRule for LowerEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Lower&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Lower'";
 }*/
 /*impl HasMatchRule for MoveEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Move&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Move'";
 }*/
 /*impl HasMatchRule for ResizeEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Resize&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Resize'";
 }*/
 /*impl HasMatchRule for ShadeEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Shade&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Shade'";
 }*/
 /*impl HasMatchRule for UUshadeEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;uUshade&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='uUshade'";
 }*/
 /*impl HasMatchRule for RestyleEvent {
-	const MATCH_RULE_STRING: &amp;&#39;static str = &quot;type=&#39;signal&#39;,interface=&#39;org.a11y.atspi.Event.Window&#39;,member=&#39;Restyle&#39;&quot;;
+	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Window',member='Restyle'";
 }*/
 /*impl HasRegistryEventString for PropertyChangeEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:PropertyChange&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:PropertyChange";
 }*/
 /*impl HasRegistryEventString for MinimizeEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Minimize&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Minimize";
 }*/
 /*impl HasRegistryEventString for MaximizeEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Maximize&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Maximize";
 }*/
 /*impl HasRegistryEventString for RestoreEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Restore&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Restore";
 }*/
 /*impl HasRegistryEventString for CloseEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Close&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Close";
 }*/
 /*impl HasRegistryEventString for CreateEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Create&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Create";
 }*/
 /*impl HasRegistryEventString for ReparentEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Reparent&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Reparent";
 }*/
 /*impl HasRegistryEventString for DesktopCreateEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:DesktopCreate&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:DesktopCreate";
 }*/
 /*impl HasRegistryEventString for DesktopDestroyEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:DesktopDestroy&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:DesktopDestroy";
 }*/
 /*impl HasRegistryEventString for DestroyEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Destroy&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Destroy";
 }*/
 /*impl HasRegistryEventString for ActivateEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Activate&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Activate";
 }*/
 /*impl HasRegistryEventString for DeactivateEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Deactivate&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Deactivate";
 }*/
 /*impl HasRegistryEventString for RaiseEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Raise&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Raise";
 }*/
 /*impl HasRegistryEventString for LowerEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Lower&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Lower";
 }*/
 /*impl HasRegistryEventString for MoveEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Move&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Move";
 }*/
 /*impl HasRegistryEventString for ResizeEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Resize&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Resize";
 }*/
 /*impl HasRegistryEventString for ShadeEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Shade&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Shade";
 }*/
 /*impl HasRegistryEventString for UUshadeEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:uUshade&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:uUshade";
 }*/
 /*impl HasRegistryEventString for RestyleEvent {
-	const REGISTRY_EVENT_STRING: &amp;&#39;static str = &quot;Window:Restyle&quot;;
+	const REGISTRY_EVENT_STRING: &amp;'static str = "Window:Restyle";
 }*/
 </span><span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>WindowEvents {
-	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;Window:&quot;</span>;
+	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Window:"</span>;
 }
 </code></pre></div></section></main></body></html>

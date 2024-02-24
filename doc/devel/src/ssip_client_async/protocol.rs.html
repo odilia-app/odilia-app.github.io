@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ssip-client-async-0.10.0/src/protocol.rs`."><title>protocol.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ssip_client_async" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ssip_client_async/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ssip-client-async-0.10.0/src/protocol.rs`."><title>protocol.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ssip_client_async" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -371,12 +372,12 @@
 </span><span class="kw">use </span>log::debug;
 <span class="kw">use </span>std::io::{<span class="self">self</span>, BufRead, Write};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;tokio&quot;</span>, doc))]
+<span class="attr">#[cfg(any(feature = <span class="string">"tokio"</span>, doc))]
 </span><span class="kw">use </span>tokio::io::{
     AsyncWrite, AsyncWriteExt,
     AsyncBufRead, AsyncBufReadExt,
 };
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;async-std&quot;</span>, doc))]
+<span class="attr">#[cfg(any(feature = <span class="string">"async-std"</span>, doc))]
 </span><span class="kw">use </span>async_std::io::{
   Read <span class="kw">as </span>AsyncReadStd,
   BufRead <span class="kw">as </span>AsyncBufReadStd,
@@ -425,7 +426,7 @@
     parse_single_value(lines)<span class="question-mark">?</span>.parse::&lt;T&gt;().map_err(|<span class="kw">_</span>| {
         ClientError::Io(io::Error::new(
             io::ErrorKind::InvalidData,
-            <span class="string">&quot;invalid integer value&quot;</span>,
+            <span class="string">"invalid integer value"</span>,
         ))
     })
 }
@@ -443,30 +444,30 @@
 <span class="doccomment">/// Write lines separated by CRLF.
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>write_lines(output: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Write, lines: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; ClientResult&lt;()&gt; {
     <span class="kw">for </span>line <span class="kw">in </span>lines.iter() {
-        <span class="macro">debug!</span>(<span class="string">&quot;SSIP(out): {}&quot;</span>, line);
+        <span class="macro">debug!</span>(<span class="string">"SSIP(out): {}"</span>, line);
         output.write_all(line.as_bytes())<span class="question-mark">?</span>;
-        output.write_all(<span class="string">b&quot;\r\n&quot;</span>)<span class="question-mark">?</span>;
+        output.write_all(<span class="string">b"\r\n"</span>)<span class="question-mark">?</span>;
     }
     <span class="prelude-val">Ok</span>(())
 }
 
 <span class="doccomment">/// Write lines (asyncronously) separated by CRLF.
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;tokio&quot;</span>, doc))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">"tokio"</span>, doc))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>write_lines_tokio(output: <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>AsyncWrite + Unpin), lines: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; ClientResult&lt;()&gt; {
     <span class="kw">for </span>line <span class="kw">in </span>lines.iter() {
-        <span class="macro">debug!</span>(<span class="string">&quot;SSIP(out): {}&quot;</span>, line);
+        <span class="macro">debug!</span>(<span class="string">"SSIP(out): {}"</span>, line);
         output.write_all(line.as_bytes()).<span class="kw">await</span><span class="question-mark">?</span>;
-        output.write_all(<span class="string">b&quot;\r\n&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        output.write_all(<span class="string">b"\r\n"</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     }
     <span class="prelude-val">Ok</span>(())
 }
 <span class="doccomment">/// Write lines (asyncronously) separated by CRLF.
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;async-std&quot;</span>, doc))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">"async-std"</span>, doc))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>write_lines_async_std(output: <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>AsyncWriteStd + Unpin), lines: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; ClientResult&lt;()&gt; {
     <span class="kw">for </span>line <span class="kw">in </span>lines.iter() {
-        <span class="macro">debug!</span>(<span class="string">&quot;SSIP(out): {}&quot;</span>, line);
+        <span class="macro">debug!</span>(<span class="string">"SSIP(out): {}"</span>, line);
         output.write_all(line.as_bytes()).<span class="kw">await</span><span class="question-mark">?</span>;
-        output.write_all(<span class="string">b&quot;\r\n&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        output.write_all(<span class="string">b"\r\n"</span>).<span class="kw">await</span><span class="question-mark">?</span>;
     }
     <span class="prelude-val">Ok</span>(())
 }
@@ -478,14 +479,14 @@
     <span class="prelude-val">Ok</span>(())
 }
 <span class="doccomment">/// Write lines separated by CRLF and flush the output asyncronously.
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;tokio&quot;</span>, doc))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">"tokio"</span>, doc))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>flush_lines_tokio(output: <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>AsyncWrite + Unpin), lines: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; ClientResult&lt;()&gt; {
     write_lines_tokio(output, lines).<span class="kw">await</span><span class="question-mark">?</span>;
     output.flush().<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 <span class="doccomment">/// Write lines separated by CRLF and flush the output asyncronously.
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;async-std&quot;</span>, doc))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">"async-std"</span>, doc))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>flush_lines_async_std(output: <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>AsyncWriteStd + Unpin), lines: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; ClientResult&lt;()&gt; {
     write_lines_async_std(output, lines).<span class="kw">await</span><span class="question-mark">?</span>;
     output.flush().<span class="kw">await</span><span class="question-mark">?</span>;
@@ -497,21 +498,21 @@
     line.strip_prefix(prefix).unwrap_or(line).to_string()
 }
 
-<span class="doccomment">/// Parse the status line &quot;OK msg&quot; or &quot;ERR msg&quot;
+<span class="doccomment">/// Parse the status line "OK msg" or "ERR msg"
 </span><span class="kw">fn </span>parse_status_line(code: u16, line: <span class="kw-2">&amp;</span>str) -&gt; ClientStatus {
     <span class="kw">if </span>(<span class="number">300</span>..<span class="number">700</span>).contains(<span class="kw-2">&amp;</span>code) {
-        <span class="kw">const </span>TOKEN_ERR: <span class="kw-2">&amp;</span>str = <span class="string">&quot;ERR &quot;</span>;
+        <span class="kw">const </span>TOKEN_ERR: <span class="kw-2">&amp;</span>str = <span class="string">"ERR "</span>;
         <span class="kw">let </span>message = strip_prefix(line, TOKEN_ERR);
         <span class="prelude-val">Err</span>(ClientError::Ssip(StatusLine { code, message }))
     } <span class="kw">else </span>{
-        <span class="kw">const </span>TOKEN_OK: <span class="kw-2">&amp;</span>str = <span class="string">&quot;OK &quot;</span>;
+        <span class="kw">const </span>TOKEN_OK: <span class="kw-2">&amp;</span>str = <span class="string">"OK "</span>;
         <span class="kw">let </span>message = strip_prefix(line, TOKEN_OK);
         <span class="prelude-val">Ok</span>(StatusLine { code, message })
     }
 }
 
 <span class="doccomment">/// Read lines from server until a status line is found.
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;tokio&quot;</span>, doc))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">"tokio"</span>, doc))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>receive_answer_tokio(
     input: <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>AsyncBufRead + Unpin),
     <span class="kw-2">mut </span>lines: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>Vec&lt;String&gt;&gt;,
@@ -519,28 +520,28 @@
     <span class="kw">loop </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>line = String::new();
         input.read_line(<span class="kw-2">&amp;mut </span>line).<span class="kw">await</span>.map_err(ClientError::Io)<span class="question-mark">?</span>;
-        <span class="macro">debug!</span>(<span class="string">&quot;SSIP(in): {}&quot;</span>, line.trim_end());
+        <span class="macro">debug!</span>(<span class="string">"SSIP(in): {}"</span>, line.trim_end());
         <span class="kw">match </span>line.chars().nth(<span class="number">3</span>) {
             <span class="prelude-val">Some</span>(ch) =&gt; <span class="kw">match </span>ch {
-                <span class="string">&#39; &#39; </span>=&gt; <span class="kw">match </span>line[<span class="number">0</span>..<span class="number">3</span>].parse::&lt;u16&gt;() {
+                <span class="string">' ' </span>=&gt; <span class="kw">match </span>line[<span class="number">0</span>..<span class="number">3</span>].parse::&lt;u16&gt;() {
                     <span class="prelude-val">Ok</span>(code) =&gt; <span class="kw">return </span>parse_status_line(code, line[<span class="number">4</span>..].trim_end()),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(err.to_string())),
                 },
-                <span class="string">&#39;-&#39; </span>=&gt; <span class="kw">match </span>lines {
+                <span class="string">'-' </span>=&gt; <span class="kw">match </span>lines {
                     <span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>lines) =&gt; lines.push(line[<span class="number">4</span>..].trim_end().to_string()),
-                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;unexpected line: {}&quot;</span>, line)),
+                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"unexpected line: {}"</span>, line)),
                 },
                 ch =&gt; {
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;expecting space or dash, got {}.&quot;</span>, ch));
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"expecting space or dash, got {}."</span>, ch));
                 }
             },
-            <span class="prelude-val">None </span><span class="kw">if </span>line.is_empty() =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;empty line&quot;</span>)),
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;line too short: {}&quot;</span>, line)),
+            <span class="prelude-val">None </span><span class="kw">if </span>line.is_empty() =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"empty line"</span>)),
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"line too short: {}"</span>, line)),
         }
     }
 }
 <span class="doccomment">/// Read lines from server until a status line is found.
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;async-std&quot;</span>, doc))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">"async-std"</span>, doc))]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>receive_answer_async_std(
     input: <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>AsyncBufReadStd + Unpin),
     <span class="kw-2">mut </span>lines: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>Vec&lt;String&gt;&gt;,
@@ -548,23 +549,23 @@
     <span class="kw">loop </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>line = String::new();
         input.read_line(<span class="kw-2">&amp;mut </span>line).<span class="kw">await</span>.map_err(ClientError::Io)<span class="question-mark">?</span>;
-        <span class="macro">debug!</span>(<span class="string">&quot;SSIP(in): {}&quot;</span>, line.trim_end());
+        <span class="macro">debug!</span>(<span class="string">"SSIP(in): {}"</span>, line.trim_end());
         <span class="kw">match </span>line.chars().nth(<span class="number">3</span>) {
             <span class="prelude-val">Some</span>(ch) =&gt; <span class="kw">match </span>ch {
-                <span class="string">&#39; &#39; </span>=&gt; <span class="kw">match </span>line[<span class="number">0</span>..<span class="number">3</span>].parse::&lt;u16&gt;() {
+                <span class="string">' ' </span>=&gt; <span class="kw">match </span>line[<span class="number">0</span>..<span class="number">3</span>].parse::&lt;u16&gt;() {
                     <span class="prelude-val">Ok</span>(code) =&gt; <span class="kw">return </span>parse_status_line(code, line[<span class="number">4</span>..].trim_end()),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(err.to_string())),
                 },
-                <span class="string">&#39;-&#39; </span>=&gt; <span class="kw">match </span>lines {
+                <span class="string">'-' </span>=&gt; <span class="kw">match </span>lines {
                     <span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>lines) =&gt; lines.push(line[<span class="number">4</span>..].trim_end().to_string()),
-                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;unexpected line: {}&quot;</span>, line)),
+                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"unexpected line: {}"</span>, line)),
                 },
                 ch =&gt; {
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;expecting space or dash, got {}.&quot;</span>, ch));
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"expecting space or dash, got {}."</span>, ch));
                 }
             },
-            <span class="prelude-val">None </span><span class="kw">if </span>line.is_empty() =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;empty line&quot;</span>)),
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;line too short: {}&quot;</span>, line)),
+            <span class="prelude-val">None </span><span class="kw">if </span>line.is_empty() =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"empty line"</span>)),
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"line too short: {}"</span>, line)),
         }
     }
 }
@@ -577,23 +578,23 @@
     <span class="kw">loop </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>line = String::new();
         input.read_line(<span class="kw-2">&amp;mut </span>line).map_err(ClientError::Io)<span class="question-mark">?</span>;
-        <span class="macro">debug!</span>(<span class="string">&quot;SSIP(in): {}&quot;</span>, line.trim_end());
+        <span class="macro">debug!</span>(<span class="string">"SSIP(in): {}"</span>, line.trim_end());
         <span class="kw">match </span>line.chars().nth(<span class="number">3</span>) {
             <span class="prelude-val">Some</span>(ch) =&gt; <span class="kw">match </span>ch {
-                <span class="string">&#39; &#39; </span>=&gt; <span class="kw">match </span>line[<span class="number">0</span>..<span class="number">3</span>].parse::&lt;u16&gt;() {
+                <span class="string">' ' </span>=&gt; <span class="kw">match </span>line[<span class="number">0</span>..<span class="number">3</span>].parse::&lt;u16&gt;() {
                     <span class="prelude-val">Ok</span>(code) =&gt; <span class="kw">return </span>parse_status_line(code, line[<span class="number">4</span>..].trim_end()),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(err.to_string())),
                 },
-                <span class="string">&#39;-&#39; </span>=&gt; <span class="kw">match </span>lines {
+                <span class="string">'-' </span>=&gt; <span class="kw">match </span>lines {
                     <span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>lines) =&gt; lines.push(line[<span class="number">4</span>..].trim_end().to_string()),
-                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;unexpected line: {}&quot;</span>, line)),
+                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"unexpected line: {}"</span>, line)),
                 },
                 ch =&gt; {
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;expecting space or dash, got {}.&quot;</span>, ch));
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"expecting space or dash, got {}."</span>, ch));
                 }
             },
-            <span class="prelude-val">None </span><span class="kw">if </span>line.is_empty() =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;empty line&quot;</span>)),
-            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">&quot;line too short: {}&quot;</span>, line)),
+            <span class="prelude-val">None </span><span class="kw">if </span>line.is_empty() =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"empty line"</span>)),
+            <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">invalid_input!</span>(<span class="string">"line too short: {}"</span>, line)),
         }
     }
 }
@@ -609,44 +610,44 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>single_ok_status_line() {
-        <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(<span class="string">&quot;208 OK CLIENT NAME SET\r\n&quot;</span>.as_bytes());
+        <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(<span class="string">"208 OK CLIENT NAME SET\r\n"</span>.as_bytes());
         <span class="kw">let </span>status = receive_answer(<span class="kw-2">&amp;mut </span>input, <span class="prelude-val">None</span>).unwrap();
         <span class="macro">assert_eq!</span>(<span class="number">208</span>, status.code);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;CLIENT NAME SET&quot;</span>, status.message);
+        <span class="macro">assert_eq!</span>(<span class="string">"CLIENT NAME SET"</span>, status.message);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>single_success_status_line() {
-        <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(<span class="string">&quot;231 HAPPY HACKING\r\n&quot;</span>.as_bytes());
+        <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(<span class="string">"231 HAPPY HACKING\r\n"</span>.as_bytes());
         <span class="kw">let </span>status = receive_answer(<span class="kw-2">&amp;mut </span>input, <span class="prelude-val">None</span>).unwrap();
         <span class="macro">assert_eq!</span>(<span class="number">231</span>, status.code);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;HAPPY HACKING&quot;</span>, status.message);
+        <span class="macro">assert_eq!</span>(<span class="string">"HAPPY HACKING"</span>, status.message);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>single_err_status_line() {
-        <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(<span class="string">&quot;409 ERR RATE TOO HIGH\r\n&quot;</span>.as_bytes());
+        <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(<span class="string">"409 ERR RATE TOO HIGH\r\n"</span>.as_bytes());
         <span class="kw">match </span>receive_answer(<span class="kw-2">&amp;mut </span>input, <span class="prelude-val">None</span>).err().unwrap() {
             ClientError::Ssip(status) =&gt; {
                 <span class="macro">assert_eq!</span>(<span class="number">409</span>, status.code);
-                <span class="macro">assert_eq!</span>(<span class="string">&quot;RATE TOO HIGH&quot;</span>, status.message);
+                <span class="macro">assert_eq!</span>(<span class="string">"RATE TOO HIGH"</span>, status.message);
             }
-            err =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}: invalid error&quot;</span>, err),
+            err =&gt; <span class="macro">panic!</span>(<span class="string">"{}: invalid error"</span>, err),
         }
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>multi_lines() {
         <span class="kw">let </span><span class="kw-2">mut </span>input = BufReader::new(
-            <span class="string">&quot;249-afrikaans\taf\tnone\r\n249-en-rhotic\ten\tr\r\n249 OK VOICE LIST SENT\r\n&quot;
+            <span class="string">"249-afrikaans\taf\tnone\r\n249-en-rhotic\ten\tr\r\n249 OK VOICE LIST SENT\r\n"
                 </span>.as_bytes(),
         );
         <span class="kw">let </span><span class="kw-2">mut </span>lines = Vec::new();
         <span class="kw">let </span>status = receive_answer(<span class="kw-2">&amp;mut </span>input, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut </span>lines)).unwrap();
         <span class="macro">assert_eq!</span>(<span class="number">249</span>, status.code);
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;VOICE LIST SENT&quot;</span>, status.message);
+        <span class="macro">assert_eq!</span>(<span class="string">"VOICE LIST SENT"</span>, status.message);
         <span class="macro">assert_eq!</span>(
-            <span class="macro">vec!</span>[<span class="string">&quot;afrikaans\taf\tnone&quot;</span>, <span class="string">&quot;en-rhotic\ten\tr&quot;</span>],
+            <span class="macro">vec!</span>[<span class="string">"afrikaans\taf\tnone"</span>, <span class="string">"en-rhotic\ten\tr"</span>],
             lines.as_slice()
         );
     }
@@ -659,11 +660,11 @@
             <span class="prelude-val">Err</span>(ClientError::TooFewLines)
         ));
 
-        <span class="kw">let </span>one = String::from(<span class="string">&quot;one&quot;</span>);
+        <span class="kw">let </span>one = String::from(<span class="string">"one"</span>);
         <span class="kw">let </span>one_line = <span class="macro">vec!</span>[one.to_owned()];
         <span class="macro">assert_eq!</span>(one, <span class="kw">super</span>::parse_single_value(<span class="kw-2">&amp;</span>one_line)<span class="question-mark">?</span>);
 
-        <span class="kw">let </span>two_lines = <span class="macro">vec!</span>[one, String::from(<span class="string">&quot;two&quot;</span>)];
+        <span class="kw">let </span>two_lines = <span class="macro">vec!</span>[one, String::from(<span class="string">"two"</span>)];
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="kw">super</span>::parse_single_value(<span class="kw-2">&amp;</span>two_lines),
             <span class="prelude-val">Err</span>(ClientError::TooManyLines)
@@ -680,23 +681,23 @@
             <span class="prelude-val">Err</span>(ClientError::TooFewLines)
         ));
 
-        <span class="kw">let </span>one_line = <span class="macro">vec!</span>[String::from(<span class="string">&quot;one&quot;</span>)];
+        <span class="kw">let </span>one_line = <span class="macro">vec!</span>[String::from(<span class="string">"one"</span>)];
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="kw">super</span>::parse_event_id(<span class="kw-2">&amp;</span>one_line),
             <span class="prelude-val">Err</span>(ClientError::TooFewLines)
         ));
 
-        <span class="kw">let </span>mid = String::from(<span class="string">&quot;message&quot;</span>);
-        <span class="kw">let </span>cid = String::from(<span class="string">&quot;client&quot;</span>);
+        <span class="kw">let </span>mid = String::from(<span class="string">"message"</span>);
+        <span class="kw">let </span>cid = String::from(<span class="string">"client"</span>);
         <span class="kw">let </span>two_lines = <span class="macro">vec!</span>[mid.to_owned(), cid.to_owned()];
         <span class="kw">let </span>event_id = <span class="kw">super</span>::parse_event_id(<span class="kw-2">&amp;</span>two_lines)<span class="question-mark">?</span>;
         <span class="macro">assert_eq!</span>(mid, event_id.message);
         <span class="macro">assert_eq!</span>(cid, event_id.client);
 
         <span class="kw">let </span>three_lines = <span class="macro">vec!</span>[
-            String::from(<span class="string">&quot;one&quot;</span>),
-            String::from(<span class="string">&quot;two&quot;</span>),
-            String::from(<span class="string">&quot;three&quot;</span>),
+            String::from(<span class="string">"one"</span>),
+            String::from(<span class="string">"two"</span>),
+            String::from(<span class="string">"three"</span>),
         ];
         <span class="macro">assert!</span>(<span class="macro">matches!</span>(
             <span class="kw">super</span>::parse_event_id(<span class="kw-2">&amp;</span>three_lines),
@@ -708,15 +709,15 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_synthesis_voices() -&gt; ClientResult&lt;()&gt; {
-        <span class="kw">let </span>lines = [<span class="string">&quot;en&quot;</span>, <span class="string">&quot;afrikaans\taf&quot;</span>, <span class="string">&quot;lancashire\ten\tuk-north&quot;</span>]
+        <span class="kw">let </span>lines = [<span class="string">"en"</span>, <span class="string">"afrikaans\taf"</span>, <span class="string">"lancashire\ten\tuk-north"</span>]
             .iter()
             .map(|s| s.to_string())
             .collect::&lt;Vec&lt;String&gt;&gt;();
         <span class="kw">let </span>voices = <span class="kw">super</span>::parse_typed_lines::&lt;SynthesisVoice&gt;(<span class="kw-2">&amp;</span>lines)<span class="question-mark">?</span>;
         <span class="macro">assert_eq!</span>(<span class="number">3</span>, voices.len());
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;en&quot;</span>, voices[<span class="number">0</span>].name.as_str());
-        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(String::from(<span class="string">&quot;af&quot;</span>)), voices[<span class="number">1</span>].language);
-        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(String::from(<span class="string">&quot;uk-north&quot;</span>)), voices[<span class="number">2</span>].dialect);
+        <span class="macro">assert_eq!</span>(<span class="string">"en"</span>, voices[<span class="number">0</span>].name.as_str());
+        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(String::from(<span class="string">"af"</span>)), voices[<span class="number">1</span>].language);
+        <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(String::from(<span class="string">"uk-north"</span>)), voices[<span class="number">2</span>].dialect);
         <span class="prelude-val">Ok</span>(())
     }
 }

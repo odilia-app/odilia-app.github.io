@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.19/src/kv/source.rs`."><title>source.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="log" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../log/index.html"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.19/src/kv/source.rs`."><title>source.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="log" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../../log/index.html"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="log"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -776,12 +777,12 @@
 <a href="#776" id="776">776</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Sources for key-value pairs.
 
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
 </span><span class="kw">extern crate </span>sval;
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
 </span><span class="kw">extern crate </span>sval_ref;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
 </span><span class="kw">extern crate </span>serde;
 
 <span class="kw">use </span>kv::{Error, Key, ToKey, ToValue, Value};
@@ -795,7 +796,7 @@
 </span><span class="kw">pub trait </span>Source {
     <span class="doccomment">/// Visit key-value pairs.
     ///
-    /// A source doesn&#39;t have to guarantee any ordering or uniqueness of key-value pairs.
+    /// A source doesn't have to guarantee any ordering or uniqueness of key-value pairs.
     /// If the given visitor returns an error then the source may early-return with it,
     /// even if there are more key-value pairs.
     ///
@@ -803,7 +804,7 @@
     ///
     /// A source should yield the same key-value pairs to a subsequent visitor unless
     /// that visitor itself fails.
-    </span><span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+    </span><span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
 
     <span class="doccomment">/// Get the value for a given key.
     ///
@@ -815,12 +816,12 @@
     /// A source that can provide a more efficient implementation of this method
     /// should override it.
     </span><span class="attr">#[cfg(not(test))]
-    </span><span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    </span><span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         get_default(<span class="self">self</span>, key)
     }
 
     <span class="attr">#[cfg(test)]
-    </span><span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt;;
+    </span><span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt;;
 
     <span class="doccomment">/// Count the number of key-value pairs that can be visited.
     ///
@@ -841,14 +842,14 @@
 }
 
 <span class="doccomment">/// The default implemention of `Source::get`
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_default&lt;<span class="lifetime">&#39;v</span>&gt;(source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span>(<span class="kw">impl </span>Source + <span class="question-mark">?</span>Sized), key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
-    <span class="kw">struct </span>Get&lt;<span class="lifetime">&#39;k</span>, <span class="lifetime">&#39;v</span>&gt; {
-        key: Key&lt;<span class="lifetime">&#39;k</span>&gt;,
-        found: <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt;,
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_default&lt;<span class="lifetime">'v</span>&gt;(source: <span class="kw-2">&amp;</span><span class="lifetime">'v </span>(<span class="kw">impl </span>Source + <span class="question-mark">?</span>Sized), key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
+    <span class="kw">struct </span>Get&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
+        key: Key&lt;<span class="lifetime">'k</span>&gt;,
+        found: <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;k</span>, <span class="lifetime">&#39;kvs</span>&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>Get&lt;<span class="lifetime">&#39;k</span>, <span class="lifetime">&#39;kvs</span>&gt; {
-        <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'kvs</span>&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>Get&lt;<span class="lifetime">'k</span>, <span class="lifetime">'kvs</span>&gt; {
+        <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             <span class="kw">if </span><span class="self">self</span>.key == key {
                 <span class="self">self</span>.found = <span class="prelude-val">Some</span>(value);
             }
@@ -867,8 +868,8 @@
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>count_default(source: <span class="kw">impl </span>Source) -&gt; usize {
     <span class="kw">struct </span>Count(usize);
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;kvs</span>&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>Count {
-        <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, <span class="kw">_</span>: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, <span class="kw">_</span>: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'kvs</span>&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>Count {
+        <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, <span class="kw">_</span>: Key&lt;<span class="lifetime">'kvs</span>&gt;, <span class="kw">_</span>: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             <span class="self">self</span>.<span class="number">0 </span>+= <span class="number">1</span>;
 
             <span class="prelude-val">Ok</span>(())
@@ -880,15 +881,15 @@
     count.<span class="number">0
 </span>}
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; Source <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; Source <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span>T
 <span class="kw">where
     </span>T: Source + <span class="question-mark">?</span>Sized,
 {
-    <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         Source::visit(<span class="kw-2">&amp;**</span><span class="self">self</span>, visitor)
     }
 
-    <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         Source::get(<span class="kw-2">&amp;**</span><span class="self">self</span>, key)
     }
 
@@ -902,11 +903,11 @@
     </span>K: ToKey,
     V: ToValue,
 {
-    <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         visitor.visit_pair(<span class="self">self</span>.<span class="number">0</span>.to_key(), <span class="self">self</span>.<span class="number">1</span>.to_value())
     }
 
-    <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.<span class="number">0</span>.to_key() == key {
             <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="number">1</span>.to_value())
         } <span class="kw">else </span>{
@@ -923,7 +924,7 @@
 <span class="kw">where
     </span>S: Source,
 {
-    <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">for </span>source <span class="kw">in </span><span class="self">self </span>{
             source.visit(visitor)<span class="question-mark">?</span>;
         }
@@ -931,7 +932,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         <span class="kw">for </span>source <span class="kw">in </span><span class="self">self </span>{
             <span class="kw">if let </span><span class="prelude-val">Some</span>(found) = source.get(key.clone()) {
                 <span class="kw">return </span><span class="prelude-val">Some</span>(found);
@@ -950,7 +951,7 @@
 <span class="kw">where
     </span>S: Source,
 {
-    <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>source) = <span class="kw-2">*</span><span class="self">self </span>{
             source.visit(visitor)<span class="question-mark">?</span>;
         }
@@ -958,7 +959,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         <span class="self">self</span>.as_ref().and_then(|s| s.get(key))
     }
 
@@ -968,50 +969,50 @@
 }
 
 <span class="doccomment">/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
-</span><span class="kw">pub trait </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; {
+</span><span class="kw">pub trait </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt; {
     <span class="doccomment">/// Visit a key-value pair.
-    </span><span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
+    </span><span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;;
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>, T&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>T
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>, T&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T
 <span class="kw">where
-    </span>T: Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; + <span class="question-mark">?</span>Sized,
+    </span>T: Visitor&lt;<span class="lifetime">'kvs</span>&gt; + <span class="question-mark">?</span>Sized,
 {
-    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).visit_pair(key, value)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>fmt::DebugMap&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
-    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>: <span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>fmt::DebugMap&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
+    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.entry(<span class="kw-2">&amp;</span>key, <span class="kw-2">&amp;</span>value);
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>fmt::DebugList&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
-    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>: <span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>fmt::DebugList&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
+    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.entry(<span class="kw-2">&amp;</span>(key, value));
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>fmt::DebugSet&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
-    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>: <span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>fmt::DebugSet&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
+    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.entry(<span class="kw-2">&amp;</span>(key, value));
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>fmt::DebugTuple&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
-    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>: <span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>fmt::DebugTuple&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
+    <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.field(<span class="kw-2">&amp;</span>key);
         <span class="self">self</span>.field(<span class="kw-2">&amp;</span>value);
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">mod </span>std_support {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span>std::borrow::Borrow;
@@ -1022,11 +1023,11 @@
     <span class="kw">where
         </span>S: Source + <span class="question-mark">?</span>Sized,
     {
-        <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             Source::visit(<span class="kw-2">&amp;**</span><span class="self">self</span>, visitor)
         }
 
-        <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+        <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
             Source::get(<span class="kw-2">&amp;**</span><span class="self">self</span>, key)
         }
 
@@ -1039,11 +1040,11 @@
     <span class="kw">where
         </span>S: Source,
     {
-        <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             Source::visit(<span class="kw-2">&amp;**</span><span class="self">self</span>, visitor)
         }
 
-        <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+        <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
             Source::get(<span class="kw-2">&amp;**</span><span class="self">self</span>, key)
         }
 
@@ -1052,11 +1053,11 @@
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;kvs</span>, V&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>Box&lt;V&gt;
+    <span class="kw">impl</span>&lt;<span class="lifetime">'kvs</span>, V&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>Box&lt;V&gt;
     <span class="kw">where
-        </span>V: Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; + <span class="question-mark">?</span>Sized,
+        </span>V: Visitor&lt;<span class="lifetime">'kvs</span>&gt; + <span class="question-mark">?</span>Sized,
     {
-        <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             (<span class="kw-2">**</span><span class="self">self</span>).visit_pair(key, value)
         }
     }
@@ -1067,14 +1068,14 @@
         V: ToValue,
         S: BuildHasher,
     {
-        <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             <span class="kw">for </span>(key, value) <span class="kw">in </span><span class="self">self </span>{
                 visitor.visit_pair(key.to_key(), value.to_value())<span class="question-mark">?</span>;
             }
             <span class="prelude-val">Ok</span>(())
         }
 
-        <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+        <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
             HashMap::get(<span class="self">self</span>, key.as_str()).map(|v| v.to_value())
         }
 
@@ -1088,14 +1089,14 @@
         </span>K: ToKey + Borrow&lt;str&gt; + Ord,
         V: ToValue,
     {
-        <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+        <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
             <span class="kw">for </span>(key, value) <span class="kw">in </span><span class="self">self </span>{
                 visitor.visit_pair(key.to_key(), value.to_value())<span class="question-mark">?</span>;
             }
             <span class="prelude-val">Ok</span>(())
         }
 
-        <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+        <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
             BTreeMap::get(<span class="self">self</span>, key.as_str()).map(|v| v.to_value())
         }
 
@@ -1112,45 +1113,45 @@
 
         <span class="attr">#[test]
         </span><span class="kw">fn </span>count() {
-            <span class="macro">assert_eq!</span>(<span class="number">1</span>, Source::count(<span class="kw-2">&amp;</span>Box::new((<span class="string">&quot;a&quot;</span>, <span class="number">1</span>))));
-            <span class="macro">assert_eq!</span>(<span class="number">2</span>, Source::count(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>), (<span class="string">&quot;b&quot;</span>, <span class="number">2</span>)]));
+            <span class="macro">assert_eq!</span>(<span class="number">1</span>, Source::count(<span class="kw-2">&amp;</span>Box::new((<span class="string">"a"</span>, <span class="number">1</span>))));
+            <span class="macro">assert_eq!</span>(<span class="number">2</span>, Source::count(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>)]));
         }
 
         <span class="attr">#[test]
         </span><span class="kw">fn </span>get() {
-            <span class="kw">let </span>source = <span class="macro">vec!</span>[(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>), (<span class="string">&quot;b&quot;</span>, <span class="number">2</span>), (<span class="string">&quot;a&quot;</span>, <span class="number">1</span>)];
+            <span class="kw">let </span>source = <span class="macro">vec!</span>[(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"a"</span>, <span class="number">1</span>)];
             <span class="macro">assert_eq!</span>(
                 Token::I64(<span class="number">1</span>),
-                Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">&quot;a&quot;</span>)).unwrap().to_token()
+                Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">"a"</span>)).unwrap().to_token()
             );
 
             <span class="kw">let </span>source = Box::new(Option::None::&lt;(<span class="kw-2">&amp;</span>str, i32)&gt;);
-            <span class="macro">assert!</span>(Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">&quot;a&quot;</span>)).is_none());
+            <span class="macro">assert!</span>(Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">"a"</span>)).is_none());
         }
 
         <span class="attr">#[test]
         </span><span class="kw">fn </span>hash_map() {
             <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
-            map.insert(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>);
-            map.insert(<span class="string">&quot;b&quot;</span>, <span class="number">2</span>);
+            map.insert(<span class="string">"a"</span>, <span class="number">1</span>);
+            map.insert(<span class="string">"b"</span>, <span class="number">2</span>);
 
             <span class="macro">assert_eq!</span>(<span class="number">2</span>, Source::count(<span class="kw-2">&amp;</span>map));
             <span class="macro">assert_eq!</span>(
                 Token::I64(<span class="number">1</span>),
-                Source::get(<span class="kw-2">&amp;</span>map, Key::from_str(<span class="string">&quot;a&quot;</span>)).unwrap().to_token()
+                Source::get(<span class="kw-2">&amp;</span>map, Key::from_str(<span class="string">"a"</span>)).unwrap().to_token()
             );
         }
 
         <span class="attr">#[test]
         </span><span class="kw">fn </span>btree_map() {
             <span class="kw">let </span><span class="kw-2">mut </span>map = BTreeMap::new();
-            map.insert(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>);
-            map.insert(<span class="string">&quot;b&quot;</span>, <span class="number">2</span>);
+            map.insert(<span class="string">"a"</span>, <span class="number">1</span>);
+            map.insert(<span class="string">"b"</span>, <span class="number">2</span>);
 
             <span class="macro">assert_eq!</span>(<span class="number">2</span>, Source::count(<span class="kw-2">&amp;</span>map));
             <span class="macro">assert_eq!</span>(
                 Token::I64(<span class="number">1</span>),
-                Source::get(<span class="kw-2">&amp;</span>map, Key::from_str(<span class="string">&quot;a&quot;</span>)).unwrap().to_token()
+                Source::get(<span class="kw-2">&amp;</span>map, Key::from_str(<span class="string">"a"</span>)).unwrap().to_token()
             );
         }
     }
@@ -1171,11 +1172,11 @@
 <span class="kw">where
     </span>S: Source,
 {
-    <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.visit(visitor)
     }
 
-    <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         <span class="self">self</span>.<span class="number">0</span>.get(key)
     }
 
@@ -1210,11 +1211,11 @@
 <span class="kw">where
     </span>S: Source,
 {
-    <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="self">self</span>.<span class="number">0</span>.visit(visitor)
     }
 
-    <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+    <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
         <span class="self">self</span>.<span class="number">0</span>.get(key)
     }
 
@@ -1234,7 +1235,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_sval&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_sval"</span>)]
 </span><span class="kw">mod </span>sval_support {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
@@ -1242,31 +1243,31 @@
     <span class="kw">where
         </span>S: Source,
     {
-        <span class="kw">fn </span>stream&lt;<span class="lifetime">&#39;sval</span>, SV: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">&#39;sval</span>&gt; + <span class="question-mark">?</span>Sized&gt;(
-            <span class="kw-2">&amp;</span><span class="lifetime">&#39;sval </span><span class="self">self</span>,
+        <span class="kw">fn </span>stream&lt;<span class="lifetime">'sval</span>, SV: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">'sval</span>&gt; + <span class="question-mark">?</span>Sized&gt;(
+            <span class="kw-2">&amp;</span><span class="lifetime">'sval </span><span class="self">self</span>,
             stream: <span class="kw-2">&amp;mut </span>SV,
         ) -&gt; <span class="self">self</span>::sval::Result {
-            <span class="kw">struct </span>StreamVisitor&lt;<span class="lifetime">&#39;a</span>, V: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>V);
+            <span class="kw">struct </span>StreamVisitor&lt;<span class="lifetime">'a</span>, V: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>V);
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>, V: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">&#39;kvs</span>&gt; + <span class="question-mark">?</span>Sized&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>StreamVisitor&lt;<span class="lifetime">&#39;a</span>, V&gt; {
-                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>, V: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">'kvs</span>&gt; + <span class="question-mark">?</span>Sized&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>StreamVisitor&lt;<span class="lifetime">'a</span>, V&gt; {
+                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
                     <span class="self">self</span>.<span class="number">0
                         </span>.map_key_begin()
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream map key&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream map key"</span>))<span class="question-mark">?</span>;
                     sval_ref::stream_ref(<span class="self">self</span>.<span class="number">0</span>, key)
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream map key&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream map key"</span>))<span class="question-mark">?</span>;
                     <span class="self">self</span>.<span class="number">0
                         </span>.map_key_end()
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream map key&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream map key"</span>))<span class="question-mark">?</span>;
 
                     <span class="self">self</span>.<span class="number">0
                         </span>.map_value_begin()
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream map value&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream map value"</span>))<span class="question-mark">?</span>;
                     sval_ref::stream_ref(<span class="self">self</span>.<span class="number">0</span>, value)
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream map value&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream map value"</span>))<span class="question-mark">?</span>;
                     <span class="self">self</span>.<span class="number">0
                         </span>.map_value_end()
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream map value&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream map value"</span>))<span class="question-mark">?</span>;
 
                     <span class="prelude-val">Ok</span>(())
                 }
@@ -1287,22 +1288,22 @@
     <span class="kw">where
         </span>S: Source,
     {
-        <span class="kw">fn </span>stream&lt;<span class="lifetime">&#39;sval</span>, SV: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">&#39;sval</span>&gt; + <span class="question-mark">?</span>Sized&gt;(
-            <span class="kw-2">&amp;</span><span class="lifetime">&#39;sval </span><span class="self">self</span>,
+        <span class="kw">fn </span>stream&lt;<span class="lifetime">'sval</span>, SV: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">'sval</span>&gt; + <span class="question-mark">?</span>Sized&gt;(
+            <span class="kw-2">&amp;</span><span class="lifetime">'sval </span><span class="self">self</span>,
             stream: <span class="kw-2">&amp;mut </span>SV,
         ) -&gt; <span class="self">self</span>::sval::Result {
-            <span class="kw">struct </span>StreamVisitor&lt;<span class="lifetime">&#39;a</span>, V: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>V);
+            <span class="kw">struct </span>StreamVisitor&lt;<span class="lifetime">'a</span>, V: <span class="question-mark">?</span>Sized&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>V);
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>, V: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">&#39;kvs</span>&gt; + <span class="question-mark">?</span>Sized&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>StreamVisitor&lt;<span class="lifetime">&#39;a</span>, V&gt; {
-                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>, V: <span class="self">self</span>::sval::Stream&lt;<span class="lifetime">'kvs</span>&gt; + <span class="question-mark">?</span>Sized&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>StreamVisitor&lt;<span class="lifetime">'a</span>, V&gt; {
+                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
                     <span class="self">self</span>.<span class="number">0
                         </span>.seq_value_begin()
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream seq value&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream seq value"</span>))<span class="question-mark">?</span>;
                     <span class="self">self</span>::sval_ref::stream_ref(<span class="self">self</span>.<span class="number">0</span>, (key, value))
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream seq value&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream seq value"</span>))<span class="question-mark">?</span>;
                     <span class="self">self</span>.<span class="number">0
                         </span>.seq_value_end()
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to stream seq value&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to stream seq value"</span>))<span class="question-mark">?</span>;
 
                     <span class="prelude-val">Ok</span>(())
                 }
@@ -1332,21 +1333,21 @@
         <span class="attr">#[test]
         </span><span class="kw">fn </span>derive_stream() {
             <span class="attr">#[derive(Value)]
-            </span><span class="kw">pub struct </span>MyRecordAsMap&lt;<span class="lifetime">&#39;a</span>&gt; {
-                msg: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
-                kvs: source::AsMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>Source&gt;,
+            </span><span class="kw">pub struct </span>MyRecordAsMap&lt;<span class="lifetime">'a</span>&gt; {
+                msg: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
+                kvs: source::AsMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Source&gt;,
             }
 
             <span class="attr">#[derive(Value)]
-            </span><span class="kw">pub struct </span>MyRecordAsList&lt;<span class="lifetime">&#39;a</span>&gt; {
-                msg: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
-                kvs: source::AsList&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>Source&gt;,
+            </span><span class="kw">pub struct </span>MyRecordAsList&lt;<span class="lifetime">'a</span>&gt; {
+                msg: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
+                kvs: source::AsList&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Source&gt;,
             }
         }
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
 </span><span class="kw">pub mod </span>as_map {
     <span class="doccomment">//! `serde` adapters for serializing a `Source` as a map.
 
@@ -1364,7 +1365,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
 </span><span class="kw">pub mod </span>as_list {
     <span class="doccomment">//! `serde` adapters for serializing a `Source` as a list.
 
@@ -1382,7 +1383,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;kv_unstable_serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"kv_unstable_serde"</span>)]
 </span><span class="kw">mod </span>serde_support {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
@@ -1396,16 +1397,16 @@
         <span class="kw">where
             </span>S: Serializer,
         {
-            <span class="kw">struct </span>SerializerVisitor&lt;<span class="lifetime">&#39;a</span>, S&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>S);
+            <span class="kw">struct </span>SerializerVisitor&lt;<span class="lifetime">'a</span>, S&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>S);
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>, S&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>SerializerVisitor&lt;<span class="lifetime">&#39;a</span>, S&gt;
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>, S&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>SerializerVisitor&lt;<span class="lifetime">'a</span>, S&gt;
             <span class="kw">where
                 </span>S: SerializeMap,
             {
-                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
                     <span class="self">self</span>.<span class="number">0
                         </span>.serialize_entry(<span class="kw-2">&amp;</span>key, <span class="kw-2">&amp;</span>value)
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to serialize map entry&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to serialize map entry"</span>))<span class="question-mark">?</span>;
                     <span class="prelude-val">Ok</span>(())
                 }
             }
@@ -1413,7 +1414,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>map = serializer.serialize_map(<span class="prelude-val">Some</span>(<span class="self">self</span>.count()))<span class="question-mark">?</span>;
 
             <span class="self">self</span>.visit(<span class="kw-2">&amp;mut </span>SerializerVisitor(<span class="kw-2">&amp;mut </span>map))
-                .map_err(|<span class="kw">_</span>| S::Error::custom(<span class="string">&quot;failed to visit key-values&quot;</span>))<span class="question-mark">?</span>;
+                .map_err(|<span class="kw">_</span>| S::Error::custom(<span class="string">"failed to visit key-values"</span>))<span class="question-mark">?</span>;
 
             map.end()
         }
@@ -1427,16 +1428,16 @@
         <span class="kw">where
             </span>S: Serializer,
         {
-            <span class="kw">struct </span>SerializerVisitor&lt;<span class="lifetime">&#39;a</span>, S&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>S);
+            <span class="kw">struct </span>SerializerVisitor&lt;<span class="lifetime">'a</span>, S&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>S);
 
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;kvs</span>, S&gt; Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt; <span class="kw">for </span>SerializerVisitor&lt;<span class="lifetime">&#39;a</span>, S&gt;
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'kvs</span>, S&gt; Visitor&lt;<span class="lifetime">'kvs</span>&gt; <span class="kw">for </span>SerializerVisitor&lt;<span class="lifetime">'a</span>, S&gt;
             <span class="kw">where
                 </span>S: SerializeSeq,
             {
-                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">&#39;kvs</span>&gt;, value: Value&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+                <span class="kw">fn </span>visit_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: Key&lt;<span class="lifetime">'kvs</span>&gt;, value: Value&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
                     <span class="self">self</span>.<span class="number">0
                         </span>.serialize_element(<span class="kw-2">&amp;</span>(key, value))
-                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">&quot;failed to serialize seq entry&quot;</span>))<span class="question-mark">?</span>;
+                        .map_err(|<span class="kw">_</span>| Error::msg(<span class="string">"failed to serialize seq entry"</span>))<span class="question-mark">?</span>;
                     <span class="prelude-val">Ok</span>(())
                 }
             }
@@ -1444,7 +1445,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="self">self</span>.count()))<span class="question-mark">?</span>;
 
             <span class="self">self</span>.visit(<span class="kw-2">&amp;mut </span>SerializerVisitor(<span class="kw-2">&amp;mut </span>seq))
-                .map_err(|<span class="kw">_</span>| S::Error::custom(<span class="string">&quot;failed to visit seq&quot;</span>))<span class="question-mark">?</span>;
+                .map_err(|<span class="kw">_</span>| S::Error::custom(<span class="string">"failed to visit seq"</span>))<span class="question-mark">?</span>;
 
             seq.end()
         }
@@ -1461,19 +1462,19 @@
         <span class="attr">#[test]
         </span><span class="kw">fn </span>derive_serialize() {
             <span class="attr">#[derive(Serialize)]
-            </span><span class="kw">pub struct </span>MyRecordAsMap&lt;<span class="lifetime">&#39;a</span>&gt; {
-                msg: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+            </span><span class="kw">pub struct </span>MyRecordAsMap&lt;<span class="lifetime">'a</span>&gt; {
+                msg: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
                 <span class="attr">#[serde(flatten)]
-                #[serde(with = <span class="string">&quot;source::as_map&quot;</span>)]
-                </span>kvs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>Source,
+                #[serde(with = <span class="string">"source::as_map"</span>)]
+                </span>kvs: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Source,
             }
 
             <span class="attr">#[derive(Serialize)]
-            </span><span class="kw">pub struct </span>MyRecordAsList&lt;<span class="lifetime">&#39;a</span>&gt; {
-                msg: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+            </span><span class="kw">pub struct </span>MyRecordAsList&lt;<span class="lifetime">'a</span>&gt; {
+                msg: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str,
                 <span class="attr">#[serde(flatten)]
-                #[serde(with = <span class="string">&quot;source::as_list&quot;</span>)]
-                </span>kvs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw">dyn </span>Source,
+                #[serde(with = <span class="string">"source::as_list"</span>)]
+                </span>kvs: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Source,
             }
         }
     }
@@ -1497,16 +1498,16 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>count() {
         <span class="kw">struct </span>OnePair {
-            key: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+            key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
             value: i32,
         }
 
         <span class="kw">impl </span>Source <span class="kw">for </span>OnePair {
-            <span class="kw">fn </span>visit&lt;<span class="lifetime">&#39;kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">&#39;kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+            <span class="kw">fn </span>visit&lt;<span class="lifetime">'kvs</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'kvs </span><span class="self">self</span>, visitor: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Visitor&lt;<span class="lifetime">'kvs</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
                 visitor.visit_pair(<span class="self">self</span>.key.to_key(), <span class="self">self</span>.value.to_value())
             }
 
-            <span class="kw">fn </span>get&lt;<span class="lifetime">&#39;v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">&#39;v</span>&gt;&gt; {
+            <span class="kw">fn </span>get&lt;<span class="lifetime">'v</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'v </span><span class="self">self</span>, key: Key) -&gt; <span class="prelude-ty">Option</span>&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; {
                 get_default(<span class="self">self</span>, key)
             }
 
@@ -1515,39 +1516,39 @@
             }
         }
 
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, Source::count(<span class="kw-2">&amp;</span>(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>)));
-        <span class="macro">assert_eq!</span>(<span class="number">2</span>, Source::count(<span class="kw-2">&amp;</span>[(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>), (<span class="string">&quot;b&quot;</span>, <span class="number">2</span>)] <span class="kw">as </span><span class="kw-2">&amp;</span>[<span class="kw">_</span>]));
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, Source::count(<span class="kw-2">&amp;</span>(<span class="string">"a"</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq!</span>(<span class="number">2</span>, Source::count(<span class="kw-2">&amp;</span>[(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>)] <span class="kw">as </span><span class="kw-2">&amp;</span>[<span class="kw">_</span>]));
         <span class="macro">assert_eq!</span>(<span class="number">0</span>, Source::count(<span class="kw-2">&amp;</span>Option::None::&lt;(<span class="kw-2">&amp;</span>str, i32)&gt;));
-        <span class="macro">assert_eq!</span>(<span class="number">1</span>, Source::count(<span class="kw-2">&amp;</span>OnePair { key: <span class="string">&quot;a&quot;</span>, value: <span class="number">1 </span>}));
+        <span class="macro">assert_eq!</span>(<span class="number">1</span>, Source::count(<span class="kw-2">&amp;</span>OnePair { key: <span class="string">"a"</span>, value: <span class="number">1 </span>}));
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get() {
-        <span class="kw">let </span>source = <span class="kw-2">&amp;</span>[(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>), (<span class="string">&quot;b&quot;</span>, <span class="number">2</span>), (<span class="string">&quot;a&quot;</span>, <span class="number">1</span>)] <span class="kw">as </span><span class="kw-2">&amp;</span>[<span class="kw">_</span>];
+        <span class="kw">let </span>source = <span class="kw-2">&amp;</span>[(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">2</span>), (<span class="string">"a"</span>, <span class="number">1</span>)] <span class="kw">as </span><span class="kw-2">&amp;</span>[<span class="kw">_</span>];
         <span class="macro">assert_eq!</span>(
             Token::I64(<span class="number">1</span>),
-            Source::get(source, Key::from_str(<span class="string">&quot;a&quot;</span>)).unwrap().to_token()
+            Source::get(source, Key::from_str(<span class="string">"a"</span>)).unwrap().to_token()
         );
         <span class="macro">assert_eq!</span>(
             Token::I64(<span class="number">2</span>),
-            Source::get(source, Key::from_str(<span class="string">&quot;b&quot;</span>)).unwrap().to_token()
+            Source::get(source, Key::from_str(<span class="string">"b"</span>)).unwrap().to_token()
         );
-        <span class="macro">assert!</span>(Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">&quot;c&quot;</span>)).is_none());
+        <span class="macro">assert!</span>(Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">"c"</span>)).is_none());
 
         <span class="kw">let </span>source = Option::None::&lt;(<span class="kw-2">&amp;</span>str, i32)&gt;;
-        <span class="macro">assert!</span>(Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">&quot;a&quot;</span>)).is_none());
+        <span class="macro">assert!</span>(Source::get(<span class="kw-2">&amp;</span>source, Key::from_str(<span class="string">"a"</span>)).is_none());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>as_map() {
-        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_map((<span class="string">&quot;a&quot;</span>, <span class="number">1</span>));
-        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_map(<span class="kw-2">&amp;</span>(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>) <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Source);
+        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_map((<span class="string">"a"</span>, <span class="number">1</span>));
+        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_map(<span class="kw-2">&amp;</span>(<span class="string">"a"</span>, <span class="number">1</span>) <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Source);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>as_list() {
-        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_list((<span class="string">&quot;a&quot;</span>, <span class="number">1</span>));
-        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_list(<span class="kw-2">&amp;</span>(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>) <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Source);
+        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_list((<span class="string">"a"</span>, <span class="number">1</span>));
+        <span class="kw">let _ </span>= <span class="kw">crate</span>::kv::source::as_list(<span class="kw-2">&amp;</span>(<span class="string">"a"</span>, <span class="number">1</span>) <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Source);
     }
 }
 </code></pre></div></section></main></body></html>

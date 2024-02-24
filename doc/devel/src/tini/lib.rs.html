@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tini-1.3.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tini" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../tini/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tini-1.3.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tini" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -815,26 +816,26 @@
 //! ## Read from buffer and get string values
 //! ````
 //! # use tini::Ini;
-//! let conf = Ini::from_string([&quot;[search]&quot;,
-//!                              &quot;g = google.com&quot;,
-//!                              &quot;dd = duckduckgo.com&quot;].join(&quot;\n&quot;)).unwrap();
+//! let conf = Ini::from_string(["[search]",
+//!                              "g = google.com",
+//!                              "dd = duckduckgo.com"].join("\n")).unwrap();
 //!
-//! let g: String = conf.get(&quot;search&quot;, &quot;g&quot;).unwrap();
-//! let dd: String = conf.get(&quot;search&quot;, &quot;dd&quot;).unwrap();
+//! let g: String = conf.get("search", "g").unwrap();
+//! let dd: String = conf.get("search", "dd").unwrap();
 //!
-//! assert_eq!(g, &quot;google.com&quot;);
-//! assert_eq!(dd, &quot;duckduckgo.com&quot;);
+//! assert_eq!(g, "google.com");
+//! assert_eq!(dd, "duckduckgo.com");
 //! ````
 //! ## Construct in program and get vectors
 //! ````
 //! # use tini::Ini;
-//! let conf = Ini::new().section(&quot;floats&quot;)
-//!                      .item_vec(&quot;consts&quot;, &amp;[3.1416, 2.7183])
-//!                      .section(&quot;integers&quot;)
-//!                      .item_vec(&quot;lost&quot;, &amp;[4, 8, 15, 16, 23, 42]);
+//! let conf = Ini::new().section("floats")
+//!                      .item_vec("consts", &amp;[3.1416, 2.7183])
+//!                      .section("integers")
+//!                      .item_vec("lost", &amp;[4, 8, 15, 16, 23, 42]);
 //!
-//! let consts: Vec&lt;f64&gt; = conf.get_vec(&quot;floats&quot;, &quot;consts&quot;).unwrap();
-//! let lost: Vec&lt;i32&gt; = conf.get_vec(&quot;integers&quot;, &quot;lost&quot;).unwrap();
+//! let consts: Vec&lt;f64&gt; = conf.get_vec("floats", "consts").unwrap();
+//! let lost: Vec&lt;i32&gt; = conf.get_vec("integers", "lost").unwrap();
 //!
 //! assert_eq!(consts, [3.1416, 2.7183]);
 //! assert_eq!(lost, [4, 8, 15, 16, 23, 42]);
@@ -892,7 +893,7 @@
     /// ```no_run
     /// # use std::path::Path;
     /// # use tini::Ini;
-    /// let path = Path::new(&quot;example.ini&quot;);
+    /// let path = Path::new("example.ini");
     ///
     /// let conf = Ini::from_file(path);
     ///
@@ -903,7 +904,7 @@
     ///
     /// ```no_run
     /// # use tini::Ini;
-    /// let conf = Ini::from_file(&quot;example.ini&quot;);
+    /// let conf = Ini::from_file("example.ini");
     ///
     /// assert!(conf.ok().is_some());
     /// ```
@@ -926,7 +927,7 @@
     /// ```
     /// # use std::io::BufReader;
     /// # use tini::Ini;
-    /// let f = &quot;[section]\nitem=value&quot;.as_bytes();
+    /// let f = "[section]\nitem=value".as_bytes();
     /// let mut reader = BufReader::new(f);
     ///
     /// let conf = Ini::from_reader(&amp;mut reader);
@@ -950,9 +951,9 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::from_string(&quot;[section]\none = 1&quot;).unwrap();
+    /// let conf = Ini::from_string("[section]\none = 1").unwrap();
     ///
-    /// let value: Option&lt;u8&gt; = conf.get(&quot;section&quot;, &quot;one&quot;);
+    /// let value: Option&lt;u8&gt; = conf.get("section", "one");
     /// assert_eq!(value, Some(1));
     /// ```
     </span><span class="kw">pub fn </span>from_string&lt;S&gt;(buf: S) -&gt; <span class="prelude-ty">Result</span>&lt;Ini, Error&gt;
@@ -983,16 +984,16 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::default().section(&quot;a&quot;).item(&quot;a&quot;, 1);
+    /// let conf = Ini::default().section("a").item("a", 1);
     ///
     /// // create output Vec&lt;u8&gt; buffer
     /// let mut output = Vec::new();
-    /// // let&#39;s write data to Vec&lt;u8&gt;
+    /// // let's write data to Vec&lt;u8&gt;
     /// conf.to_writer(&amp;mut output);
     ///
     /// // cast Vec&lt;u8&gt; to utf-8 string
     /// let casted_result = String::from_utf8(output).unwrap();
-    /// assert_eq!(casted_result, &quot;[a]\na = 1\n&quot;)
+    /// assert_eq!(casted_result, "[a]\na = 1\n")
     /// ```
     </span><span class="kw">pub fn </span>to_writer&lt;W&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>W) -&gt; <span class="prelude-ty">Result</span>&lt;(), io::Error&gt;
     <span class="kw">where
@@ -1005,17 +1006,17 @@
     <span class="doccomment">/// Set section name for the following methods in chain ([`item()`](Ini::item), [`items()`](Ini::items), etc.)
     ///
     /// # Warning
-    /// This function doesn&#39;t create a section.
+    /// This function doesn't create a section.
     ///
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let mut conf = Ini::new().section(&quot;empty&quot;);
-    /// assert_eq!(conf.to_string(), &quot;&quot;);
+    /// let mut conf = Ini::new().section("empty");
+    /// assert_eq!(conf.to_string(), "");
     ///
     /// // but section will be created on item() call
-    /// conf = conf.section(&quot;one&quot;).item(&quot;a&quot;, 1);
-    /// assert_eq!(conf.to_string(), &quot;[one]\na = 1\n&quot;);
+    /// conf = conf.section("one").item("a", 1);
+    /// assert_eq!(conf.to_string(), "[one]\na = 1\n");
     /// ```
     </span><span class="kw">pub fn </span>section&lt;S&gt;(<span class="kw-2">mut </span><span class="self">self</span>, name: S) -&gt; <span class="self">Self
     </span><span class="kw">where
@@ -1034,14 +1035,14 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let mut conf = Ini::new().section(&quot;test&quot;)
-    ///                      .item(&quot;value&quot;, 10);
+    /// let mut conf = Ini::new().section("test")
+    ///                      .item("value", 10);
     ///
-    /// assert_eq!(conf.to_string(), &quot;[test]\nvalue = 10\n&quot;);
+    /// assert_eq!(conf.to_string(), "[test]\nvalue = 10\n");
     ///
     /// // change existing value
-    /// conf = conf.section(&quot;test&quot;).item(&quot;value&quot;, &quot;updated&quot;);
-    /// assert_eq!(conf.to_string(), &quot;[test]\nvalue = updated\n&quot;);
+    /// conf = conf.section("test").item("value", "updated");
+    /// assert_eq!(conf.to_string(), "[test]\nvalue = updated\n");
     /// ```
     </span><span class="kw">pub fn </span>item&lt;N, V&gt;(<span class="kw-2">mut </span><span class="self">self</span>, name: N, value: V) -&gt; <span class="self">Self
     </span><span class="kw">where
@@ -1066,17 +1067,17 @@
     /// ```
     /// # use tini::Ini;
     /// let conf = Ini::new()
-    ///     .section(&quot;default&quot;)
+    ///     .section("default")
     /// // add a vector with `,` separator: 1,2,3,4
-    ///     .item_vec_with_sep(&quot;a&quot;, &amp;[1, 2, 3, 4], &quot;,&quot;)
+    ///     .item_vec_with_sep("a", &amp;[1, 2, 3, 4], ",")
     /// // add a vector with `|` separator: a|b|c
-    ///     .item_vec_with_sep(&quot;b&quot;, &amp;vec![&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], &quot;|&quot;);
+    ///     .item_vec_with_sep("b", &amp;vec!["a", "b", "c"], "|");
     ///
-    /// let va: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec(&quot;default&quot;, &quot;a&quot;);
-    /// let vb: Vec&lt;String&gt; = conf.get_vec_with_sep(&quot;default&quot;, &quot;b&quot;, &quot;|&quot;).unwrap();
+    /// let va: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec("default", "a");
+    /// let vb: Vec&lt;String&gt; = conf.get_vec_with_sep("default", "b", "|").unwrap();
     ///
     /// assert_eq!(va, Some(vec![1, 2, 3, 4]));
-    /// assert_eq!(vb, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);
+    /// assert_eq!(vb, ["a", "b", "c"]);
     /// ```
     </span><span class="kw">pub fn </span>item_vec_with_sep&lt;S, V&gt;(<span class="kw-2">mut </span><span class="self">self</span>, name: S, vector: <span class="kw-2">&amp;</span>[V], sep: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self
     </span><span class="kw">where
@@ -1091,7 +1092,7 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Equivalent of [`item_vec_with_sep(name, vector, &quot;, &quot;)`](Ini::item_vec_with_sep)
+    <span class="doccomment">/// Equivalent of [`item_vec_with_sep(name, vector, ", ")`](Ini::item_vec_with_sep)
     ///
     /// - `name` must support [Into] to [String]
     /// - `vector` elements must support [Display](fmt::Display) to support conversion to [String]
@@ -1100,24 +1101,24 @@
     /// ```
     /// # use tini::Ini;
     /// let conf = Ini::new()
-    ///     .section(&quot;default&quot;)
+    ///     .section("default")
     /// // add vector with default separator `, `
-    ///     .item_vec(&quot;a&quot;, &amp;[1, 2, 3, 4])
+    ///     .item_vec("a", &amp;[1, 2, 3, 4])
     /// // and another vector
-    ///     .item_vec(&quot;b&quot;, &amp;vec![&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);
+    ///     .item_vec("b", &amp;vec!["a", "b", "c"]);
     ///
-    /// let va: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec(&quot;default&quot;, &quot;a&quot;);
-    /// let vb: Vec&lt;String&gt; = conf.get_vec(&quot;default&quot;, &quot;b&quot;).unwrap();
+    /// let va: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec("default", "a");
+    /// let vb: Vec&lt;String&gt; = conf.get_vec("default", "b").unwrap();
     ///
     /// assert_eq!(va, Some(vec![1, 2, 3, 4]));
-    /// assert_eq!(vb, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]);
+    /// assert_eq!(vb, ["a", "b", "c"]);
     /// ```
     </span><span class="kw">pub fn </span>item_vec&lt;S, V&gt;(<span class="self">self</span>, name: S, vector: <span class="kw-2">&amp;</span>[V]) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>S: Into&lt;String&gt;,
         V: fmt::Display,
     {
-        <span class="self">self</span>.item_vec_with_sep(name, vector, <span class="string">&quot;, &quot;</span>)
+        <span class="self">self</span>.item_vec_with_sep(name, vector, <span class="string">", "</span>)
     }
 
     <span class="doccomment">/// Append pairs from any object supporting [IntoIterator] to the section, specified in last [`section()`](Ini::section) call.
@@ -1128,25 +1129,25 @@
     /// use std::collections::HashMap;
     ///
     /// let mut conf = Ini::new()
-    ///                .section(&quot;colors&quot;)
-    ///                .items(vec![(&quot;black&quot;, &quot;#000000&quot;),
-    ///                            (&quot;white&quot;, &quot;#ffffff&quot;)]);
+    ///                .section("colors")
+    ///                .items(vec![("black", "#000000"),
+    ///                            ("white", "#ffffff")]);
     ///
     /// // create custom section
     /// let mut numbers = HashMap::new();
-    /// numbers.insert(&quot;round_pi&quot;, 3);
+    /// numbers.insert("round_pi", 3);
     /// // and add to `conf`
-    /// conf = conf.section(&quot;numbers&quot;).items(numbers);
+    /// conf = conf.section("numbers").items(numbers);
     ///
     /// assert_eq!(conf.to_string(), [
-    ///                               &quot;[colors]&quot;,
-    ///                               &quot;black = #000000&quot;,
-    ///                               &quot;white = #ffffff&quot;,
-    ///                               &quot;&quot;,
-    ///                               &quot;[numbers]&quot;,
-    ///                               &quot;round_pi = 3&quot;,
-    ///                               &quot;&quot;
-    ///                              ].join(&quot;\n&quot;));
+    ///                               "[colors]",
+    ///                               "black = #000000",
+    ///                               "white = #ffffff",
+    ///                               "",
+    ///                               "[numbers]",
+    ///                               "round_pi = 3",
+    ///                               ""
+    ///                              ].join("\n"));
     /// ```
     </span><span class="kw">pub fn </span>items&lt;K, V, I&gt;(<span class="kw-2">mut </span><span class="self">self</span>, items: I) -&gt; <span class="self">Self
     </span><span class="kw">where
@@ -1166,18 +1167,18 @@
     /// ```
     /// # use tini::Ini;
     /// let mut config = Ini::from_string([
-    ///                                    &quot;[one]&quot;,
-    ///                                    &quot;a = 1&quot;,
-    ///                                    &quot;[two]&quot;,
-    ///                                    &quot;b = 2&quot;
-    ///                                   ].join(&quot;\n&quot;)).unwrap();
+    ///                                    "[one]",
+    ///                                    "a = 1",
+    ///                                    "[two]",
+    ///                                    "b = 2"
+    ///                                   ].join("\n")).unwrap();
     /// // remove section
-    /// config = config.section(&quot;one&quot;).clear();
-    /// assert_eq!(config.to_string(), &quot;[two]\nb = 2\n&quot;);
+    /// config = config.section("one").clear();
+    /// assert_eq!(config.to_string(), "[two]\nb = 2\n");
     ///
     /// // clear section from old data and add new
-    /// config = config.section(&quot;two&quot;).clear().item(&quot;a&quot;, 1);
-    /// assert_eq!(config.to_string(), &quot;[two]\na = 1\n&quot;);
+    /// config = config.section("two").clear().item("a", 1);
+    /// assert_eq!(config.to_string(), "[two]\na = 1\n");
     /// ```
     </span><span class="kw">pub fn </span>clear(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.document.remove(<span class="kw-2">&amp;</span><span class="self">self</span>.last_section_name);
@@ -1190,14 +1191,14 @@
     /// ```
     /// # use tini::Ini;
     /// let mut config = Ini::from_string([
-    ///                                    &quot;[one]&quot;,
-    ///                                    &quot;a = 1&quot;,
-    ///                                    &quot;b = 2&quot;
-    ///                                   ].join(&quot;\n&quot;)).unwrap();
+    ///                                    "[one]",
+    ///                                    "a = 1",
+    ///                                    "b = 2"
+    ///                                   ].join("\n")).unwrap();
     ///
-    /// config = config.section(&quot;one&quot;).erase(&quot;b&quot;);
+    /// config = config.section("one").erase("b");
     ///
-    /// assert_eq!(config.to_string(), &quot;[one]\na = 1\n&quot;);
+    /// assert_eq!(config.to_string(), "[one]\na = 1\n");
     /// ```
     </span><span class="kw">pub fn </span>erase(<span class="kw-2">mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.document.get_mut(<span class="kw-2">&amp;</span><span class="self">self</span>.last_section_name).and_then(|s| s.remove(key));
@@ -1216,9 +1217,9 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::from_string(&quot;[section]\none = 1&quot;).unwrap();
+    /// let conf = Ini::from_string("[section]\none = 1").unwrap();
     ///
-    /// let value: Option&lt;u8&gt; = conf.get(&quot;section&quot;, &quot;one&quot;);
+    /// let value: Option&lt;u8&gt; = conf.get("section", "one");
     ///
     /// assert_eq!(value, Some(1));
     /// ```
@@ -1238,9 +1239,9 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::from_string(&quot;[section]\nlist = 1, 2, 3, 4&quot;).unwrap();
+    /// let conf = Ini::from_string("[section]\nlist = 1, 2, 3, 4").unwrap();
     ///
-    /// let value: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec(&quot;section&quot;, &quot;list&quot;);
+    /// let value: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec("section", "list");
     ///
     /// assert_eq!(value, Some(vec![1, 2, 3, 4]));
     /// ```
@@ -1248,7 +1249,7 @@
     <span class="kw">where
         </span>T: FromStr,
     {
-        <span class="self">self</span>.get_vec_with_sep(section, key, <span class="string">&quot;,&quot;</span>)
+        <span class="self">self</span>.get_vec_with_sep(section, key, <span class="string">","</span>)
     }
 
     <span class="doccomment">/// Get vector value of `key` in `section` separated by `sep` string.
@@ -1260,9 +1261,9 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::from_string(&quot;[section]\nlist = 1|2|3|4&quot;).unwrap();
+    /// let conf = Ini::from_string("[section]\nlist = 1|2|3|4").unwrap();
     ///
-    /// let value: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec_with_sep(&quot;section&quot;, &quot;list&quot;, &quot;|&quot;);
+    /// let value: Option&lt;Vec&lt;u8&gt;&gt; = conf.get_vec_with_sep("section", "list", "|");
     ///
     /// assert_eq!(value, Some(vec![1, 2, 3, 4]));
     /// ```
@@ -1276,21 +1277,21 @@
 
     <span class="doccomment">/// An iterator visiting all key-value pairs of a section in order of appearance.
     ///
-    /// If section with given name doesn&#39;t exist in document, method returns empty iterator
+    /// If section with given name doesn't exist in document, method returns empty iterator
     ///
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::from_string([&quot;[search]&quot;,
-    ///                              &quot;g = google.com&quot;,
-    ///                              &quot;dd = duckduckgo.com&quot;].join(&quot;\n&quot;)).unwrap();
+    /// let conf = Ini::from_string(["[search]",
+    ///                              "g = google.com",
+    ///                              "dd = duckduckgo.com"].join("\n")).unwrap();
     ///
-    /// let mut search = conf.section_iter(&quot;search&quot;);
-    /// assert_eq!(search.next(), Some((&amp;&quot;g&quot;.to_string(), &amp;&quot;google.com&quot;.to_string())));
-    /// assert_eq!(search.next(), Some((&amp;&quot;dd&quot;.to_string(), &amp;&quot;duckduckgo.com&quot;.to_string())));
+    /// let mut search = conf.section_iter("search");
+    /// assert_eq!(search.next(), Some((&amp;"g".to_string(), &amp;"google.com".to_string())));
+    /// assert_eq!(search.next(), Some((&amp;"dd".to_string(), &amp;"duckduckgo.com".to_string())));
     /// assert_eq!(search.next(), None);
     ///
-    /// assert_eq!(conf.section_iter(&quot;absent&quot;).count(), 0);
+    /// assert_eq!(conf.section_iter("absent").count(), 0);
     /// ```
     </span><span class="kw">pub fn </span>section_iter(<span class="kw-2">&amp;</span><span class="self">self</span>, section: <span class="kw-2">&amp;</span>str) -&gt; SectionIter {
         <span class="self">self</span>.document.get(section).unwrap_or(<span class="kw-2">&amp;</span><span class="self">self</span>.empty_section).iter()
@@ -1302,16 +1303,16 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::new().section(&quot;foo&quot;)
-    ///                      .item(&quot;item&quot;, &quot;value&quot;)
-    ///                      .item(&quot;other&quot;, &quot;something&quot;)
-    ///                      .section(&quot;bar&quot;)
-    ///                      .item(&quot;one&quot;, &quot;1&quot;);
+    /// let conf = Ini::new().section("foo")
+    ///                      .item("item", "value")
+    ///                      .item("other", "something")
+    ///                      .section("bar")
+    ///                      .item("one", "1");
     ///
     /// for (name, section) in conf.iter() {
     ///     match name.as_str() {
-    ///         &quot;foo&quot; =&gt; assert_eq!(section.iter().count(), 2),
-    ///         &quot;bar&quot; =&gt; assert_eq!(section.iter().count(), 1),
+    ///         "foo" =&gt; assert_eq!(section.iter().count(), 2),
+    ///         "bar" =&gt; assert_eq!(section.iter().count(), 1),
     ///         _ =&gt; assert!(false),
     ///     }
     /// }
@@ -1321,26 +1322,26 @@
 
     <span class="doccomment">/// Iterate over all sections in arbitrary order, yielding pairs of section name and mutable
     /// iterator over the section elements. The concrete iterator element type is
-    /// `(&amp;&#39;a String, SectionIterMut&lt;&#39;a&gt;)`.
+    /// `(&amp;'a String, SectionIterMut&lt;'a&gt;)`.
     ///
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let mut conf = Ini::new().section(&quot;foo&quot;)
-    ///                          .item(&quot;item&quot;, &quot;value&quot;)
-    ///                          .item(&quot;other&quot;, &quot;something&quot;)
-    ///                          .section(&quot;bar&quot;)
-    ///                          .item(&quot;one&quot;, &quot;1&quot;);
+    /// let mut conf = Ini::new().section("foo")
+    ///                          .item("item", "value")
+    ///                          .item("other", "something")
+    ///                          .section("bar")
+    ///                          .item("one", "1");
     ///
     /// for (name, section) in conf.iter_mut() {
     ///     for (key, val) in section.iter_mut() {
-    ///         *val = String::from(&quot;replaced&quot;);
+    ///         *val = String::from("replaced");
     ///     }
     /// }
     ///
     /// for (name, section) in conf.iter() {
     ///     for (key, val) in section.iter() {
-    ///         assert_eq!(val.as_str(), &quot;replaced&quot;);
+    ///         assert_eq!(val.as_str(), "replaced");
     ///     }
     /// }
     </span><span class="kw">pub fn </span>iter_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; IniIterMut {
@@ -1353,15 +1354,15 @@
         <span class="kw">let </span><span class="kw-2">mut </span>items = Vec::new();
         <span class="kw">for </span>(name, section) <span class="kw">in </span><span class="self">self</span>.iter() {
             <span class="comment">// insert section block
-            </span>items.push(<span class="macro">format!</span>(<span class="string">&quot;[{}]&quot;</span>, name));
+            </span>items.push(<span class="macro">format!</span>(<span class="string">"[{}]"</span>, name));
             <span class="comment">// add items
             </span><span class="kw">for </span>(key, value) <span class="kw">in </span>section.iter() {
-                items.push(<span class="macro">format!</span>(<span class="string">&quot;{} = {}&quot;</span>, key, value));
+                items.push(<span class="macro">format!</span>(<span class="string">"{} = {}"</span>, key, value));
             }
             <span class="comment">// and blank line between sections
-            </span>items.push(<span class="string">&quot;&quot;</span>.to_string());
+            </span>items.push(<span class="string">""</span>.to_string());
         }
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, items.join(<span class="string">&quot;\n&quot;</span>))
+        <span class="macro">write!</span>(f, <span class="string">"{}"</span>, items.join(<span class="string">"\n"</span>))
     }
 }
 
@@ -1372,13 +1373,13 @@
 }
 
 <span class="doccomment">/// An iterator over the sections of an ini document
-</span><span class="kw">pub struct </span>IniIter&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>IniIter&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[doc(hidden)]
-    </span>iter: ordered_hashmap::Iter&lt;<span class="lifetime">&#39;a</span>, String, Section&gt;,
+    </span>iter: ordered_hashmap::Iter&lt;<span class="lifetime">'a</span>, String, Section&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>IniIter&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Section);
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Iterator <span class="kw">for </span>IniIter&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">'a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Section);
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
@@ -1387,13 +1388,13 @@
 }
 
 <span class="doccomment">/// A mutable iterator over the sections of an ini document
-</span><span class="kw">pub struct </span>IniIterMut&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>IniIterMut&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[doc(hidden)]
-    </span>iter: ordered_hashmap::IterMut&lt;<span class="lifetime">&#39;a</span>, String, Section&gt;,
+    </span>iter: ordered_hashmap::IterMut&lt;<span class="lifetime">'a</span>, String, Section&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>IniIterMut&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Section);
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Iterator <span class="kw">for </span>IniIterMut&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">'a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Section);
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
@@ -1406,13 +1407,13 @@
     inner: OrderedHashMap&lt;String, String&gt;,
 }
 
-<span class="kw">pub struct </span>SectionIter&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">pub struct </span>SectionIter&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[doc(hidden)]
-    </span>iter: ordered_hashmap::Iter&lt;<span class="lifetime">&#39;a</span>, String, String&gt;,
+    </span>iter: ordered_hashmap::Iter&lt;<span class="lifetime">'a</span>, String, String&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>SectionIter&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String);
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Iterator <span class="kw">for </span>SectionIter&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">'a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">'a </span>String);
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
@@ -1420,13 +1421,13 @@
     }
 }
 
-<span class="kw">pub struct </span>SectionIterMut&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">pub struct </span>SectionIterMut&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[doc(hidden)]
-    </span>iter: ordered_hashmap::IterMut&lt;<span class="lifetime">&#39;a</span>, String, String&gt;,
+    </span>iter: ordered_hashmap::IterMut&lt;<span class="lifetime">'a</span>, String, String&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>SectionIterMut&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>String);
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Iterator <span class="kw">for </span>SectionIterMut&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Item = (<span class="kw-2">&amp;</span><span class="lifetime">'a </span>String, <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>String);
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
@@ -1446,23 +1447,23 @@
     /// # Example
     /// ```
     /// # use tini::Ini;
-    /// let conf = Ini::from_string(&quot;[section]\nkey=1\nvalue=2&quot;).unwrap();
+    /// let conf = Ini::from_string("[section]\nkey=1\nvalue=2").unwrap();
     ///
     /// for (name, section) in conf.iter() {
-    ///     let key = section.get(&quot;key&quot;);
-    ///     let value = section.get(&quot;value&quot;);
+    ///     let key = section.get("key");
+    ///     let value = section.get("value");
     ///     assert_eq!(key, Some(1));
     ///     assert_eq!(value, Some(2));
     /// }
     /// ```
-    </span><span class="kw">pub fn </span>get&lt;<span class="lifetime">&#39;a</span>, T&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
+    </span><span class="kw">pub fn </span>get&lt;<span class="lifetime">'a</span>, T&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
     <span class="kw">where
         </span>T: FromStr,
     {
         <span class="self">self</span>.inner.get(key).and_then(|x| x.parse().ok())
     }
 
-    <span class="kw">pub fn </span>get_raw&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>String&gt; {
+    <span class="kw">pub fn </span>get_raw&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>String&gt; {
         <span class="self">self</span>.inner.get(key)
     }
 
@@ -1489,31 +1490,31 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>bool() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[string]\nabc = true&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>abc: <span class="prelude-ty">Option</span>&lt;bool&gt; = ini.get(<span class="string">&quot;string&quot;</span>, <span class="string">&quot;abc&quot;</span>);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[string]\nabc = true"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>abc: <span class="prelude-ty">Option</span>&lt;bool&gt; = ini.get(<span class="string">"string"</span>, <span class="string">"abc"</span>);
         <span class="macro">assert_eq!</span>(abc, <span class="prelude-val">Some</span>(<span class="bool-val">true</span>));
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>float() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[section]\nname=10.5&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>name: <span class="prelude-ty">Option</span>&lt;f64&gt; = ini.get(<span class="string">&quot;section&quot;</span>, <span class="string">&quot;name&quot;</span>);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[section]\nname=10.5"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>name: <span class="prelude-ty">Option</span>&lt;f64&gt; = ini.get(<span class="string">"section"</span>, <span class="string">"name"</span>);
         <span class="macro">assert_eq!</span>(name, <span class="prelude-val">Some</span>(<span class="number">10.5</span>));
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>float_vec() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[section]\nname=1.2, 3.4, 5.6&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>name: <span class="prelude-ty">Option</span>&lt;Vec&lt;f64&gt;&gt; = ini.get_vec(<span class="string">&quot;section&quot;</span>, <span class="string">&quot;name&quot;</span>);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[section]\nname=1.2, 3.4, 5.6"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>name: <span class="prelude-ty">Option</span>&lt;Vec&lt;f64&gt;&gt; = ini.get_vec(<span class="string">"section"</span>, <span class="string">"name"</span>);
         <span class="macro">assert_eq!</span>(name, <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[<span class="number">1.2</span>, <span class="number">3.4</span>, <span class="number">5.6</span>]));
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>empty_key() {
-        <span class="kw">match </span>Ini::from_string(<span class="string">&quot;[a]\nx = 1\n=2&quot;</span>) {
+        <span class="kw">match </span>Ini::from_string(<span class="string">"[a]\nx = 1\n=2"</span>) {
             <span class="prelude-val">Err</span>(Error::Parse(ParseError::EmptyKey(index))) =&gt; <span class="macro">assert_eq!</span>(index, <span class="number">3</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">assert!</span>(<span class="bool-val">false</span>),
         }
@@ -1521,7 +1522,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>invalid_section() {
-        <span class="kw">match </span>Ini::from_string(<span class="string">&quot;[a]\nx = 1\ny = 2\n[b&quot;</span>) {
+        <span class="kw">match </span>Ini::from_string(<span class="string">"[a]\nx = 1\ny = 2\n[b"</span>) {
             <span class="prelude-val">Err</span>(Error::Parse(ParseError::IncorrectSection(index))) =&gt; <span class="macro">assert_eq!</span>(index, <span class="number">4</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">assert!</span>(<span class="bool-val">false</span>),
         }
@@ -1529,7 +1530,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>invalid_syntax() {
-        <span class="kw">match </span>Ini::from_string(<span class="string">&quot;[a]\n\t- b&quot;</span>) {
+        <span class="kw">match </span>Ini::from_string(<span class="string">"[a]\n\t- b"</span>) {
             <span class="prelude-val">Err</span>(Error::Parse(ParseError::IncorrectSyntax(index))) =&gt; <span class="macro">assert_eq!</span>(index, <span class="number">2</span>),
             <span class="kw">_ </span>=&gt; <span class="macro">assert!</span>(<span class="bool-val">false</span>),
         }
@@ -1537,60 +1538,60 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>bad_cast() {
-        <span class="kw">let </span>ini = Ini::new().section(<span class="string">&quot;one&quot;</span>).item(<span class="string">&quot;a&quot;</span>, <span class="number">3.14</span>);
-        <span class="kw">let </span>a: <span class="prelude-ty">Option</span>&lt;u32&gt; = ini.get(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;a&quot;</span>);
+        <span class="kw">let </span>ini = Ini::new().section(<span class="string">"one"</span>).item(<span class="string">"a"</span>, <span class="number">3.14</span>);
+        <span class="kw">let </span>a: <span class="prelude-ty">Option</span>&lt;u32&gt; = ini.get(<span class="string">"one"</span>, <span class="string">"a"</span>);
         <span class="macro">assert_eq!</span>(a, <span class="prelude-val">None</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>string_vec() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[section]\nname=a, b, c&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>name: Vec&lt;String&gt; = ini.get_vec(<span class="string">&quot;section&quot;</span>, <span class="string">&quot;name&quot;</span>).unwrap_or(<span class="macro">vec!</span>[]);
-        <span class="macro">assert_eq!</span>(name, [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[section]\nname=a, b, c"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>name: Vec&lt;String&gt; = ini.get_vec(<span class="string">"section"</span>, <span class="string">"name"</span>).unwrap_or(<span class="macro">vec!</span>[]);
+        <span class="macro">assert_eq!</span>(name, [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]);
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_error() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[section]\nlist = 1, 2, --, 4&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>name: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt; = ini.get_vec(<span class="string">&quot;section&quot;</span>, <span class="string">&quot;list&quot;</span>);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[section]\nlist = 1, 2, --, 4"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>name: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt; = ini.get_vec(<span class="string">"section"</span>, <span class="string">"list"</span>);
         <span class="macro">assert_eq!</span>(name, <span class="prelude-val">None</span>);
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_or_macro() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[section]\nlist = 1, 2, --, 4&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>with_value: Vec&lt;u8&gt; = ini.get_vec(<span class="string">&quot;section&quot;</span>, <span class="string">&quot;list&quot;</span>).unwrap_or(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[section]\nlist = 1, 2, --, 4"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>with_value: Vec&lt;u8&gt; = ini.get_vec(<span class="string">"section"</span>, <span class="string">"list"</span>).unwrap_or(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
         <span class="macro">assert_eq!</span>(with_value, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>ordering_iter() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[a]\nc = 1\nb = 2\na = 3&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>keys: Vec&lt;<span class="kw-2">&amp;</span>String&gt; = ini.document.get(<span class="string">&quot;a&quot;</span>).unwrap().iter().map(|(k, <span class="kw">_</span>)| k).collect();
-        <span class="macro">assert_eq!</span>([<span class="string">&quot;c&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;a&quot;</span>], keys[..]);
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[a]\nc = 1\nb = 2\na = 3"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>keys: Vec&lt;<span class="kw-2">&amp;</span>String&gt; = ini.document.get(<span class="string">"a"</span>).unwrap().iter().map(|(k, <span class="kw">_</span>)| k).collect();
+        <span class="macro">assert_eq!</span>([<span class="string">"c"</span>, <span class="string">"b"</span>, <span class="string">"a"</span>], keys[..]);
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>random_access_section() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>ini = Ini::from_string(<span class="string">&quot;[a]\nc = 1\nb = 2\na = 3\n\n[b]\na = 1\nb = 2\nc = 3\n\n[c]\na=0\nd=4&quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>ini = Ini::from_string(<span class="string">"[a]\nc = 1\nb = 2\na = 3\n\n[b]\na = 1\nb = 2\nc = 3\n\n[c]\na=0\nd=4"</span>)<span class="question-mark">?</span>;
         <span class="kw">for </span>(name, section) <span class="kw">in </span>ini.iter() {
             <span class="kw">match </span>name.as_str() {
-                <span class="string">&quot;a&quot; </span>=&gt; {
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;a&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">&quot;3&quot;</span>.to_owned()));
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;d&quot;</span>), <span class="prelude-val">None</span>);
+                <span class="string">"a" </span>=&gt; {
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"a"</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">"3"</span>.to_owned()));
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"d"</span>), <span class="prelude-val">None</span>);
                 }
-                <span class="string">&quot;b&quot; </span>=&gt; {
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;a&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">&quot;1&quot;</span>.to_owned()));
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;d&quot;</span>), <span class="prelude-val">None</span>);
+                <span class="string">"b" </span>=&gt; {
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"a"</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">"1"</span>.to_owned()));
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"d"</span>), <span class="prelude-val">None</span>);
                 }
-                <span class="string">&quot;c&quot; </span>=&gt; {
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;a&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">&quot;0&quot;</span>.to_owned()));
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;b&quot;</span>), <span class="prelude-val">None</span>);
-                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">&quot;d&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">&quot;4&quot;</span>.to_owned()));
+                <span class="string">"c" </span>=&gt; {
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"a"</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">"0"</span>.to_owned()));
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"b"</span>), <span class="prelude-val">None</span>);
+                    <span class="macro">assert_eq!</span>(section.get_raw(<span class="string">"d"</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">"4"</span>.to_owned()));
                 }
                 <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
             }

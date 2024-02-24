@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/match_rule.rs`."><title>match_rule.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/match_rule.rs`."><title>match_rule.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -582,47 +583,47 @@
 /// # use zbus::MatchRule;
 /// use std::convert::TryFrom;
 ///
-/// // Let&#39;s take the most typical example of match rule to subscribe to properties&#39; changes:
+/// // Let's take the most typical example of match rule to subscribe to properties' changes:
 /// let rule = MatchRule::builder()
 ///     .msg_type(zbus::MessageType::Signal)
-///     .sender(&quot;org.freedesktop.DBus&quot;)?
-///     .interface(&quot;org.freedesktop.DBus.Properties&quot;)?
-///     .member(&quot;PropertiesChanged&quot;)?
-///     .add_arg(&quot;org.zbus&quot;)?
+///     .sender("org.freedesktop.DBus")?
+///     .interface("org.freedesktop.DBus.Properties")?
+///     .member("PropertiesChanged")?
+///     .add_arg("org.zbus")?
 ///     .build();
 /// let rule_str = rule.to_string();
 /// assert_eq!(
 ///     rule_str,
-///     &quot;type=&#39;signal&#39;,\
-///      sender=&#39;org.freedesktop.DBus&#39;,\
-///      interface=&#39;org.freedesktop.DBus.Properties&#39;,\
-///      member=&#39;PropertiesChanged&#39;,\
-///      arg0=&#39;org.zbus&#39;&quot;,
+///     "type='signal',\
+///      sender='org.freedesktop.DBus',\
+///      interface='org.freedesktop.DBus.Properties',\
+///      member='PropertiesChanged',\
+///      arg0='org.zbus'",
 /// );
 ///
-/// // Let&#39;s parse it back.
+/// // Let's parse it back.
 /// let parsed_rule = MatchRule::try_from(rule_str.as_str())?;
 /// assert_eq!(rule, parsed_rule);
 ///
 /// // Now for `ObjectManager::InterfacesAdded` signal.
 /// let rule = MatchRule::builder()
 ///     .msg_type(zbus::MessageType::Signal)
-///     .sender(&quot;org.zbus&quot;)?
-///     .interface(&quot;org.freedesktop.DBus.ObjectManager&quot;)?
-///     .member(&quot;InterfacesAdded&quot;)?
-///     .arg_path(0, &quot;/org/zbus/NewPath&quot;)?
+///     .sender("org.zbus")?
+///     .interface("org.freedesktop.DBus.ObjectManager")?
+///     .member("InterfacesAdded")?
+///     .arg_path(0, "/org/zbus/NewPath")?
 ///     .build();
 /// let rule_str = rule.to_string();
 /// assert_eq!(
 ///     rule_str,
-///     &quot;type=&#39;signal&#39;,\
-///      sender=&#39;org.zbus&#39;,\
-///      interface=&#39;org.freedesktop.DBus.ObjectManager&#39;,\
-///      member=&#39;InterfacesAdded&#39;,\
-///      arg0path=&#39;/org/zbus/NewPath&#39;&quot;,
+///     "type='signal',\
+///      sender='org.zbus',\
+///      interface='org.freedesktop.DBus.ObjectManager',\
+///      member='InterfacesAdded',\
+///      arg0path='/org/zbus/NewPath'",
 /// );
 ///
-/// // Let&#39;s parse it back.
+/// // Let's parse it back.
 /// let parsed_rule = MatchRule::try_from(rule_str.as_str())?;
 /// assert_eq!(rule, parsed_rule);
 ///
@@ -636,29 +637,29 @@
 ///
 /// [mrs]: https://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-routing-match-rules
 </span><span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash, Type)]
-#[zvariant(signature = <span class="string">&quot;s&quot;</span>)]
-</span><span class="kw">pub struct </span>MatchRule&lt;<span class="lifetime">&#39;m</span>&gt; {
+#[zvariant(signature = <span class="string">"s"</span>)]
+</span><span class="kw">pub struct </span>MatchRule&lt;<span class="lifetime">'m</span>&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) msg_type: <span class="prelude-ty">Option</span>&lt;MessageType&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) sender: <span class="prelude-ty">Option</span>&lt;BusName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) interface: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) member: <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) path_spec: <span class="prelude-ty">Option</span>&lt;MatchRulePathSpec&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) destination: <span class="prelude-ty">Option</span>&lt;UniqueName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) args: Vec&lt;(u8, Str&lt;<span class="lifetime">&#39;m</span>&gt;)&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) arg_paths: Vec&lt;(u8, ObjectPath&lt;<span class="lifetime">&#39;m</span>&gt;)&gt;,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) arg0namespace: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">&#39;m</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) sender: <span class="prelude-ty">Option</span>&lt;BusName&lt;<span class="lifetime">'m</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) interface: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">'m</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) member: <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) path_spec: <span class="prelude-ty">Option</span>&lt;MatchRulePathSpec&lt;<span class="lifetime">'m</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) destination: <span class="prelude-ty">Option</span>&lt;UniqueName&lt;<span class="lifetime">'m</span>&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) args: Vec&lt;(u8, Str&lt;<span class="lifetime">'m</span>&gt;)&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) arg_paths: Vec&lt;(u8, ObjectPath&lt;<span class="lifetime">'m</span>&gt;)&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) arg0namespace: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">'m</span>&gt;&gt;,
 }
 
-<span class="macro">assert_impl_all!</span>(MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(MatchRule&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;m</span>&gt; MatchRule&lt;<span class="lifetime">&#39;m</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; MatchRule&lt;<span class="lifetime">'m</span>&gt; {
     <span class="doccomment">/// Create a builder for `MatchRuleBuilder`.
-    </span><span class="kw">pub fn </span>builder() -&gt; MatchRuleBuilder&lt;<span class="lifetime">&#39;m</span>&gt; {
+    </span><span class="kw">pub fn </span>builder() -&gt; MatchRuleBuilder&lt;<span class="lifetime">'m</span>&gt; {
         MatchRuleBuilder::new()
     }
 
     <span class="doccomment">/// The sender, if set.
-    </span><span class="kw">pub fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>BusName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>BusName&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.sender.as_ref()
     }
 
@@ -668,47 +669,47 @@
     }
 
     <span class="doccomment">/// The interfac, if set.
-    </span><span class="kw">pub fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>InterfaceName&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.interface.as_ref()
     }
 
     <span class="doccomment">/// The member name if set.
-    </span><span class="kw">pub fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>MemberName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>MemberName&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.member.as_ref()
     }
 
     <span class="doccomment">/// The path or path namespace, if set.
-    </span><span class="kw">pub fn </span>path_spec(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>MatchRulePathSpec&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>path_spec(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>MatchRulePathSpec&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.path_spec.as_ref()
     }
 
     <span class="doccomment">/// The destination, if set.
-    </span><span class="kw">pub fn </span>destination(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UniqueName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>destination(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UniqueName&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.destination.as_ref()
     }
 
     <span class="doccomment">/// The arguments.
-    </span><span class="kw">pub fn </span>args(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[(u8, Str&lt;<span class="lifetime">&#39;_</span>&gt;)] {
+    </span><span class="kw">pub fn </span>args(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[(u8, Str&lt;<span class="lifetime">'_</span>&gt;)] {
         <span class="self">self</span>.args.as_ref()
     }
 
     <span class="doccomment">/// The argument paths.
-    </span><span class="kw">pub fn </span>arg_paths(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[(u8, ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;)] {
+    </span><span class="kw">pub fn </span>arg_paths(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[(u8, ObjectPath&lt;<span class="lifetime">'_</span>&gt;)] {
         <span class="self">self</span>.arg_paths.as_ref()
     }
 
     <span class="doccomment">/// Match messages whose first argument is within the specified namespace.
     ///
-    /// Note that while the spec allows this to be any string that&#39;s a valid bus or interface name
+    /// Note that while the spec allows this to be any string that's a valid bus or interface name
     /// except that it can have no `.`, we only allow valid interface names. The reason is not only
     /// to keep things simple and type safe at the same time but also for the fact that use cases of
     /// only matching on the first component of a bus or interface name are unheard of.
-    </span><span class="kw">pub fn </span>arg0namespace(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>arg0namespace(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>InterfaceName&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="self">self</span>.arg0namespace.as_ref()
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MatchRule&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MatchRule&lt;<span class="lifetime">'static</span>&gt; {
         MatchRule {
             msg_type: <span class="self">self</span>.msg_type,
             sender: <span class="self">self</span>.sender.as_ref().map(|s| s.to_owned()),
@@ -727,7 +728,7 @@
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; MatchRule&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; MatchRule&lt;<span class="lifetime">'static</span>&gt; {
         MatchRule {
             msg_type: <span class="self">self</span>.msg_type,
             sender: <span class="self">self</span>.sender.map(|s| s.into_owned()),
@@ -753,7 +754,7 @@
     ///
     /// # Caveats
     ///
-    /// Since this method doesn&#39;t have any knowledge of names on the bus (or even connection to a
+    /// Since this method doesn't have any knowledge of names on the bus (or even connection to a
     /// bus) matching always succeeds for:
     ///
     /// * `sender` in the rule (if set) that is a well-known name. The `sender` on a message is
@@ -777,7 +778,7 @@
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
                 }
                 BusName::Unique(<span class="kw">_</span>) =&gt; (),
-                <span class="comment">// We can&#39;t match against a well-known name.
+                <span class="comment">// We can't match against a well-known name.
                 </span>BusName::WellKnown(<span class="kw">_</span>) =&gt; (),
             }
         }
@@ -807,7 +808,7 @@
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
                 }
                 <span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>)) | <span class="prelude-val">None </span>=&gt; (),
-                <span class="comment">// We can&#39;t match against a well-known name.
+                <span class="comment">// We can't match against a well-known name.
                 </span><span class="prelude-val">Some</span>(BusName::WellKnown(<span class="kw">_</span>)) =&gt; (),
             };
         }
@@ -831,7 +832,7 @@
 
         <span class="comment">// The arg0 namespace.
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(arg0_ns) = <span class="self">self</span>.arg0namespace() {
-            <span class="kw">if let </span><span class="prelude-val">Ok</span>(arg0) = msg.body_unchecked::&lt;InterfaceName&lt;<span class="lifetime">&#39;_</span>&gt;&gt;() {
+            <span class="kw">if let </span><span class="prelude-val">Ok</span>(arg0) = msg.body_unchecked::&lt;InterfaceName&lt;<span class="lifetime">'_</span>&gt;&gt;() {
                 <span class="kw">if </span>!arg0.starts_with(arg0_ns.as_str()) {
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
                 }
@@ -844,7 +845,7 @@
         </span><span class="kw">if </span><span class="self">self</span>.args().is_empty() &amp;&amp; <span class="self">self</span>.arg_paths().is_empty() {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
         }
-        <span class="kw">let </span>structure = <span class="kw">match </span>msg.body::&lt;Structure&lt;<span class="lifetime">&#39;_</span>&gt;&gt;() {
+        <span class="kw">let </span>structure = <span class="kw">match </span>msg.body::&lt;Structure&lt;<span class="lifetime">'_</span>&gt;&gt;() {
             <span class="prelude-val">Ok</span>(s) =&gt; s,
             <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
         };
@@ -864,7 +865,7 @@
         <span class="comment">// Path args
         </span><span class="kw">for </span>(i, path) <span class="kw">in </span><span class="self">self</span>.arg_paths() {
             <span class="kw">match </span>args.get(<span class="kw-2">*</span>i <span class="kw">as </span>usize) {
-                <span class="prelude-val">Some</span>(msg_arg) =&gt; <span class="kw">match </span>&lt;ObjectPath&lt;<span class="lifetime">&#39;_</span>&gt;&gt;::try_from(msg_arg) {
+                <span class="prelude-val">Some</span>(msg_arg) =&gt; <span class="kw">match </span>&lt;ObjectPath&lt;<span class="lifetime">'_</span>&gt;&gt;::try_from(msg_arg) {
                     <span class="prelude-val">Ok</span>(msg_arg) <span class="kw">if </span><span class="kw-2">*</span>path != msg_arg =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
                     <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
                     <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>),
@@ -877,47 +878,47 @@
     }
 }
 
-<span class="kw">impl </span>ToString <span class="kw">for </span>MatchRule&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>ToString <span class="kw">for </span>MatchRule&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>to_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(msg_type) = <span class="self">self</span>.msg_type() {
             <span class="kw">let </span>type_str = <span class="kw">match </span>msg_type {
-                MessageType::Error =&gt; <span class="string">&quot;error&quot;</span>,
-                MessageType::Invalid =&gt; <span class="macro">panic!</span>(<span class="string">&quot;invalid message type&quot;</span>),
-                MessageType::MethodCall =&gt; <span class="string">&quot;method_call&quot;</span>,
-                MessageType::MethodReturn =&gt; <span class="string">&quot;method_return&quot;</span>,
-                MessageType::Signal =&gt; <span class="string">&quot;signal&quot;</span>,
+                MessageType::Error =&gt; <span class="string">"error"</span>,
+                MessageType::Invalid =&gt; <span class="macro">panic!</span>(<span class="string">"invalid message type"</span>),
+                MessageType::MethodCall =&gt; <span class="string">"method_call"</span>,
+                MessageType::MethodReturn =&gt; <span class="string">"method_return"</span>,
+                MessageType::Signal =&gt; <span class="string">"signal"</span>,
             };
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;type&quot;</span>, type_str);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">"type"</span>, type_str);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = <span class="self">self</span>.sender() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;sender&quot;</span>, sender);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">"sender"</span>, sender);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(interface) = <span class="self">self</span>.interface() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;interface&quot;</span>, interface);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">"interface"</span>, interface);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(member) = <span class="self">self</span>.member() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;member&quot;</span>, member);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">"member"</span>, member);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(destination) = <span class="self">self</span>.destination() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;destination&quot;</span>, destination);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">"destination"</span>, destination);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(path_spec) = <span class="self">self</span>.path_spec() {
             <span class="kw">let </span>(key, value) = <span class="kw">match </span>path_spec {
-                MatchRulePathSpec::Path(path) =&gt; (<span class="string">&quot;path&quot;</span>, path),
-                MatchRulePathSpec::PathNamespace(ns) =&gt; (<span class="string">&quot;path_namespace&quot;</span>, ns),
+                MatchRulePathSpec::Path(path) =&gt; (<span class="string">"path"</span>, path),
+                MatchRulePathSpec::PathNamespace(ns) =&gt; (<span class="string">"path_namespace"</span>, ns),
             };
             add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, key, value);
         }
         <span class="kw">for </span>(i, arg) <span class="kw">in </span><span class="self">self</span>.args() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;arg{i}&quot;</span>), arg);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"arg{i}"</span>), arg);
         }
         <span class="kw">for </span>(i, arg_path) <span class="kw">in </span><span class="self">self</span>.arg_paths() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;arg{i}path&quot;</span>), arg_path);
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"arg{i}path"</span>), arg_path);
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(arg0namespace) = <span class="self">self</span>.arg0namespace() {
-            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">&quot;arg0namespace&quot;</span>, arg0namespace)
+            add_match_rule_string_component(<span class="kw-2">&amp;mut </span>s, <span class="string">"arg0namespace"</span>, arg0namespace)
         }
 
         s
@@ -926,54 +927,54 @@
 
 <span class="kw">fn </span>add_match_rule_string_component(rule: <span class="kw-2">&amp;mut </span>String, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>str) {
     <span class="kw">if </span>!rule.is_empty() {
-        rule.push(<span class="string">&#39;,&#39;</span>);
+        rule.push(<span class="string">','</span>);
     }
     rule.push_str(key);
-    rule.push(<span class="string">&#39;=&#39;</span>);
-    rule.push(<span class="string">&#39;\&#39;&#39;</span>);
+    rule.push(<span class="string">'='</span>);
+    rule.push(<span class="string">'\''</span>);
     rule.push_str(value);
-    rule.push(<span class="string">&#39;\&#39;&#39;</span>);
+    rule.push(<span class="string">'\''</span>);
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;m</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;m </span>str&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">&#39;m</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'m </span>str&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">'m</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;m </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>components = s.split(<span class="string">&#39;,&#39;</span>);
+    <span class="kw">fn </span>try_from(s: <span class="kw-2">&amp;</span><span class="lifetime">'m </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>components = s.split(<span class="string">','</span>);
         <span class="kw">if </span>components.clone().peekable().peek().is_none() {
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMatchRule);
         }
         <span class="kw">let </span><span class="kw-2">mut </span>builder = MatchRule::builder();
         <span class="kw">for </span>component <span class="kw">in </span>components {
-            <span class="kw">let </span>(key, value) = component.split_once(<span class="string">&#39;=&#39;</span>).ok_or(Error::InvalidMatchRule)<span class="question-mark">?</span>;
+            <span class="kw">let </span>(key, value) = component.split_once(<span class="string">'='</span>).ok_or(Error::InvalidMatchRule)<span class="question-mark">?</span>;
             <span class="kw">if </span>key.is_empty()
                 || value.len() &lt; <span class="number">3
-                </span>|| !value.starts_with(<span class="string">&#39;\&#39;&#39;</span>)
-                || !value.ends_with(<span class="string">&#39;\&#39;&#39;</span>)
+                </span>|| !value.starts_with(<span class="string">'\''</span>)
+                || !value.ends_with(<span class="string">'\''</span>)
             {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMatchRule);
             }
             <span class="kw">let </span>value = <span class="kw-2">&amp;</span>value[<span class="number">1</span>..value.len() - <span class="number">1</span>];
             builder = <span class="kw">match </span>key {
-                <span class="string">&quot;type&quot; </span>=&gt; {
+                <span class="string">"type" </span>=&gt; {
                     <span class="kw">let </span>msg_type = <span class="kw">match </span>value {
-                        <span class="string">&quot;error&quot; </span>=&gt; MessageType::Error,
-                        <span class="string">&quot;method_call&quot; </span>=&gt; MessageType::MethodCall,
-                        <span class="string">&quot;method_return&quot; </span>=&gt; MessageType::MethodReturn,
-                        <span class="string">&quot;signal&quot; </span>=&gt; MessageType::Signal,
+                        <span class="string">"error" </span>=&gt; MessageType::Error,
+                        <span class="string">"method_call" </span>=&gt; MessageType::MethodCall,
+                        <span class="string">"method_return" </span>=&gt; MessageType::MethodReturn,
+                        <span class="string">"signal" </span>=&gt; MessageType::Signal,
                         <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMatchRule),
                     };
                     builder.msg_type(msg_type)
                 }
-                <span class="string">&quot;sender&quot; </span>=&gt; builder.sender(value)<span class="question-mark">?</span>,
-                <span class="string">&quot;interface&quot; </span>=&gt; builder.interface(value)<span class="question-mark">?</span>,
-                <span class="string">&quot;member&quot; </span>=&gt; builder.member(value)<span class="question-mark">?</span>,
-                <span class="string">&quot;path&quot; </span>=&gt; builder.path(value)<span class="question-mark">?</span>,
-                <span class="string">&quot;path_namespace&quot; </span>=&gt; builder.path_namespace(value)<span class="question-mark">?</span>,
-                <span class="string">&quot;destination&quot; </span>=&gt; builder.destination(value)<span class="question-mark">?</span>,
-                <span class="string">&quot;arg0namespace&quot; </span>=&gt; builder.arg0namespace(value)<span class="question-mark">?</span>,
-                key <span class="kw">if </span>key.starts_with(<span class="string">&quot;arg&quot;</span>) =&gt; {
-                    <span class="kw">if let </span><span class="prelude-val">Some</span>(trailing_idx) = key.find(<span class="string">&quot;path&quot;</span>) {
+                <span class="string">"sender" </span>=&gt; builder.sender(value)<span class="question-mark">?</span>,
+                <span class="string">"interface" </span>=&gt; builder.interface(value)<span class="question-mark">?</span>,
+                <span class="string">"member" </span>=&gt; builder.member(value)<span class="question-mark">?</span>,
+                <span class="string">"path" </span>=&gt; builder.path(value)<span class="question-mark">?</span>,
+                <span class="string">"path_namespace" </span>=&gt; builder.path_namespace(value)<span class="question-mark">?</span>,
+                <span class="string">"destination" </span>=&gt; builder.destination(value)<span class="question-mark">?</span>,
+                <span class="string">"arg0namespace" </span>=&gt; builder.arg0namespace(value)<span class="question-mark">?</span>,
+                key <span class="kw">if </span>key.starts_with(<span class="string">"arg"</span>) =&gt; {
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(trailing_idx) = key.find(<span class="string">"path"</span>) {
                         <span class="kw">let </span>idx = key[<span class="number">3</span>..trailing_idx]
                             .parse::&lt;u8&gt;()
                             .map_err(|<span class="kw">_</span>| Error::InvalidMatchRule)<span class="question-mark">?</span>;
@@ -993,10 +994,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>: <span class="lifetime">&#39;m</span>, <span class="lifetime">&#39;m</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">&#39;m</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>: <span class="lifetime">'m</span>, <span class="lifetime">'m</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">'m</span>&gt; {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; core::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: serde::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: serde::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>name = &lt;<span class="kw-2">&amp;</span>str&gt;::deserialize(deserializer)<span class="question-mark">?</span>;
 
@@ -1004,7 +1005,7 @@
     }
 }
 
-<span class="kw">impl </span>Serialize <span class="kw">for </span>MatchRule&lt;<span class="lifetime">&#39;_</span>&gt; {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>MatchRule&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; core::result::Result&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: serde::Serializer,
@@ -1015,16 +1016,16 @@
 
 <span class="doccomment">/// The path or path namespace.
 </span><span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash)]
-</span><span class="kw">pub enum </span>MatchRulePathSpec&lt;<span class="lifetime">&#39;m</span>&gt; {
-    Path(ObjectPath&lt;<span class="lifetime">&#39;m</span>&gt;),
-    PathNamespace(ObjectPath&lt;<span class="lifetime">&#39;m</span>&gt;),
+</span><span class="kw">pub enum </span>MatchRulePathSpec&lt;<span class="lifetime">'m</span>&gt; {
+    Path(ObjectPath&lt;<span class="lifetime">'m</span>&gt;),
+    PathNamespace(ObjectPath&lt;<span class="lifetime">'m</span>&gt;),
 }
 
-<span class="macro">assert_impl_all!</span>(MatchRulePathSpec&lt;<span class="lifetime">&#39;_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(MatchRulePathSpec&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;m</span>&gt; MatchRulePathSpec&lt;<span class="lifetime">&#39;m</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; MatchRulePathSpec&lt;<span class="lifetime">'m</span>&gt; {
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MatchRulePathSpec&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; MatchRulePathSpec&lt;<span class="lifetime">'static</span>&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             MatchRulePathSpec::Path(path) =&gt; MatchRulePathSpec::Path(path.to_owned()),
             MatchRulePathSpec::PathNamespace(ns) =&gt; MatchRulePathSpec::PathNamespace(ns.to_owned()),
@@ -1032,7 +1033,7 @@
     }
 
     <span class="doccomment">/// Creates an owned clone of `self`.
-    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; MatchRulePathSpec&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>into_owned(<span class="self">self</span>) -&gt; MatchRulePathSpec&lt;<span class="lifetime">'static</span>&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             MatchRulePathSpec::Path(path) =&gt; MatchRulePathSpec::Path(path.into_owned()),
             MatchRulePathSpec::PathNamespace(ns) =&gt; {
@@ -1044,49 +1045,49 @@
 
 <span class="doccomment">/// Owned sibling of [`MatchRule`].
 </span><span class="attr">#[derive(Clone, Debug, Hash, PartialEq, Eq, Serialize, Type)]
-</span><span class="kw">pub struct </span>OwnedMatchRule(<span class="attr">#[serde(borrow)] </span>MatchRule&lt;<span class="lifetime">&#39;static</span>&gt;);
+</span><span class="kw">pub struct </span>OwnedMatchRule(<span class="attr">#[serde(borrow)] </span>MatchRule&lt;<span class="lifetime">'static</span>&gt;);
 
 <span class="macro">assert_impl_all!</span>(OwnedMatchRule: Send, Sync, Unpin);
 
 <span class="kw">impl </span>OwnedMatchRule {
     <span class="doccomment">/// Convert to the inner `MatchRule`, consuming `self`.
-    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; MatchRule&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; MatchRule&lt;<span class="lifetime">'static</span>&gt; {
         <span class="self">self</span>.<span class="number">0
     </span>}
 
     <span class="doccomment">/// Get a reference to the inner `MatchRule`.
-    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>MatchRule&lt;<span class="lifetime">&#39;static</span>&gt; {
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>MatchRule&lt;<span class="lifetime">'static</span>&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
 }
 
 <span class="kw">impl </span>Deref <span class="kw">for </span>OwnedMatchRule {
-    <span class="kw">type </span>Target = MatchRule&lt;<span class="lifetime">&#39;static</span>&gt;;
+    <span class="kw">type </span>Target = MatchRule&lt;<span class="lifetime">'static</span>&gt;;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
     </span>}
 }
 
-<span class="kw">impl </span>From&lt;OwnedMatchRule&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl </span>From&lt;OwnedMatchRule&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">'static</span>&gt; {
     <span class="kw">fn </span>from(o: OwnedMatchRule) -&gt; <span class="self">Self </span>{
         o.into_inner()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;unowned</span>, <span class="lifetime">&#39;owned</span>: <span class="lifetime">&#39;unowned</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;owned </span>OwnedMatchRule&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">&#39;unowned</span>&gt; {
-    <span class="kw">fn </span>from(rule: <span class="kw-2">&amp;</span><span class="lifetime">&#39;owned </span>OwnedMatchRule) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'unowned</span>, <span class="lifetime">'owned</span>: <span class="lifetime">'unowned</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'owned </span>OwnedMatchRule&gt; <span class="kw">for </span>MatchRule&lt;<span class="lifetime">'unowned</span>&gt; {
+    <span class="kw">fn </span>from(rule: <span class="kw-2">&amp;</span><span class="lifetime">'owned </span>OwnedMatchRule) -&gt; <span class="self">Self </span>{
         rule.inner().clone()
     }
 }
 
-<span class="kw">impl </span>From&lt;MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;&gt; <span class="kw">for </span>OwnedMatchRule {
-    <span class="kw">fn </span>from(rule: MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span>From&lt;MatchRule&lt;<span class="lifetime">'_</span>&gt;&gt; <span class="kw">for </span>OwnedMatchRule {
+    <span class="kw">fn </span>from(rule: MatchRule&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="self">Self </span>{
         OwnedMatchRule(rule.into_owned())
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;_ </span>str&gt; <span class="kw">for </span>OwnedMatchRule {
+<span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'_ </span>str&gt; <span class="kw">for </span>OwnedMatchRule {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -1094,10 +1095,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>OwnedMatchRule {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>OwnedMatchRule {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; std::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: de::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         String::deserialize(deserializer)
             .and_then(|r| {
@@ -1109,8 +1110,8 @@
     }
 }
 
-<span class="kw">impl </span>PartialEq&lt;MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;&gt; <span class="kw">for </span>OwnedMatchRule {
-    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>MatchRule&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; bool {
+<span class="kw">impl </span>PartialEq&lt;MatchRule&lt;<span class="lifetime">'_</span>&gt;&gt; <span class="kw">for </span>OwnedMatchRule {
+    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>MatchRule&lt;<span class="lifetime">'_</span>&gt;) -&gt; bool {
         <span class="self">self</span>.<span class="number">0 </span>== <span class="kw-2">*</span>other
     }
 }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.13.1/src/iface.rs`."><title>iface.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.13.1/src/iface.rs`."><title>iface.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zbus_macros/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus_macros"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -917,16 +918,16 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::utils::<span class="kw-2">*</span>;
 
-<span class="comment">// FIXME: The list name should once be &quot;zbus&quot; instead of &quot;dbus_interface&quot; (like in serde).
+<span class="comment">// FIXME: The list name should once be "zbus" instead of "dbus_interface" (like in serde).
 </span><span class="macro">def_attrs! </span>{
     <span class="kw">crate </span>dbus_interface;
 
-    <span class="kw">pub </span>TraitAttributes(<span class="string">&quot;trait&quot;</span>) {
+    <span class="kw">pub </span>TraitAttributes(<span class="string">"trait"</span>) {
         interface str,
         name str
     };
 
-    <span class="kw">pub </span>MethodAttributes(<span class="string">&quot;method&quot;</span>) {
+    <span class="kw">pub </span>MethodAttributes(<span class="string">"method"</span>) {
         name str,
         signal none,
         property none,
@@ -940,7 +941,7 @@
     <span class="macro">def_attrs! </span>{
         <span class="kw">crate </span>zbus;
 
-        <span class="kw">pub </span>ArgAttributes(<span class="string">&quot;argument&quot;</span>) {
+        <span class="kw">pub </span>ArgAttributes(<span class="string">"argument"</span>) {
             object_server none,
             connection none,
             header none,
@@ -952,14 +953,14 @@
 <span class="kw">use </span>arg_attrs::ArgAttributes;
 
 <span class="attr">#[derive(Debug)]
-</span><span class="kw">struct </span>Property&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">struct </span>Property&lt;<span class="lifetime">'a</span>&gt; {
     read: bool,
     write: bool,
-    ty: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Type&gt;,
+    ty: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Type&gt;,
     doc_comments: TokenStream,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Property&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Property&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             read: <span class="bool-val">false</span>,
@@ -990,10 +991,10 @@
             <span class="kw-2">&amp;</span>p.path
                 .segments
                 .last()
-                .ok_or_else(|| Error::new_spanned(p, <span class="string">&quot;Unsupported &#39;impl&#39; type&quot;</span>))<span class="question-mark">?
+                .ok_or_else(|| Error::new_spanned(p, <span class="string">"Unsupported 'impl' type"</span>))<span class="question-mark">?
                 </span>.ident
         }
-        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>input.self_ty, <span class="string">&quot;Invalid type&quot;</span>)),
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>input.self_ty, <span class="string">"Invalid type"</span>)),
     };
 
     <span class="kw">let </span>iface_name =
@@ -1002,10 +1003,10 @@
 
             <span class="kw">match </span>(name, interface) {
                 (<span class="prelude-val">Some</span>(name), <span class="prelude-val">None</span>) | (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(name)) =&gt; name,
-                (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;org.freedesktop.{ty}&quot;</span>),
+                (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="macro">format!</span>(<span class="string">"org.freedesktop.{ty}"</span>),
                 (<span class="prelude-val">Some</span>(<span class="kw">_</span>), <span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(syn::Error::new(
                     input.span(),
-                    <span class="string">&quot;`name` and `interface` attributes should not be specified at the same time&quot;</span>,
+                    <span class="string">"`name` and `interface` attributes should not be specified at the same time"</span>,
                 )),
             }
         };
@@ -1028,7 +1029,7 @@
         <span class="kw">let </span>attrs = MethodAttributes::parse(<span class="kw-2">&amp;</span>method.attrs)<span class="question-mark">?</span>;
         method
             .attrs
-            .retain(|attr| !attr.path.is_ident(<span class="string">&quot;dbus_interface&quot;</span>));
+            .retain(|attr| !attr.path.is_ident(<span class="string">"dbus_interface"</span>));
 
         <span class="kw">let </span>docs = get_doc_attrs(<span class="kw-2">&amp;</span>method.attrs)
             .iter()
@@ -1036,7 +1037,7 @@
                 <span class="kw">if let </span><span class="prelude-val">Ok</span>(NameValue(MetaNameValue { lit: Str(s), .. })) = attr.parse_meta() {
                     <span class="prelude-val">Some</span>(s.value())
                 } <span class="kw">else </span>{
-                    <span class="comment">// non #[doc = &quot;...&quot;] attributes are not our concern
+                    <span class="comment">// non #[doc = "..."] attributes are not our concern
                     // we leave them for rustc to handle
                     </span><span class="prelude-val">None
                 </span>}
@@ -1053,16 +1054,16 @@
 
         <span class="kw">let </span>is_mut = <span class="kw">if let </span>FnArg::Receiver(r) = inputs
             .first()
-            .ok_or_else(|| Error::new_spanned(<span class="kw-2">&amp;</span>ident, <span class="string">&quot;not &amp;self method&quot;</span>))<span class="question-mark">?
+            .ok_or_else(|| Error::new_spanned(<span class="kw-2">&amp;</span>ident, <span class="string">"not &amp;self method"</span>))<span class="question-mark">?
         </span>{
             r.mutability.is_some()
         } <span class="kw">else if </span>is_signal {
             <span class="bool-val">false
         </span>} <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>method, <span class="string">&quot;missing receiver&quot;</span>));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>method, <span class="string">"missing receiver"</span>));
         };
         <span class="kw">if </span>is_signal &amp;&amp; !is_async {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>method, <span class="string">&quot;signals must be async&quot;</span>));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(<span class="kw-2">&amp;</span>method, <span class="string">"signals must be async"</span>));
         }
         <span class="kw">let </span>method_await = <span class="kw">if </span>is_async {
             <span class="macro">quote! </span>{ .<span class="kw">await </span>}
@@ -1081,7 +1082,7 @@
             <span class="kw">if </span>typed_inputs.is_empty() {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                     <span class="kw-2">&amp;</span>inputs,
-                    <span class="string">&quot;Expected a `&amp;zbus::SignalContext&lt;&#39;_&gt; argument&quot;</span>,
+                    <span class="string">"Expected a `&amp;zbus::SignalContext&lt;'_&gt; argument"</span>,
                 ));
             }
             <span class="prelude-val">Some</span>(typed_inputs.remove(<span class="number">0</span>))
@@ -1114,7 +1115,7 @@
         <span class="kw">let </span>member_name = attrs.name.clone().unwrap_or_else(|| {
             <span class="kw">let </span><span class="kw-2">mut </span>name = ident.to_string();
             <span class="kw">if </span>is_property &amp;&amp; has_inputs {
-                <span class="macro">assert!</span>(name.starts_with(<span class="string">&quot;set_&quot;</span>));
+                <span class="macro">assert!</span>(name.starts_with(<span class="string">"set_"</span>));
                 name = name[<span class="number">4</span>..].to_string();
             }
             pascal_case(<span class="kw-2">&amp;</span>name)
@@ -1139,8 +1140,8 @@
             <span class="kw">let </span>p = properties.entry(member_name.to_string());
 
             <span class="kw">let </span>sk_member_name = case::snake_case(<span class="kw-2">&amp;</span>member_name);
-            <span class="kw">let </span>prop_changed_method_name = <span class="macro">format_ident!</span>(<span class="string">&quot;{sk_member_name}_changed&quot;</span>);
-            <span class="kw">let </span>prop_invalidate_method_name = <span class="macro">format_ident!</span>(<span class="string">&quot;{sk_member_name}_invalidate&quot;</span>);
+            <span class="kw">let </span>prop_changed_method_name = <span class="macro">format_ident!</span>(<span class="string">"{sk_member_name}_changed"</span>);
+            <span class="kw">let </span>prop_invalidate_method_name = <span class="macro">format_ident!</span>(<span class="string">"{sk_member_name}_invalidate"</span>);
 
             <span class="kw">let </span>p = p.or_insert_with(Property::new);
             p.doc_comments.extend(doc_comments);
@@ -1161,20 +1162,20 @@
                     <span class="macro">quote!</span>(::std::result::Result::Ok(<span class="self">self</span>.#ident(val)))
                 };
 
-                <span class="comment">// * For reference arg, we convert from `&amp;Value` (so `TryFrom&lt;&amp;Value&lt;&#39;_&gt;&gt;` is
+                <span class="comment">// * For reference arg, we convert from `&amp;Value` (so `TryFrom&lt;&amp;Value&lt;'_&gt;&gt;` is
                 //   required).
                 //
                 // * For argument type with lifetimes, we convert from `Value` (so
-                //   `TryFrom&lt;Value&lt;&#39;_&gt;&gt;` is required).
+                //   `TryFrom&lt;Value&lt;'_&gt;&gt;` is required).
                 //
                 // * For all other arg types, we convert the passed value to `OwnedValue` first and
-                //   then pass it as `Value` (so `TryFrom&lt;Value&lt;&#39;static&gt;&gt;` is required).
+                //   then pass it as `Value` (so `TryFrom&lt;Value&lt;'static&gt;&gt;` is required).
                 </span><span class="kw">let </span>value_to_owned = <span class="macro">quote! </span>{
                     ::zbus::zvariant::Value::from(zbus::zvariant::Value::to_owned(value))
                 };
                 <span class="kw">let </span>value_arg = <span class="kw">match </span><span class="kw-2">&amp;*</span>typed_inputs
                     .first()
-                    .ok_or_else(|| Error::new_spanned(<span class="kw-2">&amp;</span>inputs, <span class="string">&quot;Expected a value argument&quot;</span>))<span class="question-mark">?
+                    .ok_or_else(|| Error::new_spanned(<span class="kw-2">&amp;</span>inputs, <span class="string">"Expected a value argument"</span>))<span class="question-mark">?
                     </span>.ty
                 {
                     Type::Reference(<span class="kw">_</span>) =&gt; <span class="macro">quote!</span>(value),
@@ -1296,7 +1297,7 @@
                 <span class="kw">let </span>prop_changed_method = <span class="macro">quote!</span>(
                     <span class="kw">pub async fn </span>#prop_changed_method_name(
                         <span class="kw-2">&amp;</span><span class="self">self</span>,
-                        signal_context: <span class="kw-2">&amp;</span>#zbus::SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
+                        signal_context: <span class="kw-2">&amp;</span>#zbus::SignalContext&lt;<span class="lifetime">'_</span>&gt;,
                     ) -&gt; #zbus::Result&lt;()&gt; {
                         <span class="kw">let </span><span class="kw-2">mut </span>changed = ::std::collections::HashMap::new();
                         <span class="kw">let </span>value = &lt;#zbus::zvariant::Value <span class="kw">as </span>::std::convert::From&lt;<span class="kw">_</span>&gt;&gt;::from(#prop_value_handled);
@@ -1314,7 +1315,7 @@
                 <span class="kw">let </span>prop_invalidate_method = <span class="macro">quote!</span>(
                     <span class="kw">pub async fn </span>#prop_invalidate_method_name(
                         <span class="kw-2">&amp;</span><span class="self">self</span>,
-                        signal_context: <span class="kw-2">&amp;</span>#zbus::SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
+                        signal_context: <span class="kw-2">&amp;</span>#zbus::SignalContext&lt;<span class="lifetime">'_</span>&gt;,
                     ) -&gt; #zbus::Result&lt;()&gt; {
                         #zbus::fdo::Properties::properties_changed(
                             signal_context,
@@ -1372,7 +1373,7 @@
         </span><span class="kw">impl </span>#generics #zbus::Interface <span class="kw">for </span>#self_ty
         #where_clause
         {
-            <span class="kw">fn </span>name() -&gt; #zbus::names::InterfaceName&lt;<span class="lifetime">&#39;static</span>&gt; {
+            <span class="kw">fn </span>name() -&gt; #zbus::names::InterfaceName&lt;<span class="lifetime">'static</span>&gt; {
                 #zbus::names::InterfaceName::from_static_str_unchecked(#iface_name)
             }
 
@@ -1400,12 +1401,12 @@
                 props
             }
 
-            <span class="kw">fn </span>set&lt;<span class="lifetime">&#39;call</span>&gt;(
-                <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span><span class="self">self</span>,
-                property_name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>str,
-                value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;,
-                signal_context: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
-            ) -&gt; #zbus::DispatchResult&lt;<span class="lifetime">&#39;call</span>&gt; {
+            <span class="kw">fn </span>set&lt;<span class="lifetime">'call</span>&gt;(
+                <span class="kw-2">&amp;</span><span class="lifetime">'call </span><span class="self">self</span>,
+                property_name: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>str,
+                value: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::zvariant::Value&lt;<span class="lifetime">'_</span>&gt;,
+                signal_context: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::SignalContext&lt;<span class="lifetime">'_</span>&gt;,
+            ) -&gt; #zbus::DispatchResult&lt;<span class="lifetime">'call</span>&gt; {
                 <span class="kw">match </span>property_name {
                     #set_dispatch
                     <span class="kw">_ </span>=&gt; #zbus::DispatchResult::NotFound,
@@ -1415,8 +1416,8 @@
             <span class="kw">async fn </span>set_mut(
                 <span class="kw-2">&amp;mut </span><span class="self">self</span>,
                 property_name: <span class="kw-2">&amp;</span>str,
-                value: <span class="kw-2">&amp;</span>#zbus::zvariant::Value&lt;<span class="lifetime">&#39;_</span>&gt;,
-                signal_context: <span class="kw-2">&amp;</span>#zbus::SignalContext&lt;<span class="lifetime">&#39;_</span>&gt;,
+                value: <span class="kw-2">&amp;</span>#zbus::zvariant::Value&lt;<span class="lifetime">'_</span>&gt;,
+                signal_context: <span class="kw-2">&amp;</span>#zbus::SignalContext&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; ::std::option::Option&lt;#zbus::fdo::Result&lt;()&gt;&gt; {
                 <span class="kw">match </span>property_name {
                     #set_mut_dispatch
@@ -1424,26 +1425,26 @@
                 }
             }
 
-            <span class="kw">fn </span>call&lt;<span class="lifetime">&#39;call</span>&gt;(
-                <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span><span class="self">self</span>,
-                s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::ObjectServer,
-                c: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::Connection,
-                m: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::Message,
-                name: #zbus::names::MemberName&lt;<span class="lifetime">&#39;call</span>&gt;,
-            ) -&gt; #zbus::DispatchResult&lt;<span class="lifetime">&#39;call</span>&gt; {
+            <span class="kw">fn </span>call&lt;<span class="lifetime">'call</span>&gt;(
+                <span class="kw-2">&amp;</span><span class="lifetime">'call </span><span class="self">self</span>,
+                s: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::ObjectServer,
+                c: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::Connection,
+                m: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::Message,
+                name: #zbus::names::MemberName&lt;<span class="lifetime">'call</span>&gt;,
+            ) -&gt; #zbus::DispatchResult&lt;<span class="lifetime">'call</span>&gt; {
                 <span class="kw">match </span>name.as_str() {
                     #call_dispatch
                     <span class="kw">_ </span>=&gt; #zbus::DispatchResult::NotFound,
                 }
             }
 
-            <span class="kw">fn </span>call_mut&lt;<span class="lifetime">&#39;call</span>&gt;(
-                <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span><span class="kw-2">mut </span><span class="self">self</span>,
-                s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::ObjectServer,
-                c: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::Connection,
-                m: <span class="kw-2">&amp;</span><span class="lifetime">&#39;call </span>#zbus::Message,
-                name: #zbus::names::MemberName&lt;<span class="lifetime">&#39;call</span>&gt;,
-            ) -&gt; #zbus::DispatchResult&lt;<span class="lifetime">&#39;call</span>&gt; {
+            <span class="kw">fn </span>call_mut&lt;<span class="lifetime">'call</span>&gt;(
+                <span class="kw-2">&amp;</span><span class="lifetime">'call </span><span class="kw-2">mut </span><span class="self">self</span>,
+                s: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::ObjectServer,
+                c: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::Connection,
+                m: <span class="kw-2">&amp;</span><span class="lifetime">'call </span>#zbus::Message,
+                name: #zbus::names::MemberName&lt;<span class="lifetime">'call</span>&gt;,
+            ) -&gt; #zbus::DispatchResult&lt;<span class="lifetime">'call</span>&gt; {
                 <span class="kw">match </span>name.as_str() {
                     #call_mut_dispatch
                     <span class="kw">_ </span>=&gt; #zbus::DispatchResult::NotFound,
@@ -1453,8 +1454,8 @@
             <span class="kw">fn </span>introspect_to_writer(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>::std::fmt::Write, level: usize) {
                 <span class="macro">::std::writeln!</span>(
                     writer,
-                    <span class="string">r#&quot;{:indent$}&lt;interface name=&quot;{}&quot;&gt;&quot;#</span>,
-                    <span class="string">&quot;&quot;</span>,
+                    <span class="string">r#"{:indent$}&lt;interface name="{}"&gt;"#</span>,
+                    <span class="string">""</span>,
                     &lt;<span class="self">Self </span><span class="kw">as </span>#zbus::Interface&gt;::name(),
                     indent = level
                 ).unwrap();
@@ -1464,7 +1465,7 @@
                     <span class="kw">let </span>level = level + <span class="number">2</span>;
                     #introspect
                 }
-                <span class="macro">::std::writeln!</span>(writer, <span class="string">r#&quot;{:indent$}&lt;/interface&gt;&quot;#</span>, <span class="string">&quot;&quot;</span>, indent = level).unwrap();
+                <span class="macro">::std::writeln!</span>(writer, <span class="string">r#"{:indent$}&lt;/interface&gt;"#</span>, <span class="string">""</span>, indent = level).unwrap();
             }
         }
     })
@@ -1491,7 +1492,7 @@
                 <span class="kw">if </span>server_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
-                        <span class="string">&quot;There can only be one object_server argument&quot;</span>,
+                        <span class="string">"There can only be one object_server argument"</span>,
                     ));
                 }
 
@@ -1501,7 +1502,7 @@
                 <span class="kw">if </span>conn_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
-                        <span class="string">&quot;There can only be one connection argument&quot;</span>,
+                        <span class="string">"There can only be one connection argument"</span>,
                     ));
                 }
 
@@ -1511,7 +1512,7 @@
                 <span class="kw">if </span>header_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
-                        <span class="string">&quot;There can only be one header argument&quot;</span>,
+                        <span class="string">"There can only be one header argument"</span>,
                     ));
                 }
 
@@ -1524,7 +1525,7 @@
                 <span class="kw">if </span>signal_context_arg_decl.is_some() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                         input,
-                        <span class="string">&quot;There can only be one `signal_context` argument&quot;</span>,
+                        <span class="string">"There can only be one `signal_context` argument"</span>,
                     ));
                 }
 
@@ -1533,11 +1534,11 @@
                 signal_context_arg_decl = <span class="prelude-val">Some</span>(<span class="macro">quote! </span>{
                     <span class="kw">let </span>#signal_context_arg = <span class="kw">match </span>m.path() {
                         ::std::option::Option::Some(p) =&gt; {
-                            #zbus::SignalContext::new(c, p).expect(<span class="string">&quot;Infallible conversion failed&quot;</span>)
+                            #zbus::SignalContext::new(c, p).expect(<span class="string">"Infallible conversion failed"</span>)
                         }
                         ::std::option::Option::None =&gt; {
                             <span class="kw">let </span>hdr = m.header()<span class="question-mark">?</span>;
-                            <span class="kw">let </span>err = #zbus::fdo::Error::UnknownObject(<span class="string">&quot;Path Required&quot;</span>.into());
+                            <span class="kw">let </span>err = #zbus::fdo::Error::UnknownObject(<span class="string">"Path Required"</span>.into());
                             <span class="kw">return </span>c.reply_dbus_error(<span class="kw-2">&amp;</span>hdr, err).<span class="kw">await</span>;
                         }
                     };
@@ -1578,42 +1579,42 @@
 <span class="kw">fn </span>clean_input_args(inputs: <span class="kw-2">&amp;mut </span>Punctuated&lt;FnArg, <span class="macro">Token!</span>[,]&gt;) {
     <span class="kw">for </span>input <span class="kw">in </span>inputs {
         <span class="kw">if let </span>FnArg::Typed(t) = input {
-            t.attrs.retain(|attr| !attr.path.is_ident(<span class="string">&quot;zbus&quot;</span>));
+            t.attrs.retain(|attr| !attr.path.is_ident(<span class="string">"zbus"</span>));
         }
     }
 }
 
 <span class="kw">fn </span>introspect_signal(name: <span class="kw-2">&amp;</span>str, args: <span class="kw-2">&amp;</span>TokenStream) -&gt; TokenStream {
     <span class="macro">quote!</span>(
-        <span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;signal name=\&quot;{}\&quot;&gt;&quot;</span>, <span class="string">&quot;&quot;</span>, #name, indent = level).unwrap();
+        <span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;signal name=\"{}\"&gt;"</span>, <span class="string">""</span>, #name, indent = level).unwrap();
         {
             <span class="kw">let </span>level = level + <span class="number">2</span>;
             #args
         }
-        <span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;/signal&gt;&quot;</span>, <span class="string">&quot;&quot;</span>, indent = level).unwrap();
+        <span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;/signal&gt;"</span>, <span class="string">""</span>, indent = level).unwrap();
     )
 }
 
 <span class="kw">fn </span>introspect_method(name: <span class="kw-2">&amp;</span>str, args: <span class="kw-2">&amp;</span>TokenStream) -&gt; TokenStream {
     <span class="macro">quote!</span>(
-        <span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;method name=\&quot;{}\&quot;&gt;&quot;</span>, <span class="string">&quot;&quot;</span>, #name, indent = level).unwrap();
+        <span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;method name=\"{}\"&gt;"</span>, <span class="string">""</span>, #name, indent = level).unwrap();
         {
             <span class="kw">let </span>level = level + <span class="number">2</span>;
             #args
         }
-        <span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;/method&gt;&quot;</span>, <span class="string">&quot;&quot;</span>, indent = level).unwrap();
+        <span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;/method&gt;"</span>, <span class="string">""</span>, indent = level).unwrap();
     )
 }
 
 <span class="kw">fn </span>introspect_input_args(
     inputs: <span class="kw-2">&amp;</span>[PatType],
     is_signal: bool,
-) -&gt; <span class="kw">impl </span>Iterator&lt;Item = TokenStream&gt; + <span class="lifetime">&#39;_ </span>{
+) -&gt; <span class="kw">impl </span>Iterator&lt;Item = TokenStream&gt; + <span class="lifetime">'_ </span>{
     inputs
         .iter()
         .filter_map(<span class="kw">move </span>|pat_type @ PatType { ty, attrs, .. }| {
             <span class="kw">let </span>is_special_arg = attrs.iter().any(|attr| {
-                <span class="kw">if </span>!attr.path.is_ident(<span class="string">&quot;zbus&quot;</span>) {
+                <span class="kw">if </span>!attr.path.is_ident(<span class="string">"zbus"</span>) {
                     <span class="kw">return </span><span class="bool-val">false</span>;
                 }
 
@@ -1631,7 +1632,7 @@
                     <span class="macro">matches!</span>(
                         nested_meta,
                         NestedMeta::Meta(Meta::Path(path))
-                        <span class="kw">if </span>path.is_ident(<span class="string">&quot;object_server&quot;</span>) || path.is_ident(<span class="string">&quot;connection&quot;</span>) || path.is_ident(<span class="string">&quot;header&quot;</span>) || path.is_ident(<span class="string">&quot;signal_context&quot;</span>)
+                        <span class="kw">if </span>path.is_ident(<span class="string">"object_server"</span>) || path.is_ident(<span class="string">"connection"</span>) || path.is_ident(<span class="string">"header"</span>) || path.is_ident(<span class="string">"signal_context"</span>)
                     )
                 });
 
@@ -1643,9 +1644,9 @@
 
             <span class="kw">let </span>ident = pat_ident(pat_type).unwrap();
             <span class="kw">let </span>arg_name = <span class="macro">quote!</span>(#ident).to_string();
-            <span class="kw">let </span>dir = <span class="kw">if </span>is_signal { <span class="string">&quot;&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot; direction=\&quot;in\&quot;&quot; </span>};
+            <span class="kw">let </span>dir = <span class="kw">if </span>is_signal { <span class="string">"" </span>} <span class="kw">else </span>{ <span class="string">" direction=\"in\"" </span>};
             <span class="prelude-val">Some</span>(<span class="macro">quote!</span>(
-                <span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;arg name=\&quot;{}\&quot; type=\&quot;{}\&quot;{}/&gt;&quot;</span>, <span class="string">&quot;&quot;</span>,
+                <span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;arg name=\"{}\" type=\"{}\"{}/&gt;"</span>, <span class="string">""</span>,
                          #arg_name, &lt;#ty&gt;::signature(), #dir, indent = level).unwrap();
             ))
         })
@@ -1653,12 +1654,12 @@
 
 <span class="kw">fn </span>introspect_output_arg(ty: <span class="kw-2">&amp;</span>Type, arg_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>String&gt;) -&gt; TokenStream {
     <span class="kw">let </span>arg_name = <span class="kw">match </span>arg_name {
-        <span class="prelude-val">Some</span>(name) =&gt; <span class="macro">format!</span>(<span class="string">&quot;name=\&quot;{name}\&quot; &quot;</span>),
-        <span class="prelude-val">None </span>=&gt; String::from(<span class="string">&quot;&quot;</span>),
+        <span class="prelude-val">Some</span>(name) =&gt; <span class="macro">format!</span>(<span class="string">"name=\"{name}\" "</span>),
+        <span class="prelude-val">None </span>=&gt; String::from(<span class="string">""</span>),
     };
 
     <span class="macro">quote!</span>(
-        <span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;arg {}type=\&quot;{}\&quot; direction=\&quot;out\&quot;/&gt;&quot;</span>, <span class="string">&quot;&quot;</span>,
+        <span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;arg {}type=\"{}\" direction=\"out\"/&gt;"</span>, <span class="string">""</span>,
                  #arg_name, &lt;#ty&gt;::signature(), indent = level).unwrap();
     )
 }
@@ -1668,7 +1669,7 @@
         .path
         .segments
         .last()
-        .ok_or_else(|| Error::new_spanned(p, <span class="string">&quot;unsupported result type&quot;</span>))<span class="question-mark">?
+        .ok_or_else(|| Error::new_spanned(p, <span class="string">"unsupported result type"</span>))<span class="question-mark">?
         </span>.arguments
     {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(syn::GenericArgument::Type(ty)) = args.first() {
@@ -1676,7 +1677,7 @@
         }
     }
 
-    <span class="prelude-val">Err</span>(Error::new_spanned(p, <span class="string">&quot;unhandled Result return&quot;</span>))
+    <span class="prelude-val">Err</span>(Error::new_spanned(p, <span class="string">"unhandled Result return"</span>))
 }
 
 <span class="kw">fn </span>introspect_add_output_args(
@@ -1694,9 +1695,9 @@
                 .path
                 .segments
                 .last()
-                .ok_or_else(|| Error::new_spanned(ty, <span class="string">&quot;unsupported output type&quot;</span>))<span class="question-mark">?
+                .ok_or_else(|| Error::new_spanned(ty, <span class="string">"unsupported output type"</span>))<span class="question-mark">?
                 </span>.ident
-                == <span class="string">&quot;Result&quot;</span>;
+                == <span class="string">"Result"</span>;
             <span class="kw">if </span>is_result_output {
                 ty = get_result_type(p)<span class="question-mark">?</span>;
             }
@@ -1706,7 +1707,7 @@
             <span class="kw">if let </span><span class="prelude-val">Some</span>(arg_names) = arg_names {
                 <span class="kw">if </span>t.elems.len() != arg_names.len() {
                     <span class="comment">// Turn into error
-                    </span><span class="macro">panic!</span>(<span class="string">&quot;Number of out arg names different from out args specified&quot;</span>)
+                    </span><span class="macro">panic!</span>(<span class="string">"Number of out arg names different from out args specified"</span>)
                 }
             }
             <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..t.elems.len() {
@@ -1730,9 +1731,9 @@
                 .path
                 .segments
                 .last()
-                .ok_or_else(|| Error::new_spanned(ty, <span class="string">&quot;unsupported property type&quot;</span>))<span class="question-mark">?
+                .ok_or_else(|| Error::new_spanned(ty, <span class="string">"unsupported property type"</span>))<span class="question-mark">?
                 </span>.ident
-                == <span class="string">&quot;Result&quot;</span>;
+                == <span class="string">"Result"</span>;
             <span class="kw">if </span>is_result_output {
                 <span class="kw">return </span>get_result_type(p);
             }
@@ -1740,29 +1741,29 @@
 
         <span class="prelude-val">Ok</span>(ty)
     } <span class="kw">else </span>{
-        <span class="prelude-val">Err</span>(Error::new_spanned(output, <span class="string">&quot;Invalid property getter&quot;</span>))
+        <span class="prelude-val">Err</span>(Error::new_spanned(output, <span class="string">"Invalid property getter"</span>))
     }
 }
 
 <span class="kw">fn </span>introspect_properties(
     introspection: <span class="kw-2">&amp;mut </span>TokenStream,
-    properties: BTreeMap&lt;String, Property&lt;<span class="lifetime">&#39;_</span>&gt;&gt;,
+    properties: BTreeMap&lt;String, Property&lt;<span class="lifetime">'_</span>&gt;&gt;,
 ) -&gt; syn::Result&lt;()&gt; {
     <span class="kw">for </span>(name, prop) <span class="kw">in </span>properties {
         <span class="kw">let </span>access = <span class="kw">if </span>prop.read &amp;&amp; prop.write {
-            <span class="string">&quot;readwrite&quot;
+            <span class="string">"readwrite"
         </span>} <span class="kw">else if </span>prop.read {
-            <span class="string">&quot;read&quot;
+            <span class="string">"read"
         </span>} <span class="kw">else if </span>prop.write {
-            <span class="string">&quot;write&quot;
+            <span class="string">"write"
         </span>} <span class="kw">else </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new_spanned(
                 name,
-                <span class="string">&quot;property is neither readable nor writable&quot;</span>,
+                <span class="string">"property is neither readable nor writable"</span>,
             ));
         };
         <span class="kw">let </span>ty = prop.ty.ok_or_else(|| {
-            Error::new_spanned(<span class="kw-2">&amp;</span>name, <span class="string">&quot;Write-only properties aren&#39;t supported yet&quot;</span>)
+            Error::new_spanned(<span class="kw-2">&amp;</span>name, <span class="string">"Write-only properties aren't supported yet"</span>)
         })<span class="question-mark">?</span>;
 
         <span class="kw">let </span>doc_comments = prop.doc_comments;
@@ -1770,8 +1771,8 @@
             #doc_comments
             <span class="macro">::std::writeln!</span>(
                 writer,
-                <span class="string">&quot;{:indent$}&lt;property name=\&quot;{}\&quot; type=\&quot;{}\&quot; access=\&quot;{}\&quot;/&gt;&quot;</span>,
-                <span class="string">&quot;&quot;</span>, #name, &lt;#ty&gt;::signature(), #access, indent = level,
+                <span class="string">"{:indent$}&lt;property name=\"{}\" type=\"{}\" access=\"{}\"/&gt;"</span>,
+                <span class="string">""</span>, #name, &lt;#ty&gt;::signature(), #access, indent = level,
             ).unwrap();
         ));
     }
@@ -1785,7 +1786,7 @@
     <span class="kw">let </span><span class="kw-2">mut </span>lines: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = lines
         .iter()
         .skip_while(|s| is_blank(s))
-        .flat_map(|s| s.split(<span class="string">&#39;\n&#39;</span>))
+        .flat_map(|s| s.split(<span class="string">'\n'</span>))
         .collect();
 
     <span class="kw">while let </span><span class="prelude-val">Some</span>(<span class="bool-val">true</span>) = lines.last().map(|s| is_blank(s)) {
@@ -1796,17 +1797,17 @@
         <span class="kw">return </span>docs;
     }
 
-    docs.extend(<span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}&lt;!--&quot;</span>, <span class="string">&quot;&quot;</span>, indent = level).unwrap();));
+    docs.extend(<span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}&lt;!--"</span>, <span class="string">""</span>, indent = level).unwrap();));
     <span class="kw">for </span>line <span class="kw">in </span>lines {
         <span class="kw">if </span>!line.is_empty() {
             docs.extend(
-                <span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$}{}&quot;</span>, <span class="string">&quot;&quot;</span>, #line, indent = level).unwrap();),
+                <span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$}{}"</span>, <span class="string">""</span>, #line, indent = level).unwrap();),
             );
         } <span class="kw">else </span>{
-            docs.extend(<span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;&quot;</span>).unwrap();));
+            docs.extend(<span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">""</span>).unwrap();));
         }
     }
-    docs.extend(<span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">&quot;{:indent$} --&gt;&quot;</span>, <span class="string">&quot;&quot;</span>, indent = level).unwrap();));
+    docs.extend(<span class="macro">quote!</span>(<span class="macro">::std::writeln!</span>(writer, <span class="string">"{:indent$} --&gt;"</span>, <span class="string">""</span>, indent = level).unwrap();));
 
     docs
 }

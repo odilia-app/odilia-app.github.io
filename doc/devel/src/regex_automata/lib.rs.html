@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-automata-0.1.10/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="regex_automata" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../regex_automata/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-automata-0.1.10/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="regex_automata" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -392,8 +393,8 @@ and then use it to find matches in a byte string:
 ```
 use regex_automata::Regex;
 
-let re = Regex::new(r&quot;[0-9]{4}-[0-9]{2}-[0-9]{2}&quot;).unwrap();
-let text = b&quot;2018-12-24 2016-10-08&quot;;
+let re = Regex::new(r"[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
+let text = b"2018-12-24 2016-10-08";
 let matches: Vec&lt;(usize, usize)&gt; = re.find_iter(text).collect();
 assert_eq!(matches, vec![(0, 10), (11, 21)]);
 ```
@@ -412,8 +413,8 @@ Using sparse DFAs is as easy as using `Regex::new_sparse` instead of
 use regex_automata::Regex;
 
 # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-let re = Regex::new_sparse(r&quot;[0-9]{4}-[0-9]{2}-[0-9]{2}&quot;).unwrap();
-let text = b&quot;2018-12-24 2016-10-08&quot;;
+let re = Regex::new_sparse(r"[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
+let text = b"2018-12-24 2016-10-08";
 let matches: Vec&lt;(usize, usize)&gt; = re.find_iter(text).collect();
 assert_eq!(matches, vec![(0, 10), (11, 21)]);
 # Ok(()) }; example().unwrap()
@@ -426,12 +427,12 @@ DFAs and used to build a new `Regex`. For example:
 use regex_automata::Regex;
 
 # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-let dense_re = Regex::new(r&quot;[0-9]{4}-[0-9]{2}-[0-9]{2}&quot;).unwrap();
+let dense_re = Regex::new(r"[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
 let sparse_re = Regex::from_dfas(
     dense_re.forward().to_sparse()?,
     dense_re.reverse().to_sparse()?,
 );
-let text = b&quot;2018-12-24 2016-10-08&quot;;
+let text = b"2018-12-24 2016-10-08";
 let matches: Vec&lt;(usize, usize)&gt; = sparse_re.find_iter(text).collect();
 assert_eq!(matches, vec![(0, 10), (11, 21)]);
 # Ok(()) }; example().unwrap()
@@ -450,7 +451,7 @@ time operation.
 use regex_automata::{DenseDFA, Regex};
 
 # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-let re1 = Regex::new(r&quot;[0-9]{4}-[0-9]{2}-[0-9]{2}&quot;).unwrap();
+let re1 = Regex::new(r"[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
 // serialize both the forward and reverse DFAs, see note below
 let fwd_bytes = re1.forward().to_u16()?.to_bytes_native_endian()?;
 let rev_bytes = re1.reverse().to_u16()?.to_bytes_native_endian()?;
@@ -461,7 +462,7 @@ let rev: DenseDFA&lt;&amp;[u16], u16&gt; = unsafe { DenseDFA::from_bytes(&amp;re
 let re2 = Regex::from_dfas(fwd, rev);
 
 // we can use it like normal
-let text = b&quot;2018-12-24 2016-10-08&quot;;
+let text = b"2018-12-24 2016-10-08";
 let matches: Vec&lt;(usize, usize)&gt; = re2.find_iter(text).collect();
 assert_eq!(matches, vec![(0, 10), (11, 21)]);
 # Ok(()) }; example().unwrap()
@@ -475,23 +476,23 @@ There are a few points worth noting here:
   `Regex` guarantees that the DFAs are built correctly.
 * We specifically convert the dense DFA to a representation that uses `u16`
   for its state identifiers using
-  [`DenseDFA::to_u16`](enum.DenseDFA.html#method.to_u16). While this isn&#39;t
+  [`DenseDFA::to_u16`](enum.DenseDFA.html#method.to_u16). While this isn't
   strictly necessary, if we skipped this step, then the serialized bytes would
   use `usize` for state identifiers, which does not have a fixed size. Using
   `u16` ensures that we can deserialize this DFA even on platforms with a
   smaller pointer size. If our DFA is too big for `u16` state identifiers, then
   one can use `u32` or `u64`.
 * To convert the DFA to raw bytes, we use the `to_bytes_native_endian`
-  method. In practice, you&#39;ll want to use either
+  method. In practice, you'll want to use either
   [`DenseDFA::to_bytes_little_endian`](enum.DenseDFA.html#method.to_bytes_little_endian)
   or
   [`DenseDFA::to_bytes_big_endian`](enum.DenseDFA.html#method.to_bytes_big_endian),
-  depending on which platform you&#39;re deserializing your DFA from. If you intend
-  to deserialize on either platform, then you&#39;ll need to serialize both and
-  deserialize the right one depending on your target&#39;s endianness.
+  depending on which platform you're deserializing your DFA from. If you intend
+  to deserialize on either platform, then you'll need to serialize both and
+  deserialize the right one depending on your target's endianness.
 * Deserializing a DFA requires the use of `unsafe` because the raw bytes must
   be *trusted*. In particular, while some degree of sanity checks are
-  performed, nothing guarantees the integrity of the DFA&#39;s transition table
+  performed, nothing guarantees the integrity of the DFA's transition table
   since deserialization is a constant time operation. Since searching with a
   DFA must be able to follow transitions blindly for performance reasons,
   giving incorrect bytes to the deserialization API can result in memory
@@ -503,7 +504,7 @@ The same process can be achieved with sparse DFAs as well:
 use regex_automata::{SparseDFA, Regex};
 
 # fn example() -&gt; Result&lt;(), regex_automata::Error&gt; {
-let re1 = Regex::new(r&quot;[0-9]{4}-[0-9]{2}-[0-9]{2}&quot;).unwrap();
+let re1 = Regex::new(r"[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
 // serialize both
 let fwd_bytes = re1.forward().to_u16()?.to_sparse()?.to_bytes_native_endian()?;
 let rev_bytes = re1.reverse().to_u16()?.to_sparse()?.to_bytes_native_endian()?;
@@ -514,7 +515,7 @@ let rev: SparseDFA&lt;&amp;[u8], u16&gt; = unsafe { SparseDFA::from_bytes(&amp;r
 let re2 = Regex::from_dfas(fwd, rev);
 
 // we can use it like normal
-let text = b&quot;2018-12-24 2016-10-08&quot;;
+let text = b"2018-12-24 2016-10-08";
 let matches: Vec&lt;(usize, usize)&gt; = re2.find_iter(text).collect();
 assert_eq!(matches, vec![(0, 10), (11, 21)]);
 # Ok(()) }; example().unwrap()
@@ -539,7 +540,7 @@ The intended workflow for `no_std` environments is thus as follows:
   regular expression. Serialization should only happen after first converting
   the DFAs to use a fixed size state identifier instead of the default `usize`.
   You may also need to serialize both little and big endian versions of each
-  DFA. (So that&#39;s 4 DFAs in total for each regex.)
+  DFA. (So that's 4 DFAs in total for each regex.)
 * In your `no_std` environment, follow the examples above for deserializing
   your previously serialized DFAs into regexes. You can then search with them
   as you would any regex.
@@ -587,9 +588,9 @@ Here are some specific negative differences:
   not be compiled with this library. (In the future, the API may expose an
   option to return an error if the DFA gets too big.)
 * This crate does not support sub-match extraction, which can be achieved with
-  the regex crate&#39;s &quot;captures&quot; API. This may be added in the future, but is
+  the regex crate's "captures" API. This may be added in the future, but is
   unlikely.
-* While the regex crate doesn&#39;t necessarily sport fast compilation times, the
+* While the regex crate doesn't necessarily sport fast compilation times, the
   regexes in this crate are almost universally slow to compile, especially when
   they contain large Unicode character classes. For example, on my system,
   compiling `\w{3}` with byte classes enabled takes just over 1 second and
@@ -637,55 +638,55 @@ With some of the downsides out of the way, here are some positive differences:
 * Aside from choosing between dense and sparse DFAs, there are several options
   for configuring the space usage vs search time trade off. These include
   things like choosing a smaller state identifier representation, to
-  premultiplying state identifiers and splitting a DFA&#39;s alphabet into
+  premultiplying state identifiers and splitting a DFA's alphabet into
   equivalence classes. Finally, DFA minimization is also provided, but can
   increase compilation times dramatically.
 */
 
 </span><span class="attr">#![deny(missing_docs)]
-#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), no_std)]
+#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 
-#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">extern crate </span>core;
 
-<span class="attr">#[cfg(all(test, feature = <span class="string">&quot;transducer&quot;</span>))]
+<span class="attr">#[cfg(all(test, feature = <span class="string">"transducer"</span>))]
 </span><span class="kw">extern crate </span>bstr;
-<span class="attr">#[cfg(feature = <span class="string">&quot;transducer&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"transducer"</span>)]
 </span><span class="kw">extern crate </span>fst;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">extern crate </span>regex_syntax;
 
 <span class="kw">pub use </span>dense::DenseDFA;
 <span class="kw">pub use </span>dfa::DFA;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">pub use </span>error::{Error, ErrorKind};
 <span class="kw">pub use </span>regex::Regex;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">pub use </span>regex::RegexBuilder;
 <span class="kw">pub use </span>sparse::SparseDFA;
 <span class="kw">pub use </span>state_id::StateID;
 
 <span class="kw">mod </span>byteorder;
 <span class="kw">mod </span>classes;
-<span class="attr">#[path = <span class="string">&quot;dense.rs&quot;</span>]
+<span class="attr">#[path = <span class="string">"dense.rs"</span>]
 </span><span class="kw">mod </span>dense_imp;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">mod </span>determinize;
 <span class="kw">mod </span>dfa;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">mod </span>error;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">mod </span>minimize;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 #[doc(hidden)]
 </span><span class="kw">pub mod </span>nfa;
 <span class="kw">mod </span>regex;
-<span class="attr">#[path = <span class="string">&quot;sparse.rs&quot;</span>]
+<span class="attr">#[path = <span class="string">"sparse.rs"</span>]
 </span><span class="kw">mod </span>sparse_imp;
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">mod </span>sparse_set;
 <span class="kw">mod </span>state_id;
-<span class="attr">#[cfg(feature = <span class="string">&quot;transducer&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"transducer"</span>)]
 </span><span class="kw">mod </span>transducer;
 
 <span class="doccomment">/// Types and routines specific to dense DFAs.

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ordered-stream-0.2.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ordered_stream" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ordered_stream/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ordered-stream-0.2.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ordered_stream" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -307,7 +308,7 @@
 <a href="#307" id="307">307</a>
 <a href="#308" id="308">308</a>
 </pre></div><pre class="rust"><code><span class="attr">#![no_std]
-#![doc = <span class="macro">include_str!</span>(<span class="string">&quot;../README.md&quot;</span>)]
+#![doc = <span class="macro">include_str!</span>(<span class="string">"../README.md"</span>)]
 
 </span><span class="kw">use </span>core::pin::Pin;
 <span class="kw">use </span>core::task::{Context, Poll};
@@ -341,11 +342,11 @@
     /// There are several possible return values, each indicating a distinct stream state depending
     /// on the value passed in `before`:
     ///
-    /// - If `before` was `None`, `Poll::Pending` means that this stream&#39;s next value is not ready
+    /// - If `before` was `None`, `Poll::Pending` means that this stream's next value is not ready
     /// yet. Implementations will ensure that the current task is notified when the next value may
     /// be ready.
     ///
-    /// - If `before` was `Some`, `Poll::Pending` means that this stream&#39;s next value is not ready
+    /// - If `before` was `Some`, `Poll::Pending` means that this stream's next value is not ready
     /// and that it is not yet known if the stream will produce a value ordered prior to the given
     /// ordering value.  Implementations will ensure that the current task is notified when either
     /// the next value is ready or once it is known that no such value will be produced.
@@ -364,7 +365,7 @@
     /// given token.  It does not make sense to return this value if `before` was `None`.
     </span><span class="kw">fn </span>poll_next_before(
         <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
         before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
     ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt;;
 
@@ -374,7 +375,7 @@
     /// ordering of any future item returned from [`Self::poll_next_before`].  This value should
     /// (but is not required to) be greater than or equal to the ordering of the most recent item
     /// returned.
-    </span><span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
+    </span><span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
         <span class="prelude-val">None
     </span>}
 
@@ -389,12 +390,12 @@
 /// This is similar to `std::borrow::Cow`, but does not require the ability to convert from
 /// borrowed to owned.
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub enum </span>MaybeBorrowed&lt;<span class="lifetime">&#39;a</span>, T&gt; {
-    Borrowed(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T),
+</span><span class="kw">pub enum </span>MaybeBorrowed&lt;<span class="lifetime">'a</span>, T&gt; {
+    Borrowed(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>T),
     Owned(T),
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; AsRef&lt;T&gt; <span class="kw">for </span>MaybeBorrowed&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; AsRef&lt;T&gt; <span class="kw">for </span>MaybeBorrowed&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>T {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Borrowed(t) =&gt; t,
@@ -403,7 +404,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; core::ops::Deref <span class="kw">for </span>MaybeBorrowed&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; core::ops::Deref <span class="kw">for </span>MaybeBorrowed&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="kw">type </span>Target = T;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>T {
@@ -424,13 +425,13 @@
 
     <span class="kw">fn </span>poll_next_before(
         <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
         before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
     ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
         <span class="self">self</span>.get_mut().as_mut().poll_next_before(cx, before)
     }
 
-    <span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
+    <span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).position_hint()
     }
 
@@ -448,7 +449,7 @@
 
     <span class="kw">fn </span>poll_next_before(
         <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
         before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
     ) -&gt; Poll&lt;PollResult&lt;<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Data&gt;&gt; {
         <span class="kw">match </span><span class="self">self</span>.as_pin_mut() {
@@ -457,7 +458,7 @@
         }
     }
 
-    <span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
+    <span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
         <span class="self">self</span>.as_ref().and_then(|s| s.position_hint())
     }
 
@@ -579,11 +580,11 @@
     /// There are several possible return values, each indicating a distinct state depending on the
     /// value passed in `before`:
     ///
-    /// - If `before` was `None`, `Poll::Pending` means that this future&#39;s value is not ready yet.
+    /// - If `before` was `None`, `Poll::Pending` means that this future's value is not ready yet.
     /// Implementations will ensure that the current task is notified when the next value may be
     /// ready.
     ///
-    /// - If `before` was `Some`, `Poll::Pending` means that this future&#39;s value is not ready and
+    /// - If `before` was `Some`, `Poll::Pending` means that this future's value is not ready and
     /// that it is not yet known if the value will be ordered prior to the given ordering value.
     /// Implementations will ensure that the current task is notified when either the next value is
     /// ready or once it is known that no such value will be produced.
@@ -596,14 +597,14 @@
     /// the given token.  It is an error to return `None` if `before` was `None`.
     </span><span class="kw">fn </span>poll_before(
         <span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;,
-        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">&#39;_</span>&gt;,
+        cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;,
         before: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::Ordering&gt;,
     ) -&gt; Poll&lt;<span class="prelude-ty">Option</span>&lt;(<span class="self">Self</span>::Ordering, <span class="self">Self</span>::Output)&gt;&gt;;
 
     <span class="doccomment">/// The minimum value of the ordering of the item.
     ///
     /// See [`OrderedStream::position_hint`] for details.
-    </span><span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
+    </span><span class="kw">fn </span>position_hint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;MaybeBorrowed&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>::Ordering&gt;&gt; {
         <span class="prelude-val">None
     </span>}
 }

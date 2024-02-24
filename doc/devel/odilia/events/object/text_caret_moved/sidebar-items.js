@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["dispatch","is_tab_navigation","new_position","text_cursor_moved"],"static":["CALLSITE","META"]};
+window.SIDEBAR_ITEMS = {"fn":["dispatch","is_tab_navigation","new_position","text_cursor_moved"]};

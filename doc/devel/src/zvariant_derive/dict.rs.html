@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant_derive-3.14.0/src/dict.rs`."><title>dict.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../zvariant_derive/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant_derive-3.14.0/src/dict.rs`."><title>dict.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../zvariant_derive/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zvariant_derive"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -252,7 +253,7 @@
 <span class="kw">pub fn </span>expand_type_derive(input: DeriveInput) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream, Error&gt; {
     <span class="kw">let </span>name = <span class="kw">match </span>input.data {
         Data::Struct(<span class="kw">_</span>) =&gt; input.ident,
-        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(input.span(), <span class="string">&quot;only structs supported&quot;</span>)),
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(input.span(), <span class="string">"only structs supported"</span>)),
     };
 
     <span class="kw">let </span>zv = zvariant_path();
@@ -263,8 +264,8 @@
         <span class="kw">impl </span>#impl_generics #zv::Type <span class="kw">for </span>#name #ty_generics
         #where_clause
         {
-            <span class="kw">fn </span>signature() -&gt; #zv::Signature&lt;<span class="lifetime">&#39;static</span>&gt; {
-                #zv::Signature::from_static_str_unchecked(<span class="string">&quot;a{sv}&quot;</span>)
+            <span class="kw">fn </span>signature() -&gt; #zv::Signature&lt;<span class="lifetime">'static</span>&gt; {
+                #zv::Signature::from_static_str_unchecked(<span class="string">"a{sv}"</span>)
             }
         }
     })
@@ -281,15 +282,15 @@
         <span class="kw">let </span>ident = f.ident.as_ref().unwrap().to_string();
 
         <span class="kw">match </span>rename_all_attr {
-            <span class="prelude-val">Some</span>(<span class="string">&quot;lowercase&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(ident.to_ascii_lowercase()),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;UPPERCASE&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(ident.to_ascii_uppercase()),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;PascalCase&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(case::pascal_or_camel_case(<span class="kw-2">&amp;</span>ident, <span class="bool-val">true</span>)),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;camelCase&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(case::pascal_or_camel_case(<span class="kw-2">&amp;</span>ident, <span class="bool-val">false</span>)),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;snake_case&quot;</span>) =&gt; <span class="prelude-val">Ok</span>(case::snake_case(<span class="kw-2">&amp;</span>ident)),
+            <span class="prelude-val">Some</span>(<span class="string">"lowercase"</span>) =&gt; <span class="prelude-val">Ok</span>(ident.to_ascii_lowercase()),
+            <span class="prelude-val">Some</span>(<span class="string">"UPPERCASE"</span>) =&gt; <span class="prelude-val">Ok</span>(ident.to_ascii_uppercase()),
+            <span class="prelude-val">Some</span>(<span class="string">"PascalCase"</span>) =&gt; <span class="prelude-val">Ok</span>(case::pascal_or_camel_case(<span class="kw-2">&amp;</span>ident, <span class="bool-val">true</span>)),
+            <span class="prelude-val">Some</span>(<span class="string">"camelCase"</span>) =&gt; <span class="prelude-val">Ok</span>(case::pascal_or_camel_case(<span class="kw-2">&amp;</span>ident, <span class="bool-val">false</span>)),
+            <span class="prelude-val">Some</span>(<span class="string">"snake_case"</span>) =&gt; <span class="prelude-val">Ok</span>(case::snake_case(<span class="kw-2">&amp;</span>ident)),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(ident),
             <span class="prelude-val">Some</span>(other) =&gt; <span class="prelude-val">Err</span>(Error::new(
                 f.span(),
-                <span class="macro">format!</span>(<span class="string">&quot;invalid `rename_all` attribute value {other}&quot;</span>),
+                <span class="macro">format!</span>(<span class="string">"invalid `rename_all` attribute value {other}"</span>),
             )),
         }
     }
@@ -298,7 +299,7 @@
 <span class="kw">pub fn </span>expand_serialize_derive(input: DeriveInput) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream, Error&gt; {
     <span class="kw">let </span>(name, data) = <span class="kw">match </span>input.data {
         Data::Struct(data) =&gt; (input.ident, data),
-        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(input.span(), <span class="string">&quot;only structs supported&quot;</span>)),
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(input.span(), <span class="string">"only structs supported"</span>)),
     };
 
     <span class="kw">let </span>StructAttributes { rename_all, .. } = StructAttributes::parse(<span class="kw-2">&amp;</span>input.attrs)<span class="question-mark">?</span>;
@@ -346,7 +347,7 @@
             {
                 <span class="kw">use </span>#zv::export::serde::ser::SerializeMap;
 
-                <span class="comment">// zbus doesn&#39;t care about number of entries (it would need bytes instead)
+                <span class="comment">// zbus doesn't care about number of entries (it would need bytes instead)
                 </span><span class="kw">let </span><span class="kw-2">mut </span>map = serializer.serialize_map(::std::option::Option::Some(#num_entries))<span class="question-mark">?</span>;
                 #entries
                 map.end()
@@ -358,7 +359,7 @@
 <span class="kw">pub fn </span>expand_deserialize_derive(input: DeriveInput) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream, Error&gt; {
     <span class="kw">let </span>(name, data) = <span class="kw">match </span>input.data {
         Data::Struct(data) =&gt; (input.ident, data),
-        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(input.span(), <span class="string">&quot;only structs supported&quot;</span>)),
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(input.span(), <span class="string">"only structs supported"</span>)),
     };
 
     <span class="kw">let </span>StructAttributes {
@@ -367,7 +368,7 @@
         ..
     } = StructAttributes::parse(<span class="kw-2">&amp;</span>input.attrs)<span class="question-mark">?</span>;
 
-    <span class="kw">let </span>visitor = <span class="macro">format_ident!</span>(<span class="string">&quot;{}Visitor&quot;</span>, name);
+    <span class="kw">let </span>visitor = <span class="macro">format_ident!</span>(<span class="string">"{}Visitor"</span>, name);
     <span class="kw">let </span>zv = zvariant_path();
     <span class="kw">let </span><span class="kw-2">mut </span>fields = Vec::new();
     <span class="kw">let </span><span class="kw-2">mut </span>req_fields = Vec::new();
@@ -421,7 +422,7 @@
     <span class="kw">let </span><span class="kw-2">mut </span>generics = input.generics.clone();
     <span class="kw">let </span>def = syn::LifetimeDef {
         attrs: Vec::new(),
-        lifetime: syn::Lifetime::new(<span class="string">&quot;&#39;de&quot;</span>, Span::call_site()),
+        lifetime: syn::Lifetime::new(<span class="string">"'de"</span>, Span::call_site()),
         colon_token: <span class="prelude-val">None</span>,
         bounds: Punctuated::new(),
     };
@@ -434,20 +435,20 @@
 
     <span class="prelude-val">Ok</span>(<span class="macro">quote! </span>{
         <span class="attr">#[allow(deprecated)]
-        </span><span class="kw">impl </span>#impl_generics #zv::export::serde::de::Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>#name #ty_generics
+        </span><span class="kw">impl </span>#impl_generics #zv::export::serde::de::Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>#name #ty_generics
         #where_clause
         {
             <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; ::std::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
             <span class="kw">where
-                </span>D: #zv::export::serde::de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+                </span>D: #zv::export::serde::de::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
             {
                 <span class="kw">struct </span>#visitor #ty_generics(::std::marker::PhantomData&lt;#name #ty_generics&gt;);
 
-                <span class="kw">impl </span>#impl_generics #zv::export::serde::de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>#visitor #ty_generics {
+                <span class="kw">impl </span>#impl_generics #zv::export::serde::de::Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>#visitor #ty_generics {
                     <span class="kw">type </span>Value = #name #ty_generics;
 
                     <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; ::std::fmt::Result {
-                        formatter.write_str(<span class="string">&quot;a dictionary&quot;</span>)
+                        formatter.write_str(<span class="string">"a dictionary"</span>)
                     }
 
                     <span class="kw">fn </span>visit_map&lt;M&gt;(
@@ -455,11 +456,11 @@
                         <span class="kw-2">mut </span>access: M,
                     ) -&gt; ::std::result::Result&lt;<span class="self">Self</span>::Value, M::Error&gt;
                     <span class="kw">where
-                        </span>M: #zv::export::serde::de::MapAccess&lt;<span class="lifetime">&#39;de</span>&gt;,
+                        </span>M: #zv::export::serde::de::MapAccess&lt;<span class="lifetime">'de</span>&gt;,
                     {
                         #( <span class="kw">let </span><span class="kw-2">mut </span>#fields = ::std::default::Default::default(); )*
 
-                        <span class="comment">// does not check duplicated fields, since those shouldn&#39;t exist in stream
+                        <span class="comment">// does not check duplicated fields, since those shouldn't exist in stream
                         </span><span class="kw">while let </span>::std::option::Option::Some(key) = access.next_key::&lt;<span class="kw-2">&amp;</span>str&gt;()<span class="question-mark">? </span>{
                             <span class="kw">match </span>key {
                                 #(#entries)*

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ssip-client-async-0.10.0/src/async_std.rs`."><title>async_std.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ssip_client_async" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../ssip_client_async/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ssip-client-async-0.10.0/src/async_std.rs`."><title>async_std.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ssip_client_async" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -823,11 +824,11 @@
 <span class="kw">use </span>async_std::io::{BufRead <span class="kw">as </span>AsyncBufRead, Write <span class="kw">as </span>AsyncWrite};
 
 <span class="doccomment">/// Convert boolean to ON or OFF
-</span><span class="kw">fn </span>on_off(value: bool) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+</span><span class="kw">fn </span>on_off(value: bool) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
     <span class="kw">if </span>value {
-        <span class="string">&quot;on&quot;
+        <span class="string">"on"
     </span>} <span class="kw">else </span>{
-        <span class="string">&quot;off&quot;
+        <span class="string">"off"
     </span>}
 }
 
@@ -993,7 +994,7 @@
     }
     <span class="doccomment">/// Send lines of text (terminated by a single dot).
     </span><span class="kw">pub async fn </span>send_lines(<span class="kw-2">&amp;mut </span><span class="self">self</span>, lines: <span class="kw-2">&amp;</span>[String]) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="kw">const </span>END_OF_DATA: [<span class="kw-2">&amp;</span>str; <span class="number">1</span>] = [<span class="string">&quot;.&quot;</span>];
+        <span class="kw">const </span>END_OF_DATA: [<span class="kw-2">&amp;</span>str; <span class="number">1</span>] = [<span class="string">"."</span>];
         write_lines_async_std(
             <span class="kw-2">&amp;mut </span><span class="self">self</span>.output,
             lines
@@ -1011,7 +1012,7 @@
     </span>}
     <span class="doccomment">/// Receive one response.
     </span><span class="kw">pub async fn </span>receive(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;Response&gt; {
-        <span class="kw">const </span>MSG_CURSOR_SET_FIRST: <span class="kw-2">&amp;</span>str = <span class="string">&quot;OK CURSOR SET FIRST&quot;</span>;
+        <span class="kw">const </span>MSG_CURSOR_SET_FIRST: <span class="kw-2">&amp;</span>str = <span class="string">"OK CURSOR SET FIRST"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>lines = Vec::new();
         <span class="kw">let </span>status = <span class="self">self</span>.receive_answer(<span class="kw-2">&amp;mut </span>lines).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">match </span>status.code {
@@ -1084,7 +1085,7 @@
             EVENT_CANCELED =&gt; <span class="prelude-val">Ok</span>(Response::EventCanceled(parse_event_id(<span class="kw-2">&amp;</span>lines)<span class="question-mark">?</span>)),
             EVENT_PAUSED =&gt; <span class="prelude-val">Ok</span>(Response::EventPaused(parse_event_id(<span class="kw-2">&amp;</span>lines)<span class="question-mark">?</span>)),
             EVENT_RESUMED =&gt; <span class="prelude-val">Ok</span>(Response::EventResumed(parse_event_id(<span class="kw-2">&amp;</span>lines)<span class="question-mark">?</span>)),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;error should have been caught earlier&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"error should have been caught earlier"</span>),
         }
     }
 
@@ -1093,109 +1094,109 @@
         <span class="kw">match </span>request {
             Request::SetName(client_name) =&gt; <span class="macro">send_one_line!</span>(
                 <span class="self">self</span>,
-                <span class="string">&quot;SET self CLIENT_NAME {}:{}:{}&quot;</span>,
+                <span class="string">"SET self CLIENT_NAME {}:{}:{}"</span>,
                 client_name.user,
                 client_name.application,
                 client_name.component
             ),
-            Request::Speak =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SPEAK&quot;</span>),
+            Request::Speak =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SPEAK"</span>),
             Request::SendLine(line) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span>line).map(|<span class="kw">_</span>| ()),
             Request::SendLines(lines) =&gt; <span class="self">self</span>.send_lines(<span class="kw-2">&amp;</span>lines).<span class="kw">await</span>.map(|<span class="kw">_</span>| ()),
-            Request::SpeakChar(ch) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;CHAR {}&quot;</span>, ch),
-            Request::SpeakKey(key) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;KEY {}&quot;</span>, key),
-            Request::Stop(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;STOP {}&quot;</span>, scope),
-            Request::Cancel(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;CANCEL {}&quot;</span>, scope),
-            Request::Pause(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;PAUSE {}&quot;</span>, scope),
-            Request::Resume(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;RESUME {}&quot;</span>, scope),
-            Request::SetPriority(prio) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET self PRIORITY {}&quot;</span>, prio),
-            Request::SetDebug(value) =&gt; <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">&quot;SET all DEBUG {}&quot;</span>, value),
+            Request::SpeakChar(ch) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"CHAR {}"</span>, ch),
+            Request::SpeakKey(key) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"KEY {}"</span>, key),
+            Request::Stop(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"STOP {}"</span>, scope),
+            Request::Cancel(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"CANCEL {}"</span>, scope),
+            Request::Pause(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"PAUSE {}"</span>, scope),
+            Request::Resume(scope) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"RESUME {}"</span>, scope),
+            Request::SetPriority(prio) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET self PRIORITY {}"</span>, prio),
+            Request::SetDebug(value) =&gt; <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">"SET all DEBUG {}"</span>, value),
             Request::SetOutputModule(scope, value) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} OUTPUT_MODULE {}&quot;</span>, scope, value)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} OUTPUT_MODULE {}"</span>, scope, value)
             }
-            Request::GetOutputModule =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;GET OUTPUT_MODULE&quot;</span>),
-            Request::ListOutputModules =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;LIST OUTPUT_MODULES&quot;</span>),
+            Request::GetOutputModule =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"GET OUTPUT_MODULE"</span>),
+            Request::ListOutputModules =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"LIST OUTPUT_MODULES"</span>),
             Request::SetLanguage(scope, lang) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} LANGUAGE {}&quot;</span>, scope, lang)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} LANGUAGE {}"</span>, scope, lang)
             }
-            Request::GetLanguage =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;GET LANGUAGE&quot;</span>),
-            Request::SetSsmlMode(value) =&gt; <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">&quot;SET self SSML_MODE {}&quot;</span>, value),
+            Request::GetLanguage =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"GET LANGUAGE"</span>),
+            Request::SetSsmlMode(value) =&gt; <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">"SET self SSML_MODE {}"</span>, value),
             Request::SetPunctuationMode(scope, mode) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} PUNCTUATION {}&quot;</span>, scope, mode)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} PUNCTUATION {}"</span>, scope, mode)
             }
             Request::SetSpelling(scope, value) =&gt; {
-                <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} SPELLING {}&quot;</span>, scope, value)
+                <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">"SET {} SPELLING {}"</span>, scope, value)
             }
             Request::SetCapitalLettersRecognitionMode(scope, mode) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} CAP_LET_RECOGN {}&quot;</span>, scope, mode)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} CAP_LET_RECOGN {}"</span>, scope, mode)
             }
             Request::SetVoiceType(scope, value) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} VOICE_TYPE {}&quot;</span>, scope, value)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} VOICE_TYPE {}"</span>, scope, value)
             }
-            Request::GetVoiceType =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;GET VOICE_TYPE&quot;</span>),
-            Request::ListVoiceTypes =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;LIST VOICES&quot;</span>),
+            Request::GetVoiceType =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"GET VOICE_TYPE"</span>),
+            Request::ListVoiceTypes =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"LIST VOICES"</span>),
             Request::SetSynthesisVoice(scope, value) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} SYNTHESIS_VOICE {}&quot;</span>, scope, value)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} SYNTHESIS_VOICE {}"</span>, scope, value)
             }
-            Request::ListSynthesisVoices =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;LIST SYNTHESIS_VOICES&quot;</span>),
-            Request::SetRate(scope, value) =&gt; <span class="macro">send_range!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} RATE {}&quot;</span>, scope, value),
-            Request::GetRate =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;GET RATE&quot;</span>),
-            Request::SetPitch(scope, value) =&gt; <span class="macro">send_range!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} PITCH {}&quot;</span>, scope, value),
-            Request::GetPitch =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;GET PITCH&quot;</span>),
+            Request::ListSynthesisVoices =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"LIST SYNTHESIS_VOICES"</span>),
+            Request::SetRate(scope, value) =&gt; <span class="macro">send_range!</span>(<span class="self">self</span>, <span class="string">"SET {} RATE {}"</span>, scope, value),
+            Request::GetRate =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"GET RATE"</span>),
+            Request::SetPitch(scope, value) =&gt; <span class="macro">send_range!</span>(<span class="self">self</span>, <span class="string">"SET {} PITCH {}"</span>, scope, value),
+            Request::GetPitch =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"GET PITCH"</span>),
             Request::SetVolume(scope, value) =&gt; {
-                <span class="macro">send_range!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} VOLUME {}&quot;</span>, scope, value)
+                <span class="macro">send_range!</span>(<span class="self">self</span>, <span class="string">"SET {} VOLUME {}"</span>, scope, value)
             }
-            Request::GetVolume =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;GET VOLUME&quot;</span>),
+            Request::GetVolume =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"GET VOLUME"</span>),
             Request::SetPauseContext(scope, value) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} PAUSE_CONTEXT {}&quot;</span>, scope, value)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"SET {} PAUSE_CONTEXT {}"</span>, scope, value)
             }
             Request::SetHistory(scope, value) =&gt; {
-                <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">&quot;SET {} HISTORY {}&quot;</span>, scope, value)
+                <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">"SET {} HISTORY {}"</span>, scope, value)
             }
             Request::SetNotification(ntype, value) =&gt; {
-                <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">&quot;SET self NOTIFICATION {} {}&quot;</span>, ntype, value)
+                <span class="macro">send_toggle!</span>(<span class="self">self</span>, <span class="string">"SET self NOTIFICATION {} {}"</span>, ntype, value)
             }
-            Request::Begin =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;BLOCK BEGIN&quot;</span>),
-            Request::End =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;BLOCK END&quot;</span>),
-            Request::HistoryGetClients =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY GET CLIENT_LIST&quot;</span>),
-            Request::HistoryGetClientId =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY GET CLIENT_ID&quot;</span>),
+            Request::Begin =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"BLOCK BEGIN"</span>),
+            Request::End =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"BLOCK END"</span>),
+            Request::HistoryGetClients =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY GET CLIENT_LIST"</span>),
+            Request::HistoryGetClientId =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY GET CLIENT_ID"</span>),
             Request::HistoryGetClientMsgs(scope, start, number) =&gt; <span class="macro">send_one_line!</span>(
                 <span class="self">self</span>,
-                <span class="string">&quot;HISTORY GET CLIENT_MESSAGES {} {}_{}&quot;</span>,
+                <span class="string">"HISTORY GET CLIENT_MESSAGES {} {}_{}"</span>,
                 scope,
                 start,
                 number
             ),
-            Request::HistoryGetLastMsgId =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY GET LAST&quot;</span>),
-            Request::HistoryGetMsg(id) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY GET MESSAGE {}&quot;</span>, id),
-            Request::HistoryCursorGet =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY CURSOR GET&quot;</span>),
+            Request::HistoryGetLastMsgId =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY GET LAST"</span>),
+            Request::HistoryGetMsg(id) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY GET MESSAGE {}"</span>, id),
+            Request::HistoryCursorGet =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY CURSOR GET"</span>),
             Request::HistoryCursorSet(scope, pos) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY CURSOR SET {} {}&quot;</span>, scope, pos)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY CURSOR SET {} {}"</span>, scope, pos)
             }
             Request::HistoryCursorMove(direction) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY CURSOR {}&quot;</span>, direction)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY CURSOR {}"</span>, direction)
             }
-            Request::HistorySpeak(id) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY SAY {}&quot;</span>, id),
+            Request::HistorySpeak(id) =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY SAY {}"</span>, id),
             Request::HistorySort(direction, key) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY SORT {} {}&quot;</span>, direction, key)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY SORT {} {}"</span>, direction, key)
             }
             Request::HistorySetShortMsgLength(length) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY SET SHORT_MESSAGE_LENGTH {}&quot;</span>, length)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY SET SHORT_MESSAGE_LENGTH {}"</span>, length)
             }
             Request::HistorySetMsgTypeOrdering(ordering) =&gt; {
                 <span class="macro">send_one_line!</span>(
                     <span class="self">self</span>,
-                    <span class="string">&quot;HISTORY SET MESSAGE_TYPE_ORDERING \&quot;{}\&quot;&quot;</span>,
+                    <span class="string">"HISTORY SET MESSAGE_TYPE_ORDERING \"{}\""</span>,
                     ordering
                         .iter()
                         .map(|x| x.to_string())
                         .collect::&lt;Vec&lt;String&gt;&gt;()
-                        .join(<span class="string">&quot; &quot;</span>)
+                        .join(<span class="string">" "</span>)
                 )
             }
             Request::HistorySearch(scope, condition) =&gt; {
-                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;HISTORY SEARCH {} \&quot;{}\&quot;&quot;</span>, scope, condition)
+                <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"HISTORY SEARCH {} \"{}\""</span>, scope, condition)
             }
-            Request::Quit =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">&quot;QUIT&quot;</span>),
+            Request::Quit =&gt; <span class="macro">send_one_line!</span>(<span class="self">self</span>, <span class="string">"QUIT"</span>),
         }<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">self</span>)
     }
@@ -1518,7 +1519,7 @@
     </span><span class="kw">pub async fn </span>receive_i8(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;u8&gt; {
         <span class="self">self</span>.receive_string(OK_GET).<span class="kw">await</span>.and_then(|s| {
             s.parse()
-                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">&quot;invalid signed integer&quot;</span>))
+                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">"invalid signed integer"</span>))
         })
     }
 
@@ -1526,7 +1527,7 @@
     </span><span class="kw">pub async fn </span>receive_u8(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;u8&gt; {
         <span class="self">self</span>.receive_string(OK_GET).<span class="kw">await</span>.and_then(|s| {
             s.parse()
-                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">&quot;invalid unsigned 8-bit integer&quot;</span>))
+                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">"invalid unsigned 8-bit integer"</span>))
         })
     }
 
@@ -1534,7 +1535,7 @@
     </span><span class="kw">pub async fn </span>receive_cursor_pos(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;u16&gt; {
         <span class="self">self</span>.receive_string(OK_CUR_POS_RET).<span class="kw">await</span>.and_then(|s| {
             s.parse()
-                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">&quot;invalid unsigned 16-bit integer&quot;</span>))
+                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">"invalid unsigned 16-bit integer"</span>))
         })
     }
 
@@ -1543,7 +1544,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>lines = Vec::new();
         <span class="kw">match </span><span class="self">self</span>.receive_answer(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut </span>lines)).<span class="kw">await</span><span class="question-mark">?</span>.code {
             OK_MESSAGE_QUEUED | OK_LAST_MSG =&gt; <span class="prelude-val">Ok</span>(parse_single_integer(<span class="kw-2">&amp;</span>lines)<span class="question-mark">?</span>),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ClientError::invalid_data(<span class="string">&quot;not a message id&quot;</span>)),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ClientError::invalid_data(<span class="string">"not a message id"</span>)),
         }
     }
 
@@ -1551,7 +1552,7 @@
     </span><span class="kw">pub async fn </span>receive_client_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;ClientId&gt; {
         <span class="self">self</span>.receive_string(OK_CLIENT_ID_SENT).<span class="kw">await</span>.and_then(|s| {
             s.parse()
-                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">&quot;invalid client id&quot;</span>))
+                .map_err(|<span class="kw">_</span>| ClientError::invalid_data(<span class="string">"invalid client id"</span>))
         })
     }
 
@@ -1566,14 +1567,14 @@
         <span class="kw">let </span><span class="kw-2">mut </span>lines = Vec::new();
         <span class="self">self</span>.receive_answer(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut </span>lines)).<span class="kw">await</span>.and_then(|status| {
             <span class="kw">if </span>lines.len() &lt; <span class="number">2 </span>{
-                <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">&quot;event truncated&quot;</span>))
+                <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">"event truncated"</span>))
             } <span class="kw">else </span>{
                 <span class="kw">let </span>message = <span class="kw-2">&amp;</span>lines[<span class="number">0</span>];
                 <span class="kw">let </span>client = <span class="kw-2">&amp;</span>lines[<span class="number">1</span>];
                 <span class="kw">match </span>status.code {
                     <span class="number">700 </span>=&gt; {
                         <span class="kw">if </span>lines.len() != <span class="number">3 </span>{
-                            <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">&quot;index markevent truncated&quot;</span>))
+                            <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">"index markevent truncated"</span>))
                         } <span class="kw">else </span>{
                             <span class="kw">let </span>mark = lines[<span class="number">3</span>].to_owned();
                             <span class="prelude-val">Ok</span>(Event::index_mark(mark, message, client))
@@ -1584,7 +1585,7 @@
                     <span class="number">703 </span>=&gt; <span class="prelude-val">Ok</span>(Event::cancel(message, client)),
                     <span class="number">704 </span>=&gt; <span class="prelude-val">Ok</span>(Event::pause(message, client)),
                     <span class="number">705 </span>=&gt; <span class="prelude-val">Ok</span>(Event::resume(message, client)),
-                    <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ClientError::invalid_data(<span class="string">&quot;wrong status code for event&quot;</span>)),
+                    <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ClientError::invalid_data(<span class="string">"wrong status code for event"</span>)),
                 }
             }
         })

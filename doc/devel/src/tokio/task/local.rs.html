@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.28.2/src/task/local.rs`."><title>local.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../tokio/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.28.2/src/task/local.rs`."><title>local.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1209,14 +1210,14 @@
     /// async fn main() {
     ///     // `Rc` does not implement `Send`, and thus may not be sent between
     ///     // threads safely.
-    ///     let nonsend_data = Rc::new(&quot;my nonsend data...&quot;);
+    ///     let nonsend_data = Rc::new("my nonsend data...");
     ///
     ///     let nonsend_data = nonsend_data.clone();
     ///     // Because the `async` block here moves `nonsend_data`, the future is `!Send`.
     ///     // Since `tokio::spawn` requires the spawned future to implement `Send`, this
     ///     // will not compile.
     ///     tokio::spawn(async move {
-    ///         println!(&quot;{}&quot;, nonsend_data);
+    ///         println!("{}", nonsend_data);
     ///         // ...
     ///     }).await.unwrap();
     /// }
@@ -1235,7 +1236,7 @@
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let nonsend_data = Rc::new(&quot;my nonsend data...&quot;);
+    ///     let nonsend_data = Rc::new("my nonsend data...");
     ///
     ///     // Construct a local task set that can run `!Send` futures.
     ///     let local = task::LocalSet::new();
@@ -1246,7 +1247,7 @@
     ///         // `spawn_local` ensures that the future is spawned on the local
     ///         // task set.
     ///         task::spawn_local(async move {
-    ///             println!(&quot;{}&quot;, nonsend_data);
+    ///             println!("{}", nonsend_data);
     ///             // ...
     ///         }).await.unwrap();
     ///     }).await;
@@ -1269,18 +1270,18 @@
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let nonsend_data = Rc::new(&quot;world&quot;);
+    ///     let nonsend_data = Rc::new("world");
     ///     let local = task::LocalSet::new();
     ///
     ///     let nonsend_data2 = nonsend_data.clone();
     ///     local.spawn_local(async move {
     ///         // ...
-    ///         println!(&quot;hello {}&quot;, nonsend_data2)
+    ///         println!("hello {}", nonsend_data2)
     ///     });
     ///
     ///     local.spawn_local(async move {
     ///         time::sleep(time::Duration::from_millis(100)).await;
-    ///         println!(&quot;goodbye {}&quot;, nonsend_data)
+    ///         println!("goodbye {}", nonsend_data)
     ///     });
     ///
     ///     // ...
@@ -1351,7 +1352,7 @@
     ///     }
     ///
     ///     pub fn spawn(&amp;self, task: Task) {
-    ///         self.send.send(task).expect(&quot;Thread with LocalSet has shut down.&quot;);
+    ///         self.send.send(task).expect("Thread with LocalSet has shut down.");
     ///     }
     /// }
     ///
@@ -1363,7 +1364,7 @@
     /// async fn run_task(task: Task) {
     ///     match task {
     ///         Task::PrintNumber(n) =&gt; {
-    ///             println!(&quot;{}&quot;, n);
+    ///             println!("{}", n);
     ///         },
     ///         Task::AddOne(n, response) =&gt; {
     ///             // We ignore failures to send the response.
@@ -1444,8 +1445,8 @@
 
 <span class="macro">pin_project! </span>{
     <span class="attr">#[derive(Debug)]
-    </span><span class="kw">struct </span>RunUntil&lt;<span class="lifetime">&#39;a</span>, F&gt; {
-        local_set: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LocalSet,
+    </span><span class="kw">struct </span>RunUntil&lt;<span class="lifetime">'a</span>, F&gt; {
+        local_set: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>LocalSet,
         <span class="attr">#[pin]
         </span>future: F,
     }
@@ -1465,7 +1466,7 @@
     /// The spawned future will run on the same thread that called `spawn_local`.
     ///
     /// The provided future will start running in the background immediately
-    /// when `spawn_local` is called, even if you don&#39;t await the returned
+    /// when `spawn_local` is called, even if you don't await the returned
     /// `JoinHandle`.
     ///
     /// # Panics
@@ -1484,7 +1485,7 @@
     ///
     /// #[tokio::main]
     /// async fn main() {
-    ///     let nonsend_data = Rc::new(&quot;my nonsend data...&quot;);
+    ///     let nonsend_data = Rc::new("my nonsend data...");
     ///
     ///     let local = task::LocalSet::new();
     ///
@@ -1492,7 +1493,7 @@
     ///     local.run_until(async move {
     ///         let nonsend_data = nonsend_data.clone();
     ///         task::spawn_local(async move {
-    ///             println!(&quot;{}&quot;, nonsend_data);
+    ///             println!("{}", nonsend_data);
     ///             // ...
     ///         }).await.unwrap();
     ///     }).await;
@@ -1504,8 +1505,8 @@
     </span><span class="attr">#[track_caller]
     </span><span class="kw">pub fn </span>spawn_local&lt;F&gt;(future: F) -&gt; JoinHandle&lt;F::Output&gt;
     <span class="kw">where
-        </span>F: Future + <span class="lifetime">&#39;static</span>,
-        F::Output: <span class="lifetime">&#39;static</span>,
+        </span>F: Future + <span class="lifetime">'static</span>,
+        F::Output: <span class="lifetime">'static</span>,
     {
         spawn_local_inner(future, <span class="prelude-val">None</span>)
     }
@@ -1513,11 +1514,11 @@
 
     <span class="attr">#[track_caller]
     </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>spawn_local_inner&lt;F&gt;(future: F, name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; JoinHandle&lt;F::Output&gt;
-    <span class="kw">where </span>F: Future + <span class="lifetime">&#39;static</span>,
-          F::Output: <span class="lifetime">&#39;static
+    <span class="kw">where </span>F: Future + <span class="lifetime">'static</span>,
+          F::Output: <span class="lifetime">'static
     </span>{
         <span class="kw">match </span>CURRENT.with(|LocalData { ctx, .. }| ctx.get()) {
-            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;`spawn_local` called from outside of a `task::LocalSet`&quot;</span>),
+            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"`spawn_local` called from outside of a `task::LocalSet`"</span>),
             <span class="prelude-val">Some</span>(cx) =&gt; cx.spawn(future, name)
        }
     }
@@ -1544,15 +1545,15 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>LocalEnterGuard {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;LocalEnterGuard&quot;</span>).finish()
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"LocalEnterGuard"</span>).finish()
     }
 }
 
 <span class="kw">impl </span>LocalSet {
     <span class="doccomment">/// Returns a new local task set.
     </span><span class="kw">pub fn </span>new() -&gt; LocalSet {
-        <span class="kw">let </span>owner = context::thread_id().expect(<span class="string">&quot;cannot create LocalSet during thread shutdown&quot;</span>);
+        <span class="kw">let </span>owner = context::thread_id().expect(<span class="string">"cannot create LocalSet during thread shutdown"</span>);
 
         LocalSet {
             tick: Cell::new(<span class="number">0</span>),
@@ -1594,7 +1595,7 @@
     /// Unlike the free function [`spawn_local`], this method may be used to
     /// spawn local tasks when the `LocalSet` is _not_ running. The provided
     /// future will start running once the `LocalSet` is next started, even if
-    /// you don&#39;t await the returned `JoinHandle`.
+    /// you don't await the returned `JoinHandle`.
     ///
     /// # Examples
     ///
@@ -1631,8 +1632,8 @@
     </span><span class="attr">#[track_caller]
     </span><span class="kw">pub fn </span>spawn_local&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, future: F) -&gt; JoinHandle&lt;F::Output&gt;
     <span class="kw">where
-        </span>F: Future + <span class="lifetime">&#39;static</span>,
-        F::Output: <span class="lifetime">&#39;static</span>,
+        </span>F: Future + <span class="lifetime">'static</span>,
+        F::Output: <span class="lifetime">'static</span>,
     {
         <span class="self">self</span>.spawn_named(future, <span class="prelude-val">None</span>)
     }
@@ -1700,8 +1701,8 @@
     /// [in-place blocking]: fn@crate::task::block_in_place
     /// [`spawn_blocking`]: fn@crate::task::spawn_blocking
     </span><span class="attr">#[track_caller]
-    #[cfg(feature = <span class="string">&quot;rt&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;rt&quot;</span>)))]
+    #[cfg(feature = <span class="string">"rt"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"rt"</span>)))]
     </span><span class="kw">pub fn </span>block_on&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, rt: <span class="kw-2">&amp;</span><span class="kw">crate</span>::runtime::Runtime, future: F) -&gt; F::Output
     <span class="kw">where
         </span>F: Future,
@@ -1754,13 +1755,13 @@
         name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
     ) -&gt; JoinHandle&lt;F::Output&gt;
     <span class="kw">where
-        </span>F: Future + <span class="lifetime">&#39;static</span>,
-        F::Output: <span class="lifetime">&#39;static</span>,
+        </span>F: Future + <span class="lifetime">'static</span>,
+        F::Output: <span class="lifetime">'static</span>,
     {
         <span class="kw">let </span>handle = <span class="self">self</span>.context.spawn(future, name);
 
         <span class="comment">// Because a task was spawned from *outside* the `LocalSet`, wake the
-        // `LocalSet` future to execute the new task, if it hasn&#39;t been woken.
+        // `LocalSet` future to execute the new task, if it hasn't been woken.
         //
         // Spawning via the free fn `spawn` does not require this, as it can
         // only be called from *within* a future executing on the `LocalSet` —
@@ -1773,9 +1774,9 @@
     /// notified again.
     </span><span class="kw">fn </span>tick(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">for _ in </span><span class="number">0</span>..MAX_TASKS_PER_TICK {
-            <span class="comment">// Make sure we didn&#39;t hit an unhandled panic
+            <span class="comment">// Make sure we didn't hit an unhandled panic
             </span><span class="kw">if </span><span class="self">self</span>.context.unhandled_panic.get() {
-                <span class="macro">panic!</span>(<span class="string">&quot;a spawned task panicked and the LocalSet is configured to shutdown on unhandled panic&quot;</span>);
+                <span class="macro">panic!</span>(<span class="string">"a spawned task panicked and the LocalSet is configured to shutdown on unhandled panic"</span>);
             }
 
             <span class="kw">match </span><span class="self">self</span>.next_task() {
@@ -1789,7 +1790,7 @@
                 // thread, the invariant is maintained.
                 </span><span class="prelude-val">Some</span>(task) =&gt; <span class="kw">crate</span>::runtime::coop::budget(|| task.run()),
                 <span class="comment">// We have fully drained the queue of notified tasks, so the
-                // local future doesn&#39;t need to be notified again — it can wait
+                // local future doesn't need to be notified again — it can wait
                 // until something else wakes a task in the local set.
                 </span><span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="bool-val">false</span>,
             }
@@ -1840,11 +1841,11 @@
 
     <span class="kw">fn </span>with&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw">impl </span>FnOnce() -&gt; T) -&gt; T {
         CURRENT.with(|LocalData { ctx, .. }| {
-            <span class="kw">struct </span>Reset&lt;<span class="lifetime">&#39;a</span>&gt; {
-                ctx_ref: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>RcCell&lt;Context&gt;,
+            <span class="kw">struct </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
+                ctx_ref: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>RcCell&lt;Context&gt;,
                 val: <span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;,
             }
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Drop <span class="kw">for </span>Reset&lt;<span class="lifetime">&#39;a</span>&gt; {
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
                 <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
                     <span class="self">self</span>.ctx_ref.set(<span class="self">self</span>.val.take());
                 }
@@ -1866,11 +1867,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>f = <span class="prelude-val">Some</span>(f);
 
         <span class="kw">let </span>res = CURRENT.try_with(|LocalData { ctx, .. }| {
-            <span class="kw">struct </span>Reset&lt;<span class="lifetime">&#39;a</span>&gt; {
-                ctx_ref: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>RcCell&lt;Context&gt;,
+            <span class="kw">struct </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
+                ctx_ref: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>RcCell&lt;Context&gt;,
                 val: <span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;,
             }
-            <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Drop <span class="kw">for </span>Reset&lt;<span class="lifetime">&#39;a</span>&gt; {
+            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
                 <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
                     <span class="self">self</span>.ctx_ref.replace(<span class="self">self</span>.val.take());
                 }
@@ -1898,17 +1899,17 @@
         /// spawned task.
         ///
         /// By default, an unhandled panic (i.e. a panic not caught by
-        /// [`std::panic::catch_unwind`]) has no impact on the `LocalSet`&#39;s
-        /// execution. The panic is error value is forwarded to the task&#39;s
+        /// [`std::panic::catch_unwind`]) has no impact on the `LocalSet`'s
+        /// execution. The panic is error value is forwarded to the task's
         /// [`JoinHandle`] and all other spawned tasks continue running.
         ///
         /// The `unhandled_panic` option enables configuring this behavior.
         ///
         /// * `UnhandledPanic::Ignore` is the default behavior. Panics on
-        ///   spawned tasks have no impact on the `LocalSet`&#39;s execution.
+        ///   spawned tasks have no impact on the `LocalSet`'s execution.
         /// * `UnhandledPanic::ShutdownRuntime` will force the `LocalSet` to
         ///   shutdown immediately when a spawned task panics even if that
-        ///   task&#39;s `JoinHandle` has not been dropped. All other spawned tasks
+        ///   task's `JoinHandle` has not been dropped. All other spawned tasks
         ///   will immediately terminate and further calls to
         ///   [`LocalSet::block_on`] and [`LocalSet::run_until`] will panic.
         ///
@@ -1939,7 +1940,7 @@
         /// tokio::task::LocalSet::new()
         ///     .unhandled_panic(UnhandledPanic::ShutdownRuntime)
         ///     .run_until(async {
-        ///         tokio::task::spawn_local(async { panic!(&quot;boom&quot;); });
+        ///         tokio::task::spawn_local(async { panic!("boom"); });
         ///         tokio::task::spawn_local(async {
         ///             // This task never completes
         ///         });
@@ -1956,7 +1957,7 @@
             <span class="comment">// TODO: This should be set as a builder
             </span>Rc::get_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>.context)
                 .and_then(|ctx| Arc::get_mut(<span class="kw-2">&amp;mut </span>ctx.shared))
-                .expect(<span class="string">&quot;Unhandled Panic behavior modified after starting LocalSet&quot;</span>)
+                .expect(<span class="string">"Unhandled Panic behavior modified after starting LocalSet"</span>)
                 .unhandled_panic = behavior;
             <span class="self">self
         </span>}
@@ -1964,15 +1965,15 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>LocalSet {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        fmt.debug_struct(<span class="string">&quot;LocalSet&quot;</span>).finish()
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        fmt.debug_struct(<span class="string">"LocalSet"</span>).finish()
     }
 }
 
 <span class="kw">impl </span>Future <span class="kw">for </span>LocalSet {
     <span class="kw">type </span>Output = ();
 
-    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
+    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
         <span class="comment">// Register the waker before starting to work
         </span><span class="self">self</span>.context.shared.waker.register_by_ref(cx.waker());
 
@@ -1985,10 +1986,10 @@
         <span class="comment">// Safety: called from the thread that owns `LocalSet`. Because
         // `LocalSet` is `!Send`, this is safe.
         </span>} <span class="kw">else if unsafe </span>{ <span class="self">self</span>.context.shared.local_state.owned_is_empty() } {
-            <span class="comment">// If the scheduler has no remaining futures, we&#39;re done!
+            <span class="comment">// If the scheduler has no remaining futures, we're done!
             </span>Poll::Ready(())
         } <span class="kw">else </span>{
-            <span class="comment">// There are still futures in the local set, but we&#39;ve polled all the
+            <span class="comment">// There are still futures in the local set, but we've polled all the
             // futures in the run queue. Therefore, we can just return Pending
             // since the remaining futures will be woken from somewhere else.
             </span>Poll::Pending
@@ -2020,7 +2021,7 @@
             // debug assertion that we are on the thread that owns the
             // `LocalSet`, because on some systems (e.g. at least some macOS
             // versions), attempting to get the current thread ID can panic due
-            // to the thread&#39;s local data that stores the thread ID being
+            // to the thread's local data that stores the thread ID being
             // dropped *before* the `LocalSet`.
             //
             // Despite avoiding the assertion here, it is safe for us to access
@@ -2054,11 +2055,11 @@
     <span class="attr">#[track_caller]
     </span><span class="kw">fn </span>spawn&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, future: F, name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; JoinHandle&lt;F::Output&gt;
     <span class="kw">where
-        </span>F: Future + <span class="lifetime">&#39;static</span>,
-        F::Output: <span class="lifetime">&#39;static</span>,
+        </span>F: Future + <span class="lifetime">'static</span>,
+        F::Output: <span class="lifetime">'static</span>,
     {
         <span class="kw">let </span>id = <span class="kw">crate</span>::runtime::task::Id::next();
-        <span class="kw">let </span>future = <span class="kw">crate</span>::util::trace::task(future, <span class="string">&quot;local&quot;</span>, name, id.as_u64());
+        <span class="kw">let </span>future = <span class="kw">crate</span>::util::trace::task(future, <span class="string">"local"</span>, name, id.as_u64());
 
         <span class="comment">// Safety: called from the thread that owns the `LocalSet`
         </span><span class="kw">let </span>(handle, notified) = {
@@ -2079,10 +2080,10 @@
 
 <span class="comment">// === impl LocalFuture ===
 
-</span><span class="kw">impl</span>&lt;T: Future&gt; Future <span class="kw">for </span>RunUntil&lt;<span class="lifetime">&#39;_</span>, T&gt; {
+</span><span class="kw">impl</span>&lt;T: Future&gt; Future <span class="kw">for </span>RunUntil&lt;<span class="lifetime">'_</span>, T&gt; {
     <span class="kw">type </span>Output = T::Output;
 
-    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
+    <span class="kw">fn </span>poll(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>std::task::Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="self">Self</span>::Output&gt; {
         <span class="kw">let </span>me = <span class="self">self</span>.project();
 
         me.local_set.with(|| {
@@ -2126,10 +2127,10 @@
                 </span><span class="kw">_ if </span>context::thread_id().ok() == <span class="prelude-val">Some</span>(<span class="self">self</span>.local_state.owner) =&gt; {
                     <span class="kw">unsafe </span>{
                         <span class="comment">// Safety: we just checked that the thread ID matches
-                        // the localset&#39;s owner, so this is safe.
+                        // the localset's owner, so this is safe.
                         </span><span class="self">self</span>.local_state.task_push_back(task);
                     }
-                    <span class="comment">// We still have to wake the `LocalSet`, because it isn&#39;t
+                    <span class="comment">// We still have to wake the `LocalSet`, because it isn't
                     // currently being polled.
                     </span><span class="self">self</span>.waker.wake();
                 }
@@ -2189,7 +2190,7 @@
                             <span class="comment">// Safety: this is always called from the thread that owns `LocalSet`
                             </span><span class="kw">unsafe </span>{ cx.shared.local_state.close_and_shutdown_all(); }
                         }
-                        <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">&quot;runtime core not set in CURRENT thread-local&quot;</span>),
+                        <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"runtime core not set in CURRENT thread-local"</span>),
                     })
                 }
             }
@@ -2262,15 +2263,15 @@
     </span><span class="kw">fn </span>assert_called_from_owner_thread(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="comment">// FreeBSD has some weirdness around thread-local destruction.
         // TODO: remove this hack when thread id is cleaned up
-        </span><span class="attr">#[cfg(not(any(target_os = <span class="string">&quot;openbsd&quot;</span>, target_os = <span class="string">&quot;freebsd&quot;</span>)))]
+        </span><span class="attr">#[cfg(not(any(target_os = <span class="string">"openbsd"</span>, target_os = <span class="string">"freebsd"</span>)))]
         </span><span class="macro">debug_assert!</span>(
-            <span class="comment">// if we couldn&#39;t get the thread ID because we&#39;re dropping the local
+            <span class="comment">// if we couldn't get the thread ID because we're dropping the local
             // data, skip the assertion --- the `Drop` impl is not going to be
             // called from another thread, because `LocalSet` is `!Send`
             </span>context::thread_id()
                 .map(|id| id == <span class="self">self</span>.owner)
                 .unwrap_or(<span class="bool-val">true</span>),
-            <span class="string">&quot;`LocalSet`&#39;s local run queue must not be accessed by another thread!&quot;
+            <span class="string">"`LocalSet`'s local run queue must not be accessed by another thread!"
         </span>);
     }
 }
@@ -2299,16 +2300,16 @@
         };
         <span class="kw">crate</span>::runtime::Builder::new_current_thread()
             .build()
-            .expect(<span class="string">&quot;rt&quot;</span>)
+            .expect(<span class="string">"rt"</span>)
             .block_on(f)
     }
 
     <span class="comment">// Tests that when a task on a `LocalSet` is woken by an io driver on the
-    // same thread, the task is woken to the localset&#39;s local queue rather than
+    // same thread, the task is woken to the localset's local queue rather than
     // its remote queue.
     //
     // This test has to be defined in the `local.rs` file as a lib test, rather
-    // than in `tests/`, because it makes assertions about the local set&#39;s
+    // than in `tests/`, because it makes assertions about the local set's
     // internal state.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>wakes_to_local_queue() {
@@ -2316,7 +2317,7 @@
         <span class="kw">use </span><span class="kw">crate</span>::sync::Notify;
         <span class="kw">let </span>rt = <span class="kw">crate</span>::runtime::Builder::new_current_thread()
             .build()
-            .expect(<span class="string">&quot;rt&quot;</span>);
+            .expect(<span class="string">"rt"</span>);
         rt.block_on(<span class="kw">async </span>{
             <span class="kw">let </span>local = LocalSet::new();
             <span class="kw">let </span>notify = Arc::new(Notify::new());
@@ -2343,7 +2344,7 @@
             // the local task.
             </span><span class="macro">assert!</span>(
                 task.is_some(),
-                <span class="string">&quot;task should have been notified to the LocalSet&#39;s local queue&quot;
+                <span class="string">"task should have been notified to the LocalSet's local queue"
             </span>);
         })
     }

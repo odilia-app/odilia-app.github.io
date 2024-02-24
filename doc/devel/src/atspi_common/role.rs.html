@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/role.rs`."><title>role.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../atspi_common/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/role.rs`."><title>role.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -387,15 +388,15 @@
 	</span>Animation,
 	<span class="doccomment">/// Arrow: unknown use TODO
 	</span>Arrow,
-	<span class="doccomment">/// Calendar: a calendar widget, or in HTML terms, `&lt;input type=&quot;datetime-local&quot;&gt;`
+	<span class="doccomment">/// Calendar: a calendar widget, or in HTML terms, `&lt;input type="datetime-local"&gt;`
 	</span>Calendar,
 	<span class="doccomment">/// A canvas on which any direct rendering may be called. In web terms, this would be the `&lt;canvas&gt;` element.
 	</span>Canvas,
-	<span class="doccomment">/// A (multiple) checkbox. In HTML terms, `&lt;input type=&quot;checkbox&quot;&gt;`, note that there is a different role for radio buttons and for multiple select dropdowns.
+	<span class="doccomment">/// A (multiple) checkbox. In HTML terms, `&lt;input type="checkbox"&gt;`, note that there is a different role for radio buttons and for multiple select dropdowns.
 	</span>CheckBox,
 	<span class="doccomment">/// CheckMenuItem: unknown use. TODO
 	</span>CheckMenuItem,
-	<span class="doccomment">/// ColorChooser: a color picker input. In HTML terms, `&lt;input type=&quot;color&quot;&gt;`
+	<span class="doccomment">/// ColorChooser: a color picker input. In HTML terms, `&lt;input type="color"&gt;`
 	</span>ColorChooser,
 	<span class="doccomment">/// Column header: in HTML terms, a `&lt;th&gt;`.
 	</span>ColumnHeader,
@@ -403,7 +404,7 @@
 	</span>ComboBox,
 	<span class="doccomment">/// Date editor: unknown use case. TODO
 	</span>DateEditor,
-	<span class="doccomment">/// A desktop icon: on Windows this would be the &quot;Recycle Bin&quot;, or &quot;My Computer&quot; on your desktop. On Linux this would be similar to any applications showing on your desktop.
+	<span class="doccomment">/// A desktop icon: on Windows this would be the "Recycle Bin", or "My Computer" on your desktop. On Linux this would be similar to any applications showing on your desktop.
 	</span>DesktopIcon,
 	<span class="doccomment">/// The frame within all windows live. A DesktopFrame will generally share siblings with others of the same type if you use multiple desktops.
 	</span>DesktopFrame,
@@ -434,13 +435,13 @@
 	</span>Image,
 	<span class="doccomment">/// Internal frame: this is the constraining role for a graphical window. This is a good bounding role for finding things from within an application.
 	</span>InternalFrame,
-	<span class="doccomment">/// A label, which is generally associated with an item with a different role. In HTML terms, this would be a `&lt;label for=&quot;X&quot;&gt;` being attached to whatever `&lt;Y id=&quot;X&quot;&gt;` is.
+	<span class="doccomment">/// A label, which is generally associated with an item with a different role. In HTML terms, this would be a `&lt;label for="X"&gt;` being attached to whatever `&lt;Y id="X"&gt;` is.
 	</span>Label,
 	<span class="doccomment">/// Layered pane? TODO
 	</span>LayeredPane,
 	<span class="doccomment">/// List: a list with [`Self::ListItem`] contained within it. In HTML, this would be the same as the `&lt;ul&gt;` or `&lt;ol&gt;` elements.
 	</span>List,
-	<span class="doccomment">/// ListItem: a list&#39;s item. This would be the same as an `&lt;li&gt;` in HTML terms.
+	<span class="doccomment">/// ListItem: a list's item. This would be the same as an `&lt;li&gt;` in HTML terms.
 	</span>ListItem,
 	Menu,
 	MenuBar,
@@ -449,19 +450,19 @@
 	PageTab,
 	PageTabList,
 	Panel,
-	<span class="doccomment">/// A password input, like `&lt;input type=&quot;password&quot;&gt;`.
+	<span class="doccomment">/// A password input, like `&lt;input type="password"&gt;`.
 	</span>PasswordText,
 	PopupMenu,
 	<span class="doccomment">/// Progress bar: this indicates progress of some process, and generally is indicated by successively higher-pitched beeps on a screen reader as it is updated to a more and more highly completed state. In HTML this would be the same as `&lt;progress&gt;` tag.
 	</span>ProgressBar,
 	<span class="doccomment">/// PushButton: this is what everybody else calls a button. In HTML, `&lt;button&gt;`
 	</span>PushButton,
-	<span class="doccomment">/// Radio button: a multiple-choice, single-selection option. In HTML: `&lt;input type=&quot;radio&quot;&gt;`.
+	<span class="doccomment">/// Radio button: a multiple-choice, single-selection option. In HTML: `&lt;input type="radio"&gt;`.
 	</span>RadioButton,
 	RadioMenuItem,
 	<span class="doccomment">/// Root pane: the mother of *ALL* panes. This is the pane from which all other panes descend. If you wanted to, for some reason, search within a bound of the entire active desktop, this would be your bounding pane.
 	</span>RootPane,
-	<span class="doccomment">/// Row header: a heading to a row. In HTML this would be the same as `&lt;th role=&quot;rowheader&quot;&gt;` without the additional role=&quot;...&quot; attribute, the header will still be recognized as a column header.
+	<span class="doccomment">/// Row header: a heading to a row. In HTML this would be the same as `&lt;th role="rowheader"&gt;` without the additional role="..." attribute, the header will still be recognized as a column header.
 	</span>RowHeader,
 	<span class="doccomment">/// A scroll bar itself: the item you may click on and scroll up and down.
 	</span>ScrollBar,
@@ -483,7 +484,7 @@
 	</span>TableCell,
 	<span class="doccomment">/// The column header of a table, represented in HTML as a `&lt;th&gt;`
 	</span>TableColumnHeader,
-	<span class="doccomment">/// The row heading of a table, represented in HTML as a `&lt;th scope=&quot;row&quot;&gt;`.
+	<span class="doccomment">/// The row heading of a table, represented in HTML as a `&lt;th scope="row"&gt;`.
 	</span>TableRowHeader,
 	TearoffMenuItem,
 	<span class="doccomment">/// A virtual terminal like MATE Terminal, Foot, or `st`.
@@ -578,7 +579,7 @@
 	<span class="doccomment">/// An item (usually inside a [`Self::DescriptionList`]) that has a term as its content.
 	/// The same as the `&lt;dt&gt;` tag in HTML.
 	</span>DescriptionTerm,
-	<span class="doccomment">/// An item (usually inside a [`Self::DescriptionList`]) that has a term&#39;s value as its
+	<span class="doccomment">/// An item (usually inside a [`Self::DescriptionList`]) that has a term's value as its
 	/// content. This is the same as a `&lt;dd&gt;` tag in HTML.
 	</span>DescriptionValue,
 	Footnote,
@@ -590,148 +591,148 @@
 }
 
 <span class="kw">const </span>ROLE_NAMES: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str] = <span class="kw-2">&amp;</span>[
-	<span class="string">&quot;invalid&quot;</span>,
-	<span class="string">&quot;accelerator label&quot;</span>,
-	<span class="string">&quot;alert&quot;</span>,
-	<span class="string">&quot;animation&quot;</span>,
-	<span class="string">&quot;arrow&quot;</span>,
-	<span class="string">&quot;calendar&quot;</span>,
-	<span class="string">&quot;canvas&quot;</span>,
-	<span class="string">&quot;check box&quot;</span>,
-	<span class="string">&quot;check menu item&quot;</span>,
-	<span class="string">&quot;color chooser&quot;</span>,
-	<span class="string">&quot;column header&quot;</span>,
-	<span class="string">&quot;combo box&quot;</span>,
-	<span class="string">&quot;date editor&quot;</span>,
-	<span class="string">&quot;desktop icon&quot;</span>,
-	<span class="string">&quot;desktop frame&quot;</span>,
-	<span class="string">&quot;dial&quot;</span>,
-	<span class="string">&quot;dialog&quot;</span>,
-	<span class="string">&quot;directory pane&quot;</span>,
-	<span class="string">&quot;drawing area&quot;</span>,
-	<span class="string">&quot;file chooser&quot;</span>,
-	<span class="string">&quot;filler&quot;</span>,
-	<span class="string">&quot;focus traversable&quot;</span>,
-	<span class="string">&quot;font chooser&quot;</span>,
-	<span class="string">&quot;frame&quot;</span>,
-	<span class="string">&quot;glass pane&quot;</span>,
-	<span class="string">&quot;html container&quot;</span>,
-	<span class="string">&quot;icon&quot;</span>,
-	<span class="string">&quot;image&quot;</span>,
-	<span class="string">&quot;internal frame&quot;</span>,
-	<span class="string">&quot;label&quot;</span>,
-	<span class="string">&quot;layered pane&quot;</span>,
-	<span class="string">&quot;list&quot;</span>,
-	<span class="string">&quot;list item&quot;</span>,
-	<span class="string">&quot;menu&quot;</span>,
-	<span class="string">&quot;menu bar&quot;</span>,
-	<span class="string">&quot;menu item&quot;</span>,
-	<span class="string">&quot;option pane&quot;</span>,
-	<span class="string">&quot;page tab&quot;</span>,
-	<span class="string">&quot;page tab list&quot;</span>,
-	<span class="string">&quot;panel&quot;</span>,
-	<span class="string">&quot;password text&quot;</span>,
-	<span class="string">&quot;popup menu&quot;</span>,
-	<span class="string">&quot;progress bar&quot;</span>,
-	<span class="string">&quot;push button&quot;</span>,
-	<span class="string">&quot;radio button&quot;</span>,
-	<span class="string">&quot;radio menu item&quot;</span>,
-	<span class="string">&quot;root pane&quot;</span>,
-	<span class="string">&quot;row header&quot;</span>,
-	<span class="string">&quot;scroll bar&quot;</span>,
-	<span class="string">&quot;scroll pane&quot;</span>,
-	<span class="string">&quot;separator&quot;</span>,
-	<span class="string">&quot;slider&quot;</span>,
-	<span class="string">&quot;spin button&quot;</span>,
-	<span class="string">&quot;split pane&quot;</span>,
-	<span class="string">&quot;status bar&quot;</span>,
-	<span class="string">&quot;table&quot;</span>,
-	<span class="string">&quot;table cell&quot;</span>,
-	<span class="string">&quot;table column header&quot;</span>,
-	<span class="string">&quot;table row header&quot;</span>,
-	<span class="string">&quot;tearoff menu item&quot;</span>,
-	<span class="string">&quot;terminal&quot;</span>,
-	<span class="string">&quot;text&quot;</span>,
-	<span class="string">&quot;toggle button&quot;</span>,
-	<span class="string">&quot;tool bar&quot;</span>,
-	<span class="string">&quot;tool tip&quot;</span>,
-	<span class="string">&quot;tree&quot;</span>,
-	<span class="string">&quot;tree table&quot;</span>,
-	<span class="string">&quot;unknown&quot;</span>,
-	<span class="string">&quot;viewport&quot;</span>,
-	<span class="string">&quot;window&quot;</span>,
-	<span class="string">&quot;extended&quot;</span>,
-	<span class="string">&quot;header&quot;</span>,
-	<span class="string">&quot;footer&quot;</span>,
-	<span class="string">&quot;paragraph&quot;</span>,
-	<span class="string">&quot;ruler&quot;</span>,
-	<span class="string">&quot;application&quot;</span>,
-	<span class="string">&quot;autocomplete&quot;</span>,
-	<span class="string">&quot;editbar&quot;</span>,
-	<span class="string">&quot;embedded&quot;</span>,
-	<span class="string">&quot;entry&quot;</span>,
-	<span class="string">&quot;chart&quot;</span>,
-	<span class="string">&quot;caption&quot;</span>,
-	<span class="string">&quot;document frame&quot;</span>,
-	<span class="string">&quot;heading&quot;</span>,
-	<span class="string">&quot;page&quot;</span>,
-	<span class="string">&quot;section&quot;</span>,
-	<span class="string">&quot;redundant object&quot;</span>,
-	<span class="string">&quot;form&quot;</span>,
-	<span class="string">&quot;link&quot;</span>,
-	<span class="string">&quot;input method window&quot;</span>,
-	<span class="string">&quot;table row&quot;</span>,
-	<span class="string">&quot;tree item&quot;</span>,
-	<span class="string">&quot;document spreadsheet&quot;</span>,
-	<span class="string">&quot;document presentation&quot;</span>,
-	<span class="string">&quot;document text&quot;</span>,
-	<span class="string">&quot;document web&quot;</span>,
-	<span class="string">&quot;document email&quot;</span>,
-	<span class="string">&quot;comment&quot;</span>,
-	<span class="string">&quot;list box&quot;</span>,
-	<span class="string">&quot;grouping&quot;</span>,
-	<span class="string">&quot;image map&quot;</span>,
-	<span class="string">&quot;notification&quot;</span>,
-	<span class="string">&quot;info bar&quot;</span>,
-	<span class="string">&quot;level bar&quot;</span>,
-	<span class="string">&quot;title bar&quot;</span>,
-	<span class="string">&quot;block quote&quot;</span>,
-	<span class="string">&quot;audio&quot;</span>,
-	<span class="string">&quot;video&quot;</span>,
-	<span class="string">&quot;definition&quot;</span>,
-	<span class="string">&quot;article&quot;</span>,
-	<span class="string">&quot;landmark&quot;</span>,
-	<span class="string">&quot;log&quot;</span>,
-	<span class="string">&quot;marquee&quot;</span>,
-	<span class="string">&quot;math&quot;</span>,
-	<span class="string">&quot;rating&quot;</span>,
-	<span class="string">&quot;timer&quot;</span>,
-	<span class="string">&quot;static&quot;</span>,
-	<span class="string">&quot;math fraction&quot;</span>,
-	<span class="string">&quot;math root&quot;</span>,
-	<span class="string">&quot;subscript&quot;</span>,
-	<span class="string">&quot;superscript&quot;</span>,
-	<span class="string">&quot;description list&quot;</span>,
-	<span class="string">&quot;description term&quot;</span>,
-	<span class="string">&quot;description value&quot;</span>,
-	<span class="string">&quot;footnote&quot;</span>,
-	<span class="string">&quot;content deletion&quot;</span>,
-	<span class="string">&quot;content insertion&quot;</span>,
-	<span class="string">&quot;mark&quot;</span>,
-	<span class="string">&quot;suggestion&quot;</span>,
-	<span class="string">&quot;push button menu&quot;</span>,
+	<span class="string">"invalid"</span>,
+	<span class="string">"accelerator label"</span>,
+	<span class="string">"alert"</span>,
+	<span class="string">"animation"</span>,
+	<span class="string">"arrow"</span>,
+	<span class="string">"calendar"</span>,
+	<span class="string">"canvas"</span>,
+	<span class="string">"check box"</span>,
+	<span class="string">"check menu item"</span>,
+	<span class="string">"color chooser"</span>,
+	<span class="string">"column header"</span>,
+	<span class="string">"combo box"</span>,
+	<span class="string">"date editor"</span>,
+	<span class="string">"desktop icon"</span>,
+	<span class="string">"desktop frame"</span>,
+	<span class="string">"dial"</span>,
+	<span class="string">"dialog"</span>,
+	<span class="string">"directory pane"</span>,
+	<span class="string">"drawing area"</span>,
+	<span class="string">"file chooser"</span>,
+	<span class="string">"filler"</span>,
+	<span class="string">"focus traversable"</span>,
+	<span class="string">"font chooser"</span>,
+	<span class="string">"frame"</span>,
+	<span class="string">"glass pane"</span>,
+	<span class="string">"html container"</span>,
+	<span class="string">"icon"</span>,
+	<span class="string">"image"</span>,
+	<span class="string">"internal frame"</span>,
+	<span class="string">"label"</span>,
+	<span class="string">"layered pane"</span>,
+	<span class="string">"list"</span>,
+	<span class="string">"list item"</span>,
+	<span class="string">"menu"</span>,
+	<span class="string">"menu bar"</span>,
+	<span class="string">"menu item"</span>,
+	<span class="string">"option pane"</span>,
+	<span class="string">"page tab"</span>,
+	<span class="string">"page tab list"</span>,
+	<span class="string">"panel"</span>,
+	<span class="string">"password text"</span>,
+	<span class="string">"popup menu"</span>,
+	<span class="string">"progress bar"</span>,
+	<span class="string">"push button"</span>,
+	<span class="string">"radio button"</span>,
+	<span class="string">"radio menu item"</span>,
+	<span class="string">"root pane"</span>,
+	<span class="string">"row header"</span>,
+	<span class="string">"scroll bar"</span>,
+	<span class="string">"scroll pane"</span>,
+	<span class="string">"separator"</span>,
+	<span class="string">"slider"</span>,
+	<span class="string">"spin button"</span>,
+	<span class="string">"split pane"</span>,
+	<span class="string">"status bar"</span>,
+	<span class="string">"table"</span>,
+	<span class="string">"table cell"</span>,
+	<span class="string">"table column header"</span>,
+	<span class="string">"table row header"</span>,
+	<span class="string">"tearoff menu item"</span>,
+	<span class="string">"terminal"</span>,
+	<span class="string">"text"</span>,
+	<span class="string">"toggle button"</span>,
+	<span class="string">"tool bar"</span>,
+	<span class="string">"tool tip"</span>,
+	<span class="string">"tree"</span>,
+	<span class="string">"tree table"</span>,
+	<span class="string">"unknown"</span>,
+	<span class="string">"viewport"</span>,
+	<span class="string">"window"</span>,
+	<span class="string">"extended"</span>,
+	<span class="string">"header"</span>,
+	<span class="string">"footer"</span>,
+	<span class="string">"paragraph"</span>,
+	<span class="string">"ruler"</span>,
+	<span class="string">"application"</span>,
+	<span class="string">"autocomplete"</span>,
+	<span class="string">"editbar"</span>,
+	<span class="string">"embedded"</span>,
+	<span class="string">"entry"</span>,
+	<span class="string">"chart"</span>,
+	<span class="string">"caption"</span>,
+	<span class="string">"document frame"</span>,
+	<span class="string">"heading"</span>,
+	<span class="string">"page"</span>,
+	<span class="string">"section"</span>,
+	<span class="string">"redundant object"</span>,
+	<span class="string">"form"</span>,
+	<span class="string">"link"</span>,
+	<span class="string">"input method window"</span>,
+	<span class="string">"table row"</span>,
+	<span class="string">"tree item"</span>,
+	<span class="string">"document spreadsheet"</span>,
+	<span class="string">"document presentation"</span>,
+	<span class="string">"document text"</span>,
+	<span class="string">"document web"</span>,
+	<span class="string">"document email"</span>,
+	<span class="string">"comment"</span>,
+	<span class="string">"list box"</span>,
+	<span class="string">"grouping"</span>,
+	<span class="string">"image map"</span>,
+	<span class="string">"notification"</span>,
+	<span class="string">"info bar"</span>,
+	<span class="string">"level bar"</span>,
+	<span class="string">"title bar"</span>,
+	<span class="string">"block quote"</span>,
+	<span class="string">"audio"</span>,
+	<span class="string">"video"</span>,
+	<span class="string">"definition"</span>,
+	<span class="string">"article"</span>,
+	<span class="string">"landmark"</span>,
+	<span class="string">"log"</span>,
+	<span class="string">"marquee"</span>,
+	<span class="string">"math"</span>,
+	<span class="string">"rating"</span>,
+	<span class="string">"timer"</span>,
+	<span class="string">"static"</span>,
+	<span class="string">"math fraction"</span>,
+	<span class="string">"math root"</span>,
+	<span class="string">"subscript"</span>,
+	<span class="string">"superscript"</span>,
+	<span class="string">"description list"</span>,
+	<span class="string">"description term"</span>,
+	<span class="string">"description value"</span>,
+	<span class="string">"footnote"</span>,
+	<span class="string">"content deletion"</span>,
+	<span class="string">"content insertion"</span>,
+	<span class="string">"mark"</span>,
+	<span class="string">"suggestion"</span>,
+	<span class="string">"push button menu"</span>,
 ];
 
 <span class="kw">impl </span>Role {
 	<span class="attr">#[must_use]
-	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+	</span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
 		ROLE_NAMES[<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>usize]
 	}
 }
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Role {
-	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-		<span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.name())
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+		<span class="macro">write!</span>(f, <span class="string">"{}"</span>, <span class="self">self</span>.name())
 	}
 }
 </code></pre></div></section></main></body></html>

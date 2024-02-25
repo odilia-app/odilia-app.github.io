@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["ComponentProxy","ComponentProxyBlocking"],"trait":["Component","ComponentBlocking"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["CircularQueue"],"type":["AscIter","AscIterMut","Iter","IterMut","Popped"]};

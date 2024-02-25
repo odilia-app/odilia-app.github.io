@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ClipType","Granularity"],"struct":["TextProxy","TextProxyBlocking"],"trait":["Text","TextBlocking"]};

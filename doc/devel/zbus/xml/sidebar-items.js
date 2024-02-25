@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["Annotation","Arg","Interface","Method","Node","Property","Signal"]};

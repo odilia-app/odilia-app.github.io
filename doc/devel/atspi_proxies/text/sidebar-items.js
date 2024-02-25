@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["TextProxy","TextProxyBlocking"],"trait":["Text","TextBlocking"]};

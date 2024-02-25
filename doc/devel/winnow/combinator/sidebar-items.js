@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["backtrack_err","cond","cut_err","eof","fail","iterator","not","opt","peek","rest","rest_len","success","todo"],"struct":["AndThen","ByRef","CompleteErr","Context","ErrInto","FlatMap","Map","MapRes","OutputInto","ParseTo","ParserIterator","Recognize","Span","Value","Verify","VerifyMap","Void","WithRecognized","WithSpan"]};

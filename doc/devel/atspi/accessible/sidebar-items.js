@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["RelationType","Role"],"struct":["AccessibleProxy","AccessibleProxyBlocking"],"trait":["Accessible","AccessibleBlocking"],"type":["ObjectPair"]};

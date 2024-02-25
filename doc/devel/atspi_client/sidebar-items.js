@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["accessible_ext","action_ext","application_ext","cache_ext","collection_ext","component_ext","convertable","device_event_controller_ext","device_event_listener_ext","document_ext","editable_text_ext","hyperlink_ext","hypertext_ext","image_ext","macros","registry_ext","selection_ext","socket_ext","table_cell_ext","table_ext","text_ext","value_ext"]};

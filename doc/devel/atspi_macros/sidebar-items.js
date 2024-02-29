@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":["atspi_proxy"],"derive":["TrySignify"]};

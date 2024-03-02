@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["listen_to_dbus_notifications"]};

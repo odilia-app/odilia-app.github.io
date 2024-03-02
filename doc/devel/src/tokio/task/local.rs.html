@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.28.2/src/task/local.rs`."><title>local.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.36.0/src/task/local.rs`."><title>local.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -1174,9 +1174,69 @@
 <a href="#1173" id="1173">1173</a>
 <a href="#1174" id="1174">1174</a>
 <a href="#1175" id="1175">1175</a>
+<a href="#1176" id="1176">1176</a>
+<a href="#1177" id="1177">1177</a>
+<a href="#1178" id="1178">1178</a>
+<a href="#1179" id="1179">1179</a>
+<a href="#1180" id="1180">1180</a>
+<a href="#1181" id="1181">1181</a>
+<a href="#1182" id="1182">1182</a>
+<a href="#1183" id="1183">1183</a>
+<a href="#1184" id="1184">1184</a>
+<a href="#1185" id="1185">1185</a>
+<a href="#1186" id="1186">1186</a>
+<a href="#1187" id="1187">1187</a>
+<a href="#1188" id="1188">1188</a>
+<a href="#1189" id="1189">1189</a>
+<a href="#1190" id="1190">1190</a>
+<a href="#1191" id="1191">1191</a>
+<a href="#1192" id="1192">1192</a>
+<a href="#1193" id="1193">1193</a>
+<a href="#1194" id="1194">1194</a>
+<a href="#1195" id="1195">1195</a>
+<a href="#1196" id="1196">1196</a>
+<a href="#1197" id="1197">1197</a>
+<a href="#1198" id="1198">1198</a>
+<a href="#1199" id="1199">1199</a>
+<a href="#1200" id="1200">1200</a>
+<a href="#1201" id="1201">1201</a>
+<a href="#1202" id="1202">1202</a>
+<a href="#1203" id="1203">1203</a>
+<a href="#1204" id="1204">1204</a>
+<a href="#1205" id="1205">1205</a>
+<a href="#1206" id="1206">1206</a>
+<a href="#1207" id="1207">1207</a>
+<a href="#1208" id="1208">1208</a>
+<a href="#1209" id="1209">1209</a>
+<a href="#1210" id="1210">1210</a>
+<a href="#1211" id="1211">1211</a>
+<a href="#1212" id="1212">1212</a>
+<a href="#1213" id="1213">1213</a>
+<a href="#1214" id="1214">1214</a>
+<a href="#1215" id="1215">1215</a>
+<a href="#1216" id="1216">1216</a>
+<a href="#1217" id="1217">1217</a>
+<a href="#1218" id="1218">1218</a>
+<a href="#1219" id="1219">1219</a>
+<a href="#1220" id="1220">1220</a>
+<a href="#1221" id="1221">1221</a>
+<a href="#1222" id="1222">1222</a>
+<a href="#1223" id="1223">1223</a>
+<a href="#1224" id="1224">1224</a>
+<a href="#1225" id="1225">1225</a>
+<a href="#1226" id="1226">1226</a>
+<a href="#1227" id="1227">1227</a>
+<a href="#1228" id="1228">1228</a>
+<a href="#1229" id="1229">1229</a>
+<a href="#1230" id="1230">1230</a>
+<a href="#1231" id="1231">1231</a>
+<a href="#1232" id="1232">1232</a>
+<a href="#1233" id="1233">1233</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Runs `!Send` futures on the current thread.
 </span><span class="kw">use </span><span class="kw">crate</span>::loom::cell::UnsafeCell;
 <span class="kw">use </span><span class="kw">crate</span>::loom::sync::{Arc, Mutex};
+<span class="attr">#[cfg(tokio_unstable)]
+</span><span class="kw">use </span><span class="kw">crate</span>::runtime;
 <span class="kw">use </span><span class="kw">crate</span>::runtime::task::{<span class="self">self</span>, JoinHandle, LocalOwnedTasks, Task};
 <span class="kw">use </span><span class="kw">crate</span>::runtime::{context, ThreadId};
 <span class="kw">use </span><span class="kw">crate</span>::sync::AtomicWaker;
@@ -1411,7 +1471,7 @@
     </span>unhandled_panic: Cell&lt;bool&gt;,
 }
 
-<span class="doccomment">/// LocalSet state shared between threads.
+<span class="doccomment">/// `LocalSet` state shared between threads.
 </span><span class="kw">struct </span>Shared {
     <span class="doccomment">/// # Safety
     ///
@@ -1454,10 +1514,43 @@
 
 <span class="macro">tokio_thread_local!</span>(<span class="kw">static </span>CURRENT: LocalData = <span class="kw">const </span>{ LocalData {
     ctx: RcCell::new(),
+    wake_on_schedule: Cell::new(<span class="bool-val">false</span>),
 } });
 
 <span class="kw">struct </span>LocalData {
     ctx: RcCell&lt;Context&gt;,
+    wake_on_schedule: Cell&lt;bool&gt;,
+}
+
+<span class="kw">impl </span>LocalData {
+    <span class="doccomment">/// Should be called except when we call `LocalSet::enter`.
+    /// Especially when we poll a `LocalSet`.
+    </span><span class="attr">#[must_use = <span class="string">"dropping this guard will reset the entered state"</span>]
+    </span><span class="kw">fn </span>enter(<span class="kw-2">&amp;</span><span class="self">self</span>, ctx: Rc&lt;Context&gt;) -&gt; LocalDataEnterGuard&lt;<span class="lifetime">'_</span>&gt; {
+        <span class="kw">let </span>ctx = <span class="self">self</span>.ctx.replace(<span class="prelude-val">Some</span>(ctx));
+        <span class="kw">let </span>wake_on_schedule = <span class="self">self</span>.wake_on_schedule.replace(<span class="bool-val">false</span>);
+        LocalDataEnterGuard {
+            local_data_ref: <span class="self">self</span>,
+            ctx,
+            wake_on_schedule,
+        }
+    }
+}
+
+<span class="doccomment">/// A guard for `LocalData::enter()`
+</span><span class="kw">struct </span>LocalDataEnterGuard&lt;<span class="lifetime">'a</span>&gt; {
+    local_data_ref: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>LocalData,
+    ctx: <span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;,
+    wake_on_schedule: bool,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>LocalDataEnterGuard&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.local_data_ref.ctx.set(<span class="self">self</span>.ctx.take());
+        <span class="self">self</span>.local_data_ref
+            .wake_on_schedule
+            .set(<span class="self">self</span>.wake_on_schedule)
+    }
 }
 
 <span class="macro">cfg_rt! </span>{
@@ -1475,7 +1568,7 @@
     ///
     /// Note that if [`tokio::spawn`] is used from within a `LocalSet`, the
     /// resulting new task will _not_ be inside the `LocalSet`, so you must use
-    /// use `spawn_local` if you want to stay within the `LocalSet`.
+    /// `spawn_local` if you want to stay within the `LocalSet`.
     ///
     /// # Examples
     ///
@@ -1533,14 +1626,27 @@
 <span class="doccomment">/// How often it check the remote queue first.
 </span><span class="kw">const </span>REMOTE_FIRST_INTERVAL: u8 = <span class="number">31</span>;
 
-<span class="doccomment">/// Context guard for LocalSet
-</span><span class="kw">pub struct </span>LocalEnterGuard(<span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;);
+<span class="doccomment">/// Context guard for `LocalSet`
+</span><span class="kw">pub struct </span>LocalEnterGuard {
+    ctx: <span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;,
+
+    <span class="doccomment">/// Distinguishes whether the context was entered or being polled.
+    /// When we enter it, the value `wake_on_schedule` is set. In this case
+    /// `spawn_local` refers the context, whereas it is not being polled now.
+    </span>wake_on_schedule: bool,
+}
 
 <span class="kw">impl </span>Drop <span class="kw">for </span>LocalEnterGuard {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        CURRENT.with(|LocalData { ctx, .. }| {
-            ctx.set(<span class="self">self</span>.<span class="number">0</span>.take());
-        })
+        CURRENT.with(
+            |LocalData {
+                 ctx,
+                 wake_on_schedule,
+             }| {
+                ctx.set(<span class="self">self</span>.ctx.take());
+                wake_on_schedule.set(<span class="self">self</span>.wake_on_schedule);
+            },
+        );
     }
 }
 
@@ -1582,10 +1688,20 @@
     ///
     /// [`spawn_local`]: fn@crate::task::spawn_local
     </span><span class="kw">pub fn </span>enter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; LocalEnterGuard {
-        CURRENT.with(|LocalData { ctx, .. }| {
-            <span class="kw">let </span>old = ctx.replace(<span class="prelude-val">Some</span>(<span class="self">self</span>.context.clone()));
-            LocalEnterGuard(old)
-        })
+        CURRENT.with(
+            |LocalData {
+                 ctx,
+                 wake_on_schedule,
+                 ..
+             }| {
+                <span class="kw">let </span>ctx = ctx.replace(<span class="prelude-val">Some</span>(<span class="self">self</span>.context.clone()));
+                <span class="kw">let </span>wake_on_schedule = wake_on_schedule.replace(<span class="bool-val">true</span>);
+                LocalEnterGuard {
+                    ctx,
+                    wake_on_schedule,
+                }
+            },
+        )
     }
 
     <span class="doccomment">/// Spawns a `!Send` task onto the local task set.
@@ -1644,7 +1760,7 @@
     /// This runs the given future on the runtime, blocking until it is
     /// complete, and yielding its resolved result. Any tasks or timers which
     /// the future spawns internally will be executed on the runtime. The future
-    /// may also call [`spawn_local`] to spawn_local additional local futures on the
+    /// may also call [`spawn_local`] to `spawn_local` additional local futures on the
     /// current thread.
     ///
     /// This method should not be called from an asynchronous context.
@@ -1720,6 +1836,10 @@
     /// will remain on the local set, and will be driven on subsequent calls to
     /// `run_until` or when [awaiting the local set] itself.
     ///
+    /// # Cancel safety
+    ///
+    /// This method is cancel safe when `future` is cancel safe.
+    ///
     /// # Examples
     ///
     /// ```rust
@@ -1749,7 +1869,8 @@
         run_until.<span class="kw">await
     </span>}
 
-    <span class="kw">pub</span>(<span class="kw">in </span><span class="kw">crate</span>::task) <span class="kw">fn </span>spawn_named&lt;F&gt;(
+    <span class="attr">#[track_caller]
+    </span><span class="kw">pub</span>(<span class="kw">in </span><span class="kw">crate</span>::task) <span class="kw">fn </span>spawn_named&lt;F&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         future: F,
         name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
@@ -1775,9 +1896,7 @@
     </span><span class="kw">fn </span>tick(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">for _ in </span><span class="number">0</span>..MAX_TASKS_PER_TICK {
             <span class="comment">// Make sure we didn't hit an unhandled panic
-            </span><span class="kw">if </span><span class="self">self</span>.context.unhandled_panic.get() {
-                <span class="macro">panic!</span>(<span class="string">"a spawned task panicked and the LocalSet is configured to shutdown on unhandled panic"</span>);
-            }
+            </span><span class="macro">assert!</span>(!<span class="self">self</span>.context.unhandled_panic.get(), <span class="string">"a spawned task panicked and the LocalSet is configured to shutdown on unhandled panic"</span>);
 
             <span class="kw">match </span><span class="self">self</span>.next_task() {
                 <span class="comment">// Run the task
@@ -1818,7 +1937,7 @@
                     .queue
                     .lock()
                     .as_mut()
-                    .and_then(|queue| queue.pop_front())
+                    .and_then(VecDeque::pop_front)
             })
         };
 
@@ -1840,23 +1959,8 @@
     }
 
     <span class="kw">fn </span>with&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw">impl </span>FnOnce() -&gt; T) -&gt; T {
-        CURRENT.with(|LocalData { ctx, .. }| {
-            <span class="kw">struct </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
-                ctx_ref: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>RcCell&lt;Context&gt;,
-                val: <span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;,
-            }
-            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
-                <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-                    <span class="self">self</span>.ctx_ref.set(<span class="self">self</span>.val.take());
-                }
-            }
-            <span class="kw">let </span>old = ctx.replace(<span class="prelude-val">Some</span>(<span class="self">self</span>.context.clone()));
-
-            <span class="kw">let </span>_reset = Reset {
-                ctx_ref: ctx,
-                val: old,
-            };
-
+        CURRENT.with(|local_data| {
+            <span class="kw">let </span>_guard = local_data.enter(<span class="self">self</span>.context.clone());
             f()
         })
     }
@@ -1866,23 +1970,8 @@
     </span><span class="kw">fn </span>with_if_possible&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw">impl </span>FnOnce() -&gt; T) -&gt; T {
         <span class="kw">let </span><span class="kw-2">mut </span>f = <span class="prelude-val">Some</span>(f);
 
-        <span class="kw">let </span>res = CURRENT.try_with(|LocalData { ctx, .. }| {
-            <span class="kw">struct </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
-                ctx_ref: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>RcCell&lt;Context&gt;,
-                val: <span class="prelude-ty">Option</span>&lt;Rc&lt;Context&gt;&gt;,
-            }
-            <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>Reset&lt;<span class="lifetime">'a</span>&gt; {
-                <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-                    <span class="self">self</span>.ctx_ref.replace(<span class="self">self</span>.val.take());
-                }
-            }
-            <span class="kw">let </span>old = ctx.replace(<span class="prelude-val">Some</span>(<span class="self">self</span>.context.clone()));
-
-            <span class="kw">let </span>_reset = Reset {
-                ctx_ref: ctx,
-                val: old,
-            };
-
+        <span class="kw">let </span>res = CURRENT.try_with(|local_data| {
+            <span class="kw">let </span>_guard = local_data.enter(<span class="self">self</span>.context.clone());
             (f.take().unwrap())()
         });
 
@@ -1961,6 +2050,30 @@
                 .unhandled_panic = behavior;
             <span class="self">self
         </span>}
+
+        <span class="doccomment">/// Returns the [`Id`] of the current `LocalSet` runtime.
+        ///
+        /// # Examples
+        ///
+        /// ```rust
+        /// use tokio::task;
+        ///
+        /// #[tokio::main]
+        /// async fn main() {
+        ///     let local_set = task::LocalSet::new();
+        ///     println!("Local set id: {}", local_set.id());
+        /// }
+        /// ```
+        ///
+        /// **Note**: This is an [unstable API][unstable]. The public API of this type
+        /// may break in 1.x releases. See [the documentation on unstable
+        /// features][unstable] for details.
+        ///
+        /// [unstable]: crate#unstable-features
+        /// [`Id`]: struct@crate::runtime::Id
+        </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; runtime::Id {
+            <span class="self">self</span>.context.shared.local_state.owned.id.into()
+        }
     }
 }
 
@@ -2116,7 +2229,10 @@
     </span><span class="kw">fn </span>schedule(<span class="kw-2">&amp;</span><span class="self">self</span>, task: task::Notified&lt;Arc&lt;<span class="self">Self</span>&gt;&gt;) {
         CURRENT.with(|localdata| {
             <span class="kw">match </span>localdata.ctx.get() {
-                <span class="prelude-val">Some</span>(cx) <span class="kw">if </span>cx.shared.ptr_eq(<span class="self">self</span>) =&gt; <span class="kw">unsafe </span>{
+                <span class="comment">// If the current `LocalSet` is being polled, we don't need to wake it.
+                // When we `enter` it, then the value `wake_on_schedule` is set to be true.
+                // In this case it is not being polled, so we need to wake it.
+                </span><span class="prelude-val">Some</span>(cx) <span class="kw">if </span>cx.shared.ptr_eq(<span class="self">self</span>) &amp;&amp; !localdata.wake_on_schedule.get() =&gt; <span class="kw">unsafe </span>{
                     <span class="comment">// Safety: if the current `LocalSet` context points to this
                     // `LocalSet`, then we are on the thread that owns it.
                     </span>cx.shared.local_state.task_push_back(task);
@@ -2212,7 +2328,7 @@
         // the LocalSet.
         </span><span class="self">self</span>.assert_called_from_owner_thread();
 
-        <span class="self">self</span>.local_queue.with_mut(|ptr| (<span class="kw-2">*</span>ptr).push_back(task))
+        <span class="self">self</span>.local_queue.with_mut(|ptr| (<span class="kw-2">*</span>ptr).push_back(task));
     }
 
     <span class="kw">unsafe fn </span>take_local_queue(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; VecDeque&lt;task::Notified&lt;Arc&lt;Shared&gt;&gt;&gt; {
@@ -2256,7 +2372,7 @@
         // the LocalSet.
         </span><span class="self">self</span>.assert_called_from_owner_thread();
 
-        <span class="self">self</span>.owned.close_and_shutdown_all()
+        <span class="self">self</span>.owned.close_and_shutdown_all();
     }
 
     <span class="attr">#[track_caller]
@@ -2287,7 +2403,7 @@
     <span class="comment">// Does a `LocalSet` running on a current-thread runtime...basically work?
     //
     // This duplicates a test in `tests/task_local_set.rs`, but because this is
-    // a lib test, it wil run under Miri, so this is necessary to catch stacked
+    // a lib test, it will run under Miri, so this is necessary to catch stacked
     // borrows violations in the `LocalSet` implementation.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>local_current_thread_scheduler() {

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["MissedTickBehavior"],"fn":["advance","interval","interval_at","pause","resume","sleep","sleep_until","timeout","timeout_at"],"mod":["error"],"struct":["Instant","Interval","Sleep","Timeout"]};
+window.SIDEBAR_ITEMS = {"enum":["MissedTickBehavior"],"fn":["interval","interval_at","sleep","sleep_until","timeout","timeout_at"],"mod":["error"],"struct":["Instant","Interval","Sleep","Timeout"]};

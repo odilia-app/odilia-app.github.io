@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tracing-tree-0.2.3/src/format.rs`."><title>format.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tracing_tree" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tracing-tree-0.2.5/src/format.rs`."><title>format.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tracing_tree" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -424,6 +424,96 @@
 <a href="#423" id="423">423</a>
 <a href="#424" id="424">424</a>
 <a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+<a href="#487" id="487">487</a>
+<a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
+<a href="#492" id="492">492</a>
+<a href="#493" id="493">493</a>
+<a href="#494" id="494">494</a>
+<a href="#495" id="495">495</a>
+<a href="#496" id="496">496</a>
+<a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
+<a href="#499" id="499">499</a>
+<a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
+<a href="#504" id="504">504</a>
+<a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
+<a href="#511" id="511">511</a>
+<a href="#512" id="512">512</a>
+<a href="#513" id="513">513</a>
+<a href="#514" id="514">514</a>
+<a href="#515" id="515">515</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>nu_ansi_term::Color;
 <span class="kw">use </span>std::{
     fmt::{<span class="self">self</span>, Write <span class="kw">as _</span>},
@@ -431,7 +521,7 @@
 };
 <span class="kw">use </span>tracing_core::{
     field::{Field, Visit},
-    Level,
+    span, Level,
 };
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>LINE_VERT: <span class="kw-2">&amp;</span>str = <span class="string">"│"</span>;
@@ -440,11 +530,20 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>LINE_CLOSE: <span class="kw-2">&amp;</span>str = <span class="string">"┘"</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>LINE_OPEN: <span class="kw-2">&amp;</span>str = <span class="string">"┐"</span>;
 
-<span class="attr">#[derive(Copy, Clone)]
+<span class="attr">#[derive(Debug, Copy, Clone)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>SpanMode {
-    PreOpen,
-    Open { verbose: bool },
-    Close { verbose: bool },
+    <span class="doccomment">/// Executed on the parent before entering a child span
+    </span>PreOpen,
+    Open {
+        verbose: bool,
+    },
+    Close {
+        verbose: bool,
+    },
+    <span class="doccomment">/// A span has been entered but another *different* span has been entered in the meantime.
+    </span>Retrace {
+        verbose: bool,
+    },
     PostClose,
     Event,
 }
@@ -469,8 +568,16 @@
     </span><span class="kw">pub </span>verbose_entry: bool,
     <span class="doccomment">/// Whether to print the current span before exiting it.
     </span><span class="kw">pub </span>verbose_exit: bool,
+    <span class="doccomment">/// Print the path leading up to a span if a different span was entered concurrently
+    </span><span class="kw">pub </span>span_retrace: bool,
     <span class="doccomment">/// Whether to print squiggly brackets (`{}`) around the list of fields in a span.
     </span><span class="kw">pub </span>bracketed_fields: bool,
+    <span class="doccomment">/// Defer printing a span until an event is generated inside of it
+    </span><span class="kw">pub </span>deferred_spans: bool,
+    <span class="doccomment">/// Print a label of the span mode (open/close etc).
+    </span><span class="kw">pub </span>span_modes: bool,
+    <span class="doccomment">/// Whether to print the time with higher precision.
+    </span><span class="kw">pub </span>higher_precision: bool,
 }
 
 <span class="kw">impl </span>Config {
@@ -521,9 +628,37 @@
         </span>}
     }
 
+    <span class="kw">pub fn </span>with_span_retrace(<span class="self">self</span>, enabled: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            span_retrace: enabled,
+            ..<span class="self">self
+        </span>}
+    }
+
+    <span class="kw">pub fn </span>with_deferred_spans(<span class="self">self</span>, enable: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            deferred_spans: enable,
+            ..<span class="self">self
+        </span>}
+    }
+
+    <span class="kw">pub fn </span>with_span_modes(<span class="self">self</span>, enable: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            span_modes: enable,
+            ..<span class="self">self
+        </span>}
+    }
+
     <span class="kw">pub fn </span>with_bracketed_fields(<span class="self">self</span>, bracketed_fields: bool) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             bracketed_fields,
+            ..<span class="self">self
+        </span>}
+    }
+
+    <span class="kw">pub fn </span>with_higher_precision(<span class="self">self</span>, higher_precision: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            higher_precision,
             ..<span class="self">self
         </span>}
     }
@@ -563,7 +698,11 @@
             wraparound: usize::max_value(),
             verbose_entry: <span class="bool-val">false</span>,
             verbose_exit: <span class="bool-val">false</span>,
+            span_retrace: <span class="bool-val">false</span>,
             bracketed_fields: <span class="bool-val">false</span>,
+            deferred_spans: <span class="bool-val">false</span>,
+            span_modes: <span class="bool-val">false</span>,
+            higher_precision: <span class="bool-val">false</span>,
         }
     }
 }
@@ -572,6 +711,13 @@
 </span><span class="kw">pub struct </span>Buffers {
     <span class="kw">pub </span>current_buf: String,
     <span class="kw">pub </span>indent_buf: String,
+
+    <span class="doccomment">/// The last seen span of this layer
+    ///
+    /// This serves to serialize spans as two events can be generated in different spans
+    /// without the spans entering and exiting beforehand. This happens for multithreaded code
+    /// and instrumented futures
+    </span><span class="kw">pub </span>current_span: <span class="prelude-ty">Option</span>&lt;span::Id&gt;,
 }
 
 <span class="kw">impl </span>Buffers {
@@ -579,6 +725,7 @@
         <span class="self">Self </span>{
             current_buf: String::new(),
             indent_buf: String::new(),
+            current_span: <span class="prelude-val">None</span>,
         }
     }
 
@@ -593,11 +740,12 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>indent_current(<span class="kw-2">&amp;mut </span><span class="self">self</span>, indent: usize, config: <span class="kw-2">&amp;</span>Config, style: SpanMode) {
-        <span class="self">self</span>.current_buf.push(<span class="string">'\n'</span>);
         <span class="kw">let </span>prefix = config.prefix();
 
         <span class="comment">// Render something when wraparound occurs so the user is aware of it
         </span><span class="kw">if </span>config.indent_lines {
+            <span class="self">self</span>.current_buf.push(<span class="string">'\n'</span>);
+
             <span class="kw">match </span>style {
                 SpanMode::Close { .. } | SpanMode::PostClose =&gt; {
                     <span class="kw">if </span>indent &gt; <span class="number">0 </span>&amp;&amp; (indent + <span class="number">1</span>) % config.wraparound == <span class="number">0 </span>{
@@ -622,13 +770,14 @@
             <span class="kw-2">&amp;</span>prefix,
             style,
         );
+
         <span class="self">self</span>.current_buf.clear();
         <span class="self">self</span>.flush_indent_buf();
 
         <span class="comment">// Render something when wraparound occurs so the user is aware of it
         </span><span class="kw">if </span>config.indent_lines {
             <span class="kw">match </span>style {
-                SpanMode::PreOpen | SpanMode::Open { .. } =&gt; {
+                SpanMode::PreOpen { .. } | SpanMode::Open { .. } =&gt; {
                     <span class="kw">if </span>indent &gt; <span class="number">0 </span>&amp;&amp; (indent + <span class="number">1</span>) % config.wraparound == <span class="number">0 </span>{
                         <span class="self">self</span>.current_buf.push_str(<span class="kw-2">&amp;</span>prefix);
                         <span class="kw">for _ in </span><span class="number">0</span>..(indent % config.wraparound * config.indent_amount) {
@@ -684,15 +833,33 @@
     }
 }
 
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>write_span_mode(buf: <span class="kw-2">&amp;mut </span>String, style: SpanMode) {
+    <span class="kw">match </span>style {
+        SpanMode::Open { verbose: <span class="bool-val">true </span>} =&gt; buf.push_str(<span class="string">"open(v)"</span>),
+        SpanMode::Open { verbose: <span class="bool-val">false </span>} =&gt; buf.push_str(<span class="string">"open"</span>),
+        SpanMode::Retrace { verbose: <span class="bool-val">false </span>} =&gt; buf.push_str(<span class="string">"retrace"</span>),
+        SpanMode::Retrace { verbose: <span class="bool-val">true </span>} =&gt; buf.push_str(<span class="string">"retrace(v)"</span>),
+        SpanMode::Close { verbose: <span class="bool-val">true </span>} =&gt; buf.push_str(<span class="string">"close(v)"</span>),
+        SpanMode::Close { verbose: <span class="bool-val">false </span>} =&gt; buf.push_str(<span class="string">"close"</span>),
+        SpanMode::PreOpen =&gt; buf.push_str(<span class="string">"pre_open"</span>),
+        SpanMode::PostClose =&gt; buf.push_str(<span class="string">"post_close"</span>),
+        SpanMode::Event =&gt; buf.push_str(<span class="string">"event"</span>),
+    }
+
+    buf.push_str(<span class="string">": "</span>)
+}
+
 <span class="kw">fn </span>indent_block_with_lines(
     lines: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str],
     buf: <span class="kw-2">&amp;mut </span>String,
     indent: usize,
-    indent_amount: usize,
+    <span class="comment">// width of one level of indent
+    </span>indent_amount: usize,
     prefix: <span class="kw-2">&amp;</span>str,
     style: SpanMode,
 ) {
     <span class="kw">let </span>indent_spaces = indent * indent_amount;
+
     <span class="kw">if </span>lines.is_empty() {
         <span class="kw">return</span>;
     } <span class="kw">else if </span>indent_spaces == <span class="number">0 </span>{
@@ -702,8 +869,9 @@
             </span><span class="kw">if </span>indent == <span class="number">0 </span>{
                 <span class="kw">match </span>style {
                     SpanMode::Open { .. } =&gt; buf.push_str(LINE_OPEN),
+                    SpanMode::Retrace { .. } =&gt; buf.push_str(LINE_OPEN),
                     SpanMode::Close { .. } =&gt; buf.push_str(LINE_CLOSE),
-                    SpanMode::PreOpen | SpanMode::PostClose =&gt; {}
+                    SpanMode::PreOpen { .. } | SpanMode::PostClose =&gt; {}
                     SpanMode::Event =&gt; {}
                 }
             }
@@ -712,6 +880,7 @@
         }
         <span class="kw">return</span>;
     }
+
     <span class="kw">let </span><span class="kw-2">mut </span>s = String::with_capacity(indent_spaces + prefix.len());
     s.push_str(prefix);
 
@@ -736,14 +905,14 @@
             }
             buf.push_str(LINE_OPEN);
         }
-        SpanMode::Open { verbose: <span class="bool-val">false </span>} =&gt; {
+        SpanMode::Open { verbose: <span class="bool-val">false </span>} | SpanMode::Retrace { verbose: <span class="bool-val">false </span>} =&gt; {
             buf.push_str(LINE_BRANCH);
             <span class="kw">for _ in </span><span class="number">1</span>..indent_amount {
                 buf.push_str(LINE_HORIZ);
             }
             buf.push_str(LINE_OPEN);
         }
-        SpanMode::Open { verbose: <span class="bool-val">true </span>} =&gt; {
+        SpanMode::Open { verbose: <span class="bool-val">true </span>} | SpanMode::Retrace { verbose: <span class="bool-val">true </span>} =&gt; {
             buf.push_str(LINE_VERT);
             <span class="kw">for _ in </span><span class="number">1</span>..(indent_amount / <span class="number">2</span>) {
                 buf.push(<span class="string">' '</span>);
@@ -828,7 +997,7 @@
 <span class="kw">fn </span>indent_block(
     block: <span class="kw-2">&amp;mut </span>String,
     buf: <span class="kw-2">&amp;mut </span>String,
-    indent: usize,
+    <span class="kw-2">mut </span>indent: usize,
     indent_amount: usize,
     indent_lines: bool,
     prefix: <span class="kw-2">&amp;</span>str,
@@ -837,12 +1006,23 @@
     <span class="kw">let </span>lines: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = block.lines().collect();
     <span class="kw">let </span>indent_spaces = indent * indent_amount;
     buf.reserve(block.len() + (lines.len() * indent_spaces));
+
+    <span class="comment">// The PreOpen and PostClose need to match up with the indent of the entered child span one more indent
+    // deep
+    </span><span class="kw">match </span>style {
+        SpanMode::PreOpen | SpanMode::PostClose =&gt; {
+            indent += <span class="number">1</span>;
+        }
+        <span class="kw">_ </span>=&gt; (),
+    }
+
     <span class="kw">if </span>indent_lines {
         indent_block_with_lines(<span class="kw-2">&amp;</span>lines, buf, indent, indent_amount, prefix, style);
     } <span class="kw">else </span>{
         <span class="kw">let </span>indent_str = String::from(<span class="string">" "</span>).repeat(indent_spaces);
         <span class="kw">for </span>line <span class="kw">in </span>lines {
             buf.push_str(prefix);
+            buf.push(<span class="string">' '</span>);
             buf.push_str(<span class="kw-2">&amp;</span>indent_str);
             buf.push_str(line);
             buf.push(<span class="string">'\n'</span>);

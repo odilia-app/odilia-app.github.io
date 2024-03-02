@@ -123,6 +123,19 @@
 <a href="#122" id="122">122</a>
 <a href="#123" id="123">123</a>
 <a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -142,7 +155,7 @@
 
 <span class="kw">use </span>clap::Parser;
 <span class="kw">use </span>eyre::WrapErr;
-<span class="kw">use </span>futures::future::FutureExt;
+<span class="kw">use </span>futures::{future::FutureExt, StreamExt};
 <span class="kw">use </span>tokio::{
 	signal::unix::{signal, SignalKind},
 	sync::broadcast::{<span class="self">self</span>, error::SendError},
@@ -152,10 +165,19 @@
 <span class="kw">use </span><span class="kw">crate</span>::cli::Args;
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>odilia_input::sr_event_receiver;
+<span class="kw">use </span>odilia_notify::listen_to_dbus_notifications;
 <span class="kw">use </span>ssip_client_async::Priority;
 
 <span class="kw">use </span>atspi_common::events::{document, object};
-
+<span class="kw">async fn </span>notifications_monitor(state: Arc&lt;ScreenReaderState&gt;) -&gt; eyre::Result&lt;()&gt; {
+	<span class="kw">let </span><span class="kw-2">mut </span>stream = listen_to_dbus_notifications().<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="kw">while let </span><span class="prelude-val">Some</span>(notification) = stream.next().<span class="kw">await </span>{
+		<span class="kw">let </span>notification_message =
+			<span class="macro">format!</span>(<span class="string">"new notification: {}, {}."</span>, notification.title, notification.body);
+		state.say(Priority::Important, notification_message).<span class="kw">await</span>;
+	}
+	<span class="prelude-val">Ok</span>(())
+}
 <span class="kw">async fn </span>sigterm_signal_watcher(shutdown_tx: broadcast::Sender&lt;i32&gt;) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span><span class="kw-2">mut </span>c = signal(SignalKind::interrupt())<span class="question-mark">?</span>;
 	<span class="macro">tracing::debug!</span>(<span class="string">"Watching for Ctrl+C"</span>);
@@ -235,6 +257,9 @@
 	.map(|r| r.wrap_err(<span class="string">"Could not process Odilia event"</span>));
 	<span class="kw">let </span>signal_receiver = sigterm_signal_watcher(shutdown_tx)
 		.map(|r| r.wrap_err(<span class="string">"Could not process signal shutdown."</span>));
+	<span class="kw">let </span>notification_task = notifications_monitor(Arc::clone(<span class="kw-2">&amp;</span>state))
+		.map(|r| r.wrap_err(<span class="string">"Could not process signal shutdown."</span>));
+
 	<span class="macro">tokio::try_join!</span>(
 		signal_receiver,
 		atspi_event_receiver,
@@ -242,6 +267,7 @@
 		odilia_event_receiver,
 		odilia_event_processor,
 		ssip_event_receiver,
+		notification_task,
 	)<span class="question-mark">?</span>;
 	<span class="macro">tracing::debug!</span>(<span class="string">"All listeners have stopped."</span>);
 	<span class="macro">tracing::debug!</span>(<span class="string">"Goodbye, Odilia!"</span>);

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/toml_edit-0.19.8/src/parser/numbers.rs`."><title>numbers.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="toml_edit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/toml_edit-0.19.15/src/parser/numbers.rs`."><title>numbers.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="toml_edit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -352,18 +352,63 @@
 <a href="#351" id="351">351</a>
 <a href="#352" id="352">352</a>
 <a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::ops::RangeInclusive;
 
-<span class="kw">use </span>winnow::branch::alt;
-<span class="kw">use </span>winnow::bytes::one_of;
-<span class="kw">use </span>winnow::bytes::tag;
-<span class="kw">use </span>winnow::bytes::take;
+<span class="kw">use </span>winnow::combinator::alt;
 <span class="kw">use </span>winnow::combinator::cut_err;
 <span class="kw">use </span>winnow::combinator::opt;
 <span class="kw">use </span>winnow::combinator::peek;
+<span class="kw">use </span>winnow::combinator::preceded;
+<span class="kw">use </span>winnow::combinator::repeat;
 <span class="kw">use </span>winnow::combinator::rest;
-<span class="kw">use </span>winnow::multi::many0;
-<span class="kw">use </span>winnow::sequence::preceded;
+<span class="kw">use </span>winnow::token::one_of;
+<span class="kw">use </span>winnow::token::tag;
+<span class="kw">use </span>winnow::token::take;
+<span class="kw">use </span>winnow::trace::trace;
 
 <span class="kw">use </span><span class="kw">crate</span>::parser::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::parser::trivia::from_utf8_unchecked;
@@ -372,16 +417,16 @@
 
 // boolean = true / false
 </span><span class="attr">#[allow(dead_code)] </span><span class="comment">// directly define in `fn value`
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>boolean(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, bool, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    alt((true_, false_)).parse_next(input)
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>boolean(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;bool&gt; {
+    trace(<span class="string">"boolean"</span>, alt((true_, false_))).parse_next(input)
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>true_(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, bool, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>true_(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;bool&gt; {
     (peek(TRUE[<span class="number">0</span>]), cut_err(TRUE)).value(<span class="bool-val">true</span>).parse_next(input)
 }
 <span class="kw">const </span>TRUE: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"true"</span>;
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>false_(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, bool, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>false_(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;bool&gt; {
     (peek(FALSE[<span class="number">0</span>]), cut_err(FALSE))
         .value(<span class="bool-val">false</span>)
         .parse_next(input)
@@ -391,94 +436,119 @@
 <span class="comment">// ;; Integer
 
 // integer = dec-int / hex-int / oct-int / bin-int
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>integer(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, i64, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>integer(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;i64&gt; {
+    trace(<span class="string">"integer"</span>,
     <span class="macro">dispatch! </span>{peek(opt::&lt;<span class="kw">_</span>, <span class="kw-2">&amp;</span>[u8], <span class="kw">_</span>, <span class="kw">_</span>&gt;(take(<span class="number">2usize</span>)));
-        <span class="prelude-val">Some</span>(<span class="string">b"0x"</span>) =&gt; cut_err(hex_int.map_res(|s| i64::from_str_radix(<span class="kw-2">&amp;</span>s.replace(<span class="string">'_'</span>, <span class="string">""</span>), <span class="number">16</span>))),
-        <span class="prelude-val">Some</span>(<span class="string">b"0o"</span>) =&gt; cut_err(oct_int.map_res(|s| i64::from_str_radix(<span class="kw-2">&amp;</span>s.replace(<span class="string">'_'</span>, <span class="string">""</span>), <span class="number">8</span>))),
-        <span class="prelude-val">Some</span>(<span class="string">b"0b"</span>) =&gt; cut_err(bin_int.map_res(|s| i64::from_str_radix(<span class="kw-2">&amp;</span>s.replace(<span class="string">'_'</span>, <span class="string">""</span>), <span class="number">2</span>))),
+        <span class="prelude-val">Some</span>(<span class="string">b"0x"</span>) =&gt; cut_err(hex_int.try_map(|s| i64::from_str_radix(<span class="kw-2">&amp;</span>s.replace(<span class="string">'_'</span>, <span class="string">""</span>), <span class="number">16</span>))),
+        <span class="prelude-val">Some</span>(<span class="string">b"0o"</span>) =&gt; cut_err(oct_int.try_map(|s| i64::from_str_radix(<span class="kw-2">&amp;</span>s.replace(<span class="string">'_'</span>, <span class="string">""</span>), <span class="number">8</span>))),
+        <span class="prelude-val">Some</span>(<span class="string">b"0b"</span>) =&gt; cut_err(bin_int.try_map(|s| i64::from_str_radix(<span class="kw-2">&amp;</span>s.replace(<span class="string">'_'</span>, <span class="string">""</span>), <span class="number">2</span>))),
         <span class="kw">_ </span>=&gt; dec_int.and_then(cut_err(rest
-            .map_res(|s: <span class="kw-2">&amp;</span>str| s.replace(<span class="string">'_'</span>, <span class="string">""</span>).parse())))
-    }
+            .try_map(|s: <span class="kw-2">&amp;</span>str| s.replace(<span class="string">'_'</span>, <span class="string">""</span>).parse())))
+    })
     .parse_next(input)
 }
 
 <span class="comment">// dec-int = [ minus / plus ] unsigned-dec-int
 // unsigned-dec-int = DIGIT / digit1-9 1*( DIGIT / underscore DIGIT )
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>dec_int(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    (
-        opt(one_of((<span class="string">b'+'</span>, <span class="string">b'-'</span>))),
-        alt((
-            (
-                one_of(DIGIT1_9),
-                many0(alt((
-                    digit.value(()),
-                    (
-                        one_of(<span class="string">b'_'</span>),
-                        cut_err(digit)
-                            .context(Context::Expected(ParserValue::Description(<span class="string">"digit"</span>))),
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>dec_int&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
+    trace(
+        <span class="string">"dec-int"</span>,
+        (
+            opt(one_of((<span class="string">b'+'</span>, <span class="string">b'-'</span>))),
+            alt((
+                (
+                    one_of(DIGIT1_9),
+                    repeat(
+                        <span class="number">0</span>..,
+                        alt((
+                            digit.value(()),
+                            (
+                                one_of(<span class="string">b'_'</span>),
+                                cut_err(digit).context(StrContext::Expected(
+                                    StrContextValue::Description(<span class="string">"digit"</span>),
+                                )),
+                            )
+                                .value(()),
+                        )),
                     )
-                        .value(()),
-                )))
-                .map(|()| ()),
-            )
-                .value(()),
-            digit.value(()),
-        )),
+                    .map(|()| ()),
+                )
+                    .value(()),
+                digit.value(()),
+            )),
+        )
+            .recognize()
+            .map(|b: <span class="kw-2">&amp;</span>[u8]| <span class="kw">unsafe </span>{
+                from_utf8_unchecked(b, <span class="string">"`digit` and `_` filter out non-ASCII"</span>)
+            })
+            .context(StrContext::Label(<span class="string">"integer"</span>)),
     )
-        .recognize()
-        .map(|b: <span class="kw-2">&amp;</span>[u8]| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`digit` and `_` filter out non-ASCII"</span>) })
-        .context(Context::Expression(<span class="string">"integer"</span>))
-        .parse_next(input)
+    .parse_next(input)
 }
 <span class="kw">const </span>DIGIT1_9: RangeInclusive&lt;u8&gt; = <span class="string">b'1'</span>..=<span class="string">b'9'</span>;
 
 <span class="comment">// hex-prefix = %x30.78               ; 0x
 // hex-int = hex-prefix HEXDIG *( HEXDIG / underscore HEXDIG )
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>hex_int(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    preceded(
-        HEX_PREFIX,
-        cut_err((
-            hexdig,
-            many0(alt((
-                hexdig.value(()),
-                (
-                    one_of(<span class="string">b'_'</span>),
-                    cut_err(hexdig).context(Context::Expected(ParserValue::Description(<span class="string">"digit"</span>))),
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>hex_int&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
+    trace(
+        <span class="string">"hex-int"</span>,
+        preceded(
+            HEX_PREFIX,
+            cut_err((
+                hexdig,
+                repeat(
+                    <span class="number">0</span>..,
+                    alt((
+                        hexdig.value(()),
+                        (
+                            one_of(<span class="string">b'_'</span>),
+                            cut_err(hexdig).context(StrContext::Expected(
+                                StrContextValue::Description(<span class="string">"digit"</span>),
+                            )),
+                        )
+                            .value(()),
+                    )),
                 )
-                    .value(()),
-            )))
-            .map(|()| ()),
-        ))
-        .recognize(),
+                .map(|()| ()),
+            ))
+            .recognize(),
+        )
+        .map(|b| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`hexdig` and `_` filter out non-ASCII"</span>) })
+        .context(StrContext::Label(<span class="string">"hexadecimal integer"</span>)),
     )
-    .map(|b| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`hexdig` and `_` filter out non-ASCII"</span>) })
-    .context(Context::Expression(<span class="string">"hexadecimal integer"</span>))
     .parse_next(input)
 }
 <span class="kw">const </span>HEX_PREFIX: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"0x"</span>;
 
 <span class="comment">// oct-prefix = %x30.6F               ; 0o
 // oct-int = oct-prefix digit0-7 *( digit0-7 / underscore digit0-7 )
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>oct_int(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    preceded(
-        OCT_PREFIX,
-        cut_err((
-            one_of(DIGIT0_7),
-            many0(alt((
-                one_of(DIGIT0_7).value(()),
-                (
-                    one_of(<span class="string">b'_'</span>),
-                    cut_err(one_of(DIGIT0_7))
-                        .context(Context::Expected(ParserValue::Description(<span class="string">"digit"</span>))),
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>oct_int&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
+    trace(
+        <span class="string">"oct-int"</span>,
+        preceded(
+            OCT_PREFIX,
+            cut_err((
+                one_of(DIGIT0_7),
+                repeat(
+                    <span class="number">0</span>..,
+                    alt((
+                        one_of(DIGIT0_7).value(()),
+                        (
+                            one_of(<span class="string">b'_'</span>),
+                            cut_err(one_of(DIGIT0_7)).context(StrContext::Expected(
+                                StrContextValue::Description(<span class="string">"digit"</span>),
+                            )),
+                        )
+                            .value(()),
+                    )),
                 )
-                    .value(()),
-            )))
-            .map(|()| ()),
-        ))
-        .recognize(),
+                .map(|()| ()),
+            ))
+            .recognize(),
+        )
+        .map(|b| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`DIGIT0_7` and `_` filter out non-ASCII"</span>) })
+        .context(StrContext::Label(<span class="string">"octal integer"</span>)),
     )
-    .map(|b| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`DIGIT0_7` and `_` filter out non-ASCII"</span>) })
-    .context(Context::Expression(<span class="string">"octal integer"</span>))
     .parse_next(input)
 }
 <span class="kw">const </span>OCT_PREFIX: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"0o"</span>;
@@ -486,26 +556,33 @@
 
 <span class="comment">// bin-prefix = %x30.62               ; 0b
 // bin-int = bin-prefix digit0-1 *( digit0-1 / underscore digit0-1 )
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>bin_int(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    preceded(
-        BIN_PREFIX,
-        cut_err((
-            one_of(DIGIT0_1),
-            many0(alt((
-                one_of(DIGIT0_1).value(()),
-                (
-                    one_of(<span class="string">b'_'</span>),
-                    cut_err(one_of(DIGIT0_1))
-                        .context(Context::Expected(ParserValue::Description(<span class="string">"digit"</span>))),
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>bin_int&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
+    trace(
+        <span class="string">"bin-int"</span>,
+        preceded(
+            BIN_PREFIX,
+            cut_err((
+                one_of(DIGIT0_1),
+                repeat(
+                    <span class="number">0</span>..,
+                    alt((
+                        one_of(DIGIT0_1).value(()),
+                        (
+                            one_of(<span class="string">b'_'</span>),
+                            cut_err(one_of(DIGIT0_1)).context(StrContext::Expected(
+                                StrContextValue::Description(<span class="string">"digit"</span>),
+                            )),
+                        )
+                            .value(()),
+                    )),
                 )
-                    .value(()),
-            )))
-            .map(|()| ()),
-        ))
-        .recognize(),
+                .map(|()| ()),
+            ))
+            .recognize(),
+        )
+        .map(|b| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`DIGIT0_1` and `_` filter out non-ASCII"</span>) })
+        .context(StrContext::Label(<span class="string">"binary integer"</span>)),
     )
-    .map(|b| <span class="kw">unsafe </span>{ from_utf8_unchecked(b, <span class="string">"`DIGIT0_1` and `_` filter out non-ASCII"</span>) })
-    .context(Context::Expression(<span class="string">"binary integer"</span>))
     .parse_next(input)
 }
 <span class="kw">const </span>BIN_PREFIX: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"0b"</span>;
@@ -516,20 +593,26 @@
 // float = float-int-part ( exp / frac [ exp ] )
 // float =/ special-float
 // float-int-part = dec-int
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>float(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, f64, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    alt((
-        float_.and_then(cut_err(
-            rest.map_res(|s: <span class="kw-2">&amp;</span>str| s.replace(<span class="string">'_'</span>, <span class="string">""</span>).parse())
-                .verify(|f: <span class="kw-2">&amp;</span>f64| <span class="kw-2">*</span>f != f64::INFINITY),
-        )),
-        special_float,
-    ))
-    .context(Context::Expression(<span class="string">"floating-point number"</span>))
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>float(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;f64&gt; {
+    trace(
+        <span class="string">"float"</span>,
+        alt((
+            float_.and_then(cut_err(
+                rest.try_map(|s: <span class="kw-2">&amp;</span>str| s.replace(<span class="string">'_'</span>, <span class="string">""</span>).parse())
+                    .verify(|f: <span class="kw-2">&amp;</span>f64| <span class="kw-2">*</span>f != f64::INFINITY),
+            )),
+            special_float,
+        ))
+        .context(StrContext::Label(<span class="string">"floating-point number"</span>)),
+    )
     .parse_next(input)
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>float_(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
-    (dec_int, alt((exp, (frac, opt(exp)).map(|<span class="kw">_</span>| <span class="string">""</span>))))
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>float_&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
+    (
+        dec_int,
+        alt((exp.void(), (frac.void(), opt(exp.void())).void())),
+    )
         .recognize()
         .map(|b: <span class="kw-2">&amp;</span>[u8]| <span class="kw">unsafe </span>{
             from_utf8_unchecked(
@@ -542,10 +625,11 @@
 
 <span class="comment">// frac = decimal-point zero-prefixable-int
 // decimal-point = %x2E               ; .
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>frac(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>frac&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
     (
         <span class="string">b'.'</span>,
-        cut_err(zero_prefixable_int).context(Context::Expected(ParserValue::Description(<span class="string">"digit"</span>))),
+        cut_err(zero_prefixable_int)
+            .context(StrContext::Expected(StrContextValue::Description(<span class="string">"digit"</span>))),
     )
         .recognize()
         .map(|b: <span class="kw-2">&amp;</span>[u8]| <span class="kw">unsafe </span>{
@@ -558,17 +642,21 @@
 }
 
 <span class="comment">// zero-prefixable-int = DIGIT *( DIGIT / underscore DIGIT )
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>zero_prefixable_int(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>zero_prefixable_int&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
     (
         digit,
-        many0(alt((
-            digit.value(()),
-            (
-                one_of(<span class="string">b'_'</span>),
-                cut_err(digit).context(Context::Expected(ParserValue::Description(<span class="string">"digit"</span>))),
-            )
-                .value(()),
-        )))
+        repeat(
+            <span class="number">0</span>..,
+            alt((
+                digit.value(()),
+                (
+                    one_of(<span class="string">b'_'</span>),
+                    cut_err(digit)
+                        .context(StrContext::Expected(StrContextValue::Description(<span class="string">"digit"</span>))),
+                )
+                    .value(()),
+            )),
+        )
         .map(|()| ()),
     )
         .recognize()
@@ -578,7 +666,7 @@
 
 <span class="comment">// exp = "e" float-exp-part
 // float-exp-part = [ minus / plus ] zero-prefixable-int
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>exp(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, <span class="kw-2">&amp;</span>str, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>exp&lt;<span class="lifetime">'i</span>&gt;(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'i</span>&gt;) -&gt; PResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'i </span>str&gt; {
     (
         one_of((<span class="string">b'e'</span>, <span class="string">b'E'</span>)),
         opt(one_of([<span class="string">b'+'</span>, <span class="string">b'-'</span>])),
@@ -595,7 +683,7 @@
 }
 
 <span class="comment">// special-float = [ minus / plus ] ( inf / nan )
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>special_float(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, f64, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>special_float(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;f64&gt; {
     (opt(one_of((<span class="string">b'+'</span>, <span class="string">b'-'</span>))), alt((inf, nan)))
         .map(|(s, f)| <span class="kw">match </span>s {
             <span class="prelude-val">Some</span>(<span class="string">b'+'</span>) | <span class="prelude-val">None </span>=&gt; f,
@@ -605,24 +693,24 @@
         .parse_next(input)
 }
 <span class="comment">// inf = %x69.6e.66  ; inf
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>inf(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, f64, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>inf(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;f64&gt; {
     tag(INF).value(f64::INFINITY).parse_next(input)
 }
 <span class="kw">const </span>INF: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"inf"</span>;
 <span class="comment">// nan = %x6e.61.6e  ; nan
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>nan(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, f64, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>nan(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;f64&gt; {
     tag(NAN).value(f64::NAN).parse_next(input)
 }
 <span class="kw">const </span>NAN: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"nan"</span>;
 
 <span class="comment">// DIGIT = %x30-39 ; 0-9
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>digit(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, u8, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>digit(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;u8&gt; {
     one_of(DIGIT).parse_next(input)
 }
 <span class="kw">const </span>DIGIT: RangeInclusive&lt;u8&gt; = <span class="string">b'0'</span>..=<span class="string">b'9'</span>;
 
 <span class="comment">// HEXDIG = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>hexdig(input: Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; IResult&lt;Input&lt;<span class="lifetime">'_</span>&gt;, u8, ParserError&lt;<span class="lifetime">'_</span>&gt;&gt; {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>hexdig(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;u8&gt; {
     one_of(HEXDIG).parse_next(input)
 }
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>HEXDIG: (RangeInclusive&lt;u8&gt;, RangeInclusive&lt;u8&gt;, RangeInclusive&lt;u8&gt;) =

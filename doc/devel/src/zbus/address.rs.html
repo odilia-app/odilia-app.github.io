@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/address.rs`."><title>address.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.15.1/src/address.rs`."><title>address.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -950,11 +950,16 @@
 <a href="#949" id="949">949</a>
 <a href="#950" id="950">950</a>
 <a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
+<a href="#957" id="957">957</a>
+<a href="#958" id="958">958</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(target_os = <span class="string">"macos"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::process::run;
-<span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
-</span><span class="kw">use </span><span class="kw">crate</span>::run_in_thread;
-<span class="attr">#[cfg(all(windows))]
+<span class="attr">#[cfg(windows)]
 </span><span class="kw">use </span><span class="kw">crate</span>::win32::windows_autolaunch_bus_address;
 <span class="kw">use crate</span>::{Error, <span class="prelude-ty">Result</span>};
 <span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
@@ -966,7 +971,7 @@
 <span class="attr">#[cfg(all(unix, not(feature = <span class="string">"tokio"</span>)))]
 </span><span class="kw">use </span>std::os::unix::net::UnixStream;
 <span class="kw">use </span>std::{collections::HashMap, convert::TryFrom, env, str::FromStr};
-<span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
+<span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
 </span><span class="kw">use </span>tokio::net::TcpStream;
 <span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span>tokio::net::UnixStream;
@@ -1116,8 +1121,8 @@
     </span><span class="doccomment">/// VSOCK address
     ///
     /// This variant is only available when either `vsock` or `tokio-vsock` feature is enabled. The
-    /// type of `stream` is `vsock::VsockStream` with `vsock` feature and `tokio_vsock::VsockStream`
-    /// with `tokio-vsock` feature.
+    /// type of `stream` is `vsock::VsockStream` with `vsock` feature and
+    /// `tokio_vsock::VsockStream` with `tokio-vsock` feature.
     </span>Vsock(VsockAddress),
 }
 
@@ -1130,7 +1135,7 @@
     </span>Vsock(Async&lt;VsockStream&gt;),
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
+<span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
 #[derive(Debug)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>Stream {
     <span class="attr">#[cfg(unix)]
@@ -1142,20 +1147,23 @@
 
 <span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">async fn </span>connect_tcp(addr: TcpAddress) -&gt; <span class="prelude-ty">Result</span>&lt;Async&lt;TcpStream&gt;&gt; {
-    <span class="kw">let </span>addrs = run_in_thread(<span class="kw">move </span>|| -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;SocketAddr&gt;&gt; {
-        <span class="kw">let </span>addrs = (addr.host(), addr.port()).to_socket_addrs()<span class="question-mark">?</span>.filter(|a| {
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(family) = addr.family() {
-                <span class="kw">if </span>family == TcpAddressFamily::Ipv4 {
-                    a.is_ipv4()
+    <span class="kw">let </span>addrs = <span class="kw">crate</span>::Task::spawn_blocking(
+        <span class="kw">move </span>|| -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;SocketAddr&gt;&gt; {
+            <span class="kw">let </span>addrs = (addr.host(), addr.port()).to_socket_addrs()<span class="question-mark">?</span>.filter(|a| {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(family) = addr.family() {
+                    <span class="kw">if </span>family == TcpAddressFamily::Ipv4 {
+                        a.is_ipv4()
+                    } <span class="kw">else </span>{
+                        a.is_ipv6()
+                    }
                 } <span class="kw">else </span>{
-                    a.is_ipv6()
-                }
-            } <span class="kw">else </span>{
-                <span class="bool-val">true
-            </span>}
-        });
-        <span class="prelude-val">Ok</span>(addrs.collect())
-    })
+                    <span class="bool-val">true
+                </span>}
+            });
+            <span class="prelude-val">Ok</span>(addrs.collect())
+        },
+        <span class="string">"connect tcp"</span>,
+    )
     .<span class="kw">await
     </span>.map_err(|e| Error::Address(<span class="macro">format!</span>(<span class="string">"Failed to receive TCP addresses: {e}"</span>)))<span class="question-mark">?</span>;
 
@@ -1171,7 +1179,7 @@
     <span class="prelude-val">Err</span>(last_err)
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
+<span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
 </span><span class="kw">async fn </span>connect_tcp(addr: TcpAddress) -&gt; <span class="prelude-ty">Result</span>&lt;TcpStream&gt; {
     TcpStream::connect((addr.host(), addr.port()))
         .<span class="kw">await
@@ -1207,7 +1215,11 @@
                 </span>{
                     <span class="attr">#[cfg(windows)]
                     </span>{
-                        <span class="kw">let </span>stream = run_in_thread(<span class="kw">move </span>|| UnixStream::connect(p)).<span class="kw">await</span><span class="question-mark">?</span>;
+                        <span class="kw">let </span>stream = <span class="kw">crate</span>::Task::spawn_blocking(
+                            <span class="kw">move </span>|| UnixStream::connect(p),
+                            <span class="string">"unix stream connection"</span>,
+                        )
+                        .<span class="kw">await</span><span class="question-mark">?</span>;
                         Async::new(stream)
                             .map(Stream::Unix)
                             .map_err(|e| Error::InputOutput(e.into()))
@@ -1222,7 +1234,7 @@
                     }
                 }
 
-                <span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
+                <span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
                 </span>{
                     <span class="attr">#[cfg(unix)]
                     </span>{
@@ -1280,7 +1292,7 @@
                     }
                 }
 
-                <span class="attr">#[cfg(all(feature = <span class="string">"tokio"</span>))]
+                <span class="attr">#[cfg(feature = <span class="string">"tokio"</span>)]
                 </span>{
                     <span class="kw">let </span>nonce = tokio::fs::read(nonce_file).<span class="kw">await</span><span class="question-mark">?</span>;
                     tokio::io::AsyncWriteExt::write_all(<span class="kw-2">&amp;mut </span>stream, <span class="kw-2">&amp;</span>nonce).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1495,7 +1507,8 @@
         );
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(pos) = pos {
-            <span class="comment">// SAFETY: The above `position()` call made sure that only ASCII chars are in the string up to `pos`
+            <span class="comment">// SAFETY: The above `position()` call made sure that only ASCII chars are in the string
+            // up to `pos`
             </span>f.write_str(<span class="kw">unsafe </span>{ from_utf8_unchecked(<span class="kw-2">&amp;</span>value[..pos]) })<span class="question-mark">?</span>;
 
             <span class="kw">let </span>c = value[pos];
@@ -1504,7 +1517,8 @@
             <span class="kw">let </span>pos = c <span class="kw">as </span>usize * <span class="number">3</span>;
             f.write_str(<span class="kw-2">&amp;</span>LOOKUP[pos..pos + <span class="number">3</span>])<span class="question-mark">?</span>;
         } <span class="kw">else </span>{
-            <span class="comment">// SAFETY: The above `position()` call made sure that only ASCII chars are in the rest of the string
+            <span class="comment">// SAFETY: The above `position()` call made sure that only ASCII chars are in the rest
+            // of the string
             </span>f.write_str(<span class="kw">unsafe </span>{ from_utf8_unchecked(value) })<span class="question-mark">?</span>;
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         }

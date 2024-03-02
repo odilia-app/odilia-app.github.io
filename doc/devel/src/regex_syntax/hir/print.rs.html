@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-syntax-0.7.2/src/hir/print.rs`."><title>print.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="regex_syntax" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/regex-syntax-0.8.2/src/hir/print.rs`."><title>print.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="regex_syntax" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -576,6 +576,37 @@
 <a href="#575" id="575">575</a>
 <a href="#576" id="576">576</a>
 <a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
 </pre></div><pre class="rust"><code><span class="doccomment">/*!
 This module provides a regular expression printer for `Hir`.
 */
@@ -667,9 +698,16 @@ This module provides a regular expression printer for `Hir`.
 
     <span class="kw">fn </span>visit_pre(<span class="kw-2">&amp;mut </span><span class="self">self</span>, hir: <span class="kw-2">&amp;</span>Hir) -&gt; fmt::Result {
         <span class="kw">match </span><span class="kw-2">*</span>hir.kind() {
-            <span class="comment">// Empty is represented by nothing in the concrete syntax, and
-            // repetition operators are strictly suffix oriented.
-            </span>HirKind::Empty | HirKind::Repetition(<span class="kw">_</span>) =&gt; {}
+            HirKind::Empty =&gt; {
+                <span class="comment">// Technically an empty sub-expression could be "printed" by
+                // just ignoring it, but in practice, you could have a
+                // repetition operator attached to an empty expression, and you
+                // really need something in the concrete syntax to make that
+                // work as you'd expect.
+                </span><span class="self">self</span>.wtr.write_str(<span class="string">r"(?:)"</span>)<span class="question-mark">?</span>;
+            }
+            <span class="comment">// Repetition operators are strictly suffix oriented.
+            </span>HirKind::Repetition(<span class="kw">_</span>) =&gt; {}
             HirKind::Literal(hir::Literal(<span class="kw-2">ref </span>bytes)) =&gt; {
                 <span class="comment">// See the comment on the 'Concat' and 'Alternation' case below
                 // for why we put parens here. Literals are, conceptually,
@@ -772,6 +810,30 @@ This module provides a regular expression printer for `Hir`.
                 }
                 hir::Look::WordUnicodeNegate =&gt; {
                     <span class="self">self</span>.wtr.write_str(<span class="string">r"\B"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordStartAscii =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"(?-u:\b{start})"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordEndAscii =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"(?-u:\b{end})"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordStartUnicode =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"\b{start}"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordEndUnicode =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"\b{end}"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordStartHalfAscii =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"(?-u:\b{start-half})"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordEndHalfAscii =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"(?-u:\b{end-half})"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordStartHalfUnicode =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"\b{start-half}"</span>)<span class="question-mark">?</span>;
+                }
+                hir::Look::WordEndHalfUnicode =&gt; {
+                    <span class="self">self</span>.wtr.write_str(<span class="string">r"\b{end-half}"</span>)<span class="question-mark">?</span>;
                 }
             },
             HirKind::Capture(hir::Capture { <span class="kw-2">ref </span>name, .. }) =&gt; {
@@ -1002,20 +1064,20 @@ This module provides a regular expression printer for `Hir`.
         <span class="comment">// Test that various zero-length repetitions always translate to an
         // empty regex. This is more a property of HIR's smart constructors
         // than the printer though.
-        </span>roundtrip(<span class="string">"a{0}"</span>, <span class="string">""</span>);
-        roundtrip(<span class="string">"(?:ab){0}"</span>, <span class="string">""</span>);
+        </span>roundtrip(<span class="string">"a{0}"</span>, <span class="string">"(?:)"</span>);
+        roundtrip(<span class="string">"(?:ab){0}"</span>, <span class="string">"(?:)"</span>);
         <span class="attr">#[cfg(feature = <span class="string">"unicode-gencat"</span>)]
         </span>{
-            roundtrip(<span class="string">r"\p{any}{0}"</span>, <span class="string">""</span>);
-            roundtrip(<span class="string">r"\P{any}{0}"</span>, <span class="string">""</span>);
+            roundtrip(<span class="string">r"\p{any}{0}"</span>, <span class="string">"(?:)"</span>);
+            roundtrip(<span class="string">r"\P{any}{0}"</span>, <span class="string">"(?:)"</span>);
         }
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>print_group() {
-        roundtrip(<span class="string">"()"</span>, <span class="string">"()"</span>);
-        roundtrip(<span class="string">"(?P&lt;foo&gt;)"</span>, <span class="string">"(?P&lt;foo&gt;)"</span>);
-        roundtrip(<span class="string">"(?:)"</span>, <span class="string">""</span>);
+        roundtrip(<span class="string">"()"</span>, <span class="string">"((?:))"</span>);
+        roundtrip(<span class="string">"(?P&lt;foo&gt;)"</span>, <span class="string">"(?P&lt;foo&gt;(?:))"</span>);
+        roundtrip(<span class="string">"(?:)"</span>, <span class="string">"(?:)"</span>);
 
         roundtrip(<span class="string">"(a)"</span>, <span class="string">"(a)"</span>);
         roundtrip(<span class="string">"(?P&lt;foo&gt;a)"</span>, <span class="string">"(?P&lt;foo&gt;a)"</span>);
@@ -1026,8 +1088,8 @@ This module provides a regular expression printer for `Hir`.
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>print_alternation() {
-        roundtrip(<span class="string">"|"</span>, <span class="string">"(?:|)"</span>);
-        roundtrip(<span class="string">"||"</span>, <span class="string">"(?:||)"</span>);
+        roundtrip(<span class="string">"|"</span>, <span class="string">"(?:(?:)|(?:))"</span>);
+        roundtrip(<span class="string">"||"</span>, <span class="string">"(?:(?:)|(?:)|(?:))"</span>);
 
         roundtrip(<span class="string">"a|b"</span>, <span class="string">"[ab]"</span>);
         roundtrip(<span class="string">"ab|cd"</span>, <span class="string">"(?:(?:ab)|(?:cd))"</span>);
@@ -1081,7 +1143,7 @@ This module provides a regular expression printer for `Hir`.
             }),
             Hir::look(hir::Look::End),
         ]);
-        <span class="macro">assert_eq!</span>(<span class="string">r"(?:\A(?:\A\z)+\z)"</span>, expr.to_string());
+        <span class="macro">assert_eq!</span>(<span class="string">r"(?:\A\A\z\z)"</span>, expr.to_string());
     }
 
     <span class="comment">// Just like regression_repetition_concat, but with the repetition using
@@ -1118,7 +1180,7 @@ This module provides a regular expression printer for `Hir`.
             }),
             Hir::look(hir::Look::End),
         ]);
-        <span class="macro">assert_eq!</span>(<span class="string">r"(?:\A(?:\A|\z)+\z)"</span>, expr.to_string());
+        <span class="macro">assert_eq!</span>(<span class="string">r"(?:\A(?:\A|\z)\z)"</span>, expr.to_string());
     }
 
     <span class="comment">// This regression test is very similar in flavor to

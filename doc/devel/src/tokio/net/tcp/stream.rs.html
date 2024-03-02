@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.28.2/src/net/tcp/stream.rs`."><title>stream.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-1.36.0/src/net/tcp/stream.rs`."><title>stream.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -1423,7 +1423,6 @@
 <a href="#1422" id="1422">1422</a>
 <a href="#1423" id="1423">1423</a>
 <a href="#1424" id="1424">1424</a>
-<a href="#1425" id="1425">1425</a>
 </pre></div><pre class="rust"><code><span class="macro">cfg_not_wasi! </span>{
     <span class="kw">use </span><span class="kw">crate</span>::future::poll_fn;
     <span class="kw">use </span><span class="kw">crate</span>::net::{to_socket_addrs, ToSocketAddrs};
@@ -1648,10 +1647,14 @@
     /// #[tokio::main]
     /// async fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     ///     let mut data = [0u8; 12];
+    /// #   if false {
     ///     let listener = TcpListener::bind("127.0.0.1:34254").await?;
-    /// #   let handle = tokio::spawn(async {
-    /// #       let mut stream: TcpStream = TcpStream::connect("127.0.0.1:34254").await.unwrap();
-    /// #       stream.write(b"Hello world!").await.unwrap();
+    /// #   }
+    /// #   let listener = TcpListener::bind("127.0.0.1:0").await?;
+    /// #   let addr = listener.local_addr().unwrap();
+    /// #   let handle = tokio::spawn(async move {
+    /// #       let mut stream: TcpStream = TcpStream::connect(addr).await.unwrap();
+    /// #       stream.write_all(b"Hello world!").await.unwrap();
     /// #   });
     ///     let (tokio_tcp_stream, _) = listener.accept().await?;
     ///     let mut std_tcp_stream = tokio_tcp_stream.into_std()?;
@@ -1671,7 +1674,7 @@
             <span class="kw">use </span>std::os::unix::io::{FromRawFd, IntoRawFd};
             <span class="self">self</span>.io
                 .into_inner()
-                .map(|io| io.into_raw_fd())
+                .map(IntoRawFd::into_raw_fd)
                 .map(|raw_fd| <span class="kw">unsafe </span>{ std::net::TcpStream::from_raw_fd(raw_fd) })
         }
 
@@ -1684,7 +1687,7 @@
                 .map(|raw_socket| <span class="kw">unsafe </span>{ std::net::TcpStream::from_raw_socket(raw_socket) })
         }
 
-        <span class="attr">#[cfg(tokio_wasi)]
+        <span class="attr">#[cfg(target_os = <span class="string">"wasi"</span>)]
         </span>{
             <span class="kw">use </span>std::os::wasi::io::{FromRawFd, IntoRawFd};
             <span class="self">self</span>.io
@@ -2482,7 +2485,7 @@
     /// returns the number of bytes peeked.
     ///
     /// Successive calls return the same data. This is accomplished by passing
-    /// `MSG_PEEK` as a flag to the underlying recv system call.
+    /// `MSG_PEEK` as a flag to the underlying `recv` system call.
     ///
     /// # Examples
     ///
@@ -2600,13 +2603,13 @@
             socket2::SockRef::from(<span class="self">self</span>).linger()
         }
 
-        <span class="doccomment">/// Sets the linger duration of this socket by setting the SO_LINGER option.
+        <span class="doccomment">/// Sets the linger duration of this socket by setting the `SO_LINGER` option.
         ///
         /// This option controls the action taken when a stream has unsent messages and the stream is
-        /// closed. If SO_LINGER is set, the system shall block the process until it can transmit the
+        /// closed. If `SO_LINGER` is set, the system shall block the process until it can transmit the
         /// data or until the time expires.
         ///
-        /// If SO_LINGER is not specified, and the stream is closed, the system handles the call in a
+        /// If `SO_LINGER` is not specified, and the stream is closed, the system handles the call in a
         /// way that allows the process to continue as quickly as possible.
         ///
         /// # Examples
@@ -2804,8 +2807,7 @@
         }
     }
 
-    <span class="attr">#[cfg(not(tokio_no_as_fd))]
-    </span><span class="kw">impl </span>AsFd <span class="kw">for </span>TcpStream {
+    <span class="kw">impl </span>AsFd <span class="kw">for </span>TcpStream {
         <span class="kw">fn </span>as_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedFd&lt;<span class="lifetime">'_</span>&gt; {
             <span class="kw">unsafe </span>{ BorrowedFd::borrow_raw(<span class="self">self</span>.as_raw_fd()) }
         }
@@ -2813,9 +2815,7 @@
 }
 
 <span class="macro">cfg_windows! </span>{
-    <span class="kw">use </span><span class="kw">crate</span>::os::windows::io::{AsRawSocket, RawSocket};
-    <span class="attr">#[cfg(not(tokio_no_as_fd))]
-    </span><span class="kw">use </span><span class="kw">crate</span>::os::windows::io::{AsSocket, BorrowedSocket};
+    <span class="kw">use </span><span class="kw">crate</span>::os::windows::io::{AsRawSocket, RawSocket, AsSocket, BorrowedSocket};
 
     <span class="kw">impl </span>AsRawSocket <span class="kw">for </span>TcpStream {
         <span class="kw">fn </span>as_raw_socket(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RawSocket {
@@ -2823,15 +2823,14 @@
         }
     }
 
-    <span class="attr">#[cfg(not(tokio_no_as_fd))]
-    </span><span class="kw">impl </span>AsSocket <span class="kw">for </span>TcpStream {
+    <span class="kw">impl </span>AsSocket <span class="kw">for </span>TcpStream {
         <span class="kw">fn </span>as_socket(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedSocket&lt;<span class="lifetime">'_</span>&gt; {
             <span class="kw">unsafe </span>{ BorrowedSocket::borrow_raw(<span class="self">self</span>.as_raw_socket()) }
         }
     }
 }
 
-<span class="attr">#[cfg(all(tokio_unstable, tokio_wasi))]
+<span class="attr">#[cfg(all(tokio_unstable, target_os = <span class="string">"wasi"</span>))]
 </span><span class="kw">mod </span>sys {
     <span class="kw">use </span><span class="kw">super</span>::TcpStream;
     <span class="kw">use </span>std::os::wasi::prelude::<span class="kw-2">*</span>;
@@ -2842,8 +2841,7 @@
         }
     }
 
-    <span class="attr">#[cfg(not(tokio_no_as_fd))]
-    </span><span class="kw">impl </span>AsFd <span class="kw">for </span>TcpStream {
+    <span class="kw">impl </span>AsFd <span class="kw">for </span>TcpStream {
         <span class="kw">fn </span>as_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BorrowedFd&lt;<span class="lifetime">'_</span>&gt; {
             <span class="kw">unsafe </span>{ BorrowedFd::borrow_raw(<span class="self">self</span>.as_raw_fd()) }
         }

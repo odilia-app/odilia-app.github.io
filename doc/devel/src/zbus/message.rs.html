@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.13.1/src/message.rs`."><title>message.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.15.1/src/message.rs`."><title>message.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><a class="sub-logo-container" href="../../zbus/index.html"><img src="https://storage.googleapis.com/fdo-gitlab-uploads/project/avatar/3213/zbus-logomark.png" alt="zbus"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -600,322 +600,10 @@
 <a href="#599" id="599">599</a>
 <a href="#600" id="600">600</a>
 <a href="#601" id="601">601</a>
-<a href="#602" id="602">602</a>
-<a href="#603" id="603">603</a>
-<a href="#604" id="604">604</a>
-<a href="#605" id="605">605</a>
-<a href="#606" id="606">606</a>
-<a href="#607" id="607">607</a>
-<a href="#608" id="608">608</a>
-<a href="#609" id="609">609</a>
-<a href="#610" id="610">610</a>
-<a href="#611" id="611">611</a>
-<a href="#612" id="612">612</a>
-<a href="#613" id="613">613</a>
-<a href="#614" id="614">614</a>
-<a href="#615" id="615">615</a>
-<a href="#616" id="616">616</a>
-<a href="#617" id="617">617</a>
-<a href="#618" id="618">618</a>
-<a href="#619" id="619">619</a>
-<a href="#620" id="620">620</a>
-<a href="#621" id="621">621</a>
-<a href="#622" id="622">622</a>
-<a href="#623" id="623">623</a>
-<a href="#624" id="624">624</a>
-<a href="#625" id="625">625</a>
-<a href="#626" id="626">626</a>
-<a href="#627" id="627">627</a>
-<a href="#628" id="628">628</a>
-<a href="#629" id="629">629</a>
-<a href="#630" id="630">630</a>
-<a href="#631" id="631">631</a>
-<a href="#632" id="632">632</a>
-<a href="#633" id="633">633</a>
-<a href="#634" id="634">634</a>
-<a href="#635" id="635">635</a>
-<a href="#636" id="636">636</a>
-<a href="#637" id="637">637</a>
-<a href="#638" id="638">638</a>
-<a href="#639" id="639">639</a>
-<a href="#640" id="640">640</a>
-<a href="#641" id="641">641</a>
-<a href="#642" id="642">642</a>
-<a href="#643" id="643">643</a>
-<a href="#644" id="644">644</a>
-<a href="#645" id="645">645</a>
-<a href="#646" id="646">646</a>
-<a href="#647" id="647">647</a>
-<a href="#648" id="648">648</a>
-<a href="#649" id="649">649</a>
-<a href="#650" id="650">650</a>
-<a href="#651" id="651">651</a>
-<a href="#652" id="652">652</a>
-<a href="#653" id="653">653</a>
-<a href="#654" id="654">654</a>
-<a href="#655" id="655">655</a>
-<a href="#656" id="656">656</a>
-<a href="#657" id="657">657</a>
-<a href="#658" id="658">658</a>
-<a href="#659" id="659">659</a>
-<a href="#660" id="660">660</a>
-<a href="#661" id="661">661</a>
-<a href="#662" id="662">662</a>
-<a href="#663" id="663">663</a>
-<a href="#664" id="664">664</a>
-<a href="#665" id="665">665</a>
-<a href="#666" id="666">666</a>
-<a href="#667" id="667">667</a>
-<a href="#668" id="668">668</a>
-<a href="#669" id="669">669</a>
-<a href="#670" id="670">670</a>
-<a href="#671" id="671">671</a>
-<a href="#672" id="672">672</a>
-<a href="#673" id="673">673</a>
-<a href="#674" id="674">674</a>
-<a href="#675" id="675">675</a>
-<a href="#676" id="676">676</a>
-<a href="#677" id="677">677</a>
-<a href="#678" id="678">678</a>
-<a href="#679" id="679">679</a>
-<a href="#680" id="680">680</a>
-<a href="#681" id="681">681</a>
-<a href="#682" id="682">682</a>
-<a href="#683" id="683">683</a>
-<a href="#684" id="684">684</a>
-<a href="#685" id="685">685</a>
-<a href="#686" id="686">686</a>
-<a href="#687" id="687">687</a>
-<a href="#688" id="688">688</a>
-<a href="#689" id="689">689</a>
-<a href="#690" id="690">690</a>
-<a href="#691" id="691">691</a>
-<a href="#692" id="692">692</a>
-<a href="#693" id="693">693</a>
-<a href="#694" id="694">694</a>
-<a href="#695" id="695">695</a>
-<a href="#696" id="696">696</a>
-<a href="#697" id="697">697</a>
-<a href="#698" id="698">698</a>
-<a href="#699" id="699">699</a>
-<a href="#700" id="700">700</a>
-<a href="#701" id="701">701</a>
-<a href="#702" id="702">702</a>
-<a href="#703" id="703">703</a>
-<a href="#704" id="704">704</a>
-<a href="#705" id="705">705</a>
-<a href="#706" id="706">706</a>
-<a href="#707" id="707">707</a>
-<a href="#708" id="708">708</a>
-<a href="#709" id="709">709</a>
-<a href="#710" id="710">710</a>
-<a href="#711" id="711">711</a>
-<a href="#712" id="712">712</a>
-<a href="#713" id="713">713</a>
-<a href="#714" id="714">714</a>
-<a href="#715" id="715">715</a>
-<a href="#716" id="716">716</a>
-<a href="#717" id="717">717</a>
-<a href="#718" id="718">718</a>
-<a href="#719" id="719">719</a>
-<a href="#720" id="720">720</a>
-<a href="#721" id="721">721</a>
-<a href="#722" id="722">722</a>
-<a href="#723" id="723">723</a>
-<a href="#724" id="724">724</a>
-<a href="#725" id="725">725</a>
-<a href="#726" id="726">726</a>
-<a href="#727" id="727">727</a>
-<a href="#728" id="728">728</a>
-<a href="#729" id="729">729</a>
-<a href="#730" id="730">730</a>
-<a href="#731" id="731">731</a>
-<a href="#732" id="732">732</a>
-<a href="#733" id="733">733</a>
-<a href="#734" id="734">734</a>
-<a href="#735" id="735">735</a>
-<a href="#736" id="736">736</a>
-<a href="#737" id="737">737</a>
-<a href="#738" id="738">738</a>
-<a href="#739" id="739">739</a>
-<a href="#740" id="740">740</a>
-<a href="#741" id="741">741</a>
-<a href="#742" id="742">742</a>
-<a href="#743" id="743">743</a>
-<a href="#744" id="744">744</a>
-<a href="#745" id="745">745</a>
-<a href="#746" id="746">746</a>
-<a href="#747" id="747">747</a>
-<a href="#748" id="748">748</a>
-<a href="#749" id="749">749</a>
-<a href="#750" id="750">750</a>
-<a href="#751" id="751">751</a>
-<a href="#752" id="752">752</a>
-<a href="#753" id="753">753</a>
-<a href="#754" id="754">754</a>
-<a href="#755" id="755">755</a>
-<a href="#756" id="756">756</a>
-<a href="#757" id="757">757</a>
-<a href="#758" id="758">758</a>
-<a href="#759" id="759">759</a>
-<a href="#760" id="760">760</a>
-<a href="#761" id="761">761</a>
-<a href="#762" id="762">762</a>
-<a href="#763" id="763">763</a>
-<a href="#764" id="764">764</a>
-<a href="#765" id="765">765</a>
-<a href="#766" id="766">766</a>
-<a href="#767" id="767">767</a>
-<a href="#768" id="768">768</a>
-<a href="#769" id="769">769</a>
-<a href="#770" id="770">770</a>
-<a href="#771" id="771">771</a>
-<a href="#772" id="772">772</a>
-<a href="#773" id="773">773</a>
-<a href="#774" id="774">774</a>
-<a href="#775" id="775">775</a>
-<a href="#776" id="776">776</a>
-<a href="#777" id="777">777</a>
-<a href="#778" id="778">778</a>
-<a href="#779" id="779">779</a>
-<a href="#780" id="780">780</a>
-<a href="#781" id="781">781</a>
-<a href="#782" id="782">782</a>
-<a href="#783" id="783">783</a>
-<a href="#784" id="784">784</a>
-<a href="#785" id="785">785</a>
-<a href="#786" id="786">786</a>
-<a href="#787" id="787">787</a>
-<a href="#788" id="788">788</a>
-<a href="#789" id="789">789</a>
-<a href="#790" id="790">790</a>
-<a href="#791" id="791">791</a>
-<a href="#792" id="792">792</a>
-<a href="#793" id="793">793</a>
-<a href="#794" id="794">794</a>
-<a href="#795" id="795">795</a>
-<a href="#796" id="796">796</a>
-<a href="#797" id="797">797</a>
-<a href="#798" id="798">798</a>
-<a href="#799" id="799">799</a>
-<a href="#800" id="800">800</a>
-<a href="#801" id="801">801</a>
-<a href="#802" id="802">802</a>
-<a href="#803" id="803">803</a>
-<a href="#804" id="804">804</a>
-<a href="#805" id="805">805</a>
-<a href="#806" id="806">806</a>
-<a href="#807" id="807">807</a>
-<a href="#808" id="808">808</a>
-<a href="#809" id="809">809</a>
-<a href="#810" id="810">810</a>
-<a href="#811" id="811">811</a>
-<a href="#812" id="812">812</a>
-<a href="#813" id="813">813</a>
-<a href="#814" id="814">814</a>
-<a href="#815" id="815">815</a>
-<a href="#816" id="816">816</a>
-<a href="#817" id="817">817</a>
-<a href="#818" id="818">818</a>
-<a href="#819" id="819">819</a>
-<a href="#820" id="820">820</a>
-<a href="#821" id="821">821</a>
-<a href="#822" id="822">822</a>
-<a href="#823" id="823">823</a>
-<a href="#824" id="824">824</a>
-<a href="#825" id="825">825</a>
-<a href="#826" id="826">826</a>
-<a href="#827" id="827">827</a>
-<a href="#828" id="828">828</a>
-<a href="#829" id="829">829</a>
-<a href="#830" id="830">830</a>
-<a href="#831" id="831">831</a>
-<a href="#832" id="832">832</a>
-<a href="#833" id="833">833</a>
-<a href="#834" id="834">834</a>
-<a href="#835" id="835">835</a>
-<a href="#836" id="836">836</a>
-<a href="#837" id="837">837</a>
-<a href="#838" id="838">838</a>
-<a href="#839" id="839">839</a>
-<a href="#840" id="840">840</a>
-<a href="#841" id="841">841</a>
-<a href="#842" id="842">842</a>
-<a href="#843" id="843">843</a>
-<a href="#844" id="844">844</a>
-<a href="#845" id="845">845</a>
-<a href="#846" id="846">846</a>
-<a href="#847" id="847">847</a>
-<a href="#848" id="848">848</a>
-<a href="#849" id="849">849</a>
-<a href="#850" id="850">850</a>
-<a href="#851" id="851">851</a>
-<a href="#852" id="852">852</a>
-<a href="#853" id="853">853</a>
-<a href="#854" id="854">854</a>
-<a href="#855" id="855">855</a>
-<a href="#856" id="856">856</a>
-<a href="#857" id="857">857</a>
-<a href="#858" id="858">858</a>
-<a href="#859" id="859">859</a>
-<a href="#860" id="860">860</a>
-<a href="#861" id="861">861</a>
-<a href="#862" id="862">862</a>
-<a href="#863" id="863">863</a>
-<a href="#864" id="864">864</a>
-<a href="#865" id="865">865</a>
-<a href="#866" id="866">866</a>
-<a href="#867" id="867">867</a>
-<a href="#868" id="868">868</a>
-<a href="#869" id="869">869</a>
-<a href="#870" id="870">870</a>
-<a href="#871" id="871">871</a>
-<a href="#872" id="872">872</a>
-<a href="#873" id="873">873</a>
-<a href="#874" id="874">874</a>
-<a href="#875" id="875">875</a>
-<a href="#876" id="876">876</a>
-<a href="#877" id="877">877</a>
-<a href="#878" id="878">878</a>
-<a href="#879" id="879">879</a>
-<a href="#880" id="880">880</a>
-<a href="#881" id="881">881</a>
-<a href="#882" id="882">882</a>
-<a href="#883" id="883">883</a>
-<a href="#884" id="884">884</a>
-<a href="#885" id="885">885</a>
-<a href="#886" id="886">886</a>
-<a href="#887" id="887">887</a>
-<a href="#888" id="888">888</a>
-<a href="#889" id="889">889</a>
-<a href="#890" id="890">890</a>
-<a href="#891" id="891">891</a>
-<a href="#892" id="892">892</a>
-<a href="#893" id="893">893</a>
-<a href="#894" id="894">894</a>
-<a href="#895" id="895">895</a>
-<a href="#896" id="896">896</a>
-<a href="#897" id="897">897</a>
-<a href="#898" id="898">898</a>
-<a href="#899" id="899">899</a>
-<a href="#900" id="900">900</a>
-<a href="#901" id="901">901</a>
-<a href="#902" id="902">902</a>
-<a href="#903" id="903">903</a>
-<a href="#904" id="904">904</a>
-<a href="#905" id="905">905</a>
-<a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
-<a href="#910" id="910">910</a>
-<a href="#911" id="911">911</a>
-<a href="#912" id="912">912</a>
-<a href="#913" id="913">913</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
     convert::{Into, TryFrom, TryInto},
     fmt,
-    io::{Cursor, Write},
+    io::Cursor,
 };
 
 <span class="attr">#[cfg(unix)]
@@ -924,7 +612,6 @@
     sync::{Arc, RwLock},
 };
 
-<span class="kw">use </span>enumflags2::BitFlags;
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>zbus_names::{BusName, ErrorName, InterfaceName, MemberName, UniqueName};
 
@@ -933,19 +620,13 @@
 <span class="kw">use crate</span>::{
     utils::padding_for_8_bytes,
     zvariant::{DynamicType, EncodingContext, ObjectPath, Signature, Type},
-    EndianSig, Error, MessageField, MessageFieldCode, MessageFields, MessageFlags, MessageHeader,
-    MessagePrimaryHeader, MessageType, QuickMessageFields, <span class="prelude-ty">Result</span>, MAX_MESSAGE_SIZE,
-    MIN_MESSAGE_SIZE, NATIVE_ENDIAN_SIG,
+    EndianSig, Error, MessageBuilder, MessageField, MessageFieldCode, MessageFields, MessageHeader,
+    MessagePrimaryHeader, MessageType, QuickMessageFields, <span class="prelude-ty">Result</span>, MIN_MESSAGE_SIZE,
+    NATIVE_ENDIAN_SIG,
 };
 
 <span class="attr">#[cfg(unix)]
 </span><span class="kw">const </span>LOCK_PANIC_MSG: <span class="kw-2">&amp;</span>str = <span class="string">"lock poisoned"</span>;
-
-<span class="attr">#[cfg(unix)]
-</span><span class="kw">type </span>BuildGenericResult = Vec&lt;RawFd&gt;;
-
-<span class="attr">#[cfg(not(unix))]
-</span><span class="kw">type </span>BuildGenericResult = ();
 
 <span class="macro">macro_rules! </span>dbus_context {
     (<span class="macro-nonterminal">$n_bytes_before</span>: expr) =&gt; {
@@ -953,318 +634,9 @@
     };
 }
 
-<span class="doccomment">/// A builder for [`Message`]
-</span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>MessageBuilder&lt;<span class="lifetime">'a</span>&gt; {
-    header: MessageHeader&lt;<span class="lifetime">'a</span>&gt;,
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; MessageBuilder&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">fn </span>new(msg_type: MessageType) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>primary = MessagePrimaryHeader::new(msg_type, <span class="number">0</span>);
-        <span class="kw">let </span>fields = MessageFields::new();
-        <span class="kw">let </span>header = MessageHeader::new(primary, fields);
-        <span class="self">Self </span>{ header }
-    }
-
-    <span class="doccomment">/// Create a message of type [`MessageType::MethodCall`].
-    </span><span class="kw">pub fn </span>method_call&lt;<span class="lifetime">'p</span>: <span class="lifetime">'a</span>, <span class="lifetime">'m</span>: <span class="lifetime">'a</span>, P, M&gt;(path: P, method_name: M) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
-        P::Error: Into&lt;Error&gt;,
-        M::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">Self</span>::new(MessageType::MethodCall)
-            .path(path)<span class="question-mark">?
-            </span>.member(method_name)
-    }
-
-    <span class="doccomment">/// Create a message of type [`MessageType::Signal`].
-    </span><span class="kw">pub fn </span>signal&lt;<span class="lifetime">'p</span>: <span class="lifetime">'a</span>, <span class="lifetime">'i</span>: <span class="lifetime">'a</span>, <span class="lifetime">'m</span>: <span class="lifetime">'a</span>, P, I, M&gt;(path: P, interface: I, name: M) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
-        I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
-        M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
-        P::Error: Into&lt;Error&gt;,
-        I::Error: Into&lt;Error&gt;,
-        M::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">Self</span>::new(MessageType::Signal)
-            .path(path)<span class="question-mark">?
-            </span>.interface(interface)<span class="question-mark">?
-            </span>.member(name)
-    }
-
-    <span class="doccomment">/// Create a message of type [`MessageType::MethodReturn`].
-    </span><span class="kw">pub fn </span>method_return(reply_to: <span class="kw-2">&amp;</span>MessageHeader&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">Self</span>::new(MessageType::MethodReturn).reply_to(reply_to)
-    }
-
-    <span class="doccomment">/// Create a message of type [`MessageType::Error`].
-    </span><span class="kw">pub fn </span>error&lt;<span class="lifetime">'e</span>: <span class="lifetime">'a</span>, E&gt;(reply_to: <span class="kw-2">&amp;</span>MessageHeader&lt;<span class="lifetime">'_</span>&gt;, name: E) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>E: TryInto&lt;ErrorName&lt;<span class="lifetime">'e</span>&gt;&gt;,
-        E::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">Self</span>::new(MessageType::Error)
-            .error_name(name)<span class="question-mark">?
-            </span>.reply_to(reply_to)
-    }
-
-    <span class="doccomment">/// Add flags to the message.
-    ///
-    /// See [`MessageFlags`] documentation for the meaning of the flags.
-    ///
-    /// The function will return an error if invalid flags are given for the message type.
-    </span><span class="kw">pub fn </span>with_flags(<span class="kw-2">mut </span><span class="self">self</span>, flag: MessageFlags) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">if </span><span class="self">self</span>.header.message_type()<span class="question-mark">? </span>!= MessageType::MethodCall
-            &amp;&amp; BitFlags::from_flag(flag).contains(MessageFlags::NoReplyExpected)
-        {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidField);
-        }
-        <span class="kw">let </span>flags = <span class="self">self</span>.header.primary().flags() | flag;
-        <span class="self">self</span>.header.primary_mut().set_flags(flags);
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="doccomment">/// Set the unique name of the sending connection.
-    </span><span class="kw">pub fn </span>sender&lt;<span class="lifetime">'s</span>: <span class="lifetime">'a</span>, S&gt;(<span class="kw-2">mut </span><span class="self">self</span>, sender: S) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>S: TryInto&lt;UniqueName&lt;<span class="lifetime">'s</span>&gt;&gt;,
-        S::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">self</span>.header
-            .fields_mut()
-            .replace(MessageField::Sender(sender.try_into().map_err(Into::into)<span class="question-mark">?</span>));
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="doccomment">/// Set the object to send a call to, or the object a signal is emitted from.
-    </span><span class="kw">pub fn </span>path&lt;<span class="lifetime">'p</span>: <span class="lifetime">'a</span>, P&gt;(<span class="kw-2">mut </span><span class="self">self</span>, path: P) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>P: TryInto&lt;ObjectPath&lt;<span class="lifetime">'p</span>&gt;&gt;,
-        P::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">self</span>.header
-            .fields_mut()
-            .replace(MessageField::Path(path.try_into().map_err(Into::into)<span class="question-mark">?</span>));
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="doccomment">/// Set the interface to invoke a method call on, or that a signal is emitted from.
-    </span><span class="kw">pub fn </span>interface&lt;<span class="lifetime">'i</span>: <span class="lifetime">'a</span>, I&gt;(<span class="kw-2">mut </span><span class="self">self</span>, interface: I) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>I: TryInto&lt;InterfaceName&lt;<span class="lifetime">'i</span>&gt;&gt;,
-        I::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">self</span>.header.fields_mut().replace(MessageField::Interface(
-            interface.try_into().map_err(Into::into)<span class="question-mark">?</span>,
-        ));
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="doccomment">/// Set the member, either the method name or signal name.
-    </span><span class="kw">pub fn </span>member&lt;<span class="lifetime">'m</span>: <span class="lifetime">'a</span>, M&gt;(<span class="kw-2">mut </span><span class="self">self</span>, member: M) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>M: TryInto&lt;MemberName&lt;<span class="lifetime">'m</span>&gt;&gt;,
-        M::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">self</span>.header
-            .fields_mut()
-            .replace(MessageField::Member(member.try_into().map_err(Into::into)<span class="question-mark">?</span>));
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="kw">fn </span>error_name&lt;<span class="lifetime">'e</span>: <span class="lifetime">'a</span>, E&gt;(<span class="kw-2">mut </span><span class="self">self</span>, error: E) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>E: TryInto&lt;ErrorName&lt;<span class="lifetime">'e</span>&gt;&gt;,
-        E::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">self</span>.header.fields_mut().replace(MessageField::ErrorName(
-            error.try_into().map_err(Into::into)<span class="question-mark">?</span>,
-        ));
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="doccomment">/// Set the name of the connection this message is intended for.
-    </span><span class="kw">pub fn </span>destination&lt;<span class="lifetime">'d</span>: <span class="lifetime">'a</span>, D&gt;(<span class="kw-2">mut </span><span class="self">self</span>, destination: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>D: TryInto&lt;BusName&lt;<span class="lifetime">'d</span>&gt;&gt;,
-        D::Error: Into&lt;Error&gt;,
-    {
-        <span class="self">self</span>.header.fields_mut().replace(MessageField::Destination(
-            destination.try_into().map_err(Into::into)<span class="question-mark">?</span>,
-        ));
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
-
-    <span class="kw">fn </span>reply_to(<span class="kw-2">mut </span><span class="self">self</span>, reply_to: <span class="kw-2">&amp;</span>MessageHeader&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>serial = reply_to.primary().serial_num().ok_or(Error::MissingField)<span class="question-mark">?</span>;
-        <span class="self">self</span>.header
-            .fields_mut()
-            .replace(MessageField::ReplySerial(<span class="kw-2">*</span>serial));
-
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = reply_to.sender()<span class="question-mark">? </span>{
-            <span class="self">self</span>.destination(sender.to_owned())
-        } <span class="kw">else </span>{
-            <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-        }
-    }
-
-    <span class="doccomment">/// Build the [`Message`] with the given body.
-    ///
-    /// You may pass `()` as the body if the message has no body.
-    ///
-    /// The caller is currently required to ensure that the resulting message contains the headers
-    /// as compliant with the [specification]. Additional checks may be added to this builder over
-    /// time as needed.
-    ///
-    /// [specification]:
-    /// https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-header-fields
-    </span><span class="kw">pub fn </span>build&lt;B&gt;(<span class="self">self</span>, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt;
-    <span class="kw">where
-        </span>B: serde::ser::Serialize + DynamicType,
-    {
-        <span class="kw">let </span>ctxt = <span class="macro">dbus_context!</span>(<span class="number">0</span>);
-
-        <span class="comment">// Note: this iterates the body twice, but we prefer efficient handling of large messages
-        // to efficient handling of ones that are complex to serialize.
-        </span><span class="attr">#[cfg(unix)]
-        </span><span class="kw">let </span>(body_len, fds_len) = zvariant::serialized_size_fds(ctxt, body)<span class="question-mark">?</span>;
-        <span class="attr">#[cfg(not(unix))]
-        </span><span class="kw">let </span>body_len = zvariant::serialized_size(ctxt, body)<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>signature = body.dynamic_signature();
-
-        <span class="self">self</span>.build_generic(
-            signature,
-            body_len,
-            <span class="kw">move </span>|cursor| {
-                <span class="attr">#[cfg(unix)]
-                </span>{
-                    <span class="kw">let </span>(<span class="kw">_</span>, fds) = zvariant::to_writer_fds(cursor, ctxt, body)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>::&lt;Vec&lt;RawFd&gt;, Error&gt;(fds)
-                }
-                <span class="attr">#[cfg(not(unix))]
-                </span>{
-                    zvariant::to_writer(cursor, ctxt, body)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>::&lt;(), Error&gt;(())
-                }
-            },
-            <span class="attr">#[cfg(unix)]
-            </span>fds_len,
-        )
-    }
-
-    <span class="doccomment">/// Create a new message from a raw slice of bytes to populate the body with, rather than by
-    /// serializing a value. The message body will be the exact bytes.
-    ///
-    /// # Safety
-    ///
-    /// This method is unsafe because it can be used to build an invalid message.
-    </span><span class="kw">pub unsafe fn </span>build_raw_body&lt;<span class="lifetime">'b</span>, S&gt;(
-        <span class="self">self</span>,
-        body_bytes: <span class="kw-2">&amp;</span>[u8],
-        signature: S,
-        <span class="attr">#[cfg(unix)] </span>fds: Vec&lt;RawFd&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt;
-    <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'b</span>&gt;&gt;,
-        S::Error: Into&lt;Error&gt;,
-    {
-        <span class="kw">let </span>signature: Signature&lt;<span class="lifetime">'b</span>&gt; = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
-        <span class="attr">#[cfg(unix)]
-        </span><span class="kw">let </span>fds_len = fds.len();
-
-        <span class="self">self</span>.build_generic(
-            signature,
-            body_bytes.len(),
-            <span class="kw">move </span>|cursor: <span class="kw-2">&amp;mut </span>Cursor&lt;<span class="kw-2">&amp;mut </span>Vec&lt;u8&gt;&gt;| {
-                cursor.write_all(body_bytes)<span class="question-mark">?</span>;
-
-                <span class="attr">#[cfg(unix)]
-                </span><span class="kw">return </span><span class="prelude-val">Ok</span>::&lt;Vec&lt;RawFd&gt;, Error&gt;(fds);
-
-                <span class="attr">#[cfg(not(unix))]
-                </span><span class="kw">return </span><span class="prelude-val">Ok</span>::&lt;(), Error&gt;(());
-            },
-            <span class="attr">#[cfg(unix)]
-            </span>fds_len,
-        )
-    }
-
-    <span class="kw">fn </span>build_generic&lt;WriteFunc&gt;(
-        <span class="self">self</span>,
-        <span class="kw-2">mut </span>signature: Signature&lt;<span class="lifetime">'_</span>&gt;,
-        body_len: usize,
-        write_body: WriteFunc,
-        <span class="attr">#[cfg(unix)] </span>fds_len: usize,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Message&gt;
-    <span class="kw">where
-        </span>WriteFunc: FnOnce(<span class="kw-2">&amp;mut </span>Cursor&lt;<span class="kw-2">&amp;mut </span>Vec&lt;u8&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;BuildGenericResult&gt;,
-    {
-        <span class="kw">let </span>ctxt = <span class="macro">dbus_context!</span>(<span class="number">0</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>header = <span class="self">self</span>.header;
-
-        <span class="kw">if </span>!signature.is_empty() {
-            <span class="kw">if </span>signature.starts_with(zvariant::STRUCT_SIG_START_STR) {
-                <span class="comment">// Remove leading and trailing STRUCT delimiters
-                </span>signature = signature.slice(<span class="number">1</span>..signature.len() - <span class="number">1</span>);
-            }
-            header.fields_mut().add(MessageField::Signature(signature));
-        }
-
-        <span class="kw">let </span>body_len_u32 = body_len.try_into().map_err(|<span class="kw">_</span>| Error::ExcessData)<span class="question-mark">?</span>;
-        header.primary_mut().set_body_len(body_len_u32);
-
-        <span class="attr">#[cfg(unix)]
-        </span>{
-            <span class="kw">let </span>fds_len_u32 = fds_len.try_into().map_err(|<span class="kw">_</span>| Error::ExcessData)<span class="question-mark">?</span>;
-            <span class="kw">if </span>fds_len != <span class="number">0 </span>{
-                header.fields_mut().add(MessageField::UnixFDs(fds_len_u32));
-            }
-        }
-
-        <span class="kw">let </span>hdr_len = zvariant::serialized_size(ctxt, <span class="kw-2">&amp;</span>header)<span class="question-mark">?</span>;
-        <span class="comment">// We need to align the body to 8-byte boundary.
-        </span><span class="kw">let </span>body_padding = padding_for_8_bytes(hdr_len);
-        <span class="kw">let </span>body_offset = hdr_len + body_padding;
-        <span class="kw">let </span>total_len = body_offset + body_len;
-        <span class="kw">if </span>total_len &gt; MAX_MESSAGE_SIZE {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::ExcessData);
-        }
-        <span class="kw">let </span><span class="kw-2">mut </span>bytes: Vec&lt;u8&gt; = Vec::with_capacity(total_len);
-        <span class="kw">let </span><span class="kw-2">mut </span>cursor = Cursor::new(<span class="kw-2">&amp;mut </span>bytes);
-
-        zvariant::to_writer(<span class="kw-2">&amp;mut </span>cursor, ctxt, <span class="kw-2">&amp;</span>header)<span class="question-mark">?</span>;
-        <span class="kw">for _ in </span><span class="number">0</span>..body_padding {
-            cursor.write_all(<span class="kw-2">&amp;</span>[<span class="number">0u8</span>])<span class="question-mark">?</span>;
-        }
-        <span class="attr">#[cfg(unix)]
-        </span><span class="kw">let </span>fds = write_body(<span class="kw-2">&amp;mut </span>cursor)<span class="question-mark">?</span>;
-        <span class="attr">#[cfg(not(unix))]
-        </span>write_body(<span class="kw-2">&amp;mut </span>cursor)<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>primary_header = header.into_primary();
-        <span class="kw">let </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt; = zvariant::from_slice(<span class="kw-2">&amp;</span>bytes, ctxt)<span class="question-mark">?</span>;
-        <span class="kw">let </span>quick_fields = QuickMessageFields::new(<span class="kw-2">&amp;</span>bytes, <span class="kw-2">&amp;</span>header)<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(Message {
-            primary_header,
-            quick_fields,
-            bytes,
-            body_offset,
-            <span class="attr">#[cfg(unix)]
-            </span>fds: Arc::new(RwLock::new(Fds::Raw(fds))),
-            recv_seq: MessageSequence::default(),
-        })
-    }
-}
-
 <span class="attr">#[cfg(unix)]
 #[derive(Debug, Eq, PartialEq)]
-</span><span class="kw">enum </span>Fds {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>Fds {
     Owned(Vec&lt;OwnedFd&gt;),
     Raw(Vec&lt;RawFd&gt;),
 }
@@ -1301,13 +673,13 @@
 /// [`Connection`]: struct.Connection#method.call_method
 </span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>Message {
-    primary_header: MessagePrimaryHeader,
-    quick_fields: QuickMessageFields,
-    bytes: Vec&lt;u8&gt;,
-    body_offset: usize,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) primary_header: MessagePrimaryHeader,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) quick_fields: QuickMessageFields,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) bytes: Vec&lt;u8&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) body_offset: usize,
     <span class="attr">#[cfg(unix)]
-    </span>fds: Arc&lt;RwLock&lt;Fds&gt;&gt;,
-    recv_seq: MessageSequence,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) fds: Arc&lt;RwLock&lt;Fds&gt;&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) recv_seq: MessageSequence,
 }
 
 <span class="macro">assert_impl_all!</span>(Message: Send, Sync, Unpin);
@@ -1424,6 +796,29 @@
             b = b.sender(sender)<span class="question-mark">?</span>;
         }
         b.build(body)
+    }
+
+    <span class="doccomment">/// Create a message from bytes.
+    ///
+    /// The `fds` parameter is only available on unix. It specifies the file descriptors that
+    /// accompany the message. On the wire, values of the UNIX_FD types store the index of the
+    /// corresponding file descriptor in this vector. Passing an empty vector on a message that
+    /// has UNIX_FD will result in an error.
+    ///
+    /// **Note:** Since the constructed message is not construct by zbus, the receive sequence,
+    /// which can be acquired from [`Message::recv_position`], is not applicable and hence set
+    /// to `0`.
+    ///
+    /// # Safety
+    ///
+    /// This method is unsafe as bytes may have an invalid encoding.
+    </span><span class="kw">pub unsafe fn </span>from_bytes(bytes: Vec&lt;u8&gt;, <span class="attr">#[cfg(unix)] </span>fds: Vec&lt;OwnedFd&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::from_raw_parts(
+            bytes,
+            <span class="attr">#[cfg(unix)]
+            </span>fds,
+            <span class="number">0</span>,
+        )
     }
 
     <span class="doccomment">/// Create a message from its full contents
@@ -1760,7 +1155,7 @@
 
     <span class="attr">#[cfg(unix)]
     </span><span class="kw">use </span><span class="kw">super</span>::Fds;
-    <span class="kw">use super</span>::{Message, MessageBuilder};
+    <span class="kw">use </span><span class="kw">super</span>::Message;
     <span class="kw">use </span><span class="kw">crate</span>::Error;
 
     <span class="attr">#[test]
@@ -1804,25 +1199,6 @@
         )
         .unwrap();
         <span class="macro">assert_eq!</span>(e.to_string(), <span class="string">"Error org.freedesktop.zbus.Error: kaboom!"</span>);
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_raw() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>raw_body: <span class="kw-2">&amp;</span>[u8] = <span class="kw-2">&amp;</span>[<span class="number">16</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>];
-        <span class="kw">let </span>message_builder = MessageBuilder::signal(<span class="string">"/"</span>, <span class="string">"test.test"</span>, <span class="string">"test"</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>message = <span class="kw">unsafe </span>{
-            message_builder.build_raw_body(
-                raw_body,
-                <span class="string">"ai"</span>,
-                <span class="attr">#[cfg(unix)]
-                </span><span class="macro">vec!</span>[],
-            )<span class="question-mark">?
-        </span>};
-
-        <span class="kw">let </span>output: Vec&lt;i32&gt; = message.body()<span class="question-mark">?</span>;
-        <span class="macro">assert_eq!</span>(output, <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);
-
-        <span class="prelude-val">Ok</span>(())
     }
 }
 </code></pre></div></section></main></body></html>

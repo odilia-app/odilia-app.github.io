@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/eyre-0.6.8/src/error.rs`."><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="eyre" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/eyre-0.6.12/src/error.rs`."><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="eyre" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -770,7 +770,149 @@
 <a href="#769" id="769">769</a>
 <a href="#770" id="770">770</a>
 <a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
+<a href="#789" id="789">789</a>
+<a href="#790" id="790">790</a>
+<a href="#791" id="791">791</a>
+<a href="#792" id="792">792</a>
+<a href="#793" id="793">793</a>
+<a href="#794" id="794">794</a>
+<a href="#795" id="795">795</a>
+<a href="#796" id="796">796</a>
+<a href="#797" id="797">797</a>
+<a href="#798" id="798">798</a>
+<a href="#799" id="799">799</a>
+<a href="#800" id="800">800</a>
+<a href="#801" id="801">801</a>
+<a href="#802" id="802">802</a>
+<a href="#803" id="803">803</a>
+<a href="#804" id="804">804</a>
+<a href="#805" id="805">805</a>
+<a href="#806" id="806">806</a>
+<a href="#807" id="807">807</a>
+<a href="#808" id="808">808</a>
+<a href="#809" id="809">809</a>
+<a href="#810" id="810">810</a>
+<a href="#811" id="811">811</a>
+<a href="#812" id="812">812</a>
+<a href="#813" id="813">813</a>
+<a href="#814" id="814">814</a>
+<a href="#815" id="815">815</a>
+<a href="#816" id="816">816</a>
+<a href="#817" id="817">817</a>
+<a href="#818" id="818">818</a>
+<a href="#819" id="819">819</a>
+<a href="#820" id="820">820</a>
+<a href="#821" id="821">821</a>
+<a href="#822" id="822">822</a>
+<a href="#823" id="823">823</a>
+<a href="#824" id="824">824</a>
+<a href="#825" id="825">825</a>
+<a href="#826" id="826">826</a>
+<a href="#827" id="827">827</a>
+<a href="#828" id="828">828</a>
+<a href="#829" id="829">829</a>
+<a href="#830" id="830">830</a>
+<a href="#831" id="831">831</a>
+<a href="#832" id="832">832</a>
+<a href="#833" id="833">833</a>
+<a href="#834" id="834">834</a>
+<a href="#835" id="835">835</a>
+<a href="#836" id="836">836</a>
+<a href="#837" id="837">837</a>
+<a href="#838" id="838">838</a>
+<a href="#839" id="839">839</a>
+<a href="#840" id="840">840</a>
+<a href="#841" id="841">841</a>
+<a href="#842" id="842">842</a>
+<a href="#843" id="843">843</a>
+<a href="#844" id="844">844</a>
+<a href="#845" id="845">845</a>
+<a href="#846" id="846">846</a>
+<a href="#847" id="847">847</a>
+<a href="#848" id="848">848</a>
+<a href="#849" id="849">849</a>
+<a href="#850" id="850">850</a>
+<a href="#851" id="851">851</a>
+<a href="#852" id="852">852</a>
+<a href="#853" id="853">853</a>
+<a href="#854" id="854">854</a>
+<a href="#855" id="855">855</a>
+<a href="#856" id="856">856</a>
+<a href="#857" id="857">857</a>
+<a href="#858" id="858">858</a>
+<a href="#859" id="859">859</a>
+<a href="#860" id="860">860</a>
+<a href="#861" id="861">861</a>
+<a href="#862" id="862">862</a>
+<a href="#863" id="863">863</a>
+<a href="#864" id="864">864</a>
+<a href="#865" id="865">865</a>
+<a href="#866" id="866">866</a>
+<a href="#867" id="867">867</a>
+<a href="#868" id="868">868</a>
+<a href="#869" id="869">869</a>
+<a href="#870" id="870">870</a>
+<a href="#871" id="871">871</a>
+<a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::chain::Chain;
+<span class="kw">use </span><span class="kw">crate</span>::ptr::{MutPtr, OwnedPtr, RefPtr};
 <span class="kw">use </span><span class="kw">crate</span>::EyreHandler;
 <span class="kw">use crate</span>::{Report, StdError};
 <span class="kw">use </span>core::any::TypeId;
@@ -842,6 +984,7 @@
     }
 
     <span class="attr">#[cfg_attr(track_caller, track_caller)]
+    </span><span class="doccomment">/// Creates a new error from an implementor of [`std::error::Error`]
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_std&lt;E&gt;(error: E) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>E: StdError + Send + Sync + <span class="lifetime">'static</span>,
@@ -852,6 +995,7 @@
             object_mut: object_mut::&lt;E&gt;,
             object_boxed: object_boxed::&lt;E&gt;,
             object_downcast: object_downcast::&lt;E&gt;,
+            object_downcast_mut: object_downcast_mut::&lt;E&gt;,
             object_drop_rest: object_drop_front::&lt;E&gt;,
         };
 
@@ -874,6 +1018,7 @@
             object_mut: object_mut::&lt;MessageError&lt;M&gt;&gt;,
             object_boxed: object_boxed::&lt;MessageError&lt;M&gt;&gt;,
             object_downcast: object_downcast::&lt;M&gt;,
+            object_downcast_mut: object_downcast_mut::&lt;M&gt;,
             object_drop_rest: object_drop_front::&lt;M&gt;,
         };
 
@@ -897,6 +1042,7 @@
             object_mut: object_mut::&lt;DisplayError&lt;M&gt;&gt;,
             object_boxed: object_boxed::&lt;DisplayError&lt;M&gt;&gt;,
             object_downcast: object_downcast::&lt;M&gt;,
+            object_downcast_mut: object_downcast_mut::&lt;M&gt;,
             object_drop_rest: object_drop_front::&lt;M&gt;,
         };
 
@@ -921,6 +1067,7 @@
             object_mut: object_mut::&lt;ContextError&lt;D, E&gt;&gt;,
             object_boxed: object_boxed::&lt;ContextError&lt;D, E&gt;&gt;,
             object_downcast: context_downcast::&lt;D, E&gt;,
+            object_downcast_mut: context_downcast_mut::&lt;D, E&gt;,
             object_drop_rest: context_drop_rest::&lt;D, E&gt;,
         };
 
@@ -942,6 +1089,7 @@
             object_mut: object_mut::&lt;BoxedError&gt;,
             object_boxed: object_boxed::&lt;BoxedError&gt;,
             object_downcast: object_downcast::&lt;Box&lt;<span class="kw">dyn </span>StdError + Send + Sync&gt;&gt;,
+            object_downcast_mut: object_downcast_mut::&lt;Box&lt;<span class="kw">dyn </span>StdError + Send + Sync&gt;&gt;,
             object_drop_rest: object_drop_front::&lt;Box&lt;<span class="kw">dyn </span>StdError + Send + Sync&gt;&gt;,
         };
 
@@ -963,20 +1111,20 @@
     </span><span class="kw">where
         </span>E: StdError + Send + Sync + <span class="lifetime">'static</span>,
     {
-        <span class="kw">let </span>inner = Box::new(ErrorImpl {
-            vtable,
-            handler,
+        <span class="kw">let </span>inner = ErrorImpl {
+            header: ErrorHeader { vtable, handler },
             _object: error,
-        });
-        <span class="comment">// Erase the concrete type of E from the compile-time type system. This
-        // is equivalent to the safe unsize coersion from Box&lt;ErrorImpl&lt;E&gt;&gt; to
-        // Box&lt;ErrorImpl&lt;dyn StdError + Send + Sync + 'static&gt;&gt; except that the
-        // result is a thin pointer. The necessary behavior for manipulating the
-        // underlying ErrorImpl&lt;E&gt; is preserved in the vtable provided by the
-        // caller rather than a builtin fat pointer vtable.
-        </span><span class="kw">let </span>erased = mem::transmute::&lt;Box&lt;ErrorImpl&lt;E&gt;&gt;, Box&lt;ErrorImpl&lt;()&gt;&gt;&gt;(inner);
-        <span class="kw">let </span>inner = ManuallyDrop::new(erased);
-        Report { inner }
+        };
+
+        <span class="comment">// Construct a new owned allocation through a raw pointer
+        //
+        // This does not keep the allocation around as a `Box` which would invalidate an
+        // references when moved
+        </span><span class="kw">let </span>ptr = OwnedPtr::&lt;ErrorImpl&lt;E&gt;&gt;::new(inner);
+
+        <span class="comment">// Safety: the type
+        </span><span class="kw">let </span>ptr = ptr.cast::&lt;ErrorImpl&lt;()&gt;&gt;();
+        Report { inner: ptr }
     }
 
     <span class="doccomment">/// Create a new error from an error message to wrap the existing error.
@@ -1036,7 +1184,11 @@
     </span><span class="kw">where
         </span>D: Display + Send + Sync + <span class="lifetime">'static</span>,
     {
-        <span class="kw">let </span>handler = <span class="self">self</span>.inner.handler.take();
+        <span class="comment">// Safety: this access a `ErrorImpl&lt;unknown&gt;` as a valid reference to a `ErrorImpl&lt;()&gt;`
+        //
+        // As the generic is at the end of the struct and the struct is `repr(C)` this reference
+        // will be within bounds of the original pointer, and the field will have the same offset
+        </span><span class="kw">let </span>handler = header_mut(<span class="self">self</span>.inner.as_mut()).handler.take();
         <span class="kw">let </span>error: ContextError&lt;D, Report&gt; = ContextError { msg, error: <span class="self">self </span>};
 
         <span class="kw">let </span>vtable = <span class="kw-2">&amp;</span>ErrorVTable {
@@ -1045,11 +1197,17 @@
             object_mut: object_mut::&lt;ContextError&lt;D, Report&gt;&gt;,
             object_boxed: object_boxed::&lt;ContextError&lt;D, Report&gt;&gt;,
             object_downcast: context_chain_downcast::&lt;D&gt;,
+            object_downcast_mut: context_chain_downcast_mut::&lt;D&gt;,
             object_drop_rest: context_chain_drop_rest::&lt;D&gt;,
         };
 
         <span class="comment">// Safety: passing vtable that operates on the right type.
         </span><span class="kw">unsafe </span>{ Report::construct(error, vtable, handler) }
+    }
+
+    <span class="doccomment">/// Access the vtable for the current error object.
+    </span><span class="kw">fn </span>vtable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>ErrorVTable {
+        header(<span class="self">self</span>.inner.as_ref()).vtable
     }
 
     <span class="doccomment">/// An iterator of the chain of source errors contained by this Report.
@@ -1074,7 +1232,7 @@
     /// }
     /// ```
     </span><span class="kw">pub fn </span>chain(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Chain&lt;<span class="lifetime">'_</span>&gt; {
-        <span class="self">self</span>.inner.chain()
+        ErrorImpl::chain(<span class="self">self</span>.inner.as_ref())
     }
 
     <span class="doccomment">/// The lowest level cause of this error &amp;mdash; this error's cause's
@@ -1114,7 +1272,7 @@
         <span class="kw">unsafe </span>{
             <span class="comment">// Use vtable to find NonNull&lt;()&gt; which points to a value of type E
             // somewhere inside the data structure.
-            </span><span class="kw">let </span>addr = <span class="kw">match </span>(<span class="self">self</span>.inner.vtable.object_downcast)(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, target) {
+            </span><span class="kw">let </span>addr = <span class="kw">match </span>(<span class="self">self</span>.vtable().object_downcast)(<span class="self">self</span>.inner.as_ref(), target) {
                 <span class="prelude-val">Some</span>(addr) =&gt; addr,
                 <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="self">self</span>),
             };
@@ -1129,10 +1287,9 @@
             <span class="comment">// Read Box&lt;ErrorImpl&lt;()&gt;&gt; from self. Can't move it out because
             // Report has a Drop impl which we want to not run.
             </span><span class="kw">let </span>inner = ptr::read(<span class="kw-2">&amp;</span>outer.inner);
-            <span class="kw">let </span>erased = ManuallyDrop::into_inner(inner);
 
             <span class="comment">// Drop rest of the data structure outside of E.
-            </span>(erased.vtable.object_drop_rest)(erased, target);
+            </span>(outer.vtable().object_drop_rest)(inner, target);
 
             <span class="prelude-val">Ok</span>(error)
         }
@@ -1185,8 +1342,8 @@
         <span class="kw">unsafe </span>{
             <span class="comment">// Use vtable to find NonNull&lt;()&gt; which points to a value of type E
             // somewhere inside the data structure.
-            </span><span class="kw">let </span>addr = (<span class="self">self</span>.inner.vtable.object_downcast)(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, target)<span class="question-mark">?</span>;
-            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;*</span>addr.cast::&lt;E&gt;().as_ptr())
+            </span><span class="kw">let </span>addr = (<span class="self">self</span>.vtable().object_downcast)(<span class="self">self</span>.inner.as_ref(), target)<span class="question-mark">?</span>;
+            <span class="prelude-val">Some</span>(addr.cast::&lt;E&gt;().as_ref())
         }
     }
 
@@ -1199,31 +1356,47 @@
         <span class="kw">unsafe </span>{
             <span class="comment">// Use vtable to find NonNull&lt;()&gt; which points to a value of type E
             // somewhere inside the data structure.
-            </span><span class="kw">let </span>addr = (<span class="self">self</span>.inner.vtable.object_downcast)(<span class="kw-2">&amp;</span><span class="self">self</span>.inner, target)<span class="question-mark">?</span>;
-            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut *</span>addr.cast::&lt;E&gt;().as_ptr())
+            </span><span class="kw">let </span>addr = (<span class="self">self</span>.vtable().object_downcast_mut)(<span class="self">self</span>.inner.as_mut(), target)<span class="question-mark">?</span>;
+            <span class="prelude-val">Some</span>(addr.cast::&lt;E&gt;().as_mut())
         }
     }
 
     <span class="doccomment">/// Get a reference to the Handler for this Report.
     </span><span class="kw">pub fn </span>handler(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn </span>EyreHandler {
-        <span class="self">self</span>.inner.handler.as_ref().unwrap().as_ref()
+        header(<span class="self">self</span>.inner.as_ref())
+            .handler
+            .as_ref()
+            .unwrap()
+            .as_ref()
     }
 
     <span class="doccomment">/// Get a mutable reference to the Handler for this Report.
     </span><span class="kw">pub fn </span>handler_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>EyreHandler {
-        <span class="self">self</span>.inner.handler.as_mut().unwrap().as_mut()
+        header_mut(<span class="self">self</span>.inner.as_mut())
+            .handler
+            .as_mut()
+            .unwrap()
+            .as_mut()
     }
 
     <span class="doccomment">/// Get a reference to the Handler for this Report.
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn </span>EyreHandler {
-        <span class="self">self</span>.inner.handler.as_ref().unwrap().as_ref()
+        header(<span class="self">self</span>.inner.as_ref())
+            .handler
+            .as_ref()
+            .unwrap()
+            .as_ref()
     }
 
     <span class="doccomment">/// Get a mutable reference to the Handler for this Report.
     </span><span class="attr">#[doc(hidden)]
     </span><span class="kw">pub fn </span>context_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>EyreHandler {
-        <span class="self">self</span>.inner.handler.as_mut().unwrap().as_mut()
+        header_mut(<span class="self">self</span>.inner.as_mut())
+            .handler
+            .as_mut()
+            .unwrap()
+            .as_mut()
     }
 }
 
@@ -1241,25 +1414,25 @@
     <span class="kw">type </span>Target = <span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-        <span class="self">self</span>.inner.error()
+        ErrorImpl::error(<span class="self">self</span>.inner.as_ref())
     }
 }
 
 <span class="kw">impl </span>DerefMut <span class="kw">for </span>Report {
     <span class="kw">fn </span>deref_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self</span>::Target {
-        <span class="self">self</span>.inner.error_mut()
+        ErrorImpl::error_mut(<span class="self">self</span>.inner.as_mut())
     }
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>Report {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
-        <span class="self">self</span>.inner.display(formatter)
+        ErrorImpl::display(<span class="self">self</span>.inner.as_ref(), formatter)
     }
 }
 
 <span class="kw">impl </span>Debug <span class="kw">for </span>Report {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
-        <span class="self">self</span>.inner.debug(formatter)
+        ErrorImpl::debug(<span class="self">self</span>.inner.as_ref(), formatter)
     }
 }
 
@@ -1267,107 +1440,169 @@
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             <span class="comment">// Read Box&lt;ErrorImpl&lt;()&gt;&gt; from self.
-            </span><span class="kw">let </span>inner = ptr::read(<span class="kw-2">&amp;</span><span class="self">self</span>.inner);
-            <span class="kw">let </span>erased = ManuallyDrop::into_inner(inner);
-
-            <span class="comment">// Invoke the vtable's drop behavior.
-            </span>(erased.vtable.object_drop)(erased);
+            </span>(<span class="self">self</span>.vtable().object_drop)(<span class="self">self</span>.inner);
         }
     }
 }
 
 <span class="kw">struct </span>ErrorVTable {
-    object_drop: <span class="kw">unsafe fn</span>(Box&lt;ErrorImpl&lt;()&gt;&gt;),
-    object_ref: <span class="kw">unsafe fn</span>(<span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt;) -&gt; <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>),
-    object_mut: <span class="kw">unsafe fn</span>(<span class="kw-2">&amp;mut </span>ErrorImpl&lt;()&gt;) -&gt; <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>),
+    object_drop: <span class="kw">unsafe fn</span>(OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;),
+    object_ref: <span class="kw">unsafe fn</span>(RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;) -&gt; <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>),
+    object_mut: <span class="kw">unsafe fn</span>(MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;) -&gt; <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>),
     <span class="attr">#[allow(clippy::type_complexity)]
-    </span>object_boxed: <span class="kw">unsafe fn</span>(Box&lt;ErrorImpl&lt;()&gt;&gt;) -&gt; Box&lt;<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>&gt;,
-    object_downcast: <span class="kw">unsafe fn</span>(<span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt;, TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;,
-    object_drop_rest: <span class="kw">unsafe fn</span>(Box&lt;ErrorImpl&lt;()&gt;&gt;, TypeId),
+    </span>object_boxed: <span class="kw">unsafe fn</span>(OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;) -&gt; Box&lt;<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>&gt;,
+    object_downcast: <span class="kw">unsafe fn</span>(RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;, TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;,
+    object_downcast_mut: <span class="kw">unsafe fn</span>(MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;, TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;,
+    object_drop_rest: <span class="kw">unsafe fn</span>(OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;, TypeId),
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;E&gt;.
-</span><span class="kw">unsafe fn </span>object_drop&lt;E&gt;(e: Box&lt;ErrorImpl&lt;()&gt;&gt;) {
-    <span class="comment">// Cast back to ErrorImpl&lt;E&gt; so that the allocator receives the correct
-    // Layout to deallocate the Box's memory.
-    </span><span class="kw">let </span>unerased = mem::transmute::&lt;Box&lt;ErrorImpl&lt;()&gt;&gt;, Box&lt;ErrorImpl&lt;E&gt;&gt;&gt;(e);
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_drop&lt;E&gt;(e: OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;) {
+    <span class="comment">// Cast to a context type and drop the Box allocation.
+    </span><span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().into_box() };
     drop(unerased);
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;E&gt;.
-</span><span class="kw">unsafe fn </span>object_drop_front&lt;E&gt;(e: Box&lt;ErrorImpl&lt;()&gt;&gt;, target: TypeId) {
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_drop_front&lt;E&gt;(e: OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;, target: TypeId) {
     <span class="comment">// Drop the fields of ErrorImpl other than E as well as the Box allocation,
     // without dropping E itself. This is used by downcast after doing a
     // ptr::read to take ownership of the E.
     </span><span class="kw">let _ </span>= target;
-    <span class="kw">let </span>unerased = mem::transmute::&lt;Box&lt;ErrorImpl&lt;()&gt;&gt;, Box&lt;ErrorImpl&lt;ManuallyDrop&lt;E&gt;&gt;&gt;&gt;(e);
-    drop(unerased);
+    <span class="comment">// Note: This must not use `mem::transmute` because it tries to reborrow the `Unique`
+    //   contained in `Box`, which must not be done. In practice this probably won't make any
+    //   difference by now, but technically it's unsound.
+    //   see: https://github.com/rust-lang/unsafe-code-guidelines/blob/master/wip/stacked-borrows.m
+    </span><span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().into_box() };
+
+    mem::forget(unerased._object)
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;E&gt;.
-</span><span class="kw">unsafe fn </span>object_ref&lt;E&gt;(e: <span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt;) -&gt; <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>)
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_ref&lt;E&gt;(e: RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;) -&gt; <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>)
 <span class="kw">where
     </span>E: StdError + Send + Sync + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Attach E's native StdError vtable onto a pointer to self._object.
-    </span><span class="kw-2">&amp;</span>(<span class="kw-2">*</span>(e <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;()&gt; <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;E&gt;))._object
+    </span><span class="kw-2">&amp;</span><span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().as_ref() }._object
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;E&gt;.
-</span><span class="kw">unsafe fn </span>object_mut&lt;E&gt;(e: <span class="kw-2">&amp;mut </span>ErrorImpl&lt;()&gt;) -&gt; <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>)
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_mut&lt;E&gt;(e: MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;) -&gt; <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>)
 <span class="kw">where
     </span>E: StdError + Send + Sync + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Attach E's native StdError vtable onto a pointer to self._object.
-    </span><span class="kw-2">&amp;mut </span>(<span class="kw-2">*</span>(e <span class="kw">as </span><span class="kw-2">*mut </span>ErrorImpl&lt;()&gt; <span class="kw">as </span><span class="kw-2">*mut </span>ErrorImpl&lt;E&gt;))._object
+    </span><span class="kw-2">&amp;mut </span><span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().into_mut() }._object
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;E&gt;.
-</span><span class="kw">unsafe fn </span>object_boxed&lt;E&gt;(e: Box&lt;ErrorImpl&lt;()&gt;&gt;) -&gt; Box&lt;<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>&gt;
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_boxed&lt;E&gt;(e: OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;) -&gt; Box&lt;<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>&gt;
 <span class="kw">where
     </span>E: StdError + Send + Sync + <span class="lifetime">'static</span>,
 {
     <span class="comment">// Attach ErrorImpl&lt;E&gt;'s native StdError vtable. The StdError impl is below.
-    </span>mem::transmute::&lt;Box&lt;ErrorImpl&lt;()&gt;&gt;, Box&lt;ErrorImpl&lt;E&gt;&gt;&gt;(e)
+    </span><span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().into_box() }
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;E&gt;.
-</span><span class="kw">unsafe fn </span>object_downcast&lt;E&gt;(e: <span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt;, target: TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_downcast&lt;E&gt;(e: RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;, target: TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
 <span class="kw">where
     </span>E: <span class="lifetime">'static</span>,
 {
     <span class="kw">if </span>TypeId::of::&lt;E&gt;() == target {
         <span class="comment">// Caller is looking for an E pointer and e is ErrorImpl&lt;E&gt;, take a
         // pointer to its E field.
-        </span><span class="kw">let </span>unerased = e <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;()&gt; <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;E&gt;;
-        <span class="kw">let </span>addr = <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>unerased)._object <span class="kw">as </span><span class="kw-2">*const </span>E <span class="kw">as </span><span class="kw-2">*mut </span>();
-        <span class="prelude-val">Some</span>(NonNull::new_unchecked(addr))
+        </span><span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().as_ref() };
+        <span class="prelude-val">Some</span>(NonNull::from(<span class="kw-2">&amp;</span>(unerased._object)).cast::&lt;()&gt;())
     } <span class="kw">else </span>{
         <span class="prelude-val">None
     </span>}
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;.
-</span><span class="kw">unsafe fn </span>context_downcast&lt;D, E&gt;(e: <span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt;, target: TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;E&gt;.
+</span><span class="kw">unsafe fn </span>object_downcast_mut&lt;E&gt;(
+    e: MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;,
+    target: TypeId,
+) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
+<span class="kw">where
+    </span>E: <span class="lifetime">'static</span>,
+{
+    <span class="kw">if </span>TypeId::of::&lt;E&gt;() == target {
+        <span class="comment">// Caller is looking for an E pointer and e is ErrorImpl&lt;E&gt;, take a
+        // pointer to its E field.
+        </span><span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;E&gt;&gt;().into_mut() };
+        <span class="prelude-val">Some</span>(NonNull::from(<span class="kw-2">&amp;mut </span>(unerased._object)).cast::&lt;()&gt;())
+    } <span class="kw">else </span>{
+        <span class="prelude-val">None
+    </span>}
+}
+
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;.
+</span><span class="kw">unsafe fn </span>context_downcast&lt;D, E&gt;(
+    e: RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;,
+    target: TypeId,
+) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
 <span class="kw">where
     </span>D: <span class="lifetime">'static</span>,
     E: <span class="lifetime">'static</span>,
 {
     <span class="kw">if </span>TypeId::of::&lt;D&gt;() == target {
-        <span class="kw">let </span>unerased = e <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;()&gt; <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;;
-        <span class="kw">let </span>addr = <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>unerased)._object.msg <span class="kw">as </span><span class="kw-2">*const </span>D <span class="kw">as </span><span class="kw-2">*mut </span>();
-        <span class="prelude-val">Some</span>(NonNull::new_unchecked(addr))
+        <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;&gt;().as_ref() };
+        <span class="kw">let </span>addr = NonNull::from(<span class="kw-2">&amp;</span>unerased._object.msg).cast::&lt;()&gt;();
+        <span class="prelude-val">Some</span>(addr)
     } <span class="kw">else if </span>TypeId::of::&lt;E&gt;() == target {
-        <span class="kw">let </span>unerased = e <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;()&gt; <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;;
-        <span class="kw">let </span>addr = <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>unerased)._object.error <span class="kw">as </span><span class="kw-2">*const </span>E <span class="kw">as </span><span class="kw-2">*mut </span>();
-        <span class="prelude-val">Some</span>(NonNull::new_unchecked(addr))
+        <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;&gt;().as_ref() };
+        <span class="kw">let </span>addr = NonNull::from(<span class="kw-2">&amp;</span>unerased._object.error).cast::&lt;()&gt;();
+        <span class="prelude-val">Some</span>(addr)
     } <span class="kw">else </span>{
         <span class="prelude-val">None
     </span>}
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;.
-</span><span class="kw">unsafe fn </span>context_drop_rest&lt;D, E&gt;(e: Box&lt;ErrorImpl&lt;()&gt;&gt;, target: TypeId)
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;.
+</span><span class="kw">unsafe fn </span>context_downcast_mut&lt;D, E&gt;(
+    e: MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;,
+    target: TypeId,
+) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
+<span class="kw">where
+    </span>D: <span class="lifetime">'static</span>,
+    E: <span class="lifetime">'static</span>,
+{
+    <span class="kw">if </span>TypeId::of::&lt;D&gt;() == target {
+        <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;&gt;().into_mut() };
+        <span class="kw">let </span>addr = NonNull::from(<span class="kw-2">&amp;</span>unerased._object.msg).cast::&lt;()&gt;();
+        <span class="prelude-val">Some</span>(addr)
+    } <span class="kw">else if </span>TypeId::of::&lt;E&gt;() == target {
+        <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;&gt;().into_mut() };
+        <span class="kw">let </span>addr = NonNull::from(<span class="kw-2">&amp;mut </span>unerased._object.error).cast::&lt;()&gt;();
+        <span class="prelude-val">Some</span>(addr)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">None
+    </span>}
+}
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, E&gt;&gt;.
+</span><span class="kw">unsafe fn </span>context_drop_rest&lt;D, E&gt;(e: OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;, target: TypeId)
 <span class="kw">where
     </span>D: <span class="lifetime">'static</span>,
     E: <span class="lifetime">'static</span>,
@@ -1375,69 +1610,101 @@
     <span class="comment">// Called after downcasting by value to either the D or the E and doing a
     // ptr::read to take ownership of that value.
     </span><span class="kw">if </span>TypeId::of::&lt;D&gt;() == target {
-        <span class="kw">let </span>unerased = mem::transmute::&lt;
-            Box&lt;ErrorImpl&lt;()&gt;&gt;,
-            Box&lt;ErrorImpl&lt;ContextError&lt;ManuallyDrop&lt;D&gt;, E&gt;&gt;&gt;,
-        &gt;(e);
-        drop(unerased);
+        <span class="kw">unsafe </span>{
+            e.cast::&lt;ErrorImpl&lt;ContextError&lt;ManuallyDrop&lt;D&gt;, E&gt;&gt;&gt;()
+                .into_box()
+        };
     } <span class="kw">else </span>{
-        <span class="kw">let </span>unerased = mem::transmute::&lt;
-            Box&lt;ErrorImpl&lt;()&gt;&gt;,
-            Box&lt;ErrorImpl&lt;ContextError&lt;D, ManuallyDrop&lt;E&gt;&gt;&gt;&gt;,
-        &gt;(e);
-        drop(unerased);
+        <span class="macro">debug_assert_eq!</span>(TypeId::of::&lt;E&gt;(), target);
+        <span class="kw">unsafe </span>{
+            e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, ManuallyDrop&lt;E&gt;&gt;&gt;&gt;()
+                .into_box()
+        };
     }
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;.
-</span><span class="kw">unsafe fn </span>context_chain_downcast&lt;D&gt;(e: <span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt;, target: TypeId) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;.
+</span><span class="kw">unsafe fn </span>context_chain_downcast&lt;D&gt;(
+    e: RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;,
+    target: TypeId,
+) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
 <span class="kw">where
     </span>D: <span class="lifetime">'static</span>,
 {
-    <span class="kw">let </span>unerased = e <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;()&gt; <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;;
+    <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;&gt;().as_ref() };
     <span class="kw">if </span>TypeId::of::&lt;D&gt;() == target {
-        <span class="kw">let </span>addr = <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>unerased)._object.msg <span class="kw">as </span><span class="kw-2">*const </span>D <span class="kw">as </span><span class="kw-2">*mut </span>();
-        <span class="prelude-val">Some</span>(NonNull::new_unchecked(addr))
+        <span class="kw">let </span>addr = NonNull::from(<span class="kw-2">&amp;</span>unerased._object.msg).cast::&lt;()&gt;();
+        <span class="prelude-val">Some</span>(addr)
     } <span class="kw">else </span>{
         <span class="comment">// Recurse down the context chain per the inner error's vtable.
-        </span><span class="kw">let </span>source = <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>unerased)._object.error;
-        (source.inner.vtable.object_downcast)(<span class="kw-2">&amp;</span>source.inner, target)
+        </span><span class="kw">let </span>source = <span class="kw-2">&amp;</span>unerased._object.error;
+        <span class="kw">unsafe </span>{ (source.vtable().object_downcast)(source.inner.as_ref(), target) }
     }
 }
 
-<span class="comment">// Safety: requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;.
-</span><span class="kw">unsafe fn </span>context_chain_drop_rest&lt;D&gt;(e: Box&lt;ErrorImpl&lt;()&gt;&gt;, target: TypeId)
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;.
+</span><span class="kw">unsafe fn </span>context_chain_downcast_mut&lt;D&gt;(
+    e: MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;,
+    target: TypeId,
+) -&gt; <span class="prelude-ty">Option</span>&lt;NonNull&lt;()&gt;&gt;
+<span class="kw">where
+    </span>D: <span class="lifetime">'static</span>,
+{
+    <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{ e.cast::&lt;ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;&gt;().into_mut() };
+    <span class="kw">if </span>TypeId::of::&lt;D&gt;() == target {
+        <span class="kw">let </span>addr = NonNull::from(<span class="kw-2">&amp;</span>unerased._object.msg).cast::&lt;()&gt;();
+        <span class="prelude-val">Some</span>(addr)
+    } <span class="kw">else </span>{
+        <span class="comment">// Recurse down the context chain per the inner error's vtable.
+        </span><span class="kw">let </span>source = <span class="kw-2">&amp;mut </span>unerased._object.error;
+        <span class="kw">unsafe </span>{ (source.vtable().object_downcast_mut)(source.inner.as_mut(), target) }
+    }
+}
+
+<span class="doccomment">/// # Safety
+///
+/// Requires layout of *e to match ErrorImpl&lt;ContextError&lt;D, Report&gt;&gt;.
+</span><span class="kw">unsafe fn </span>context_chain_drop_rest&lt;D&gt;(e: OwnedPtr&lt;ErrorImpl&lt;()&gt;&gt;, target: TypeId)
 <span class="kw">where
     </span>D: <span class="lifetime">'static</span>,
 {
     <span class="comment">// Called after downcasting by value to either the D or one of the causes
     // and doing a ptr::read to take ownership of that value.
     </span><span class="kw">if </span>TypeId::of::&lt;D&gt;() == target {
-        <span class="kw">let </span>unerased = mem::transmute::&lt;
-            Box&lt;ErrorImpl&lt;()&gt;&gt;,
-            Box&lt;ErrorImpl&lt;ContextError&lt;ManuallyDrop&lt;D&gt;, Report&gt;&gt;&gt;,
-        &gt;(e);
+        <span class="kw">let </span>unerased = <span class="kw">unsafe </span>{
+            e.cast::&lt;ErrorImpl&lt;ContextError&lt;ManuallyDrop&lt;D&gt;, Report&gt;&gt;&gt;()
+                .into_box()
+        };
         <span class="comment">// Drop the entire rest of the data structure rooted in the next Report.
         </span>drop(unerased);
     } <span class="kw">else </span>{
-        <span class="kw">let </span>unerased = mem::transmute::&lt;
-            Box&lt;ErrorImpl&lt;()&gt;&gt;,
-            Box&lt;ErrorImpl&lt;ContextError&lt;D, ManuallyDrop&lt;Report&gt;&gt;&gt;&gt;,
-        &gt;(e);
-        <span class="comment">// Read out a ManuallyDrop&lt;Box&lt;ErrorImpl&lt;()&gt;&gt;&gt; from the next error.
-        </span><span class="kw">let </span>inner = ptr::read(<span class="kw-2">&amp;</span>unerased._object.error.inner);
-        drop(unerased);
-        <span class="kw">let </span>erased = ManuallyDrop::into_inner(inner);
-        <span class="comment">// Recursively drop the next error using the same target typeid.
-        </span>(erased.vtable.object_drop_rest)(erased, target);
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>unerased = e
+                .cast::&lt;ErrorImpl&lt;ContextError&lt;D, ManuallyDrop&lt;Report&gt;&gt;&gt;&gt;()
+                .into_box();
+            <span class="comment">// Read out a ManuallyDrop&lt;Box&lt;ErrorImpl&lt;()&gt;&gt;&gt; from the next error.
+            </span><span class="kw">let </span>inner = ptr::read(<span class="kw-2">&amp;</span>unerased.as_ref()._object.error.inner);
+            drop(unerased);
+            <span class="comment">// Recursively drop the next error using the same target typeid.
+            </span>(header(inner.as_ref()).vtable.object_drop_rest)(inner, target);
+        }
     }
+}
+
+<span class="attr">#[repr(C)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ErrorHeader {
+    vtable: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>ErrorVTable,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) handler: <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>EyreHandler&gt;&gt;,
 }
 
 <span class="comment">// repr C to ensure that E remains in the final position.
 </span><span class="attr">#[repr(C)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ErrorImpl&lt;E&gt; {
-    vtable: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>ErrorVTable,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) handler: <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>EyreHandler&gt;&gt;,
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ErrorImpl&lt;E = ()&gt; {
+    header: ErrorHeader,
     <span class="comment">// NOTE: Don't use directly. Use only through vtable. Erased type may have
     // different alignment.
     </span>_object: E,
@@ -1452,29 +1719,47 @@
 }
 
 <span class="kw">impl</span>&lt;E&gt; ErrorImpl&lt;E&gt; {
-    <span class="kw">fn </span>erase(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ErrorImpl&lt;()&gt; {
+    <span class="doccomment">/// Returns a type erased Error
+    </span><span class="kw">fn </span>erase(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt; {
         <span class="comment">// Erase the concrete type of E but preserve the vtable in self.vtable
         // for manipulating the resulting thin pointer. This is analogous to an
         // unsize coersion.
-        </span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>(<span class="self">self </span><span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;E&gt; <span class="kw">as </span><span class="kw-2">*const </span>ErrorImpl&lt;()&gt;) }
+        </span>RefPtr::new(<span class="self">self</span>).cast()
     }
 }
 
+<span class="comment">// Reads the header out of `p`. This is the same as `p.as_ref().header`, but
+// avoids converting `p` into a reference of a shrunk provenance with a type different than the
+// allocation.
+</span><span class="kw">fn </span>header(p: RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'_ </span>ErrorHeader {
+    <span class="comment">// Safety: `ErrorHeader` is the first field of repr(C) `ErrorImpl`
+    </span><span class="kw">unsafe </span>{ p.cast().as_ref() }
+}
+
+<span class="kw">fn </span>header_mut(p: MutPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&lt;()&gt;&gt;) -&gt; <span class="kw-2">&amp;mut </span>ErrorHeader {
+    <span class="comment">// Safety: `ErrorHeader` is the first field of repr(C) `ErrorImpl`
+    </span><span class="kw">unsafe </span>{ p.cast().into_mut() }
+}
+
 <span class="kw">impl </span>ErrorImpl&lt;()&gt; {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>error(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>error(this: RefPtr&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;) -&gt; <span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>) {
         <span class="comment">// Use vtable to attach E's native StdError vtable for the right
         // original type E.
-        </span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>(<span class="self">self</span>.vtable.object_ref)(<span class="self">self</span>) }
+        </span><span class="kw">unsafe </span>{ (header(this).vtable.object_ref)(this) }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>error_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>error_mut(this: MutPtr&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;) -&gt; <span class="kw-2">&amp;mut </span>(<span class="kw">dyn </span>StdError + Send + Sync + <span class="lifetime">'static</span>) {
         <span class="comment">// Use vtable to attach E's native StdError vtable for the right
         // original type E.
-        </span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>(<span class="self">self</span>.vtable.object_mut)(<span class="self">self</span>) }
+        </span><span class="kw">unsafe </span>{ (header_mut(this).vtable.object_mut)(this) }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>chain(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Chain&lt;<span class="lifetime">'_</span>&gt; {
-        Chain::new(<span class="self">self</span>.error())
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>chain(this: RefPtr&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;) -&gt; Chain&lt;<span class="lifetime">'_</span>&gt; {
+        Chain::new(<span class="self">Self</span>::error(this))
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>header(this: RefPtr&lt;<span class="lifetime">'_</span>, ErrorImpl&gt;) -&gt; <span class="kw-2">&amp;</span>ErrorHeader {
+        header(this)
     }
 }
 
@@ -1483,7 +1768,7 @@
     </span>E: StdError,
 {
     <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>)&gt; {
-        <span class="self">self</span>.erase().error().source()
+        ErrorImpl::&lt;()&gt;::error(<span class="self">self</span>.erase()).source()
     }
 }
 
@@ -1492,7 +1777,7 @@
     </span>E: Debug,
 {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
-        <span class="self">self</span>.erase().debug(formatter)
+        ErrorImpl::debug(<span class="self">self</span>.erase(), formatter)
     }
 }
 
@@ -1501,7 +1786,7 @@
     </span>E: Display,
 {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
-        Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.erase().error(), formatter)
+        Display::fmt(ErrorImpl::error(<span class="self">self</span>.erase()), formatter)
     }
 }
 
@@ -1511,12 +1796,9 @@
         <span class="kw">unsafe </span>{
             <span class="comment">// Read Box&lt;ErrorImpl&lt;()&gt;&gt; from error. Can't move it out because
             // Report has a Drop impl which we want to not run.
-            </span><span class="kw">let </span>inner = ptr::read(<span class="kw-2">&amp;</span>outer.inner);
-            <span class="kw">let </span>erased = ManuallyDrop::into_inner(inner);
-
-            <span class="comment">// Use vtable to attach ErrorImpl&lt;E&gt;'s native StdError vtable for
+            // Use vtable to attach ErrorImpl&lt;E&gt;'s native StdError vtable for
             // the right original type E.
-            </span>(erased.vtable.object_boxed)(erased)
+            </span>(header(outer.inner.as_ref()).vtable.object_boxed)(outer.inner)
         }
     }
 }

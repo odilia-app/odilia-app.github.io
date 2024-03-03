@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["CacheProxy","CacheProxyBlocking"],"trait":["Cache","CacheBlocking"]};

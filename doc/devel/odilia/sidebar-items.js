@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["main","notifications_monitor","sigterm_signal_watcher"],"mod":["cli","events","logging","state"]};

@@ -136,6 +136,18 @@
 <a href="#135" id="135">135</a>
 <a href="#136" id="136">136</a>
 <a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -169,12 +181,23 @@
 <span class="kw">use </span>ssip_client_async::Priority;
 
 <span class="kw">use </span>atspi_common::events::{document, object};
-<span class="kw">async fn </span>notifications_monitor(state: Arc&lt;ScreenReaderState&gt;) -&gt; eyre::Result&lt;()&gt; {
+<span class="kw">async fn </span>notifications_monitor(
+	state: Arc&lt;ScreenReaderState&gt;,
+	shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
+) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span><span class="kw-2">mut </span>stream = listen_to_dbus_notifications().<span class="kw">await</span><span class="question-mark">?</span>;
-	<span class="kw">while let </span><span class="prelude-val">Some</span>(notification) = stream.next().<span class="kw">await </span>{
-		<span class="kw">let </span>notification_message =
+	<span class="kw">loop </span>{
+		<span class="macro">tokio::select! </span>{
+		    <span class="prelude-val">Some</span>(notification) = stream.next() =&gt; {
+		      <span class="kw">let </span>notification_message =
 			<span class="macro">format!</span>(<span class="string">"new notification: {}, {}."</span>, notification.title, notification.body);
-		state.say(Priority::Important, notification_message).<span class="kw">await</span>;
+		      state.say(Priority::Important, notification_message).<span class="kw">await</span>;
+		    },
+		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
+		      <span class="macro">tracing::debug!</span>(<span class="string">"Shutting down notification task."</span>);
+		      <span class="kw">break</span>;
+		    },
+		}
 	}
 	<span class="prelude-val">Ok</span>(())
 }
@@ -255,9 +278,10 @@
 		<span class="kw-2">&amp;mut </span>shutdown_rx_odilia_proc_recv,
 	)
 	.map(|r| r.wrap_err(<span class="string">"Could not process Odilia event"</span>));
-	<span class="kw">let </span>signal_receiver = sigterm_signal_watcher(shutdown_tx)
+	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_notif = shutdown_tx.subscribe();
+	<span class="kw">let </span>notification_task = notifications_monitor(Arc::clone(<span class="kw-2">&amp;</span>state), <span class="kw-2">&amp;mut </span>shutdown_rx_notif)
 		.map(|r| r.wrap_err(<span class="string">"Could not process signal shutdown."</span>));
-	<span class="kw">let </span>notification_task = notifications_monitor(Arc::clone(<span class="kw-2">&amp;</span>state))
+	<span class="kw">let </span>signal_receiver = sigterm_signal_watcher(shutdown_tx)
 		.map(|r| r.wrap_err(<span class="string">"Could not process signal shutdown."</span>));
 
 	<span class="macro">tokio::try_join!</span>(

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["accessible_to_cache_item"],"struct":["AccessiblePrimitive","Cache","CacheItem","CacheRef"]};

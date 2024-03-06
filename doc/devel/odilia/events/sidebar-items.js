@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["dispatch","dispatch_wrapper","process","receive","sr_event","structural_navigation"],"mod":["cache","document","object"]};

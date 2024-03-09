@@ -42,6 +42,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["digest",["",[["core_api",[],["ct_variable.rs","rt_variable.rs","wrapper.rs","xof_reader.rs"]]],["core_api.rs","digest.rs","lib.rs"]]],\
 ["dirs",["",[],["lib.rs","lin.rs"]]],\
 ["dirs_sys",["",[],["lib.rs","xdg_user_dirs.rs"]]],\
+["either",["",[],["iterator.rs","lib.rs"]]],\
 ["enumflags2",["",[],["const_api.rs","fallible.rs","formatting.rs","iter.rs","lib.rs"]]],\
 ["enumflags2_derive",["",[],["lib.rs"]]],\
 ["equivalent",["",[],["lib.rs"]]],\
@@ -67,6 +68,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["hex",["",[],["error.rs","lib.rs"]]],\
 ["indenter",["",[],["lib.rs"]]],\
 ["indexmap",["",[["map",[["core",[],["entry.rs","raw.rs","raw_entry_v1.rs"]]],["core.rs","iter.rs","slice.rs"]],["set",[],["iter.rs","slice.rs"]]],["arbitrary.rs","lib.rs","macros.rs","map.rs","mutable_keys.rs","set.rs","util.rs"]]],\
+["itertools",["",[["adaptors",[],["coalesce.rs","map.rs","mod.rs","multi_product.rs"]]],["combinations.rs","combinations_with_replacement.rs","concat_impl.rs","cons_tuples_impl.rs","diff.rs","duplicates_impl.rs","either_or_both.rs","exactly_one_err.rs","extrema_set.rs","flatten_ok.rs","format.rs","free.rs","group_map.rs","groupbylazy.rs","grouping_map.rs","impl_macros.rs","intersperse.rs","k_smallest.rs","kmerge_impl.rs","lazy_buffer.rs","lib.rs","merge_join.rs","minmax.rs","multipeek_impl.rs","pad_tail.rs","peek_nth.rs","peeking_take_while.rs","permutations.rs","powerset.rs","process_results_impl.rs","put_back_n_impl.rs","rciter_impl.rs","repeatn.rs","size_hint.rs","sources.rs","take_while_inclusive.rs","tee.rs","tuple_impl.rs","unique_impl.rs","unziptuple.rs","with_position.rs","zip_eq_impl.rs","zip_longest.rs","ziptuple.rs"]]],\
 ["itoa",["",[],["lib.rs","udiv128.rs"]]],\
 ["kv_log_macro",["",[],["lib.rs"]]],\
 ["lazy_static",["",[],["inline_lazy.rs","lib.rs"]]],\
@@ -84,7 +86,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["odilia_cache",["",[],["lib.rs"]]],\
 ["odilia_common",["",[["settings",[],["log.rs","mod.rs","speech.rs"]]],["elements.rs","errors.rs","events.rs","lib.rs","modes.rs","result.rs","types.rs"]]],\
 ["odilia_input",["",[],["lib.rs"]]],\
-["odilia_notify",["",[],["error.rs","lib.rs","notification.rs"]]],\
+["odilia_notify",["",[],["action.rs","error.rs","lib.rs","notification.rs","urgency.rs"]]],\
 ["odilia_tts",["",[],["lib.rs"]]],\
 ["once_cell",["",[],["imp_std.rs","lib.rs","race.rs"]]],\
 ["ordered_stream",["",[],["adapters.rs","join.rs","lib.rs","multi.rs"]]],\

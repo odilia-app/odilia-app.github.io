@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ScreenReaderState"]};
+window.SIDEBAR_ITEMS = {"enum":["ConfigType"],"struct":["ScreenReaderState"]};

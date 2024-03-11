@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Request","Response"],"struct":["AsyncClient"]};
+window.SIDEBAR_ITEMS = {"struct":["AsyncClient"]};

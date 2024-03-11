@@ -185,6 +185,7 @@
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
 <a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -205,7 +206,8 @@
 	time::{SystemTime, UNIX_EPOCH},
 };
 <span class="kw">use </span>sysinfo::{ProcessExt, System, SystemExt};
-<span class="kw">use </span>tokio::{fs, io::AsyncReadExt, net::UnixListener, sync::broadcast, sync::mpsc::Sender};
+<span class="kw">use </span>tokio::{fs, io::AsyncReadExt, net::UnixListener, sync::mpsc::Sender};
+<span class="kw">use </span>tokio_util::sync::CancellationToken;
 
 <span class="kw">fn </span>get_log_file_name() -&gt; String {
 	<span class="kw">let </span>time = <span class="kw">if let </span><span class="prelude-val">Ok</span>(n) = SystemTime::now().duration_since(UNIX_EPOCH) {
@@ -241,7 +243,7 @@
 /// If there is no way to get access to the directory, then this function will call `exit(1)`; TODO: should probably return a result instead.
 </span><span class="kw">pub async fn </span>sr_event_receiver(
 	event_sender: Sender&lt;ScreenReaderEvent&gt;,
-	shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
+	shutdown: CancellationToken,
 ) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>(pid_file_path, sock_file_path) = get_file_paths();
 	<span class="kw">let </span>log_file_name = get_log_file_name();
@@ -340,7 +342,7 @@
 			    }
 			    <span class="kw">continue</span>;
 			}
-			<span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
+			() = shutdown.cancelled() =&gt; {
 			    <span class="macro">tracing::debug!</span>(<span class="string">"Shutting down input socker."</span>);
 			    <span class="kw">break</span>;
 			}

@@ -144,10 +144,6 @@
 <a href="#143" id="143">143</a>
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -163,27 +159,27 @@
 <span class="kw">mod </span>logging;
 <span class="kw">mod </span>state;
 
-<span class="kw">use </span>std::{process::exit, sync::Arc};
-
-<span class="kw">use </span>clap::Parser;
-<span class="kw">use </span>eyre::WrapErr;
-<span class="kw">use </span>futures::{future::FutureExt, StreamExt};
-<span class="kw">use </span>tokio::{
-	signal::unix::{signal, SignalKind},
-	sync::broadcast::{<span class="self">self</span>, error::SendError},
-	sync::mpsc,
-};
+<span class="kw">use </span>std::{process::exit, sync::Arc, time::Duration};
 
 <span class="kw">use </span><span class="kw">crate</span>::cli::Args;
 <span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
+<span class="kw">use </span>clap::Parser;
+<span class="kw">use </span>eyre::WrapErr;
+<span class="kw">use </span>futures::{future::FutureExt, StreamExt};
 <span class="kw">use </span>odilia_input::sr_event_receiver;
 <span class="kw">use </span>odilia_notify::listen_to_dbus_notifications;
 <span class="kw">use </span>ssip_client_async::Priority;
+<span class="kw">use </span>tokio::{
+	signal::unix::{signal, SignalKind},
+	sync::mpsc,
+	time::timeout,
+};
+<span class="kw">use </span>tokio_util::{sync::CancellationToken, task::TaskTracker};
 
 <span class="kw">use </span>atspi_common::events::{document, object};
 <span class="kw">async fn </span>notifications_monitor(
 	state: Arc&lt;ScreenReaderState&gt;,
-	shutdown_rx: <span class="kw-2">&amp;mut </span>broadcast::Receiver&lt;i32&gt;,
+	shutdown: CancellationToken,
 ) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span><span class="kw-2">mut </span>stream = listen_to_dbus_notifications().<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="kw">loop </span>{
@@ -193,7 +189,7 @@
 			<span class="macro">format!</span>(<span class="string">"new notification: {}, {}."</span>, notification.title, notification.body);
 		      state.say(Priority::Important, notification_message).<span class="kw">await</span>;
 		    },
-		    <span class="kw">_ </span>= shutdown_rx.recv() =&gt; {
+		    () = shutdown.cancelled() =&gt; {
 		      <span class="macro">tracing::debug!</span>(<span class="string">"Shutting down notification task."</span>);
 		      <span class="kw">break</span>;
 		    },
@@ -201,36 +197,50 @@
 	}
 	<span class="prelude-val">Ok</span>(())
 }
-<span class="kw">async fn </span>sigterm_signal_watcher(shutdown_tx: broadcast::Sender&lt;i32&gt;) -&gt; eyre::Result&lt;()&gt; {
-	<span class="kw">let </span><span class="kw-2">mut </span>c = signal(SignalKind::interrupt())<span class="question-mark">?</span>;
+<span class="kw">async fn </span>sigterm_signal_watcher(
+	token: CancellationToken,
+	tracker: TaskTracker,
+) -&gt; eyre::Result&lt;()&gt; {
+	<span class="kw">let </span>timeout_duration = Duration::from_millis(<span class="number">500</span>); <span class="comment">//todo: perhaps take this from the configuration file at some point
+	</span><span class="kw">let </span><span class="kw-2">mut </span>c = signal(SignalKind::interrupt())<span class="question-mark">?</span>;
 	<span class="macro">tracing::debug!</span>(<span class="string">"Watching for Ctrl+C"</span>);
 	c.recv().<span class="kw">await</span>;
 	<span class="macro">tracing::debug!</span>(<span class="string">"Asking all processes to stop."</span>);
-	<span class="kw">let _</span>: <span class="prelude-ty">Result</span>&lt;usize, SendError&lt;i32&gt;&gt; = shutdown_tx.send(<span class="number">0</span>);
+	<span class="macro">tracing::debug!</span>(<span class="string">"cancelling all tokens"</span>);
+	token.cancel();
+	<span class="macro">tracing::debug!</span>(<span class="question-mark">?</span>timeout_duration, <span class="string">"waiting for all tasks to finish"</span>);
+	timeout(timeout_duration, tracker.wait()).<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="macro">tracing::debug!</span>(<span class="string">"All listeners have stopped."</span>);
+	<span class="macro">tracing::debug!</span>(<span class="string">"Goodbye, Odilia!"</span>);
 	<span class="prelude-val">Ok</span>(())
 }
 
 <span class="attr">#[tokio::main(flavor = <span class="string">"current_thread"</span>)]
 </span><span class="kw">async fn </span>main() -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>args = Args::parse();
-
 	logging::init();
-	<span class="comment">// Make sure applications with dynamic accessibility supprt do expose their AT-SPI2 interfaces.
+
+	<span class="comment">//initialize the primary token for task cancelation
+	</span><span class="kw">let </span>token = CancellationToken::new();
+
+	<span class="comment">//initialize a task tracker, which will allow us to wait for all tasks to finish
+	</span><span class="kw">let </span>tracker = TaskTracker::new();
+
+	<span class="comment">// Make sure applications with dynamic accessibility support do expose their AT-SPI2 interfaces.
 	</span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = atspi_connection::set_session_accessibility(<span class="bool-val">true</span>).<span class="kw">await </span>{
 		<span class="macro">tracing::debug!</span>(<span class="string">"Could not set AT-SPI2 IsEnabled property because: {}"</span>, e);
 	}
-	<span class="kw">let </span>(shutdown_tx, <span class="kw">_</span>) = broadcast::channel(<span class="number">1</span>);
-	<span class="kw">let </span>(sr_event_tx, <span class="kw-2">mut </span>sr_event_rx) = mpsc::channel(<span class="number">128</span>);
+	<span class="kw">let </span>(sr_event_tx, sr_event_rx) = mpsc::channel(<span class="number">128</span>);
 	<span class="comment">// this channel must NEVER fill up; it will cause the thread receiving events to deadlock due to a zbus design choice.
 	// If you need to make it bigger, then make it bigger, but do NOT let it ever fill up.
-	</span><span class="kw">let </span>(atspi_event_tx, <span class="kw-2">mut </span>atspi_event_rx) = mpsc::channel(<span class="number">128</span>);
+	</span><span class="kw">let </span>(atspi_event_tx, atspi_event_rx) = mpsc::channel(<span class="number">128</span>);
 	<span class="comment">// this is the chanel which handles all SSIP commands. If SSIP is not allowed to operate on a separate task, then wdaiting for the receiving message can block other long-running operations like structural navigation.
 	// Although in the future, this may possibly be remidied through a proper cache, I think it still makes sense to separate SSIP's IO operations to a separate task.
 	// Like the channel above, it is very important that this is *never* full, since it can cause deadlocking if the other task sending the request is working with zbus.
-	</span><span class="kw">let </span>(ssip_req_tx, ssip_req_rx) = mpsc::channel::&lt;ssip_client_async::tokio::Request&gt;(<span class="number">128</span>);
+	</span><span class="kw">let </span>(ssip_req_tx, ssip_req_rx) = mpsc::channel::&lt;ssip_client_async::Request&gt;(<span class="number">128</span>);
 	<span class="comment">// Initialize state
 	</span><span class="kw">let </span>state = Arc::new(ScreenReaderState::new(ssip_req_tx, args.config.as_deref()).<span class="kw">await</span><span class="question-mark">?</span>);
-	<span class="kw">let </span><span class="kw-2">mut </span>ssip = odilia_tts::create_ssip_client().<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="kw">let </span>ssip = odilia_tts::create_ssip_client().<span class="kw">await</span><span class="question-mark">?</span>;
 
 	<span class="kw">if </span>state.say(Priority::Message, <span class="string">"Welcome to Odilia!"</span>.to_string()).<span class="kw">await </span>{
 		<span class="macro">tracing::debug!</span>(<span class="string">"Welcome message spoken."</span>);
@@ -250,51 +260,33 @@
 		state.add_cache_match_rule(),
 	)<span class="question-mark">?</span>;
 
-	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_ssip_recv = shutdown_tx.subscribe();
-	<span class="kw">let </span>ssip_event_receiver = odilia_tts::handle_ssip_commands(
-		<span class="kw-2">&amp;mut </span>ssip,
-		ssip_req_rx,
-		<span class="kw-2">&amp;mut </span>shutdown_rx_ssip_recv,
-	)
-	.map(|r| r.wrap_err(<span class="string">"Could no process SSIP request"</span>));
-	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_atspi_recv = shutdown_tx.subscribe();
+	<span class="kw">let </span>ssip_event_receiver =
+		odilia_tts::handle_ssip_commands(ssip, ssip_req_rx, token.clone())
+			.map(|r| r.wrap_err(<span class="string">"Could no process SSIP request"</span>));
 	<span class="kw">let </span>atspi_event_receiver =
-		events::receive(Arc::clone(<span class="kw-2">&amp;</span>state), atspi_event_tx, <span class="kw-2">&amp;mut </span>shutdown_rx_atspi_recv)
+		events::receive(Arc::clone(<span class="kw-2">&amp;</span>state), atspi_event_tx, token.clone())
 			.map(|()| <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, eyre::Report&gt;(()));
-	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_atspi_proc_recv = shutdown_tx.subscribe();
-	<span class="kw">let </span>atspi_event_processor = events::process(
-		Arc::clone(<span class="kw-2">&amp;</span>state),
-		<span class="kw-2">&amp;mut </span>atspi_event_rx,
-		<span class="kw-2">&amp;mut </span>shutdown_rx_atspi_proc_recv,
-	)
-	.map(|()| <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, eyre::Report&gt;(()));
-	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_odilia_recv = shutdown_tx.subscribe();
-	<span class="kw">let </span>odilia_event_receiver = sr_event_receiver(sr_event_tx, <span class="kw-2">&amp;mut </span>shutdown_rx_odilia_recv)
+	<span class="kw">let </span>atspi_event_processor =
+		events::process(Arc::clone(<span class="kw-2">&amp;</span>state), atspi_event_rx, token.clone())
+			.map(|()| <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, eyre::Report&gt;(()));
+	<span class="kw">let </span>odilia_event_receiver = sr_event_receiver(sr_event_tx, token.clone())
 		.map(|r| r.wrap_err(<span class="string">"Could not process Odilia events"</span>));
-	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_odilia_proc_recv = shutdown_tx.subscribe();
-	<span class="kw">let </span>odilia_event_processor = events::sr_event(
-		Arc::clone(<span class="kw-2">&amp;</span>state),
-		<span class="kw-2">&amp;mut </span>sr_event_rx,
-		<span class="kw-2">&amp;mut </span>shutdown_rx_odilia_proc_recv,
-	)
-	.map(|r| r.wrap_err(<span class="string">"Could not process Odilia event"</span>));
-	<span class="kw">let </span><span class="kw-2">mut </span>shutdown_rx_notif = shutdown_tx.subscribe();
-	<span class="kw">let </span>notification_task = notifications_monitor(Arc::clone(<span class="kw-2">&amp;</span>state), <span class="kw-2">&amp;mut </span>shutdown_rx_notif)
-		.map(|r| r.wrap_err(<span class="string">"Could not process signal shutdown."</span>));
-	<span class="kw">let </span>signal_receiver = sigterm_signal_watcher(shutdown_tx)
+	<span class="kw">let </span>odilia_event_processor =
+		events::sr_event(Arc::clone(<span class="kw-2">&amp;</span>state), sr_event_rx, token.clone())
+			.map(|r| r.wrap_err(<span class="string">"Could not process Odilia event"</span>));
+	<span class="kw">let </span>notification_task = notifications_monitor(Arc::clone(<span class="kw-2">&amp;</span>state), token.clone())
 		.map(|r| r.wrap_err(<span class="string">"Could not process signal shutdown."</span>));
 
-	<span class="macro">tokio::try_join!</span>(
-		signal_receiver,
-		atspi_event_receiver,
-		atspi_event_processor,
-		odilia_event_receiver,
-		odilia_event_processor,
-		ssip_event_receiver,
-		notification_task,
-	)<span class="question-mark">?</span>;
-	<span class="macro">tracing::debug!</span>(<span class="string">"All listeners have stopped."</span>);
-	<span class="macro">tracing::debug!</span>(<span class="string">"Goodbye, Odilia!"</span>);
+	tracker.spawn(atspi_event_receiver);
+	tracker.spawn(atspi_event_processor);
+	tracker.spawn(odilia_event_receiver);
+	tracker.spawn(odilia_event_processor);
+	tracker.spawn(ssip_event_receiver);
+	tracker.spawn(notification_task);
+	tracker.close();
+	<span class="kw">let _ </span>= sigterm_signal_watcher(token, tracker)
+		.<span class="kw">await
+		</span>.wrap_err(<span class="string">"can not process interrupt signal"</span>);
 	<span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

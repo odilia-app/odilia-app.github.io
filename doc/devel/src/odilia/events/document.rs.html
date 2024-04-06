@@ -34,6 +34,8 @@
 <a href="#32" id="32">32</a>
 <a href="#33" id="33">33</a>
 <a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi_common::events::{
 	document::{DocumentEvents, LoadCompleteEvent},
@@ -41,7 +43,8 @@
 };
 <span class="kw">use </span>odilia_common::errors::OdiliaError;
 
-<span class="kw">pub async fn </span>load_complete(
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">pub async fn </span>load_complete(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	event: <span class="kw-2">&amp;</span>LoadCompleteEvent,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(), OdiliaError&gt; {
@@ -56,7 +59,8 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>DocumentEvents) -&gt; eyre::Result&lt;()&gt; {
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>DocumentEvents) -&gt; eyre::Result&lt;()&gt; {
 	<span class="comment">// Dispatch based on member
 	</span><span class="kw">match </span>event {
 		DocumentEvents::LoadComplete(load_complete_event) =&gt; {

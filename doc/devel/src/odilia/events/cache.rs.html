@@ -28,11 +28,16 @@
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::ScreenReaderState;
 <span class="kw">use </span>atspi::events::{AddAccessibleEvent, CacheEvents, RemoveAccessibleEvent};
 <span class="kw">use </span>odilia_cache::AccessiblePrimitive;
 
-<span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>CacheEvents) -&gt; eyre::Result&lt;()&gt; {
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>CacheEvents) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">match </span>event {
 		CacheEvents::Add(add_event) =&gt; add_accessible(state, add_event).<span class="kw">await</span><span class="question-mark">?</span>,
 		CacheEvents::Remove(rem_event) =&gt; remove_accessible(state, rem_event)<span class="question-mark">?</span>,
@@ -40,7 +45,8 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">pub async fn </span>add_accessible(
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">pub async fn </span>add_accessible(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	event: <span class="kw-2">&amp;</span>AddAccessibleEvent,
 ) -&gt; eyre::Result&lt;()&gt; {
@@ -48,7 +54,9 @@
 		.<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="prelude-val">Ok</span>(())
 }
-<span class="kw">pub fn </span>remove_accessible(
+
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">pub fn </span>remove_accessible(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	event: <span class="kw-2">&amp;</span>RemoveAccessibleEvent,
 ) -&gt; eyre::Result&lt;()&gt; {

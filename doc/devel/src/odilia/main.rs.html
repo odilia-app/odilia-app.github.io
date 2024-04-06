@@ -145,6 +145,14 @@
 <a href="#143" id="143">143</a>
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -178,11 +186,15 @@
 <span class="kw">use </span>tokio_util::{sync::CancellationToken, task::TaskTracker};
 
 <span class="kw">use </span>atspi_common::events::{document, object};
-<span class="kw">async fn </span>notifications_monitor(
+<span class="kw">use </span>tracing::Instrument;
+<span class="attr">#[tracing::instrument(skip(state, shutdown))]
+</span><span class="kw">async fn </span>notifications_monitor(
 	state: Arc&lt;ScreenReaderState&gt;,
 	shutdown: CancellationToken,
 ) -&gt; eyre::Result&lt;()&gt; {
-	<span class="kw">let </span><span class="kw-2">mut </span>stream = listen_to_dbus_notifications().<span class="kw">await</span><span class="question-mark">?</span>;
+	<span class="kw">let </span><span class="kw-2">mut </span>stream = listen_to_dbus_notifications()
+		.instrument(<span class="macro">tracing::info_span!</span>(<span class="string">"creating notification listener"</span>))
+		.<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="kw">loop </span>{
 		<span class="macro">tokio::select! </span>{
 		    <span class="prelude-val">Some</span>(notification) = stream.next() =&gt; {
@@ -198,14 +210,14 @@
 	}
 	<span class="prelude-val">Ok</span>(())
 }
-<span class="kw">async fn </span>sigterm_signal_watcher(
+<span class="attr">#[tracing::instrument]
+</span><span class="kw">async fn </span>sigterm_signal_watcher(
 	token: CancellationToken,
 	tracker: TaskTracker,
 ) -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>timeout_duration = Duration::from_millis(<span class="number">500</span>); <span class="comment">//todo: perhaps take this from the configuration file at some point
 	</span><span class="kw">let </span><span class="kw-2">mut </span>c = signal(SignalKind::interrupt())<span class="question-mark">?</span>;
-	<span class="macro">tracing::debug!</span>(<span class="string">"Watching for Ctrl+C"</span>);
-	c.recv().<span class="kw">await</span>;
+	c.recv().instrument(<span class="macro">tracing::debug_span!</span>(<span class="string">"Watching for Ctrl+C"</span>)).<span class="kw">await</span>;
 	<span class="macro">tracing::debug!</span>(<span class="string">"Asking all processes to stop."</span>);
 	<span class="macro">tracing::debug!</span>(<span class="string">"cancelling all tokens"</span>);
 	token.cancel();
@@ -216,7 +228,8 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="attr">#[tokio::main(flavor = <span class="string">"current_thread"</span>)]
+<span class="attr">#[tracing::instrument]
+#[tokio::main(flavor = <span class="string">"current_thread"</span>)]
 </span><span class="kw">async fn </span>main() -&gt; eyre::Result&lt;()&gt; {
 	<span class="kw">let </span>args = Args::parse();
 	logging::init();
@@ -228,15 +241,18 @@
 	</span><span class="kw">let </span>tracker = TaskTracker::new();
 
 	<span class="comment">// Make sure applications with dynamic accessibility support do expose their AT-SPI2 interfaces.
-	</span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = atspi_connection::set_session_accessibility(<span class="bool-val">true</span>).<span class="kw">await </span>{
-		<span class="macro">tracing::debug!</span>(<span class="string">"Could not set AT-SPI2 IsEnabled property because: {}"</span>, e);
+	</span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = atspi_connection::set_session_accessibility(<span class="bool-val">true</span>)
+		.instrument(<span class="macro">tracing::info_span!</span>(<span class="string">"setting accessibility enabled flag"</span>))
+		.<span class="kw">await
+	</span>{
+		<span class="macro">tracing::error!</span>(<span class="string">"Could not set AT-SPI2 IsEnabled property because: {}"</span>, e);
 	}
 	<span class="kw">let </span>(sr_event_tx, sr_event_rx) = mpsc::channel(<span class="number">128</span>);
 	<span class="comment">// this channel must NEVER fill up; it will cause the thread receiving events to deadlock due to a zbus design choice.
 	// If you need to make it bigger, then make it bigger, but do NOT let it ever fill up.
 	</span><span class="kw">let </span>(atspi_event_tx, atspi_event_rx) = mpsc::channel(<span class="number">128</span>);
-	<span class="comment">// this is the chanel which handles all SSIP commands. If SSIP is not allowed to operate on a separate task, then wdaiting for the receiving message can block other long-running operations like structural navigation.
-	// Although in the future, this may possibly be remidied through a proper cache, I think it still makes sense to separate SSIP's IO operations to a separate task.
+	<span class="comment">// this is the channel which handles all SSIP commands. If SSIP is not allowed to operate on a separate task, then waiting for the receiving message can block other long-running operations like structural navigation.
+	// Although in the future, this may possibly be resolved through a proper cache, I think it still makes sense to separate SSIP's IO operations to a separate task.
 	// Like the channel above, it is very important that this is *never* full, since it can cause deadlocking if the other task sending the request is working with zbus.
 	</span><span class="kw">let </span>(ssip_req_tx, ssip_req_rx) = mpsc::channel::&lt;ssip_client_async::Request&gt;(<span class="number">128</span>);
 	<span class="comment">// Initialize state
@@ -246,8 +262,8 @@
 	<span class="kw">if </span>state.say(Priority::Message, <span class="string">"Welcome to Odilia!"</span>.to_string()).<span class="kw">await </span>{
 		<span class="macro">tracing::debug!</span>(<span class="string">"Welcome message spoken."</span>);
 	} <span class="kw">else </span>{
-		<span class="macro">tracing::debug!</span>(<span class="string">"Welcome message failed. Odilia is not able to continue in this state. Existing now."</span>);
-		<span class="kw">let _</span>: bool = state.close_speech().<span class="kw">await</span>;
+		<span class="macro">tracing::error!</span>(<span class="string">"Welcome message failed. Odilia is not able to continue in this state. Exiting now."</span>);
+		state.close_speech().<span class="kw">await</span>;
 		exit(<span class="number">1</span>);
 	}
 

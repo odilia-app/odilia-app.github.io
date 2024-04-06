@@ -187,6 +187,14 @@
 <a href="#185" id="185">185</a>
 <a href="#186" id="186">186</a>
 <a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -210,14 +218,17 @@
 <span class="kw">use </span>tokio::{fs, io::AsyncReadExt, net::UnixListener, sync::mpsc::Sender};
 <span class="kw">use </span>tokio_util::sync::CancellationToken;
 
-<span class="kw">fn </span>get_log_file_name() -&gt; String {
+<span class="attr">#[tracing::instrument(ret)]
+</span><span class="kw">fn </span>get_log_file_name() -&gt; String {
+	<span class="macro">tracing::info!</span>(<span class="string">"getting unix timestamp for current time"</span>);
 	<span class="kw">let </span>time = <span class="kw">if let </span><span class="prelude-val">Ok</span>(n) = SystemTime::now().duration_since(UNIX_EPOCH) {
+		<span class="macro">tracing::info!</span>(timestamp=<span class="question-mark">?</span>n, <span class="string">"success"</span>);
 		n.as_secs().to_string()
 	} <span class="kw">else </span>{
-		<span class="macro">tracing::error!</span>(<span class="string">"SystemTime before UnixEpoch!"</span>);
+		<span class="macro">tracing::error!</span>(<span class="string">"SystemTime before UnixEpoch? how is that possible?"</span>);
 		exit(<span class="number">1</span>);
 	};
-
+	<span class="macro">tracing::info!</span>(<span class="string">"searching for xdg environment variables"</span>);
 	<span class="kw">match </span>env::var(<span class="string">"XDG_DATA_HOME"</span>) {
 		<span class="prelude-val">Ok</span>(val) =&gt; {
 			<span class="macro">tracing::info!</span>(
@@ -226,7 +237,7 @@
 			<span class="macro">format!</span>(<span class="string">"{val}/sohks/sohks-{time}.log"</span>)
 		}
 		<span class="prelude-val">Err</span>(e) =&gt; {
-			<span class="macro">tracing::trace!</span>(
+			<span class="macro">tracing::warn!</span>(
                 <span class="string">"XDG_DATA_HOME Variable is not set, falling back on hardcoded path.\nError: {:#?}"</span>,
                 e
             );
@@ -237,11 +248,12 @@
 }
 
 <span class="doccomment">/// Receives [`odilia_common::events::ScreenReaderEvent`] structs, then sends them over the `event_sender` socket.
-/// This function will exit upon cancelation via a message from `shutdown_rx` parameter.
+/// This function will exit upon the expiry of the cancellation token passed in.
 /// # Errors
 /// This function will return an error type if the same function is already running.
 /// This is checked by looking for a file on disk. If the file exists, this program is probably already running.
 /// If there is no way to get access to the directory, then this function will call `exit(1)`; TODO: should probably return a result instead.
+</span><span class="attr">#[tracing::instrument(skip_all)]
 </span><span class="kw">pub async fn </span>sr_event_receiver(
 	event_sender: Sender&lt;ScreenReaderEvent&gt;,
 	shutdown: CancellationToken,
@@ -251,6 +263,7 @@
 
 	<span class="kw">let </span>log_path = Path::new(<span class="kw-2">&amp;</span>log_file_name);
 	<span class="macro">tracing::debug!</span>(<span class="string">"Socket file located at: {:?}"</span>, sock_file_path);
+	<span class="macro">tracing::debug!</span>(<span class="string">"creating log directory"</span>);
 	<span class="kw">if let </span><span class="prelude-val">Some</span>(p) = log_path.parent() {
 		<span class="kw">if </span>!p.exists() {
 			<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = fs::create_dir_all(p).<span class="kw">await </span>{
@@ -259,11 +272,12 @@
 		}
 	}
 
+	<span class="macro">tracing::debug!</span>(<span class="string">"checking for already running program"</span>);
 	<span class="kw">if </span>Path::new(<span class="kw-2">&amp;</span>pid_file_path).exists() {
-		<span class="macro">tracing::trace!</span>(
-			<span class="string">"Reading {} file and checking for running instances."</span>,
-			pid_file_path
-		);
+		<span class="macro">tracing::debug!</span>(
+			%pid_file_path, <span class="string">"Reading pid file  and checking for running instances"
+
+		</span>);
 		<span class="kw">let </span>odilias_pid = <span class="kw">match </span>fs::read_to_string(<span class="kw-2">&amp;</span>pid_file_path).<span class="kw">await </span>{
 			<span class="prelude-val">Ok</span>(odilias_pid) =&gt; odilias_pid,
 			<span class="prelude-val">Err</span>(e) =&gt; {
@@ -287,7 +301,7 @@
 	}
 
 	<span class="kw">if </span>Path::new(<span class="kw-2">&amp;</span>sock_file_path).exists() {
-		<span class="macro">tracing::trace!</span>(<span class="string">"Sockfile exists, attempting to remove it."</span>);
+		<span class="macro">tracing::debug!</span>(<span class="string">"Sockfile exists, attempting to remove it."</span>);
 		<span class="kw">match </span>fs::remove_file(<span class="kw-2">&amp;</span>sock_file_path).<span class="kw">await </span>{
 			<span class="prelude-val">Ok</span>(()) =&gt; {
 				<span class="macro">tracing::debug!</span>(<span class="string">"Removed old socket file"</span>);
@@ -302,6 +316,7 @@
 			}
 		};
 	}
+	<span class="macro">tracing::debug!</span>(%pid_file_path, <span class="string">"writing current ID to pid file"</span>);
 
 	<span class="kw">match </span>fs::write(<span class="kw-2">&amp;</span>pid_file_path, id().to_string()).<span class="kw">await </span>{
 		<span class="prelude-val">Ok</span>(()) =&gt; {}
@@ -344,7 +359,7 @@
 			    <span class="kw">continue</span>;
 			}
 			() = shutdown.cancelled() =&gt; {
-			    <span class="macro">tracing::debug!</span>(<span class="string">"Shutting down input socker."</span>);
+			    <span class="macro">tracing::debug!</span>(<span class="string">"Shutting down input socket due to cancellation token"</span>);
 			    <span class="kw">break</span>;
 			}
 		    }
@@ -352,7 +367,8 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="kw">fn </span>get_file_paths() -&gt; (String, String) {
+<span class="attr">#[tracing::instrument(ret)]
+</span><span class="kw">fn </span>get_file_paths() -&gt; (String, String) {
 	<span class="kw">match </span>env::var(<span class="string">"XDG_RUNTIME_DIR"</span>) {
 		<span class="prelude-val">Ok</span>(val) =&gt; {
 			<span class="macro">tracing::info!</span>(
@@ -365,7 +381,7 @@
 			(pid_file_path, sock_file_path)
 		}
 		<span class="prelude-val">Err</span>(e) =&gt; {
-			<span class="macro">tracing::trace!</span>(<span class="string">"XDG_RUNTIME_DIR Variable is not set, falling back on hardcoded path.\nError: {:#?}"</span>, e);
+			<span class="macro">tracing::warn!</span>(error=%e, <span class="string">"XDG_RUNTIME_DIR Variable is not set, falling back to hardcoded path"</span>);
 
 			<span class="kw">let </span>pid_file_path = <span class="macro">format!</span>(<span class="string">"/run/user/{}/odilias.pid"</span>, Uid::current());
 			<span class="kw">let </span>sock_file_path = <span class="macro">format!</span>(<span class="string">"/run/user/{}/odilia.sock"</span>, Uid::current());

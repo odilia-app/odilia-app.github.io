@@ -906,6 +906,33 @@
 <a href="#904" id="904">904</a>
 <a href="#905" id="905">905</a>
 <a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+<a href="#920" id="920">920</a>
+<a href="#921" id="921">921</a>
+<a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -952,7 +979,7 @@
 /// This makes some *possibly eronious* assumptions about what the sender is.
 </span><span class="kw">pub struct </span>AccessiblePrimitive {
 	<span class="doccomment">/// The accessible ID, which is an arbitrary string specified by the application.
-	/// It is guarenteed to be unique per application.
+	/// It is guaranteed to be unique per application.
 	/// Examples:
 	/// * /org/a11y/atspi/accessible/1234
 	/// * /org/a11y/atspi/accessible/null
@@ -970,6 +997,7 @@
 	<span class="doccomment">/// Convert into an [`atspi_proxies::accessible::AccessibleProxy`]. Must be async because the creation of an async proxy requires async itself.
 	/// # Errors
 	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
+	</span><span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub async fn </span>into_accessible&lt;<span class="lifetime">'a</span>&gt;(
 		<span class="self">self</span>,
 		conn: <span class="kw-2">&amp;</span>zbus::Connection,
@@ -987,6 +1015,7 @@
 	<span class="doccomment">/// Convert into an [`atspi_proxies::text::TextProxy`]. Must be async because the creation of an async proxy requires async itself.
 	/// # Errors
 	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
+	</span><span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub async fn </span>into_text&lt;<span class="lifetime">'a</span>&gt;(<span class="self">self</span>, conn: <span class="kw-2">&amp;</span>zbus::Connection) -&gt; zbus::Result&lt;TextProxy&lt;<span class="lifetime">'a</span>&gt;&gt; {
 		<span class="kw">let </span>id = <span class="self">self</span>.id;
 		<span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
@@ -998,24 +1027,24 @@
 			.build()
 			.<span class="kw">await
 	</span>}
-	<span class="doccomment">/// Turns any `atspi::event` type into an `AccessiblePrimtive`, the basic type which is used for keys in the cache.
+	<span class="doccomment">/// Turns any `atspi::event` type into an `AccessiblePrimitive`, the basic type which is used for keys in the cache.
 	/// # Errors
 	/// The errors are self-explanitory variants of the [`odilia_common::errors::AccessiblePrimitiveConversionError`].
+	</span><span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub fn </span>from_event&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AccessiblePrimitiveConversionError&gt; {
 		<span class="kw">let </span>sender = event.sender();
-		<span class="comment">//.map_err(|_| AccessiblePrimitiveConversionError::ErrSender)?
-		//.ok_or(AccessiblePrimitiveConversionError::NoSender)?;
-		</span><span class="kw">let </span>path = event.path(); <span class="comment">//.ok_or(AccessiblePrimitiveConversionError::NoPathId)?;
-		</span><span class="kw">let </span>id = path.to_string();
+		<span class="kw">let </span>path = event.path();
+		<span class="kw">let </span>id = path.to_string();
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ id, sender: sender.as_str().into() })
 	}
 }
 <span class="kw">impl </span>TryFrom&lt;atspi::events::Accessible&gt; <span class="kw">for </span>AccessiblePrimitive {
 	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
 
-	<span class="kw">fn </span>try_from(
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
+	</span><span class="kw">fn </span>try_from(
 		atspi_accessible: atspi::events::Accessible,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>tuple_converter = (atspi_accessible.name, atspi_accessible.path);
@@ -1025,7 +1054,8 @@
 <span class="kw">impl </span>TryFrom&lt;(OwnedUniqueName, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
 	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
 
-	<span class="kw">fn </span>try_from(
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
+	</span><span class="kw">fn </span>try_from(
 		so: (OwnedUniqueName, OwnedObjectPath),
 	) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
@@ -1036,20 +1066,23 @@
 	}
 }
 <span class="kw">impl </span>From&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">fn </span>from(so: (String, OwnedObjectPath)) -&gt; AccessiblePrimitive {
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
+	</span><span class="kw">fn </span>from(so: (String, OwnedObjectPath)) -&gt; AccessiblePrimitive {
 		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
 		AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.into() }
 	}
 }
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;(String, ObjectPath&lt;<span class="lifetime">'a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">fn </span>from(so: (String, ObjectPath&lt;<span class="lifetime">'a</span>&gt;)) -&gt; AccessiblePrimitive {
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
+	</span><span class="kw">fn </span>from(so: (String, ObjectPath&lt;<span class="lifetime">'a</span>&gt;)) -&gt; AccessiblePrimitive {
 		AccessiblePrimitive { id: so.<span class="number">1</span>.to_string(), sender: so.<span class="number">0</span>.into() }
 	}
 }
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>AccessiblePrimitive {
 	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
 
-	<span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
+	</span><span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
 		<span class="kw">let </span>id = accessible.path().as_str().into();
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
@@ -1058,7 +1091,8 @@
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;AccessibleProxy&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>AccessiblePrimitive {
 	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
 
-	<span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
+	</span><span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>sender = accessible.destination().as_str().into();
 		<span class="kw">let </span>id = accessible.path().as_str().into();
 		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
@@ -1068,25 +1102,25 @@
 <span class="attr">#[derive(Clone, Debug, Deserialize, Serialize)]
 </span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi_proxies::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
 </span><span class="kw">pub struct </span>CacheItem {
-	<span class="comment">// The accessible object (within the application)	(so)
+	<span class="doccomment">/// The accessible object (within the application)    (so)
 	</span><span class="kw">pub </span>object: AccessiblePrimitive,
-	<span class="comment">// The application (root object(?)	  (so)
+	<span class="doccomment">/// The application (root object(?)      (so)
 	</span><span class="kw">pub </span>app: AccessiblePrimitive,
-	<span class="comment">// The parent object.  (so)
+	<span class="doccomment">/// The parent object.  (so)
 	</span><span class="kw">pub </span>parent: CacheRef,
-	<span class="comment">// The accessbile index in parent.	i
+	<span class="doccomment">/// The accessible index in parent.I
 	</span><span class="kw">pub </span>index: i32,
-	<span class="comment">// Child count of the accessible  i
+	<span class="doccomment">/// Child count of the accessible.I
 	</span><span class="kw">pub </span>children_num: i32,
-	<span class="comment">// The exposed interfece(s) set.  as
+	<span class="doccomment">/// The exposed interface(s) set
 	</span><span class="kw">pub </span>interfaces: InterfaceSet,
-	<span class="comment">// Accessible role. u
+	<span class="doccomment">/// Accessible role. u
 	</span><span class="kw">pub </span>role: Role,
-	<span class="comment">// The states applicable to the accessible.  au
+	<span class="doccomment">/// The states applicable to the accessible.  au
 	</span><span class="kw">pub </span>states: StateSet,
-	<span class="comment">// The text of the accessible.
+	<span class="doccomment">/// The text of the accessible
 	</span><span class="kw">pub </span>text: String,
-	<span class="comment">// The children (ids) of the accessible.
+	<span class="doccomment">/// The children (ids) of the accessible
 	</span><span class="kw">pub </span>children: Vec&lt;CacheRef&gt;,
 
 	<span class="attr">#[serde(skip)]
@@ -1096,6 +1130,7 @@
 	<span class="doccomment">/// Return a *reference* to a parent. This is *much* cheaper than getting the parent element outright via [`Self::parent`].
 	/// # Errors
 	/// This method will return a [`CacheError::NoItem`] if no item is found within the cache.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub fn </span>parent_ref(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; OdiliaResult&lt;Arc&lt;std::sync::RwLock&lt;CacheItem&gt;&gt;&gt; {
 		<span class="kw">let </span>parent_ref = Weak::upgrade(<span class="kw-2">&amp;</span><span class="self">self</span>.parent.item);
 		<span class="kw">if let </span><span class="prelude-val">Some</span>(p) = parent_ref {
@@ -1116,6 +1151,7 @@
 	/// 1. We are unable to convert information from the event into an [`AccessiblePrimitive`] hashmap key. This should never happen.
 	/// 2. We are unable to convert the [`AccessiblePrimitive`] to an [`atspi_proxies::accessible::AccessibleProxy`].
 	/// 3. The `accessible_to_cache_item` function fails for any reason. This also shouldn't happen.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, skip_all, ret, err)]
 	</span><span class="kw">pub async fn </span>from_atspi_event&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		event: <span class="kw-2">&amp;</span>T,
 		cache: Weak&lt;Cache&gt;,
@@ -1134,6 +1170,7 @@
 	/// 3. Getting children from the `AccessibleProxy` fails. This should never happen.
 	///
 	/// The only time these can fail is if the item is removed on the application side before the conversion to `AccessibleProxy`.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, skip_all, ret, err)]
 	</span><span class="kw">pub async fn </span>from_atspi_cache_item(
 		atspi_cache_item: atspi_common::CacheItem,
 		cache: Weak&lt;Cache&gt;,
@@ -1167,6 +1204,7 @@
 	/// # Errors
 	/// 1. Will return an `Err` variant if `self.cache` does not reference an active cache. This should never happen, but it is technically possible.
 	/// 2. Any children keys' values are not found in the cache itself.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, skip_all, ret, err)]
 	</span><span class="kw">pub fn </span>get_children(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OdiliaResult&lt;Vec&lt;<span class="self">Self</span>&gt;&gt; {
 		<span class="kw">let </span>derefed_cache: Arc&lt;Cache&gt; = strong_cache(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)<span class="question-mark">?</span>;
 		<span class="kw">let </span>children = <span class="self">self
@@ -1186,9 +1224,9 @@
 <span class="doccomment">/// A composition of an accessible ID and (possibly) a reference
 /// to its `CacheItem`, if the item has not been dropped from the cache yet.
 /// TODO if desirable, we could make one direction strong references (e.g. have
-/// the parent be an Arc, xor have the children be Arcs). Might even be possible to have both.
+/// the parent be an Arc, or have the children be Arcs). Might even be possible to have both.
 /// BUT - is it even desirable to keep an item pinned in an Arc from its
-/// releatives after it has been removed from the cache?
+/// relatives after it has been removed from the cache?
 </span><span class="attr">#[derive(Debug, Clone, Deserialize, Serialize)]
 </span><span class="kw">pub struct </span>CacheRef {
 	<span class="kw">pub </span>key: CacheKey,
@@ -1198,6 +1236,7 @@
 
 <span class="kw">impl </span>CacheRef {
 	<span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"trace"</span>, skip_all, ret)]
 	</span><span class="kw">pub fn </span>new(key: AccessiblePrimitive) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{ key, item: Weak::new() }
 	}
@@ -1209,23 +1248,27 @@
 }
 
 <span class="kw">impl </span>From&lt;AccessiblePrimitive&gt; <span class="kw">for </span>CacheRef {
-	<span class="kw">fn </span>from(value: AccessiblePrimitive) -&gt; <span class="self">Self </span>{
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
+	</span><span class="kw">fn </span>from(value: AccessiblePrimitive) -&gt; <span class="self">Self </span>{
 		<span class="self">Self</span>::new(value)
 	}
 }
 
 <span class="attr">#[inline]
+#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 </span><span class="kw">async fn </span>as_accessible(cache_item: <span class="kw-2">&amp;</span>CacheItem) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;&gt; {
 	<span class="kw">let </span>cache = strong_cache(<span class="kw-2">&amp;</span>cache_item.cache)<span class="question-mark">?</span>;
 	<span class="prelude-val">Ok</span>(cache_item.object.clone().into_accessible(<span class="kw-2">&amp;</span>cache.connection).<span class="kw">await</span><span class="question-mark">?</span>)
 }
 <span class="attr">#[inline]
+#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 </span><span class="kw">async fn </span>as_text(cache_item: <span class="kw-2">&amp;</span>CacheItem) -&gt; OdiliaResult&lt;TextProxy&lt;<span class="lifetime">'_</span>&gt;&gt; {
 	<span class="kw">let </span>cache = strong_cache(<span class="kw-2">&amp;</span>cache_item.cache)<span class="question-mark">?</span>;
 	<span class="prelude-val">Ok</span>(cache_item.object.clone().into_text(<span class="kw-2">&amp;</span>cache.connection).<span class="kw">await</span><span class="question-mark">?</span>)
 }
 
 <span class="attr">#[inline]
+#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 </span><span class="kw">fn </span>strong_cache(weak_cache: <span class="kw-2">&amp;</span>Weak&lt;Cache&gt;) -&gt; OdiliaResult&lt;Arc&lt;Cache&gt;&gt; {
 	Weak::upgrade(weak_cache).ok_or(OdiliaError::Cache(CacheError::NotAvailable))
 }
@@ -1233,7 +1276,6 @@
 <span class="attr">#[async_trait]
 </span><span class="kw">impl </span>Accessible <span class="kw">for </span>CacheItem {
 	<span class="kw">type </span>Error = OdiliaError;
-
 	<span class="kw">async fn </span>get_application(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span>derefed_cache: Arc&lt;Cache&gt; = strong_cache(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)<span class="question-mark">?</span>;
 		derefed_cache.get(<span class="kw-2">&amp;</span><span class="self">self</span>.app).ok_or(CacheError::NoItem.into())
@@ -1581,6 +1623,7 @@
 </span><span class="kw">impl </span>Cache {
 	<span class="doccomment">/// create a new, fresh cache
 	</span><span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"debug"</span>, ret)]
 	</span><span class="kw">pub fn </span>new(conn: zbus::Connection) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			by_id: Arc::new(DashMap::with_capacity_and_hasher(
@@ -1595,6 +1638,7 @@
 	/// never two items with the same ID stored in the cache at the same time).
 	/// # Errors
 	/// Fails if the internal call to [`Self::add_ref`] fails.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_item: CacheItem) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>id = cache_item.object.clone();
 		<span class="self">self</span>.add_ref(id, <span class="kw-2">&amp;</span>Arc::new(RwLock::new(cache_item)))
@@ -1603,6 +1647,7 @@
 	<span class="doccomment">/// Add an item via a reference instead of creating the reference.
 	/// # Errors
 	/// Can error if [`Cache::populate_references`] errors. The insertion is guarenteed to succeed.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub fn </span>add_ref(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		id: CacheKey,
@@ -1613,6 +1658,7 @@
 	}
 
 	<span class="doccomment">/// Remove a single cache item. This function can not fail.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) {
 		<span class="self">self</span>.by_id.remove(id);
 	}
@@ -1621,6 +1667,7 @@
 	/// You will need to either get a read or a write lock on any item returned from this function.
 	/// It also may return `None` if a value is not matched to the key.
 	</span><span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;RwLock&lt;CacheItem&gt;&gt;&gt; {
 		<span class="self">self</span>.by_id.get(id).as_deref().cloned()
 	}
@@ -1630,12 +1677,14 @@
 	/// This will allow you to get the item without holding any locks to it,
 	/// at the cost of (1) a clone and (2) no guarantees that the data is kept up-to-date.
 	</span><span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
 		<span class="prelude-val">Some</span>(<span class="self">self</span>.by_id.get(id).as_deref()<span class="question-mark">?</span>.read().ok()<span class="question-mark">?</span>.clone())
 	}
 
 	<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
 	</span><span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>get_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: <span class="kw-2">&amp;</span>[CacheKey]) -&gt; Vec&lt;<span class="prelude-ty">Option</span>&lt;CacheItem&gt;&gt; {
 		ids.iter().map(|id| <span class="self">self</span>.get(id)).collect()
 	}
@@ -1644,6 +1693,7 @@
 	/// associated with an id.
 	/// # Errors
 	/// An `Err(_)` variant may be returned if the [`Cache::populate_references`] function fails.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub fn </span>add_all(<span class="kw-2">&amp;</span><span class="self">self</span>, cache_items: Vec&lt;CacheItem&gt;) -&gt; OdiliaResult&lt;()&gt; {
 		cache_items
 			.into_iter()
@@ -1658,6 +1708,7 @@
 			.try_for_each(|item| <span class="self">Self</span>::populate_references(<span class="kw-2">&amp;</span><span class="self">self</span>.by_id, <span class="kw-2">&amp;</span>item))
 	}
 	<span class="doccomment">/// Bulk remove all ids in the cache; this only refreshes the cache after removing all items.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>, ids: <span class="kw-2">&amp;</span>Vec&lt;CacheKey&gt;) {
 		<span class="kw">for </span>id <span class="kw">in </span>ids {
 			<span class="self">self</span>.by_id.remove(id);
@@ -1671,7 +1722,8 @@
 	///
 	/// # Errors
 	///
-	/// An [`odilia_common::errors::OdiliaError::PoisoningError`] may be returned if a write lock can not be aquired on the `CacheItem` being modified.
+	/// An [`odilia_common::errors::OdiliaError::PoisoningError`] may be returned if a write lock can not be acquired on the `CacheItem` being modified.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, skip(modify), ret, err)]
 	</span><span class="kw">pub fn </span>modify_item&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey, modify: F) -&gt; OdiliaResult&lt;bool&gt;
 	<span class="kw">where
 		</span>F: FnOnce(<span class="kw-2">&amp;mut </span>CacheItem),
@@ -1698,6 +1750,7 @@
 	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
 	/// 2. The [`Self::add`] function fails.
 	/// 3. The [`accessible_to_cache_item`] function fails.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, ret, err)]
 	</span><span class="kw">pub async fn </span>get_or_create(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;,
@@ -1725,12 +1778,12 @@
 	/// # Errors
 	/// If any references, either the ones passed in through the `item_ref` parameter, any children references, or the parent reference are unable to be unlocked, an `Err(_)` variant will be returned.
 	/// Technically it can also fail if the index of the `item_ref` in its parent exceeds `usize` on the given platform, but this is highly improbable.
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 	</span><span class="kw">pub fn </span>populate_references(
 		cache: <span class="kw-2">&amp;</span>ThreadSafeCache,
 		item_ref: <span class="kw-2">&amp;</span>Arc&lt;RwLock&lt;CacheItem&gt;&gt;,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;(), OdiliaError&gt; {
 		<span class="kw">let </span>item_wk_ref = Arc::downgrade(item_ref);
-
 		<span class="kw">let </span><span class="kw-2">mut </span>item = item_ref.write()<span class="question-mark">?</span>;
 		<span class="kw">let </span>item_key = item.object.clone();
 
@@ -1777,6 +1830,7 @@
 /// 1. The `cache` parameter does not reference an active cache once the `Weak` is upgraded to an `Option&lt;Arc&lt;_&gt;&gt;`.
 /// 2. Any of the function calls on the `accessible` fail.
 /// 3. Any `(String, OwnedObjectPath) -&gt; AccessiblePrimitive` conversions fail. This *should* never happen, but technically it is possible.
+</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
 </span><span class="kw">pub async fn </span>accessible_to_cache_item(
 	accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;,
 	cache: Weak&lt;Cache&gt;,

@@ -322,13 +322,20 @@
 <a href="#320" id="320">320</a>
 <a href="#321" id="321">321</a>
 <a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fs, sync::atomic::AtomicI32};
 
 <span class="kw">use </span>circular_queue::CircularQueue;
 <span class="kw">use </span>eyre::WrapErr;
 <span class="kw">use </span>ssip_client_async::{MessageScope, Priority, Request <span class="kw">as </span>SSIPRequest};
 <span class="kw">use </span>tokio::sync::{mpsc::Sender, Mutex};
-<span class="kw">use </span>tracing::debug;
+<span class="kw">use </span>tracing::{debug, Instrument};
 <span class="kw">use </span>zbus::{fdo::DBusProxy, names::UniqueName, zvariant::ObjectPath, MatchRule, MessageType};
 
 <span class="kw">use </span>atspi_client::{accessible_ext::AccessibleExt, convertable::Convertable};
@@ -369,15 +376,19 @@
 }
 
 <span class="kw">impl </span>ScreenReaderState {
-	<span class="attr">#[tracing::instrument]
+	<span class="attr">#[tracing::instrument(skip_all)]
 	</span><span class="kw">pub async fn </span>new(
 		ssip: Sender&lt;SSIPRequest&gt;,
 		config_override: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>std::path::Path&gt;,
 	) -&gt; eyre::Result&lt;ScreenReaderState&gt; {
 		<span class="kw">let </span>atspi = AccessibilityConnection::open()
+			.instrument(<span class="macro">tracing::info_span!</span>(<span class="string">"connecting to at-spi bus"</span>))
 			.<span class="kw">await
 			</span>.wrap_err(<span class="string">"Could not connect to at-spi bus"</span>)<span class="question-mark">?</span>;
 		<span class="kw">let </span>dbus = DBusProxy::new(atspi.connection())
+			.instrument(<span class="macro">tracing::debug_span!</span>(
+				<span class="string">"creating dbus proxy for accessibility connection"
+			</span>))
 			.<span class="kw">await
 			</span>.wrap_err(<span class="string">"Failed to create org.freedesktop.DBus proxy"</span>)<span class="question-mark">?</span>;
 
@@ -451,8 +462,8 @@
 			cache,
 		})
 	}
-
-	<span class="kw">pub async fn </span>get_or_create_atspi_cache_item_to_cache(
+	<span class="attr">#[tracing::instrument(level=<span class="string">"debug"</span>, skip(<span class="self">self</span>) ret, err)]
+	</span><span class="kw">pub async fn </span>get_or_create_atspi_cache_item_to_cache(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		atspi_cache_item: atspi_common::CacheItem,
 	) -&gt; OdiliaResult&lt;CacheItem&gt; {
@@ -467,7 +478,8 @@
 		}
 		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
-	<span class="kw">pub async fn </span>get_or_create_event_object_to_cache&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
+	<span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"debug"</span>, ret, err)]
+	</span><span class="kw">pub async fn </span>get_or_create_event_object_to_cache&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; OdiliaResult&lt;CacheItem&gt; {
@@ -532,8 +544,8 @@
 		<span class="comment">// TODO: add logic for punctuation
 		</span><span class="prelude-val">Ok</span>(text_selection)
 	}
-
-	<span class="kw">pub async fn </span>register_event&lt;E: HasRegistryEventString + HasMatchRule&gt;(
+	<span class="attr">#[tracing::instrument(skip_all)]
+	</span><span class="kw">pub async fn </span>register_event&lt;E: HasRegistryEventString + HasMatchRule&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 	) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">self</span>.atspi.register_event::&lt;E&gt;().<span class="kw">await</span><span class="question-mark">?</span>)
@@ -549,16 +561,16 @@
 	<span class="kw">pub fn </span>connection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>zbus::Connection {
 		<span class="self">self</span>.atspi.connection()
 	}
-
-	<span class="kw">pub async fn </span>stop_speech(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+	<span class="attr">#[tracing::instrument(skip(<span class="self">self</span>))]
+	</span><span class="kw">pub async fn </span>stop_speech(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
 		<span class="self">self</span>.ssip.send(SSIPRequest::Cancel(MessageScope::All)).<span class="kw">await</span>.is_ok()
 	}
-
-	<span class="kw">pub async fn </span>close_speech(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+	<span class="attr">#[tracing::instrument(name = <span class="string">"closing speech dispatcher connection"</span>, skip(<span class="self">self</span>))]
+	</span><span class="kw">pub async fn </span>close_speech(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
 		<span class="self">self</span>.ssip.send(SSIPRequest::Quit).<span class="kw">await</span>.is_ok()
 	}
-
-	<span class="kw">pub async fn </span>say(<span class="kw-2">&amp;</span><span class="self">self</span>, priority: Priority, text: String) -&gt; bool {
+	<span class="attr">#[tracing::instrument(skip(<span class="self">self</span>))]
+	</span><span class="kw">pub async fn </span>say(<span class="kw-2">&amp;</span><span class="self">self</span>, priority: Priority, text: String) -&gt; bool {
 		<span class="kw">if </span><span class="self">self</span>.ssip.send(SSIPRequest::SetPriority(priority)).<span class="kw">await</span>.is_err() {
 			<span class="kw">return </span><span class="bool-val">false</span>;
 		}
@@ -622,7 +634,8 @@
 			.get_or_create(<span class="kw-2">&amp;</span>accessible_proxy, Arc::downgrade(<span class="kw-2">&amp;</span><span class="self">self</span>.cache))
 			.<span class="kw">await
 	</span>}
-	<span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
+	<span class="attr">#[tracing::instrument(skip_all, ret, err)]
+	</span><span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
 	) -&gt; OdiliaResult&lt;AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;&gt; {
@@ -635,7 +648,8 @@
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}
-	<span class="kw">pub async fn </span>add_cache_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OdiliaResult&lt;()&gt; {
+	<span class="attr">#[tracing::instrument(skip_all, ret, err)]
+	</span><span class="kw">pub async fn </span>add_cache_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>cache_rule = MatchRule::builder()
 			.msg_type(MessageType::Signal)
 			.interface(<span class="string">"org.a11y.atspi.Cache"</span>)<span class="question-mark">?

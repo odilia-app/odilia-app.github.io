@@ -218,6 +218,8 @@
 <a href="#216" id="216">216</a>
 <a href="#217" id="217">217</a>
 <a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
 </pre></div><pre class="rust"><code><span class="kw">mod </span>cache;
 <span class="kw">mod </span>document;
 <span class="kw">mod </span>object;
@@ -238,7 +240,8 @@
 };
 <span class="kw">use </span>ssip_client_async::Priority;
 
-<span class="kw">pub async fn </span>structural_navigation(
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip_all, ret, err)]
+</span><span class="kw">pub async fn </span>structural_navigation(
 	state: <span class="kw-2">&amp;</span>ScreenReaderState,
 	dir: Direction,
 	role: Role,
@@ -282,7 +285,8 @@
 	}
 }
 
-<span class="kw">pub async fn </span>sr_event(
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">pub async fn </span>sr_event(
 	state: Arc&lt;ScreenReaderState&gt;,
 	<span class="kw-2">mut </span>sr_events: Receiver&lt;ScreenReaderEvent&gt;,
 	shutdown: CancellationToken,
@@ -301,7 +305,7 @@
 			    },
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::StopSpeech) =&gt; {
 			      <span class="macro">tracing::debug!</span>(<span class="string">"Stopping speech!"</span>);
-			      <span class="kw">let _</span>: bool = state.stop_speech().<span class="kw">await</span>;
+			      state.stop_speech().<span class="kw">await</span>;
 			    },
 			    <span class="prelude-val">Some</span>(ScreenReaderEvent::ChangeMode(new_sr_mode)) =&gt; {
 						<span class="macro">tracing::debug!</span>(<span class="string">"Changing mode to {:?}"</span>, new_sr_mode);
@@ -321,7 +325,7 @@
 	<span class="prelude-val">Ok</span>(())
 }
 
-<span class="comment">//#[tracing::instrument(level = "debug"i, skip(state))]
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip_all)]
 </span><span class="kw">pub async fn </span>receive(
 	state: Arc&lt;ScreenReaderState&gt;,
 	tx: Sender&lt;Event&gt;,
@@ -349,7 +353,7 @@
 	}
 }
 
-<span class="comment">//#[tracing::instrument(level = "debug")]
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip_all)]
 </span><span class="kw">pub async fn </span>process(
 	state: Arc&lt;ScreenReaderState&gt;,
 	<span class="kw-2">mut </span>rx: Receiver&lt;Event&gt;,
@@ -379,7 +383,8 @@
 	}
 }
 
-<span class="kw">async fn </span>dispatch_wrapper(state: Arc&lt;ScreenReaderState&gt;, good_event: Event) {
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state))]
+</span><span class="kw">async fn </span>dispatch_wrapper(state: Arc&lt;ScreenReaderState&gt;, good_event: Event) {
 	<span class="kw">if let </span><span class="prelude-val">Err</span>(e) = dispatch(<span class="kw-2">&amp;</span>state, good_event).<span class="kw">await </span>{
 		<span class="macro">tracing::error!</span>(error = %e, <span class="string">"Could not handle event"</span>);
 	} <span class="kw">else </span>{
@@ -387,7 +392,8 @@
 	}
 }
 
-<span class="kw">async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+</span><span class="kw">async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: Event) -&gt; eyre::Result&lt;()&gt; {
 	<span class="comment">// Dispatch based on interface
 	</span><span class="kw">match </span><span class="kw-2">&amp;</span>event {
 		Event::Object(object_event) =&gt; {
@@ -404,9 +410,7 @@
 			);
 		}
 	}
-	<span class="comment">//let accessible_id = state.new_accessible(&amp;interface).await?.path().try_into()?;
-	//state.update_accessible(accessible_id).await;
-	</span>state.event_history_update(event).<span class="kw">await</span>;
+	state.event_history_update(event).<span class="kw">await</span>;
 	<span class="prelude-val">Ok</span>(())
 }
 

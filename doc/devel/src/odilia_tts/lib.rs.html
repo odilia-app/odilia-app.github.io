@@ -112,6 +112,8 @@
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -129,7 +131,7 @@
 <span class="kw">use </span>std::{
 	io::ErrorKind,
 	process::{exit, Command, Stdio},
-	thread, time,
+	time,
 };
 <span class="kw">use </span>tokio::{
 	io::{BufReader, BufWriter},
@@ -141,6 +143,7 @@
 <span class="doccomment">/// Creates a new async SSIP client which can be sent commends, and can await responses to.
 /// # Errors
 /// There may be errors when trying to send the initial registration command, or when parsing the response.
+</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, err)]
 </span><span class="kw">pub async fn </span>create_ssip_client(
 ) -&gt; eyre::Result&lt;AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;&gt; {
 	<span class="macro">tracing::debug!</span>(<span class="string">"Attempting to register SSIP client odilia:speech"</span>);
@@ -161,7 +164,7 @@
 					<span class="macro">tracing::debug!</span>(
 						<span class="string">"Attempting to connect to speech-dispatcher again!"
 					</span>);
-					thread::sleep(time::Duration::from_millis(<span class="number">500</span>));
+					tokio::time::sleep(time::Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
 					Builder::new().build().<span class="kw">await</span><span class="question-mark">?
 				</span>} <span class="kw">else </span>{
 					<span class="macro">tracing::debug!</span>(<span class="string">"Speech dispatcher could not be started."</span>);
@@ -179,14 +182,15 @@
 	<span class="prelude-val">Ok</span>(ssip_core)
 }
 
-<span class="doccomment">/// A handler task for incomming SSIP requests.
-/// This function will run until it receives a requrst via the `shutdown_tx`'s sender half.
+<span class="doccomment">/// A handler task for incoming SSIP requests
+/// This function will run untill it gets canceled via the cancellation token
 ///
 /// # Errors
 ///
 /// This function will return an error if anything within it fails. It may fail to read a value from the channel, it may fail to run an SSIP command, or fail to parse the response.
-/// Errors may also be returned during cleanup via the `shutdown_tx` parameter, since shutting down the connection to speech dispatcher can also potentially error.
+/// Errors may also be returned during cleanup via the `cancellation_token` parameter, since shutting down the connection to speech dispatcher can also potentially error.
 /// Any of these failures will result in this function exiting with an `Err(_)` variant.
+</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip_all, err)]
 </span><span class="kw">pub async fn </span>handle_ssip_commands(
 	<span class="kw-2">mut </span>client: AsyncClient&lt;BufReader&lt;OwnedReadHalf&gt;, BufWriter&lt;OwnedWriteHalf&gt;&gt;,
 	requests: Receiver&lt;Request&gt;,
@@ -197,11 +201,11 @@
 		<span class="macro">tokio::select! </span>{
 				      request_option = requests.recv() =&gt; {
 					      <span class="kw">if let </span><span class="prelude-val">Some</span>(request) = request_option {
-		  <span class="macro">tracing::debug!</span>(<span class="string">"SSIP command received"</span>);
+		  <span class="macro">tracing::debug!</span>(<span class="question-mark">?</span>request, <span class="string">"SSIP command received"</span>);
 		  <span class="kw">let </span>response = client
 		    .send(request).<span class="kw">await</span><span class="question-mark">?
 		    </span>.receive().<span class="kw">await</span><span class="question-mark">?</span>;
-		  <span class="macro">tracing::debug!</span>(<span class="string">"Response from server: {:#?}"</span>, response);
+		  <span class="macro">tracing::debug!</span>(<span class="question-mark">?</span>response, <span class="string">"Recieved response from server"</span>);
 		}
 				      }
 				      () = shutdown.cancelled() =&gt; {
@@ -216,8 +220,8 @@
 		      <span class="kw">let </span>response = client
 			.send(Request::Quit).<span class="kw">await</span><span class="question-mark">?
 			</span>.receive().<span class="kw">await</span><span class="question-mark">?</span>;
-		      <span class="macro">tracing::debug!</span>(<span class="string">"Response from server: {:?}"</span>, response);
-					      <span class="macro">tracing::debug!</span>(<span class="string">"SSIP command interpreter is shut down."</span>);
+		      <span class="macro">tracing::debug!</span>(<span class="question-mark">?</span>response, <span class="string">"Recieved response from server"</span>);
+					      <span class="macro">tracing::debug!</span>(<span class="string">"SSIP command interpreter shutdown completed"</span>);
 					      <span class="kw">break</span>;
 				      }
 			      }

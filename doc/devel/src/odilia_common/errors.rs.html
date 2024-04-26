@@ -192,19 +192,19 @@
 }
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub enum </span>ConfigError {
-	Tini(tini::Error),
+	Figment(figment::Error),
 	ValueNotFound,
 	PathNotFound,
 }
-<span class="kw">impl </span>From&lt;tini::Error&gt; <span class="kw">for </span>ConfigError {
-	<span class="kw">fn </span>from(t_err: tini::Error) -&gt; <span class="self">Self </span>{
-		<span class="self">Self</span>::Tini(t_err)
+<span class="kw">impl </span>From&lt;figment::Error&gt; <span class="kw">for </span>ConfigError {
+	<span class="kw">fn </span>from(t_err: figment::Error) -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::Figment(t_err)
 	}
 }
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ConfigError {
 	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
 		<span class="kw">match </span><span class="self">self </span>{
-			<span class="self">Self</span>::Tini(t) =&gt; t.fmt(f),
+			<span class="self">Self</span>::Figment(t) =&gt; t.fmt(f),
 			<span class="self">Self</span>::ValueNotFound =&gt; f.write_str(<span class="string">"Vlaue not found in config file."</span>),
 			<span class="self">Self</span>::PathNotFound =&gt; {
 				f.write_str(<span class="string">"The path for the config file was not found."</span>)

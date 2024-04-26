@@ -12,16 +12,68 @@
 <a href="#10" id="10">10</a>
 <a href="#11" id="11">11</a>
 <a href="#12" id="12">12</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+<a href="#15" id="15">15</a>
+<a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::path::PathBuf;
+
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="doccomment">///structure used for all the configurable options related to logging
 </span><span class="attr">#[derive(Debug, Serialize, Deserialize)]
 #[allow(clippy::module_name_repetitions)]
 </span><span class="kw">pub struct </span>LogSettings {
-	level: String,
+	<span class="doccomment">///the logging level this session should output at
+	/// see the tracing documentation for more information, in the log filters section
+	/// typical values here include info, warn, debug and trace
+	/// however, one can also include specific modules for which logging should be shown at a different warning level
+	</span><span class="kw">pub </span>level: String,
+	<span class="doccomment">///the place where odilia should output its logs
+	/// the values possible include tty, file and syslog
+	</span><span class="kw">pub </span>logger: LoggingKind,
 }
-<span class="kw">impl </span>LogSettings {
-	<span class="kw">pub fn </span>new(level: String) -&gt; <span class="self">Self </span>{
-		<span class="self">Self </span>{ level }
+<span class="kw">impl </span>Default <span class="kw">for </span>LogSettings {
+	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{
+			level: <span class="string">"info"</span>.to_owned(),
+			logger: LoggingKind::File(<span class="string">"/var/log/odilia.log"</span>.into()),
+		}
 	}
+}
+
+<span class="doccomment">///the place where odilia should output its logs
+</span><span class="attr">#[derive(Serialize, Deserialize, Debug)]
+</span><span class="kw">pub enum </span>LoggingKind {
+	<span class="doccomment">///a file where the log messages should be written
+	/// the path can be both absolute and relative to the current working directory
+	/// warning: the path must be accessible permission wise from the user where odilia was launched
+	</span>File(PathBuf),
+	<span class="doccomment">///logs are being sent to the terminal directly
+	</span>Tty,
+	<span class="doccomment">///the logs are sent to systemd-journald, as long as the target architecture supports it
+	/// if that's not the case, this option does nothing
+	</span>Syslog,
 }
 </code></pre></div></section></main></body></html>

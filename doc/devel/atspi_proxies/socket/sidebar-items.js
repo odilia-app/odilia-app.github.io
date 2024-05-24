@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["SocketProxy","SocketProxyBlocking"],"trait":["Socket","SocketBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["SocketProxy","SocketProxyBlocking"]};

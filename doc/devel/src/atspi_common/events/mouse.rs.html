@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/events/mouse.rs`."><title>mouse.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.5.0/src/events/mouse.rs`."><title>mouse.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../atspi_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -201,56 +201,26 @@
 <a href="#199" id="199">199</a>
 <a href="#200" id="200">200</a>
 <a href="#201" id="201">201</a>
-<a href="#202" id="202">202</a>
-<a href="#203" id="203">203</a>
-<a href="#204" id="204">204</a>
-<a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
-<a href="#209" id="209">209</a>
-<a href="#210" id="210">210</a>
-<a href="#211" id="211">211</a>
-<a href="#212" id="212">212</a>
-<a href="#213" id="213">213</a>
-<a href="#214" id="214">214</a>
-<a href="#215" id="215">215</a>
-<a href="#216" id="216">216</a>
-<a href="#217" id="217">217</a>
-<a href="#218" id="218">218</a>
-<a href="#219" id="219">219</a>
-<a href="#220" id="220">220</a>
-<a href="#221" id="221">221</a>
-<a href="#222" id="222">222</a>
-<a href="#223" id="223">223</a>
-<a href="#224" id="224">224</a>
-<a href="#225" id="225">225</a>
-<a href="#226" id="226">226</a>
-<a href="#227" id="227">227</a>
-<a href="#228" id="228">228</a>
-<a href="#229" id="229">229</a>
-<a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
-<a href="#233" id="233">233</a>
-<a href="#234" id="234">234</a>
-<a href="#235" id="235">235</a>
-<a href="#236" id="236">236</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	error::AtspiError,
-	events::{Accessible, EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString},
+	events::{EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString, ObjectRef},
 	Event,
 };
-<span class="kw">use </span>zbus_names::UniqueName;
 <span class="kw">use </span>zvariant::ObjectPath;
 
 <span class="attr">#[derive(Clone, Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash)]
 </span><span class="kw">pub enum </span>MouseEvents {
-	Abs(AbsEvent),
-	Rel(RelEvent),
-	Button(ButtonEvent),
+	<span class="doccomment">/// See: [`AbsEvent`].
+	</span>Abs(AbsEvent),
+	<span class="doccomment">/// See: [`RelEvent`].
+	</span>Rel(RelEvent),
+	<span class="doccomment">/// See: [`ButtonEvent`].
+	</span>Button(ButtonEvent),
 }
-<span class="macro">impl_event_conversions!</span>(MouseEvents, Event::Mouse);
+
+<span class="macro">impl_from_interface_event_enum_for_event!</span>(MouseEvents, Event::Mouse);
+<span class="macro">impl_try_from_event_for_user_facing_event_type!</span>(MouseEvents, Event::Mouse);
+
 <span class="macro">event_wrapper_test_cases!</span>(MouseEvents, AbsEvent);
 
 <span class="kw">impl </span>HasMatchRule <span class="kw">for </span>MouseEvents {
@@ -259,21 +229,24 @@
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>AbsEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 	<span class="kw">pub </span>x: i32,
 	<span class="kw">pub </span>y: i32,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>RelEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 	<span class="kw">pub </span>x: i32,
 	<span class="kw">pub </span>y: i32,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ButtonEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 	<span class="kw">pub </span>detail: String,
 	<span class="kw">pub </span>mouse_x: i32,
 	<span class="kw">pub </span>mouse_y: i32,
@@ -288,11 +261,11 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, x: body.detail1, y: body.detail2 })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -303,19 +276,7 @@
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for AbsEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Mouse(MouseEvents::Abs(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RelEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RelEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Rel"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Mouse"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -324,11 +285,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, x: body.detail1, y: body.detail2 })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -339,19 +300,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for RelEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Mouse(MouseEvents::Rel(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ButtonEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ButtonEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Button"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Mouse"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -360,11 +309,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, detail: body.kind, mouse_x: body.detail1, mouse_y: body.detail2 })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -375,19 +324,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ButtonEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Mouse(MouseEvents::Button(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>MouseEvents {
 	<span class="kw">type </span>Error = AtspiError;
 	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
@@ -403,7 +340,10 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(AbsEvent, MouseEvents, MouseEvents::Abs, Event::Mouse);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(AbsEvent, MouseEvents, MouseEvents::Abs);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(AbsEvent, Event::Mouse);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(AbsEvent, MouseEvents::Abs, Event::Mouse);
+
 <span class="macro">event_test_cases!</span>(AbsEvent);
 <span class="macro">impl_to_dbus_message!</span>(AbsEvent);
 <span class="macro">impl_from_dbus_message!</span>(AbsEvent);
@@ -419,7 +359,9 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(RelEvent, MouseEvents, MouseEvents::Rel, Event::Mouse);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(RelEvent, MouseEvents, MouseEvents::Rel);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(RelEvent, Event::Mouse);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(RelEvent, MouseEvents::Rel, Event::Mouse);
 <span class="macro">event_test_cases!</span>(RelEvent);
 <span class="macro">impl_to_dbus_message!</span>(RelEvent);
 <span class="macro">impl_from_dbus_message!</span>(RelEvent);
@@ -435,7 +377,13 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(ButtonEvent, MouseEvents, MouseEvents::Button, Event::Mouse);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	ButtonEvent,
+	MouseEvents,
+	MouseEvents::Button
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ButtonEvent, Event::Mouse);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(ButtonEvent, MouseEvents::Button, Event::Mouse);
 <span class="macro">event_test_cases!</span>(ButtonEvent);
 <span class="macro">impl_to_dbus_message!</span>(ButtonEvent);
 <span class="macro">impl_from_dbus_message!</span>(ButtonEvent);
@@ -451,25 +399,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*impl HasMatchRule for AbsEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Mouse',member='Abs'";
-}*/
-/*impl HasMatchRule for RelEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Mouse',member='Rel'";
-}*/
-/*impl HasMatchRule for ButtonEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Mouse',member='Button'";
-}*/
-/*impl HasRegistryEventString for AbsEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Mouse:Abs";
-}*/
-/*impl HasRegistryEventString for RelEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Mouse:Rel";
-}*/
-/*impl HasRegistryEventString for ButtonEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Mouse:Button";
-}*/
-</span><span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>MouseEvents {
+<span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>MouseEvents {
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Mouse:"</span>;
 }
 </code></pre></div></section></main></body></html>

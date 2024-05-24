@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AccessibleProxy","AccessibleProxyBlocking"],"trait":["Accessible","AccessibleBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["AccessibleProxy","AccessibleProxyBlocking"]};

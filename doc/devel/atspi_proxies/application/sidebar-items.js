@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ApplicationProxy","ApplicationProxyBlocking"],"trait":["Application","ApplicationBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["ApplicationProxy","ApplicationProxyBlocking"]};

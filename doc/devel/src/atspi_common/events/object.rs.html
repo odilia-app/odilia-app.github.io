@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/events/object.rs`."><title>object.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.5.0/src/events/object.rs`."><title>object.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../atspi_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1427,168 +1427,502 @@
 <a href="#1425" id="1425">1425</a>
 <a href="#1426" id="1426">1426</a>
 <a href="#1427" id="1427">1427</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
+<a href="#1428" id="1428">1428</a>
+<a href="#1429" id="1429">1429</a>
+<a href="#1430" id="1430">1430</a>
+<a href="#1431" id="1431">1431</a>
+<a href="#1432" id="1432">1432</a>
+<a href="#1433" id="1433">1433</a>
+<a href="#1434" id="1434">1434</a>
+<a href="#1435" id="1435">1435</a>
+<a href="#1436" id="1436">1436</a>
+<a href="#1437" id="1437">1437</a>
+<a href="#1438" id="1438">1438</a>
+<a href="#1439" id="1439">1439</a>
+<a href="#1440" id="1440">1440</a>
+<a href="#1441" id="1441">1441</a>
+<a href="#1442" id="1442">1442</a>
+<a href="#1443" id="1443">1443</a>
+<a href="#1444" id="1444">1444</a>
+<a href="#1445" id="1445">1445</a>
+<a href="#1446" id="1446">1446</a>
+<a href="#1447" id="1447">1447</a>
+<a href="#1448" id="1448">1448</a>
+<a href="#1449" id="1449">1449</a>
+<a href="#1450" id="1450">1450</a>
+<a href="#1451" id="1451">1451</a>
+<a href="#1452" id="1452">1452</a>
+<a href="#1453" id="1453">1453</a>
+<a href="#1454" id="1454">1454</a>
+<a href="#1455" id="1455">1455</a>
+<a href="#1456" id="1456">1456</a>
+<a href="#1457" id="1457">1457</a>
+<a href="#1458" id="1458">1458</a>
+<a href="#1459" id="1459">1459</a>
+<a href="#1460" id="1460">1460</a>
+<a href="#1461" id="1461">1461</a>
+<a href="#1462" id="1462">1462</a>
+<a href="#1463" id="1463">1463</a>
+<a href="#1464" id="1464">1464</a>
+<a href="#1465" id="1465">1465</a>
+<a href="#1466" id="1466">1466</a>
+<a href="#1467" id="1467">1467</a>
+<a href="#1468" id="1468">1468</a>
+<a href="#1469" id="1469">1469</a>
+<a href="#1470" id="1470">1470</a>
+<a href="#1471" id="1471">1471</a>
+<a href="#1472" id="1472">1472</a>
+<a href="#1473" id="1473">1473</a>
+<a href="#1474" id="1474">1474</a>
+<a href="#1475" id="1475">1475</a>
+<a href="#1476" id="1476">1476</a>
+<a href="#1477" id="1477">1477</a>
+<a href="#1478" id="1478">1478</a>
+<a href="#1479" id="1479">1479</a>
+<a href="#1480" id="1480">1480</a>
+<a href="#1481" id="1481">1481</a>
+<a href="#1482" id="1482">1482</a>
+<a href="#1483" id="1483">1483</a>
+<a href="#1484" id="1484">1484</a>
+<a href="#1485" id="1485">1485</a>
+<a href="#1486" id="1486">1486</a>
+<a href="#1487" id="1487">1487</a>
+<a href="#1488" id="1488">1488</a>
+<a href="#1489" id="1489">1489</a>
+<a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
+<a href="#1494" id="1494">1494</a>
+<a href="#1495" id="1495">1495</a>
+<a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
+<a href="#1525" id="1525">1525</a>
+<a href="#1526" id="1526">1526</a>
+<a href="#1527" id="1527">1527</a>
+<a href="#1528" id="1528">1528</a>
+<a href="#1529" id="1529">1529</a>
+<a href="#1530" id="1530">1530</a>
+<a href="#1531" id="1531">1531</a>
+<a href="#1532" id="1532">1532</a>
+<a href="#1533" id="1533">1533</a>
+<a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::hash::Hash;
+
+<span class="kw">use crate</span>::{
 	error::AtspiError,
-	events::{Accessible, EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString},
-	Event,
+	events::{EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString, ObjectRef},
+	Event, State,
 };
-<span class="kw">use </span>zbus_names::UniqueName;
-<span class="kw">use </span>zvariant::ObjectPath;
+<span class="kw">use </span>zvariant::{ObjectPath, OwnedValue, Value};
 
 <span class="attr">#[derive(Clone, Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash)]
 </span><span class="kw">pub enum </span>ObjectEvents {
-	PropertyChange(PropertyChangeEvent),
-	BoundsChanged(BoundsChangedEvent),
-	LinkSelected(LinkSelectedEvent),
-	StateChanged(StateChangedEvent),
-	ChildrenChanged(ChildrenChangedEvent),
-	VisibleDataChanged(VisibleDataChangedEvent),
-	SelectionChanged(SelectionChangedEvent),
-	ModelChanged(ModelChangedEvent),
-	ActiveDescendantChanged(ActiveDescendantChangedEvent),
-	Announcement(AnnouncementEvent),
-	AttributesChanged(AttributesChangedEvent),
-	RowInserted(RowInsertedEvent),
-	RowReordered(RowReorderedEvent),
-	RowDeleted(RowDeletedEvent),
-	ColumnInserted(ColumnInsertedEvent),
-	ColumnReordered(ColumnReorderedEvent),
-	ColumnDeleted(ColumnDeletedEvent),
-	TextBoundsChanged(TextBoundsChangedEvent),
-	TextSelectionChanged(TextSelectionChangedEvent),
-	TextChanged(TextChangedEvent),
-	TextAttributesChanged(TextAttributesChangedEvent),
-	TextCaretMoved(TextCaretMovedEvent),
+	<span class="doccomment">/// See: [`PropertyChangeEvent`].
+	</span>PropertyChange(PropertyChangeEvent),
+	<span class="doccomment">/// See: [`BoundsChangedEvent`].
+	</span>BoundsChanged(BoundsChangedEvent),
+	<span class="doccomment">/// See: [`LinkSelectedEvent`].
+	</span>LinkSelected(LinkSelectedEvent),
+	<span class="doccomment">/// See: [`StateChangedEvent`].
+	</span>StateChanged(StateChangedEvent),
+	<span class="doccomment">/// See: [`ChildrenChangedEvent`].
+	</span>ChildrenChanged(ChildrenChangedEvent),
+	<span class="doccomment">/// See: [`VisibleDataChangedEvent`].
+	</span>VisibleDataChanged(VisibleDataChangedEvent),
+	<span class="doccomment">/// See: [`SelectionChangedEvent`].
+	</span>SelectionChanged(SelectionChangedEvent),
+	<span class="doccomment">/// See: [`ModelChangedEvent`].
+	</span>ModelChanged(ModelChangedEvent),
+	<span class="doccomment">/// See: [`ActiveDescendantChangedEvent`].
+	</span>ActiveDescendantChanged(ActiveDescendantChangedEvent),
+	<span class="doccomment">/// See: [`AnnouncementEvent`].
+	</span>Announcement(AnnouncementEvent),
+	<span class="doccomment">/// See: [`AttributesChangedEvent`].
+	</span>AttributesChanged(AttributesChangedEvent),
+	<span class="doccomment">/// See: [`RowInsertedEvent`].
+	</span>RowInserted(RowInsertedEvent),
+	<span class="doccomment">/// See: [`RowReorderedEvent`].
+	</span>RowReordered(RowReorderedEvent),
+	<span class="doccomment">/// See: [`RowDeletedEvent`].
+	</span>RowDeleted(RowDeletedEvent),
+	<span class="doccomment">/// See: [`ColumnInsertedEvent`].
+	</span>ColumnInserted(ColumnInsertedEvent),
+	<span class="doccomment">/// See: [`ColumnReorderedEvent`].
+	</span>ColumnReordered(ColumnReorderedEvent),
+	<span class="doccomment">/// See: [`ColumnDeletedEvent`].
+	</span>ColumnDeleted(ColumnDeletedEvent),
+	<span class="doccomment">/// See: [`TextBoundsChangedEvent`].
+	</span>TextBoundsChanged(TextBoundsChangedEvent),
+	<span class="doccomment">/// See: [`TextSelectionChangedEvent`].
+	</span>TextSelectionChanged(TextSelectionChangedEvent),
+	<span class="doccomment">/// See: [`TextChangedEvent`].
+	</span>TextChanged(TextChangedEvent),
+	<span class="doccomment">/// See: [`TextAttributesChangedEvent`].
+	</span>TextAttributesChanged(TextAttributesChangedEvent),
+	<span class="doccomment">/// See: [`TextCaretMovedEvent`].
+	</span>TextCaretMoved(TextCaretMovedEvent),
 }
-<span class="macro">impl_event_conversions!</span>(ObjectEvents, Event::Object);
+
+<span class="macro">impl_from_interface_event_enum_for_event!</span>(ObjectEvents, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_event_type!</span>(ObjectEvents, Event::Object);
+
 <span class="macro">event_wrapper_test_cases!</span>(ObjectEvents, PropertyChangeEvent);
 
 <span class="kw">impl </span>HasMatchRule <span class="kw">for </span>ObjectEvents {
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"type='signal',interface='org.a11y.atspi.Event.Object'"</span>;
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// The `org.a11y.atspi.Event.Object:PropertyChange` event.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
 </span><span class="kw">pub struct </span>PropertyChangeEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 	<span class="kw">pub </span>property: String,
-	<span class="kw">pub </span>value: String,
+	<span class="kw">pub </span>value: Property,
+}
+
+<span class="kw">impl </span>Hash <span class="kw">for </span>PropertyChangeEvent {
+	<span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+		<span class="self">self</span>.item.hash(state);
+		<span class="self">self</span>.property.hash(state);
+	}
+}
+
+<span class="comment">// Do not derive Eq if not all fields implement Eq
+</span><span class="kw">impl </span>Eq <span class="kw">for </span>PropertyChangeEvent {}
+
+<span class="comment">// Looks like a false positive Clippy lint
+</span><span class="attr">#[allow(clippy::derivable_impls)]
+</span><span class="kw">impl </span>Default <span class="kw">for </span>PropertyChangeEvent {
+	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+		<span class="self">Self </span>{ item: ObjectRef::default(), property: String::default(), value: Property::default() }
+	}
+}
+
+<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize)]
+#[non_exhaustive]
+</span><span class="kw">pub enum </span>Property {
+	Name(String),
+	Description(String),
+	Role(<span class="kw">crate</span>::Role),
+	Parent(ObjectRef),
+	TableCaption(String),
+	TableColumnDescription(String),
+	TableColumnHeader(String),
+	TableRowDescription(String),
+	TableRowHeader(String),
+	TableSummary(String),
+	Other((String, OwnedValue)),
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>Property {
+	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+		<span class="self">Self</span>::Other((String::default(), zvariant::Value::U64(<span class="number">0</span>).into()))
+	}
+}
+
+<span class="kw">impl </span>TryFrom&lt;EventBodyOwned&gt; <span class="kw">for </span>Property {
+	<span class="kw">type </span>Error = AtspiError;
+
+	<span class="kw">fn </span>try_from(body: EventBodyOwned) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">let </span>property = body.kind;
+
+		<span class="kw">match </span>property.as_str() {
+			<span class="string">"accessible-name" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Name(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"accessible-name"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"accessible-description" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Description(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"accessible-description"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"accessible-role" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Role({
+				<span class="kw">let </span>role_int: u32 = body
+					.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"accessible-role"</span>))<span class="question-mark">?</span>;
+				<span class="kw">let </span>role: <span class="kw">crate</span>::Role = <span class="kw">crate</span>::Role::try_from(role_int)
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"accessible-role"</span>))<span class="question-mark">?</span>;
+				role
+			})),
+			<span class="string">"accessible-parent" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Parent(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"accessible-parent"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"accessible-table-caption" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::TableCaption(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"accessible-table-caption"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"table-column-description" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::TableColumnDescription(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"table-column-description"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"table-column-header" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::TableColumnHeader(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"table-column-header"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"table-row-description" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::TableRowDescription(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"table-row-description"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"table-row-header" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::TableRowHeader(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"table-row-header"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="string">"table-summary" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::TableSummary(
+				body.any_data
+					.try_into()
+					.map_err(|<span class="kw">_</span>| AtspiError::ParseError(<span class="string">"table-summary"</span>))<span class="question-mark">?</span>,
+			)),
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Other((property, body.any_data))),
+		}
+	}
+}
+
+<span class="kw">impl </span>From&lt;Property&gt; <span class="kw">for </span>OwnedValue {
+	<span class="kw">fn </span>from(property: Property) -&gt; <span class="self">Self </span>{
+		<span class="kw">match </span>property {
+			Property::Name(name) =&gt; Value::from(name).into(),
+			Property::Description(description) =&gt; Value::from(description).into(),
+			Property::Role(role) =&gt; Value::from(role <span class="kw">as </span>u32).into(),
+			Property::Parent(parent) =&gt; Value::from(parent).into(),
+			Property::TableCaption(table_caption) =&gt; Value::from(table_caption).into(),
+			Property::TableColumnDescription(table_column_description) =&gt; {
+				Value::from(table_column_description).into()
+			}
+			Property::TableColumnHeader(table_column_header) =&gt; {
+				Value::from(table_column_header).into()
+			}
+			Property::TableRowDescription(table_row_description) =&gt; {
+				Value::from(table_row_description).into()
+			}
+			Property::TableRowHeader(table_row_header) =&gt; Value::from(table_row_header).into(),
+			Property::TableSummary(table_summary) =&gt; Value::from(table_summary).into(),
+			Property::Other((<span class="kw">_</span>, value)) =&gt; value,
+		}
+	}
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>BoundsChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>LinkSelectedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A state of an object has been modified.
+/// A [`State`] can be added or removed from any [`ObjectRef`].
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>StateChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
-	<span class="kw">pub </span>state: String,
-	<span class="kw">pub </span>enabled: i32,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
+	<span class="doccomment">/// The state to be enabled/disabled.
+	</span><span class="kw">pub </span>state: State,
+	<span class="doccomment">/// Enabled or disabled the state.
+	///
+	/// 1 == enabled
+	///
+	/// 0 == disabled
+	</span><span class="kw">pub </span>enabled: i32,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A child of an [`ObjectRef`] has been added or removed.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ChildrenChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
-	<span class="kw">pub </span>operation: String,
-	<span class="kw">pub </span>index_in_parent: i32,
-	<span class="kw">pub </span>child: Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
+	<span class="doccomment">/// Operation, which may be one of:
+	///
+	/// * "insert/system"
+	/// * "insert"
+	/// * "delete/system"
+	/// * "delete"
+	///
+	/// The operation is the same whether it contains the "/system" suffix or not.
+	/// TODO: This should be an enum.
+	</span><span class="kw">pub </span>operation: String,
+	<span class="doccomment">/// Index to remove from/add to.
+	</span><span class="kw">pub </span>index_in_parent: i32,
+	<span class="doccomment">/// A reference to the new child.
+	</span><span class="kw">pub </span>child: ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>VisibleDataChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>SelectionChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ModelChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ActiveDescendantChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
-	<span class="kw">pub </span>child: Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
+	<span class="kw">pub </span>child: ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>AnnouncementEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
-	<span class="kw">pub </span>text: String,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
+	<span class="doccomment">/// Text of the announcement.
+	</span><span class="kw">pub </span>text: String,
+	<span class="doccomment">/// Politeness level.
+	</span><span class="kw">pub </span>live: <span class="kw">crate</span>::Live,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>AttributesChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A row has been added to a table.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>RowInsertedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The table which has had a row inserted.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A row has been moved within a table.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>RowReorderedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The table which has had a row re-ordered.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A row has been deleted from a table.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>RowDeletedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The table which has had a row removed.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A column has been added to a table.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ColumnInsertedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The table which has had a column inserted.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A column has been re-ordered within a table.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ColumnReorderedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The table which has had a column re-ordered.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A column has been removed from a table.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ColumnDeletedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The table which has had a column removed.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>TextBoundsChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>TextSelectionChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// Text has changed within an [`ObjectRef`].
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>TextChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
-	<span class="kw">pub </span>operation: String,
-	<span class="kw">pub </span>start_pos: i32,
-	<span class="kw">pub </span>length: i32,
-	<span class="kw">pub </span>text: String,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
+	<span class="doccomment">/// Operation, which may be one of:
+	///
+	/// * "insert/system"
+	/// * "insert"
+	/// * "delete/system"
+	/// * "delete"
+	///
+	/// The operation is the same whether it contains the "/system" suffix or not.
+	/// TODO: This should be an enum.
+	</span><span class="kw">pub </span>operation: String,
+	<span class="doccomment">/// starting index of the insertion/deletion
+	</span><span class="kw">pub </span>start_pos: i32,
+	<span class="doccomment">/// length of the insertion/deletion
+	</span><span class="kw">pub </span>length: i32,
+	<span class="doccomment">/// the text being inserted/deleted
+	</span><span class="kw">pub </span>text: String,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>TextAttributesChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// The caret of the user also known as a cursor (not to be confused with mouse pointer) has changed position.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>TextCaretMovedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
-	<span class="kw">pub </span>position: i32,
+	<span class="doccomment">/// The object on which the caret has been moved on.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
+	<span class="doccomment">/// New position of the caret.
+	</span><span class="kw">pub </span>position: i32,
 }
 
 <span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>PropertyChangeEvent {
@@ -1600,11 +1934,13 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, property: body.kind, value: body.any_data.try_into()<span class="question-mark">? </span>})
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+		<span class="kw">let </span>property = body.kind.clone();
+		<span class="kw">let </span>value: Property = body.try_into()<span class="question-mark">?</span>;
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, property, value })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1615,19 +1951,7 @@
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for PropertyChangeEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::PropertyChange(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>BoundsChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>BoundsChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"BoundsChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1636,11 +1960,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1651,19 +1975,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for BoundsChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::BoundsChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LinkSelectedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LinkSelectedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"LinkSelected"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1672,11 +1984,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1687,19 +1999,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for LinkSelectedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::LinkSelected(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>StateChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>StateChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"StateChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1708,11 +2008,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, state: body.kind, enabled: body.detail1 })
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, state: body.kind.into(), enabled: body.detail1 })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1723,19 +2023,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for StateChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::StateChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ChildrenChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ChildrenChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ChildrenChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1744,7 +2032,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			item,
 			operation: body.kind,
@@ -1752,8 +2040,8 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 			child: body.any_data.try_into()<span class="question-mark">?</span>,
 		})
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1764,19 +2052,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ChildrenChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::ChildrenChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>VisibleDataChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>VisibleDataChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"VisibleDataChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1785,11 +2061,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1800,19 +2076,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for VisibleDataChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::VisibleDataChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>SelectionChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>SelectionChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"SelectionChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1821,11 +2085,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1836,19 +2100,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for SelectionChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::SelectionChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ModelChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ModelChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ModelChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1857,11 +2109,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1872,19 +2124,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ModelChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::ModelChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ActiveDescendantChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ActiveDescendantChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ActiveDescendantChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1893,11 +2133,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, child: body.any_data.try_into()<span class="question-mark">? </span>})
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1908,19 +2148,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ActiveDescendantChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::ActiveDescendantChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>AnnouncementEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>AnnouncementEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Announcement"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1929,11 +2157,15 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, text: body.kind })
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+			item,
+			text: body.any_data.try_into().map_err(|<span class="kw">_</span>| AtspiError::Conversion(<span class="string">"text"</span>))<span class="question-mark">?</span>,
+			live: body.detail1.try_into()<span class="question-mark">?</span>,
+		})
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1944,19 +2176,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for AnnouncementEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::Announcement(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>AttributesChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>AttributesChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"AttributesChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1965,11 +2185,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -1980,19 +2200,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for AttributesChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::AttributesChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RowInsertedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RowInsertedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"RowInserted"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2001,11 +2209,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2016,19 +2224,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for RowInsertedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::RowInserted(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RowReorderedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RowReorderedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"RowReordered"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2037,11 +2233,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2052,19 +2248,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for RowReorderedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::RowReordered(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RowDeletedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RowDeletedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"RowDeleted"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2073,11 +2257,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2088,19 +2272,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for RowDeletedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::RowDeleted(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnInsertedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnInsertedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ColumnInserted"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2109,11 +2281,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2124,19 +2296,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ColumnInsertedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::ColumnInserted(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnReorderedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnReorderedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ColumnReordered"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2145,11 +2305,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2160,19 +2320,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ColumnReorderedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::ColumnReordered(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnDeletedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnDeletedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ColumnDeleted"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2181,11 +2329,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2196,19 +2344,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ColumnDeletedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::ColumnDeleted(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextBoundsChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextBoundsChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"TextBoundsChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2217,11 +2353,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2232,19 +2368,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for TextBoundsChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::TextBoundsChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextSelectionChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextSelectionChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"TextSelectionChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2253,11 +2377,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2268,19 +2392,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for TextSelectionChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::TextSelectionChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"TextChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2289,7 +2401,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			item,
 			operation: body.kind,
@@ -2298,8 +2410,8 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 			text: body.any_data.try_into()<span class="question-mark">?</span>,
 		})
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2310,19 +2422,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for TextChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::TextChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextAttributesChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextAttributesChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"TextAttributesChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2331,11 +2431,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2346,19 +2446,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for TextAttributesChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::TextAttributesChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextCaretMovedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>TextCaretMovedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"TextCaretMoved"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Object"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -2367,11 +2455,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, position: body.detail1 })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -2382,19 +2470,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for TextCaretMovedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Object(ObjectEvents::TextCaretMoved(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>ObjectEvents {
 	<span class="kw">type </span>Error = AtspiError;
 	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
@@ -2429,15 +2505,22 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	PropertyChangeEvent,
 	ObjectEvents,
+	ObjectEvents::PropertyChange
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(PropertyChangeEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	PropertyChangeEvent,
 	ObjectEvents::PropertyChange,
 	Event::Object
 );
+
 <span class="macro">event_test_cases!</span>(PropertyChangeEvent);
 <span class="macro">impl_to_dbus_message!</span>(PropertyChangeEvent);
 <span class="macro">impl_from_dbus_message!</span>(PropertyChangeEvent);
+
 <span class="kw">impl </span>From&lt;PropertyChangeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(event: PropertyChangeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2445,14 +2528,19 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 			kind: event.property,
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::from(event.value).into(),
+			any_data: event.value.into(),
 		}
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	BoundsChangedEvent,
 	ObjectEvents,
+	ObjectEvents::BoundsChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(BoundsChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	BoundsChangedEvent,
 	ObjectEvents::BoundsChanged,
 	Event::Object
 );
@@ -2471,7 +2559,17 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(LinkSelectedEvent, ObjectEvents, ObjectEvents::LinkSelected, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	LinkSelectedEvent,
+	ObjectEvents,
+	ObjectEvents::LinkSelected
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(LinkSelectedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	LinkSelectedEvent,
+	ObjectEvents::LinkSelected,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(LinkSelectedEvent);
 <span class="macro">impl_to_dbus_message!</span>(LinkSelectedEvent);
 <span class="macro">impl_from_dbus_message!</span>(LinkSelectedEvent);
@@ -2487,7 +2585,17 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(StateChangedEvent, ObjectEvents, ObjectEvents::StateChanged, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	StateChangedEvent,
+	ObjectEvents,
+	ObjectEvents::StateChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(StateChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	StateChangedEvent,
+	ObjectEvents::StateChanged,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(StateChangedEvent);
 <span class="macro">impl_to_dbus_message!</span>(StateChangedEvent);
 <span class="macro">impl_from_dbus_message!</span>(StateChangedEvent);
@@ -2495,7 +2603,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	<span class="kw">fn </span>from(event: StateChangedEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
 			properties: std::collections::HashMap::new(),
-			kind: event.state,
+			kind: event.state.into(),
 			detail1: event.enabled,
 			detail2: i32::default(),
 			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
@@ -2503,9 +2611,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ChildrenChangedEvent,
 	ObjectEvents,
+	ObjectEvents::ChildrenChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ChildrenChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ChildrenChangedEvent,
 	ObjectEvents::ChildrenChanged,
 	Event::Object
 );
@@ -2524,9 +2637,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	VisibleDataChangedEvent,
 	ObjectEvents,
+	ObjectEvents::VisibleDataChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(VisibleDataChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	VisibleDataChangedEvent,
 	ObjectEvents::VisibleDataChanged,
 	Event::Object
 );
@@ -2545,9 +2663,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	SelectionChangedEvent,
 	ObjectEvents,
+	ObjectEvents::SelectionChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(SelectionChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	SelectionChangedEvent,
 	ObjectEvents::SelectionChanged,
 	Event::Object
 );
@@ -2566,7 +2689,17 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(ModelChangedEvent, ObjectEvents, ObjectEvents::ModelChanged, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	ModelChangedEvent,
+	ObjectEvents,
+	ObjectEvents::ModelChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ModelChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ModelChangedEvent,
+	ObjectEvents::ModelChanged,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(ModelChangedEvent);
 <span class="macro">impl_to_dbus_message!</span>(ModelChangedEvent);
 <span class="macro">impl_from_dbus_message!</span>(ModelChangedEvent);
@@ -2582,9 +2715,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ActiveDescendantChangedEvent,
 	ObjectEvents,
+	ObjectEvents::ActiveDescendantChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ActiveDescendantChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ActiveDescendantChangedEvent,
 	ObjectEvents::ActiveDescendantChanged,
 	Event::Object
 );
@@ -2603,25 +2741,38 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(AnnouncementEvent, ObjectEvents, ObjectEvents::Announcement, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	AnnouncementEvent,
+	ObjectEvents,
+	ObjectEvents::Announcement
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(AnnouncementEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	AnnouncementEvent,
+	ObjectEvents::Announcement,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(AnnouncementEvent);
 <span class="macro">impl_to_dbus_message!</span>(AnnouncementEvent);
 <span class="macro">impl_from_dbus_message!</span>(AnnouncementEvent);
 <span class="kw">impl </span>From&lt;AnnouncementEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(event: AnnouncementEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: event.text,
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			detail1: event.live <span class="kw">as </span>i32,
+			any_data: zvariant::Value::from(event.text).into(),
+			..Default::default()
 		}
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	AttributesChangedEvent,
 	ObjectEvents,
+	ObjectEvents::AttributesChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(AttributesChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	AttributesChangedEvent,
 	ObjectEvents::AttributesChanged,
 	Event::Object
 );
@@ -2640,7 +2791,17 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(RowInsertedEvent, ObjectEvents, ObjectEvents::RowInserted, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	RowInsertedEvent,
+	ObjectEvents,
+	ObjectEvents::RowInserted
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(RowInsertedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	RowInsertedEvent,
+	ObjectEvents::RowInserted,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(RowInsertedEvent);
 <span class="macro">impl_to_dbus_message!</span>(RowInsertedEvent);
 <span class="macro">impl_from_dbus_message!</span>(RowInsertedEvent);
@@ -2656,7 +2817,17 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(RowReorderedEvent, ObjectEvents, ObjectEvents::RowReordered, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	RowReorderedEvent,
+	ObjectEvents,
+	ObjectEvents::RowReordered
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(RowReorderedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	RowReorderedEvent,
+	ObjectEvents::RowReordered,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(RowReorderedEvent);
 <span class="macro">impl_to_dbus_message!</span>(RowReorderedEvent);
 <span class="macro">impl_from_dbus_message!</span>(RowReorderedEvent);
@@ -2672,7 +2843,13 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(RowDeletedEvent, ObjectEvents, ObjectEvents::RowDeleted, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	RowDeletedEvent,
+	ObjectEvents,
+	ObjectEvents::RowDeleted
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(RowDeletedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(RowDeletedEvent, ObjectEvents::RowDeleted, Event::Object);
 <span class="macro">event_test_cases!</span>(RowDeletedEvent);
 <span class="macro">impl_to_dbus_message!</span>(RowDeletedEvent);
 <span class="macro">impl_from_dbus_message!</span>(RowDeletedEvent);
@@ -2688,9 +2865,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ColumnInsertedEvent,
 	ObjectEvents,
+	ObjectEvents::ColumnInserted
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ColumnInsertedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ColumnInsertedEvent,
 	ObjectEvents::ColumnInserted,
 	Event::Object
 );
@@ -2709,9 +2891,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ColumnReorderedEvent,
 	ObjectEvents,
+	ObjectEvents::ColumnReordered
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ColumnReorderedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ColumnReorderedEvent,
 	ObjectEvents::ColumnReordered,
 	Event::Object
 );
@@ -2730,9 +2917,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ColumnDeletedEvent,
 	ObjectEvents,
+	ObjectEvents::ColumnDeleted
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ColumnDeletedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ColumnDeletedEvent,
 	ObjectEvents::ColumnDeleted,
 	Event::Object
 );
@@ -2751,9 +2943,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	TextBoundsChangedEvent,
 	ObjectEvents,
+	ObjectEvents::TextBoundsChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(TextBoundsChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	TextBoundsChangedEvent,
 	ObjectEvents::TextBoundsChanged,
 	Event::Object
 );
@@ -2772,9 +2969,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	TextSelectionChangedEvent,
 	ObjectEvents,
+	ObjectEvents::TextSelectionChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(TextSelectionChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	TextSelectionChangedEvent,
 	ObjectEvents::TextSelectionChanged,
 	Event::Object
 );
@@ -2793,7 +2995,17 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(TextChangedEvent, ObjectEvents, ObjectEvents::TextChanged, Event::Object);
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
+	TextChangedEvent,
+	ObjectEvents,
+	ObjectEvents::TextChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(TextChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	TextChangedEvent,
+	ObjectEvents::TextChanged,
+	Event::Object
+);
 <span class="macro">event_test_cases!</span>(TextChangedEvent);
 <span class="macro">impl_to_dbus_message!</span>(TextChangedEvent);
 <span class="macro">impl_from_dbus_message!</span>(TextChangedEvent);
@@ -2809,9 +3021,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	TextAttributesChangedEvent,
 	ObjectEvents,
+	ObjectEvents::TextAttributesChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(TextAttributesChangedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	TextAttributesChangedEvent,
 	ObjectEvents::TextAttributesChanged,
 	Event::Object
 );
@@ -2830,9 +3047,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	TextCaretMovedEvent,
 	ObjectEvents,
+	ObjectEvents::TextCaretMoved
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(TextCaretMovedEvent, Event::Object);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	TextCaretMovedEvent,
 	ObjectEvents::TextCaretMoved,
 	Event::Object
 );

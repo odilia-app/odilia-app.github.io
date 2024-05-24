@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["accessible_to_cache_item"],"struct":["AccessiblePrimitive","Cache","CacheItem","CacheRef"]};
+window.SIDEBAR_ITEMS = {"fn":["accessible_to_cache_item"],"struct":["AccessiblePrimitive","Cache","CacheItem","CacheRef"],"trait":["AccessibleExt","Convertable"]};

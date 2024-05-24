@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["TextProxy","TextProxyBlocking"],"trait":["Text","TextBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["TextProxy","TextProxyBlocking"]};

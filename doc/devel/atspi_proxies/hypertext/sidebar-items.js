@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["HypertextProxy","HypertextProxyBlocking"],"trait":["Hypertext","HypertextBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["HypertextProxy","HypertextProxyBlocking"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.15.2/src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-3.15.2/src/proxy.rs`."><title>proxy.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zbus_macros/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1172,7 +1172,7 @@
 <span class="kw">use </span>zvariant_utils::{case, def_attrs};
 
 <span class="comment">// FIXME: The list name should once be "zbus" instead of "dbus_proxy" (like in serde).
-</span><span class="macro">def_attrs! </span>{
+</span><span class="macro">def_attrs!</span> {
     <span class="kw">crate </span>dbus_proxy;
 
     <span class="kw">pub </span>ImplAttributes(<span class="string">"impl block"</span>) {
@@ -1213,9 +1213,9 @@
 <span class="kw">impl </span>AsyncOpts {
     <span class="kw">fn </span>new(blocking: bool) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>(usage, wait) = <span class="kw">if </span>blocking {
-            (<span class="macro">quote! </span>{}, <span class="macro">quote! </span>{})
+            (<span class="macro">quote!</span> {}, <span class="macro">quote!</span> {})
         } <span class="kw">else </span>{
-            (<span class="macro">quote! </span>{ <span class="kw">async </span>}, <span class="macro">quote! </span>{ .<span class="kw">await </span>})
+            (<span class="macro">quote!</span> { <span class="kw">async </span>}, <span class="macro">quote!</span> { .<span class="kw">await </span>})
         };
         <span class="self">Self </span>{
             blocking,
@@ -1285,7 +1285,7 @@
             </span>!gen_async,
         )<span class="question-mark">?
     </span>} <span class="kw">else </span>{
-        <span class="macro">quote! </span>{}
+        <span class="macro">quote!</span> {}
     };
     <span class="kw">let </span>async_proxy = <span class="kw">if </span>gen_async {
         <span class="kw">let </span>proxy_name = async_name.unwrap_or_else(|| <span class="macro">format!</span>(<span class="string">"{}Proxy"</span>, input.ident));
@@ -1300,10 +1300,10 @@
             <span class="bool-val">true</span>,
         )<span class="question-mark">?
     </span>} <span class="kw">else </span>{
-        <span class="macro">quote! </span>{}
+        <span class="macro">quote!</span> {}
     };
 
-    <span class="prelude-val">Ok</span>(<span class="macro">quote! </span>{
+    <span class="prelude-val">Ok</span>(<span class="macro">quote!</span> {
         #blocking_proxy
 
         #async_proxy
@@ -1423,15 +1423,15 @@
 
     <span class="kw">let </span>AsyncOpts { usage, wait, .. } = async_opts;
     <span class="kw">let </span>(proxy_struct, connection, builder) = <span class="kw">if </span>blocking {
-        <span class="kw">let </span>connection = <span class="macro">quote! </span>{ #zbus::blocking::Connection };
-        <span class="kw">let </span>proxy = <span class="macro">quote! </span>{ #zbus::blocking::Proxy };
-        <span class="kw">let </span>builder = <span class="macro">quote! </span>{ #zbus::blocking::ProxyBuilder };
+        <span class="kw">let </span>connection = <span class="macro">quote!</span> { #zbus::blocking::Connection };
+        <span class="kw">let </span>proxy = <span class="macro">quote!</span> { #zbus::blocking::Proxy };
+        <span class="kw">let </span>builder = <span class="macro">quote!</span> { #zbus::blocking::ProxyBuilder };
 
         (proxy, connection, builder)
     } <span class="kw">else </span>{
-        <span class="kw">let </span>connection = <span class="macro">quote! </span>{ #zbus::Connection };
-        <span class="kw">let </span>proxy = <span class="macro">quote! </span>{ #zbus::Proxy };
-        <span class="kw">let </span>builder = <span class="macro">quote! </span>{ #zbus::ProxyBuilder };
+        <span class="kw">let </span>connection = <span class="macro">quote!</span> { #zbus::Connection };
+        <span class="kw">let </span>proxy = <span class="macro">quote!</span> { #zbus::Proxy };
+        <span class="kw">let </span>builder = <span class="macro">quote!</span> { #zbus::ProxyBuilder };
 
         (proxy, connection, builder)
     };
@@ -1439,12 +1439,12 @@
     <span class="kw">let </span>(builder_new, proxydefault_impl, proxy_method_new) = <span class="kw">match </span>(<span class="kw-2">&amp;</span>default_path, <span class="kw-2">&amp;</span>default_service)
     {
         (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; {
-            <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>builder_new = <span class="macro">quote!</span> {
                 #builder::new_bare(conn)
                     .interface(#iface_name).expect(<span class="string">"invalid interface name"</span>)
             };
             <span class="kw">let </span>proxydefault_impl = TokenStream::new();
-            <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>proxy_method_new = <span class="macro">quote!</span> {
                 <span class="doccomment">/// Creates a new proxy with the given service destination and path.
                 </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;D, P&gt;(conn: <span class="kw-2">&amp;</span>#connection, destination: D, path: P) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt;
                 <span class="kw">where
@@ -1464,13 +1464,13 @@
             (builder_new, proxydefault_impl, proxy_method_new)
         }
         (<span class="prelude-val">Some</span>(path), <span class="prelude-val">None</span>) =&gt; {
-            <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>builder_new = <span class="macro">quote!</span> {
                 #builder::new_bare(conn)
                     .interface(#iface_name).expect(<span class="string">"invalid interface name"</span>)
                     .path(#path).expect(<span class="string">"invalid default path"</span>)
             };
             <span class="kw">let </span>proxydefault_impl = TokenStream::new();
-            <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>proxy_method_new = <span class="macro">quote!</span> {
                 <span class="doccomment">/// Creates a new proxy with the given destination, and the default path.
                 </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;D&gt;(conn: <span class="kw-2">&amp;</span>#connection, destination: D) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt;
                 <span class="kw">where
@@ -1487,13 +1487,13 @@
             (builder_new, proxydefault_impl, proxy_method_new)
         }
         (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(dest)) =&gt; {
-            <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>builder_new = <span class="macro">quote!</span> {
                 #builder::new_bare(conn)
                     .interface(#iface_name).expect(<span class="string">"invalid interface name"</span>)
                     .destination(#dest).expect(<span class="string">"invalid destination bus name"</span>)
             };
             <span class="kw">let </span>proxydefault_impl = TokenStream::new();
-            <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>proxy_method_new = <span class="macro">quote!</span> {
                 <span class="doccomment">/// Creates a new proxy with the given path, and the default destination.
                 </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new&lt;P&gt;(conn: <span class="kw-2">&amp;</span>#connection, path: P) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt;
                 <span class="kw">where
@@ -1510,15 +1510,15 @@
             (builder_new, proxydefault_impl, proxy_method_new)
         }
         (<span class="prelude-val">Some</span>(path), <span class="prelude-val">Some</span>(svc)) =&gt; {
-            <span class="kw">let </span>builder_new = <span class="macro">quote! </span>{ #builder::new(conn) };
-            <span class="kw">let </span>proxydefault_impl = <span class="macro">quote! </span>{
+            <span class="kw">let </span>builder_new = <span class="macro">quote!</span> { #builder::new(conn) };
+            <span class="kw">let </span>proxydefault_impl = <span class="macro">quote!</span> {
                 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; #zbus::ProxyDefault <span class="kw">for </span>#proxy_name&lt;<span class="lifetime">'a</span>&gt; {
                     <span class="kw">const </span>INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = #iface_name;
                     <span class="kw">const </span>DESTINATION: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = #svc;
                     <span class="kw">const </span>PATH: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = #path;
                 }
             };
-            <span class="kw">let </span>proxy_method_new = <span class="macro">quote! </span>{
+            <span class="kw">let </span>proxy_method_new = <span class="macro">quote!</span> {
                 <span class="doccomment">/// Creates a new proxy with the default service and path.
                 </span><span class="kw">pub </span>#usage <span class="kw">fn </span>new(conn: <span class="kw-2">&amp;</span>#connection) -&gt; #zbus::Result&lt;#proxy_name&lt;<span class="lifetime">'c</span>&gt;&gt; {
                     <span class="self">Self</span>::builder(conn).build()#wait
@@ -1528,7 +1528,7 @@
         }
     };
 
-    <span class="prelude-val">Ok</span>(<span class="macro">quote! </span>{
+    <span class="prelude-val">Ok</span>(<span class="macro">quote!</span> {
         #proxydefault_impl
 
         #(#other_attrs)*
@@ -1728,12 +1728,12 @@
 
     <span class="kw">if let </span><span class="prelude-val">Some</span>(proxy_name) = proxy_object {
         <span class="kw">let </span>proxy = Ident::new(<span class="kw-2">&amp;</span>proxy_name, Span::call_site());
-        <span class="kw">let </span>signature = <span class="macro">quote! </span>{
+        <span class="kw">let </span>signature = <span class="macro">quote!</span> {
             <span class="kw">fn </span>#method#ty_generics(#inputs) -&gt; #zbus::Result&lt;#proxy&lt;<span class="lifetime">'c</span>&gt;&gt;
             #where_clause
         };
 
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             #(#other_attrs)*
             <span class="kw">pub </span>#usage #signature {
                 <span class="kw">let </span>object_path: #zbus::zvariant::OwnedObjectPath =
@@ -1753,24 +1753,24 @@
             <span class="comment">// Wrap single arg in a tuple so if it's a struct/tuple itself, zbus will only remove
             // the '()' from the signature that we add and not the actual intended ones.
             </span><span class="kw">let </span>arg = <span class="kw-2">&amp;</span>args[<span class="number">0</span>];
-            <span class="macro">quote! </span>{
+            <span class="macro">quote!</span> {
                 <span class="kw-2">&amp;</span>(#arg,)
             }
         } <span class="kw">else </span>{
-            <span class="macro">quote! </span>{
+            <span class="macro">quote!</span> {
                 <span class="kw-2">&amp;</span>(#(#args),<span class="kw-2">*</span>)
             }
         };
 
         <span class="kw">let </span>output = <span class="kw-2">&amp;</span>m.sig.output;
-        <span class="kw">let </span>signature = <span class="macro">quote! </span>{
+        <span class="kw">let </span>signature = <span class="macro">quote!</span> {
             <span class="kw">fn </span>#method#ty_generics(#inputs) #output
             #where_clause
         };
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(method_flags) = method_flags {
             <span class="kw">if </span>no_reply {
-                <span class="macro">quote! </span>{
+                <span class="macro">quote!</span> {
                     #(#other_attrs)*
                     <span class="kw">pub </span>#usage #signature {
                         <span class="self">self</span>.<span class="number">0</span>.call_with_flags::&lt;<span class="kw">_</span>, <span class="kw">_</span>, ()&gt;(#method_name, #method_flags, #body)#wait<span class="question-mark">?</span>;
@@ -1778,7 +1778,7 @@
                     }
                 }
             } <span class="kw">else </span>{
-                <span class="macro">quote! </span>{
+                <span class="macro">quote!</span> {
                     #(#other_attrs)*
                     <span class="kw">pub </span>#usage #signature {
                         <span class="kw">let </span>reply = <span class="self">self</span>.<span class="number">0</span>.call_with_flags(#method_name, #method_flags, #body)#wait<span class="question-mark">?</span>;
@@ -1794,7 +1794,7 @@
                 }
             }
         } <span class="kw">else </span>{
-            <span class="macro">quote! </span>{
+            <span class="macro">quote!</span> {
                 #(#other_attrs)*
                 <span class="kw">pub </span>#usage #signature {
                     <span class="kw">let </span>reply = <span class="self">self</span>.<span class="number">0</span>.call(#method_name, #body)#wait<span class="question-mark">?</span>;
@@ -1855,7 +1855,7 @@
     <span class="kw">let </span>signature = <span class="kw-2">&amp;</span>m.sig;
     <span class="kw">if </span>signature.inputs.len() &gt; <span class="number">1 </span>{
         <span class="kw">let </span>value = pat_ident(typed_arg(signature.inputs.last().unwrap()).unwrap()).unwrap();
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             #(#other_attrs)*
             <span class="attr">#[allow(clippy::needless_question_mark)]
             </span><span class="kw">pub </span>#usage #signature {
@@ -1870,7 +1870,7 @@
         } <span class="kw">else </span>{
             signature.span()
         };
-        <span class="kw">let </span>body = <span class="macro">quote_spanned! </span>{body_span =&gt;
+        <span class="kw">let </span>body = <span class="macro">quote_spanned!</span> {body_span =&gt;
             ::std::result::Result::Ok(<span class="self">self</span>.<span class="number">0</span>.get_property(#property_name)#wait<span class="question-mark">?</span>)
         };
         <span class="kw">let </span>ret_type = <span class="kw">if let </span>ReturnType::Type(<span class="kw">_</span>, ty) = <span class="kw-2">&amp;</span>signature.output {
@@ -1882,10 +1882,10 @@
         <span class="kw">let </span>(proxy_name, prop_stream) = <span class="kw">if </span><span class="kw-2">*</span>blocking {
             (
                 <span class="string">"zbus::blocking::Proxy"</span>,
-                <span class="macro">quote! </span>{ #zbus::blocking::PropertyIterator },
+                <span class="macro">quote!</span> { #zbus::blocking::PropertyIterator },
             )
         } <span class="kw">else </span>{
-            (<span class="string">"zbus::Proxy"</span>, <span class="macro">quote! </span>{ #zbus::PropertyStream })
+            (<span class="string">"zbus::Proxy"</span>, <span class="macro">quote!</span> { #zbus::PropertyStream })
         };
 
         <span class="kw">let </span>receive_method = <span class="kw">match </span>emits_changed_signal {
@@ -1896,7 +1896,7 @@
                     <span class="string">"Create a stream for the `{property_name}` property changes. \
                 This is a convenient wrapper around [`{proxy_name}::receive_property_changed`]."
                 </span>);
-                <span class="macro">quote! </span>{
+                <span class="macro">quote!</span> {
                     <span class="attr">#[doc = #gen_doc]
                     </span><span class="kw">pub </span>#usage <span class="kw">fn </span>#receive#ty_generics(
                         <span class="kw-2">&amp;</span><span class="self">self
@@ -1908,7 +1908,7 @@
                 }
             }
             PropertyEmitsChangedSignal::False | PropertyEmitsChangedSignal::Const =&gt; {
-                <span class="macro">quote! </span>{}
+                <span class="macro">quote!</span> {}
             }
         };
 
@@ -1920,7 +1920,7 @@
                 <span class="kw">let </span>cached_doc = <span class="macro">format!</span>(
                     <span class="string">" Get the cached value of the `{property_name}` property, or `None` if the property is not cached."</span>,
                 );
-                <span class="macro">quote! </span>{
+                <span class="macro">quote!</span> {
                     <span class="attr">#[doc = #cached_doc]
                     </span><span class="kw">pub fn </span>#cached_getter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ::std::result::Result&lt;
                         ::std::option::Option&lt;&lt;#ret_type <span class="kw">as </span>#zbus::ResultAdapter&gt;::Ok&gt;,
@@ -1930,10 +1930,10 @@
                     }
                 }
             }
-            PropertyEmitsChangedSignal::False =&gt; <span class="macro">quote! </span>{},
+            PropertyEmitsChangedSignal::False =&gt; <span class="macro">quote!</span> {},
         };
 
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             #(#other_attrs)*
             <span class="attr">#[allow(clippy::needless_question_mark)]
             </span><span class="kw">pub </span>#usage #signature {
@@ -2040,7 +2040,7 @@
             <span class="string">"https://docs.rs/zbus/latest/zbus/blocking/struct.Proxy.html#method.receive_signal_with_args"</span>,
             <span class="string">"Iterator"</span>,
             <span class="string">"https://doc.rust-lang.org/std/iter/trait.Iterator.html"</span>,
-            <span class="macro">quote! </span>{ blocking::SignalIterator },
+            <span class="macro">quote!</span> { blocking::SignalIterator },
         )
     } <span class="kw">else </span>{
         (
@@ -2049,7 +2049,7 @@
             <span class="string">"https://docs.rs/zbus/latest/zbus/struct.Proxy.html#method.receive_signal_with_args"</span>,
             <span class="string">"Stream"</span>,
             <span class="string">"https://docs.rs/futures/0.3.15/futures/stream/trait.Stream.html"</span>,
-            <span class="macro">quote! </span>{ SignalStream },
+            <span class="macro">quote!</span> { SignalStream },
         )
     };
     <span class="kw">let </span>receiver_name = <span class="macro">format_ident!</span>(<span class="string">"receive_{snake_case_name}"</span>);
@@ -2071,7 +2071,7 @@
     <span class="kw">let </span>receive_signal_with_args = <span class="kw">if </span>args.is_empty() {
         <span class="macro">quote!</span>()
     } <span class="kw">else </span>{
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             <span class="attr">#[doc = #receive_with_args_gen_doc]
             </span>#(#other_attrs)*
             <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_with_args_name(<span class="kw-2">&amp;</span><span class="self">self</span>, args: <span class="kw-2">&amp;</span>[(u8, <span class="kw-2">&amp;</span>str)]) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">'static</span>&gt;&gt;
@@ -2080,7 +2080,7 @@
             }
         }
     };
-    <span class="kw">let </span>receive_signal = <span class="macro">quote! </span>{
+    <span class="kw">let </span>receive_signal = <span class="macro">quote!</span> {
         <span class="attr">#[doc = #receive_gen_doc]
         </span>#(#other_attrs)*
         <span class="kw">pub </span>#usage <span class="kw">fn </span>#receiver_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #zbus::Result&lt;#stream_name&lt;<span class="lifetime">'static</span>&gt;&gt;
@@ -2101,7 +2101,7 @@
     <span class="kw">let </span>signal_args_gen_doc = <span class="macro">format!</span>(<span class="string">"`{signal_name}` signal arguments."</span>);
     <span class="kw">let </span>args_struct_gen_doc = <span class="macro">format!</span>(<span class="string">"A `{signal_name}` signal."</span>);
     <span class="kw">let </span>args_struct_decl = <span class="kw">if </span>gen_sig_args {
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             <span class="attr">#[doc = #args_struct_gen_doc]
             #[derive(Debug, Clone)]
             </span><span class="kw">pub struct </span>#signal_name_ident(::std::sync::Arc&lt;#zbus::Message&gt;);
@@ -2155,12 +2155,12 @@
         <span class="macro">quote!</span>()
     } <span class="kw">else </span>{
         <span class="kw">let </span>arg_fields_init = <span class="kw">if </span>args.len() == <span class="number">1 </span>{
-            <span class="macro">quote! </span>{ #(#args)<span class="kw-2">*</span>: args }
+            <span class="macro">quote!</span> { #(#args)<span class="kw-2">*</span>: args }
         } <span class="kw">else </span>{
-            <span class="macro">quote! </span>{ #(#args: args.#args_nth),* }
+            <span class="macro">quote!</span> { #(#args: args.#args_nth),* }
         };
 
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             <span class="kw">impl </span>#signal_name_ident {
                 <span class="doccomment">/// Retrieve the signal arguments.
                 </span><span class="kw">pub fn </span>args#ty_generics(<span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="self">self</span>) -&gt; #zbus::Result&lt;#signal_args #ty_generics&gt;
@@ -2219,7 +2219,7 @@
         }
     };
     <span class="kw">let </span>stream_impl = <span class="kw">if </span><span class="kw-2">*</span>blocking {
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             <span class="kw">impl </span>::std::iter::Iterator <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">type </span>Item = #signal_name_ident;
 
@@ -2230,7 +2230,7 @@
             }
         }
     } <span class="kw">else </span>{
-        <span class="macro">quote! </span>{
+        <span class="macro">quote!</span> {
             <span class="kw">impl </span>#zbus::export::futures_core::stream::Stream <span class="kw">for </span>#stream_name&lt;<span class="lifetime">'_</span>&gt; {
                 <span class="kw">type </span>Item = #signal_name_ident;
 
@@ -2278,7 +2278,7 @@
             }
         }
     };
-    <span class="kw">let </span>stream_types = <span class="macro">quote! </span>{
+    <span class="kw">let </span>stream_types = <span class="macro">quote!</span> {
         <span class="attr">#[doc = #stream_gen_doc]
         #[derive(Debug)]
         </span><span class="kw">pub struct </span>#stream_name&lt;<span class="lifetime">'a</span>&gt;(#zbus::#signal_type&lt;<span class="lifetime">'a</span>&gt;);

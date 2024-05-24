@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.1.0/src/events/terminal.rs`."><title>terminal.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.5.0/src/events/terminal.rs`."><title>terminal.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../atspi_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -340,68 +340,31 @@
 <a href="#338" id="338">338</a>
 <a href="#339" id="339">339</a>
 <a href="#340" id="340">340</a>
-<a href="#341" id="341">341</a>
-<a href="#342" id="342">342</a>
-<a href="#343" id="343">343</a>
-<a href="#344" id="344">344</a>
-<a href="#345" id="345">345</a>
-<a href="#346" id="346">346</a>
-<a href="#347" id="347">347</a>
-<a href="#348" id="348">348</a>
-<a href="#349" id="349">349</a>
-<a href="#350" id="350">350</a>
-<a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-<a href="#353" id="353">353</a>
-<a href="#354" id="354">354</a>
-<a href="#355" id="355">355</a>
-<a href="#356" id="356">356</a>
-<a href="#357" id="357">357</a>
-<a href="#358" id="358">358</a>
-<a href="#359" id="359">359</a>
-<a href="#360" id="360">360</a>
-<a href="#361" id="361">361</a>
-<a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	error::AtspiError,
-	events::{Accessible, EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString},
+	events::{EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString, ObjectRef},
 	Event,
 };
-<span class="kw">use </span>zbus_names::UniqueName;
 <span class="kw">use </span>zvariant::ObjectPath;
 
-<span class="attr">#[derive(Clone, Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash)]
+<span class="doccomment">/// All events related to the `org.a11y.atspi.Event.Terminal` interface.
+</span><span class="attr">#[derive(Clone, Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash)]
 </span><span class="kw">pub enum </span>TerminalEvents {
-	LineChanged(LineChangedEvent),
-	ColumnCountChanged(ColumnCountChangedEvent),
-	LineCountChanged(LineCountChangedEvent),
-	ApplicationChanged(ApplicationChangedEvent),
-	CharWidthChanged(CharWidthChangedEvent),
+	<span class="doccomment">/// See: [`LineChangedEvent`].
+	</span>LineChanged(LineChangedEvent),
+	<span class="doccomment">/// See: [`ColumnCountChangedEvent`].
+	</span>ColumnCountChanged(ColumnCountChangedEvent),
+	<span class="doccomment">/// See: [`LineCountChangedEvent`].
+	</span>LineCountChanged(LineCountChangedEvent),
+	<span class="doccomment">/// See: [`ApplicationChangedEvent`].
+	</span>ApplicationChanged(ApplicationChangedEvent),
+	<span class="doccomment">/// See: [`CharWidthChangedEvent`].
+	</span>CharWidthChanged(CharWidthChangedEvent),
 }
-<span class="macro">impl_event_conversions!</span>(TerminalEvents, Event::Terminal);
+
+<span class="macro">impl_from_interface_event_enum_for_event!</span>(TerminalEvents, Event::Terminal);
+<span class="macro">impl_try_from_event_for_user_facing_event_type!</span>(TerminalEvents, Event::Terminal);
+
 <span class="macro">event_wrapper_test_cases!</span>(TerminalEvents, LineChangedEvent);
 
 <span class="kw">impl </span>HasMatchRule <span class="kw">for </span>TerminalEvents {
@@ -409,29 +372,41 @@
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Terminal'"</span>;
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// A line of text has been changed.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>LineChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// The width of a terminal emulator has changed sufficiently such that the number of characters
+/// able to fit on one *visual* line has changed.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ColumnCountChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// The height of a terminal emulator has changed sufficiently such that the number of lines
+/// able to fit within the terminal has changed.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>LineCountChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ApplicationChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// The width of a terminal emulator has changed sufficiently such that the number of characters
+/// able to fit on one *visual* line has changed.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>CharWidthChangedEvent {
-	<span class="kw">pub </span>item: <span class="kw">crate</span>::events::Accessible,
+	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LineChangedEvent {
@@ -443,11 +418,11 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -458,19 +433,7 @@
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for LineChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Terminal(TerminalEvents::LineChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnCountChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ColumnCountChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ColumncountChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Terminal"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -479,11 +442,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -494,19 +457,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ColumnCountChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Terminal(TerminalEvents::ColumnCountChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LineCountChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LineCountChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"LinecountChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Terminal"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -515,11 +466,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -530,19 +481,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for LineCountChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Terminal(TerminalEvents::LineCountChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ApplicationChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ApplicationChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"ApplicationChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Terminal"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -551,11 +490,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -566,19 +505,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for ApplicationChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Terminal(TerminalEvents::ApplicationChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>CharWidthChangedEvent {
+<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>CharWidthChangedEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"CharwidthChanged"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Terminal"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -587,11 +514,11 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: Accessible, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
 	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.name.clone().into()
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+		<span class="self">self</span>.item.name.clone()
 	}
 	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
 		<span class="self">self</span>.item.path.clone().into()
@@ -602,19 +529,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*
-impl TryFrom&lt;Event&gt; for CharWidthChangedEvent {
-type Error = AtspiError;
-fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
-	 if let Event::Terminal(TerminalEvents::CharWidthChanged(inner_event)) = event {
-			Ok(inner_event)
-		} else {
-			Err(AtspiError::Conversion("Invalid type"))
-		}
-	}
-}*/
-
-</span><span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>TerminalEvents {
 	<span class="kw">type </span>Error = AtspiError;
 	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
@@ -632,9 +547,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	LineChangedEvent,
 	TerminalEvents,
+	TerminalEvents::LineChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(LineChangedEvent, Event::Terminal);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	LineChangedEvent,
 	TerminalEvents::LineChanged,
 	Event::Terminal
 );
@@ -653,9 +573,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ColumnCountChangedEvent,
 	TerminalEvents,
+	TerminalEvents::ColumnCountChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ColumnCountChangedEvent, Event::Terminal);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ColumnCountChangedEvent,
 	TerminalEvents::ColumnCountChanged,
 	Event::Terminal
 );
@@ -674,9 +599,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	LineCountChangedEvent,
 	TerminalEvents,
+	TerminalEvents::LineCountChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(LineCountChangedEvent, Event::Terminal);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	LineCountChangedEvent,
 	TerminalEvents::LineCountChanged,
 	Event::Terminal
 );
@@ -695,9 +625,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ApplicationChangedEvent,
 	TerminalEvents,
+	TerminalEvents::ApplicationChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(ApplicationChangedEvent, Event::Terminal);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	ApplicationChangedEvent,
 	TerminalEvents::ApplicationChanged,
 	Event::Terminal
 );
@@ -716,9 +651,14 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="macro">impl_event_conversions!</span>(
+<span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	CharWidthChangedEvent,
 	TerminalEvents,
+	TerminalEvents::CharWidthChanged
+);
+<span class="macro">impl_from_user_facing_type_for_event_enum!</span>(CharWidthChangedEvent, Event::Terminal);
+<span class="macro">impl_try_from_event_for_user_facing_type!</span>(
+	CharWidthChangedEvent,
 	TerminalEvents::CharWidthChanged,
 	Event::Terminal
 );
@@ -737,37 +677,7 @@ fn try_from(event: Event) -&gt; Result&lt;Self, Self::Error&gt; {
 	}
 }
 
-<span class="comment">/*impl HasMatchRule for LineChangedEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Terminal',member='LineChanged'";
-}*/
-/*impl HasMatchRule for ColumnCountChangedEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Terminal',member='ColumncountChanged'";
-}*/
-/*impl HasMatchRule for LineCountChangedEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Terminal',member='LinecountChanged'";
-}*/
-/*impl HasMatchRule for ApplicationChangedEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Terminal',member='ApplicationChanged'";
-}*/
-/*impl HasMatchRule for CharWidthChangedEvent {
-	const MATCH_RULE_STRING: &amp;'static str = "type='signal',interface='org.a11y.atspi.Event.Terminal',member='CharwidthChanged'";
-}*/
-/*impl HasRegistryEventString for LineChangedEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Terminal:LineChanged";
-}*/
-/*impl HasRegistryEventString for ColumnCountChangedEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Terminal:ColumncountChanged";
-}*/
-/*impl HasRegistryEventString for LineCountChangedEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Terminal:LinecountChanged";
-}*/
-/*impl HasRegistryEventString for ApplicationChangedEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Terminal:ApplicationChanged";
-}*/
-/*impl HasRegistryEventString for CharWidthChangedEvent {
-	const REGISTRY_EVENT_STRING: &amp;'static str = "Terminal:CharwidthChanged";
-}*/
-</span><span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>TerminalEvents {
+<span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>TerminalEvents {
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Terminal:"</span>;
 }
 </code></pre></div></section></main></body></html>

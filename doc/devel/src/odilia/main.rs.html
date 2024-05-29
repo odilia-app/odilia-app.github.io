@@ -194,6 +194,7 @@
 <a href="#192" id="192">192</a>
 <a href="#193" id="193">193</a>
 <a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -361,7 +362,7 @@
 
 <span class="kw">fn </span>load_configuration(cli_overide: <span class="prelude-ty">Option</span>&lt;PathBuf&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;ApplicationConfig, eyre::Report&gt; {
 	<span class="comment">// In order, do  a configuration file specified via cli, XDG_CONFIG_HOME, the usual location for system wide configuration(/etc/odilia/config.toml)
-	// If XDG_CONFIG_HOME based configuration wasn't found, create one with default values for the user to alter, for the next run of odilia
+	// If XDG_CONFIG_HOME based configuration wasn't found, create one by combining default values with the system provided ones, if available, for the user to alter, for the next run of odilia
 	//default configuration first, because that doesn't affect the priority outlined above
 	</span><span class="kw">let </span>figment = Figment::from(Serialized::defaults(ApplicationConfig::default()));
 	<span class="comment">//cli override, if applicable
@@ -376,16 +377,17 @@
 		.place_config_file(<span class="string">"config.toml"</span>)
 		.expect(<span class="string">"unable to place configuration file. Maybe your system is readonly?"</span>);
 
+	<span class="kw">let </span>figment = figment
+		<span class="comment">//next, the configuration system wide, in /etc/odilia/config.toml
+		</span>.admerge(Toml::file(<span class="string">"/etc/odilia/config.toml"</span>))
+		<span class="comment">//finally, the xdg configuration
+		</span>.admerge(Toml::file(<span class="kw-2">&amp;</span>config_path));
+	<span class="comment">//realise the configuration and freeze it into place
+	</span><span class="kw">let </span>config: ApplicationConfig = figment.extract()<span class="question-mark">?</span>;
 	<span class="kw">if </span>!config_path.exists() {
-		<span class="kw">let </span>toml = toml::to_string(<span class="kw-2">&amp;</span>ApplicationConfig::default())<span class="question-mark">?</span>;
+		<span class="kw">let </span>toml = toml::to_string(<span class="kw-2">&amp;</span>config)<span class="question-mark">?</span>;
 		fs::write(<span class="kw-2">&amp;</span>config_path, toml).expect(<span class="string">"Unable to create default config file."</span>);
 	}
-	<span class="comment">//next, the xdg configuration
-	</span><span class="kw">let </span>figment = figment
-		.admerge(Toml::file(<span class="kw-2">&amp;</span>config_path))
-		<span class="comment">//last, the configuration system wide, in /etc/odilia/config.toml
-		</span>.admerge(Toml::file(<span class="string">"/etc/odilia/config.toml"</span>));
-	<span class="comment">//realise the configuration and freeze it into place
-	</span><span class="prelude-val">Ok</span>(figment.extract()<span class="question-mark">?</span>)
+	<span class="prelude-val">Ok</span>(config)
 }
 </code></pre></div></section></main></body></html>

@@ -669,18 +669,10 @@
 <a href="#667" id="667">667</a>
 <a href="#668" id="668">668</a>
 <a href="#669" id="669">669</a>
-<a href="#670" id="670">670</a>
-<a href="#671" id="671">671</a>
-<a href="#672" id="672">672</a>
-<a href="#673" id="673">673</a>
-<a href="#674" id="674">674</a>
-<a href="#675" id="675">675</a>
-<a href="#676" id="676">676</a>
-<a href="#677" id="677">677</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi_common::events::object::ObjectEvents;
 
-<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 </span><span class="kw">pub async fn </span>dispatch(state: <span class="kw-2">&amp;</span>ScreenReaderState, event: <span class="kw-2">&amp;</span>ObjectEvents) -&gt; eyre::Result&lt;()&gt; {
 	<span class="comment">// Dispatch based on member
 	</span><span class="kw">match </span>event {
@@ -715,8 +707,7 @@
 	<span class="kw">use </span>ssip_client_async::Priority;
 	<span class="kw">use </span>std::collections::HashMap;
 
-	<span class="attr">#[inline]
-	#[tracing::instrument(level = <span class="string">"trace"</span>)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>)]
 	</span><span class="kw">pub fn </span>update_string_insert(
 		start_pos: usize,
 		update_length: usize,
@@ -753,22 +744,19 @@
 		}
 	}
 
-	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>append_to_object(original: <span class="kw-2">&amp;</span>str, to_append: <span class="kw-2">&amp;</span>str) -&gt; String {
+	<span class="kw">pub fn </span>append_to_object(original: <span class="kw-2">&amp;</span>str, to_append: <span class="kw-2">&amp;</span>str) -&gt; String {
 		<span class="kw">let </span><span class="kw-2">mut </span>new_text = original.chars().collect::&lt;Vec&lt;char&gt;&gt;();
 		new_text.extend(to_append.chars());
 		new_text.into_iter().collect()
 	}
 
-	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>insert_at_index(original: <span class="kw-2">&amp;</span>str, to_splice: <span class="kw-2">&amp;</span>str, index: usize) -&gt; String {
+	<span class="kw">pub fn </span>insert_at_index(original: <span class="kw-2">&amp;</span>str, to_splice: <span class="kw-2">&amp;</span>str, index: usize) -&gt; String {
 		<span class="kw">let </span><span class="kw-2">mut </span>new_text = original.chars().collect::&lt;Vec&lt;char&gt;&gt;();
 		new_text.splice(index.., to_splice.chars());
 		new_text.into_iter().collect()
 	}
 
-	<span class="attr">#[inline]
-	</span><span class="kw">pub fn </span>insert_at_range(
+	<span class="kw">pub fn </span>insert_at_range(
 		original: <span class="kw-2">&amp;</span>str,
 		to_splice: <span class="kw-2">&amp;</span>str,
 		start: usize,
@@ -779,10 +767,9 @@
 		new_text.into_iter().collect()
 	}
 
-	<span class="attr">#[inline]
-	</span><span class="doccomment">/// Get the live state of a set of attributes.
+	<span class="doccomment">/// Get the live state of a set of attributes.
 	/// Although the function only currently tests one attribute, in the future it may be important to inspect many attributes, compare them, or do additional logic.
-	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>get_live_state(attributes: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; OdiliaResult&lt;AriaLive&gt; {
 		<span class="kw">match </span>attributes.get(<span class="string">"live"</span>) {
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(OdiliaError::NoAttributeError(<span class="string">"live"</span>.to_string())),
@@ -790,8 +777,7 @@
 		}
 	}
 
-	<span class="attr">#[inline]
-	</span><span class="doccomment">/// if the aria-live attribute is set to "polite", then set the priority of the message to speak once all other messages are done
+	<span class="doccomment">/// if the aria-live attribute is set to "polite", then set the priority of the message to speak once all other messages are done
 	/// if the aria-live attribute is set to "assertive", then set the priority of the message to speak immediately, stop all other messages, and do not interrupt that piece of speech
 	/// otherwise, do not continue
 	</span><span class="kw">pub fn </span>live_to_priority(live_str: <span class="kw-2">&amp;</span>AriaLive) -&gt; Priority {
@@ -802,8 +788,7 @@
 		}
 	}
 
-	<span class="attr">#[inline]
-	#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
 	</span><span class="kw">pub fn </span>get_atomic_state(attributes: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; OdiliaResult&lt;AriaAtomic&gt; {
 		<span class="kw">match </span>attributes.get(<span class="string">"atomic"</span>) {
 			<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(OdiliaError::NoAttributeError(<span class="string">"atomic"</span>.to_string())),
@@ -841,7 +826,7 @@
 		}
 	}
 
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>dispatch(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextChangedEvent,
@@ -859,7 +844,7 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state))]
 	</span><span class="kw">pub async fn </span>speak_insertion(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextChangedEvent,
@@ -882,7 +867,7 @@
 	<span class="doccomment">/// The `insert` boolean, if set to true, will update the text in the cache.
 	/// If it is set to false, the selection will be removed.
 	/// The [`TextChangedEvent::operation`] value will *NOT* be checked by this function.
-	</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>insert_or_delete(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextChangedEvent,
@@ -937,7 +922,7 @@
 	<span class="kw">use </span>odilia_common::result::OdiliaResult;
 	<span class="kw">use </span>std::sync::Arc;
 
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>dispatch(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>ChildrenChangedEvent,
@@ -950,7 +935,7 @@
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>add(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>ChildrenChangedEvent,
@@ -965,8 +950,7 @@
 		<span class="macro">tracing::debug!</span>(<span class="string">"Add a single item to cache."</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
-	<span class="attr">#[inline]
-	</span><span class="kw">fn </span>get_child_primitive(event: <span class="kw-2">&amp;</span>ChildrenChangedEvent) -&gt; AccessiblePrimitive {
+	<span class="kw">fn </span>get_child_primitive(event: <span class="kw-2">&amp;</span>ChildrenChangedEvent) -&gt; AccessiblePrimitive {
 		event.child.clone().into()
 	}
 	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
@@ -1074,7 +1058,7 @@
 	}
 
 	<span class="comment">// TODO: left/right vs. up/down, and use generated speech
-	</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	</span><span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>text_cursor_moved(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextCaretMovedEvent,
@@ -1110,7 +1094,7 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>dispatch(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextCaretMovedEvent,
@@ -1151,7 +1135,7 @@
 		}
 	}
 
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>dispatch(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>StateChangedEvent,
@@ -1160,7 +1144,7 @@
 		<span class="comment">// update cache with state of item
 		</span><span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
 		<span class="kw">if </span>update_state(state, <span class="kw-2">&amp;</span>a11y_prim, event.state, state_value)<span class="question-mark">? </span>{
-			<span class="macro">tracing::debug!</span>(<span class="string">"Updating of the state was not succesful! The item with id {:?} was not found in the cache."</span>, a11y_prim.id);
+			<span class="macro">tracing::trace!</span>(<span class="string">"Updating of the state was not successful! The item with id {:?} was not found in the cache."</span>, a11y_prim.id);
 		} <span class="kw">else </span>{
 			<span class="macro">tracing::trace!</span>(<span class="string">"Updated the state of accessible with ID {:?}, and state {:?} to {state_value}."</span>, a11y_prim.id, event.state);
 		}
@@ -1176,7 +1160,7 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 
-	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
 	</span><span class="kw">pub async fn </span>focused(
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>StateChangedEvent,

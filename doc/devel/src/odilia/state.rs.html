@@ -449,7 +449,7 @@
 			cache,
 		})
 	}
-	<span class="attr">#[tracing::instrument(level=<span class="string">"debug"</span>, skip(<span class="self">self</span>) ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(<span class="self">self</span>), err)]
 	</span><span class="kw">pub async fn </span>get_or_create_atspi_cache_item_to_cache(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		atspi_cache_item: atspi_common::CacheItem,
@@ -465,7 +465,7 @@
 		}
 		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
-	<span class="attr">#[tracing::instrument(level=<span class="string">"debug"</span>, skip(<span class="self">self</span>) ret, err)]
+	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(<span class="self">self</span>), err)]
 	</span><span class="kw">pub async fn </span>get_or_create_atspi_legacy_cache_item_to_cache(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		atspi_cache_item: atspi_common::LegacyCacheItem,
@@ -481,7 +481,7 @@
 		}
 		<span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>prim).ok_or(CacheError::NoItem.into())
 	}
-	<span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"debug"</span>, ret, err)]
+	<span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"debug"</span>, err)]
 	</span><span class="kw">pub async fn </span>get_or_create_event_object_to_cache&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
@@ -642,7 +642,7 @@
 			.get_or_create(<span class="kw-2">&amp;</span>accessible_proxy, Arc::downgrade(<span class="kw-2">&amp;</span><span class="self">self</span>.cache))
 			.<span class="kw">await
 	</span>}
-	<span class="attr">#[tracing::instrument(skip_all, ret, err)]
+	<span class="attr">#[tracing::instrument(skip_all, err)]
 	</span><span class="kw">pub async fn </span>new_accessible&lt;<span class="lifetime">'a</span>, T: GenericEvent&lt;<span class="lifetime">'a</span>&gt;&gt;(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		event: <span class="kw-2">&amp;</span>T,
@@ -656,7 +656,7 @@
 			</span>.build()
 			.<span class="kw">await</span><span class="question-mark">?</span>)
 	}
-	<span class="attr">#[tracing::instrument(skip_all, ret, err)]
+	<span class="attr">#[tracing::instrument(skip_all, err)]
 	</span><span class="kw">pub async fn </span>add_cache_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OdiliaResult&lt;()&gt; {
 		<span class="kw">let </span>cache_rule = MatchRule::builder()
 			.msg_type(MessageType::Signal)

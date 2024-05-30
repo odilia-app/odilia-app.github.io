@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.15.2/src/signature.rs`."><title>signature.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/signature.rs`."><title>signature.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zvariant/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -518,29 +518,152 @@
 <a href="#516" id="516">516</a>
 <a href="#517" id="517">517</a>
 <a href="#518" id="518">518</a>
+<a href="#519" id="519">519</a>
+<a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
+<a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
+<a href="#529" id="529">529</a>
+<a href="#530" id="530">530</a>
+<a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a>
+<a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
+<a href="#554" id="554">554</a>
+<a href="#555" id="555">555</a>
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+<a href="#565" id="565">565</a>
+<a href="#566" id="566">566</a>
+<a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+<a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>core::{
-    convert::TryFrom,
+    cmp::Ordering,
     fmt::{<span class="self">self</span>, Debug, Display, Formatter},
-    panic, str,
+    hash::{Hash, Hasher},
+    str,
 };
 <span class="kw">use </span>serde::{
-    de::{Deserialize, Deserializer, Visitor},
+    de::{Deserialize, Deserializer},
     ser::{Serialize, Serializer},
 };
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::{
+    borrow::Cow,
     ops::{Bound, RangeBounds},
     sync::Arc,
 };
 
-<span class="kw">use crate</span>::{signature_parser::SignatureParser, Basic, EncodingFormat, Error, <span class="prelude-ty">Result</span>, Type};
+<span class="kw">use crate</span>::{serialized::Format, signature_parser::SignatureParser, Basic, Error, <span class="prelude-ty">Result</span>, Type};
 
 <span class="comment">// A data type similar to Cow and [`bytes::Bytes`] but unlike the former won't allow us to only keep
 // the owned bytes in Arc and latter doesn't have a notion of borrowed data and would require API
 // breakage.
 //
 // [`bytes::Bytes`]: https://docs.rs/bytes/0.5.6/bytes/struct.Bytes.html
-</span><span class="attr">#[derive(PartialEq, Eq, Hash, Clone)]
+</span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">enum </span>Bytes&lt;<span class="lifetime">'b</span>&gt; {
     Borrowed(<span class="kw-2">&amp;</span><span class="lifetime">'b </span>[u8]),
     Static(<span class="kw-2">&amp;</span><span class="lifetime">'static </span>[u8]),
@@ -555,9 +678,18 @@
     <span class="kw">fn </span>owned(bytes: Vec&lt;u8&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::Owned(bytes.into())
     }
+
+    <span class="doccomment">/// This is faster than `Clone::clone` when `self` contains owned data.
+    </span><span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Bytes&lt;<span class="lifetime">'_</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self </span>{
+            Bytes::Static(s) =&gt; Bytes::Static(s),
+            Bytes::Borrowed(s) =&gt; Bytes::Borrowed(s),
+            Bytes::Owned(s) =&gt; Bytes::Borrowed(s),
+        }
+    }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'b</span>&gt; std::ops::Deref <span class="kw">for </span>Bytes&lt;<span class="lifetime">'b</span>&gt; {
+<span class="kw">impl </span>std::ops::Deref <span class="kw">for </span>Bytes&lt;<span class="lifetime">'_</span>&gt; {
     <span class="kw">type </span>Target = [u8];
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
@@ -569,25 +701,55 @@
     }
 }
 
+<span class="kw">impl </span>Eq <span class="kw">for </span>Bytes&lt;<span class="lifetime">'_</span>&gt; {}
+
+<span class="kw">impl </span>PartialEq <span class="kw">for </span>Bytes&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
+        <span class="kw-2">**</span><span class="self">self </span>== <span class="kw-2">**</span>other
+    }
+}
+
+<span class="kw">impl </span>Ord <span class="kw">for </span>Bytes&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; Ordering {
+        (<span class="kw-2">**</span><span class="self">self</span>).cmp(<span class="kw-2">&amp;**</span>other)
+    }
+}
+
+<span class="kw">impl </span>PartialOrd <span class="kw">for </span>Bytes&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>partial_cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Ordering&gt; {
+        <span class="prelude-val">Some</span>(<span class="self">self</span>.cmp(other))
+    }
+}
+
+<span class="kw">impl </span>Hash <span class="kw">for </span>Bytes&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        (<span class="kw-2">**</span><span class="self">self</span>).hash(state)
+    }
+}
+
 <span class="doccomment">/// String that [identifies] the type of an encoded value.
 ///
 /// # Examples
 ///
 /// ```
-/// use core::convert::TryFrom;
 /// use zvariant::Signature;
 ///
 /// // Valid signatures
 /// let s = Signature::try_from("").unwrap();
 /// assert_eq!(s, "");
+/// # assert_eq!(s.n_complete_types(), Ok(0));
 /// let s = Signature::try_from("y").unwrap();
 /// assert_eq!(s, "y");
+/// # assert_eq!(s.n_complete_types(), Ok(1));
 /// let s = Signature::try_from("xs").unwrap();
 /// assert_eq!(s, "xs");
+/// # assert_eq!(s.n_complete_types(), Ok(2));
 /// let s = Signature::try_from("(ysa{sd})").unwrap();
 /// assert_eq!(s, "(ysa{sd})");
+/// # assert_eq!(s.n_complete_types(), Ok(1));
 /// let s = Signature::try_from("a{sd}").unwrap();
 /// assert_eq!(s, "a{sd}");
+/// # assert_eq!(s.n_complete_types(), Ok(1));
 ///
 /// // Invalid signatures
 /// Signature::try_from("z").unwrap_err();
@@ -603,7 +765,7 @@
 ///
 /// [identifies]: https://dbus.freedesktop.org/doc/dbus-specification.html#type-system
 /// [`slice`]: #method.slice
-</span><span class="attr">#[derive(Eq, Hash, Clone)]
+</span><span class="attr">#[derive(Hash, Clone, PartialOrd, Ord)]
 </span><span class="kw">pub struct </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
     bytes: Bytes&lt;<span class="lifetime">'a</span>&gt;,
     pos: usize,
@@ -622,6 +784,15 @@
     <span class="doccomment">/// The signature bytes.
     </span><span class="kw">pub fn </span>as_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.bytes[<span class="self">self</span>.pos..<span class="self">self</span>.end]
+    }
+
+    <span class="doccomment">/// This is faster than `Clone::clone` when `self` contains owned data.
+    </span><span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
+        Signature {
+            bytes: <span class="self">self</span>.bytes.as_ref(),
+            pos: <span class="self">self</span>.pos,
+            end: <span class="self">self</span>.end,
+        }
     }
 
     <span class="doccomment">/// Create a new Signature from given bytes.
@@ -690,7 +861,7 @@
     /// [`Signature::into_owned`] do not clone the underlying bytes.
     </span><span class="kw">pub fn </span>from_static_str(signature: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>bytes = signature.as_bytes();
-        ensure_correct_signature_str(bytes)<span class="question-mark">?</span>;
+        SignatureParser::validate(bytes)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             bytes: Bytes::Static(bytes),
@@ -705,7 +876,7 @@
     /// `&amp;'static [u8]`. The former will ensure that [`Signature::to_owned`] and
     /// [`Signature::into_owned`] do not clone the underlying bytes.
     </span><span class="kw">pub fn </span>from_static_bytes(bytes: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        ensure_correct_signature_str(bytes)<span class="question-mark">?</span>;
+        SignatureParser::validate(bytes)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             bytes: Bytes::Static(bytes),
@@ -791,6 +962,21 @@
 
         clone
     }
+
+    <span class="doccomment">/// The number of complete types for the signature.
+    ///
+    /// # Errors
+    ///
+    /// If the signature is invalid, returns the first error.
+    </span><span class="kw">pub fn </span>n_complete_types(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;usize&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>count = <span class="number">0</span>;
+        <span class="comment">// SAFETY: the parser is only used to do counting
+        </span><span class="kw">for </span>s <span class="kw">in unsafe </span>{ SignatureParser::from_bytes_unchecked(<span class="self">self</span>.as_bytes())<span class="question-mark">? </span>} {
+            s<span class="question-mark">?</span>;
+            count += <span class="number">1</span>;
+        }
+        <span class="prelude-val">Ok</span>(count)
+    }
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Debug <span class="kw">for </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
@@ -803,11 +989,11 @@
     <span class="kw">const </span>SIGNATURE_CHAR: char = <span class="string">'g'</span>;
     <span class="kw">const </span>SIGNATURE_STR: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"g"</span>;
 
-    <span class="kw">fn </span>alignment(format: EncodingFormat) -&gt; usize {
+    <span class="kw">fn </span>alignment(format: Format) -&gt; usize {
         <span class="kw">match </span>format {
-            EncodingFormat::DBus =&gt; <span class="number">1</span>,
+            Format::DBus =&gt; <span class="number">1</span>,
             <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
-            </span>EncodingFormat::GVariant =&gt; <span class="number">1</span>,
+            </span>Format::GVariant =&gt; <span class="number">1</span>,
         }
     }
 }
@@ -818,8 +1004,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'b </span>Signature&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">fn </span>from(signature: <span class="kw-2">&amp;</span><span class="lifetime">'b </span>Signature&lt;<span class="lifetime">'a</span>&gt;) -&gt; Signature&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;<span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>from(signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'a</span>&gt;) -&gt; Signature&lt;<span class="lifetime">'a</span>&gt; {
         signature.clone()
     }
 }
@@ -828,9 +1014,9 @@
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        ensure_correct_signature_str(value)<span class="question-mark">?</span>;
+        SignatureParser::validate(value)<span class="question-mark">?</span>;
 
-        <span class="comment">// SAFETY: ensure_correct_signature_str checks UTF8
+        <span class="comment">// SAFETY: validate checks UTF8
         </span><span class="kw">unsafe </span>{ <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from_bytes_unchecked(value)) }
     }
 }
@@ -844,11 +1030,23 @@
     }
 }
 
+<span class="doccomment">/// Try to create a Signature from a `Cow&lt;str&gt;.`
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;Cow&lt;<span class="lifetime">'a</span>, str&gt;&gt; <span class="kw">for </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Error = Error;
+
+    <span class="kw">fn </span>try_from(value: Cow&lt;<span class="lifetime">'a</span>, str&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">match </span>value {
+            Cow::Borrowed(v) =&gt; <span class="self">Self</span>::try_from(v),
+            Cow::Owned(v) =&gt; <span class="self">Self</span>::try_from(v),
+        }
+    }
+}
+
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;String&gt; <span class="kw">for </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = Error;
 
     <span class="kw">fn </span>try_from(value: String) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        ensure_correct_signature_str(value.as_bytes())<span class="question-mark">?</span>;
+        SignatureParser::validate(value.as_bytes())<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>::from_string_unchecked(value))
     }
@@ -874,9 +1072,35 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; PartialEq&lt;Signature&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>Signature&lt;<span class="lifetime">'b</span>&gt; {
+<span class="doccomment">/// Checks whether the string slice has balanced parentheses.
+</span><span class="kw">fn </span>has_balanced_parentheses(signature_str: <span class="kw-2">&amp;</span>str) -&gt; bool {
+    signature_str.chars().fold(<span class="number">0</span>, |count, ch| <span class="kw">match </span>ch {
+        <span class="string">'(' </span>=&gt; count + <span class="number">1</span>,
+        <span class="string">')' </span><span class="kw">if </span>count != <span class="number">0 </span>=&gt; count - <span class="number">1</span>,
+        <span class="kw">_ </span>=&gt; count,
+    }) == <span class="number">0
+</span>}
+
+<span class="doccomment">/// Determines whether the signature has outer parentheses and if so, return the
+/// string slice without those parentheses.
+</span><span class="kw">fn </span>without_outer_parentheses&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;(sig: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Signature&lt;<span class="lifetime">'b</span>&gt;) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str
+<span class="kw">where
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
+{
+    <span class="kw">let </span>sig_str = sig.as_str();
+
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(subslice) = sig_str.strip_prefix(<span class="string">'('</span>).and_then(|s| s.strip_suffix(<span class="string">')'</span>)) {
+        <span class="kw">if </span>has_balanced_parentheses(subslice) {
+            <span class="kw">return </span>subslice;
+        }
+    }
+    sig_str
+}
+
+<span class="doccomment">/// Evaluate equality of two signatures, ignoring outer parentheses if needed.
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; PartialEq&lt;Signature&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>Signature&lt;<span class="lifetime">'b</span>&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;) -&gt; bool {
-        <span class="self">self</span>.as_bytes() == other.as_bytes()
+        without_outer_parentheses(<span class="self">self</span>) == without_outer_parentheses(other)
     }
 }
 
@@ -891,6 +1115,10 @@
         <span class="self">self</span>.as_bytes() == other.as_bytes()
     }
 }
+
+<span class="comment">// According to the docs, `Eq` derive should only be used on structs if all its fields are
+// are `Eq`. Hence the manual implementation.
+</span><span class="kw">impl </span>Eq <span class="kw">for </span>Signature&lt;<span class="lifetime">'_</span>&gt; {}
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Display <span class="kw">for </span>Signature&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
@@ -912,50 +1140,10 @@
     <span class="kw">where
         </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>visitor = SignatureVisitor;
+        <span class="kw">let </span>val = &lt;std::borrow::Cow&lt;<span class="lifetime">'a</span>, str&gt;&gt;::deserialize(deserializer)<span class="question-mark">?</span>;
 
-        deserializer.deserialize_str(visitor)
+        <span class="self">Self</span>::try_from(val).map_err(serde::de::Error::custom)
     }
-}
-
-<span class="kw">struct </span>SignatureVisitor;
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>SignatureVisitor {
-    <span class="kw">type </span>Value = Signature&lt;<span class="lifetime">'de</span>&gt;;
-
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
-        formatter.write_str(<span class="string">"a Signature"</span>)
-    }
-
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>visit_borrowed_str&lt;E&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="lifetime">'de </span>str) -&gt; core::result::Result&lt;Signature&lt;<span class="lifetime">'de</span>&gt;, E&gt;
-    <span class="kw">where
-        </span>E: serde::de::Error,
-    {
-        Signature::try_from(value).map_err(serde::de::Error::custom)
-    }
-}
-
-<span class="kw">fn </span>ensure_correct_signature_str(signature: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">if </span>signature.len() &gt; <span class="number">255 </span>{
-        <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(
-            signature.len(),
-            <span class="kw-2">&amp;</span><span class="string">"&lt;= 255 characters"</span>,
-        ));
-    }
-
-    <span class="kw">if </span>signature.is_empty() {
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(());
-    }
-
-    <span class="comment">// SAFETY: SignatureParser never calls as_str
-    </span><span class="kw">let </span>signature = <span class="kw">unsafe </span>{ Signature::from_bytes_unchecked(signature) };
-    <span class="kw">let </span><span class="kw-2">mut </span>parser = SignatureParser::new(signature);
-    <span class="kw">while </span>!parser.done() {
-        <span class="kw">let _ </span>= parser.parse_next_signature()<span class="question-mark">?</span>;
-    }
-
-    <span class="prelude-val">Ok</span>(())
 }
 
 <span class="doccomment">/// Owned [`Signature`](struct.Signature.html)
@@ -968,6 +1156,15 @@
     <span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         <span class="self">self</span>.<span class="number">0
     </span>}
+}
+
+<span class="kw">impl </span>Basic <span class="kw">for </span>OwnedSignature {
+    <span class="kw">const </span>SIGNATURE_CHAR: char = Signature::SIGNATURE_CHAR;
+    <span class="kw">const </span>SIGNATURE_STR: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = Signature::SIGNATURE_STR;
+
+    <span class="kw">fn </span>alignment(format: Format) -&gt; usize {
+        Signature::alignment(format)
+    }
 }
 
 <span class="kw">impl </span>std::ops::Deref <span class="kw">for </span>OwnedSignature {
@@ -996,16 +1193,22 @@
     }
 }
 
+<span class="kw">impl </span>TryFrom&lt;String&gt; <span class="kw">for </span>OwnedSignature {
+    <span class="kw">type </span>Error = Error;
+
+    <span class="kw">fn </span>try_from(value: String) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(Signature::try_from(value)<span class="question-mark">?</span>))
+    }
+}
+
 <span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>OwnedSignature {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; core::result::Result&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
         </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>visitor = SignatureVisitor;
+        <span class="kw">let </span>val = String::deserialize(deserializer)<span class="question-mark">?</span>;
 
-        deserializer
-            .deserialize_str(visitor)
-            .map(|v| OwnedSignature(v.to_owned()))
+        OwnedSignature::try_from(val).map_err(serde::de::Error::custom)
     }
 }
 
@@ -1017,7 +1220,31 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span><span class="kw">super</span>::Signature;
+    <span class="kw">use super</span>::{Bytes, Signature};
+    <span class="kw">use </span>std::sync::Arc;
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>bytes_equality() {
+        <span class="kw">let </span>borrowed1 = Bytes::Borrowed(<span class="string">b"foo"</span>);
+        <span class="kw">let </span>borrowed2 = Bytes::Borrowed(<span class="string">b"foo"</span>);
+        <span class="kw">let </span>static1 = Bytes::Static(<span class="string">b"foo"</span>);
+        <span class="kw">let </span>static2 = Bytes::Static(<span class="string">b"foo"</span>);
+        <span class="kw">let </span>owned1 = Bytes::Owned(Arc::new(<span class="kw-2">*</span><span class="string">b"foo"</span>));
+        <span class="kw">let </span>owned2 = Bytes::Owned(Arc::new(<span class="kw-2">*</span><span class="string">b"foo"</span>));
+
+        <span class="macro">assert_eq!</span>(borrowed1, borrowed2);
+        <span class="macro">assert_eq!</span>(static1, static2);
+        <span class="macro">assert_eq!</span>(owned1, owned2);
+
+        <span class="macro">assert_eq!</span>(borrowed1, static1);
+        <span class="macro">assert_eq!</span>(static1, borrowed1);
+
+        <span class="macro">assert_eq!</span>(static1, owned1);
+        <span class="macro">assert_eq!</span>(owned1, static1);
+
+        <span class="macro">assert_eq!</span>(borrowed1, owned1);
+        <span class="macro">assert_eq!</span>(owned1, borrowed1);
+    }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>signature_slicing() {
@@ -1034,6 +1261,21 @@
         <span class="macro">assert_eq!</span>(slice.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(slice, <span class="string">"t"</span>);
         <span class="macro">assert_eq!</span>(slice.slice(<span class="number">1</span>..), <span class="string">""</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>signature_equality() {
+        <span class="kw">let </span>sig_a = Signature::from_str_unchecked(<span class="string">"(asta{sv})"</span>);
+        <span class="kw">let </span>sig_b = Signature::from_str_unchecked(<span class="string">"asta{sv}"</span>);
+        <span class="macro">assert_eq!</span>(sig_a, sig_b);
+
+        <span class="kw">let </span>sig_a = Signature::from_str_unchecked(<span class="string">"((so)ii(uu))"</span>);
+        <span class="kw">let </span>sig_b = Signature::from_str_unchecked(<span class="string">"(so)ii(uu)"</span>);
+        <span class="macro">assert_eq!</span>(sig_a, sig_b);
+
+        <span class="kw">let </span>sig_a = Signature::from_str_unchecked(<span class="string">"(so)i"</span>);
+        <span class="kw">let </span>sig_b = Signature::from_str_unchecked(<span class="string">"(so)u"</span>);
+        <span class="macro">assert_ne!</span>(sig_a, sig_b);
     }
 }
 </code></pre></div></section></main></body></html>

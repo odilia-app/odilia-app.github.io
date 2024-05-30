@@ -42,7 +42,6 @@
 <a href="#40" id="40">40</a>
 <a href="#41" id="41">41</a>
 <a href="#42" id="42">42</a>
-<a href="#43" id="43">43</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>futures::{Stream, StreamExt};
 <span class="kw">use </span>tracing::{debug, info, instrument};
 
@@ -75,10 +74,9 @@
 		</span>.build();
 	<span class="macro">debug!</span>(<span class="question-mark">?</span>notify_rule, <span class="string">"finished generating rule"</span>);
 	<span class="macro">info!</span>(<span class="string">"listening for notifications"</span>);
-	<span class="kw">let </span>notify_rule = notify_rule.to_string();
-	monitor.become_monitor(<span class="kw-2">&amp;</span>[notify_rule.as_str()], <span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+	monitor.become_monitor(<span class="kw-2">&amp;</span>[notify_rule], <span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 
-	<span class="kw">let </span>stream = MessageStream::from(monitor.connection()).filter_map(<span class="kw">move </span>|message| <span class="kw">async </span>{
+	<span class="kw">let </span>stream = MessageStream::from(connection).filter_map(<span class="kw">move </span>|message| <span class="kw">async </span>{
 		<span class="kw">let </span>notification = message.ok()<span class="question-mark">?</span>.try_into().ok()<span class="question-mark">?</span>;
 		<span class="macro">debug!</span>(<span class="question-mark">?</span>notification, <span class="string">"adding notification to stream"</span>);
 		<span class="prelude-val">Some</span>(notification)

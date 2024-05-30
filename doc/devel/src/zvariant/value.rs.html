@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.15.2/src/value.rs`."><title>value.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/value.rs`."><title>value.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zvariant/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1033,11 +1033,128 @@
 <a href="#1031" id="1031">1031</a>
 <a href="#1032" id="1032">1032</a>
 <a href="#1033" id="1033">1033</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>core::str;
-<span class="kw">use </span>std::{
-    convert::TryFrom,
+<a href="#1034" id="1034">1034</a>
+<a href="#1035" id="1035">1035</a>
+<a href="#1036" id="1036">1036</a>
+<a href="#1037" id="1037">1037</a>
+<a href="#1038" id="1038">1038</a>
+<a href="#1039" id="1039">1039</a>
+<a href="#1040" id="1040">1040</a>
+<a href="#1041" id="1041">1041</a>
+<a href="#1042" id="1042">1042</a>
+<a href="#1043" id="1043">1043</a>
+<a href="#1044" id="1044">1044</a>
+<a href="#1045" id="1045">1045</a>
+<a href="#1046" id="1046">1046</a>
+<a href="#1047" id="1047">1047</a>
+<a href="#1048" id="1048">1048</a>
+<a href="#1049" id="1049">1049</a>
+<a href="#1050" id="1050">1050</a>
+<a href="#1051" id="1051">1051</a>
+<a href="#1052" id="1052">1052</a>
+<a href="#1053" id="1053">1053</a>
+<a href="#1054" id="1054">1054</a>
+<a href="#1055" id="1055">1055</a>
+<a href="#1056" id="1056">1056</a>
+<a href="#1057" id="1057">1057</a>
+<a href="#1058" id="1058">1058</a>
+<a href="#1059" id="1059">1059</a>
+<a href="#1060" id="1060">1060</a>
+<a href="#1061" id="1061">1061</a>
+<a href="#1062" id="1062">1062</a>
+<a href="#1063" id="1063">1063</a>
+<a href="#1064" id="1064">1064</a>
+<a href="#1065" id="1065">1065</a>
+<a href="#1066" id="1066">1066</a>
+<a href="#1067" id="1067">1067</a>
+<a href="#1068" id="1068">1068</a>
+<a href="#1069" id="1069">1069</a>
+<a href="#1070" id="1070">1070</a>
+<a href="#1071" id="1071">1071</a>
+<a href="#1072" id="1072">1072</a>
+<a href="#1073" id="1073">1073</a>
+<a href="#1074" id="1074">1074</a>
+<a href="#1075" id="1075">1075</a>
+<a href="#1076" id="1076">1076</a>
+<a href="#1077" id="1077">1077</a>
+<a href="#1078" id="1078">1078</a>
+<a href="#1079" id="1079">1079</a>
+<a href="#1080" id="1080">1080</a>
+<a href="#1081" id="1081">1081</a>
+<a href="#1082" id="1082">1082</a>
+<a href="#1083" id="1083">1083</a>
+<a href="#1084" id="1084">1084</a>
+<a href="#1085" id="1085">1085</a>
+<a href="#1086" id="1086">1086</a>
+<a href="#1087" id="1087">1087</a>
+<a href="#1088" id="1088">1088</a>
+<a href="#1089" id="1089">1089</a>
+<a href="#1090" id="1090">1090</a>
+<a href="#1091" id="1091">1091</a>
+<a href="#1092" id="1092">1092</a>
+<a href="#1093" id="1093">1093</a>
+<a href="#1094" id="1094">1094</a>
+<a href="#1095" id="1095">1095</a>
+<a href="#1096" id="1096">1096</a>
+<a href="#1097" id="1097">1097</a>
+<a href="#1098" id="1098">1098</a>
+<a href="#1099" id="1099">1099</a>
+<a href="#1100" id="1100">1100</a>
+<a href="#1101" id="1101">1101</a>
+<a href="#1102" id="1102">1102</a>
+<a href="#1103" id="1103">1103</a>
+<a href="#1104" id="1104">1104</a>
+<a href="#1105" id="1105">1105</a>
+<a href="#1106" id="1106">1106</a>
+<a href="#1107" id="1107">1107</a>
+<a href="#1108" id="1108">1108</a>
+<a href="#1109" id="1109">1109</a>
+<a href="#1110" id="1110">1110</a>
+<a href="#1111" id="1111">1111</a>
+<a href="#1112" id="1112">1112</a>
+<a href="#1113" id="1113">1113</a>
+<a href="#1114" id="1114">1114</a>
+<a href="#1115" id="1115">1115</a>
+<a href="#1116" id="1116">1116</a>
+<a href="#1117" id="1117">1117</a>
+<a href="#1118" id="1118">1118</a>
+<a href="#1119" id="1119">1119</a>
+<a href="#1120" id="1120">1120</a>
+<a href="#1121" id="1121">1121</a>
+<a href="#1122" id="1122">1122</a>
+<a href="#1123" id="1123">1123</a>
+<a href="#1124" id="1124">1124</a>
+<a href="#1125" id="1125">1125</a>
+<a href="#1126" id="1126">1126</a>
+<a href="#1127" id="1127">1127</a>
+<a href="#1128" id="1128">1128</a>
+<a href="#1129" id="1129">1129</a>
+<a href="#1130" id="1130">1130</a>
+<a href="#1131" id="1131">1131</a>
+<a href="#1132" id="1132">1132</a>
+<a href="#1133" id="1133">1133</a>
+<a href="#1134" id="1134">1134</a>
+<a href="#1135" id="1135">1135</a>
+<a href="#1136" id="1136">1136</a>
+<a href="#1137" id="1137">1137</a>
+<a href="#1138" id="1138">1138</a>
+<a href="#1139" id="1139">1139</a>
+<a href="#1140" id="1140">1140</a>
+<a href="#1141" id="1141">1141</a>
+<a href="#1142" id="1142">1142</a>
+<a href="#1143" id="1143">1143</a>
+<a href="#1144" id="1144">1144</a>
+<a href="#1145" id="1145">1145</a>
+<a href="#1146" id="1146">1146</a>
+<a href="#1147" id="1147">1147</a>
+<a href="#1148" id="1148">1148</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>core::{
+    cmp::Ordering,
     fmt::{Display, Write},
+    hash::{Hash, Hasher},
     marker::PhantomData,
+    mem::discriminant,
+    str,
 };
 
 <span class="kw">use </span>serde::{
@@ -1069,18 +1186,17 @@
 /// # Examples
 ///
 /// ```
-/// use std::convert::TryFrom;
-/// use zvariant::{from_slice, to_bytes, EncodingContext, Value};
+/// use zvariant::{to_bytes, serialized::Context, Value, LE};
 ///
 /// // Create a Value from an i16
 /// let v = Value::new(i16::max_value());
 ///
 /// // Encode it
-/// let ctxt = EncodingContext::&lt;byteorder::LE&gt;::new_dbus(0);
+/// let ctxt = Context::new_dbus(LE, 0);
 /// let encoding = to_bytes(ctxt, &amp;v).unwrap();
 ///
 /// // Decode it back
-/// let v: Value = from_slice(&amp;encoding, ctxt).unwrap();
+/// let v: Value = encoding.deserialize().unwrap().0;
 ///
 /// // Check everything is as expected
 /// assert_eq!(i16::try_from(&amp;v).unwrap(), i16::max_value());
@@ -1089,17 +1205,16 @@
 /// Now let's try a more complicated example:
 ///
 /// ```
-/// use std::convert::TryFrom;
-/// use zvariant::{from_slice, to_bytes, EncodingContext};
+/// use zvariant::{to_bytes, serialized::Context, LE};
 /// use zvariant::{Structure, Value, Str};
 ///
 /// // Create a Value from a tuple this time
 /// let v = Value::new((i16::max_value(), "hello", true));
 ///
 /// // Same drill as previous example
-/// let ctxt = EncodingContext::&lt;byteorder::LE&gt;::new_dbus(0);
+/// let ctxt = Context::new_dbus(LE, 0);
 /// let encoding = to_bytes(ctxt, &amp;v).unwrap();
-/// let v: Value = from_slice(&amp;encoding, ctxt).unwrap();
+/// let v: Value = encoding.deserialize().unwrap().0;
 ///
 /// // Check everything is as expected
 /// let s = Structure::try_from(v).unwrap();
@@ -1110,7 +1225,7 @@
 /// ```
 ///
 /// [D-Bus specification]: https://dbus.freedesktop.org/doc/dbus-specification.html#container-types
-</span><span class="attr">#[derive(Debug, Clone, PartialEq)]
+</span><span class="attr">#[derive(Debug, PartialEq, PartialOrd)]
 </span><span class="kw">pub enum </span>Value&lt;<span class="lifetime">'a</span>&gt; {
     <span class="comment">// Simple types
     </span>U8(u8),
@@ -1135,7 +1250,51 @@
     </span>Maybe(Maybe&lt;<span class="lifetime">'a</span>&gt;),
 
     <span class="attr">#[cfg(unix)]
-    </span>Fd(Fd),
+    </span>Fd(Fd&lt;<span class="lifetime">'a</span>&gt;),
+}
+
+<span class="kw">impl </span>Hash <span class="kw">for </span>Value&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        discriminant(<span class="self">self</span>).hash(state);
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::U8(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::Bool(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::I16(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::U16(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::I32(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::U32(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::I64(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::U64(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::F64(inner) =&gt; inner.to_le_bytes().hash(state),
+            <span class="self">Self</span>::Str(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::Signature(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::ObjectPath(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::Value(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::Array(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::Dict(inner) =&gt; inner.hash(state),
+            <span class="self">Self</span>::Structure(inner) =&gt; inner.hash(state),
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+            </span><span class="self">Self</span>::Maybe(inner) =&gt; inner.hash(state),
+            <span class="attr">#[cfg(unix)]
+            </span><span class="self">Self</span>::Fd(inner) =&gt; inner.hash(state),
+        }
+    }
+}
+
+<span class="kw">impl </span>Eq <span class="kw">for </span>Value&lt;<span class="lifetime">'_</span>&gt; {}
+
+<span class="kw">impl </span>Ord <span class="kw">for </span>Value&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; Ordering {
+        <span class="self">self</span>.partial_cmp(other)
+            .unwrap_or_else(|| <span class="kw">match </span>(<span class="self">self</span>, other) {
+                (<span class="self">Self</span>::F64(lhs), <span class="self">Self</span>::F64(rhs)) =&gt; lhs.total_cmp(rhs),
+                <span class="comment">// `partial_cmp` returns `Some(_)` if either the discriminants are different
+                // or if both the left hand side and right hand side is `Self::F64(_)`,
+                // because `f64` is the only type in this enum, that does not implement `Ord`.
+                // This `match`-arm is therefore unreachable.
+                </span><span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
+            })
+    }
 }
 
 <span class="macro">assert_impl_all!</span>(Value&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
@@ -1201,13 +1360,14 @@
         }
     }
 
-    <span class="doccomment">/// Create an owned version of `self`.
+    <span class="doccomment">/// Try to create an owned version of `self`.
     ///
-    /// Ideally, we should implement [`std::borrow::ToOwned`] trait for `Value`, but that's
-    /// implemented generically for us through `impl&lt;T: Clone&gt; ToOwned for T` and it's not what we
-    /// need/want.
-    </span><span class="kw">pub fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; OwnedValue {
-        OwnedValue(<span class="kw">match </span><span class="self">self </span>{
+    /// # Errors
+    ///
+    /// This method can currently only fail on Unix platforms for [`Value::Fd`] variant. This
+    /// happens when the current process exceeds the maximum number of open file descriptors.
+    </span><span class="kw">pub fn </span>try_to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;OwnedValue&gt; {
+        <span class="prelude-val">Ok</span>(OwnedValue(<span class="kw">match </span><span class="self">self </span>{
             Value::U8(v) =&gt; Value::U8(<span class="kw-2">*</span>v),
             Value::Bool(v) =&gt; Value::Bool(<span class="kw-2">*</span>v),
             Value::I16(v) =&gt; Value::I16(<span class="kw-2">*</span>v),
@@ -1221,18 +1381,18 @@
             Value::Signature(v) =&gt; Value::Signature(v.to_owned()),
             Value::ObjectPath(v) =&gt; Value::ObjectPath(v.to_owned()),
             Value::Value(v) =&gt; {
-                <span class="kw">let </span>o = OwnedValue::from(<span class="kw-2">&amp;**</span>v);
+                <span class="kw">let </span>o = OwnedValue::try_from(<span class="kw-2">&amp;**</span>v)<span class="question-mark">?</span>;
                 Value::Value(Box::new(o.into_inner()))
             }
 
-            Value::Array(v) =&gt; Value::Array(v.to_owned()),
-            Value::Dict(v) =&gt; Value::Dict(v.to_owned()),
-            Value::Structure(v) =&gt; Value::Structure(v.to_owned()),
+            Value::Array(v) =&gt; Value::Array(v.try_to_owned()<span class="question-mark">?</span>),
+            Value::Dict(v) =&gt; Value::Dict(v.try_to_owned()<span class="question-mark">?</span>),
+            Value::Structure(v) =&gt; Value::Structure(v.try_to_owned()<span class="question-mark">?</span>),
             <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
-            </span>Value::Maybe(v) =&gt; Value::Maybe(v.to_owned()),
+            </span>Value::Maybe(v) =&gt; Value::Maybe(v.try_to_owned()<span class="question-mark">?</span>),
             <span class="attr">#[cfg(unix)]
-            </span>Value::Fd(v) =&gt; Value::Fd(<span class="kw-2">*</span>v),
-        })
+            </span>Value::Fd(v) =&gt; Value::Fd(v.try_to_owned()<span class="question-mark">?</span>),
+        }))
     }
 
     <span class="doccomment">/// Get the signature of the enclosed value.
@@ -1253,15 +1413,47 @@
             Value::Value(<span class="kw">_</span>) =&gt; Signature::from_static_str_unchecked(<span class="string">"v"</span>),
 
             <span class="comment">// Container types
-            </span>Value::Array(value) =&gt; value.full_signature().clone(),
-            Value::Dict(value) =&gt; value.full_signature().clone(),
-            Value::Structure(value) =&gt; value.full_signature().clone(),
+            </span>Value::Array(value) =&gt; value.full_signature().as_ref(),
+            Value::Dict(value) =&gt; value.full_signature().as_ref(),
+            Value::Structure(value) =&gt; value.full_signature().as_ref(),
             <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
-            </span>Value::Maybe(value) =&gt; value.full_signature().clone(),
+            </span>Value::Maybe(value) =&gt; value.full_signature().as_ref(),
 
             <span class="attr">#[cfg(unix)]
             </span>Value::Fd(<span class="kw">_</span>) =&gt; Fd::signature(),
         }
+    }
+
+    <span class="doccomment">/// Try to clone the value.
+    ///
+    /// # Errors
+    ///
+    /// This method can currently only fail on Unix platforms for [`Value::Fd`] variant containing
+    /// an [`Fd::Owned`] variant. This happens when the current process exceeds the maximum number
+    /// of open file descriptors.
+    </span><span class="kw">pub fn </span>try_clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;<span class="self">Self</span>&gt; {
+        <span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="self">self </span>{
+            Value::U8(v) =&gt; Value::U8(<span class="kw-2">*</span>v),
+            Value::Bool(v) =&gt; Value::Bool(<span class="kw-2">*</span>v),
+            Value::I16(v) =&gt; Value::I16(<span class="kw-2">*</span>v),
+            Value::U16(v) =&gt; Value::U16(<span class="kw-2">*</span>v),
+            Value::I32(v) =&gt; Value::I32(<span class="kw-2">*</span>v),
+            Value::U32(v) =&gt; Value::U32(<span class="kw-2">*</span>v),
+            Value::I64(v) =&gt; Value::I64(<span class="kw-2">*</span>v),
+            Value::U64(v) =&gt; Value::U64(<span class="kw-2">*</span>v),
+            Value::F64(v) =&gt; Value::F64(<span class="kw-2">*</span>v),
+            Value::Str(v) =&gt; Value::Str(v.clone()),
+            Value::Signature(v) =&gt; Value::Signature(v.clone()),
+            Value::ObjectPath(v) =&gt; Value::ObjectPath(v.clone()),
+            Value::Value(v) =&gt; Value::Value(Box::new(v.try_clone()<span class="question-mark">?</span>)),
+            Value::Array(v) =&gt; Value::Array(v.try_clone()<span class="question-mark">?</span>),
+            Value::Dict(v) =&gt; Value::Dict(v.try_clone()<span class="question-mark">?</span>),
+            Value::Structure(v) =&gt; Value::Structure(v.try_clone()<span class="question-mark">?</span>),
+            <span class="attr">#[cfg(feature = <span class="string">"gvariant"</span>)]
+            </span>Value::Maybe(v) =&gt; Value::Maybe(v.try_clone()<span class="question-mark">?</span>),
+            <span class="attr">#[cfg(unix)]
+            </span>Value::Fd(v) =&gt; Value::Fd(v.try_clone()<span class="question-mark">?</span>),
+        })
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>serialize_value_as_struct_field&lt;S&gt;(
@@ -1314,16 +1506,16 @@
     /// # Examples
     ///
     /// ```
-    /// use std::convert::TryFrom;
-    /// use zvariant::{Result, Value};
+    /// use zvariant::{Error, Result, Value};
     ///
     /// fn value_vec_to_type_vec&lt;'a, T&gt;(values: Vec&lt;Value&lt;'a&gt;&gt;) -&gt; Result&lt;Vec&lt;T&gt;&gt;
     /// where
     ///     T: TryFrom&lt;Value&lt;'a&gt;&gt;,
+    ///     &lt;T as TryFrom&lt;Value&lt;'a&gt;&gt;&gt;::Error: Into&lt;Error&gt;,
     /// {
     ///     let mut res = vec![];
     ///     for value in values.into_iter() {
-    ///         res.push(value.downcast().unwrap());
+    ///         res.push(value.downcast()?);
     ///     }
     ///
     ///     Ok(res)
@@ -1345,35 +1537,37 @@
     /// [`Value::Value`]: enum.Value.html#variant.Value
     /// [`TryFrom&lt;Value&gt;`]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
     /// [`From&lt;Value&gt;`]: https://doc.rust-lang.org/std/convert/trait.From.html
-    </span><span class="kw">pub fn </span>downcast&lt;T: <span class="question-mark">?</span>Sized&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
+    </span><span class="kw">pub fn </span>downcast&lt;T&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, <span class="kw">crate</span>::Error&gt;
     <span class="kw">where
-        </span>T: TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
+        </span>T: <span class="question-mark">?</span>Sized + TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
+        &lt;T <span class="kw">as </span>TryFrom&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;&gt;::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
     {
         <span class="kw">if let </span>Value::Value(v) = <span class="self">self </span>{
-            T::try_from(<span class="kw-2">*</span>v).ok()
+            T::try_from(<span class="kw-2">*</span>v)
         } <span class="kw">else </span>{
-            T::try_from(<span class="self">self</span>).ok()
+            T::try_from(<span class="self">self</span>)
         }
+        .map_err(Into::into)
     }
 
-    <span class="doccomment">/// Try to get a reference to the underlying type `T`.
+    <span class="doccomment">/// Try to get the underlying type `T`.
     ///
-    /// Same as [`downcast`] except it doesn't consume `self` and get a reference to the underlying
-    /// value.
+    /// Same as [`downcast`] except it doesn't consume `self` and hence requires
+    /// `T: TryFrom&lt;&amp;Value&lt;_&gt;&gt;`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use std::convert::TryFrom;
-    /// use zvariant::{Result, Value};
+    /// use zvariant::{Error, Result, Value};
     ///
     /// fn value_vec_to_type_vec&lt;'a, T&gt;(values: &amp;'a Vec&lt;Value&lt;'a&gt;&gt;) -&gt; Result&lt;Vec&lt;&amp;'a T&gt;&gt;
     /// where
     ///     &amp;'a T: TryFrom&lt;&amp;'a Value&lt;'a&gt;&gt;,
+    ///     &lt;&amp;'a T as TryFrom&lt;&amp;'a Value&lt;'a&gt;&gt;&gt;::Error: Into&lt;Error&gt;,
     /// {
     ///     let mut res = vec![];
     ///     for value in values.into_iter() {
-    ///         res.push(value.downcast_ref().unwrap());
+    ///         res.push(value.downcast_ref()?);
     ///     }
     ///
     ///     Ok(res)
@@ -1393,16 +1587,17 @@
     /// ```
     ///
     /// [`downcast`]: enum.Value.html#method.downcast
-    </span><span class="kw">pub fn </span>downcast_ref&lt;T&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>T&gt;
+    </span><span class="kw">pub fn </span>downcast_ref&lt;T&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, <span class="kw">crate</span>::Error&gt;
     <span class="kw">where
-        </span>T: <span class="question-mark">?</span>Sized,
-        <span class="kw-2">&amp;</span><span class="lifetime">'a </span>T: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
+        </span>T: <span class="question-mark">?</span>Sized + TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
+        &lt;T <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;&gt;::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
     {
         <span class="kw">if let </span>Value::Value(v) = <span class="self">self </span>{
-            &lt;<span class="kw-2">&amp;</span>T&gt;::try_from(v).ok()
+            &lt;T&gt;::try_from(v)
         } <span class="kw">else </span>{
-            &lt;<span class="kw-2">&amp;</span>T&gt;::try_from(<span class="self">self</span>).ok()
+            &lt;T&gt;::try_from(<span class="self">self</span>)
         }
+        .map_err(Into::into)
     }
 }
 
@@ -1619,7 +1814,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>builder = StructureBuilder::new();
         <span class="kw">while </span>i &lt; signature_end {
             <span class="kw">let </span>fields_signature = <span class="self">self</span>.signature.slice(i..signature_end);
-            <span class="kw">let </span>parser = SignatureParser::new(fields_signature.clone());
+            <span class="kw">let </span>parser = SignatureParser::new(fields_signature.as_ref());
             <span class="kw">let </span>len = parser.next_signature().map_err(Error::custom)<span class="question-mark">?</span>.len();
             <span class="kw">let </span>field_signature = fields_signature.slice(<span class="number">0</span>..len);
             i += field_signature.len();
@@ -1752,7 +1947,11 @@
             )
         })<span class="question-mark">? </span>{
             <span class="attr">#[cfg(unix)]
-            </span><span class="string">b'h' </span>=&gt; Fd::from(value).into(),
+            </span><span class="string">b'h' </span>=&gt; {
+                <span class="comment">// SAFETY: The `'de` lifetimes will ensure the borrow won't outlive the raw FD.
+                </span><span class="kw">let </span>fd = <span class="kw">unsafe </span>{ std::os::fd::BorrowedFd::borrow_raw(value) };
+                Fd::Borrowed(fd).into()
+            }
             <span class="kw">_ </span>=&gt; value.into(),
         };
 
@@ -1880,6 +2079,14 @@
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Type <span class="kw">for </span>Value&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
         Signature::from_static_str_unchecked(VARIANT_SIGNATURE_STR)
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>Value&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Error = <span class="kw">crate</span>::Error;
+
+    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'a</span>&gt;) -&gt; <span class="kw">crate</span>::Result&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt; {
+        value.try_clone()
     }
 }
 
@@ -2012,58 +2219,81 @@
             <span class="string">"((true,), (true, false), (true, true, false))"
         </span>);
 
-        <span class="macro">assert_eq!</span>(
-            Value::new((
-                (<span class="prelude-val">Some</span>(<span class="number">0_i16</span>), <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="number">0_i16</span>)), <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="number">0_i16</span>))),),
-                (<span class="prelude-val">None</span>::&lt;i16&gt;, <span class="prelude-val">Some</span>(<span class="prelude-val">None</span>::&lt;i16&gt;), <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">None</span>::&lt;i16&gt;)),),
-                (<span class="prelude-val">None</span>::&lt;<span class="prelude-ty">Option</span>&lt;i16&gt;&gt;, <span class="prelude-val">Some</span>(<span class="prelude-val">None</span>::&lt;<span class="prelude-ty">Option</span>&lt;i16&gt;&gt;)),
-            ))
-            .to_string(),
-            <span class="string">"((@mn 0, @mmn 0, @mmmn 0), \
+        <span class="attr">#[cfg(any(feature = <span class="string">"gvariant"</span>, feature = <span class="string">"option-as-array"</span>))]
+        </span>{
+            <span class="attr">#[cfg(unix)]
+            </span><span class="kw">use </span>std::os::fd::BorrowedFd;
+
+            <span class="attr">#[cfg(all(feature = <span class="string">"gvariant"</span>, not(feature = <span class="string">"option-as-array"</span>)))]
+            </span><span class="kw">let </span>s = <span class="string">"((@mn 0, @mmn 0, @mmmn 0), \
                 (@mn nothing, @mmn just nothing, @mmmn just just nothing), \
-                (@mmn nothing, @mmmn just nothing))"
-        </span>);
+                (@mmn nothing, @mmmn just nothing))"</span>;
+            <span class="attr">#[cfg(feature = <span class="string">"option-as-array"</span>)]
+            </span><span class="kw">let </span>s = <span class="string">"(([int16 0], [[int16 0]], [[[int16 0]]]), \
+                (@an [], [@an []], [[@an []]]), \
+                (@aan [], [@aan []]))"</span>;
+            <span class="macro">assert_eq!</span>(
+                Value::new((
+                    (<span class="prelude-val">Some</span>(<span class="number">0_i16</span>), <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="number">0_i16</span>)), <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="number">0_i16</span>))),),
+                    (<span class="prelude-val">None</span>::&lt;i16&gt;, <span class="prelude-val">Some</span>(<span class="prelude-val">None</span>::&lt;i16&gt;), <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">None</span>::&lt;i16&gt;)),),
+                    (<span class="prelude-val">None</span>::&lt;<span class="prelude-ty">Option</span>&lt;i16&gt;&gt;, <span class="prelude-val">Some</span>(<span class="prelude-val">None</span>::&lt;<span class="prelude-ty">Option</span>&lt;i16&gt;&gt;)),
+                ))
+                .to_string(),
+                s,
+            );
 
-        <span class="macro">assert_eq!</span>(
-            Value::new(<span class="macro">vec!</span>[Fd::from(<span class="number">0</span>), Fd::from(-<span class="number">100</span>)]).to_string(),
-            <span class="string">"[handle 0, -100]"
-        </span>);
+            <span class="attr">#[cfg(unix)]
+            </span><span class="macro">assert_eq!</span>(
+                Value::new(<span class="macro">vec!</span>[
+                    Fd::from(<span class="kw">unsafe </span>{ BorrowedFd::borrow_raw(<span class="number">0</span>) }),
+                    Fd::from(<span class="kw">unsafe </span>{ BorrowedFd::borrow_raw(-<span class="number">100</span>) })
+                ])
+                .to_string(),
+                <span class="string">"[handle 0, -100]"
+            </span>);
 
-        <span class="macro">assert_eq!</span>(
-            Value::new((
-                <span class="prelude-val">None</span>::&lt;bool&gt;,
-                <span class="prelude-val">None</span>::&lt;bool&gt;,
-                <span class="prelude-val">Some</span>(
-                    <span class="macro">vec!</span>[(<span class="string">"size"</span>, Value::new((<span class="number">800</span>, <span class="number">600</span>)))]
-                        .into_iter()
-                        .collect::&lt;HashMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()
-                ),
-                <span class="macro">vec!</span>[
-                    Value::new(<span class="number">1</span>),
-                    Value::new(
-                        <span class="macro">vec!</span>[(
-                            <span class="string">"dimension"</span>,
-                            Value::new((
-                                <span class="macro">vec!</span>[<span class="number">2.4</span>, <span class="number">1.</span>],
-                                <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="number">200_i16</span>)),
-                                Value::new((<span class="number">3_u8</span>, <span class="string">"Hello!"</span>))
-                            ))
-                        )]
-                        .into_iter()
-                        .collect::&lt;HashMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()
-                    )
-                ],
-                <span class="number">7777</span>,
-                ObjectPath::from_static_str(<span class="string">"/"</span>).unwrap(),
-                <span class="number">8888
-            </span>))
-            .to_string(),
-            <span class="string">"(@mb nothing, @mb nothing, \
+            <span class="attr">#[cfg(all(feature = <span class="string">"gvariant"</span>, not(feature = <span class="string">"option-as-array"</span>)))]
+            </span><span class="kw">let </span>s = <span class="string">"(@mb nothing, @mb nothing, \
                 @ma{sv} {\"size\": &lt;(800, 600)&gt;}, \
                 [&lt;1&gt;, &lt;{\"dimension\": &lt;([2.4, 1.], \
                 @mmn 200, &lt;(byte 0x03, \"Hello!\")&gt;)&gt;}&gt;], \
-                7777, objectpath \"/\", 8888)"
-        </span>);
+                7777, objectpath \"/\", 8888)"</span>;
+            <span class="attr">#[cfg(feature = <span class="string">"option-as-array"</span>)]
+            </span><span class="kw">let </span>s = <span class="string">"(@ab [], @ab [], [{\"size\": &lt;(800, 600)&gt;}], \
+                [&lt;1&gt;, &lt;{\"dimension\": &lt;([2.4, 1.], [[int16 200]], \
+                &lt;(byte 0x03, \"Hello!\")&gt;)&gt;}&gt;], 7777, objectpath \"/\", 8888)"</span>;
+            <span class="macro">assert_eq!</span>(
+                Value::new((
+                    <span class="prelude-val">None</span>::&lt;bool&gt;,
+                    <span class="prelude-val">None</span>::&lt;bool&gt;,
+                    <span class="prelude-val">Some</span>(
+                        <span class="macro">vec!</span>[(<span class="string">"size"</span>, Value::new((<span class="number">800</span>, <span class="number">600</span>)))]
+                            .into_iter()
+                            .collect::&lt;HashMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()
+                    ),
+                    <span class="macro">vec!</span>[
+                        Value::new(<span class="number">1</span>),
+                        Value::new(
+                            <span class="macro">vec!</span>[(
+                                <span class="string">"dimension"</span>,
+                                Value::new((
+                                    <span class="macro">vec!</span>[<span class="number">2.4</span>, <span class="number">1.</span>],
+                                    <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="number">200_i16</span>)),
+                                    Value::new((<span class="number">3_u8</span>, <span class="string">"Hello!"</span>))
+                                ))
+                            )]
+                            .into_iter()
+                            .collect::&lt;HashMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()
+                        )
+                    ],
+                    <span class="number">7777</span>,
+                    ObjectPath::from_static_str(<span class="string">"/"</span>).unwrap(),
+                    <span class="number">8888
+                </span>))
+                .to_string(),
+                s,
+            );
+        }
     }
 }
 </code></pre></div></section></main></body></html>

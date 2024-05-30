@@ -1,5 +1,4 @@
 (function() {var type_impls = {
-"nix":[],
 "rustix":[],
 "serde":[],
 "ssip_client_async":[],

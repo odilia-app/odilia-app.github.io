@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.15.2/src/dict.rs`."><title>dict.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/dict.rs`."><title>dict.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zvariant/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -300,11 +300,35 @@
 <a href="#298" id="298">298</a>
 <a href="#299" id="299">299</a>
 <a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
-    collections::HashMap,
-    convert::TryFrom,
+    collections::{BTreeMap, HashMap},
     fmt::{Display, Write},
-    hash::BuildHasher,
+    hash::{BuildHasher, Hash},
 };
 
 <span class="kw">use </span>serde::ser::{Serialize, SerializeSeq, SerializeStruct, Serializer};
@@ -318,9 +342,9 @@
 ///
 /// [`Value`]: enum.Value.html#variant.Dict
 /// [`HashMap`]: https://doc.rust-lang.org/std/collections/struct.HashMap.html
-</span><span class="attr">#[derive(Debug, Clone, PartialEq)]
+</span><span class="attr">#[derive(Debug, Hash, PartialEq, PartialOrd, Eq, Ord)]
 </span><span class="kw">pub struct </span>Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
-    entries: Vec&lt;DictEntry&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;&gt;,
+    map: BTreeMap&lt;Value&lt;<span class="lifetime">'k</span>&gt;, Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
     key_signature: Signature&lt;<span class="lifetime">'k</span>&gt;,
     value_signature: Signature&lt;<span class="lifetime">'v</span>&gt;,
     <span class="comment">// should use a separate lifetime or everything should use the same but API break.
@@ -335,7 +359,7 @@
         <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>key_signature, <span class="kw-2">&amp;</span>value_signature);
 
         <span class="self">Self </span>{
-            entries: <span class="macro">vec!</span>[],
+            map: BTreeMap::new(),
             key_signature,
             value_signature,
             signature,
@@ -359,7 +383,7 @@
         <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.key_signature, key.value_signature(), <span class="string">"key"</span>);
         <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.value_signature, value.value_signature(), <span class="string">"value"</span>);
 
-        <span class="self">self</span>.entries.push(DictEntry { key, value });
+        <span class="self">self</span>.map.insert(key, value);
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -367,41 +391,29 @@
     <span class="doccomment">/// Add a new entry.
     </span><span class="kw">pub fn </span>add&lt;K, V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: K, value: V) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt;
     <span class="kw">where
-        </span>K: Basic + Into&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt; + std::hash::Hash + std::cmp::Eq,
+        </span>K: Basic + Into&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt; + Ord,
         V: Into&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; + DynamicType,
     {
         <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.key_signature, K::signature(), <span class="string">"key"</span>);
         <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.value_signature, value.dynamic_signature(), <span class="string">"value"</span>);
 
-        <span class="self">self</span>.entries.push(DictEntry {
-            key: Value::new(key),
-            value: Value::new(value),
-        });
+        <span class="self">self</span>.map.insert(Value::new(key), Value::new(value));
 
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="doccomment">/// Get the value for the given key.
-    </span><span class="kw">pub fn </span>get&lt;<span class="lifetime">'d</span>, K, V&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>V&gt;, Error&gt;
+    </span><span class="kw">pub fn </span>get&lt;<span class="lifetime">'d</span>, K, V&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'k </span>K) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;V&gt;, Error&gt;
     <span class="kw">where
         </span><span class="lifetime">'d</span>: <span class="lifetime">'k </span>+ <span class="lifetime">'v</span>,
-        K: <span class="question-mark">?</span>Sized + std::cmp::Eq + <span class="lifetime">'k</span>,
-        V: <span class="question-mark">?</span>Sized,
-        <span class="kw-2">&amp;</span><span class="lifetime">'k </span>K: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'k </span>Value&lt;<span class="lifetime">'k</span>&gt;&gt;,
-        <span class="kw-2">&amp;</span><span class="lifetime">'v </span>V: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
+        <span class="kw-2">&amp;</span><span class="lifetime">'k </span>K: TryInto&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt;,
+        &lt;<span class="kw-2">&amp;</span><span class="lifetime">'k </span>K <span class="kw">as </span>TryInto&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt;&gt;::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
+        V: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
+        &lt;V <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'v </span>Value&lt;<span class="lifetime">'v</span>&gt;&gt;&gt;::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
     {
-        <span class="kw">for </span>entry <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.entries {
-            <span class="kw">let </span>entry_key = entry.key.downcast_ref::&lt;K&gt;().ok_or(Error::IncorrectType)<span class="question-mark">?</span>;
-            <span class="kw">if </span><span class="kw-2">*</span>entry_key == <span class="kw-2">*</span>key {
-                <span class="kw">return </span>entry
-                    .value
-                    .downcast_ref()
-                    .ok_or(Error::IncorrectType)
-                    .map(<span class="prelude-val">Some</span>);
-            }
-        }
+        <span class="kw">let </span>key: Value&lt;<span class="lifetime">'_</span>&gt; = key.try_into().map_err(Into::into)<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+        <span class="self">self</span>.map.get(<span class="kw-2">&amp;</span>key).map(|v| v.downcast_ref()).transpose()
     }
 
     <span class="doccomment">/// Get the signature of this `Dict`.
@@ -419,13 +431,38 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.signature
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Dict&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt; {
-        Dict {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>try_to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;Dict&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt;&gt; {
+        <span class="prelude-val">Ok</span>(Dict {
             key_signature: <span class="self">self</span>.key_signature.to_owned(),
             value_signature: <span class="self">self</span>.value_signature.to_owned(),
             signature: <span class="self">self</span>.signature.to_owned(),
-            entries: <span class="self">self</span>.entries.iter().map(|v| v.to_owned()).collect(),
-        }
+            map: <span class="self">self
+                </span>.map
+                .iter()
+                .map(|(k, v)| {
+                    <span class="prelude-val">Ok</span>((
+                        k.try_to_owned().map(Into::into)<span class="question-mark">?</span>,
+                        v.try_to_owned().map(Into::into)<span class="question-mark">?</span>,
+                    ))
+                })
+                .collect::&lt;<span class="kw">crate</span>::Result&lt;<span class="kw">_</span>&gt;&gt;()<span class="question-mark">?</span>,
+        })
+    }
+
+    <span class="doccomment">/// Try to clone the `Dict`.
+    </span><span class="kw">pub fn </span>try_clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        <span class="kw">let </span>entries = <span class="self">self
+            </span>.map
+            .iter()
+            .map(|(k, v)| <span class="prelude-val">Ok</span>((k.try_clone()<span class="question-mark">?</span>, v.try_clone()<span class="question-mark">?</span>)))
+            .collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, <span class="kw">crate</span>::Error&gt;&gt;()<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+            map: entries,
+            key_signature: <span class="self">self</span>.key_signature.clone(),
+            value_signature: <span class="self">self</span>.value_signature.clone(),
+            signature: <span class="self">self</span>.signature.clone(),
+        })
     }
 
     <span class="doccomment">/// Create a new empty `Dict`, given the complete signature.
@@ -434,11 +471,19 @@
         <span class="kw">let </span>value_signature = signature.slice(<span class="number">3</span>..signature.len() - <span class="number">1</span>);
 
         <span class="self">Self </span>{
-            entries: <span class="macro">vec!</span>[],
+            map: BTreeMap::new(),
             key_signature,
             value_signature,
             signature,
         }
+    }
+
+    <span class="kw">pub fn </span>iter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'k</span>&gt;, <span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'v</span>&gt;)&gt; {
+        <span class="self">self</span>.map.iter()
+    }
+
+    <span class="kw">pub fn </span>iter_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (<span class="kw-2">&amp;</span>Value&lt;<span class="lifetime">'k</span>&gt;, <span class="kw-2">&amp;mut </span>Value&lt;<span class="lifetime">'v</span>&gt;)&gt; {
+        <span class="self">self</span>.map.iter_mut()
     }
 
     <span class="comment">// TODO: Provide more API like https://docs.rs/toml/0.5.5/toml/map/struct.Map.html
@@ -450,12 +495,21 @@
     }
 }
 
+<span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; IntoIterator <span class="kw">for </span>Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
+    <span class="kw">type </span>Item = (Value&lt;<span class="lifetime">'k</span>&gt;, Value&lt;<span class="lifetime">'v</span>&gt;);
+    <span class="kw">type </span>IntoIter = &lt;BTreeMap&lt;Value&lt;<span class="lifetime">'k</span>&gt;, Value&lt;<span class="lifetime">'v</span>&gt;&gt; <span class="kw">as </span>IntoIterator&gt;::IntoIter;
+
+    <span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
+        <span class="self">self</span>.map.into_iter()
+    }
+}
+
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>dict_display_fmt(
     dict: <span class="kw-2">&amp;</span>Dict&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
     f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;,
     type_annotate: bool,
 ) -&gt; std::fmt::Result {
-    <span class="kw">if </span>dict.entries.is_empty() {
+    <span class="kw">if </span>dict.map.is_empty() {
         <span class="kw">if </span>type_annotate {
             <span class="macro">write!</span>(f, <span class="string">"@{} "</span>, dict.full_signature())<span class="question-mark">?</span>;
         }
@@ -466,13 +520,13 @@
         <span class="comment">// Annotate only the first entry as the rest will be of the same type.
         </span><span class="kw">let </span><span class="kw-2">mut </span>type_annotate = type_annotate;
 
-        <span class="kw">for </span>(i, entry) <span class="kw">in </span>dict.entries.iter().enumerate() {
-            value_display_fmt(<span class="kw-2">&amp;</span>entry.key, f, type_annotate)<span class="question-mark">?</span>;
+        <span class="kw">for </span>(i, (key, value)) <span class="kw">in </span>dict.map.iter().enumerate() {
+            value_display_fmt(key, f, type_annotate)<span class="question-mark">?</span>;
             f.write_str(<span class="string">": "</span>)<span class="question-mark">?</span>;
-            value_display_fmt(<span class="kw-2">&amp;</span>entry.value, f, type_annotate)<span class="question-mark">?</span>;
+            value_display_fmt(value, f, type_annotate)<span class="question-mark">?</span>;
             type_annotate = <span class="bool-val">false</span>;
 
-            <span class="kw">if </span>i + <span class="number">1 </span>&lt; dict.entries.len() {
+            <span class="kw">if </span>i + <span class="number">1 </span>&lt; dict.map.len() {
                 f.write_str(<span class="string">", "</span>)<span class="question-mark">?</span>;
             }
         }
@@ -488,98 +542,94 @@
     <span class="kw">where
         </span>S: Serializer,
     {
-        <span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="self">self</span>.entries.len()))<span class="question-mark">?</span>;
-        <span class="kw">for </span>entry <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.entries {
-            seq.serialize_element(entry)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="self">self</span>.map.len()))<span class="question-mark">?</span>;
+        <span class="kw">for </span>(key, value) <span class="kw">in </span><span class="self">self</span>.map.iter() {
+            seq.serialize_element(<span class="kw-2">&amp;</span>DictEntry { key, value })<span class="question-mark">?</span>;
         }
 
         seq.end()
     }
 }
 
-<span class="comment">// Conversion of Dict to HashMap
-</span><span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>, K, V, H&gt; TryFrom&lt;Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;&gt; <span class="kw">for </span>HashMap&lt;K, V, H&gt;
-<span class="kw">where
-    </span>K: Basic + TryFrom&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt; + std::hash::Hash + std::cmp::Eq,
-    V: TryFrom&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
-    H: BuildHasher + Default,
-    K::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
-    V::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
-{
-    <span class="kw">type </span>Error = Error;
+<span class="comment">// Conversion of Dict to Map types
+</span><span class="macro">macro_rules!</span> from_dict {
+    (<span class="macro-nonterminal">$ty</span>:ident &lt;K $(: <span class="macro-nonterminal">$kbound1</span>:ident $(+ <span class="macro-nonterminal">$kbound2</span>:ident)<span class="kw-2">*</span>)<span class="kw-2">*</span>, V $(, <span class="macro-nonterminal">$typaram</span>:ident)<span class="kw-2">*</span>&gt;) =&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>, K, V $(, <span class="macro-nonterminal">$typaram</span>)<span class="kw-2">*</span>&gt; TryFrom&lt;Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;&gt; <span class="kw">for </span><span class="macro-nonterminal">$ty</span>&lt;K, V $(, <span class="macro-nonterminal">$typaram</span>)<span class="kw-2">*</span>&gt;
+        <span class="kw">where
+            </span>K: Basic + TryFrom&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt; $(+ <span class="macro-nonterminal">$kbound1 </span>$(+ <span class="macro-nonterminal">$kbound2</span>)<span class="kw-2">*</span>)<span class="kw-2">*</span>,
+            V: TryFrom&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
+            K::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
+            V::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
+            $(<span class="macro-nonterminal">$typaram</span>: BuildHasher + Default,)*
+        {
+            <span class="kw">type </span>Error = Error;
 
-    <span class="kw">fn </span>try_from(v: Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::default();
-        <span class="kw">for </span>e <span class="kw">in </span>v.entries.into_iter() {
-            <span class="kw">let </span>key = <span class="kw">if let </span>Value::Value(v) = e.key {
-                K::try_from(<span class="kw-2">*</span>v)
-            } <span class="kw">else </span>{
-                K::try_from(e.key)
+            <span class="kw">fn </span>try_from(v: Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+                v.map.into_iter().map(|(key, value)| {
+                    <span class="kw">let </span>key = <span class="kw">if let </span>Value::Value(v) = key {
+                        K::try_from(<span class="kw-2">*</span>v)
+                    } <span class="kw">else </span>{
+                        K::try_from(key)
+                    }
+                    .map_err(Into::into)<span class="question-mark">?</span>;
+
+                    <span class="kw">let </span>value = <span class="kw">if let </span>Value::Value(v) = value {
+                        V::try_from(<span class="kw-2">*</span>v)
+                    } <span class="kw">else </span>{
+                        V::try_from(value)
+                    }
+                    .map_err(Into::into)<span class="question-mark">?</span>;
+
+                    <span class="prelude-val">Ok</span>((key, value))
+                }).collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;()
             }
-            .map_err(Into::into)<span class="question-mark">?</span>;
-
-            <span class="kw">let </span>value = <span class="kw">if let </span>Value::Value(v) = e.value {
-                V::try_from(<span class="kw-2">*</span>v)
-            } <span class="kw">else </span>{
-                V::try_from(e.value)
-            }
-            .map_err(Into::into)<span class="question-mark">?</span>;
-
-            map.insert(key, value);
         }
-        <span class="prelude-val">Ok</span>(map)
-    }
+    };
 }
+<span class="macro">from_dict!</span>(HashMap&lt;K: Eq + Hash, V, H&gt;);
+<span class="macro">from_dict!</span>(BTreeMap&lt;K: Ord, V&gt;);
 
 <span class="comment">// TODO: this could be useful
 // impl&lt;'d, 'k, 'v, K, V, H&gt; TryFrom&lt;&amp;'d Dict&lt;'k, 'v&gt;&gt; for HashMap&lt;&amp;'k K, &amp;'v V, H&gt;
 
 // Conversion of Hashmap to Dict
-</span><span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>, K, V, H&gt; From&lt;HashMap&lt;K, V, H&gt;&gt; <span class="kw">for </span>Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;
-<span class="kw">where
-    </span>K: Type + Into&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt; + std::hash::Hash + std::cmp::Eq,
-    V: Type + Into&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
-    H: BuildHasher + Default,
-{
-    <span class="kw">fn </span>from(value: HashMap&lt;K, V, H&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>entries = value
-            .into_iter()
-            .map(|(key, value)| DictEntry {
-                key: Value::new(key),
-                value: Value::new(value),
-            })
-            .collect();
-        <span class="kw">let </span>key_signature = K::signature();
-        <span class="kw">let </span>value_signature = V::signature();
-        <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>key_signature, <span class="kw-2">&amp;</span>value_signature);
+</span><span class="macro">macro_rules!</span> to_dict {
+    (<span class="macro-nonterminal">$ty</span>:ident &lt;K $(: <span class="macro-nonterminal">$kbound1</span>:ident $(+ <span class="macro-nonterminal">$kbound2</span>:ident)<span class="kw-2">*</span>)<span class="kw-2">*</span>, V $(, <span class="macro-nonterminal">$typaram</span>:ident)<span class="kw-2">*</span>&gt;) =&gt; {
+        <span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>, K, V $(, <span class="macro-nonterminal">$typaram</span>)<span class="kw-2">*</span>&gt; From&lt;<span class="macro-nonterminal">$ty</span>&lt;K, V $(, <span class="macro-nonterminal">$typaram</span>)<span class="kw-2">*</span>&gt;&gt; <span class="kw">for </span>Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt;
+        <span class="kw">where
+            </span>K: Type + Into&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt;,
+            V: Type + Into&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
+            $(<span class="macro-nonterminal">$typaram</span>: BuildHasher,)*
+        {
+            <span class="kw">fn </span>from(value: <span class="macro-nonterminal">$ty</span>&lt;K, V $(, <span class="macro-nonterminal">$typaram</span>)<span class="kw-2">*</span>&gt;) -&gt; <span class="self">Self </span>{
+                <span class="kw">let </span>entries = value
+                    .into_iter()
+                    .map(|(key, value)| (Value::new(key), Value::new(value)))
+                    .collect();
+                <span class="kw">let </span>key_signature = K::signature();
+                <span class="kw">let </span>value_signature = V::signature();
+                <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>key_signature, <span class="kw-2">&amp;</span>value_signature);
 
-        <span class="self">Self </span>{
-            entries,
-            key_signature,
-            value_signature,
-            signature,
+                <span class="self">Self </span>{
+                    map: entries,
+                    key_signature,
+                    value_signature,
+                    signature,
+                }
+            }
         }
-    }
+    };
+}
+<span class="macro">to_dict!</span>(HashMap&lt;K: Eq + Hash, V, H&gt;);
+<span class="macro">to_dict!</span>(BTreeMap&lt;K: Ord, V&gt;);
+
+<span class="attr">#[derive(Debug)]
+</span><span class="kw">struct </span>DictEntry&lt;<span class="lifetime">'kref</span>, <span class="lifetime">'k</span>, <span class="lifetime">'vref</span>, <span class="lifetime">'v</span>&gt; {
+    key: <span class="kw-2">&amp;</span><span class="lifetime">'kref </span>Value&lt;<span class="lifetime">'k</span>&gt;,
+    value: <span class="kw-2">&amp;</span><span class="lifetime">'vref </span>Value&lt;<span class="lifetime">'v</span>&gt;,
 }
 
-<span class="comment">// TODO: Conversion of Dict from/to BTreeMap
-
-</span><span class="attr">#[derive(Debug, Clone, PartialEq)]
-</span><span class="kw">struct </span>DictEntry&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
-    key: Value&lt;<span class="lifetime">'k</span>&gt;,
-    value: Value&lt;<span class="lifetime">'v</span>&gt;,
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; DictEntry&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
-    <span class="kw">fn </span>to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; DictEntry&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt; {
-        DictEntry {
-            key: <span class="self">self</span>.key.to_owned().into(),
-            value: <span class="self">self</span>.value.to_owned().into(),
-        }
-    }
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; Serialize <span class="kw">for </span>DictEntry&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>DictEntry&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt; {
     <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
     <span class="kw">where
         </span>S: Serializer,

@@ -152,6 +152,13 @@
 <a href="#150" id="150">150</a>
 <a href="#151" id="151">151</a>
 <a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>atspi::Interface;
 <span class="kw">use </span>atspi_proxies::{
 	accessible::AccessibleProxy, action::ActionProxy, application::ApplicationProxy,
@@ -161,30 +168,30 @@
 	table_cell::TableCellProxy, text::TextProxy, value::ValueProxy,
 };
 <span class="kw">use </span>std::future::Future;
-<span class="kw">use </span>std::ops::Deref;
-<span class="kw">use </span>zbus::{CacheProperties, Error, Proxy, ProxyBuilder, ProxyDefault};
+<span class="kw">use </span>zbus::{proxy::ProxyImpl, CacheProperties, Error, Proxy, ProxyBuilder, ProxyDefault};
 
 <span class="attr">#[allow(clippy::module_name_repetitions)]
-</span><span class="kw">pub trait </span>Convertable {
+</span><span class="kw">pub trait </span>Convertable&lt;<span class="lifetime">'a</span>&gt; {
 	<span class="kw">type </span>Error: std::error::Error;
 
-	<span class="doccomment">/// Creates an [`Self::Accessible`] from the existing accessible item.
+	<span class="doccomment">/// Creates an [`AccessibleProxy`] from the existing accessible item.
 	/// # Errors
 	///
 	/// This may fail based on the implementation of.
 	/// Generally, it fails if the accessible item does not implement to accessible interface.
 	/// This shouldn't be possible, but this function may fail for other reasons.
-	/// For example, to convert a [`zbus::Proxy`] into a [`Self::Accessible`], it may fail to create the new [`atspi_proxies::accessible::AccessibleProxy`].
+	/// For example, to convert a [`zbus::Proxy`] into a [`AccessibleProxy`], it may fail to create the new [`atspi_proxies::accessible::AccessibleProxy`].
 	</span><span class="kw">fn </span>to_accessible(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 	) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;AccessibleProxy, <span class="self">Self</span>::Error&gt;&gt; + Send;
-	<span class="doccomment">/// Creates an [`Self::Action`] from the existing accessible item.
+	<span class="doccomment">/// Creates an [`ActionProxy`] from the existing accessible item.
 	/// # Errors
 	///
 	/// This may fail based on the implementation.
 	/// Generally, it fails if the accessible item does not implement to action interface.
 	</span><span class="kw">fn </span>to_action(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;ActionProxy, <span class="self">Self</span>::Error&gt;&gt; + Send;
-	<span class="doccomment">/// Creates an [`Self::Application`] from the existing accessible item.
+
+	<span class="doccomment">/// Creates an [`ApplicationProxy`] from the existing accessible item.
 	/// # Errors
 	///
 	/// This may fail based on the implementation.
@@ -192,7 +199,8 @@
 	</span><span class="kw">fn </span>to_application(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 	) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;ApplicationProxy, <span class="self">Self</span>::Error&gt;&gt; + Send;
-	<span class="doccomment">/// Creates an [`Collection`] from the existing accessible item.
+
+	<span class="doccomment">/// Creates an [`CollectionProxy`] from the existing accessible item.
 	/// # Errors
 	///
 	/// This may fail based on the implementation.
@@ -200,7 +208,8 @@
 	</span><span class="kw">fn </span>to_collection(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 	) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;CollectionProxy, <span class="self">Self</span>::Error&gt;&gt; + Send;
-	<span class="doccomment">/// Creates an [`Component`] from the existing accessible item.
+
+	<span class="doccomment">/// Creates an [`ComponentProxy`] from the existing accessible item.
 	/// # Errors
 	///
 	/// This may fail based on the implementation.
@@ -226,10 +235,12 @@
 	<span class="lifetime">'a</span>,
 	<span class="lifetime">'b</span>,
 	T: From&lt;Proxy&lt;<span class="lifetime">'b</span>&gt;&gt; + ProxyDefault,
-	U: Deref&lt;Target = Proxy&lt;<span class="lifetime">'a</span>&gt;&gt; + ProxyDefault,
+	U: ProxyImpl&lt;<span class="lifetime">'a</span>&gt; + ProxyDefault,
 &gt;(
 	from: <span class="kw-2">&amp;</span>U,
 ) -&gt; zbus::Result&lt;T&gt; {
+	<span class="kw">let </span>from = from.inner();
+
 	<span class="comment">// first thing is first, we need to creat an accessible to query the interfaces.
 	</span><span class="kw">let </span>accessible = AccessibleProxy::builder(from.connection())
 		.destination(from.destination())<span class="question-mark">?
@@ -238,16 +249,19 @@
 		</span>.build()
 		.<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="comment">// if the interface we're trying to convert to is not available as an interface; this can be problematic because the interface we're passing in could potentially be different from what we're converting to.
-	</span><span class="kw">let </span>new_interface_name = Interface::try_from(&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE)
-		.map_err(|<span class="kw">_</span>| Error::InterfaceNotFound)<span class="question-mark">?</span>;
+	</span><span class="kw">let </span>new_interface_name: Interface = serde_plain::from_str(
+		&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE.ok_or(Error::InterfaceNotFound)<span class="question-mark">?</span>,
+	)
+	.map_err(|<span class="kw">_</span>| Error::InterfaceNotFound)<span class="question-mark">?</span>;
 	<span class="kw">if </span>!accessible.get_interfaces().<span class="kw">await</span><span class="question-mark">?</span>.contains(new_interface_name) {
 		<span class="kw">return </span><span class="prelude-val">Err</span>(Error::InterfaceNotFound);
 	}
 	<span class="comment">// otherwise, make a new Proxy with the related type.
 	</span><span class="kw">let </span>path = from.path().to_owned();
 	<span class="kw">let </span>dest = from.destination().to_owned();
-	ProxyBuilder::&lt;<span class="lifetime">'b</span>, T&gt;::new_bare(from.connection())
-		.interface(&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE)<span class="question-mark">?
+
+	ProxyBuilder::&lt;T&gt;::new(from.connection())
+		.interface(&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE.ok_or(Error::InterfaceNotFound)<span class="question-mark">?</span>)<span class="question-mark">?
 		</span>.destination(dest)<span class="question-mark">?
 		</span>.cache_properties(CacheProperties::No)
 		.path(path)<span class="question-mark">?
@@ -255,7 +269,7 @@
 		.<span class="kw">await
 </span>}
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: Deref&lt;Target = Proxy&lt;<span class="lifetime">'a</span>&gt;&gt; + ProxyDefault + Sync&gt; Convertable <span class="kw">for </span>T {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: ProxyImpl&lt;<span class="lifetime">'a</span>&gt; + ProxyDefault + Sync&gt; Convertable&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>T {
 	<span class="kw">type </span>Error = zbus::Error;
 	<span class="comment">/* no guard due to assumption it is always possible */
 	</span><span class="kw">async fn </span>to_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;AccessibleProxy&gt; {

@@ -288,6 +288,7 @@
 <a href="#286" id="286">286</a>
 <a href="#287" id="287">287</a>
 <a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::convertable::Convertable;
 <span class="kw">use </span><span class="kw">crate</span>::AccessiblePrimitive;
 <span class="kw">use </span><span class="kw">crate</span>::CacheProperties;
@@ -375,7 +376,7 @@
 	{
 		<span class="kw">let </span>or: ObjectRef = <span class="self">self</span>.get_application().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>io: AccessiblePrimitive = or.into();
-		<span class="prelude-val">Ok</span>(io.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>)
+		<span class="prelude-val">Ok</span>(io.into_accessible(<span class="self">self</span>.as_ref().connection()).<span class="kw">await</span><span class="question-mark">?</span>)
 	}
 	<span class="kw">async fn </span>get_parent_ext&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;AccessibleProxy&lt;<span class="lifetime">'a</span>&gt;, <span class="self">Self</span>::Error&gt;
 	<span class="kw">where
@@ -383,7 +384,7 @@
 	{
 		<span class="kw">let </span>or: ObjectRef = <span class="self">self</span>.parent().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>io: AccessiblePrimitive = or.into();
-		<span class="prelude-val">Ok</span>(io.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>)
+		<span class="prelude-val">Ok</span>(io.into_accessible(<span class="self">self</span>.as_ref().connection()).<span class="kw">await</span><span class="question-mark">?</span>)
 	}
 	<span class="kw">async fn </span>get_children_indexes&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;i32&gt;, <span class="self">Self</span>::Error&gt; {
 		<span class="kw">let </span><span class="kw-2">mut </span>indexes = Vec::new();
@@ -399,7 +400,7 @@
 		<span class="kw">let </span>children_refs = <span class="self">self</span>.get_children().<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span><span class="kw-2">mut </span>children = Vec::new();
 		<span class="kw">for </span>child_refs <span class="kw">in </span>children_refs {
-			<span class="kw">let </span>acc = AccessibleProxy::builder(<span class="self">self</span>.connection())
+			<span class="kw">let </span>acc = AccessibleProxy::builder(<span class="self">self</span>.as_ref().connection())
 				.destination(child_refs.name)<span class="question-mark">?
 				</span>.cache_properties(CacheProperties::No)
 				.path(child_refs.path)<span class="question-mark">?
@@ -563,8 +564,9 @@
 			<span class="kw">let </span><span class="kw-2">mut </span>related_vec = Vec::new();
 			<span class="kw">for </span>related <span class="kw">in </span>relation.<span class="number">1 </span>{
 				<span class="kw">let </span>related_ap: AccessiblePrimitive = related.into();
-				<span class="kw">let </span>ap: AccessibleProxy&lt;<span class="lifetime">'_</span>&gt; =
-					related_ap.into_accessible(<span class="self">self</span>.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
+				<span class="kw">let </span>ap: AccessibleProxy&lt;<span class="lifetime">'_</span>&gt; = related_ap
+					.into_accessible(<span class="self">self</span>.as_ref().connection())
+					.<span class="kw">await</span><span class="question-mark">?</span>;
 				related_vec.push(ap);
 			}
 			relations.insert(relation.<span class="number">0</span>, related_vec);

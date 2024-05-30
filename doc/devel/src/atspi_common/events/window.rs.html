@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.5.0/src/events/window.rs`."><title>window.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.6.0/src/events/window.rs`."><title>window.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../atspi_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1098,11 +1098,63 @@
 <a href="#1096" id="1096">1096</a>
 <a href="#1097" id="1097">1097</a>
 <a href="#1098" id="1098">1098</a>
+<a href="#1099" id="1099">1099</a>
+<a href="#1100" id="1100">1100</a>
+<a href="#1101" id="1101">1101</a>
+<a href="#1102" id="1102">1102</a>
+<a href="#1103" id="1103">1103</a>
+<a href="#1104" id="1104">1104</a>
+<a href="#1105" id="1105">1105</a>
+<a href="#1106" id="1106">1106</a>
+<a href="#1107" id="1107">1107</a>
+<a href="#1108" id="1108">1108</a>
+<a href="#1109" id="1109">1109</a>
+<a href="#1110" id="1110">1110</a>
+<a href="#1111" id="1111">1111</a>
+<a href="#1112" id="1112">1112</a>
+<a href="#1113" id="1113">1113</a>
+<a href="#1114" id="1114">1114</a>
+<a href="#1115" id="1115">1115</a>
+<a href="#1116" id="1116">1116</a>
+<a href="#1117" id="1117">1117</a>
+<a href="#1118" id="1118">1118</a>
+<a href="#1119" id="1119">1119</a>
+<a href="#1120" id="1120">1120</a>
+<a href="#1121" id="1121">1121</a>
+<a href="#1122" id="1122">1122</a>
+<a href="#1123" id="1123">1123</a>
+<a href="#1124" id="1124">1124</a>
+<a href="#1125" id="1125">1125</a>
+<a href="#1126" id="1126">1126</a>
+<a href="#1127" id="1127">1127</a>
+<a href="#1128" id="1128">1128</a>
+<a href="#1129" id="1129">1129</a>
+<a href="#1130" id="1130">1130</a>
+<a href="#1131" id="1131">1131</a>
+<a href="#1132" id="1132">1132</a>
+<a href="#1133" id="1133">1133</a>
+<a href="#1134" id="1134">1134</a>
+<a href="#1135" id="1135">1135</a>
+<a href="#1136" id="1136">1136</a>
+<a href="#1137" id="1137">1137</a>
+<a href="#1138" id="1138">1138</a>
+<a href="#1139" id="1139">1139</a>
+<a href="#1140" id="1140">1140</a>
+<a href="#1141" id="1141">1141</a>
+<a href="#1142" id="1142">1142</a>
+<a href="#1143" id="1143">1143</a>
+<a href="#1144" id="1144">1144</a>
+<a href="#1145" id="1145">1145</a>
+<a href="#1146" id="1146">1146</a>
+<a href="#1147" id="1147">1147</a>
+<a href="#1148" id="1148">1148</a>
+<a href="#1149" id="1149">1149</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	error::AtspiError,
-	events::{EventBodyOwned, GenericEvent, HasMatchRule, HasRegistryEventString, ObjectRef},
-	Event,
+	events::{BusProperties, EventBodyOwned, HasMatchRule, HasRegistryEventString, ObjectRef},
+	Event, EventProperties, EventTypeProperties,
 };
+<span class="kw">use </span>zbus_names::UniqueName;
 <span class="kw">use </span>zvariant::ObjectPath;
 
 <span class="doccomment">/// All events on the `org.a11y.atspi.Event.Window` interface.
@@ -1146,6 +1198,150 @@
 	</span>UUshade(UUshadeEvent),
 	<span class="doccomment">/// See: [`RestyleEvent`].
 	</span>Restyle(RestyleEvent),
+}
+
+<span class="kw">impl </span>EventTypeProperties <span class="kw">for </span>WindowEvents {
+	<span class="kw">fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::PropertyChange(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Minimize(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Maximize(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Restore(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Close(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Create(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Reparent(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::DesktopCreate(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::DesktopDestroy(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Destroy(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Activate(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Deactivate(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Raise(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Lower(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Move(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Resize(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Shade(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::UUshade(inner) =&gt; inner.member(),
+			<span class="self">Self</span>::Restyle(inner) =&gt; inner.member(),
+		}
+	}
+	<span class="kw">fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::PropertyChange(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Minimize(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Maximize(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Restore(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Close(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Create(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Reparent(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::DesktopCreate(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::DesktopDestroy(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Destroy(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Activate(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Deactivate(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Raise(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Lower(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Move(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Resize(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Shade(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::UUshade(inner) =&gt; inner.interface(),
+			<span class="self">Self</span>::Restyle(inner) =&gt; inner.interface(),
+		}
+	}
+	<span class="kw">fn </span>match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::PropertyChange(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Minimize(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Maximize(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Restore(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Close(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Create(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Reparent(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::DesktopCreate(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::DesktopDestroy(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Destroy(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Activate(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Deactivate(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Raise(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Lower(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Move(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Resize(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Shade(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::UUshade(inner) =&gt; inner.match_rule(),
+			<span class="self">Self</span>::Restyle(inner) =&gt; inner.match_rule(),
+		}
+	}
+	<span class="kw">fn </span>registry_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::PropertyChange(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Minimize(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Maximize(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Restore(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Close(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Create(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Reparent(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::DesktopCreate(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::DesktopDestroy(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Destroy(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Activate(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Deactivate(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Raise(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Lower(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Move(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Resize(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Shade(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::UUshade(inner) =&gt; inner.registry_string(),
+			<span class="self">Self</span>::Restyle(inner) =&gt; inner.registry_string(),
+		}
+	}
+}
+
+<span class="kw">impl </span>EventProperties <span class="kw">for </span>WindowEvents {
+	<span class="kw">fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::PropertyChange(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Minimize(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Maximize(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Restore(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Close(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Create(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Reparent(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::DesktopCreate(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::DesktopDestroy(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Destroy(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Activate(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Deactivate(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Raise(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Lower(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Move(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Resize(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Shade(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::UUshade(inner) =&gt; inner.path(),
+			<span class="self">Self</span>::Restyle(inner) =&gt; inner.path(),
+		}
+	}
+	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UniqueName&lt;<span class="lifetime">'_</span>&gt; {
+		<span class="kw">match </span><span class="self">self </span>{
+			<span class="self">Self</span>::PropertyChange(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Minimize(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Maximize(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Restore(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Close(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Create(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Reparent(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::DesktopCreate(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::DesktopDestroy(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Destroy(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Activate(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Deactivate(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Raise(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Lower(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Move(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Resize(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Shade(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::UUshade(inner) =&gt; inner.sender(),
+			<span class="self">Self</span>::Restyle(inner) =&gt; inner.sender(),
+		}
+	}
 }
 
 <span class="macro">impl_from_interface_event_enum_for_event!</span>(WindowEvents, Event::Window);
@@ -1279,7 +1475,7 @@
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>PropertyChangeEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>PropertyChangeEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"PropertyChange"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1288,14 +1484,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, property: body.kind })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1303,7 +1493,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>MinimizeEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>MinimizeEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Minimize"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1312,14 +1502,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1327,7 +1511,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>MaximizeEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>MaximizeEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Maximize"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1336,14 +1520,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1351,7 +1529,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RestoreEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>RestoreEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Restore"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1360,14 +1538,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1375,7 +1547,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>CloseEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>CloseEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Close"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1384,14 +1556,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1399,7 +1565,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>CreateEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>CreateEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Create"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1408,14 +1574,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1423,7 +1583,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ReparentEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>ReparentEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Reparent"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1432,14 +1592,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1447,7 +1601,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DesktopCreateEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>DesktopCreateEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"DesktopCreate"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1456,14 +1610,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1471,7 +1619,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DesktopDestroyEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>DesktopDestroyEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"DesktopDestroy"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1480,14 +1628,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1495,7 +1637,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DestroyEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>DestroyEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Destroy"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1504,14 +1646,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1519,7 +1655,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ActivateEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>ActivateEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Activate"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1528,14 +1664,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1543,7 +1673,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>DeactivateEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>DeactivateEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Deactivate"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1552,14 +1682,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1567,7 +1691,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RaiseEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>RaiseEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Raise"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1576,14 +1700,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1591,7 +1709,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>LowerEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>LowerEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Lower"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1600,14 +1718,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1615,7 +1727,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>MoveEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>MoveEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Move"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1624,14 +1736,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1639,7 +1745,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ResizeEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>ResizeEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Resize"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1648,14 +1754,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1663,7 +1763,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>ShadeEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>ShadeEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Shade"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1672,14 +1772,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1687,7 +1781,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>UUshadeEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>UUshadeEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"uUshade"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1696,14 +1790,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1711,7 +1799,7 @@
 	}
 }
 
-<span class="kw">impl </span>GenericEvent&lt;<span class="lifetime">'_</span>&gt; <span class="kw">for </span>RestyleEvent {
+<span class="kw">impl </span>BusProperties <span class="kw">for </span>RestyleEvent {
 	<span class="kw">const </span>DBUS_MEMBER: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Restyle"</span>;
 	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Window"</span>;
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
@@ -1720,14 +1808,8 @@
 
 	<span class="kw">type </span>Body = EventBodyOwned;
 
-	<span class="kw">fn </span>build(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-		<span class="self">self</span>.item.name.clone()
-	}
-	<span class="kw">fn </span>path&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ObjectPath&lt;<span class="lifetime">'_</span>&gt; {
-		<span class="self">self</span>.item.path.clone().into()
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -1739,7 +1821,8 @@
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>WindowEvents {
 	<span class="kw">type </span>Error = AtspiError;
 	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>member = ev
+		<span class="kw">let </span>header = ev.header();
+		<span class="kw">let </span>member = header
 			.member()
 			.ok_or(AtspiError::MemberMatch(<span class="string">"Event without member"</span>.into()))<span class="question-mark">?</span>;
 		<span class="kw">match </span>member.as_str() {
@@ -1781,6 +1864,7 @@
 <span class="macro">event_test_cases!</span>(PropertyChangeEvent);
 <span class="macro">impl_to_dbus_message!</span>(PropertyChangeEvent);
 <span class="macro">impl_from_dbus_message!</span>(PropertyChangeEvent);
+<span class="macro">impl_event_properties!</span>(PropertyChangeEvent);
 <span class="kw">impl </span>From&lt;PropertyChangeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(event: PropertyChangeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1788,7 +1872,7 @@
 			kind: event.property,
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1803,6 +1887,7 @@
 <span class="macro">event_test_cases!</span>(MinimizeEvent);
 <span class="macro">impl_to_dbus_message!</span>(MinimizeEvent);
 <span class="macro">impl_from_dbus_message!</span>(MinimizeEvent);
+<span class="macro">impl_event_properties!</span>(MinimizeEvent);
 <span class="kw">impl </span>From&lt;MinimizeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: MinimizeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1810,7 +1895,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1825,6 +1910,7 @@
 <span class="macro">event_test_cases!</span>(MaximizeEvent);
 <span class="macro">impl_to_dbus_message!</span>(MaximizeEvent);
 <span class="macro">impl_from_dbus_message!</span>(MaximizeEvent);
+<span class="macro">impl_event_properties!</span>(MaximizeEvent);
 <span class="kw">impl </span>From&lt;MaximizeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: MaximizeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1832,7 +1918,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1847,6 +1933,7 @@
 <span class="macro">event_test_cases!</span>(RestoreEvent);
 <span class="macro">impl_to_dbus_message!</span>(RestoreEvent);
 <span class="macro">impl_from_dbus_message!</span>(RestoreEvent);
+<span class="macro">impl_event_properties!</span>(RestoreEvent);
 <span class="kw">impl </span>From&lt;RestoreEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: RestoreEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1854,7 +1941,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1869,6 +1956,7 @@
 <span class="macro">event_test_cases!</span>(CloseEvent);
 <span class="macro">impl_to_dbus_message!</span>(CloseEvent);
 <span class="macro">impl_from_dbus_message!</span>(CloseEvent);
+<span class="macro">impl_event_properties!</span>(CloseEvent);
 <span class="kw">impl </span>From&lt;CloseEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: CloseEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1876,7 +1964,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1891,6 +1979,7 @@
 <span class="macro">event_test_cases!</span>(CreateEvent);
 <span class="macro">impl_to_dbus_message!</span>(CreateEvent);
 <span class="macro">impl_from_dbus_message!</span>(CreateEvent);
+<span class="macro">impl_event_properties!</span>(CreateEvent);
 <span class="kw">impl </span>From&lt;CreateEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: CreateEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1898,7 +1987,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1913,6 +2002,7 @@
 <span class="macro">event_test_cases!</span>(ReparentEvent);
 <span class="macro">impl_to_dbus_message!</span>(ReparentEvent);
 <span class="macro">impl_from_dbus_message!</span>(ReparentEvent);
+<span class="macro">impl_event_properties!</span>(ReparentEvent);
 <span class="kw">impl </span>From&lt;ReparentEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: ReparentEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1920,7 +2010,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1939,6 +2029,7 @@
 <span class="macro">event_test_cases!</span>(DesktopCreateEvent);
 <span class="macro">impl_to_dbus_message!</span>(DesktopCreateEvent);
 <span class="macro">impl_from_dbus_message!</span>(DesktopCreateEvent);
+<span class="macro">impl_event_properties!</span>(DesktopCreateEvent);
 <span class="kw">impl </span>From&lt;DesktopCreateEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: DesktopCreateEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1946,7 +2037,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1965,6 +2056,7 @@
 <span class="macro">event_test_cases!</span>(DesktopDestroyEvent);
 <span class="macro">impl_to_dbus_message!</span>(DesktopDestroyEvent);
 <span class="macro">impl_from_dbus_message!</span>(DesktopDestroyEvent);
+<span class="macro">impl_event_properties!</span>(DesktopDestroyEvent);
 <span class="kw">impl </span>From&lt;DesktopDestroyEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: DesktopDestroyEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1972,7 +2064,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -1987,6 +2079,7 @@
 <span class="macro">event_test_cases!</span>(DestroyEvent);
 <span class="macro">impl_to_dbus_message!</span>(DestroyEvent);
 <span class="macro">impl_from_dbus_message!</span>(DestroyEvent);
+<span class="macro">impl_event_properties!</span>(DestroyEvent);
 <span class="kw">impl </span>From&lt;DestroyEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: DestroyEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -1994,7 +2087,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2009,6 +2102,7 @@
 <span class="macro">event_test_cases!</span>(ActivateEvent);
 <span class="macro">impl_to_dbus_message!</span>(ActivateEvent);
 <span class="macro">impl_from_dbus_message!</span>(ActivateEvent);
+<span class="macro">impl_event_properties!</span>(ActivateEvent);
 <span class="kw">impl </span>From&lt;ActivateEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: ActivateEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2016,7 +2110,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2031,6 +2125,7 @@
 <span class="macro">event_test_cases!</span>(DeactivateEvent);
 <span class="macro">impl_to_dbus_message!</span>(DeactivateEvent);
 <span class="macro">impl_from_dbus_message!</span>(DeactivateEvent);
+<span class="macro">impl_event_properties!</span>(DeactivateEvent);
 <span class="kw">impl </span>From&lt;DeactivateEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: DeactivateEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2038,7 +2133,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2053,6 +2148,7 @@
 <span class="macro">event_test_cases!</span>(RaiseEvent);
 <span class="macro">impl_to_dbus_message!</span>(RaiseEvent);
 <span class="macro">impl_from_dbus_message!</span>(RaiseEvent);
+<span class="macro">impl_event_properties!</span>(RaiseEvent);
 <span class="kw">impl </span>From&lt;RaiseEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: RaiseEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2060,7 +2156,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2075,6 +2171,7 @@
 <span class="macro">event_test_cases!</span>(LowerEvent);
 <span class="macro">impl_to_dbus_message!</span>(LowerEvent);
 <span class="macro">impl_from_dbus_message!</span>(LowerEvent);
+<span class="macro">impl_event_properties!</span>(LowerEvent);
 <span class="kw">impl </span>From&lt;LowerEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: LowerEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2082,7 +2179,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2093,6 +2190,7 @@
 <span class="macro">event_test_cases!</span>(MoveEvent);
 <span class="macro">impl_to_dbus_message!</span>(MoveEvent);
 <span class="macro">impl_from_dbus_message!</span>(MoveEvent);
+<span class="macro">impl_event_properties!</span>(MoveEvent);
 <span class="kw">impl </span>From&lt;MoveEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: MoveEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2100,7 +2198,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2115,6 +2213,7 @@
 <span class="macro">event_test_cases!</span>(ResizeEvent);
 <span class="macro">impl_to_dbus_message!</span>(ResizeEvent);
 <span class="macro">impl_from_dbus_message!</span>(ResizeEvent);
+<span class="macro">impl_event_properties!</span>(ResizeEvent);
 <span class="kw">impl </span>From&lt;ResizeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: ResizeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2122,7 +2221,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }
@@ -2137,6 +2236,7 @@
 <span class="macro">event_test_cases!</span>(ShadeEvent);
 <span class="macro">impl_to_dbus_message!</span>(ShadeEvent);
 <span class="macro">impl_from_dbus_message!</span>(ShadeEvent);
+<span class="macro">impl_event_properties!</span>(ShadeEvent);
 <span class="kw">impl </span>From&lt;ShadeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: ShadeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2144,7 +2244,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: zvariant::Value::U8(<span class="number">0</span>).try_into().unwrap(),
 		}
 	}
 }
@@ -2159,6 +2259,7 @@
 <span class="macro">event_test_cases!</span>(UUshadeEvent);
 <span class="macro">impl_to_dbus_message!</span>(UUshadeEvent);
 <span class="macro">impl_from_dbus_message!</span>(UUshadeEvent);
+<span class="macro">impl_event_properties!</span>(UUshadeEvent);
 <span class="kw">impl </span>From&lt;UUshadeEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: UUshadeEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2166,7 +2267,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: zvariant::Value::U8(<span class="number">0</span>).try_into().unwrap(),
 		}
 	}
 }
@@ -2181,6 +2282,7 @@
 <span class="macro">event_test_cases!</span>(RestyleEvent);
 <span class="macro">impl_to_dbus_message!</span>(RestyleEvent);
 <span class="macro">impl_from_dbus_message!</span>(RestyleEvent);
+<span class="macro">impl_event_properties!</span>(RestyleEvent);
 <span class="kw">impl </span>From&lt;RestyleEvent&gt; <span class="kw">for </span>EventBodyOwned {
 	<span class="kw">fn </span>from(_event: RestyleEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
@@ -2188,7 +2290,7 @@
 			kind: String::default(),
 			detail1: i32::default(),
 			detail2: i32::default(),
-			any_data: zvariant::Value::U8(<span class="number">0</span>).into(),
+			any_data: u8::default().into(),
 		}
 	}
 }

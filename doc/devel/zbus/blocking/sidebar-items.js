@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["fdo"],"struct":["Connection","ConnectionBuilder","InterfaceRef","MessageIterator","ObjectServer","OwnerChangedIterator","PropertyChanged","PropertyIterator","Proxy","ProxyBuilder","SignalIterator"]};
+window.SIDEBAR_ITEMS = {"mod":["connection","fdo","object_server","proxy"],"struct":["MessageIterator"]};

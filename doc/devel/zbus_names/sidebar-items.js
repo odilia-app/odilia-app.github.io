@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["BusName","Error"],"struct":["ErrorName","InterfaceName","MemberName","OwnedBusName","OwnedErrorName","OwnedInterfaceName","OwnedMemberName","OwnedUniqueName","OwnedWellKnownName","UniqueName","WellKnownName"],"type":["Result"]};
+window.SIDEBAR_ITEMS = {"enum":["BusName","Error"],"struct":["ErrorName","InterfaceName","MemberName","OwnedBusName","OwnedErrorName","OwnedInterfaceName","OwnedMemberName","OwnedPropertyName","OwnedUniqueName","OwnedWellKnownName","PropertyName","UniqueName","WellKnownName"],"type":["Result"]};

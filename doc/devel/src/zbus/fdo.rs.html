@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.15.2/src/fdo.rs`."><title>fdo.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.2.2/src/fdo.rs`."><title>fdo.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zbus/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1078,6 +1078,88 @@
 <a href="#1076" id="1076">1076</a>
 <a href="#1077" id="1077">1077</a>
 <a href="#1078" id="1078">1078</a>
+<a href="#1079" id="1079">1079</a>
+<a href="#1080" id="1080">1080</a>
+<a href="#1081" id="1081">1081</a>
+<a href="#1082" id="1082">1082</a>
+<a href="#1083" id="1083">1083</a>
+<a href="#1084" id="1084">1084</a>
+<a href="#1085" id="1085">1085</a>
+<a href="#1086" id="1086">1086</a>
+<a href="#1087" id="1087">1087</a>
+<a href="#1088" id="1088">1088</a>
+<a href="#1089" id="1089">1089</a>
+<a href="#1090" id="1090">1090</a>
+<a href="#1091" id="1091">1091</a>
+<a href="#1092" id="1092">1092</a>
+<a href="#1093" id="1093">1093</a>
+<a href="#1094" id="1094">1094</a>
+<a href="#1095" id="1095">1095</a>
+<a href="#1096" id="1096">1096</a>
+<a href="#1097" id="1097">1097</a>
+<a href="#1098" id="1098">1098</a>
+<a href="#1099" id="1099">1099</a>
+<a href="#1100" id="1100">1100</a>
+<a href="#1101" id="1101">1101</a>
+<a href="#1102" id="1102">1102</a>
+<a href="#1103" id="1103">1103</a>
+<a href="#1104" id="1104">1104</a>
+<a href="#1105" id="1105">1105</a>
+<a href="#1106" id="1106">1106</a>
+<a href="#1107" id="1107">1107</a>
+<a href="#1108" id="1108">1108</a>
+<a href="#1109" id="1109">1109</a>
+<a href="#1110" id="1110">1110</a>
+<a href="#1111" id="1111">1111</a>
+<a href="#1112" id="1112">1112</a>
+<a href="#1113" id="1113">1113</a>
+<a href="#1114" id="1114">1114</a>
+<a href="#1115" id="1115">1115</a>
+<a href="#1116" id="1116">1116</a>
+<a href="#1117" id="1117">1117</a>
+<a href="#1118" id="1118">1118</a>
+<a href="#1119" id="1119">1119</a>
+<a href="#1120" id="1120">1120</a>
+<a href="#1121" id="1121">1121</a>
+<a href="#1122" id="1122">1122</a>
+<a href="#1123" id="1123">1123</a>
+<a href="#1124" id="1124">1124</a>
+<a href="#1125" id="1125">1125</a>
+<a href="#1126" id="1126">1126</a>
+<a href="#1127" id="1127">1127</a>
+<a href="#1128" id="1128">1128</a>
+<a href="#1129" id="1129">1129</a>
+<a href="#1130" id="1130">1130</a>
+<a href="#1131" id="1131">1131</a>
+<a href="#1132" id="1132">1132</a>
+<a href="#1133" id="1133">1133</a>
+<a href="#1134" id="1134">1134</a>
+<a href="#1135" id="1135">1135</a>
+<a href="#1136" id="1136">1136</a>
+<a href="#1137" id="1137">1137</a>
+<a href="#1138" id="1138">1138</a>
+<a href="#1139" id="1139">1139</a>
+<a href="#1140" id="1140">1140</a>
+<a href="#1141" id="1141">1141</a>
+<a href="#1142" id="1142">1142</a>
+<a href="#1143" id="1143">1143</a>
+<a href="#1144" id="1144">1144</a>
+<a href="#1145" id="1145">1145</a>
+<a href="#1146" id="1146">1146</a>
+<a href="#1147" id="1147">1147</a>
+<a href="#1148" id="1148">1148</a>
+<a href="#1149" id="1149">1149</a>
+<a href="#1150" id="1150">1150</a>
+<a href="#1151" id="1151">1151</a>
+<a href="#1152" id="1152">1152</a>
+<a href="#1153" id="1153">1153</a>
+<a href="#1154" id="1154">1154</a>
+<a href="#1155" id="1155">1155</a>
+<a href="#1156" id="1156">1156</a>
+<a href="#1157" id="1157">1157</a>
+<a href="#1158" id="1158">1158</a>
+<a href="#1159" id="1159">1159</a>
+<a href="#1160" id="1160">1160</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! D-Bus standard interfaces.
 //!
 //! The D-Bus specification defines the message bus messages and some standard interfaces that may
@@ -1097,14 +1179,15 @@
 };
 
 <span class="kw">use crate</span>::{
-    dbus_interface, dbus_proxy, DBusError, Guid, MessageHeader, ObjectServer, SignalContext,
+    interface, message::Header, object_server::SignalContext, proxy, DBusError, ObjectServer,
+    OwnedGuid,
 };
 
 <span class="attr">#[rustfmt::skip]
 </span><span class="macro">macro_rules!</span> gen_introspectable_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Introspectable` interface.
-        </span><span class="attr">#[dbus_proxy(
+        </span><span class="attr">#[proxy(
             interface = <span class="string">"org.freedesktop.DBus.Introspectable"</span>,
             default_path = <span class="string">"/"</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
@@ -1126,14 +1209,14 @@
 /// [ObjectServer](crate::ObjectServer).
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Introspectable;
 
-<span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.Introspectable"</span>)]
+<span class="attr">#[interface(name = <span class="string">"org.freedesktop.DBus.Introspectable"</span>)]
 </span><span class="kw">impl </span>Introspectable {
     <span class="kw">async fn </span>introspect(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: Header&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;String&gt; {
-        <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
+        <span class="kw">let </span>path = header.path().ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>node = root
             .get_child(path)
@@ -1147,9 +1230,8 @@
 </span><span class="macro">macro_rules!</span> gen_properties_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Properties` interface.
-        </span><span class="attr">#[dbus_proxy(
+        </span><span class="attr">#[proxy(
             interface = <span class="string">"org.freedesktop.DBus.Properties"</span>,
-            assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
@@ -1172,10 +1254,10 @@
             <span class="doccomment">/// Get all properties.
             </span><span class="kw">async fn </span>get_all(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
-                interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
+                interface_name: Optional&lt;InterfaceName&lt;<span class="lifetime">'_</span>&gt;&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, OwnedValue&gt;&gt;;
 
-            <span class="attr">#[dbus_proxy(signal)]
+            <span class="attr">#[zbus(signal)]
             </span><span class="kw">async fn </span>properties_changed(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
                 interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
@@ -1191,21 +1273,21 @@
 
 <span class="doccomment">/// Server-side implementation for the `org.freedesktop.DBus.Properties` interface.
 /// This interface is implemented automatically for any object registered to the
-/// [ObjectServer](crate::ObjectServer).
+/// [ObjectServer].
 </span><span class="kw">pub struct </span>Properties;
 
 <span class="macro">assert_impl_all!</span>(Properties: Send, Sync, Unpin);
 
-<span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.Properties"</span>)]
+<span class="attr">#[interface(name = <span class="string">"org.freedesktop.DBus.Properties"</span>)]
 </span><span class="kw">impl </span>Properties {
     <span class="kw">async fn </span>get(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
         property_name: <span class="kw-2">&amp;</span>str,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: Header&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedValue&gt; {
-        <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
+        <span class="kw">let </span>path = header.path().ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>iface = root
             .get_child(path)
@@ -1214,7 +1296,7 @@
                 Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">"Unknown interface '{interface_name}'"</span>))
             })<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>res = iface.read().<span class="kw">await</span>.get(property_name).<span class="kw">await</span>;
+        <span class="kw">let </span>res = iface.instance.read().<span class="kw">await</span>.get(property_name).<span class="kw">await</span>;
         res.unwrap_or_else(|| {
             <span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
                 <span class="string">"Unknown property '{property_name}'"
@@ -1228,10 +1310,10 @@
         property_name: <span class="kw-2">&amp;</span>str,
         value: Value&lt;<span class="lifetime">'_</span>&gt;,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: Header&lt;<span class="lifetime">'_</span>&gt;,
         <span class="attr">#[zbus(signal_context)] </span>ctxt: SignalContext&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
+        <span class="kw">let </span>path = header.path().ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>iface = root
             .get_child(path)
@@ -1240,18 +1322,24 @@
                 Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">"Unknown interface '{interface_name}'"</span>))
             })<span class="question-mark">?</span>;
 
-        <span class="kw">match </span>iface.read().<span class="kw">await</span>.set(property_name, <span class="kw-2">&amp;</span>value, <span class="kw-2">&amp;</span>ctxt) {
-            zbus::DispatchResult::RequiresMut =&gt; {}
-            zbus::DispatchResult::NotFound =&gt; {
+        <span class="kw">match </span>iface
+            .instance
+            .read()
+            .<span class="kw">await
+            </span>.set(property_name, <span class="kw-2">&amp;</span>value, <span class="kw-2">&amp;</span>ctxt)
+        {
+            zbus::object_server::DispatchResult::RequiresMut =&gt; {}
+            zbus::object_server::DispatchResult::NotFound =&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnknownProperty(<span class="macro">format!</span>(
                     <span class="string">"Unknown property '{property_name}'"
                 </span>)));
             }
-            zbus::DispatchResult::Async(f) =&gt; {
+            zbus::object_server::DispatchResult::Async(f) =&gt; {
                 <span class="kw">return </span>f.<span class="kw">await</span>.map_err(Into::into);
             }
         }
         <span class="kw">let </span>res = iface
+            .instance
             .write()
             .<span class="kw">await
             </span>.set_mut(property_name, <span class="kw-2">&amp;</span>value, <span class="kw-2">&amp;</span>ctxt)
@@ -1267,9 +1355,9 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         interface_name: InterfaceName&lt;<span class="lifetime">'_</span>&gt;,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: Header&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, OwnedValue&gt;&gt; {
-        <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
+        <span class="kw">let </span>path = header.path().ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>iface = root
             .get_child(path)
@@ -1278,12 +1366,12 @@
                 Error::UnknownInterface(<span class="macro">format!</span>(<span class="string">"Unknown interface '{interface_name}'"</span>))
             })<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>res = iface.read().<span class="kw">await</span>.get_all().<span class="kw">await</span>;
+        <span class="kw">let </span>res = iface.instance.read().<span class="kw">await</span>.get_all().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(res)
     }
 
     <span class="doccomment">/// Emits the `org.freedesktop.DBus.Properties.PropertiesChanged` signal.
-    </span><span class="attr">#[dbus_interface(signal)]
+    </span><span class="attr">#[zbus(signal)]
     #[rustfmt::skip]
     </span><span class="kw">pub async fn </span>properties_changed(
         ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;,
@@ -1305,9 +1393,8 @@
         /// **NB:** Changes to properties on existing interfaces are not reported using this interface.
         /// Please use [`PropertiesProxy::receive_properties_changed`] to monitor changes to properties on
         /// objects.
-        </span><span class="attr">#[dbus_proxy(
+        </span><span class="attr">#[proxy(
             interface = <span class="string">"org.freedesktop.DBus.ObjectManager"</span>,
-            assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
@@ -1325,7 +1412,7 @@
             <span class="doccomment">/// This signal is emitted when either a new object is added or when an existing object gains
             /// one or more interfaces. The `interfaces_and_properties` argument contains a map with the
             /// interfaces and properties (if any) that have been added to the given object path.
-            </span><span class="attr">#[dbus_proxy(signal)]
+            </span><span class="attr">#[zbus(signal)]
             </span><span class="kw">fn </span>interfaces_added(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
                 object_path: ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
@@ -1334,7 +1421,7 @@
 
             <span class="doccomment">/// This signal is emitted whenever an object is removed or it loses one or more interfaces.
             /// The `interfaces` parameters contains a list of the interfaces that were removed.
-            </span><span class="attr">#[dbus_proxy(signal)]
+            </span><span class="attr">#[zbus(signal)]
             </span><span class="kw">fn </span>interfaces_removed(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
                 object_path: ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
@@ -1364,26 +1451,26 @@
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>ObjectManager;
 
-<span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.ObjectManager"</span>)]
+<span class="attr">#[interface(name = <span class="string">"org.freedesktop.DBus.ObjectManager"</span>)]
 </span><span class="kw">impl </span>ObjectManager {
     <span class="kw">async fn </span>get_managed_objects(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="attr">#[zbus(object_server)] </span>server: <span class="kw-2">&amp;</span>ObjectServer,
-        <span class="attr">#[zbus(header)] </span>header: MessageHeader&lt;<span class="lifetime">'_</span>&gt;,
+        <span class="attr">#[zbus(header)] </span>header: Header&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;ManagedObjects&gt; {
-        <span class="kw">let </span>path = header.path()<span class="question-mark">?</span>.ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
+        <span class="kw">let </span>path = header.path().ok_or(<span class="kw">crate</span>::Error::MissingField)<span class="question-mark">?</span>;
         <span class="kw">let </span>root = server.root().read().<span class="kw">await</span>;
         <span class="kw">let </span>node = root
             .get_child(path)
             .ok_or_else(|| Error::UnknownObject(<span class="macro">format!</span>(<span class="string">"Unknown object '{path}'"</span>)))<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(node.get_managed_objects().<span class="kw">await</span>)
-    }
+        node.get_managed_objects().<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// This signal is emitted when either a new object is added or when an existing object gains
     /// one or more interfaces. The `interfaces_and_properties` argument contains a map with the
     /// interfaces and properties (if any) that have been added to the given object path.
-    </span><span class="attr">#[dbus_interface(signal)]
+    </span><span class="attr">#[zbus(signal)]
     </span><span class="kw">pub async fn </span>interfaces_added(
         ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;,
         object_path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
@@ -1392,7 +1479,7 @@
 
     <span class="doccomment">/// This signal is emitted whenever an object is removed or it loses one or more interfaces.
     /// The `interfaces` parameters contains a list of the interfaces that were removed.
-    </span><span class="attr">#[dbus_interface(signal)]
+    </span><span class="attr">#[zbus(signal)]
     </span><span class="kw">pub async fn </span>interfaces_removed(
         ctxt: <span class="kw-2">&amp;</span>SignalContext&lt;<span class="lifetime">'_</span>&gt;,
         object_path: <span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'_</span>&gt;,
@@ -1404,9 +1491,8 @@
 </span><span class="macro">macro_rules!</span> gen_peer_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Peer` interface.
-        </span><span class="attr">#[dbus_proxy(
+        </span><span class="attr">#[proxy(
             interface = <span class="string">"org.freedesktop.DBus.Peer"</span>,
-            assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
@@ -1433,7 +1519,7 @@
 <span class="doccomment">/// Server-side implementation for the `org.freedesktop.DBus.Peer` interface.
 /// This interface is implemented automatically for any object registered to the
 /// [ObjectServer](crate::ObjectServer).
-</span><span class="attr">#[dbus_interface(name = <span class="string">"org.freedesktop.DBus.Peer"</span>)]
+</span><span class="attr">#[interface(name = <span class="string">"org.freedesktop.DBus.Peer"</span>)]
 </span><span class="kw">impl </span>Peer {
     <span class="kw">fn </span>ping(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
 
@@ -1461,18 +1547,39 @@
 </span><span class="macro">macro_rules!</span> gen_monitoring_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Monitoring` interface.
-        </span><span class="attr">#[dbus_proxy(
+        </span><span class="attr">#[proxy(
             interface = <span class="string">"org.freedesktop.DBus.Monitoring"</span>,
             default_service = <span class="string">"org.freedesktop.DBus"</span>,
             default_path = <span class="string">"/org/freedesktop/DBus"</span>,
-            assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
         </span><span class="kw">trait </span>Monitoring {
             <span class="doccomment">/// Converts the connection into a monitor connection which can be used as a
             /// debugging/monitoring tool.
-            </span><span class="kw">fn </span>become_monitor(<span class="kw-2">&amp;</span><span class="self">self</span>, n1: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str], n2: u32) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
+            ///
+            /// After this call successfully returns, sending any messages on the bus will result
+            /// in an error. This is why this method takes ownership of `self`, since there is not
+            /// much use for the proxy anymore. It is highly recommended to convert the underlying
+            /// [`Connection`] to a [`MessageStream`] and iterate over messages from the stream,
+            /// after this call.
+            ///
+            /// See [the spec] for details on all the implications and caveats.
+            /// 
+            /// # Arguments
+            ///
+            /// * `match_rules` - A list of match rules describing the messages you want to receive.
+            ///   An empty list means you are want to receive all messages going through the bus.
+            /// * `flags` - This argument is currently unused by the bus. Just pass a `0`.
+            ///
+            /// [the spec]: https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-become-monitor
+            /// [`Connection`]: https://docs.rs/zbus/latest/zbus/connection/struct.Connection.html
+            /// [`MessageStream`]: https://docs.rs/zbus/latest/zbus/struct.MessageStream.html
+            </span><span class="kw">fn </span>become_monitor(
+                <span class="self">self</span>,
+                match_rules: <span class="kw-2">&amp;</span>[<span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">'_</span>&gt;],
+                flags: u32,
+            ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
         }
     };
 }
@@ -1484,11 +1591,10 @@
 </span><span class="macro">macro_rules!</span> gen_stats_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus.Debug.Stats` interface.
-        </span><span class="attr">#[dbus_proxy(
+        </span><span class="attr">#[proxy(
             interface = <span class="string">"org.freedesktop.DBus.Debug.Stats"</span>,
             default_service = <span class="string">"org.freedesktop.DBus"</span>,
             default_path = <span class="string">"/org/freedesktop/DBus"</span>,
-            assume_defaults = <span class="bool-val">true</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
@@ -1497,10 +1603,18 @@
             </span><span class="kw">fn </span>get_stats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;HashMap&lt;String, OwnedValue&gt;&gt;&gt;;
 
             <span class="doccomment">/// GetConnectionStats (undocumented)
-            </span><span class="kw">fn </span>get_connection_stats(<span class="kw-2">&amp;</span><span class="self">self</span>, n1: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;HashMap&lt;String, OwnedValue&gt;&gt;&gt;;
+            </span><span class="kw">fn </span>get_connection_stats(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;HashMap&lt;String, OwnedValue&gt;&gt;&gt;;
 
             <span class="doccomment">/// GetAllMatchRules (undocumented)
-            </span><span class="kw">fn </span>get_all_match_rules(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;HashMap&lt;String, Vec&lt;String&gt;&gt;&gt;&gt;;
+            </span><span class="kw">fn </span>get_all_match_rules(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; 
+                <span class="prelude-ty">Result</span>&lt;
+                    Vec&lt;
+                        HashMap&lt;
+                            <span class="kw">crate</span>::names::OwnedUniqueName,
+                            Vec&lt;<span class="kw">crate</span>::OwnedMatchRule&gt;,
+                        &gt;
+                    &gt;
+                &gt;;
         }
     };
 }
@@ -1613,28 +1727,22 @@
 #[zvariant(signature = <span class="string">"a{sv}"</span>)]
 </span><span class="kw">pub struct </span>ConnectionCredentials {
     <span class="attr">#[zvariant(rename = <span class="string">"UnixUserID"</span>)]
-    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `unix_user_id` method"</span>)]
-    </span><span class="kw">pub </span>unix_user_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) unix_user_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 
     <span class="attr">#[zvariant(rename = <span class="string">"UnixGroupIDs"</span>)]
-    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `unix_group_ids` method"</span>)]
-    </span><span class="kw">pub </span>unix_group_ids: <span class="prelude-ty">Option</span>&lt;Vec&lt;u32&gt;&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) unix_group_ids: <span class="prelude-ty">Option</span>&lt;Vec&lt;u32&gt;&gt;,
 
     <span class="attr">#[zvariant(rename = <span class="string">"ProcessID"</span>)]
-    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `process_id` method"</span>)]
-    </span><span class="kw">pub </span>process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) process_id: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 
     <span class="attr">#[zvariant(rename = <span class="string">"WindowsSID"</span>)]
-    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `windows_sid` method"</span>)]
-    </span><span class="kw">pub </span>windows_sid: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) windows_sid: <span class="prelude-ty">Option</span>&lt;String&gt;,
 
     <span class="attr">#[zvariant(rename = <span class="string">"LinuxSecurityLabel"</span>)]
-    #[deprecated(since = <span class="string">"3.13.0"</span>, note = <span class="string">"Use `linux_security_label` method"</span>)]
-    </span><span class="kw">pub </span>linux_security_label: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) linux_security_label: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
 }
 
-<span class="attr">#[allow(deprecated)]
-</span><span class="kw">impl </span>ConnectionCredentials {
+<span class="kw">impl </span>ConnectionCredentials {
     <span class="doccomment">/// The numeric Unix user ID, as defined by POSIX.
     </span><span class="kw">pub fn </span>unix_user_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
         <span class="self">self</span>.unix_user_id
@@ -1750,19 +1858,16 @@
 </span><span class="macro">macro_rules!</span> gen_dbus_proxy {
     (<span class="macro-nonterminal">$gen_async</span>:literal, <span class="macro-nonterminal">$gen_blocking</span>:literal) =&gt; {
         <span class="doccomment">/// Proxy for the `org.freedesktop.DBus` interface.
-        </span><span class="attr">#[dbus_proxy(
-            assume_defaults = <span class="bool-val">true</span>,
+        </span><span class="attr">#[proxy(
+            default_service = <span class="string">"org.freedesktop.DBus"</span>,
+            default_path = <span class="string">"/org/freedesktop/DBus"</span>,
             interface = <span class="string">"org.freedesktop.DBus"</span>,
             gen_async = <span class="macro-nonterminal">$gen_async</span>,
             gen_blocking = <span class="macro-nonterminal">$gen_blocking</span>,
         )]
         </span><span class="kw">trait </span>DBus {
             <span class="doccomment">/// Adds a match rule to match messages going through the message bus
-            </span><span class="attr">#[deprecated(since = <span class="string">"3.5.0"</span>, note = <span class="string">"Use `add_match_rule` instead"</span>)]
-            </span><span class="kw">fn </span>add_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
-
-            <span class="doccomment">/// Adds a match rule to match messages going through the message bus
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">"AddMatch"</span>)]
+            </span><span class="attr">#[zbus(name = <span class="string">"AddMatch"</span>)]
             </span><span class="kw">fn </span>add_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Returns auditing data used by Solaris ADT, in an unspecified binary format.
@@ -1775,21 +1880,21 @@
             ) -&gt; <span class="prelude-ty">Result</span>&lt;ConnectionCredentials&gt;;
 
             <span class="doccomment">/// Returns the security context used by SELinux, in an unspecified format.
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">"GetConnectionSELinuxSecurityContext"</span>)]
+            </span><span class="attr">#[zbus(name = <span class="string">"GetConnectionSELinuxSecurityContext"</span>)]
             </span><span class="kw">fn </span>get_connection_selinux_security_context(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
                 bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;,
             ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;&gt;;
 
             <span class="doccomment">/// Returns the Unix process ID of the process connected to the server.
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">"GetConnectionUnixProcessID"</span>)]
+            </span><span class="attr">#[zbus(name = <span class="string">"GetConnectionUnixProcessID"</span>)]
             </span><span class="kw">fn </span>get_connection_unix_process_id(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
 
             <span class="doccomment">/// Returns the Unix user ID of the process connected to the server.
             </span><span class="kw">fn </span>get_connection_unix_user(<span class="kw-2">&amp;</span><span class="self">self</span>, bus_name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt;;
 
             <span class="doccomment">/// Gets the unique ID of the bus.
-            </span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Guid&gt;;
+            </span><span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedGuid&gt;;
 
             <span class="doccomment">/// Returns the unique connection name of the primary owner of the name given.
             </span><span class="kw">fn </span>get_name_owner(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedUniqueName&gt;;
@@ -1816,11 +1921,7 @@
             </span><span class="kw">fn </span>reload_config(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Removes the first rule that matches.
-            </span><span class="attr">#[deprecated(since = <span class="string">"3.5.0"</span>, note = <span class="string">"Use `remove_match_rule` instead"</span>)]
-            </span><span class="kw">fn </span>remove_match(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
-
-            <span class="doccomment">/// Removes the first rule that matches.
-            </span><span class="attr">#[dbus_proxy(name = <span class="string">"RemoveMatch"</span>)]
+            </span><span class="attr">#[zbus(name = <span class="string">"RemoveMatch"</span>)]
             </span><span class="kw">fn </span>remove_match_rule(<span class="kw-2">&amp;</span><span class="self">self</span>, rule: <span class="kw">crate</span>::MatchRule&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;;
 
             <span class="doccomment">/// Ask the message bus to assign the given name to the method caller.
@@ -1841,7 +1942,7 @@
             <span class="doccomment">/// This signal indicates that the owner of a name has
             /// changed. It's also the signal to use to detect the appearance
             /// of new names on the bus.
-            </span><span class="attr">#[dbus_proxy(signal)]
+            </span><span class="attr">#[zbus(signal)]
             </span><span class="kw">fn </span>name_owner_changed(
                 <span class="kw-2">&amp;</span><span class="self">self</span>,
                 name: BusName&lt;<span class="lifetime">'_</span>&gt;,
@@ -1850,16 +1951,16 @@
             );
 
             <span class="doccomment">/// This signal is sent to a specific application when it loses ownership of a name.
-            </span><span class="attr">#[dbus_proxy(signal)]
+            </span><span class="attr">#[zbus(signal)]
             </span><span class="kw">fn </span>name_lost(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;);
 
             <span class="doccomment">/// This signal is sent to a specific application when it gains ownership of a name.
-            </span><span class="attr">#[dbus_proxy(signal)]
+            </span><span class="attr">#[zbus(signal)]
             </span><span class="kw">fn </span>name_acquired(<span class="kw-2">&amp;</span><span class="self">self</span>, name: BusName&lt;<span class="lifetime">'_</span>&gt;);
 
             <span class="doccomment">/// This property lists abstract “features” provided by the message bus, and can be used by
             /// clients to detect the capabilities of the message bus with which they are communicating.
-            </span><span class="attr">#[dbus_proxy(property)]
+            </span><span class="attr">#[zbus(property)]
             </span><span class="kw">fn </span>features(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;String&gt;&gt;;
 
             <span class="doccomment">/// This property lists interfaces provided by the `/org/freedesktop/DBus` object, and can be
@@ -1874,7 +1975,7 @@
             /// `org.freedesktop.DBus` was successful. The standard `org.freedesktop.DBus.Peer` and
             /// `org.freedesktop.DBus.Introspectable` interfaces are not included in the value of this
             /// property either, because they do not indicate features of the message bus implementation.
-            </span><span class="attr">#[dbus_proxy(property)]
+            </span><span class="attr">#[zbus(property)]
             </span><span class="kw">fn </span>interfaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;OwnedInterfaceName&gt;&gt;;
         }
     };
@@ -1885,11 +1986,11 @@
 
 <span class="doccomment">/// Errors from &lt;https://gitlab.freedesktop.org/dbus/dbus/-/blob/master/dbus/dbus-protocol.h&gt;
 </span><span class="attr">#[derive(Clone, Debug, DBusError, PartialEq)]
-#[dbus_error(prefix = <span class="string">"org.freedesktop.DBus.Error"</span>, impl_display = <span class="bool-val">true</span>)]
+#[zbus(prefix = <span class="string">"org.freedesktop.DBus.Error"</span>, impl_display = <span class="bool-val">true</span>)]
 #[allow(clippy::upper_case_acronyms)]
 </span><span class="kw">pub enum </span>Error {
     <span class="doccomment">/// Unknown or fall-through ZBus error.
-    </span><span class="attr">#[dbus_error(zbus_error)]
+    </span><span class="attr">#[zbus(error)]
     </span>ZBus(zbus::Error),
 
     <span class="doccomment">/// A generic error; "something went wrong" - see the error message for more.
@@ -1975,51 +2076,51 @@
     </span>MatchRuleInvalid(String),
 
     <span class="doccomment">/// While starting a new process, the exec() call failed.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ExecFailed"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ExecFailed"</span>)]
     </span>SpawnExecFailed(String),
 
     <span class="doccomment">/// While starting a new process, the fork() call failed.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ForkFailed"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ForkFailed"</span>)]
     </span>SpawnForkFailed(String),
 
     <span class="doccomment">/// While starting a new process, the child exited with a status code.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ChildExited"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ChildExited"</span>)]
     </span>SpawnChildExited(String),
 
     <span class="doccomment">/// While starting a new process, the child exited on a signal.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ChildSignaled"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ChildSignaled"</span>)]
     </span>SpawnChildSignaled(String),
 
     <span class="doccomment">/// While starting a new process, something went wrong.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.Failed"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.Failed"</span>)]
     </span>SpawnFailed(String),
 
     <span class="doccomment">/// We failed to setup the environment correctly.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.FailedToSetup"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.FailedToSetup"</span>)]
     </span>SpawnFailedToSetup(String),
 
     <span class="doccomment">/// We failed to setup the config parser correctly.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ConfigInvalid"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ConfigInvalid"</span>)]
     </span>SpawnConfigInvalid(String),
 
     <span class="doccomment">/// Bus name was not valid.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ServiceNotValid"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ServiceNotValid"</span>)]
     </span>SpawnServiceNotValid(String),
 
     <span class="doccomment">/// Service file not found in system-services directory.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.ServiceNotFound"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.ServiceNotFound"</span>)]
     </span>SpawnServiceNotFound(String),
 
     <span class="doccomment">/// Permissions are incorrect on the setuid helper.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.PermissionsInvalid"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.PermissionsInvalid"</span>)]
     </span>SpawnPermissionsInvalid(String),
 
     <span class="doccomment">/// Service file invalid (Name, User or Exec missing).
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.FileInvalid"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.FileInvalid"</span>)]
     </span>SpawnFileInvalid(String),
 
     <span class="doccomment">/// There was not enough memory to complete the operation.
-    </span><span class="attr">#[dbus_error(name = <span class="string">"Spawn.NoMemory"</span>)]
+    </span><span class="attr">#[zbus(name = <span class="string">"Spawn.NoMemory"</span>)]
     </span>SpawnNoMemory(String),
 
     <span class="doccomment">/// Tried to get a UNIX process ID and it wasn't available.
@@ -2061,24 +2162,25 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use crate</span>::{fdo, DBusError, Error, Message};
+    <span class="kw">use crate</span>::{fdo, message::Message, DBusError, Error};
     <span class="kw">use </span>futures_util::StreamExt;
     <span class="kw">use </span>ntest::timeout;
-    <span class="kw">use </span>std::convert::TryInto;
     <span class="kw">use </span>test_log::test;
     <span class="kw">use </span>tokio::runtime;
     <span class="kw">use </span>zbus_names::WellKnownName;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>error_from_zerror() {
-        <span class="kw">let </span>m = Message::method(<span class="prelude-val">Some</span>(<span class="string">":1.2"</span>), <span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"/"</span>, <span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"foo"</span>, <span class="kw-2">&amp;</span>()).unwrap();
-        <span class="kw">let </span>m = Message::method_error(
-            <span class="prelude-val">None</span>::&lt;()&gt;,
-            <span class="kw-2">&amp;</span>m,
-            <span class="string">"org.freedesktop.DBus.Error.TimedOut"</span>,
-            <span class="kw-2">&amp;</span>(<span class="string">"so long"</span>),
-        )
-        .unwrap();
+        <span class="kw">let </span>m = Message::method(<span class="string">"/"</span>, <span class="string">"foo"</span>)
+            .unwrap()
+            .destination(<span class="string">":1.2"</span>)
+            .unwrap()
+            .build(<span class="kw-2">&amp;</span>())
+            .unwrap();
+        <span class="kw">let </span>m = Message::method_error(<span class="kw-2">&amp;</span>m, <span class="string">"org.freedesktop.DBus.Error.TimedOut"</span>)
+            .unwrap()
+            .build(<span class="kw-2">&amp;</span>(<span class="string">"so long"</span>))
+            .unwrap();
         <span class="kw">let </span>e: Error = m.into();
         <span class="kw">let </span>e: fdo::Error = e.into();
         <span class="macro">assert_eq!</span>(e, fdo::Error::TimedOut(<span class="string">"so long"</span>.to_string()),);
@@ -2154,6 +2256,68 @@
                 <span class="kw">let </span>v = changed.get().<span class="kw">await</span>.ok();
                 <span class="macro">dbg!</span>(v)
             });
+    }
+
+    <span class="attr">#[test]
+    #[timeout(<span class="number">15000</span>)]
+    </span><span class="kw">fn </span>no_object_manager_signals_before_hello() {
+        <span class="kw">use </span>zbus::blocking;
+        <span class="comment">// We were emitting `InterfacesAdded` signals before `Hello` was called, which is wrong and
+        // results in us getting disconnected by the bus. This test case ensures we don't do that
+        // and also that the signals are eventually emitted.
+
+        // Let's first create an interator to get the signals (it has to be another connection).
+        </span><span class="kw">let </span>conn = blocking::Connection::session().unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>iterator = blocking::MessageIterator::for_match_rule(
+            zbus::MatchRule::builder()
+                .msg_type(zbus::MessageType::Signal)
+                .interface(<span class="string">"org.freedesktop.DBus.ObjectManager"</span>)
+                .unwrap()
+                .path(<span class="string">"/org/zbus/NoObjectManagerSignalsBeforeHello"</span>)
+                .unwrap()
+                .build(),
+            <span class="kw-2">&amp;</span>conn,
+            <span class="prelude-val">None</span>,
+        )
+        .unwrap();
+
+        <span class="comment">// Now create the service side.
+        </span><span class="kw">struct </span>TestObj;
+        <span class="attr">#[<span class="kw">super</span>::interface(name = <span class="string">"org.zbus.TestObj"</span>)]
+        </span><span class="kw">impl </span>TestObj {
+            <span class="attr">#[zbus(property)]
+            </span><span class="kw">fn </span>test(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+                <span class="string">"test"</span>.into()
+            }
+        }
+        <span class="kw">let </span>_conn = blocking::connection::Builder::session()
+            .unwrap()
+            .name(<span class="string">"org.zbus.NoObjectManagerSignalsBeforeHello"</span>)
+            .unwrap()
+            .serve_at(<span class="string">"/org/zbus/NoObjectManagerSignalsBeforeHello/Obj"</span>, TestObj)
+            .unwrap()
+            .serve_at(
+                <span class="string">"/org/zbus/NoObjectManagerSignalsBeforeHello"</span>,
+                <span class="kw">super</span>::ObjectManager,
+            )
+            .unwrap()
+            .build()
+            .unwrap();
+
+        <span class="comment">// Let's see if the `InterfacesAdded` signal was emitted.
+        </span><span class="kw">let </span>msg = iterator.next().unwrap().unwrap();
+        <span class="kw">let </span>signal = <span class="kw">super</span>::InterfacesAdded::from_message(msg).unwrap();
+        <span class="macro">assert_eq!</span>(
+            signal.args().unwrap().interfaces_and_properties,
+            <span class="macro">vec!</span>[(
+                <span class="string">"org.zbus.TestObj"</span>,
+                <span class="macro">vec!</span>[(<span class="string">"Test"</span>, zvariant::Value::new(<span class="string">"test"</span>))]
+                    .into_iter()
+                    .collect()
+            )]
+            .into_iter()
+            .collect()
+        );
     }
 }
 </code></pre></div></section></main></body></html>

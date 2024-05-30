@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-3.15.2/src/dbus/de.rs`."><title>de.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/dbus/de.rs`."><title>de.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../zvariant/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -643,19 +643,52 @@
 <a href="#641" id="641">641</a>
 <a href="#642" id="642">642</a>
 <a href="#643" id="643">643</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>core::convert::TryFrom;
-
-<span class="kw">use </span>serde::de::{<span class="self">self</span>, DeserializeSeed, EnumAccess, MapAccess, SeqAccess, Visitor};
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>serde::de::{<span class="self">self</span>, DeserializeSeed, EnumAccess, MapAccess, SeqAccess, Visitor};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 
 <span class="kw">use </span>std::{marker::PhantomData, str};
 
 <span class="attr">#[cfg(unix)]
-</span><span class="kw">use </span>std::os::unix::io::RawFd;
+</span><span class="kw">use </span>std::os::fd::AsFd;
 
 <span class="kw">use crate</span>::{
-    de::ValueParseStage, signature_parser::SignatureParser, utils::<span class="kw-2">*</span>, Basic, EncodingContext,
-    EncodingFormat, Error, ObjectPath, <span class="prelude-ty">Result</span>, Signature,
+    de::{DeserializerCommon, ValueParseStage},
+    serialized::{Context, Format},
+    signature_parser::SignatureParser,
+    utils::<span class="kw-2">*</span>,
+    Basic, Error, ObjectPath, <span class="prelude-ty">Result</span>, Signature,
 };
 
 <span class="attr">#[cfg(unix)]
@@ -663,27 +696,29 @@
 
 <span class="doccomment">/// Our D-Bus deserialization implementation.
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;(<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">crate</span>::DeserializerCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;);
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;(<span class="kw">pub</span>(<span class="kw">crate</span>) DeserializerCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;);
 
-<span class="macro">assert_impl_all!</span>(Deserializer&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, i32&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(Deserializer&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, ()&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
-{
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
     <span class="doccomment">/// Create a Deserializer struct instance.
     ///
     /// On Windows, there is no `fds` argument.
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'r</span>: <span class="lifetime">'de</span>&gt;(
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'r</span>: <span class="lifetime">'de</span>, S&gt;(
         bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
-        <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'f </span>[RawFd]&gt;,
-        signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'sig</span>&gt;,
-        ctxt: EncodingContext&lt;B&gt;,
-    ) -&gt; <span class="self">Self </span>{
-        <span class="macro">assert_eq!</span>(ctxt.format(), EncodingFormat::DBus);
+        <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'f </span>[F]&gt;,
+        signature: S,
+        ctxt: Context,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
+    <span class="kw">where
+        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'sig</span>&gt;&gt;,
+        S::Error: Into&lt;Error&gt;,
+    {
+        <span class="macro">assert_eq!</span>(ctxt.format(), Format::DBus);
 
-        <span class="kw">let </span>sig_parser = SignatureParser::new(signature.clone());
-        <span class="self">Self</span>(<span class="kw">crate</span>::DeserializerCommon {
+        <span class="kw">let </span>signature = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
+        <span class="kw">let </span>sig_parser = SignatureParser::new(signature);
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(DeserializerCommon {
             ctxt,
             sig_parser,
             bytes,
@@ -693,8 +728,7 @@
             </span>fds: PhantomData,
             pos: <span class="number">0</span>,
             container_depths: Default::default(),
-            b: PhantomData,
-        })
+        }))
     }
 }
 
@@ -704,7 +738,11 @@
         <span class="kw">where
             </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
         {
-            <span class="kw">let </span>v = B::<span class="macro-nonterminal">$read_method</span>(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;<span class="macro-nonterminal">$</span><span class="kw">type</span>&gt;()<span class="question-mark">?</span>);
+            <span class="kw">let </span>v = <span class="self">self
+                </span>.<span class="number">0
+                </span>.ctxt
+                .endian()
+                .<span class="macro-nonterminal">$read_method</span>(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;<span class="macro-nonterminal">$</span><span class="kw">type</span>&gt;()<span class="question-mark">?</span>);
 
             <span class="macro-nonterminal">visitor</span>.<span class="macro-nonterminal">$visitor_method</span>(v)
         }
@@ -726,9 +764,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; de::Deserializer&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; de::Deserializer&lt;<span class="lifetime">'de</span>&gt;
+    <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
     <span class="kw">type </span>Error = Error;
 
@@ -745,7 +782,11 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>v = B::read_u32(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;bool&gt;()<span class="question-mark">?</span>);
+        <span class="kw">let </span>v = <span class="self">self
+            </span>.<span class="number">0
+            </span>.ctxt
+            .endian()
+            .read_u32(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;bool&gt;()<span class="question-mark">?</span>);
         <span class="kw">let </span>b = <span class="kw">match </span>v {
             <span class="number">1 </span>=&gt; <span class="bool-val">true</span>,
             <span class="number">0 </span>=&gt; <span class="bool-val">false</span>,
@@ -807,12 +848,16 @@
             <span class="attr">#[cfg(unix)]
             </span>Fd::SIGNATURE_CHAR =&gt; {
                 <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-                <span class="kw">let </span>alignment = u32::alignment(EncodingFormat::DBus);
+                <span class="kw">let </span>alignment = u32::alignment(Format::DBus);
                 <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
-                <span class="kw">let </span>idx = B::read_u32(<span class="self">self</span>.<span class="number">0</span>.next_slice(alignment)<span class="question-mark">?</span>);
+                <span class="kw">let </span>idx = <span class="self">self</span>.<span class="number">0</span>.ctxt.endian().read_u32(<span class="self">self</span>.<span class="number">0</span>.next_slice(alignment)<span class="question-mark">?</span>);
                 <span class="self">self</span>.<span class="number">0</span>.get_fd(idx)<span class="question-mark">?
             </span>}
-            <span class="kw">_ </span>=&gt; B::read_i32(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;i32&gt;()<span class="question-mark">?</span>),
+            <span class="kw">_ </span>=&gt; <span class="self">self
+                </span>.<span class="number">0
+                </span>.ctxt
+                .endian()
+                .read_i32(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;i32&gt;()<span class="question-mark">?</span>),
         };
 
         visitor.visit_i32(v)
@@ -830,7 +875,11 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>v = B::read_f64(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;f64&gt;()<span class="question-mark">?</span>);
+        <span class="kw">let </span>v = <span class="self">self
+            </span>.<span class="number">0
+            </span>.ctxt
+            .endian()
+            .read_f64(<span class="self">self</span>.<span class="number">0</span>.next_const_size_slice::&lt;f64&gt;()<span class="question-mark">?</span>);
 
         visitor.visit_f32(f64_to_f32(v))
     }
@@ -846,11 +895,11 @@
                 len_slice[<span class="number">0</span>] <span class="kw">as </span>usize
             }
             &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_CHAR | ObjectPath::SIGNATURE_CHAR =&gt; {
-                <span class="kw">let </span>alignment = u32::alignment(EncodingFormat::DBus);
+                <span class="kw">let </span>alignment = u32::alignment(Format::DBus);
                 <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
                 <span class="kw">let </span>len_slice = <span class="self">self</span>.<span class="number">0</span>.next_slice(alignment)<span class="question-mark">?</span>;
 
-                B::read_u32(len_slice) <span class="kw">as </span>usize
+                <span class="self">self</span>.<span class="number">0</span>.ctxt.endian().read_u32(len_slice) <span class="kw">as </span>usize
             }
             c =&gt; {
                 <span class="kw">let </span>expected = <span class="macro">format!</span>(
@@ -880,12 +929,34 @@
         visitor.visit_borrowed_str(s)
     }
 
-    <span class="kw">fn </span>deserialize_option&lt;V&gt;(<span class="self">self</span>, _visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
+    <span class="kw">fn </span>deserialize_option&lt;V&gt;(<span class="self">self</span>, <span class="attr">#[allow(unused)] </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="prelude-val">Err</span>(de::Error::custom(
-            <span class="string">"D-Bus format does not support optional values"</span>,
+        <span class="attr">#[cfg(feature = <span class="string">"option-as-array"</span>)]
+        </span>{
+            <span class="kw">let </span>c = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
+            <span class="kw">if </span>c != ARRAY_SIGNATURE_CHAR {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(de::Error::invalid_type(
+                    de::Unexpected::Char(c),
+                    <span class="kw-2">&amp;</span>ARRAY_SIGNATURE_STR,
+                ));
+            }
+            <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
+            <span class="comment">// This takes care of parsing all the padding and getting the byte length.
+            </span><span class="kw">let </span>len = ArrayDeserializer::new(<span class="self">self</span>)<span class="question-mark">?</span>.len;
+            <span class="kw">if </span>len == <span class="number">0 </span>{
+                <span class="self">self</span>.<span class="number">0</span>.sig_parser.parse_next_signature()<span class="question-mark">?</span>;
+
+                visitor.visit_none()
+            } <span class="kw">else </span>{
+                visitor.visit_some(<span class="self">self</span>)
+            }
+        }
+
+        <span class="attr">#[cfg(not(feature = <span class="string">"option-as-array"</span>))]
+        </span><span class="prelude-val">Err</span>(de::Error::custom(
+            <span class="string">"Can only decode Option&lt;T&gt; from D-Bus format if `option-as-array` feature is enabled"</span>,
         ))
     }
 
@@ -933,7 +1004,7 @@
             }
             STRUCT_SIG_START_CHAR =&gt; {
                 <span class="kw">let </span>signature = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-                <span class="kw">let </span>alignment = alignment_for_signature(<span class="kw-2">&amp;</span>signature, EncodingFormat::DBus)<span class="question-mark">?</span>;
+                <span class="kw">let </span>alignment = alignment_for_signature(<span class="kw-2">&amp;</span>signature, Format::DBus)<span class="question-mark">?</span>;
                 <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
 
                 <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
@@ -985,7 +1056,7 @@
         <span class="kw">let </span>v = visitor.visit_enum(<span class="kw">crate</span>::de::Enum {
             de: <span class="kw-2">&amp;mut *</span><span class="self">self</span>,
             name,
-            phantom: PhantomData,
+            _phantom: PhantomData,
         })<span class="question-mark">?</span>;
 
         <span class="kw">if </span>non_unit {
@@ -1012,8 +1083,8 @@
     </span>}
 }
 
-<span class="kw">struct </span>ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; {
-    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;,
+<span class="kw">struct </span>ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
+    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;,
     len: usize,
     start: usize,
     <span class="comment">// alignment of element
@@ -1022,17 +1093,16 @@
     </span>element_signature_len: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;
+    ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
-    <span class="kw">fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         de.<span class="number">0</span>.parse_padding(ARRAY_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
         de.<span class="number">0</span>.container_depths = de.<span class="number">0</span>.container_depths.inc_array()<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>len = B::read_u32(de.<span class="number">0</span>.next_slice(<span class="number">4</span>)<span class="question-mark">?</span>) <span class="kw">as </span>usize;
+        <span class="kw">let </span>len = de.<span class="number">0</span>.ctxt.endian().read_u32(de.<span class="number">0</span>.next_slice(<span class="number">4</span>)<span class="question-mark">?</span>) <span class="kw">as </span>usize;
         <span class="kw">let </span>element_signature = de.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>element_alignment = alignment_for_signature(<span class="kw-2">&amp;</span>element_signature, EncodingFormat::DBus)<span class="question-mark">?</span>;
+        <span class="kw">let </span>element_alignment = alignment_for_signature(<span class="kw-2">&amp;</span>element_signature, Format::DBus)<span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>element_signature_len = element_signature.len();
 
         <span class="comment">// D-Bus requires padding for the first element even when there is no first element
@@ -1058,16 +1128,18 @@
     <span class="kw">where
         </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>ctxt = EncodingContext::new_dbus(<span class="self">self</span>.de.<span class="number">0</span>.ctxt.position() + <span class="self">self</span>.de.<span class="number">0</span>.pos);
+        <span class="kw">let </span>ctxt = Context::new_dbus(
+            <span class="self">self</span>.de.<span class="number">0</span>.ctxt.endian(),
+            <span class="self">self</span>.de.<span class="number">0</span>.ctxt.position() + <span class="self">self</span>.de.<span class="number">0</span>.pos,
+        );
 
-        <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;B&gt;(<span class="kw">crate</span>::DeserializerCommon {
+        <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;F&gt;(DeserializerCommon {
             ctxt,
             sig_parser,
             bytes: subslice(<span class="self">self</span>.de.<span class="number">0</span>.bytes, <span class="self">self</span>.de.<span class="number">0</span>.pos..)<span class="question-mark">?</span>,
             fds: <span class="self">self</span>.de.<span class="number">0</span>.fds,
             pos: <span class="number">0</span>,
             container_depths: <span class="self">self</span>.de.<span class="number">0</span>.container_depths,
-            b: PhantomData,
         });
         <span class="kw">let </span>v = seed.deserialize(<span class="kw-2">&amp;mut </span>de);
         <span class="self">self</span>.de.<span class="number">0</span>.pos += de.<span class="number">0</span>.pos;
@@ -1111,10 +1183,9 @@
     }
 }
 
-<span class="kw">fn </span>deserialize_ay&lt;<span class="lifetime">'de</span>, B&gt;(de: <span class="kw-2">&amp;mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'de </span>[u8]&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
-{
+<span class="kw">fn </span>deserialize_ay&lt;<span class="lifetime">'de</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;(
+    de: <span class="kw-2">&amp;mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, F&gt;,
+) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'de </span>[u8]&gt; {
     <span class="kw">if </span>de.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">? </span>!= <span class="string">"ay" </span>{
         <span class="kw">return </span><span class="prelude-val">Err</span>(de::Error::invalid_type(de::Unexpected::Seq, <span class="kw-2">&amp;</span><span class="string">"ay"</span>));
     }
@@ -1126,11 +1197,10 @@
     de.<span class="number">0</span>.next_slice(len)
 }
 
-<span class="kw">struct </span>ArraySeqDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;(ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;);
+<span class="kw">struct </span>ArraySeqDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;(ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ArraySeqDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt;
+    <span class="kw">for </span>ArraySeqDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
     <span class="kw">type </span>Error = Error;
 
@@ -1143,11 +1213,10 @@
     }
 }
 
-<span class="kw">struct </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;(ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;);
+<span class="kw">struct </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;(ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; MapAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; MapAccess&lt;<span class="lifetime">'de</span>&gt;
+    <span class="kw">for </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
     <span class="kw">type </span>Error = Error;
 
@@ -1171,13 +1240,12 @@
 }
 
 <span class="attr">#[derive(Debug)]
-</span><span class="kw">struct </span>StructureDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; {
-    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;,
+</span><span class="kw">struct </span>StructureDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
+    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>StructureDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt;
+    <span class="kw">for </span>StructureDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
     <span class="kw">type </span>Error = Error;
 
@@ -1197,19 +1265,18 @@
 }
 
 <span class="attr">#[derive(Debug)]
-</span><span class="kw">struct </span>ValueDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; {
-    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;,
+</span><span class="kw">struct </span>ValueDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
+    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;,
     stage: ValueParseStage,
     sig_start: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; ValueDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;
+    ValueDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
-    <span class="kw">fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;) -&gt; <span class="self">Self </span>{
+    <span class="kw">fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>sig_start = de.<span class="number">0</span>.pos;
-        ValueDeserializer::&lt;B&gt; {
+        ValueDeserializer::&lt;F&gt; {
             de,
             stage: ValueParseStage::Signature,
             sig_start,
@@ -1217,9 +1284,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ValueDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt;
+    <span class="kw">for </span>ValueDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
 {
     <span class="kw">type </span>Error = Error;
 
@@ -1247,18 +1313,18 @@
                 <span class="kw">let </span>signature = Signature::try_from(slice)<span class="question-mark">?</span>;
                 <span class="kw">let </span>sig_parser = SignatureParser::new(signature);
 
-                <span class="kw">let </span>ctxt = EncodingContext::new(
-                    EncodingFormat::DBus,
+                <span class="kw">let </span>ctxt = Context::new(
+                    Format::DBus,
+                    <span class="self">self</span>.de.<span class="number">0</span>.ctxt.endian(),
                     <span class="self">self</span>.de.<span class="number">0</span>.ctxt.position() + value_start,
                 );
-                <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;B&gt;(<span class="kw">crate</span>::DeserializerCommon {
+                <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;F&gt;(DeserializerCommon {
                     ctxt,
                     sig_parser,
                     bytes: subslice(<span class="self">self</span>.de.<span class="number">0</span>.bytes, value_start..)<span class="question-mark">?</span>,
                     fds: <span class="self">self</span>.de.<span class="number">0</span>.fds,
                     pos: <span class="number">0</span>,
                     container_depths: <span class="self">self</span>.de.<span class="number">0</span>.container_depths.inc_variant()<span class="question-mark">?</span>,
-                    b: PhantomData,
                 });
 
                 <span class="kw">let </span>v = seed.deserialize(<span class="kw-2">&amp;mut </span>de).map(<span class="prelude-val">Some</span>);
@@ -1271,10 +1337,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt; EnumAccess&lt;<span class="lifetime">'de</span>&gt;
-    <span class="kw">for </span><span class="kw">crate</span>::de::Enum&lt;B, <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, B&gt;&gt;
-<span class="kw">where
-    </span>B: byteorder::ByteOrder,
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; EnumAccess&lt;<span class="lifetime">'de</span>&gt;
+    <span class="kw">for </span><span class="kw">crate</span>::de::Enum&lt;<span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;, F&gt;
 {
     <span class="kw">type </span>Error = Error;
     <span class="kw">type </span>Variant = <span class="self">Self</span>;

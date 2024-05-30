@@ -77,14 +77,7 @@
 <a href="#75" id="75">75</a>
 <a href="#76" id="76">76</a>
 <a href="#77" id="77">77</a>
-<a href="#78" id="78">78</a>
-<a href="#79" id="79">79</a>
-<a href="#80" id="80">80</a>
-<a href="#81" id="81">81</a>
-<a href="#82" id="82">82</a>
-<a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::{collections::HashMap, sync::Arc};
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::collections::HashMap;
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
@@ -106,11 +99,12 @@
 <span class="kw">type </span>MessageBody&lt;<span class="lifetime">'a</span>&gt; =
 	(String, u32, <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str, String, String, Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;, HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str, Value&lt;<span class="lifetime">'a</span>&gt;&gt;, i32);
 
-<span class="kw">impl </span>TryFrom&lt;Arc&lt;Message&gt;&gt; <span class="kw">for </span>Notification {
+<span class="kw">impl </span>TryFrom&lt;Message&gt; <span class="kw">for </span>Notification {
 	<span class="kw">type </span>Error = zbus::Error;
 
-	<span class="kw">fn </span>try_from(msg: Arc&lt;Message&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>mb: MessageBody = msg.body()<span class="question-mark">?</span>;
+	<span class="kw">fn </span>try_from(msg: Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="kw">let </span>body = msg.body();
+		<span class="kw">let </span>mb: MessageBody = body.deserialize()<span class="question-mark">?</span>;
 		<span class="kw">let </span>(app_name, <span class="kw">_</span>, <span class="kw">_</span>, title, body, actions, <span class="kw-2">mut </span>options, <span class="kw">_</span>) = mb;
 		<span class="kw">let </span>actions = actions
 			.iter()
@@ -136,14 +130,10 @@
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>correctly_formatted_message_leads_to_a_correct_notification() -&gt; <span class="prelude-ty">Result</span>&lt;(), zbus::Error&gt;
 	{
-		<span class="comment">// Simulate a method call to the org.freedesktop.notifications interface
-		</span><span class="kw">let </span>message = Message::method(
-			<span class="prelude-val">Some</span>(<span class="string">":0.1"</span>), <span class="comment">//I can't pass none here, because of type needed errors, so passing dummy values for now
-			</span><span class="prelude-val">Some</span>(<span class="string">":0.3"</span>), <span class="comment">//same here
-			</span><span class="string">"/org/freedesktop/notifications"</span>,
-			<span class="prelude-val">Some</span>(<span class="string">"org.freedesktop.notifications"</span>),
-			<span class="string">"notify"</span>,
-			<span class="kw-2">&amp;</span>(
+		<span class="kw">let </span>message = Message::method(<span class="string">"/org/freedesktop/notifications"</span>, <span class="string">"notify"</span>)<span class="question-mark">?
+			</span>.sender(<span class="string">":0.1"</span>)<span class="question-mark">?
+			</span>.interface(<span class="string">"org.freedesktop.notifications"</span>)<span class="question-mark">?
+			</span>.build(<span class="kw-2">&amp;</span>(
 				<span class="string">"ExampleApp"</span>,
 				<span class="number">0u32</span>,
 				<span class="string">"summary"</span>,
@@ -152,11 +142,7 @@
 				Vec::&lt;<span class="kw-2">&amp;</span>str&gt;::new(),
 				HashMap::&lt;<span class="kw-2">&amp;</span>str, Value&gt;::new(),
 				<span class="number">0</span>,
-			),
-		)<span class="question-mark">?</span>;
-
-		<span class="comment">//make this into an arc, to use the try_from implementation used in the wild
-		</span><span class="kw">let </span>message = Arc::new(message);
+			))<span class="question-mark">?</span>;
 		<span class="comment">// Convert the Message into a Notification
 		</span><span class="kw">let </span>notification = Notification::try_from(message)<span class="question-mark">?</span>;
 

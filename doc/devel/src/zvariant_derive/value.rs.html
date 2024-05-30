@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant_derive-3.15.2/src/value.rs`."><title>value.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant_derive-4.1.1/src/value.rs`."><title>value.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zvariant_derive/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -277,11 +277,61 @@
 <a href="#275" id="275">275</a>
 <a href="#276" id="276">276</a>
 <a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>proc_macro2::{Span, TokenStream};
 <span class="kw">use </span>quote::{quote, ToTokens};
 <span class="kw">use </span>syn::{
     spanned::Spanned, Attribute, Data, DataEnum, DeriveInput, Error, Expr, Fields, Generics, Ident,
-    Lifetime, LifetimeDef,
+    Lifetime, LifetimeParam,
 };
 
 <span class="kw">use </span><span class="kw">crate</span>::utils::<span class="kw-2">*</span>;
@@ -330,8 +380,16 @@
     signature: <span class="prelude-ty">Option</span>&lt;String&gt;,
     zv: <span class="kw-2">&amp;</span>TokenStream,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream, Error&gt; {
-    <span class="kw">let </span>statc_lifetime = LifetimeDef::new(Lifetime::new(<span class="string">"'static"</span>, Span::call_site()));
-    <span class="kw">let </span>(value_type, value_lifetime) = <span class="kw">match </span>value_type {
+    <span class="kw">let </span>statc_lifetime = LifetimeParam::new(Lifetime::new(<span class="string">"'static"</span>, Span::call_site()));
+    <span class="kw">let </span>(
+        value_type,
+        value_lifetime,
+        into_value_trait,
+        into_value_method,
+        into_value_error_decl,
+        into_value_ret,
+        into_value_error_transform,
+    ) = <span class="kw">match </span>value_type {
         ValueType::Value =&gt; {
             <span class="kw">let </span><span class="kw-2">mut </span>lifetimes = generics.lifetimes();
             <span class="kw">let </span>value_lifetime = lifetimes
@@ -345,9 +403,25 @@
                 ));
             }
 
-            (<span class="macro">quote!</span> { #zv::Value&lt;#value_lifetime&gt; }, value_lifetime)
+            (
+                <span class="macro">quote!</span> { #zv::Value&lt;#value_lifetime&gt; },
+                value_lifetime,
+                <span class="macro">quote!</span> { From },
+                <span class="macro">quote!</span> { from },
+                <span class="macro">quote!</span> {},
+                <span class="macro">quote!</span> { <span class="self">Self </span>},
+                <span class="macro">quote!</span> {},
+            )
         }
-        ValueType::OwnedValue =&gt; (<span class="macro">quote!</span> { #zv::OwnedValue }, statc_lifetime),
+        ValueType::OwnedValue =&gt; (
+            <span class="macro">quote!</span> { #zv::OwnedValue },
+            statc_lifetime,
+            <span class="macro">quote!</span> { TryFrom },
+            <span class="macro">quote!</span> { try_from },
+            <span class="macro">quote!</span> { <span class="kw">type </span>Error = #zv::Error; },
+            <span class="macro">quote!</span> { #zv::Result&lt;<span class="self">Self</span>&gt; },
+            <span class="macro">quote!</span> { .map_err(::std::convert::Into::into) },
+        ),
     };
 
     <span class="kw">let </span>type_params = generics.type_params().cloned().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
@@ -356,7 +430,8 @@
             <span class="prelude-val">Some</span>(<span class="macro">quote!</span> {
                 <span class="kw">where
                 </span>#(
-                    #type_params: ::std::convert::TryFrom&lt;#zv::Value&lt;#value_lifetime&gt;&gt; + #zv::Type
+                    #type_params: ::std::convert::TryFrom&lt;#zv::Value&lt;#value_lifetime&gt;&gt; + #zv::Type,
+                    &lt;#type_params <span class="kw">as </span>::std::convert::TryFrom&lt;#zv::Value&lt;#value_lifetime&gt;&gt;&gt;::Error: ::std::convert::Into&lt;#zv::Error&gt;
                 ),*
             }),
             <span class="prelude-val">Some</span>(<span class="macro">quote!</span> {
@@ -389,8 +464,7 @@
                                     fields
                                         .remove(<span class="macro">stringify!</span>(#field_names))
                                         .ok_or_else(|| #zv::Error::IncorrectType)<span class="question-mark">?
-                                        </span>.downcast()
-                                        .ok_or_else(|| #zv::Error::IncorrectType)<span class="question-mark">?
+                                        </span>.downcast()<span class="question-mark">?
                             </span>),*
                         })
                     },
@@ -400,7 +474,8 @@
                             fields.insert(<span class="macro">stringify!</span>(#field_names), #zv::Value::from(s.#field_names));
                         )*
 
-                        #zv::Value::from(fields).into()
+                        &lt;#value_type&gt;::#into_value_method(#zv::Value::from(fields))
+                            #into_value_error_transform
                     },
                 ),
                 <span class="prelude-val">Some</span>(<span class="kw">_</span>) | <span class="prelude-val">None </span>=&gt; (
@@ -409,21 +484,17 @@
 
                         ::std::result::Result::Ok(<span class="self">Self </span>{
                             #(
-                                #field_names:
-                                    fields
-                                        .remove(<span class="number">0</span>)
-                                        .downcast()
-                                        .ok_or_else(|| #zv::Error::IncorrectType)<span class="question-mark">?
+                                #field_names: fields.remove(<span class="number">0</span>).downcast()<span class="question-mark">?
                             </span>),*
                         })
                     },
                     <span class="macro">quote!</span> {
-                        #zv::StructureBuilder::new()
+                        &lt;#value_type&gt;::#into_value_method(#zv::StructureBuilder::new()
                         #(
                             .add_field(s.#field_names)
                         )*
-                        .build()
-                        .into()
+                        .build())
+                        #into_value_error_transform
                     },
                 ),
             };
@@ -439,11 +510,13 @@
                     }
                 }
 
-                <span class="kw">impl </span>#impl_generics From&lt;#name #ty_generics&gt; <span class="kw">for </span>#value_type
+                <span class="kw">impl </span>#impl_generics #into_value_trait&lt;#name #ty_generics&gt; <span class="kw">for </span>#value_type
                     #into_value_where_clause
                 {
+                    #into_value_error_decl
+
                     <span class="attr">#[inline]
-                    </span><span class="kw">fn </span>from(s: #name #ty_generics) -&gt; <span class="self">Self </span>{
+                    </span><span class="kw">fn </span>#into_value_method(s: #name #ty_generics) -&gt; #into_value_ret {
                         #into_value_impl
                     }
                 }
@@ -463,12 +536,14 @@
                     }
                 }
 
-                <span class="kw">impl </span>#impl_generics From&lt;#name #ty_generics&gt; <span class="kw">for </span>#value_type
+                <span class="kw">impl </span>#impl_generics #into_value_trait&lt;#name #ty_generics&gt; <span class="kw">for </span>#value_type
                     #into_value_where_clause
                 {
+                    #into_value_error_decl
+
                     <span class="attr">#[inline]
-                    </span><span class="kw">fn </span>from(s: #name #ty_generics) -&gt; <span class="self">Self </span>{
-                        s.<span class="number">0</span>.into()
+                    </span><span class="kw">fn </span>#into_value_method(s: #name #ty_generics) -&gt; #into_value_ret {
+                        &lt;#value_type&gt;::#into_value_method(s.<span class="number">0</span>) #into_value_error_transform
                     }
                 }
             })
@@ -486,7 +561,7 @@
     data: <span class="kw-2">&amp;</span>DataEnum,
     zv: <span class="kw-2">&amp;</span>TokenStream,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;TokenStream, Error&gt; {
-    <span class="kw">let </span>repr: TokenStream = <span class="kw">match </span>attrs.iter().find(|attr| attr.path.is_ident(<span class="string">"repr"</span>)) {
+    <span class="kw">let </span>repr: TokenStream = <span class="kw">match </span>attrs.iter().find(|attr| attr.path().is_ident(<span class="string">"repr"</span>)) {
         <span class="prelude-val">Some</span>(repr_attr) =&gt; repr_attr.parse_args()<span class="question-mark">?</span>,
         <span class="prelude-val">None </span>=&gt; <span class="macro">quote!</span> { u32 },
     };
@@ -518,9 +593,45 @@
         }
     }
 
-    <span class="kw">let </span>value_type = <span class="kw">match </span>value_type {
-        ValueType::Value =&gt; <span class="macro">quote!</span> { #zv::Value&lt;<span class="lifetime">'_</span>&gt; },
-        ValueType::OwnedValue =&gt; <span class="macro">quote!</span> { #zv::OwnedValue },
+    <span class="kw">let </span>(value_type, into_value) = <span class="kw">match </span>value_type {
+        ValueType::Value =&gt; (
+            <span class="macro">quote!</span> { #zv::Value&lt;<span class="lifetime">'_</span>&gt; },
+            <span class="macro">quote!</span> {
+                <span class="kw">impl </span>::std::convert::From&lt;#name&gt; <span class="kw">for </span>#zv::Value&lt;<span class="lifetime">'_</span>&gt; {
+                    <span class="attr">#[inline]
+                    </span><span class="kw">fn </span>from(e: #name) -&gt; <span class="self">Self </span>{
+                        <span class="kw">let </span>u: #repr = <span class="kw">match </span>e {
+                            #(
+                                #name::#variant_names =&gt; #variant_values
+                            ),*
+                        };
+
+                        &lt;#zv::Value <span class="kw">as </span>::std::convert::From&lt;<span class="kw">_</span>&gt;&gt;::from(u).into()
+                    }
+                }
+            },
+        ),
+        ValueType::OwnedValue =&gt; (
+            <span class="macro">quote!</span> { #zv::OwnedValue },
+            <span class="macro">quote!</span> {
+                <span class="kw">impl </span>::std::convert::TryFrom&lt;#name&gt; <span class="kw">for </span>#zv::OwnedValue {
+                    <span class="kw">type </span>Error = #zv::Error;
+
+                    <span class="attr">#[inline]
+                    </span><span class="kw">fn </span>try_from(e: #name) -&gt; #zv::Result&lt;<span class="self">Self</span>&gt; {
+                        <span class="kw">let </span>u: #repr = <span class="kw">match </span>e {
+                            #(
+                                #name::#variant_names =&gt; #variant_values
+                            ),*
+                        };
+
+                        &lt;#zv::OwnedValue <span class="kw">as </span>::std::convert::TryFrom&lt;<span class="kw">_</span>&gt;&gt;::try_from(
+                            &lt;#zv::Value <span class="kw">as </span>::std::convert::From&lt;<span class="kw">_</span>&gt;&gt;::from(u)
+                        )
+                    }
+                }
+            },
+        ),
     };
 
     <span class="prelude-val">Ok</span>(<span class="macro">quote!</span> {
@@ -540,18 +651,7 @@
             }
         }
 
-        <span class="kw">impl </span>::std::convert::From&lt;#name&gt; <span class="kw">for </span>#value_type {
-            <span class="attr">#[inline]
-            </span><span class="kw">fn </span>from(e: #name) -&gt; <span class="self">Self </span>{
-                <span class="kw">let </span>u: #repr = <span class="kw">match </span>e {
-                    #(
-                        #name::#variant_names =&gt; #variant_values
-                     ),*
-                };
-
-                &lt;#zv::Value <span class="kw">as </span>::std::convert::From&lt;<span class="kw">_</span>&gt;&gt;::from(u).into()
-             }
-        }
+        #into_value
     })
 }
 </code></pre></div></section></main></body></html>

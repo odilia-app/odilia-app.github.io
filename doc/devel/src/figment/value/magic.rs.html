@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/figment-0.10.15/src/value/magic.rs`."><title>magic.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="figment" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/figment-0.10.19/src/value/magic.rs`."><title>magic.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="figment" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../figment/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1547,6 +1547,7 @@
 <a href="#1545" id="1545">1545</a>
 <a href="#1546" id="1546">1546</a>
 <a href="#1547" id="1547">1547</a>
+<a href="#1548" id="1548">1548</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! (De)serializable values that "magically" use information from the extracing
 //! [`Figment`](crate::Figment).
 
@@ -1555,7 +1556,7 @@
 
 <span class="kw">use </span>serde::{Deserialize, Serialize, de};
 
-<span class="kw">use crate</span>::{Error, value::{ConfiguredValueDe, MapDe, Tag}};
+<span class="kw">use crate</span>::{Error, value::{ConfiguredValueDe, Interpreter, MapDe, Tag}};
 
 <span class="doccomment">/// Marker trait for "magic" values. Primarily for use with [`Either`].
 </span><span class="kw">pub trait </span>Magic: <span class="kw">for</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; {
@@ -1565,8 +1566,8 @@
     <span class="doccomment">/// The fields of the pseudo-structure. The last one should be the value.
     </span><span class="attr">#[doc(hidden)] </span><span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str];
 
-    <span class="attr">#[doc(hidden)] </span><span class="kw">fn </span>deserialize_from&lt;<span class="lifetime">'de</span>: <span class="lifetime">'c</span>, <span class="lifetime">'c</span>, V: de::Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
-        de: ConfiguredValueDe&lt;<span class="lifetime">'c</span>&gt;,
+    <span class="attr">#[doc(hidden)] </span><span class="kw">fn </span>deserialize_from&lt;<span class="lifetime">'de</span>: <span class="lifetime">'c</span>, <span class="lifetime">'c</span>, V: de::Visitor&lt;<span class="lifetime">'de</span>&gt;, I: Interpreter&gt;(
+        de: ConfiguredValueDe&lt;<span class="lifetime">'c</span>, I&gt;,
         visitor: V
     ) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, Error&gt;;
 }
@@ -1726,8 +1727,8 @@
         <span class="string">"___figment_relative_path"
     </span>];
 
-    <span class="kw">fn </span>deserialize_from&lt;<span class="lifetime">'de</span>: <span class="lifetime">'c</span>, <span class="lifetime">'c</span>, V: de::Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
-        de: ConfiguredValueDe&lt;<span class="lifetime">'c</span>&gt;,
+    <span class="kw">fn </span>deserialize_from&lt;<span class="lifetime">'de</span>: <span class="lifetime">'c</span>, <span class="lifetime">'c</span>, V: de::Visitor&lt;<span class="lifetime">'de</span>&gt;, I: Interpreter&gt;(
+        de: ConfiguredValueDe&lt;<span class="lifetime">'c</span>, I&gt;,
         visitor: V
     ) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, Error&gt; {
         <span class="comment">// If we have this struct with a non-empty metadata_path, use it.
@@ -1735,7 +1736,8 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(d) = de.value.as_dict() {
             <span class="kw">if let </span><span class="prelude-val">Some</span>(mpv) = d.get(<span class="self">Self</span>::FIELDS[<span class="number">0</span>]) {
                 <span class="kw">if </span>mpv.to_empty().is_none() {
-                    <span class="kw">return </span>visitor.visit_map(MapDe::new(d, |v| ConfiguredValueDe::from(config, v)));
+                    <span class="kw">let </span>map_de = MapDe::new(d, |v| ConfiguredValueDe::&lt;I&gt;::from(config, v));
+                    <span class="kw">return </span>visitor.visit_map(map_de);
                 }
             }
         }
@@ -1753,7 +1755,7 @@
         <span class="comment">// If we have this struct with no metadata_path, still use the value.
         </span><span class="kw">let </span>value = de.value.find_ref(<span class="self">Self</span>::FIELDS[<span class="number">1</span>]).unwrap_or(<span class="kw-2">&amp;</span>de.value);
         map.insert(<span class="self">Self</span>::FIELDS[<span class="number">1</span>].into(), value.clone());
-        visitor.visit_map(MapDe::new(<span class="kw-2">&amp;</span>map, |v| ConfiguredValueDe::from(config, v)))
+        visitor.visit_map(MapDe::new(<span class="kw-2">&amp;</span>map, |v| ConfiguredValueDe::&lt;I&gt;::from(config, v)))
     }
 }
 
@@ -1955,7 +1957,7 @@
 //     ) -&gt; Result&lt;V::Value, Error&gt;{
 //         let mut map = crate::value::Map::new();
 //         map.insert(Self::FIELDS[0].into(), de.config.profile().to_string().into());
-//         visitor.visit_map(MapDe::new(&amp;map, |v| ConfiguredValueDe::from(de.config, v)))
+//         visitor.visit_map(MapDe::new(&amp;map, |v| ConfiguredValueDe::&lt;I&gt;::from(de.config, v)))
 //     }
 // }
 //
@@ -2121,8 +2123,8 @@
         <span class="string">"___figment_tagged_tag" </span>, <span class="string">"___figment_tagged_value"
     </span>];
 
-    <span class="kw">fn </span>deserialize_from&lt;<span class="lifetime">'de</span>: <span class="lifetime">'c</span>, <span class="lifetime">'c</span>, V: de::Visitor&lt;<span class="lifetime">'de</span>&gt;&gt;(
-        de: ConfiguredValueDe&lt;<span class="lifetime">'c</span>&gt;,
+    <span class="kw">fn </span>deserialize_from&lt;<span class="lifetime">'de</span>: <span class="lifetime">'c</span>, <span class="lifetime">'c</span>, V: de::Visitor&lt;<span class="lifetime">'de</span>&gt;, I: Interpreter&gt;(
+        de: ConfiguredValueDe&lt;<span class="lifetime">'c</span>, I&gt;,
         visitor: V
     ) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, Error&gt;{
         <span class="kw">let </span>config = de.config;
@@ -2133,7 +2135,7 @@
             <span class="kw">if let </span><span class="prelude-val">Some</span>(tagv) = dict.get(<span class="self">Self</span>::FIELDS[<span class="number">0</span>]) {
                 <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) = tagv.deserialize::&lt;Tag&gt;().map(|t| t.is_default()) {
                     <span class="kw">return </span>visitor.visit_map(MapDe::new(dict, |v| {
-                        ConfiguredValueDe::from(config, v)
+                        ConfiguredValueDe::&lt;I&gt;::from(config, v)
                     }));
                 }
             }
@@ -2143,7 +2145,7 @@
         </span><span class="kw">let </span>value = de.value.find_ref(<span class="self">Self</span>::FIELDS[<span class="number">1</span>]).unwrap_or(<span class="kw-2">&amp;</span>de.value);
         map.insert(<span class="self">Self</span>::FIELDS[<span class="number">0</span>].into(), de.value.tag().into());
         map.insert(<span class="self">Self</span>::FIELDS[<span class="number">1</span>].into(), value.clone());
-        visitor.visit_map(MapDe::new(<span class="kw-2">&amp;</span>map, |v| ConfiguredValueDe::from(config, v)))
+        visitor.visit_map(MapDe::new(<span class="kw-2">&amp;</span>map, |v| ConfiguredValueDe::&lt;I&gt;::from(config, v)))
     }
 }
 

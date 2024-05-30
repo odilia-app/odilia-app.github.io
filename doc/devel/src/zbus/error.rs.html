@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-3.15.2/src/error.rs`."><title>error.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.2.2/src/error.rs`."><title>error.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../zbus/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -255,65 +255,15 @@
 <a href="#253" id="253">253</a>
 <a href="#254" id="254">254</a>
 <a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
-<a href="#257" id="257">257</a>
-<a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
-<a href="#263" id="263">263</a>
-<a href="#264" id="264">264</a>
-<a href="#265" id="265">265</a>
-<a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
-<a href="#272" id="272">272</a>
-<a href="#273" id="273">273</a>
-<a href="#274" id="274">274</a>
-<a href="#275" id="275">275</a>
-<a href="#276" id="276">276</a>
-<a href="#277" id="277">277</a>
-<a href="#278" id="278">278</a>
-<a href="#279" id="279">279</a>
-<a href="#280" id="280">280</a>
-<a href="#281" id="281">281</a>
-<a href="#282" id="282">282</a>
-<a href="#283" id="283">283</a>
-<a href="#284" id="284">284</a>
-<a href="#285" id="285">285</a>
-<a href="#286" id="286">286</a>
-<a href="#287" id="287">287</a>
-<a href="#288" id="288">288</a>
-<a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
-<a href="#299" id="299">299</a>
-<a href="#300" id="300">300</a>
-<a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-</span><span class="kw">use </span>quick_xml::de::DeError;
-<span class="kw">use </span>static_assertions::assert_impl_all;
+</pre></div><pre class="rust"><code><span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::{convert::Infallible, error, fmt, io, sync::Arc};
-<span class="kw">use </span>zbus_names::{Error <span class="kw">as </span>NamesError, OwnedErrorName};
-<span class="kw">use </span>zvariant::Error <span class="kw">as </span>VariantError;
+<span class="kw">use </span>zbus_names::{Error <span class="kw">as </span>NamesError, InterfaceName, OwnedErrorName};
+<span class="kw">use </span>zvariant::{Error <span class="kw">as </span>VariantError, ObjectPath};
 
-<span class="kw">use crate</span>::{fdo, Message, MessageType};
+<span class="kw">use crate</span>::{
+    fdo,
+    message::{Message, Type},
+};
 
 <span class="doccomment">/// The error type for `zbus`.
 ///
@@ -326,9 +276,6 @@
     </span>InterfaceNotFound,
     <span class="doccomment">/// Invalid D-Bus address.
     </span>Address(String),
-    <span class="doccomment">/// An I/O error.
-    </span><span class="attr">#[deprecated(note = <span class="string">"Use `Error::InputOutput` instead"</span>)]
-    </span>Io(io::Error),
     <span class="doccomment">/// An I/O error.
     </span>InputOutput(Arc&lt;io::Error&gt;),
     <span class="doccomment">/// Invalid message field.
@@ -348,7 +295,7 @@
     <span class="doccomment">/// A D-Bus method error reply.
     </span><span class="comment">// According to the spec, there can be all kinds of details in D-Bus errors but nobody adds
     // anything more than a string description.
-    </span>MethodError(OwnedErrorName, <span class="prelude-ty">Option</span>&lt;String&gt;, Arc&lt;Message&gt;),
+    </span>MethodError(OwnedErrorName, <span class="prelude-ty">Option</span>&lt;String&gt;, Message),
     <span class="doccomment">/// A required field is missing in the message headers.
     </span>MissingField,
     <span class="doccomment">/// Invalid D-Bus GUID.
@@ -357,13 +304,6 @@
     </span>Unsupported,
     <span class="doccomment">/// A [`fdo::Error`] transformed into [`Error`].
     </span>FDO(Box&lt;fdo::Error&gt;),
-    <span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
-    </span><span class="doccomment">/// An XML error
-    </span>SerdeXml(serde_xml_rs::Error),
-    <span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-    </span><span class="doccomment">/// An XML error from quick_xml
-    </span>QuickXml(DeError),
-    NoBodySignature,
     <span class="doccomment">/// The requested name was already claimed by another peer.
     </span>NameTaken,
     <span class="doccomment">/// Invalid [match rule][MR] string.
@@ -374,6 +314,10 @@
     </span>Failure(String),
     <span class="doccomment">/// A required parameter was missing.
     </span>MissingParameter(<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str),
+    <span class="doccomment">/// Serial number in the message header is 0 (which is invalid).
+    </span>InvalidSerial,
+    <span class="doccomment">/// The given interface already exists at the given path.
+    </span>InterfaceExists(InterfaceName&lt;<span class="lifetime">'static</span>&gt;, ObjectPath&lt;<span class="lifetime">'static</span>&gt;),
 }
 
 <span class="macro">assert_impl_all!</span>(Error: Send, Sync, Unpin);
@@ -390,22 +334,17 @@
             (<span class="self">Self</span>::MethodError(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>), <span class="self">Self</span>::MethodError(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>)) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::MissingField, <span class="self">Self</span>::MissingField) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::InvalidGUID, <span class="self">Self</span>::InvalidGUID) =&gt; <span class="bool-val">true</span>,
+            (<span class="self">Self</span>::InvalidSerial, <span class="self">Self</span>::InvalidSerial) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::Unsupported, <span class="self">Self</span>::Unsupported) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::FDO(s), <span class="self">Self</span>::FDO(o)) =&gt; s == o,
-            (<span class="self">Self</span>::NoBodySignature, <span class="self">Self</span>::NoBodySignature) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::InvalidField, <span class="self">Self</span>::InvalidField) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::InvalidMatchRule, <span class="self">Self</span>::InvalidMatchRule) =&gt; <span class="bool-val">true</span>,
             (<span class="self">Self</span>::Variant(s), <span class="self">Self</span>::Variant(o)) =&gt; s == o,
             (<span class="self">Self</span>::Names(s), <span class="self">Self</span>::Names(o)) =&gt; s == o,
             (<span class="self">Self</span>::NameTaken, <span class="self">Self</span>::NameTaken) =&gt; <span class="bool-val">true</span>,
-            <span class="attr">#[allow(deprecated)]
-            </span>(Error::Io(<span class="kw">_</span>), <span class="self">Self</span>::Io(<span class="kw">_</span>)) =&gt; <span class="bool-val">false</span>,
             (Error::InputOutput(<span class="kw">_</span>), <span class="self">Self</span>::InputOutput(<span class="kw">_</span>)) =&gt; <span class="bool-val">false</span>,
-            <span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
-            </span>(<span class="self">Self</span>::SerdeXml(<span class="kw">_</span>), <span class="self">Self</span>::SerdeXml(<span class="kw">_</span>)) =&gt; <span class="bool-val">false</span>,
-            <span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-            </span>(<span class="self">Self</span>::QuickXml(<span class="kw">_</span>), <span class="self">Self</span>::QuickXml(<span class="kw">_</span>)) =&gt; <span class="bool-val">false</span>,
             (<span class="self">Self</span>::Failure(s1), <span class="self">Self</span>::Failure(s2)) =&gt; s1 == s2,
+            (<span class="self">Self</span>::InterfaceExists(s1, s2), <span class="self">Self</span>::InterfaceExists(o1, o2)) =&gt; s1 == o1 &amp;&amp; s2 == o2,
             (<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="bool-val">false</span>,
         }
     }
@@ -416,8 +355,6 @@
         <span class="kw">match </span><span class="self">self </span>{
             Error::InterfaceNotFound =&gt; <span class="prelude-val">None</span>,
             Error::Address(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-            <span class="attr">#[allow(deprecated)]
-            </span>Error::Io(e) =&gt; <span class="prelude-val">Some</span>(e),
             Error::InputOutput(e) =&gt; <span class="prelude-val">Some</span>(e),
             Error::ExcessData =&gt; <span class="prelude-val">None</span>,
             Error::Handshake(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
@@ -429,17 +366,14 @@
             Error::InvalidGUID =&gt; <span class="prelude-val">None</span>,
             Error::Unsupported =&gt; <span class="prelude-val">None</span>,
             Error::FDO(e) =&gt; <span class="prelude-val">Some</span>(e),
-            <span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
-            </span>Error::SerdeXml(e) =&gt; <span class="prelude-val">Some</span>(e),
-            <span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-            </span>Error::QuickXml(e) =&gt; <span class="prelude-val">Some</span>(e),
-            Error::NoBodySignature =&gt; <span class="prelude-val">None</span>,
             Error::InvalidField =&gt; <span class="prelude-val">None</span>,
             Error::MissingField =&gt; <span class="prelude-val">None</span>,
             Error::NameTaken =&gt; <span class="prelude-val">None</span>,
             Error::InvalidMatchRule =&gt; <span class="prelude-val">None</span>,
             Error::Failure(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
             Error::MissingParameter(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+            Error::InvalidSerial =&gt; <span class="prelude-val">None</span>,
+            Error::InterfaceExists(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
         }
     }
 }
@@ -450,8 +384,6 @@
             Error::InterfaceNotFound =&gt; <span class="macro">write!</span>(f, <span class="string">"Interface not found"</span>),
             Error::Address(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"address error: {e}"</span>),
             Error::ExcessData =&gt; <span class="macro">write!</span>(f, <span class="string">"excess data"</span>),
-            <span class="attr">#[allow(deprecated)]
-            </span>Error::Io(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"I/O error: {e}"</span>),
             Error::InputOutput(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"I/O error: {e}"</span>),
             Error::Handshake(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"D-Bus handshake failed: {e}"</span>),
             Error::IncorrectEndian =&gt; <span class="macro">write!</span>(f, <span class="string">"incorrect endian"</span>),
@@ -469,17 +401,14 @@
             Error::InvalidGUID =&gt; <span class="macro">write!</span>(f, <span class="string">"Invalid GUID"</span>),
             Error::Unsupported =&gt; <span class="macro">write!</span>(f, <span class="string">"Connection support is lacking"</span>),
             Error::FDO(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"{e}"</span>),
-            <span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
-            </span>Error::SerdeXml(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"XML error: {}"</span>, e),
-            <span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-            </span>Error::QuickXml(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"XML error: {e}"</span>),
-            Error::NoBodySignature =&gt; <span class="macro">write!</span>(f, <span class="string">"missing body signature in the message"</span>),
             Error::NameTaken =&gt; <span class="macro">write!</span>(f, <span class="string">"name already taken on the bus"</span>),
             Error::InvalidMatchRule =&gt; <span class="macro">write!</span>(f, <span class="string">"Invalid match rule string"</span>),
             Error::Failure(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"{e}"</span>),
             Error::MissingParameter(p) =&gt; {
                 <span class="macro">write!</span>(f, <span class="string">"Parameter `{}` was not specified but it is required"</span>, p)
             }
+            Error::InvalidSerial =&gt; <span class="macro">write!</span>(f, <span class="string">"Serial number in the message header is 0"</span>),
+            Error::InterfaceExists(i, p) =&gt; <span class="macro">write!</span>(f, <span class="string">"Interface `{i}` already exists at `{p}`"</span>),
         }
     }
 }
@@ -490,8 +419,6 @@
             Error::InterfaceNotFound =&gt; Error::InterfaceNotFound,
             Error::Address(e) =&gt; Error::Address(e.clone()),
             Error::ExcessData =&gt; Error::ExcessData,
-            <span class="attr">#[allow(deprecated)]
-            </span>Error::Io(e) =&gt; Error::Io(io::Error::new(e.kind(), e.to_string())),
             Error::InputOutput(e) =&gt; Error::InputOutput(e.clone()),
             Error::Handshake(e) =&gt; Error::Handshake(e.clone()),
             Error::IncorrectEndian =&gt; Error::IncorrectEndian,
@@ -506,16 +433,12 @@
             Error::InvalidGUID =&gt; Error::InvalidGUID,
             Error::Unsupported =&gt; Error::Unsupported,
             Error::FDO(e) =&gt; Error::FDO(e.clone()),
-            <span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
-            </span>Error::SerdeXml(e) =&gt; Error::Failure(e.to_string()),
-            <span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-            </span><span class="comment">// Until https://github.com/tafia/quick-xml/pull/521 is merged and released.
-            </span>Error::QuickXml(e) =&gt; Error::QuickXml(e.clone()),
-            Error::NoBodySignature =&gt; Error::NoBodySignature,
             Error::NameTaken =&gt; Error::NameTaken,
             Error::InvalidMatchRule =&gt; Error::InvalidMatchRule,
             Error::Failure(e) =&gt; Error::Failure(e.clone()),
             Error::MissingParameter(p) =&gt; Error::MissingParameter(p),
+            Error::InvalidSerial =&gt; Error::InvalidSerial,
+            Error::InterfaceExists(i, p) =&gt; Error::InterfaceExists(i.clone(), p.clone()),
         }
     }
 }
@@ -557,20 +480,6 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">"xml"</span>)]
-</span><span class="kw">impl </span>From&lt;serde_xml_rs::Error&gt; <span class="kw">for </span>Error {
-    <span class="kw">fn </span>from(val: serde_xml_rs::Error) -&gt; <span class="self">Self </span>{
-        Error::SerdeXml(val)
-    }
-}
-
-<span class="attr">#[cfg(feature = <span class="string">"quick-xml"</span>)]
-</span><span class="kw">impl </span>From&lt;DeError&gt; <span class="kw">for </span>Error {
-    <span class="kw">fn </span>from(val: DeError) -&gt; <span class="self">Self </span>{
-        Error::QuickXml(val)
-    }
-}
-
 <span class="kw">impl </span>From&lt;Infallible&gt; <span class="kw">for </span>Error {
     <span class="kw">fn </span>from(i: Infallible) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span>i {}
@@ -580,27 +489,16 @@
 <span class="comment">// For messages that are D-Bus error returns
 </span><span class="kw">impl </span>From&lt;Message&gt; <span class="kw">for </span>Error {
     <span class="kw">fn </span>from(message: Message) -&gt; Error {
-        <span class="self">Self</span>::from(Arc::new(message))
-    }
-}
-
-<span class="kw">impl </span>From&lt;Arc&lt;Message&gt;&gt; <span class="kw">for </span>Error {
-    <span class="kw">fn </span>from(message: Arc&lt;Message&gt;) -&gt; Error {
         <span class="comment">// FIXME: Instead of checking this, we should have Method as trait and specific types for
         // each message type.
-        </span><span class="kw">let </span>header = <span class="kw">match </span>message.header() {
-            <span class="prelude-val">Ok</span>(header) =&gt; header,
-            <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="kw">return </span>e;
-            }
-        };
-        <span class="kw">if </span>header.primary().msg_type() != MessageType::Error {
+        </span><span class="kw">let </span>header = message.header();
+        <span class="kw">if </span>header.primary().msg_type() != Type::Error {
             <span class="kw">return </span>Error::InvalidReply;
         }
 
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(name)) = header.error_name() {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(name) = header.error_name() {
             <span class="kw">let </span>name = name.to_owned().into();
-            <span class="kw">match </span>message.body_unchecked::&lt;<span class="kw-2">&amp;</span>str&gt;() {
+            <span class="kw">match </span>message.body().deserialize_unchecked::&lt;<span class="kw-2">&amp;</span>str&gt;() {
                 <span class="prelude-val">Ok</span>(detail) =&gt; Error::MethodError(name, <span class="prelude-val">Some</span>(String::from(detail)), message),
                 <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; Error::MethodError(name, <span class="prelude-val">None</span>, message),
             }

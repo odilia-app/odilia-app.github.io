@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/events/object.rs`."><title>object.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../odilia/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `odilia/src/events/object.rs`."><title>object.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="odilia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -661,14 +659,6 @@
 <a href="#659" id="659">659</a>
 <a href="#660" id="660">660</a>
 <a href="#661" id="661">661</a>
-<a href="#662" id="662">662</a>
-<a href="#663" id="663">663</a>
-<a href="#664" id="664">664</a>
-<a href="#665" id="665">665</a>
-<a href="#666" id="666">666</a>
-<a href="#667" id="667">667</a>
-<a href="#668" id="668">668</a>
-<a href="#669" id="669">669</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 <span class="kw">use </span>atspi_common::events::object::ObjectEvents;
 
@@ -697,7 +687,7 @@
 
 <span class="kw">mod </span>text_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi_common::events::object::TextChangedEvent;
+	<span class="kw">use </span>atspi_common::{events::object::TextChangedEvent, Operation};
 	<span class="kw">use </span>odilia_cache::CacheItem;
 	<span class="kw">use </span>odilia_common::{
 		errors::OdiliaError,
@@ -831,15 +821,9 @@
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>TextChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">match </span>event.operation.as_str() {
-			<span class="string">"insert/system" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">"insert" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">"delete/system" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="string">"delete" </span>=&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
-			<span class="kw">_ </span>=&gt; <span class="macro">tracing::trace!</span>(
-				<span class="string">"TextChangedEvent has invalid kind: {}"</span>,
-				event.operation
-			),
+		<span class="kw">match </span>event.operation {
+			Operation::Insert =&gt; insert_or_delete(state, event, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>,
+			Operation::Delete =&gt; insert_or_delete(state, event, <span class="bool-val">false</span>).<span class="kw">await</span><span class="question-mark">?</span>,
 		};
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -917,9 +901,9 @@
 
 <span class="kw">mod </span>children_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
-	<span class="kw">use </span>atspi_common::events::object::ChildrenChangedEvent;
-	<span class="kw">use </span>odilia_cache::{AccessiblePrimitive, CacheItem};
-	<span class="kw">use </span>odilia_common::result::OdiliaResult;
+	<span class="kw">use </span>atspi_common::{events::object::ChildrenChangedEvent, Operation};
+	<span class="kw">use </span>odilia_cache::CacheItem;
+	<span class="kw">use </span>odilia_common::{cache::AccessiblePrimitive, result::OdiliaResult};
 	<span class="kw">use </span>std::sync::Arc;
 
 	<span class="attr">#[tracing::instrument(level = <span class="string">"debug"</span>, skip(state), err)]
@@ -928,10 +912,9 @@
 		event: <span class="kw-2">&amp;</span>ChildrenChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
 		<span class="comment">// Dispatch based on kind
-		</span><span class="kw">match </span>event.operation.as_str() {
-			<span class="string">"remove" </span>| <span class="string">"remove/system" </span>=&gt; remove(state, event)<span class="question-mark">?</span>,
-			<span class="string">"add" </span>| <span class="string">"add/system" </span>=&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
-			kind =&gt; <span class="macro">tracing::debug!</span>(kind, <span class="string">"Ignoring event with unknown kind"</span>),
+		</span><span class="kw">match </span>event.operation {
+			Operation::Insert =&gt; add(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
+			Operation::Delete =&gt; remove(state, event)<span class="question-mark">?</span>,
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -943,10 +926,8 @@
 		<span class="kw">let </span>accessible = get_child_primitive(event)
 			.into_accessible(state.atspi.connection())
 			.<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">let _</span>: OdiliaResult&lt;CacheItem&gt; = state
-			.cache
-			.get_or_create(<span class="kw-2">&amp;</span>accessible, Arc::downgrade(<span class="kw-2">&amp;</span>Arc::clone(<span class="kw-2">&amp;</span>state.cache)))
-			.<span class="kw">await</span>;
+		<span class="kw">let _</span>: OdiliaResult&lt;CacheItem&gt; =
+			state.cache.get_or_create(<span class="kw-2">&amp;</span>accessible, Arc::clone(<span class="kw-2">&amp;</span>state.cache)).<span class="kw">await</span>;
 		<span class="macro">tracing::debug!</span>(<span class="string">"Add a single item to cache."</span>);
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -1040,7 +1021,7 @@
 			<span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
 		}
 		<span class="comment">// Hopefully this shouldn't happen, but technically the caret may change before any other event happens. Since we already know that the caret position is 0, it may be a caret moved event
-		</span><span class="kw">let </span>last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+		</span><span class="kw">let </span>last_accessible = <span class="kw">match </span>state.history_item(<span class="number">0</span>) {
 			<span class="prelude-val">Some</span>(acc) =&gt; state.get_or_create_cache_item(acc).<span class="kw">await</span><span class="question-mark">?</span>,
 			<span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="bool-val">true</span>),
 		};
@@ -1069,7 +1050,7 @@
 		<span class="kw">let </span>new_item = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
 
 		<span class="kw">let </span>new_prim = new_item.object.clone();
-		<span class="kw">let </span>text = <span class="kw">match </span>state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+		<span class="kw">let </span>text = <span class="kw">match </span>state.history_item(<span class="number">0</span>) {
 			<span class="prelude-val">Some</span>(old_prim) =&gt; {
 				<span class="kw">let </span>old_pos = state.previous_caret_position.load(Ordering::Relaxed);
 				<span class="kw">let </span>old_item =
@@ -1090,7 +1071,7 @@
 			</span>}
 		};
 		state.say(Priority::Text, text).<span class="kw">await</span>;
-		state.update_accessible(new_prim).<span class="kw">await</span>;
+		state.update_accessible(new_prim);
 		<span class="prelude-val">Ok</span>(())
 	}
 
@@ -1114,7 +1095,7 @@
 </span><span class="kw">mod </span>state_changed {
 	<span class="kw">use </span><span class="kw">crate</span>::state::ScreenReaderState;
 	<span class="kw">use </span>atspi_common::{events::object::StateChangedEvent, State};
-	<span class="kw">use </span>odilia_cache::AccessiblePrimitive;
+	<span class="kw">use </span>odilia_common::cache::AccessiblePrimitive;
 
 	<span class="doccomment">/// Update the state of an item in the cache using a `StateChanged` event and the `ScreenReaderState` as context.
 	/// This writes to the value in-place, and does not clone any values.
@@ -1140,16 +1121,16 @@
 		state: <span class="kw-2">&amp;</span>ScreenReaderState,
 		event: <span class="kw-2">&amp;</span>StateChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
-		<span class="kw">let </span>state_value = event.enabled == <span class="number">1</span>;
+		<span class="kw">let </span>state_value = event.enabled;
 		<span class="comment">// update cache with state of item
-		</span><span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
+		</span><span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event);
 		<span class="kw">if </span>update_state(state, <span class="kw-2">&amp;</span>a11y_prim, event.state, state_value)<span class="question-mark">? </span>{
 			<span class="macro">tracing::trace!</span>(<span class="string">"Updating of the state was not successful! The item with id {:?} was not found in the cache."</span>, a11y_prim.id);
 		} <span class="kw">else </span>{
 			<span class="macro">tracing::trace!</span>(<span class="string">"Updated the state of accessible with ID {:?}, and state {:?} to {state_value}."</span>, a11y_prim.id, event.state);
 		}
 		<span class="comment">// enabled can only be 1 or 0, but is not a boolean over dbus
-		</span><span class="kw">match </span>(event.state, event.enabled == <span class="number">1</span>) {
+		</span><span class="kw">match </span>(event.state, event.enabled) {
 			(State::Focused, <span class="bool-val">true</span>) =&gt; focused(state, event).<span class="kw">await</span><span class="question-mark">?</span>,
 			(state, enabled) =&gt; <span class="macro">tracing::trace!</span>(
 				<span class="string">"Ignoring state_changed event with unknown kind: {:?}/{}"</span>,
@@ -1166,7 +1147,7 @@
 		event: <span class="kw-2">&amp;</span>StateChangedEvent,
 	) -&gt; eyre::Result&lt;()&gt; {
 		<span class="kw">let </span>accessible = state.get_or_create_event_object_to_cache(event).<span class="kw">await</span><span class="question-mark">?</span>;
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>).<span class="kw">await </span>{
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(curr) = state.history_item(<span class="number">0</span>) {
 			<span class="kw">if </span>curr == accessible.object {
 				<span class="kw">return </span><span class="prelude-val">Ok</span>(());
 			}
@@ -1177,7 +1158,7 @@
 			accessible.description(),
 			accessible.get_relation_set(),
 		)<span class="question-mark">?</span>;
-		state.update_accessible(accessible.object.clone()).<span class="kw">await</span>;
+		state.update_accessible(accessible.object.clone());
 		<span class="macro">tracing::debug!</span>(
 			<span class="string">"Focus event received on: {:?} with role {}"</span>,
 			accessible.object.id,
@@ -1191,7 +1172,7 @@
 		)
 		.<span class="kw">await</span>;
 
-		state.update_accessible(accessible.object).<span class="kw">await</span>;
+		state.update_accessible(accessible.object);
 		<span class="prelude-val">Ok</span>(())
 	}
 }
@@ -1202,7 +1183,8 @@
 	<span class="kw">use </span>atspi_common::{Interface, InterfaceSet, Role, State, StateSet};
 	<span class="kw">use </span>atspi_connection::AccessibilityConnection;
 	<span class="kw">use </span>lazy_static::lazy_static;
-	<span class="kw">use </span>odilia_cache::{AccessiblePrimitive, Cache, CacheItem};
+	<span class="kw">use </span>odilia_cache::{Cache, CacheItem};
+	<span class="kw">use </span>odilia_common::cache::AccessiblePrimitive;
 	<span class="kw">use </span>std::sync::Arc;
 	<span class="kw">use </span>tokio_test::block_on;
 

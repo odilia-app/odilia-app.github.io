@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["ChoiceService"],"trait":["Chooser","ChooserStatic"]};

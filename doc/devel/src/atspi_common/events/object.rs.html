@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atspi-common-0.6.0/src/events/object.rs`."><title>object.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../atspi_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/bfa3bc4/atspi-common/src/events/object.rs`."><title>object.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1641,6 +1639,18 @@
 <a href="#1639" id="1639">1639</a>
 <a href="#1640" id="1640">1640</a>
 <a href="#1641" id="1641">1641</a>
+<a href="#1642" id="1642">1642</a>
+<a href="#1643" id="1643">1643</a>
+<a href="#1644" id="1644">1644</a>
+<a href="#1645" id="1645">1645</a>
+<a href="#1646" id="1646">1646</a>
+<a href="#1647" id="1647">1647</a>
+<a href="#1648" id="1648">1648</a>
+<a href="#1649" id="1649">1649</a>
+<a href="#1650" id="1650">1650</a>
+<a href="#1651" id="1651">1651</a>
+<a href="#1652" id="1652">1652</a>
+<a href="#1653" id="1653">1653</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::hash::Hash;
 
 <span class="kw">use crate</span>::{
@@ -1875,7 +1885,8 @@
 </span><span class="kw">pub struct </span>PropertyChangeEvent {
 	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
-	<span class="kw">pub </span>property: String,
+	<span class="comment">// TODO: this is not necessary since the string is encoded in the `Property` type.
+	</span><span class="kw">pub </span>property: String,
 	<span class="kw">pub </span>value: Property,
 }
 
@@ -1897,7 +1908,10 @@
 	}
 }
 
-<span class="attr">#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+<span class="doccomment">/// Any accessibility related property on an [`ObjectRef`].
+/// This is used only in the [`PropertyChangeEvent`]; this event gets triggered if a role or accessible
+/// description of an item changes.
+</span><span class="attr">#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[non_exhaustive]
 </span><span class="kw">pub enum </span>Property {
 	Name(String),
@@ -2059,12 +2073,33 @@
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 	<span class="doccomment">/// The state to be enabled/disabled.
 	</span><span class="kw">pub </span>state: State,
-	<span class="doccomment">/// Enabled or disabled the state.
-	///
-	/// 1 == enabled
-	///
-	/// 0 == disabled
-	</span><span class="kw">pub </span>enabled: i32,
+	<span class="doccomment">/// Whether the state was enabled or disabled.
+	</span><span class="attr">#[serde(with = <span class="string">"i32_bool_conversion"</span>)]
+	</span><span class="kw">pub </span>enabled: bool,
+}
+
+<span class="kw">mod </span>i32_bool_conversion {
+	<span class="kw">use </span>serde::{Deserialize, Deserializer, Serializer};
+	<span class="doccomment">/// Convert an integer flag to a boolean.
+	/// returns true if value is more than 0, otherwise false
+	</span><span class="kw">pub fn </span>deserialize&lt;<span class="lifetime">'de</span>, D&gt;(de: D) -&gt; <span class="prelude-ty">Result</span>&lt;bool, D::Error&gt;
+	<span class="kw">where
+		</span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+	{
+		<span class="kw">let </span>int: i32 = Deserialize::deserialize(de)<span class="question-mark">?</span>;
+		<span class="prelude-val">Ok</span>(int &gt; <span class="number">0</span>)
+	}
+
+	<span class="doccomment">/// Convert a boolean flag to an integer.
+	/// returns 0 if false and 1 if true
+	</span><span class="attr">#[allow(clippy::trivially_copy_pass_by_ref)]
+	</span><span class="kw">pub fn </span>serialize&lt;S&gt;(b: <span class="kw-2">&amp;</span>bool, ser: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
+	<span class="kw">where
+		</span>S: Serializer,
+	{
+		<span class="kw">let </span>val: i32 = (<span class="kw-2">*</span>b).into();
+		ser.serialize_i32(val)
+	}
 }
 
 <span class="doccomment">/// A child of an [`ObjectRef`] has been added or removed.
@@ -2072,16 +2107,8 @@
 </span><span class="kw">pub struct </span>ChildrenChangedEvent {
 	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
-	<span class="doccomment">/// Operation, which may be one of:
-	///
-	/// * "insert/system"
-	/// * "insert"
-	/// * "delete/system"
-	/// * "delete"
-	///
-	/// The operation is the same whether it contains the "/system" suffix or not.
-	/// TODO: This should be an enum.
-	</span><span class="kw">pub </span>operation: String,
+	<span class="doccomment">/// The [`crate::Operation`] being performed.
+	</span><span class="kw">pub </span>operation: <span class="kw">crate</span>::Operation,
 	<span class="doccomment">/// Index to remove from/add to.
 	</span><span class="kw">pub </span>index_in_parent: i32,
 	<span class="doccomment">/// A reference to the new child.
@@ -2120,7 +2147,7 @@
 	<span class="doccomment">/// Text of the announcement.
 	</span><span class="kw">pub </span>text: String,
 	<span class="doccomment">/// Politeness level.
-	</span><span class="kw">pub </span>live: <span class="kw">crate</span>::Live,
+	</span><span class="kw">pub </span>live: <span class="kw">crate</span>::Politeness,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
@@ -2188,16 +2215,8 @@
 </span><span class="kw">pub struct </span>TextChangedEvent {
 	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
-	<span class="doccomment">/// Operation, which may be one of:
-	///
-	/// * "insert/system"
-	/// * "insert"
-	/// * "delete/system"
-	/// * "delete"
-	///
-	/// The operation is the same whether it contains the "/system" suffix or not.
-	/// TODO: This should be an enum.
-	</span><span class="kw">pub </span>operation: String,
+	<span class="doccomment">/// The [`crate::Operation`] being performed.
+	</span><span class="kw">pub </span>operation: <span class="kw">crate</span>::Operation,
 	<span class="doccomment">/// starting index of the insertion/deletion
 	</span><span class="kw">pub </span>start_pos: i32,
 	<span class="doccomment">/// length of the insertion/deletion
@@ -2206,7 +2225,10 @@
 	</span><span class="kw">pub </span>text: String,
 }
 
-<span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
+<span class="doccomment">/// Signal that some attributes about the text (usually styling) have changed.
+/// This event does not encode _what_ has changed about the attributes, merely that they have
+/// changed.
+</span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>TextAttributesChangedEvent {
 	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
@@ -2287,7 +2309,7 @@
 	<span class="kw">type </span>Body = EventBodyOwned;
 
 	<span class="kw">fn </span>from_message_parts(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, state: body.kind.into(), enabled: body.detail1 })
+		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item, state: body.kind.into(), enabled: body.detail1 &gt; <span class="number">0 </span>})
 	}
 	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
 		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
@@ -2307,7 +2329,7 @@
 	<span class="kw">fn </span>from_message_parts(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			item,
-			operation: body.kind,
+			operation: body.kind.as_str().parse()<span class="question-mark">?</span>,
 			index_in_parent: body.detail1,
 			child: body.any_data.try_into()<span class="question-mark">?</span>,
 		})
@@ -2586,7 +2608,7 @@
 	<span class="kw">fn </span>from_message_parts(item: ObjectRef, body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{
 			item,
-			operation: body.kind,
+			operation: body.kind.as_str().parse()<span class="question-mark">?</span>,
 			start_pos: body.detail1,
 			length: body.detail2,
 			text: body.any_data.try_into()<span class="question-mark">?</span>,
@@ -2772,8 +2794,8 @@
 	<span class="kw">fn </span>from(event: StateChangedEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
 			properties: std::collections::HashMap::new(),
-			kind: event.state.into(),
-			detail1: event.enabled,
+			kind: event.state.to_string(),
+			detail1: event.enabled.into(),
 			detail2: i32::default(),
 			any_data: u8::default().into(),
 		}
@@ -2799,7 +2821,7 @@
 	<span class="kw">fn </span>from(event: ChildrenChangedEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
 			properties: std::collections::HashMap::new(),
-			kind: event.operation,
+			kind: event.operation.to_string(),
 			detail1: event.index_in_parent,
 			detail2: i32::default(),
 			<span class="comment">// `OwnedValue` is constructed from the `ObjectRef`
@@ -3212,7 +3234,7 @@
 	<span class="kw">fn </span>from(event: TextChangedEvent) -&gt; <span class="self">Self </span>{
 		EventBodyOwned {
 			properties: std::collections::HashMap::new(),
-			kind: event.operation,
+			kind: event.operation.to_string(),
 			detail1: event.start_pos,
 			detail2: event.length,
 

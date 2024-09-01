@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cache/src/lib.rs`."><title>lib.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../odilia_cache/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cache/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -872,110 +870,6 @@
 <a href="#870" id="870">870</a>
 <a href="#871" id="871">871</a>
 <a href="#872" id="872">872</a>
-<a href="#873" id="873">873</a>
-<a href="#874" id="874">874</a>
-<a href="#875" id="875">875</a>
-<a href="#876" id="876">876</a>
-<a href="#877" id="877">877</a>
-<a href="#878" id="878">878</a>
-<a href="#879" id="879">879</a>
-<a href="#880" id="880">880</a>
-<a href="#881" id="881">881</a>
-<a href="#882" id="882">882</a>
-<a href="#883" id="883">883</a>
-<a href="#884" id="884">884</a>
-<a href="#885" id="885">885</a>
-<a href="#886" id="886">886</a>
-<a href="#887" id="887">887</a>
-<a href="#888" id="888">888</a>
-<a href="#889" id="889">889</a>
-<a href="#890" id="890">890</a>
-<a href="#891" id="891">891</a>
-<a href="#892" id="892">892</a>
-<a href="#893" id="893">893</a>
-<a href="#894" id="894">894</a>
-<a href="#895" id="895">895</a>
-<a href="#896" id="896">896</a>
-<a href="#897" id="897">897</a>
-<a href="#898" id="898">898</a>
-<a href="#899" id="899">899</a>
-<a href="#900" id="900">900</a>
-<a href="#901" id="901">901</a>
-<a href="#902" id="902">902</a>
-<a href="#903" id="903">903</a>
-<a href="#904" id="904">904</a>
-<a href="#905" id="905">905</a>
-<a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
-<a href="#910" id="910">910</a>
-<a href="#911" id="911">911</a>
-<a href="#912" id="912">912</a>
-<a href="#913" id="913">913</a>
-<a href="#914" id="914">914</a>
-<a href="#915" id="915">915</a>
-<a href="#916" id="916">916</a>
-<a href="#917" id="917">917</a>
-<a href="#918" id="918">918</a>
-<a href="#919" id="919">919</a>
-<a href="#920" id="920">920</a>
-<a href="#921" id="921">921</a>
-<a href="#922" id="922">922</a>
-<a href="#923" id="923">923</a>
-<a href="#924" id="924">924</a>
-<a href="#925" id="925">925</a>
-<a href="#926" id="926">926</a>
-<a href="#927" id="927">927</a>
-<a href="#928" id="928">928</a>
-<a href="#929" id="929">929</a>
-<a href="#930" id="930">930</a>
-<a href="#931" id="931">931</a>
-<a href="#932" id="932">932</a>
-<a href="#933" id="933">933</a>
-<a href="#934" id="934">934</a>
-<a href="#935" id="935">935</a>
-<a href="#936" id="936">936</a>
-<a href="#937" id="937">937</a>
-<a href="#938" id="938">938</a>
-<a href="#939" id="939">939</a>
-<a href="#940" id="940">940</a>
-<a href="#941" id="941">941</a>
-<a href="#942" id="942">942</a>
-<a href="#943" id="943">943</a>
-<a href="#944" id="944">944</a>
-<a href="#945" id="945">945</a>
-<a href="#946" id="946">946</a>
-<a href="#947" id="947">947</a>
-<a href="#948" id="948">948</a>
-<a href="#949" id="949">949</a>
-<a href="#950" id="950">950</a>
-<a href="#951" id="951">951</a>
-<a href="#952" id="952">952</a>
-<a href="#953" id="953">953</a>
-<a href="#954" id="954">954</a>
-<a href="#955" id="955">955</a>
-<a href="#956" id="956">956</a>
-<a href="#957" id="957">957</a>
-<a href="#958" id="958">958</a>
-<a href="#959" id="959">959</a>
-<a href="#960" id="960">960</a>
-<a href="#961" id="961">961</a>
-<a href="#962" id="962">962</a>
-<a href="#963" id="963">963</a>
-<a href="#964" id="964">964</a>
-<a href="#965" id="965">965</a>
-<a href="#966" id="966">966</a>
-<a href="#967" id="967">967</a>
-<a href="#968" id="968">968</a>
-<a href="#969" id="969">969</a>
-<a href="#970" id="970">970</a>
-<a href="#971" id="971">971</a>
-<a href="#972" id="972">972</a>
-<a href="#973" id="973">973</a>
-<a href="#974" id="974">974</a>
-<a href="#975" id="975">975</a>
-<a href="#976" id="976">976</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -996,26 +890,25 @@
 
 <span class="kw">use </span>std::{
 	collections::HashMap,
+	fmt::Debug,
+	ops::Deref,
 	sync::{Arc, RwLock, Weak},
 };
 
 <span class="kw">use </span>atspi_common::{
-	object_ref::ObjectRef, ClipType, CoordType, EventProperties, Granularity, InterfaceSet,
-	RelationType, Role, StateSet,
+	ClipType, CoordType, EventProperties, Granularity, InterfaceSet, RelationType, Role,
+	StateSet,
 };
 <span class="kw">use </span>atspi_proxies::{accessible::AccessibleProxy, text::TextProxy};
 <span class="kw">use </span>dashmap::DashMap;
 <span class="kw">use </span>fxhash::FxBuildHasher;
 <span class="kw">use </span>odilia_common::{
-	errors::{AccessiblePrimitiveConversionError, CacheError, OdiliaError},
+	cache::AccessiblePrimitive,
+	errors::{CacheError, OdiliaError},
 	result::OdiliaResult,
 };
 <span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>zbus::{
-	names::OwnedUniqueName,
-	zvariant::{ObjectPath, OwnedObjectPath},
-	CacheProperties, ProxyBuilder,
-};
+<span class="kw">use </span>zbus::CacheProperties;
 
 <span class="kw">trait </span>AllText {
 	<span class="kw">async fn </span>get_all_text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String, OdiliaError&gt;;
@@ -1030,121 +923,6 @@
 <span class="kw">type </span>CacheKey = AccessiblePrimitive;
 <span class="kw">type </span>InnerCache = DashMap&lt;CacheKey, Arc&lt;RwLock&lt;CacheItem&gt;&gt;, FxBuildHasher&gt;;
 <span class="kw">type </span>ThreadSafeCache = Arc&lt;InnerCache&gt;;
-
-<span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Hash, Deserialize, Serialize)]
-</span><span class="doccomment">/// A struct which represents the bare minimum of an accessible for purposes of caching.
-/// This makes some *possibly eronious* assumptions about what the sender is.
-</span><span class="kw">pub struct </span>AccessiblePrimitive {
-	<span class="doccomment">/// The accessible ID, which is an arbitrary string specified by the application.
-	/// It is guaranteed to be unique per application.
-	/// Examples:
-	/// * /org/a11y/atspi/accessible/1234
-	/// * /org/a11y/atspi/accessible/null
-	/// * /org/a11y/atspi/accessible/root
-	/// * /org/Gnome/GTK/abab22-bbbb33-2bba2
-	</span><span class="kw">pub </span>id: String,
-	<span class="doccomment">/// Assuming that the sender is ":x.y", this stores the (x,y) portion of this sender.
-	/// Examples:
-	/// * :1.1 (the first window has opened)
-	/// * :2.5 (a second session exists, where at least 5 applications have been lauinched)
-	/// * :1.262 (many applications have been started on this bus)
-	</span><span class="kw">pub </span>sender: smartstring::alias::String,
-}
-<span class="kw">impl </span>AccessiblePrimitive {
-	<span class="doccomment">/// Convert into an [`atspi_proxies::accessible::AccessibleProxy`]. Must be async because the creation of an async proxy requires async itself.
-	/// # Errors
-	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
-	</span><span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"trace"</span>, ret, err)]
-	</span><span class="kw">pub async fn </span>into_accessible&lt;<span class="lifetime">'a</span>&gt;(
-		<span class="self">self</span>,
-		conn: <span class="kw-2">&amp;</span>zbus::Connection,
-	) -&gt; zbus::Result&lt;AccessibleProxy&lt;<span class="lifetime">'a</span>&gt;&gt; {
-		<span class="kw">let </span>id = <span class="self">self</span>.id;
-		<span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
-		<span class="kw">let </span>path: ObjectPath&lt;<span class="lifetime">'a</span>&gt; = id.try_into()<span class="question-mark">?</span>;
-		ProxyBuilder::new(conn)
-			.path(path)<span class="question-mark">?
-			</span>.destination(sender.as_str().to_owned())<span class="question-mark">?
-			</span>.cache_properties(CacheProperties::No)
-			.build()
-			.<span class="kw">await
-	</span>}
-	<span class="doccomment">/// Convert into an [`atspi_proxies::text::TextProxy`]. Must be async because the creation of an async proxy requires async itself.
-	/// # Errors
-	/// Will return a [`zbus::Error`] in the case of an invalid destination, path, or failure to create a `Proxy` from those properties.
-	</span><span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"trace"</span>, ret, err)]
-	</span><span class="kw">pub async fn </span>into_text&lt;<span class="lifetime">'a</span>&gt;(<span class="self">self</span>, conn: <span class="kw-2">&amp;</span>zbus::Connection) -&gt; zbus::Result&lt;TextProxy&lt;<span class="lifetime">'a</span>&gt;&gt; {
-		<span class="kw">let </span>id = <span class="self">self</span>.id;
-		<span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
-		<span class="kw">let </span>path: ObjectPath&lt;<span class="lifetime">'a</span>&gt; = id.try_into()<span class="question-mark">?</span>;
-		ProxyBuilder::new(conn)
-			.path(path)<span class="question-mark">?
-			</span>.destination(sender.as_str().to_owned())<span class="question-mark">?
-			</span>.cache_properties(CacheProperties::No)
-			.build()
-			.<span class="kw">await
-	</span>}
-	<span class="doccomment">/// Turns any `atspi::event` type into an `AccessiblePrimitive`, the basic type which is used for keys in the cache.
-	/// # Errors
-	/// The errors are self-explanitory variants of the [`odilia_common::errors::AccessiblePrimitiveConversionError`].
-	</span><span class="attr">#[tracing::instrument(skip_all, level = <span class="string">"trace"</span>, ret, err)]
-	</span><span class="kw">pub fn </span>from_event&lt;T: EventProperties&gt;(
-		event: <span class="kw-2">&amp;</span>T,
-	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AccessiblePrimitiveConversionError&gt; {
-		<span class="kw">let </span>sender = event.sender();
-		<span class="kw">let </span>path = event.path();
-		<span class="kw">let </span>id = path.to_string();
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ id, sender: sender.as_str().into() })
-	}
-}
-<span class="kw">impl </span>From&lt;ObjectRef&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">fn </span>from(atspi_accessible: ObjectRef) -&gt; AccessiblePrimitive {
-		<span class="kw">let </span>tuple_converter = (atspi_accessible.name, atspi_accessible.path);
-		tuple_converter.into()
-	}
-}
-
-<span class="kw">impl </span>From&lt;(OwnedUniqueName, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">fn </span>from(so: (OwnedUniqueName, OwnedObjectPath)) -&gt; AccessiblePrimitive {
-		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
-		AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.as_str().into() }
-	}
-}
-<span class="kw">impl </span>From&lt;(String, OwnedObjectPath)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
-	</span><span class="kw">fn </span>from(so: (String, OwnedObjectPath)) -&gt; AccessiblePrimitive {
-		<span class="kw">let </span>accessible_id = so.<span class="number">1</span>;
-		AccessiblePrimitive { id: accessible_id.to_string(), sender: so.<span class="number">0</span>.into() }
-	}
-}
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; From&lt;(String, ObjectPath&lt;<span class="lifetime">'a</span>&gt;)&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
-	</span><span class="kw">fn </span>from(so: (String, ObjectPath&lt;<span class="lifetime">'a</span>&gt;)) -&gt; AccessiblePrimitive {
-		AccessiblePrimitive { id: so.<span class="number">1</span>.to_string(), sender: so.<span class="number">0</span>.into() }
-	}
-}
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
-
-	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
-	</span><span class="kw">fn </span>try_from(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>accessible = accessible.inner();
-		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-		<span class="kw">let </span>id = accessible.path().as_str().into();
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
-	}
-}
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;AccessibleProxy&lt;<span class="lifetime">'a</span>&gt;&gt; <span class="kw">for </span>AccessiblePrimitive {
-	<span class="kw">type </span>Error = AccessiblePrimitiveConversionError;
-
-	<span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
-	</span><span class="kw">fn </span>try_from(accessible: AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;AccessiblePrimitive, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>accessible = accessible.inner();
-		<span class="kw">let </span>sender = accessible.destination().as_str().into();
-		<span class="kw">let </span>id = accessible.path().as_str().into();
-		<span class="prelude-val">Ok</span>(AccessiblePrimitive { id, sender })
-	}
-}
 
 <span class="attr">#[derive(Clone, Debug, Deserialize, Serialize)]
 </span><span class="doccomment">/// A struct representing an accessible. To get any information from the cache other than the stored information like role, interfaces, and states, you will need to instantiate an [`atspi_proxies::accessible::AccessibleProxy`] or other `*Proxy` type from atspi to query further info.
@@ -1201,10 +979,10 @@
 	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, skip_all, ret, err)]
 	</span><span class="kw">pub async fn </span>from_atspi_event&lt;T: EventProperties&gt;(
 		event: <span class="kw-2">&amp;</span>T,
-		cache: Weak&lt;Cache&gt;,
+		cache: Arc&lt;Cache&gt;,
 		connection: <span class="kw-2">&amp;</span>zbus::Connection,
 	) -&gt; OdiliaResult&lt;<span class="self">Self</span>&gt; {
-		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event)<span class="question-mark">?</span>;
+		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event);
 		accessible_to_cache_item(<span class="kw-2">&amp;</span>a11y_prim.into_accessible(connection).<span class="kw">await</span><span class="question-mark">?</span>, cache).<span class="kw">await
 	</span>}
 	<span class="doccomment">/// Convert an [`atspi::CacheItem`] into a [`crate::CacheItem`].
@@ -1409,28 +1187,17 @@
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;(RelationType, Vec&lt;<span class="self">Self</span>&gt;)&gt;, OdiliaError&gt; {
 		<span class="kw">let </span>cache = strong_cache(<span class="kw-2">&amp;</span><span class="self">self</span>.cache)<span class="question-mark">?</span>;
-		as_accessible(<span class="self">self</span>)
-			.<span class="kw">await</span><span class="question-mark">?
-			</span>.get_relation_set()
-			.<span class="kw">await</span><span class="question-mark">?
-			</span>.into_iter()
-			.map(|(relation, object_pairs)| {
-				(
-					relation,
-					object_pairs
-						.into_iter()
-						.map(|object_pair| {
-							cache.get(<span class="kw-2">&amp;</span>object_pair.into()).ok_or(
-								OdiliaError::Cache(
-									CacheError::NoItem,
-								),
-							)
-						})
-						.collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, OdiliaError&gt;&gt;(),
-				)
-			})
-			.map(|(relation, result_selfs)| <span class="prelude-val">Ok</span>((relation, result_selfs<span class="question-mark">?</span>)))
-			.collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;(RelationType, Vec&lt;<span class="self">Self</span>&gt;)&gt;, OdiliaError&gt;&gt;()
+		<span class="kw">let </span>ipc_rs = as_accessible(<span class="self">self</span>).<span class="kw">await</span><span class="question-mark">?</span>.get_relation_set().<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span><span class="kw-2">mut </span>relations = Vec::new();
+		<span class="kw">for </span>(relation, object_pairs) <span class="kw">in </span>ipc_rs {
+			<span class="kw">let </span><span class="kw-2">mut </span>cache_keys = Vec::new();
+			<span class="kw">for </span>object_pair <span class="kw">in </span>object_pairs {
+				<span class="kw">let </span>cached = cache.get_ipc(<span class="kw-2">&amp;</span>object_pair.into()).<span class="kw">await</span><span class="question-mark">?</span>;
+				cache_keys.push(cached);
+			}
+			relations.push((relation, cache_keys));
+		}
+		<span class="prelude-val">Ok</span>(relations)
 	}
 	<span class="doccomment">/// See [`atspi_proxies::accessible::AccessibleProxy::get_child_at_index`]
 	/// # Errors
@@ -1700,10 +1467,16 @@
 /// This contains (mostly) all accessibles in the entire accessibility tree, and
 /// they are referenced by their IDs. If you are having issues with incorrect or
 /// invalid accessibles trying to be accessed, this is code is probably the issue.
-</span><span class="attr">#[derive(Clone, Debug)]
+</span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>Cache {
 	<span class="kw">pub </span>by_id: ThreadSafeCache,
 	<span class="kw">pub </span>connection: zbus::Connection,
+}
+
+<span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>Cache {
+	<span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+		f.write_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"Cache {{ by_id: ...{} items..., .. }}"</span>, <span class="self">self</span>.by_id.len()))
+	}
 }
 
 <span class="comment">// N.B.: we are using std RwLockes internally here, within the cache hashmap
@@ -1712,7 +1485,7 @@
 </span><span class="kw">impl </span>Cache {
 	<span class="doccomment">/// create a new, fresh cache
 	</span><span class="attr">#[must_use]
-	#[tracing::instrument(level = <span class="string">"debug"</span>, ret)]
+	#[tracing::instrument(level = <span class="string">"debug"</span>, ret, skip_all)]
 	</span><span class="kw">pub fn </span>new(conn: zbus::Connection) -&gt; <span class="self">Self </span>{
 		<span class="self">Self </span>{
 			by_id: Arc::new(DashMap::with_capacity_and_hasher(
@@ -1770,6 +1543,18 @@
 	</span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
 		<span class="prelude-val">Some</span>(<span class="self">self</span>.by_id.get(id).as_deref()<span class="question-mark">?</span>.read().ok()<span class="question-mark">?</span>.clone())
 	}
+
+	<span class="doccomment">/// Get a single item from the cache. This will also get the information from DBus if it does not
+	/// exist in the cache.
+	</span><span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
+	</span><span class="kw">pub async fn </span>get_ipc(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Result</span>&lt;CacheItem, OdiliaError&gt; {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(ci) = <span class="self">self</span>.get(id) {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(ci);
+		}
+		<span class="kw">let </span>acc = id.clone().into_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>.connection).<span class="kw">await</span><span class="question-mark">?</span>;
+		accessible_to_cache_item(<span class="kw-2">&amp;</span>acc, <span class="self">self</span>).<span class="kw">await
+	</span>}
 
 	<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
 	</span><span class="attr">#[must_use]
@@ -1843,7 +1628,7 @@
 	</span><span class="kw">pub async fn </span>get_or_create(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;,
-		cache: Weak&lt;<span class="self">Self</span>&gt;,
+		cache: Arc&lt;Cache&gt;,
 	) -&gt; OdiliaResult&lt;CacheItem&gt; {
 		<span class="comment">// if the item already exists in the cache, return it
 		</span><span class="kw">let </span>primitive = accessible.try_into()<span class="question-mark">?</span>;
@@ -1903,6 +1688,11 @@
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
+	<span class="kw">pub async fn </span>from_event&lt;T: EventProperties&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, ev: <span class="kw-2">&amp;</span>T) -&gt; OdiliaResult&lt;CacheItem&gt; {
+		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(ev);
+		accessible_to_cache_item(<span class="kw-2">&amp;</span>a11y_prim.into_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>.connection).<span class="kw">await</span><span class="question-mark">?</span>, <span class="self">self</span>)
+			.<span class="kw">await
+	</span>}
 }
 
 <span class="doccomment">/// Convert an [`atspi_proxies::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
@@ -1917,9 +1707,9 @@
 /// 2. Any of the function calls on the `accessible` fail.
 /// 3. Any `(String, OwnedObjectPath) -&gt; AccessiblePrimitive` conversions fail. This *should* never happen, but technically it is possible.
 </span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
-</span><span class="kw">pub async fn </span>accessible_to_cache_item(
+</span><span class="kw">pub async fn </span>accessible_to_cache_item&lt;C: Deref&lt;Target = Cache&gt; + Debug&gt;(
 	accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;,
-	cache: Weak&lt;Cache&gt;,
+	cache: C,
 ) -&gt; OdiliaResult&lt;CacheItem&gt; {
 	<span class="kw">let </span>(app, parent, index, children_num, interfaces, role, states, children) = <span class="macro">tokio::try_join!</span>(
 		accessible.get_application(),
@@ -1949,7 +1739,7 @@
 		states,
 		text,
 		children: children.into_iter().map(|k| CacheRef::new(k.into())).collect(),
-		cache,
+		cache: Arc::downgrade(<span class="kw-2">&amp;</span>Arc::new(cache.deref().clone())),
 	})
 }
 </code></pre></div></section></main></body></html>

@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/dashmap-5.5.3/src/mapref/one.rs`."><title>one.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="dashmap" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../dashmap/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/dashmap-6.0.1/src/mapref/one.rs`."><title>one.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="dashmap" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -334,26 +332,24 @@
 <a href="#332" id="332">332</a>
 <a href="#333" id="333">333</a>
 <a href="#334" id="334">334</a>
-<a href="#335" id="335">335</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::lock::{RwLockReadGuard, RwLockWriteGuard};
 <span class="kw">use </span><span class="kw">crate</span>::HashMap;
-<span class="kw">use </span>core::hash::{BuildHasher, Hash};
+<span class="kw">use </span>core::hash::Hash;
 <span class="kw">use </span>core::ops::{Deref, DerefMut};
-<span class="kw">use </span>std::collections::hash_map::RandomState;
 <span class="kw">use </span>std::fmt::{Debug, Formatter};
 
-<span class="kw">pub struct </span>Ref&lt;<span class="lifetime">'a</span>, K, V, S = RandomState&gt; {
-    _guard: RwLockReadGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V, S&gt;&gt;,
+<span class="kw">pub struct </span>Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {
+    _guard: RwLockReadGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V&gt;&gt;,
     k: <span class="kw-2">*const </span>K,
     v: <span class="kw-2">*const </span>V,
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync, S: BuildHasher&gt; Send <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V, S&gt; {}
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync, S: BuildHasher&gt; Sync <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V, S&gt; {}
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync&gt; Send <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {}
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync&gt; Sync <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {}
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, S: BuildHasher&gt; Ref&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V&gt; Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>new(
-        guard: RwLockReadGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V, S&gt;&gt;,
+        guard: RwLockReadGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V&gt;&gt;,
         k: <span class="kw-2">*const </span>K,
         v: <span class="kw-2">*const </span>V,
     ) -&gt; <span class="self">Self </span>{
@@ -376,7 +372,7 @@
         <span class="kw">unsafe </span>{ (<span class="kw-2">&amp;*</span><span class="self">self</span>.k, <span class="kw-2">&amp;*</span><span class="self">self</span>.v) }
     }
 
-    <span class="kw">pub fn </span>map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; MappedRef&lt;<span class="lifetime">'a</span>, K, V, T, S&gt;
+    <span class="kw">pub fn </span>map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; MappedRef&lt;<span class="lifetime">'a</span>, K, V, T&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;</span>V) -&gt; <span class="kw-2">&amp;</span>T,
     {
@@ -387,7 +383,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>try_map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRef&lt;<span class="lifetime">'a</span>, K, V, T, S&gt;, <span class="self">Self</span>&gt;
+    <span class="kw">pub fn </span>try_map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRef&lt;<span class="lifetime">'a</span>, K, V, T&gt;, <span class="self">Self</span>&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;</span>V) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt;,
     {
@@ -403,7 +399,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V: Debug, S: BuildHasher&gt; Debug <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V: Debug&gt; Debug <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         f.debug_struct(<span class="string">"Ref"</span>)
             .field(<span class="string">"k"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.k)
@@ -412,7 +408,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, S: BuildHasher&gt; Deref <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V&gt; Deref <span class="kw">for </span>Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">type </span>Target = V;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>V {
@@ -420,18 +416,18 @@
     }
 }
 
-<span class="kw">pub struct </span>RefMut&lt;<span class="lifetime">'a</span>, K, V, S = RandomState&gt; {
-    guard: RwLockWriteGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V, S&gt;&gt;,
+<span class="kw">pub struct </span>RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {
+    guard: RwLockWriteGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V&gt;&gt;,
     k: <span class="kw-2">*const </span>K,
     v: <span class="kw-2">*mut </span>V,
 }
 
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync, S: BuildHasher&gt; Send <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V, S&gt; {}
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync, S: BuildHasher&gt; Sync <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V, S&gt; {}
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync&gt; Send <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {}
+<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Sync, V: Sync&gt; Sync <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {}
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, S: BuildHasher&gt; RefMut&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V&gt; RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>new(
-        guard: RwLockWriteGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V, S&gt;&gt;,
+        guard: RwLockWriteGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V&gt;&gt;,
         k: <span class="kw-2">*const </span>K,
         v: <span class="kw-2">*mut </span>V,
     ) -&gt; <span class="self">Self </span>{
@@ -458,11 +454,11 @@
         <span class="kw">unsafe </span>{ (<span class="kw-2">&amp;*</span><span class="self">self</span>.k, <span class="kw-2">&amp;mut *</span><span class="self">self</span>.v) }
     }
 
-    <span class="kw">pub fn </span>downgrade(<span class="self">self</span>) -&gt; Ref&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+    <span class="kw">pub fn </span>downgrade(<span class="self">self</span>) -&gt; Ref&lt;<span class="lifetime">'a</span>, K, V&gt; {
         <span class="kw">unsafe </span>{ Ref::new(RwLockWriteGuard::downgrade(<span class="self">self</span>.guard), <span class="self">self</span>.k, <span class="self">self</span>.v) }
     }
 
-    <span class="kw">pub fn </span>map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S&gt;
+    <span class="kw">pub fn </span>map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;mut </span>V) -&gt; <span class="kw-2">&amp;mut </span>T,
     {
@@ -473,7 +469,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>try_map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S&gt;, <span class="self">Self</span>&gt;
+    <span class="kw">pub fn </span>try_map&lt;F, T&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt;, <span class="self">Self</span>&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;mut </span>V) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>T&gt;,
     {
@@ -491,7 +487,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V: Debug, S: BuildHasher&gt; Debug <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V: Debug&gt; Debug <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         f.debug_struct(<span class="string">"RefMut"</span>)
             .field(<span class="string">"k"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.k)
@@ -500,7 +496,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, S: BuildHasher&gt; Deref <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V&gt; Deref <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">type </span>Target = V;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>V {
@@ -508,19 +504,19 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, S: BuildHasher&gt; DerefMut <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V&gt; DerefMut <span class="kw">for </span>RefMut&lt;<span class="lifetime">'a</span>, K, V&gt; {
     <span class="kw">fn </span>deref_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>V {
         <span class="self">self</span>.value_mut()
     }
 }
 
-<span class="kw">pub struct </span>MappedRef&lt;<span class="lifetime">'a</span>, K, V, T, S = RandomState&gt; {
-    _guard: RwLockReadGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V, S&gt;&gt;,
+<span class="kw">pub struct </span>MappedRef&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
+    _guard: RwLockReadGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V&gt;&gt;,
     k: <span class="kw-2">*const </span>K,
     v: <span class="kw-2">*const </span>T,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T, S: BuildHasher&gt; MappedRef&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T&gt; MappedRef&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">pub fn </span>key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>K {
         <span class="self">self</span>.pair().<span class="number">0
     </span>}
@@ -533,7 +529,7 @@
         <span class="kw">unsafe </span>{ (<span class="kw-2">&amp;*</span><span class="self">self</span>.k, <span class="kw-2">&amp;*</span><span class="self">self</span>.v) }
     }
 
-    <span class="kw">pub fn </span>map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; MappedRef&lt;<span class="lifetime">'a</span>, K, V, T2, S&gt;
+    <span class="kw">pub fn </span>map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; MappedRef&lt;<span class="lifetime">'a</span>, K, V, T2&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;</span>T) -&gt; <span class="kw-2">&amp;</span>T2,
     {
@@ -544,7 +540,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>try_map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRef&lt;<span class="lifetime">'a</span>, K, V, T2, S&gt;, <span class="self">Self</span>&gt;
+    <span class="kw">pub fn </span>try_map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRef&lt;<span class="lifetime">'a</span>, K, V, T2&gt;, <span class="self">Self</span>&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T2&gt;,
     {
@@ -561,7 +557,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V, T: Debug, S: BuildHasher&gt; Debug <span class="kw">for </span>MappedRef&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V, T: Debug&gt; Debug <span class="kw">for </span>MappedRef&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         f.debug_struct(<span class="string">"MappedRef"</span>)
             .field(<span class="string">"k"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.k)
@@ -570,7 +566,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T, S: BuildHasher&gt; Deref <span class="kw">for </span>MappedRef&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T&gt; Deref <span class="kw">for </span>MappedRef&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">type </span>Target = T;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>T {
@@ -592,13 +588,13 @@
     }
 }
 
-<span class="kw">pub struct </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S = RandomState&gt; {
-    _guard: RwLockWriteGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V, S&gt;&gt;,
+<span class="kw">pub struct </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
+    _guard: RwLockWriteGuard&lt;<span class="lifetime">'a</span>, HashMap&lt;K, V&gt;&gt;,
     k: <span class="kw-2">*const </span>K,
     v: <span class="kw-2">*mut </span>T,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T, S: BuildHasher&gt; MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T&gt; MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">pub fn </span>key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>K {
         <span class="self">self</span>.pair().<span class="number">0
     </span>}
@@ -619,7 +615,7 @@
         <span class="kw">unsafe </span>{ (<span class="kw-2">&amp;*</span><span class="self">self</span>.k, <span class="kw-2">&amp;mut *</span><span class="self">self</span>.v) }
     }
 
-    <span class="kw">pub fn </span>map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T2, S&gt;
+    <span class="kw">pub fn </span>map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T2&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;mut </span>T) -&gt; <span class="kw-2">&amp;mut </span>T2,
     {
@@ -630,7 +626,7 @@
         }
     }
 
-    <span class="kw">pub fn </span>try_map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T2, S&gt;, <span class="self">Self</span>&gt;
+    <span class="kw">pub fn </span>try_map&lt;F, T2&gt;(<span class="self">self</span>, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T2&gt;, <span class="self">Self</span>&gt;
     <span class="kw">where
         </span>F: FnOnce(<span class="kw-2">&amp;mut </span>T) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>T2&gt;,
     {
@@ -648,7 +644,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V, T: Debug, S: BuildHasher&gt; Debug <span class="kw">for </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash + Debug, V, T: Debug&gt; Debug <span class="kw">for </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         f.debug_struct(<span class="string">"MappedRefMut"</span>)
             .field(<span class="string">"k"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.k)
@@ -657,7 +653,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T, S: BuildHasher&gt; Deref <span class="kw">for </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T&gt; Deref <span class="kw">for </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">type </span>Target = T;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>T {
@@ -665,7 +661,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T, S: BuildHasher&gt; DerefMut <span class="kw">for </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T, S&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, K: Eq + Hash, V, T&gt; DerefMut <span class="kw">for </span>MappedRefMut&lt;<span class="lifetime">'a</span>, K, V, T&gt; {
     <span class="kw">fn </span>deref_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>T {
         <span class="self">self</span>.value_mut()
     }

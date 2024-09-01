@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["sr_event_receiver"]};
+window.SIDEBAR_ITEMS = {"fn":["get_file_paths","get_log_file_name","sr_event_receiver"]};

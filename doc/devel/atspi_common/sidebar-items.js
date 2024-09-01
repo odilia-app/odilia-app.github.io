@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ClipType","CoordType","Granularity","Layer","Live","MatchType","RelationType","Role","ScrollType","SortOrder","TreeTraversalType"],"mod":["cache","error","events","interface","object_ref","state"],"type":["MatchArgs","Result"]};
+window.SIDEBAR_ITEMS = {"enum":["ClipType","CoordType","Granularity","Layer","Politeness","RelationType","Role","ScrollType"],"mod":["action","cache","error","events","interface","object_match","object_ref","operation","state"],"struct":["TextSelection"],"type":["Result"]};

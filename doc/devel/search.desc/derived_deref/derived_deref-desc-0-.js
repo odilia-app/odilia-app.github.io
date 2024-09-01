@@ -1,0 +1,1 @@
+searchState.loadedDescShard("derived_deref", 0, "A crate for deriving the <code>Deref</code> and <code>DerefMut</code> traits from …\nDerives the <code>Deref</code> trait, passing the field directly if a …\nDerives the <code>DerefMut</code> trait, passing the field directly if …")

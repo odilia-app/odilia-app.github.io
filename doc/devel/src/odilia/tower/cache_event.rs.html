@@ -124,12 +124,6 @@
 <a href="#124" id="124">124</a>
 <a href="#125" id="125">125</a>
 <a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{tower::from_state::TryFromState, OdiliaError, ScreenReaderState};
 <span class="kw">use </span>atspi_common::EventProperties;
 <span class="kw">use </span>derived_deref::{Deref, DerefMut};
@@ -140,16 +134,16 @@
 <span class="kw">use </span>std::{future::Future, marker::PhantomData, sync::Arc};
 <span class="kw">use </span>zbus::{names::UniqueName, zvariant::ObjectPath};
 
-<span class="kw">pub type </span>CacheEvent&lt;E&gt; = CacheEventPredicate&lt;E, Always&gt;;
-<span class="kw">pub type </span>ActiveAppEvent&lt;E&gt; = CacheEventPredicate&lt;E, ActiveApplication&gt;;
+<span class="kw">pub type </span>CacheEvent&lt;E&gt; = EventPredicate&lt;E, Always&gt;;
+<span class="kw">pub type </span>ActiveAppEvent&lt;E&gt; = EventPredicate&lt;E, ActiveApplication&gt;;
 
 <span class="attr">#[derive(Debug, Clone, Deref, DerefMut)]
-</span><span class="kw">pub struct </span>CacheEventInner&lt;E: EventProperties + Debug&gt; {
+</span><span class="kw">pub struct </span>InnerEvent&lt;E: EventProperties + Debug&gt; {
 	<span class="attr">#[target]
 	</span><span class="kw">pub </span>inner: E,
 	<span class="kw">pub </span>item: CacheItem,
 }
-<span class="kw">impl</span>&lt;E&gt; CacheEventInner&lt;E&gt;
+<span class="kw">impl</span>&lt;E&gt; InnerEvent&lt;E&gt;
 <span class="kw">where
 	</span>E: EventProperties + Debug,
 {
@@ -159,24 +153,18 @@
 }
 
 <span class="attr">#[derive(Debug, Clone, Deref, DerefMut)]
-</span><span class="kw">pub struct </span>CacheEventPredicate&lt;
-	E: EventProperties + Debug,
-	P: Predicate&lt;(E, Arc&lt;ScreenReaderState&gt;)&gt;,
-&gt; {
+</span><span class="kw">pub struct </span>EventPredicate&lt;E: EventProperties + Debug, P: Predicate&lt;(E, Arc&lt;ScreenReaderState&gt;)&gt;&gt; {
 	<span class="attr">#[target]
 	</span><span class="kw">pub </span>inner: E,
 	<span class="kw">pub </span>item: CacheItem,
 	_marker: PhantomData&lt;P&gt;,
 }
-<span class="kw">impl</span>&lt;E, P&gt; CacheEventPredicate&lt;E, P&gt;
+<span class="kw">impl</span>&lt;E, P&gt; EventPredicate&lt;E, P&gt;
 <span class="kw">where
 	</span>E: EventProperties + Debug + Clone,
 	P: Predicate&lt;(E, Arc&lt;ScreenReaderState&gt;)&gt;,
 {
-	<span class="kw">pub fn </span>from_cache_event(
-		ce: CacheEventInner&lt;E&gt;,
-		state: Arc&lt;ScreenReaderState&gt;,
-	) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+	<span class="kw">pub fn </span>from_cache_event(ce: InnerEvent&lt;E&gt;, state: Arc&lt;ScreenReaderState&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">if </span>P::test(<span class="kw-2">&amp;</span>(ce.inner.clone(), state)) {
 			<span class="kw">return </span><span class="prelude-val">Some</span>(<span class="self">Self </span>{ inner: ce.inner, item: ce.item, _marker: PhantomData });
 		}
@@ -206,7 +194,7 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;E&gt; TryFromState&lt;Arc&lt;ScreenReaderState&gt;, E&gt; <span class="kw">for </span>CacheEventInner&lt;E&gt;
+<span class="kw">impl</span>&lt;E&gt; TryFromState&lt;Arc&lt;ScreenReaderState&gt;, E&gt; <span class="kw">for </span>InnerEvent&lt;E&gt;
 <span class="kw">where
 	</span>E: EventProperties + Debug + Clone,
 {
@@ -219,12 +207,12 @@
 			<span class="kw">let </span>proxy = a11y.into_accessible(state.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
 			<span class="kw">let </span>cache_item =
 				state.cache.get_or_create(<span class="kw-2">&amp;</span>proxy, Arc::clone(<span class="kw-2">&amp;</span>state.cache)).<span class="kw">await</span><span class="question-mark">?</span>;
-			<span class="prelude-val">Ok</span>(CacheEventInner::new(event, cache_item))
+			<span class="prelude-val">Ok</span>(InnerEvent::new(event, cache_item))
 		}
 	}
 }
 
-<span class="kw">impl</span>&lt;E, P&gt; TryFromState&lt;Arc&lt;ScreenReaderState&gt;, E&gt; <span class="kw">for </span>CacheEventPredicate&lt;E, P&gt;
+<span class="kw">impl</span>&lt;E, P&gt; TryFromState&lt;Arc&lt;ScreenReaderState&gt;, E&gt; <span class="kw">for </span>EventPredicate&lt;E, P&gt;
 <span class="kw">where
 	</span>E: EventProperties + Debug + Clone,
 	P: Predicate&lt;(E, Arc&lt;ScreenReaderState&gt;)&gt; + Debug,
@@ -238,8 +226,8 @@
 			<span class="kw">let </span>proxy = a11y.into_accessible(state.connection()).<span class="kw">await</span><span class="question-mark">?</span>;
 			<span class="kw">let </span>cache_item =
 				state.cache.get_or_create(<span class="kw-2">&amp;</span>proxy, Arc::clone(<span class="kw-2">&amp;</span>state.cache)).<span class="kw">await</span><span class="question-mark">?</span>;
-			<span class="kw">let </span>cache_event = CacheEventInner::new(event.clone(), cache_item);
-			CacheEventPredicate::from_cache_event(cache_event, state).ok_or(
+			<span class="kw">let </span>cache_event = InnerEvent::new(event.clone(), cache_item);
+			EventPredicate::from_cache_event(cache_event, state).ok_or(
 				OdiliaError::PredicateFailure(<span class="macro">format!</span>(
 					<span class="string">"Predicate cache event {} failed for event {:?}"</span>,
 					std::any::type_name::&lt;P&gt;(),
@@ -250,7 +238,7 @@
 	}
 }
 
-<span class="kw">impl</span>&lt;E, P&gt; EventProperties <span class="kw">for </span>CacheEventPredicate&lt;E, P&gt;
+<span class="kw">impl</span>&lt;E, P&gt; EventProperties <span class="kw">for </span>EventPredicate&lt;E, P&gt;
 <span class="kw">where
 	</span>E: EventProperties + Debug,
 	P: Predicate&lt;(E, Arc&lt;ScreenReaderState&gt;)&gt;,

@@ -268,6 +268,7 @@
 <a href="#268" id="268">268</a>
 <a href="#269" id="269">269</a>
 <a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>atspi_common::{
 	events::object::StateChangedEvent, AtspiError, EventProperties, State <span class="kw">as </span>AtspiState,
 };
@@ -385,7 +386,8 @@
 </span><span class="kw">pub struct </span>AnyState;
 
 <span class="kw">impl </span>Predicate&lt;AtspiState&gt; <span class="kw">for </span>AnyState {
-	<span class="kw">fn </span>test(outer: <span class="kw-2">&amp;</span>AtspiState) -&gt; bool {
+	<span class="attr">#[allow(clippy::too_many_lines)]
+	</span><span class="kw">fn </span>test(outer: <span class="kw-2">&amp;</span>AtspiState) -&gt; bool {
 		<span class="kw">match </span><span class="kw-2">*</span>outer {
 			AtspiState::Invalid =&gt; &lt;StateInvalid <span class="kw">as </span>Predicate&lt;AtspiState&gt;&gt;::test(outer),
 			AtspiState::Active =&gt; &lt;StateActive <span class="kw">as </span>Predicate&lt;AtspiState&gt;&gt;::test(outer),

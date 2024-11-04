@@ -88,7 +88,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["nix",["",[["sys",[["socket",[],["addr.rs","mod.rs","sockopt.rs"]]],["mod.rs","signal.rs","sysinfo.rs","time.rs","uio.rs","utsname.rs"]]],["errno.rs","fcntl.rs","features.rs","lib.rs","macros.rs","unistd.rs"]]],\
 ["nu_ansi_term",["",[],["ansi.rs","debug.rs","difference.rs","display.rs","gradient.rs","lib.rs","rgb.rs","style.rs","util.rs","windows.rs","write.rs"]]],\
 ["num_cpus",["",[],["lib.rs","linux.rs"]]],\
-["odilia",["",[["events",[],["cache.rs","document.rs","mod.rs","object.rs"]],["tower",[],["async_try.rs","cache_event.rs","choice.rs","from_state.rs","handler.rs","handlers.rs","iter_svc.rs","mod.rs","service_ext.rs","service_set.rs","state_changed.rs","state_svc.rs","sync_try.rs","unwrap_svc.rs"]]],["cli.rs","logging.rs","main.rs","state.rs"]]],\
+["odilia",["",[["events",[],["cache.rs","document.rs","mod.rs"]],["tower",[],["async_try.rs","cache_event.rs","choice.rs","from_state.rs","handler.rs","handlers.rs","iter_svc.rs","mod.rs","service_ext.rs","service_set.rs","state_changed.rs","state_svc.rs","sync_try.rs","unwrap_svc.rs"]]],["cli.rs","logging.rs","main.rs","state.rs"]]],\
 ["odilia_cache",["",[],["accessible_ext.rs","convertable.rs","lib.rs"]]],\
 ["odilia_common",["",[["settings",[],["log.rs","mod.rs","speech.rs"]]],["cache.rs","command.rs","elements.rs","errors.rs","events.rs","lib.rs","modes.rs","result.rs","types.rs"]]],\
 ["odilia_input",["",[],["lib.rs"]]],\

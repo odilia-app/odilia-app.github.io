@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/nix-0.28.0/src/sys/socket/addr.rs`."><title>addr.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/nix-0.29.0/src/sys/socket/addr.rs`."><title>addr.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -2398,6 +2398,32 @@
 <a href="#2398" id="2398">2398</a>
 <a href="#2399" id="2399">2399</a>
 <a href="#2400" id="2400">2400</a>
+<a href="#2401" id="2401">2401</a>
+<a href="#2402" id="2402">2402</a>
+<a href="#2403" id="2403">2403</a>
+<a href="#2404" id="2404">2404</a>
+<a href="#2405" id="2405">2405</a>
+<a href="#2406" id="2406">2406</a>
+<a href="#2407" id="2407">2407</a>
+<a href="#2408" id="2408">2408</a>
+<a href="#2409" id="2409">2409</a>
+<a href="#2410" id="2410">2410</a>
+<a href="#2411" id="2411">2411</a>
+<a href="#2412" id="2412">2412</a>
+<a href="#2413" id="2413">2413</a>
+<a href="#2414" id="2414">2414</a>
+<a href="#2415" id="2415">2415</a>
+<a href="#2416" id="2416">2416</a>
+<a href="#2417" id="2417">2417</a>
+<a href="#2418" id="2418">2418</a>
+<a href="#2419" id="2419">2419</a>
+<a href="#2420" id="2420">2420</a>
+<a href="#2421" id="2421">2421</a>
+<a href="#2422" id="2422">2422</a>
+<a href="#2423" id="2423">2423</a>
+<a href="#2424" id="2424">2424</a>
+<a href="#2425" id="2425">2425</a>
+<a href="#2426" id="2426">2426</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(any(
     bsd,
     linux_android,
@@ -3320,6 +3346,19 @@
 }
 
 <span class="attr">#[cfg(feature = <span class="string">"net"</span>)]
+</span><span class="kw">impl </span>From&lt;SockaddrIn&gt; <span class="kw">for </span>libc::sockaddr_in {
+    <span class="kw">fn </span>from(sin: SockaddrIn) -&gt; libc::sockaddr_in {
+        sin.<span class="number">0
+    </span>}
+}
+<span class="attr">#[cfg(feature = <span class="string">"net"</span>)]
+</span><span class="kw">impl </span>From&lt;libc::sockaddr_in&gt; <span class="kw">for </span>SockaddrIn {
+    <span class="kw">fn </span>from(sin: libc::sockaddr_in) -&gt; SockaddrIn {
+        SockaddrIn(sin)
+    }
+}
+
+<span class="attr">#[cfg(feature = <span class="string">"net"</span>)]
 </span><span class="kw">impl </span>std::str::FromStr <span class="kw">for </span>SockaddrIn {
     <span class="kw">type </span><span class="prelude-val">Err </span>= net::AddrParseError;
 
@@ -3366,6 +3405,20 @@
     <span class="doccomment">/// Returns the scope ID associated with this address.
     </span><span class="kw">pub const fn </span>scope_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
         <span class="self">self</span>.<span class="number">0</span>.sin6_scope_id
+    }
+}
+
+<span class="attr">#[cfg(feature = <span class="string">"net"</span>)]
+</span><span class="kw">impl </span>From&lt;SockaddrIn6&gt; <span class="kw">for </span>libc::sockaddr_in6 {
+    <span class="kw">fn </span>from(sin6: SockaddrIn6) -&gt; libc::sockaddr_in6 {
+        sin6.<span class="number">0
+    </span>}
+}
+
+<span class="attr">#[cfg(feature = <span class="string">"net"</span>)]
+</span><span class="kw">impl </span>From&lt;libc::sockaddr_in6&gt; <span class="kw">for </span>SockaddrIn6 {
+    <span class="kw">fn </span>from(sin6: libc::sockaddr_in6) -&gt; SockaddrIn6 {
+        SockaddrIn6(sin6)
     }
 }
 
@@ -4550,10 +4603,9 @@
     }
 
     <span class="attr">#[cfg(not(any(target_os = <span class="string">"hurd"</span>, target_os = <span class="string">"redox"</span>)))]
+    #[allow(clippy::cast_ptr_alignment)]
     </span><span class="kw">mod </span>link {
-        <span class="attr">#![allow(clippy::cast_ptr_alignment)]
-
-        #[cfg(any(apple_targets, solarish))]
+        <span class="attr">#[cfg(any(apple_targets, solarish))]
         </span><span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::<span class="kw">super</span>::socklen_t;
         <span class="kw">use super</span>::<span class="kw-2">*</span>;
 

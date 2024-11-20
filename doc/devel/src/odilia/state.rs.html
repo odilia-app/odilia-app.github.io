@@ -425,6 +425,9 @@
 <a href="#425" id="425">425</a>
 <a href="#426" id="426">426</a>
 <a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::Debug, sync::atomic::AtomicUsize};
 
 <span class="kw">use </span><span class="kw">crate</span>::tower::from_state::TryFromState;
@@ -437,7 +440,10 @@
 <span class="kw">use </span>std::sync::Mutex;
 <span class="kw">use </span>tokio::sync::mpsc::Sender;
 <span class="kw">use </span>tracing::{debug, Instrument, Level};
-<span class="kw">use </span>zbus::{fdo::DBusProxy, names::BusName, zvariant::ObjectPath, MatchRule, MessageType};
+<span class="kw">use </span>zbus::{
+	fdo::DBusProxy, message::Type <span class="kw">as </span>MessageType, names::BusName, proxy::CacheProperties,
+	zvariant::ObjectPath, MatchRule,
+};
 
 <span class="kw">use </span>atspi_common::{
 	events::{EventProperties, HasMatchRule, HasRegistryEventString},
@@ -836,7 +842,7 @@
 		<span class="kw">let </span>sender = event.sender().clone();
 		<span class="kw">let </span>path = event.path().to_owned();
 		<span class="prelude-val">Ok</span>(AccessibleProxy::builder(<span class="self">self</span>.connection())
-			.cache_properties(zbus::CacheProperties::No)
+			.cache_properties(CacheProperties::No)
 			.destination(sender)<span class="question-mark">?
 			</span>.path(path)<span class="question-mark">?
 			</span>.build()

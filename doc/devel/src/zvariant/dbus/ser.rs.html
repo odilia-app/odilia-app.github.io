@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/dbus/ser.rs`."><title>ser.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-5.1.0/src/dbus/ser.rs`."><title>ser.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -694,61 +694,43 @@
 <a href="#694" id="694">694</a>
 <a href="#695" id="695">695</a>
 <a href="#696" id="696">696</a>
-<a href="#697" id="697">697</a>
-<a href="#698" id="698">698</a>
-<a href="#699" id="699">699</a>
-<a href="#700" id="700">700</a>
-<a href="#701" id="701">701</a>
-<a href="#702" id="702">702</a>
-<a href="#703" id="703">703</a>
-<a href="#704" id="704">704</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{ser, ser::SerializeSeq, Serialize};
-<span class="kw">use </span>static_assertions::assert_impl_all;
+</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{
+    ser::{<span class="self">self</span>, SerializeSeq, SerializeTuple},
+    Serialize,
+};
 <span class="kw">use </span>std::{
     io::{Seek, Write},
-    str,
+    str::{<span class="self">self</span>, FromStr},
 };
 
 <span class="kw">use crate</span>::{
     container_depths::ContainerDepths,
     serialized::{Context, Format},
-    signature_parser::SignatureParser,
     utils::<span class="kw-2">*</span>,
     Basic, Error, ObjectPath, <span class="prelude-ty">Result</span>, Signature, WriteBytes,
 };
 
-<span class="attr">#[cfg(unix)]
-</span><span class="kw">use </span><span class="kw">crate</span>::Fd;
-
 <span class="doccomment">/// Our D-Bus serialization implementation.
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;(<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">crate</span>::SerializerCommon&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;);
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;(<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">crate</span>::SerializerCommon&lt;<span class="lifetime">'ser</span>, W&gt;);
 
-<span class="macro">assert_impl_all!</span>(Serializer&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, i32&gt;: Send, Sync, Unpin);
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt; Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, W&gt; Serializer&lt;<span class="lifetime">'ser</span>, W&gt;
 <span class="kw">where
     </span>W: Write + Seek,
 {
     <span class="doccomment">/// Create a D-Bus Serializer struct instance.
     ///
     /// On Windows, there is no `fds` argument.
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'w</span>: <span class="lifetime">'ser</span>, <span class="lifetime">'f</span>: <span class="lifetime">'ser</span>, S&gt;(
-        signature: S,
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'w</span>: <span class="lifetime">'ser</span>, <span class="lifetime">'f</span>: <span class="lifetime">'ser</span>&gt;(
+        signature: <span class="kw-2">&amp;</span><span class="lifetime">'ser </span>Signature,
         writer: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>W,
         <span class="attr">#[cfg(unix)] </span>fds: <span class="kw-2">&amp;</span><span class="lifetime">'f </span><span class="kw-2">mut </span><span class="kw">crate</span>::ser::FdList,
         ctxt: Context,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'sig</span>&gt;&gt;,
-        S::Error: Into&lt;Error&gt;,
-    {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="macro">assert_eq!</span>(ctxt.format(), Format::DBus);
 
-        <span class="kw">let </span>signature = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
-        <span class="kw">let </span>sig_parser = SignatureParser::new(signature);
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(<span class="kw">crate</span>::SerializerCommon {
             ctxt,
-            sig_parser,
+            signature,
             writer,
             <span class="attr">#[cfg(unix)]
             </span>fds,
@@ -771,20 +753,20 @@
     };
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::Serializer <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::Serializer <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;
 <span class="kw">where
     </span>W: Write + Seek,
 {
     <span class="kw">type </span><span class="prelude-val">Ok </span>= ();
     <span class="kw">type </span>Error = Error;
 
-    <span class="kw">type </span>SerializeSeq = SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
-    <span class="kw">type </span>SerializeTuple = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
-    <span class="kw">type </span>SerializeTupleStruct = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
-    <span class="kw">type </span>SerializeTupleVariant = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
-    <span class="kw">type </span>SerializeMap = SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
-    <span class="kw">type </span>SerializeStruct = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
-    <span class="kw">type </span>SerializeStructVariant = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeSeq = SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeTuple = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeTupleStruct = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeTupleVariant = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeMap = MapSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeStruct = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
+    <span class="kw">type </span>SerializeStructVariant = StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;;
 
     <span class="macro">serialize_basic!</span>(serialize_bool(bool) write_u32(u32));
     <span class="comment">// No i8 type in D-Bus/GVariant, let's pretend it's i16
@@ -793,10 +775,9 @@
     <span class="macro">serialize_basic!</span>(serialize_i64(i64) write_i64);
 
     <span class="kw">fn </span>serialize_i32(<span class="self">self</span>, v: i32) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>{
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.signature {
             <span class="attr">#[cfg(unix)]
-            </span>Fd::SIGNATURE_CHAR =&gt; {
-                <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
+            </span>Signature::Fd =&gt; {
                 <span class="self">self</span>.<span class="number">0</span>.add_padding(u32::alignment(Format::DBus))<span class="question-mark">?</span>;
                 <span class="kw">let </span>idx = <span class="self">self</span>.<span class="number">0</span>.add_fd(v)<span class="question-mark">?</span>;
                 <span class="self">self</span>.<span class="number">0
@@ -833,25 +814,21 @@
     }
 
     <span class="kw">fn </span>serialize_str(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">if </span>v.contains(<span class="string">'\0'</span>) {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_value(
-                serde::de::Unexpected::Char(<span class="string">'\0'</span>),
-                <span class="kw-2">&amp;</span><span class="string">"D-Bus string type must not contain interior null bytes"</span>,
-            ));
-        }
-        <span class="kw">let </span>c = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
-        <span class="kw">if </span>c == VARIANT_SIGNATURE_CHAR {
-            <span class="self">self</span>.<span class="number">0</span>.value_sign = <span class="prelude-val">Some</span>(<span class="macro">signature_string!</span>(v));
+        <span class="self">self</span>.<span class="number">0
+            </span>.add_padding(<span class="self">self</span>.<span class="number">0</span>.signature.alignment(Format::DBus))<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>signature = <span class="self">self</span>.<span class="number">0</span>.signature;
+        <span class="kw">if </span><span class="macro">matches!</span>(signature, Signature::Variant) {
+            <span class="self">self</span>.<span class="number">0</span>.value_sign = <span class="prelude-val">Some</span>(Signature::from_str(v)<span class="question-mark">?</span>);
         }
 
-        <span class="kw">match </span>c {
-            ObjectPath::SIGNATURE_CHAR | &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_CHAR =&gt; {
-                <span class="self">self</span>.<span class="number">0</span>.add_padding(&lt;<span class="kw-2">&amp;</span>str&gt;::alignment(Format::DBus))<span class="question-mark">?</span>;
+        <span class="kw">match </span>signature {
+            Signature::ObjectPath | Signature::Str =&gt; {
                 <span class="self">self</span>.<span class="number">0
                     </span>.write_u32(<span class="self">self</span>.<span class="number">0</span>.ctxt.endian(), usize_to_u32(v.len()))
                     .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
             }
-            Signature::SIGNATURE_CHAR | VARIANT_SIGNATURE_CHAR =&gt; {
+            Signature::Signature | Signature::Variant =&gt; {
                 <span class="self">self</span>.<span class="number">0
                     </span>.write_u8(<span class="self">self</span>.<span class="number">0</span>.ctxt.endian(), usize_to_u8(v.len()))
                     .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
@@ -864,14 +841,10 @@
                     ObjectPath::SIGNATURE_STR,
                     VARIANT_SIGNATURE_CHAR,
                 );
-                <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_type(
-                    serde::de::Unexpected::Char(c),
-                    <span class="kw-2">&amp;</span>expected.as_str(),
-                ));
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(signature.clone(), expected));
             }
         }
 
-        <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="number">0
             </span>.write_all(v.as_bytes())
             .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
@@ -883,12 +856,14 @@
     }
 
     <span class="kw">fn </span>serialize_bytes(<span class="self">self</span>, v: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">let </span>seq = <span class="self">self</span>.serialize_seq(<span class="prelude-val">Some</span>(v.len()))<span class="question-mark">?</span>;
-        seq.ser
-            .<span class="number">0
-            </span>.write(v)
+        <span class="self">self</span>.<span class="number">0</span>.add_padding(ARRAY_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="number">0
+            </span>.write_u32(<span class="self">self</span>.<span class="number">0</span>.ctxt.endian(), v.len() <span class="kw">as </span>u32)
             .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
-        seq.end()
+        <span class="self">self</span>.<span class="number">0
+            </span>.write(v)
+            .map(|<span class="kw">_</span>| ())
+            .map_err(|e| Error::InputOutput(e.into()))
     }
 
     <span class="kw">fn </span>serialize_none(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -935,7 +910,7 @@
         variant_index: u32,
         variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">if </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>== &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_CHAR {
+        <span class="kw">if </span><span class="macro">matches!</span>(<span class="self">self</span>.<span class="number">0</span>.signature, Signature::Str) {
             variant.serialize(<span class="self">self</span>)
         } <span class="kw">else </span>{
             variant_index.serialize(<span class="self">self</span>)
@@ -961,16 +936,11 @@
     <span class="kw">where
         </span>T: <span class="question-mark">?</span>Sized + Serialize,
     {
-        <span class="self">self</span>.<span class="number">0</span>.prep_serialize_enum_variant(variant_index)<span class="question-mark">?</span>;
-        value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>)<span class="question-mark">?</span>;
-        <span class="comment">// Skip the `)`.
-        </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-
-        <span class="prelude-val">Ok</span>(())
+        StructSerializer::enum_variant(<span class="self">self</span>, variant_index)
+            .and_then(|<span class="kw-2">mut </span>ser| ser.serialize_element(value))
     }
 
     <span class="kw">fn </span>serialize_seq(<span class="self">self</span>, _len: <span class="prelude-ty">Option</span>&lt;usize&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeSeq&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="number">0</span>.add_padding(ARRAY_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
         <span class="comment">// Length in bytes (unfortunately not the same as len passed to us here) which we
         // initially set to 0.
@@ -978,22 +948,34 @@
             </span>.write_u32(<span class="self">self</span>.<span class="number">0</span>.ctxt.endian(), <span class="number">0_u32</span>)
             .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>element_signature = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>element_signature_len = element_signature.len();
-        <span class="kw">let </span>element_alignment = alignment_for_signature(<span class="kw-2">&amp;</span>element_signature, <span class="self">self</span>.<span class="number">0</span>.ctxt.format())<span class="question-mark">?</span>;
-
         <span class="comment">// D-Bus expects us to add padding for the first element even when there is no first
         // element (i-e empty array) so we add padding already.
-        </span><span class="kw">let </span>first_padding = <span class="self">self</span>.<span class="number">0</span>.add_padding(element_alignment)<span class="question-mark">?</span>;
+        </span><span class="kw">let </span>(alignment, child_signature) = <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.signature {
+            Signature::Array(child) =&gt; (child.alignment(<span class="self">self</span>.<span class="number">0</span>.ctxt.format()), child.signature()),
+            Signature::Dict { key, .. } =&gt; (DICT_ENTRY_ALIGNMENT_DBUS, key.signature()),
+            <span class="kw">_ </span>=&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                    <span class="string">"an array or dict"</span>.to_string(),
+                ));
+            }
+        };
+
+        <span class="comment">// In case of an array, we'll only be serializing the array's child elements from now on and
+        // in case of a dict, we'll swap key and value signatures during serlization of each entry,
+        // so let's assume the element signature for array and key signature for dict, from now on.
+        // We restore the original signature at the end of serialization.
+        </span><span class="kw">let </span>array_signature = <span class="self">self</span>.<span class="number">0</span>.signature;
+        <span class="self">self</span>.<span class="number">0</span>.signature = child_signature;
+        <span class="kw">let </span>first_padding = <span class="self">self</span>.<span class="number">0</span>.add_padding(alignment)<span class="question-mark">?</span>;
         <span class="kw">let </span>start = <span class="self">self</span>.<span class="number">0</span>.bytes_written;
         <span class="self">self</span>.<span class="number">0</span>.container_depths = <span class="self">self</span>.<span class="number">0</span>.container_depths.inc_array()<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(SeqSerializer {
             ser: <span class="self">self</span>,
             start,
-            element_alignment,
-            element_signature_len,
             first_padding,
+            array_signature,
         })
     }
 
@@ -1016,13 +998,27 @@
         _variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         _len: usize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleVariant&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.prep_serialize_enum_variant(variant_index)<span class="question-mark">?</span>;
-
-        StructSerializer::enum_variant(<span class="self">self</span>).map(StructSeqSerializer::Struct)
+        StructSerializer::enum_variant(<span class="self">self</span>, variant_index).map(StructSeqSerializer::Struct)
     }
 
     <span class="kw">fn </span>serialize_map(<span class="self">self</span>, len: <span class="prelude-ty">Option</span>&lt;usize&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeMap&gt; {
-        <span class="self">self</span>.serialize_seq(len)
+        <span class="kw">let </span>(key_signature, value_signature) = <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.signature {
+            Signature::Dict { key, value } =&gt; (key.signature(), value.signature()),
+            <span class="kw">_ </span>=&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                    <span class="string">"a dict"</span>.to_string(),
+                ));
+            }
+        };
+
+        <span class="kw">let </span>seq = <span class="self">self</span>.serialize_seq(len)<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(MapSerializer {
+            seq,
+            key_signature,
+            value_signature,
+        })
     }
 
     <span class="kw">fn </span>serialize_struct(<span class="self">self</span>, _name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStruct&gt; {
@@ -1030,12 +1026,18 @@
             <span class="kw">return </span>StructSerializer::unit(<span class="self">self</span>).map(StructSeqSerializer::Struct);
         }
 
-        <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>{
-            VARIANT_SIGNATURE_CHAR =&gt; {
-                StructSerializer::variant(<span class="self">self</span>).map(StructSeqSerializer::Struct)
+        <span class="self">self</span>.<span class="number">0
+            </span>.add_padding(<span class="self">self</span>.<span class="number">0</span>.signature.alignment(<span class="self">self</span>.<span class="number">0</span>.ctxt.format()))<span class="question-mark">?</span>;
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.signature {
+            Signature::Variant =&gt; StructSerializer::variant(<span class="self">self</span>).map(StructSeqSerializer::Struct),
+            Signature::Array(<span class="kw">_</span>) =&gt; <span class="self">self</span>.serialize_seq(<span class="prelude-val">Some</span>(len)).map(StructSeqSerializer::Seq),
+            Signature::Structure(<span class="kw">_</span>) =&gt; {
+                StructSerializer::structure(<span class="self">self</span>).map(StructSeqSerializer::Struct)
             }
-            ARRAY_SIGNATURE_CHAR =&gt; <span class="self">self</span>.serialize_seq(<span class="prelude-val">Some</span>(len)).map(StructSeqSerializer::Seq),
-            <span class="kw">_ </span>=&gt; StructSerializer::structure(<span class="self">self</span>).map(StructSeqSerializer::Struct),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                <span class="string">"a struct, array or variant"</span>.to_string(),
+            )),
         }
     }
 
@@ -1046,9 +1048,7 @@
         _variant: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
         _len: usize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStructVariant&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.prep_serialize_enum_variant(variant_index)<span class="question-mark">?</span>;
-
-        StructSerializer::enum_variant(<span class="self">self</span>).map(StructSeqSerializer::Struct)
+        StructSerializer::enum_variant(<span class="self">self</span>, variant_index).map(StructSeqSerializer::Struct)
     }
 
     <span class="kw">fn </span>is_human_readable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1057,27 +1057,19 @@
 }
 
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">pub struct </span>SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; {
-    ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;,
+</span><span class="kw">pub struct </span>SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; {
+    ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;,
     start: usize,
-    <span class="comment">// alignment of element
-    </span>element_alignment: usize,
-    <span class="comment">// size of element signature
-    </span>element_signature_len: usize,
     <span class="comment">// First element's padding
     </span>first_padding: usize,
+    array_signature: <span class="kw-2">&amp;</span><span class="lifetime">'ser </span>Signature,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
 <span class="kw">where
     </span>W: Write + Seek,
 {
     <span class="kw">pub</span>(<span class="self">self</span>) <span class="kw">fn </span>end_seq(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>.ser
-            .<span class="number">0
-            </span>.sig_parser
-            .skip_chars(<span class="self">self</span>.element_signature_len)<span class="question-mark">?</span>;
-
         <span class="comment">// Set size of array in bytes
         </span><span class="kw">let </span>array_len = <span class="self">self</span>.ser.<span class="number">0</span>.bytes_written - <span class="self">self</span>.start;
         <span class="kw">let </span>len = usize_to_u32(array_len);
@@ -1099,12 +1091,13 @@
             .map_err(|e| Error::InputOutput(e.into()))<span class="question-mark">?</span>;
 
         <span class="self">self</span>.ser.<span class="number">0</span>.container_depths = <span class="self">self</span>.ser.<span class="number">0</span>.container_depths.dec_array();
+        <span class="self">self</span>.ser.<span class="number">0</span>.signature = <span class="self">self</span>.array_signature;
 
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::SerializeSeq <span class="kw">for </span>SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::SerializeSeq <span class="kw">for </span>SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
 <span class="kw">where
     </span>W: Write + Seek,
 {
@@ -1115,15 +1108,7 @@
     <span class="kw">where
         </span>T: <span class="question-mark">?</span>Sized + Serialize,
     {
-        <span class="comment">// We want to keep parsing the same signature repeatedly for each element so we use a
-        // disposable clone.
-        </span><span class="kw">let </span>sig_parser = <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser.clone();
-        <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser = sig_parser.clone();
-
-        value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.ser)<span class="question-mark">?</span>;
-        <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser = sig_parser;
-
-        <span class="prelude-val">Ok</span>(())
+        value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.ser)
     }
 
     <span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -1132,115 +1117,127 @@
 }
 
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">pub struct </span>StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; {
-    ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;,
-    <span class="comment">// The number of `)` in the signature to skip at the end.
-    </span>end_parens: u8,
+</span><span class="kw">pub struct </span>StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; {
+    ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;,
     <span class="comment">// The original container depths. We restore to that at the end.
     </span>container_depths: ContainerDepths,
+    <span class="comment">// Index of the next field to serialize.
+    </span>field_idx: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
 <span class="kw">where
     </span>W: Write + Seek,
 {
-    <span class="kw">fn </span>variant(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        ser.<span class="number">0</span>.add_padding(VARIANT_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
+    <span class="kw">fn </span>variant(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>container_depths = ser.<span class="number">0</span>.container_depths;
         ser.<span class="number">0</span>.container_depths = ser.<span class="number">0</span>.container_depths.inc_variant()<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             ser,
-            end_parens: <span class="number">0</span>,
             container_depths,
+            field_idx: <span class="number">0</span>,
         })
     }
 
-    <span class="kw">fn </span>structure(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>c = ser.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
-        <span class="kw">if </span>c != STRUCT_SIG_START_CHAR &amp;&amp; c != DICT_ENTRY_SIG_START_CHAR {
-            <span class="kw">let </span>expected = <span class="macro">format!</span>(<span class="string">"`{STRUCT_SIG_START_STR}` or `{DICT_ENTRY_SIG_START_STR}`"</span>,);
-
-            <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_type(
-                serde::de::Unexpected::Char(c),
-                <span class="kw-2">&amp;</span>expected.as_str(),
-            ));
-        }
-
-        <span class="kw">let </span>signature = ser.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>alignment = alignment_for_signature(<span class="kw-2">&amp;</span>signature, Format::DBus)<span class="question-mark">?</span>;
-        ser.<span class="number">0</span>.add_padding(alignment)<span class="question-mark">?</span>;
-
-        ser.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
+    <span class="kw">fn </span>structure(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>container_depths = ser.<span class="number">0</span>.container_depths;
         ser.<span class="number">0</span>.container_depths = ser.<span class="number">0</span>.container_depths.inc_structure()<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             ser,
-            end_parens: <span class="number">1</span>,
             container_depths,
+            field_idx: <span class="number">0</span>,
         })
     }
 
-    <span class="kw">fn </span>unit(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>unit(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="comment">// serialize as a `0u8`
         </span>serde::Serializer::serialize_u8(<span class="kw-2">&amp;mut *</span>ser, <span class="number">0</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>container_depths = ser.<span class="number">0</span>.container_depths;
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             ser,
-            end_parens: <span class="number">0</span>,
             container_depths,
+            field_idx: <span class="number">0</span>,
         })
     }
 
-    <span class="kw">fn </span>enum_variant(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>ser = <span class="self">Self</span>::structure(ser)<span class="question-mark">?</span>;
-        ser.end_parens += <span class="number">1</span>;
+    <span class="kw">fn </span>enum_variant(ser: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>Serializer&lt;<span class="lifetime">'ser</span>, W&gt;, variant_index: u32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="comment">// Encode enum variants as a struct with first field as variant index
+        </span><span class="kw">let </span>Signature::Structure(fields) = ser.<span class="number">0</span>.signature <span class="kw">else </span>{
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                ser.<span class="number">0</span>.signature.clone(),
+                <span class="string">"a struct"</span>.to_string(),
+            ));
+        };
+        <span class="kw">let </span>struct_field = fields.iter().nth(<span class="number">1</span>).and_then(|f| {
+            <span class="kw">if </span><span class="macro">matches!</span>(f, Signature::Structure(<span class="kw">_</span>)) {
+                <span class="prelude-val">Some</span>(f)
+            } <span class="kw">else </span>{
+                <span class="prelude-val">None
+            </span>}
+        });
 
-        <span class="prelude-val">Ok</span>(ser)
+        ser.<span class="number">0</span>.add_padding(STRUCT_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>struct_ser = <span class="self">Self</span>::structure(ser)<span class="question-mark">?</span>;
+        struct_ser.serialize_struct_element(<span class="kw-2">&amp;</span>variant_index)<span class="question-mark">?</span>;
+
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(field) = struct_field {
+            <span class="comment">// Add struct padding for inner struct and pretend we're the inner struct.
+            </span>struct_ser.ser.<span class="number">0</span>.add_padding(STRUCT_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
+            struct_ser.field_idx = <span class="number">0</span>;
+            struct_ser.ser.<span class="number">0</span>.signature = field;
+        }
+
+        <span class="prelude-val">Ok</span>(struct_ser)
     }
 
-    <span class="kw">fn </span>serialize_struct_element&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    <span class="kw">fn </span>serialize_struct_element&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>T: <span class="question-mark">?</span>Sized + Serialize,
     {
-        <span class="kw">match </span>name {
-            <span class="prelude-val">Some</span>(<span class="string">"zvariant::Value::Value"</span>) =&gt; {
-                <span class="comment">// Serializing the value of a Value, which means signature was serialized
-                // already, and also put aside for us to be picked here.
-                </span><span class="kw">let </span>signature = <span class="self">self
-                    </span>.ser
-                    .<span class="number">0
-                    </span>.value_sign
-                    .take()
-                    .expect(<span class="string">"Incorrect Value encoding"</span>);
-
-                <span class="kw">let </span>sig_parser = SignatureParser::new(signature);
-                <span class="kw">let </span>bytes_written = <span class="self">self</span>.ser.<span class="number">0</span>.bytes_written;
-                <span class="kw">let </span><span class="kw-2">mut </span>ser = Serializer(<span class="kw">crate</span>::SerializerCommon::&lt;W&gt; {
-                    ctxt: <span class="self">self</span>.ser.<span class="number">0</span>.ctxt,
-                    sig_parser,
-                    writer: <span class="self">self</span>.ser.<span class="number">0</span>.writer,
-                    <span class="attr">#[cfg(unix)]
-                    </span>fds: <span class="self">self</span>.ser.<span class="number">0</span>.fds,
-                    bytes_written,
-                    value_sign: <span class="prelude-val">None</span>,
-                    container_depths: <span class="self">self</span>.ser.<span class="number">0</span>.container_depths,
-                });
-                value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
-                <span class="self">self</span>.ser.<span class="number">0</span>.bytes_written = ser.<span class="number">0</span>.bytes_written;
-
-                <span class="prelude-val">Ok</span>(())
+        <span class="kw">let </span>signature = <span class="self">self</span>.ser.<span class="number">0</span>.signature;
+        <span class="kw">let </span>field_signature = <span class="kw">match </span>signature {
+            Signature::Variant =&gt; {
+                <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.ser.<span class="number">0</span>.value_sign {
+                    <span class="comment">// Serializing the value of a Value, which means signature was serialized
+                    // already, and also put aside for us to be picked here.
+                    </span><span class="prelude-val">Some</span>(signature) =&gt; signature,
+                    <span class="comment">// Serializing the signature of a Value.
+                    </span><span class="prelude-val">None </span>=&gt; <span class="kw-2">&amp;</span>Signature::Variant,
+                }
             }
-            <span class="kw">_ </span>=&gt; value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.ser),
-        }
+            Signature::Structure(fields) =&gt; {
+                <span class="kw">let </span>signature = fields.iter().nth(<span class="self">self</span>.field_idx).ok_or_else(|| {
+                    Error::SignatureMismatch(signature.clone(), <span class="string">"a struct"</span>.to_string())
+                })<span class="question-mark">?</span>;
+                <span class="self">self</span>.field_idx += <span class="number">1</span>;
+
+                signature
+            }
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Incorrect signature for struct"</span>),
+        };
+        <span class="kw">let </span>bytes_written = <span class="self">self</span>.ser.<span class="number">0</span>.bytes_written;
+        <span class="kw">let </span><span class="kw-2">mut </span>ser = Serializer(<span class="kw">crate</span>::SerializerCommon::&lt;W&gt; {
+            ctxt: <span class="self">self</span>.ser.<span class="number">0</span>.ctxt,
+            signature: field_signature,
+            writer: <span class="self">self</span>.ser.<span class="number">0</span>.writer,
+            <span class="attr">#[cfg(unix)]
+            </span>fds: <span class="self">self</span>.ser.<span class="number">0</span>.fds,
+            bytes_written,
+            value_sign: <span class="prelude-val">None</span>,
+            container_depths: <span class="self">self</span>.ser.<span class="number">0</span>.container_depths,
+        });
+
+        value.serialize(<span class="kw-2">&amp;mut </span>ser)<span class="question-mark">?</span>;
+        <span class="self">self</span>.ser.<span class="number">0</span>.bytes_written = ser.<span class="number">0</span>.bytes_written;
+        <span class="self">self</span>.ser.<span class="number">0</span>.value_sign = ser.<span class="number">0</span>.value_sign;
+
+        <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">fn </span>end_struct(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">if </span><span class="self">self</span>.end_parens &gt; <span class="number">0 </span>{
-            <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser.skip_chars(<span class="self">self</span>.end_parens <span class="kw">as </span>usize)<span class="question-mark">?</span>;
-        }
         <span class="comment">// Restore the original container depths.
         </span><span class="self">self</span>.ser.<span class="number">0</span>.container_depths = <span class="self">self</span>.container_depths;
 
@@ -1250,14 +1247,14 @@
 
 <span class="attr">#[doc(hidden)]
 </span><span class="doccomment">/// Allows us to serialize a struct as an ARRAY.
-</span><span class="kw">pub enum </span>StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; {
-    Struct(StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;),
-    Seq(SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;),
+</span><span class="kw">pub enum </span>StructSeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; {
+    Struct(StructSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;),
+    Seq(SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;),
 }
 
 <span class="macro">macro_rules!</span> serialize_struct_anon_fields {
     (<span class="macro-nonterminal">$</span><span class="kw">trait</span>:<span class="macro-nonterminal">ident $method</span>:ident) =&gt; {
-        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
         <span class="kw">where
             </span>W: Write + Seek,
         {
@@ -1268,7 +1265,7 @@
             <span class="kw">where
                 </span>T: <span class="question-mark">?</span>Sized + Serialize,
             {
-                <span class="self">self</span>.serialize_struct_element(<span class="prelude-val">None</span>, value)
+                <span class="self">self</span>.serialize_struct_element(value)
             }
 
             <span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -1276,7 +1273,7 @@
             }
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSeqSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSeqSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
         <span class="kw">where
             </span>W: Write + Seek,
         {
@@ -1306,7 +1303,13 @@
 <span class="macro">serialize_struct_anon_fields!</span>(SerializeTupleStruct serialize_field);
 <span class="macro">serialize_struct_anon_fields!</span>(SerializeTupleVariant serialize_field);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::SerializeMap <span class="kw">for </span>SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>MapSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; {
+    seq: SeqSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;,
+    key_signature: <span class="kw-2">&amp;</span><span class="lifetime">'ser </span>Signature,
+    value_signature: <span class="kw-2">&amp;</span><span class="lifetime">'ser </span>Signature,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::SerializeMap <span class="kw">for </span>MapSerializer&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
 <span class="kw">where
     </span>W: Write + Seek,
 {
@@ -1317,60 +1320,41 @@
     <span class="kw">where
         </span>T: <span class="question-mark">?</span>Sized + Serialize,
     {
-        <span class="self">self</span>.ser.<span class="number">0</span>.add_padding(<span class="self">self</span>.element_alignment)<span class="question-mark">?</span>;
+        <span class="self">self</span>.seq.ser.<span class="number">0</span>.add_padding(DICT_ENTRY_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
 
-        <span class="comment">// We want to keep parsing the same signature repeatedly for each key so we use a
-        // disposable clone.
-        </span><span class="kw">let </span>sig_parser = <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser.clone();
-        <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser = sig_parser.clone();
-
-        <span class="comment">// skip `{`
-        </span><span class="self">self</span>.ser.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-
-        key.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.ser)<span class="question-mark">?</span>;
-        <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser = sig_parser;
-
-        <span class="prelude-val">Ok</span>(())
+        key.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.seq.ser)
     }
 
     <span class="kw">fn </span>serialize_value&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>T: <span class="question-mark">?</span>Sized + Serialize,
     {
-        <span class="comment">// We want to keep parsing the same signature repeatedly for each key so we use a
-        // disposable clone.
-        </span><span class="kw">let </span>sig_parser = <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser.clone();
-        <span class="self">self</span>.ser.<span class="number">0</span>.sig_parser = sig_parser.clone();
-
-        <span class="comment">// skip `{` and key char
-        </span><span class="self">self</span>.ser.<span class="number">0</span>.sig_parser.skip_chars(<span class="number">2</span>)<span class="question-mark">?</span>;
-
-        value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.ser)<span class="question-mark">?</span>;
-        <span class="comment">// Restore the original parser
-        </span><span class="self">self</span>.ser.<span class="number">0</span>.sig_parser = sig_parser;
+        <span class="self">self</span>.seq.ser.<span class="number">0</span>.signature = <span class="self">self</span>.value_signature;
+        value.serialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.seq.ser)<span class="question-mark">?</span>;
+        <span class="self">self</span>.seq.ser.<span class="number">0</span>.signature = <span class="self">self</span>.key_signature;
 
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="self">self</span>.end_seq()
+        <span class="self">self</span>.seq.end_seq()
     }
 }
 
 <span class="macro">macro_rules!</span> serialize_struct_named_fields {
     (<span class="macro-nonterminal">$</span><span class="kw">trait</span>:<span class="macro-nonterminal">ident</span>) =&gt; {
-        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
         <span class="kw">where
             </span>W: Write + Seek,
         {
             <span class="kw">type </span><span class="prelude-val">Ok </span>= ();
             <span class="kw">type </span>Error = Error;
 
-            <span class="kw">fn </span>serialize_field&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+            <span class="kw">fn </span>serialize_field&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _key: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, value: <span class="kw-2">&amp;</span>T) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
             <span class="kw">where
                 </span>T: <span class="question-mark">?</span>Sized + Serialize,
             {
-                <span class="self">self</span>.serialize_struct_element(<span class="prelude-val">Some</span>(key), value)
+                <span class="self">self</span>.serialize_struct_element(value)
             }
 
             <span class="kw">fn </span>end(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -1378,7 +1362,7 @@
             }
         }
 
-        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSeqSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'b</span>, W&gt;
+        <span class="kw">impl</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt; ser::<span class="macro-nonterminal">$</span><span class="kw">trait for </span><span class="macro-nonterminal">StructSeqSerializer</span>&lt;<span class="lifetime">'ser</span>, <span class="lifetime">'b</span>, W&gt;
         <span class="kw">where
             </span>W: Write + Seek,
         {

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/connection/handshake/client.rs`."><title>client.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/connection/handshake/client.rs`."><title>client.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -248,90 +248,14 @@
 <a href="#248" id="248">248</a>
 <a href="#249" id="249">249</a>
 <a href="#250" id="250">250</a>
-<a href="#251" id="251">251</a>
-<a href="#252" id="252">252</a>
-<a href="#253" id="253">253</a>
-<a href="#254" id="254">254</a>
-<a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
-<a href="#257" id="257">257</a>
-<a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
-<a href="#263" id="263">263</a>
-<a href="#264" id="264">264</a>
-<a href="#265" id="265">265</a>
-<a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
-<a href="#272" id="272">272</a>
-<a href="#273" id="273">273</a>
-<a href="#274" id="274">274</a>
-<a href="#275" id="275">275</a>
-<a href="#276" id="276">276</a>
-<a href="#277" id="277">277</a>
-<a href="#278" id="278">278</a>
-<a href="#279" id="279">279</a>
-<a href="#280" id="280">280</a>
-<a href="#281" id="281">281</a>
-<a href="#282" id="282">282</a>
-<a href="#283" id="283">283</a>
-<a href="#284" id="284">284</a>
-<a href="#285" id="285">285</a>
-<a href="#286" id="286">286</a>
-<a href="#287" id="287">287</a>
-<a href="#288" id="288">288</a>
-<a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
-<a href="#299" id="299">299</a>
-<a href="#300" id="300">300</a>
-<a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-<a href="#307" id="307">307</a>
-<a href="#308" id="308">308</a>
-<a href="#309" id="309">309</a>
-<a href="#310" id="310">310</a>
-<a href="#311" id="311">311</a>
-<a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
-<a href="#315" id="315">315</a>
-<a href="#316" id="316">316</a>
-<a href="#317" id="317">317</a>
-<a href="#318" id="318">318</a>
-<a href="#319" id="319">319</a>
-<a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>async_trait::async_trait;
-<span class="kw">use </span>std::collections::VecDeque;
-<span class="kw">use </span>tracing::{debug, instrument, trace, warn};
+<span class="kw">use </span>tracing::{instrument, trace, warn};
 
-<span class="kw">use </span>sha1::{Digest, Sha1};
-
-<span class="kw">use crate</span>::{conn::socket::ReadHalf, names::OwnedUniqueName, Message};
+<span class="kw">use crate</span>::{conn::socket::ReadHalf, is_flatpak, names::OwnedUniqueName, Message};
 
 <span class="kw">use super</span>::{
-    random_ascii, sasl_auth_id, AuthMechanism, Authenticated, BoxedSplit, Command, Common, Cookie,
-    Error, Handshake, OwnedGuid, <span class="prelude-ty">Result</span>, Str,
+    sasl_auth_id, AuthMechanism, Authenticated, BoxedSplit, Command, Common, Error, Handshake,
+    OwnedGuid, <span class="prelude-ty">Result</span>,
 };
 
 <span class="doccomment">/// A representation of an in-progress handshake, client-side
@@ -349,54 +273,17 @@
     <span class="doccomment">/// Start a handshake on this client socket
     </span><span class="kw">pub fn </span>new(
         socket: BoxedSplit,
-        mechanisms: <span class="prelude-ty">Option</span>&lt;VecDeque&lt;AuthMechanism&gt;&gt;,
+        mechanism: <span class="prelude-ty">Option</span>&lt;AuthMechanism&gt;,
         server_guid: <span class="prelude-ty">Option</span>&lt;OwnedGuid&gt;,
         bus: bool,
     ) -&gt; Client {
-        <span class="kw">let </span>mechanisms = mechanisms.unwrap_or_else(|| {
-            <span class="kw">let </span><span class="kw-2">mut </span>mechanisms = VecDeque::new();
-            mechanisms.push_back(AuthMechanism::External);
-            mechanisms.push_back(AuthMechanism::Cookie);
-            mechanisms.push_back(AuthMechanism::Anonymous);
-            mechanisms
-        });
+        <span class="kw">let </span>mechanism = mechanism.unwrap_or_else(|| socket.read().auth_mechanism());
 
         Client {
-            common: Common::new(socket, mechanisms),
+            common: Common::new(socket, mechanism),
             server_guid,
             bus,
         }
-    }
-
-    <span class="doccomment">/// Respond to a cookie authentication challenge from the server.
-    ///
-    /// Returns the next command to send to the server.
-    </span><span class="kw">async fn </span>handle_cookie_challenge(<span class="kw-2">&amp;mut </span><span class="self">self</span>, data: Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Command&gt; {
-        <span class="kw">let </span>context = std::str::from_utf8(<span class="kw-2">&amp;</span>data)
-            .map_err(|<span class="kw">_</span>| Error::Handshake(<span class="string">"Cookie context was not valid UTF-8"</span>.into()))<span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>split = context.split_ascii_whitespace();
-        <span class="kw">let </span>context = split
-            .next()
-            .ok_or_else(|| Error::Handshake(<span class="string">"Missing cookie context name"</span>.into()))<span class="question-mark">?</span>;
-        <span class="kw">let </span>context = Str::from(context).try_into()<span class="question-mark">?</span>;
-        <span class="kw">let </span>id = split
-            .next()
-            .ok_or_else(|| Error::Handshake(<span class="string">"Missing cookie ID"</span>.into()))<span class="question-mark">?</span>;
-        <span class="kw">let </span>id = id
-            .parse()
-            .map_err(|e| Error::Handshake(<span class="macro">format!</span>(<span class="string">"Invalid cookie ID `{id}`: {e}"</span>)))<span class="question-mark">?</span>;
-        <span class="kw">let </span>server_challenge = split
-            .next()
-            .ok_or_else(|| Error::Handshake(<span class="string">"Missing cookie challenge"</span>.into()))<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>cookie = Cookie::lookup(<span class="kw-2">&amp;</span>context, id).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>cookie = cookie.cookie();
-        <span class="kw">let </span>client_challenge = random_ascii(<span class="number">16</span>);
-        <span class="kw">let </span>sec = <span class="macro">format!</span>(<span class="string">"{server_challenge}:{client_challenge}:{cookie}"</span>);
-        <span class="kw">let </span>sha1 = hex::encode(Sha1::digest(sec));
-        <span class="kw">let </span>data = <span class="macro">format!</span>(<span class="string">"{client_challenge} {sha1}"</span>).into_bytes();
-
-        <span class="prelude-val">Ok</span>(Command::Data(<span class="prelude-val">Some</span>(data)))
     }
 
     <span class="kw">fn </span>set_guid(<span class="kw-2">&amp;mut </span><span class="self">self</span>, guid: OwnedGuid) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -439,66 +326,42 @@
     }
 
     <span class="doccomment">/// Perform the authentication handshake with the server.
-    ///
-    /// In case of cookie auth, it returns the challenge response to send to the server, so it can
-    /// be batched with rest of the commands.
     </span><span class="attr">#[instrument(skip(<span class="self">self</span>))]
-    </span><span class="kw">async fn </span>authenticate(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Command&gt;&gt; {
-        <span class="kw">loop </span>{
-            <span class="kw">let </span>mechanism = <span class="self">self</span>.common.next_mechanism()<span class="question-mark">?</span>;
-            <span class="macro">trace!</span>(<span class="string">"Trying {mechanism} mechanism"</span>);
-            <span class="kw">let </span>auth_cmd = <span class="kw">match </span>mechanism {
-                AuthMechanism::Anonymous =&gt; Command::Auth(<span class="prelude-val">Some</span>(mechanism), <span class="prelude-val">Some</span>(<span class="string">"zbus"</span>.into())),
-                AuthMechanism::External =&gt; {
-                    Command::Auth(<span class="prelude-val">Some</span>(mechanism), <span class="prelude-val">Some</span>(sasl_auth_id()<span class="question-mark">?</span>.into_bytes()))
-                }
-                AuthMechanism::Cookie =&gt; Command::Auth(
-                    <span class="prelude-val">Some</span>(AuthMechanism::Cookie),
-                    <span class="prelude-val">Some</span>(sasl_auth_id()<span class="question-mark">?</span>.into_bytes()),
-                ),
-            };
-            <span class="self">self</span>.common.write_command(auth_cmd).<span class="kw">await</span><span class="question-mark">?</span>;
-
-            <span class="kw">match </span><span class="self">self</span>.common.read_command().<span class="kw">await</span><span class="question-mark">? </span>{
-                Command::Ok(guid) =&gt; {
-                    <span class="macro">trace!</span>(<span class="string">"Received OK from server"</span>);
-                    <span class="self">self</span>.set_guid(guid)<span class="question-mark">?</span>;
-
-                    <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
-                }
-                Command::Data(data) <span class="kw">if </span>mechanism == AuthMechanism::Cookie =&gt; {
-                    <span class="kw">let </span>data = data.ok_or_else(|| {
-                        Error::Handshake(<span class="string">"Received DATA with no data from server"</span>.into())
-                    })<span class="question-mark">?</span>;
-                    <span class="macro">trace!</span>(<span class="string">"Received cookie challenge from server"</span>);
-                    <span class="kw">let </span>response = <span class="self">self</span>.handle_cookie_challenge(data).<span class="kw">await</span><span class="question-mark">?</span>;
-
-                    <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(response));
-                }
-                Command::Rejected(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">"{mechanism} rejected by the server"</span>),
-                Command::Error(e) =&gt; <span class="macro">debug!</span>(<span class="string">"Received error from server: {e}"</span>),
-                cmd =&gt; {
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Handshake(<span class="macro">format!</span>(
-                        <span class="string">"Unexpected command from server: {cmd}"
-                    </span>)))
-                }
+    </span><span class="kw">async fn </span>authenticate(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>mechanism = <span class="self">self</span>.common.mechanism();
+        <span class="macro">trace!</span>(<span class="string">"Trying {mechanism} mechanism"</span>);
+        <span class="kw">let </span>auth_cmd = <span class="kw">match </span>mechanism {
+            AuthMechanism::Anonymous =&gt; Command::Auth(<span class="prelude-val">Some</span>(mechanism), <span class="prelude-val">Some</span>(<span class="string">"zbus"</span>.into())),
+            AuthMechanism::External =&gt; {
+                Command::Auth(<span class="prelude-val">Some</span>(mechanism), <span class="prelude-val">Some</span>(sasl_auth_id()<span class="question-mark">?</span>.into_bytes()))
             }
+        };
+        <span class="self">self</span>.common.write_command(auth_cmd).<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="kw">match </span><span class="self">self</span>.common.read_command().<span class="kw">await</span><span class="question-mark">? </span>{
+            Command::Ok(guid) =&gt; {
+                <span class="macro">trace!</span>(<span class="string">"Received OK from server"</span>);
+                <span class="self">self</span>.set_guid(guid)<span class="question-mark">?</span>;
+
+                <span class="prelude-val">Ok</span>(())
+            }
+            Command::Rejected(accepted) =&gt; {
+                <span class="kw">let </span>list = accepted.replace(<span class="string">" "</span>, <span class="string">", "</span>);
+                <span class="prelude-val">Err</span>(Error::Handshake(<span class="macro">format!</span>(
+                    <span class="string">"{mechanism} rejected by the server. Accepted mechanisms: [{list}]"
+                </span>)))
+            }
+            Command::Error(e) =&gt; <span class="prelude-val">Err</span>(Error::Handshake(<span class="macro">format!</span>(<span class="string">"Received error from server: {e}"</span>))),
+            cmd =&gt; <span class="prelude-val">Err</span>(Error::Handshake(<span class="macro">format!</span>(
+                <span class="string">"Unexpected command from server: {cmd}"
+            </span>))),
         }
     }
 
     <span class="doccomment">/// Sends out all commands after authentication.
-    ///
-    /// This includes the challenge response for cookie auth, if any and returns the number of
-    /// responses expected from the server.
     </span><span class="attr">#[instrument(skip(<span class="self">self</span>))]
-    </span><span class="kw">async fn </span>send_secondary_commands(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        challenge_response: <span class="prelude-ty">Option</span>&lt;Command&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;usize&gt; {
+    </span><span class="kw">async fn </span>send_secondary_commands(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;usize&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>commands = Vec::with_capacity(<span class="number">4</span>);
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(response) = challenge_response {
-            commands.push(response);
-        }
 
         <span class="kw">let </span>can_pass_fd = <span class="self">self</span>.common.socket_mut().read_mut().can_pass_unix_fd();
         <span class="kw">if </span>can_pass_fd {
@@ -545,12 +408,7 @@
                 }
                 Command::AgreeUnixFD =&gt; <span class="self">self</span>.common.set_cap_unix_fd(<span class="bool-val">true</span>),
                 Command::Error(e) =&gt; <span class="macro">warn!</span>(<span class="string">"UNIX file descriptor passing rejected: {e}"</span>),
-                <span class="comment">// This also covers "REJECTED", which would mean that the server has rejected the
-                // authentication challenge response (likely cookie) since it already agreed to the
-                // mechanism. Theoretically we should be just trying the next auth mechanism but
-                // this most likely means something is very wrong and we're already too deep into
-                // the handshake to recover.
-                </span>cmd =&gt; {
+                cmd =&gt; {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Handshake(<span class="macro">format!</span>(
                         <span class="string">"Unexpected command from server: {cmd}"
                     </span>)))
@@ -571,8 +429,8 @@
         <span class="attr">#[cfg(any(target_os = <span class="string">"freebsd"</span>, target_os = <span class="string">"dragonfly"</span>))]
         </span><span class="self">self</span>.send_zero_byte().<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="kw">let </span>challenge_response = <span class="self">self</span>.authenticate().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span>expected_n_responses = <span class="self">self</span>.send_secondary_commands(challenge_response).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="self">self</span>.authenticate().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>expected_n_responses = <span class="self">self</span>.send_secondary_commands().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">if </span>expected_n_responses &gt; <span class="number">0 </span>{
             <span class="self">self</span>.receive_secondary_responses(expected_n_responses)
@@ -610,7 +468,7 @@
 }
 
 <span class="kw">fn </span>create_hello_method_call() -&gt; Message {
-    Message::method(<span class="string">"/org/freedesktop/DBus"</span>, <span class="string">"Hello"</span>)
+    Message::method_call(<span class="string">"/org/freedesktop/DBus"</span>, <span class="string">"Hello"</span>)
         .unwrap()
         .destination(<span class="string">"org.freedesktop.DBus"</span>)
         .unwrap()
@@ -639,9 +497,5 @@
         Type::Error =&gt; <span class="prelude-val">Err</span>(Error::from(reply)),
         m =&gt; <span class="prelude-val">Err</span>(Error::Handshake(<span class="macro">format!</span>(<span class="string">"Unexpected messgage `{m:?}`"</span>))),
     }
-}
-
-<span class="kw">fn </span>is_flatpak() -&gt; bool {
-    std::env::var(<span class="string">"FLATPAK_ID"</span>).is_ok()
 }
 </code></pre></div></section></main></body></html>

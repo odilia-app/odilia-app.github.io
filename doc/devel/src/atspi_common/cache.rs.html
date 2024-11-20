@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/bfa3bc4/atspi-common/src/cache.rs`."><title>cache.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/5224bc0/atspi-common/src/cache.rs`."><title>cache.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -128,6 +128,40 @@
 <a href="#128" id="128">128</a>
 <a href="#129" id="129">129</a>
 <a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Common types for `org.a11y.atspi.Cache` events.
 //!
 
@@ -135,7 +169,39 @@
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>zbus_lockstep_macros::validate;
 <span class="kw">use </span>zbus_names::UniqueName;
-<span class="kw">use </span>zvariant::{ObjectPath, Type};
+<span class="kw">use </span>zvariant::{
+	signature::{Child, Fields},
+	ObjectPath, Signature, Type,
+};
+
+<span class="comment">// ((so)(so)(so)iiassusau)
+</span><span class="kw">pub const </span>CACHE_ITEM_SIGNATURE: <span class="kw-2">&amp;</span>Signature = <span class="kw-2">&amp;</span>Signature::static_structure(<span class="kw-2">&amp;</span>[
+	<span class="kw-2">&amp;</span>Signature::Structure(Fields::Static { fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath] }),
+	<span class="kw-2">&amp;</span>Signature::Structure(Fields::Static { fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath] }),
+	<span class="kw-2">&amp;</span>Signature::Structure(Fields::Static { fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath] }),
+	<span class="kw-2">&amp;</span>Signature::I32,
+	<span class="kw-2">&amp;</span>Signature::I32,
+	<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::Str }),
+	<span class="kw-2">&amp;</span>Signature::Str,
+	<span class="kw-2">&amp;</span>Signature::U32,
+	<span class="kw-2">&amp;</span>Signature::Str,
+	<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::U32 }),
+]);
+<span class="kw">pub const </span>LEGACY_CACHE_ITEM_SIGNATURE: <span class="kw-2">&amp;</span>Signature = <span class="kw-2">&amp;</span>Signature::static_structure(<span class="kw-2">&amp;</span>[
+	<span class="kw-2">&amp;</span>Signature::Structure(Fields::Static { fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath] }),
+	<span class="kw-2">&amp;</span>Signature::Structure(Fields::Static { fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath] }),
+	<span class="kw-2">&amp;</span>Signature::Structure(Fields::Static { fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath] }),
+	<span class="kw-2">&amp;</span>Signature::Array(Child::Static {
+		child: <span class="kw-2">&amp;</span>Signature::Structure(Fields::Static {
+			fields: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Signature::Str, <span class="kw-2">&amp;</span>Signature::ObjectPath],
+		}),
+	}),
+	<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::Str }),
+	<span class="kw-2">&amp;</span>Signature::Str,
+	<span class="kw-2">&amp;</span>Signature::U32,
+	<span class="kw-2">&amp;</span>Signature::Str,
+	<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::U32 }),
+]);
 
 <span class="doccomment">/// The item type provided by `Cache:Add` signals
 </span><span class="attr">#[allow(clippy::module_name_repetitions)]
@@ -253,9 +319,11 @@
 <span class="attr">#[cfg(test)]
 #[test]
 </span><span class="kw">fn </span>zvariant_type_signature_of_legacy_cache_item() {
+	<span class="kw">use </span>std::str::FromStr;
 	<span class="macro">assert_eq!</span>(
-		LegacyCacheItem::signature(),
-		zbus::zvariant::Signature::from_static_str(<span class="string">"((so)(so)(so)a(so)assusau)"</span>).unwrap()
+		<span class="kw-2">*</span>&lt;LegacyCacheItem <span class="kw">as </span>Type&gt;::SIGNATURE,
+		zbus::zvariant::Signature::from_str(<span class="string">"((so)(so)(so)a(so)assusau)"</span>).unwrap()
 	);
+	<span class="macro">assert_eq!</span>(&lt;LegacyCacheItem <span class="kw">as </span>Type&gt;::SIGNATURE, LEGACY_CACHE_ITEM_SIGNATURE,);
 }
 </code></pre></div></section></main></body></html>

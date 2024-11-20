@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/message/body.rs`."><title>body.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/message/body.rs`."><title>body.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -72,6 +72,7 @@
 <a href="#72" id="72">72</a>
 <a href="#73" id="73">73</a>
 <a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>zvariant::{
     serialized::{<span class="self">self</span>, Data},
     Signature, Type,
@@ -86,11 +87,18 @@
 </span><span class="kw">pub struct </span>Body {
     data: Data&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt;,
     msg: Message,
+    signature: Signature,
 }
 
 <span class="kw">impl </span>Body {
     <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>new(data: Data&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt;, msg: Message) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{ data, msg }
+        <span class="kw">let </span>body_sig = msg.header().signature().clone();
+
+        <span class="self">Self </span>{
+            data,
+            msg,
+            signature: body_sig,
+        }
     }
 
     <span class="doccomment">/// Deserialize the body using the contained signature.
@@ -98,9 +106,8 @@
     <span class="kw">where
         </span>B: zvariant::DynamicDeserialize&lt;<span class="lifetime">'s</span>&gt;,
     {
-        <span class="kw">let </span>body_sig = <span class="self">self
-            </span>.signature()
-            .unwrap_or_else(|| Signature::from_static_str_unchecked(<span class="string">""</span>));
+        <span class="kw">let </span>header = <span class="self">self</span>.msg.header();
+        <span class="kw">let </span>body_sig = header.signature();
 
         <span class="self">self</span>.data
             .deserialize_for_dynamic_signature(body_sig)
@@ -117,13 +124,8 @@
     }
 
     <span class="doccomment">/// The signature of the body.
-    ///
-    /// **Note:** While zbus treats multiple arguments as a struct (to allow you to use the tuple
-    /// syntax), D-Bus does not. Since this method gives you the signature expected on the wire by
-    /// D-Bus, the trailing and leading STRUCT signature parenthesis will not be present in case of
-    /// multiple arguments.
-    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Signature&lt;<span class="lifetime">'_</span>&gt;&gt; {
-        <span class="self">self</span>.msg.inner.quick_fields.signature(<span class="kw-2">&amp;</span><span class="self">self</span>.msg)
+    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.signature
     }
 
     <span class="doccomment">/// The length of the body in bytes.

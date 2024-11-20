@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quick-xml-0.30.0/src/de/var.rs`."><title>var.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quick-xml-0.36.2/src/de/var.rs`."><title>var.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -144,8 +144,10 @@
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     de::key::QNameDeserializer,
+    de::map::ElementMapAccess,
     de::resolver::EntityResolver,
     de::simple_type::SimpleTypeDeserializer,
     de::{DeEvent, Deserializer, XmlRead, TEXT_KEY},
@@ -155,33 +157,33 @@
 <span class="kw">use </span>serde::de::{<span class="self">self</span>, DeserializeSeed, Deserializer <span class="kw">as _</span>, Visitor};
 
 <span class="doccomment">/// An enum access
-</span><span class="kw">pub struct </span>EnumAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;
+</span><span class="kw">pub struct </span>EnumAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt;
 <span class="kw">where
     </span>R: XmlRead&lt;<span class="lifetime">'de</span>&gt;,
     E: EntityResolver,
 {
-    de: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, R, E&gt;,
+    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, R, E&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt; EnumAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt; EnumAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt;
 <span class="kw">where
     </span>R: XmlRead&lt;<span class="lifetime">'de</span>&gt;,
     E: EntityResolver,
 {
-    <span class="kw">pub fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, R, E&gt;) -&gt; <span class="self">Self </span>{
+    <span class="kw">pub fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, R, E&gt;) -&gt; <span class="self">Self </span>{
         EnumAccess { de }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt; de::EnumAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>EnumAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt; de::EnumAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>EnumAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt;
 <span class="kw">where
     </span>R: XmlRead&lt;<span class="lifetime">'de</span>&gt;,
     E: EntityResolver,
 {
     <span class="kw">type </span>Error = DeError;
-    <span class="kw">type </span>Variant = VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;;
+    <span class="kw">type </span>Variant = VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt;;
 
-    <span class="kw">fn </span>variant_seed&lt;V&gt;(<span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;), DeError&gt;
+    <span class="kw">fn </span>variant_seed&lt;V&gt;(<span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;(V::Value, <span class="self">Self</span>::Variant), <span class="self">Self</span>::Error&gt;
     <span class="kw">where
         </span>V: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
@@ -195,7 +197,9 @@
                 seed.deserialize(BorrowedStrDeserializer::&lt;DeError&gt;::new(TEXT_KEY))<span class="question-mark">?</span>,
                 <span class="bool-val">true</span>,
             ),
-            DeEvent::End(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(DeError::UnexpectedEnd(e.name().into_inner().to_vec())),
+            <span class="comment">// SAFETY: The reader is guaranteed that we don't have unmatched tags
+            // If we here, then out deserializer has a bug
+            </span>DeEvent::End(e) =&gt; <span class="macro">unreachable!</span>(<span class="string">"{:?}"</span>, e),
             DeEvent::Eof =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(DeError::UnexpectedEof),
         };
         <span class="prelude-val">Ok</span>((
@@ -208,25 +212,25 @@
     }
 }
 
-<span class="kw">pub struct </span>VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;
+<span class="kw">pub struct </span>VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt;
 <span class="kw">where
     </span>R: XmlRead&lt;<span class="lifetime">'de</span>&gt;,
     E: EntityResolver,
 {
-    de: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, R, E&gt;,
+    de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, R, E&gt;,
     <span class="doccomment">/// `true` if variant should be deserialized from a textual content
     /// and `false` if from tag
     </span>is_text: bool,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt; de::VariantAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'a</span>, R, E&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt; de::VariantAccess&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>VariantAccess&lt;<span class="lifetime">'de</span>, <span class="lifetime">'d</span>, R, E&gt;
 <span class="kw">where
     </span>R: XmlRead&lt;<span class="lifetime">'de</span>&gt;,
     E: EntityResolver,
 {
     <span class="kw">type </span>Error = DeError;
 
-    <span class="kw">fn </span>unit_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), DeError&gt; {
+    <span class="kw">fn </span>unit_variant(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
         <span class="kw">match </span><span class="self">self</span>.de.next()<span class="question-mark">? </span>{
             <span class="comment">// Consume subtree
             </span>DeEvent::Start(e) =&gt; <span class="self">self</span>.de.read_to_end(e.name()),
@@ -238,7 +242,7 @@
         }
     }
 
-    <span class="kw">fn </span>newtype_variant_seed&lt;T&gt;(<span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value, DeError&gt;
+    <span class="kw">fn </span>newtype_variant_seed&lt;T&gt;(<span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value, <span class="self">Self</span>::Error&gt;
     <span class="kw">where
         </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
@@ -249,11 +253,11 @@
                 </span><span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Only `Text` events are possible here"</span>),
             }
         } <span class="kw">else </span>{
-            seed.deserialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.de)
+            seed.deserialize(<span class="self">self</span>.de)
         }
     }
 
-    <span class="kw">fn </span>tuple_variant&lt;V&gt;(<span class="self">self</span>, len: usize, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, DeError&gt;
+    <span class="kw">fn </span>tuple_variant&lt;V&gt;(<span class="self">self</span>, len: usize, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt;
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
@@ -274,19 +278,17 @@
         <span class="self">self</span>,
         fields: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str],
         visitor: V,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, DeError&gt;
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value, <span class="self">Self</span>::Error&gt;
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">if </span><span class="self">self</span>.is_text {
-            <span class="kw">match </span><span class="self">self</span>.de.next()<span class="question-mark">? </span>{
-                DeEvent::Text(e) =&gt; SimpleTypeDeserializer::from_text_content(e)
-                    .deserialize_struct(<span class="string">""</span>, fields, visitor),
-                <span class="comment">// SAFETY: the other events are filtered in `variant_seed()`
-                </span><span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Only `Text` events are possible here"</span>),
+        <span class="kw">match </span><span class="self">self</span>.de.next()<span class="question-mark">? </span>{
+            DeEvent::Start(e) =&gt; visitor.visit_map(ElementMapAccess::new(<span class="self">self</span>.de, e, fields)<span class="question-mark">?</span>),
+            DeEvent::Text(e) =&gt; {
+                SimpleTypeDeserializer::from_text_content(e).deserialize_struct(<span class="string">""</span>, fields, visitor)
             }
-        } <span class="kw">else </span>{
-            <span class="self">self</span>.de.deserialize_struct(<span class="string">""</span>, fields, visitor)
+            <span class="comment">// SAFETY: the other events are filtered in `variant_seed()`
+            </span><span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Only `Start` or `Text` events are possible here"</span>),
         }
     }
 }

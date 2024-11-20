@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/connection/handshake/common.rs`."><title>common.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/connection/handshake/common.rs`."><title>common.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -184,17 +184,7 @@
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
 <a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::collections::VecDeque;
-<span class="kw">use </span>tracing::{instrument, trace};
+</pre></div><pre class="rust"><code><span class="kw">use </span>tracing::{instrument, trace};
 
 <span class="kw">use super</span>::{AuthMechanism, BoxedSplit, Command};
 <span class="kw">use crate</span>::{Error, <span class="prelude-ty">Result</span>};
@@ -207,21 +197,20 @@
     <span class="attr">#[cfg(unix)]
     </span>received_fds: Vec&lt;std::os::fd::OwnedFd&gt;,
     cap_unix_fd: bool,
-    <span class="comment">// the current AUTH mechanism is front, ordered by priority
-    </span>mechanisms: VecDeque&lt;AuthMechanism&gt;,
+    mechanism: AuthMechanism,
     first_command: bool,
 }
 
 <span class="kw">impl </span>Common {
     <span class="doccomment">/// Start a handshake on this client socket
-    </span><span class="kw">pub fn </span>new(socket: BoxedSplit, mechanisms: VecDeque&lt;AuthMechanism&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(socket: BoxedSplit, mechanism: AuthMechanism) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             socket,
             recv_buffer: Vec::new(),
             <span class="attr">#[cfg(unix)]
             </span>received_fds: Vec::new(),
             cap_unix_fd: <span class="bool-val">false</span>,
-            mechanisms,
+            mechanism,
             first_command: <span class="bool-val">true</span>,
         }
     }
@@ -239,9 +228,8 @@
         <span class="self">self</span>.cap_unix_fd = cap_unix_fd;
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
-    </span><span class="kw">pub fn </span>mechanisms(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>VecDeque&lt;AuthMechanism&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.mechanisms
+    <span class="kw">pub fn </span>mechanism(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; AuthMechanism {
+        <span class="self">self</span>.mechanism
     }
 
     <span class="kw">pub fn </span>into_components(<span class="self">self</span>) -&gt; IntoComponentsReturn {
@@ -251,7 +239,7 @@
             <span class="attr">#[cfg(unix)]
             </span><span class="self">self</span>.received_fds,
             <span class="self">self</span>.cap_unix_fd,
-            <span class="self">self</span>.mechanisms,
+            <span class="self">self</span>.mechanism,
         )
     }
 
@@ -370,12 +358,6 @@
 
         <span class="prelude-val">Ok</span>(commands)
     }
-
-    <span class="kw">pub fn </span>next_mechanism(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;AuthMechanism&gt; {
-        <span class="self">self</span>.mechanisms
-            .pop_front()
-            .ok_or_else(|| Error::Handshake(<span class="string">"Exhausted available AUTH mechanisms"</span>.into()))
-    }
 }
 
 <span class="attr">#[cfg(unix)]
@@ -384,8 +366,8 @@
     Vec&lt;u8&gt;,
     Vec&lt;std::os::fd::OwnedFd&gt;,
     bool,
-    VecDeque&lt;AuthMechanism&gt;,
+    AuthMechanism,
 );
 <span class="attr">#[cfg(not(unix))]
-</span><span class="kw">type </span>IntoComponentsReturn = (BoxedSplit, Vec&lt;u8&gt;, bool, VecDeque&lt;AuthMechanism&gt;);
+</span><span class="kw">type </span>IntoComponentsReturn = (BoxedSplit, Vec&lt;u8&gt;, bool, AuthMechanism);
 </code></pre></div></section></main></body></html>

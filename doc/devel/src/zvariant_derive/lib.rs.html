@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant_derive-4.1.1/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant_derive-5.1.0/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -430,6 +430,8 @@
 <a href="#430" id="430">430</a>
 <a href="#431" id="431">431</a>
 <a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(rust_2018_idioms)]
 #![doc(
     html_logo_url = <span class="string">"https://raw.githubusercontent.com/dbus2/zbus/9f7a90d2b594ddc48b7a5f39fda5e00cd56a7dfb/logo.png"
@@ -468,7 +470,7 @@
 ///     field3: &amp;'s str,
 /// }
 ///
-/// assert_eq!(Struct::signature(), "(qxs)");
+/// assert_eq!(Struct::SIGNATURE, "(qxs)");
 /// let s = Struct {
 ///     field1: 42,
 ///     field2: i64::max_value(),
@@ -495,7 +497,7 @@
 ///     Variant1,
 ///     Variant2,
 /// }
-/// assert_eq!(Enum::signature(), u8::signature());
+/// assert_eq!(Enum::SIGNATURE, u8::SIGNATURE);
 /// let ctxt = Context::new_dbus(LE, 0);
 /// let encoded = to_bytes(ctxt, &amp;Enum::Variant2).unwrap();
 /// let decoded: Enum = encoded.deserialize().unwrap().0;
@@ -507,7 +509,7 @@
 ///     Variant1,
 ///     Variant2,
 /// }
-/// assert_eq!(Enum2::signature(), i64::signature());
+/// assert_eq!(Enum2::SIGNATURE, i64::SIGNATURE);
 ///
 /// // w/o repr attribute, u32 representation is chosen
 /// #[derive(Deserialize, Serialize, Type)]
@@ -515,7 +517,7 @@
 ///     Variant1,
 ///     Variant2,
 /// }
-/// assert_eq!(NoReprEnum::signature(), u32::signature());
+/// assert_eq!(NoReprEnum::SIGNATURE, u32::SIGNATURE);
 ///
 /// // Not-unit enums are represented as a structure, with the first field being a u32 denoting the
 /// // variant and the second as the actual value.
@@ -524,14 +526,14 @@
 ///     Variant1(f64),
 ///     Variant2(f64),
 /// }
-/// assert_eq!(NewType::signature(), "(ud)");
+/// assert_eq!(NewType::SIGNATURE, "(ud)");
 ///
 /// #[derive(Deserialize, Serialize, Type)]
 /// enum StructFields {
 ///     Variant1(u16, i64, &amp;'static str),
 ///     Variant2 { field1: u16, field2: i64, field3: &amp;'static str },
 /// }
-/// assert_eq!(StructFields::signature(), "(u(qxs))");
+/// assert_eq!(StructFields::SIGNATURE, "(u(qxs))");
 /// ```
 ///
 /// # Custom signatures
@@ -553,7 +555,7 @@
 ///     field3: String,
 /// }
 ///
-/// assert_eq!(Struct::signature(), "a{sv}");
+/// assert_eq!(Struct::SIGNATURE, "a{sv}");
 /// let s = Struct {
 ///     field1: 42,
 ///     field2: i64::max_value(),
@@ -579,7 +581,7 @@
 ///     Variant3,
 /// }
 ///
-/// assert_eq!(StrEnum::signature(), "s");
+/// assert_eq!(StrEnum::SIGNATURE, "s");
 /// let ctxt = Context::new_dbus(LE, 0);
 /// let encoded = to_bytes(ctxt, &amp;StrEnum::Variant2).unwrap();
 /// assert_eq!(encoded.len(), 13);
@@ -591,7 +593,7 @@
 /// [`Serialize`]: https://docs.serde.rs/serde/trait.Serialize.html
 /// [`Deserialize`]: https://docs.serde.rs/serde/de/trait.Deserialize.html
 /// [serde_repr]: https://crates.io/crates/serde_repr
-</span><span class="attr">#[proc_macro_derive(Type, attributes(zvariant))]
+</span><span class="attr">#[proc_macro_derive(Type, attributes(zbus, zvariant))]
 </span><span class="kw">pub fn </span>type_macro_derive(input: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>ast: DeriveInput = syn::parse(input).unwrap();
     r#type::expand_derive(ast)
@@ -656,9 +658,10 @@
 /// * `"PascalCase"`
 /// * `"camelCase"`
 /// * `"snake_case"`
+/// * `"kebab-case"`
 ///
 /// [`Serialize`]: https://docs.serde.rs/serde/trait.Serialize.html
-</span><span class="attr">#[proc_macro_derive(SerializeDict, attributes(zvariant))]
+</span><span class="attr">#[proc_macro_derive(SerializeDict, attributes(zbus, zvariant))]
 </span><span class="kw">pub fn </span>serialize_dict_macro_derive(input: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>input: DeriveInput = syn::parse(input).unwrap();
     dict::expand_serialize_derive(input)
@@ -724,9 +727,10 @@
 /// * `"PascalCase"`
 /// * `"camelCase"`
 /// * `"snake_case"`
+/// * `"kebab-case"`
 ///
 /// [`Deserialize`]: https://docs.serde.rs/serde/de/trait.Deserialize.html
-</span><span class="attr">#[proc_macro_derive(DeserializeDict, attributes(zvariant))]
+</span><span class="attr">#[proc_macro_derive(DeserializeDict, attributes(zbus, zvariant))]
 </span><span class="kw">pub fn </span>deserialize_dict_macro_derive(input: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>input: DeriveInput = syn::parse(input).unwrap();
     dict::expand_deserialize_derive(input)

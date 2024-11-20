@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["pascal_or_camel_case","snake_case"]};
+window.SIDEBAR_ITEMS = {"fn":["pascal_or_camel_case","snake_or_kebab_case"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/error.rs`."><title>error.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-5.1.0/src/error.rs`."><title>error.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -175,9 +175,38 @@
 <a href="#175" id="175">175</a>
 <a href="#176" id="176">176</a>
 <a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>serde::{de, ser};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::{convert::Infallible, error, fmt, io, result, sync::Arc};
+
+<span class="kw">use </span><span class="kw">crate</span>::Signature;
 
 <span class="doccomment">/// Enum representing the max depth exceeded error.
 </span><span class="attr">#[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -229,14 +258,20 @@
     <span class="doccomment">/// Missing framing offset at the end of a GVariant-encoded container,
     </span>MissingFramingOffset,
     <span class="doccomment">/// The type (signature as first argument) being (de)serialized is not supported by the format.
-    </span>IncompatibleFormat(<span class="kw">crate</span>::Signature&lt;<span class="lifetime">'static</span>&gt;, <span class="kw">crate</span>::serialized::Format),
+    </span>IncompatibleFormat(Signature, <span class="kw">crate</span>::serialized::Format),
     <span class="doccomment">/// The provided signature (first argument) was not valid for reading as the requested type.
     /// Details on the expected signatures are in the second argument.
-    </span>SignatureMismatch(<span class="kw">crate</span>::Signature&lt;<span class="lifetime">'static</span>&gt;, String),
+    </span>SignatureMismatch(Signature, String),
     <span class="doccomment">/// Out of bounds range specified.
     </span>OutOfBounds,
     <span class="doccomment">/// The maximum allowed depth for containers in encoding was exceeded.
     </span>MaxDepthExceeded(MaxDepthExceeded),
+    <span class="doccomment">/// Error from parsing a signature.
+    </span>SignatureParse(<span class="kw">crate</span>::signature::Error),
+    <span class="doccomment">/// Attempted to create an empty structure (which is not allowed by the D-Bus specification).
+    </span>EmptyStructure,
+    <span class="doccomment">/// Invalid object path.
+    </span>InvalidObjectPath,
 }
 
 <span class="macro">assert_impl_all!</span>(Error: Send, Sync, Unpin);
@@ -251,6 +286,19 @@
             (Error::PaddingNot0(p), Error::PaddingNot0(other)) =&gt; p == other,
             (Error::UnknownFd, Error::UnknownFd) =&gt; <span class="bool-val">true</span>,
             (Error::MaxDepthExceeded(max1), Error::MaxDepthExceeded(max2)) =&gt; max1 == max2,
+            (Error::MissingFramingOffset, Error::MissingFramingOffset) =&gt; <span class="bool-val">true</span>,
+            (
+                Error::IncompatibleFormat(sig1, format1),
+                Error::IncompatibleFormat(sig2, format2),
+            ) =&gt; sig1 == sig2 &amp;&amp; format1 == format2,
+            (
+                Error::SignatureMismatch(provided1, expected1),
+                Error::SignatureMismatch(provided2, expected2),
+            ) =&gt; provided1 == provided2 &amp;&amp; expected1 == expected2,
+            (Error::OutOfBounds, Error::OutOfBounds) =&gt; <span class="bool-val">true</span>,
+            (Error::SignatureParse(e1), Error::SignatureParse(e2)) =&gt; e1 == e2,
+            (Error::EmptyStructure, Error::EmptyStructure) =&gt; <span class="bool-val">true</span>,
+            (Error::InvalidObjectPath, Error::InvalidObjectPath) =&gt; <span class="bool-val">true</span>,
             (<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="bool-val">false</span>,
         }
     }
@@ -292,6 +340,9 @@
                 </span><span class="string">"Out of bounds range specified"</span>,
             ),
             Error::MaxDepthExceeded(max) =&gt; <span class="macro">write!</span>(f, <span class="string">"{max}"</span>),
+            Error::SignatureParse(e) =&gt; <span class="macro">write!</span>(f, <span class="string">"{e}"</span>),
+            Error::EmptyStructure =&gt; <span class="macro">write!</span>(f, <span class="string">"Attempted to create an empty structure"</span>),
+            Error::InvalidObjectPath =&gt; <span class="macro">write!</span>(f, <span class="string">"Invalid object path"</span>),
         }
     }
 }
@@ -314,6 +365,9 @@
             }
             Error::OutOfBounds =&gt; Error::OutOfBounds,
             Error::MaxDepthExceeded(max) =&gt; Error::MaxDepthExceeded(<span class="kw-2">*</span>max),
+            Error::SignatureParse(e) =&gt; Error::SignatureParse(<span class="kw-2">*</span>e),
+            Error::EmptyStructure =&gt; Error::EmptyStructure,
+            Error::InvalidObjectPath =&gt; Error::InvalidObjectPath,
         }
     }
 }

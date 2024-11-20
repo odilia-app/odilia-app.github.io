@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/dbus/de.rs`."><title>de.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-5.1.0/src/dbus/de.rs`."><title>de.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -673,8 +673,39 @@
 <a href="#673" id="673">673</a>
 <a href="#674" id="674">674</a>
 <a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>serde::de::{<span class="self">self</span>, DeserializeSeed, EnumAccess, MapAccess, SeqAccess, Visitor};
-<span class="kw">use </span>static_assertions::assert_impl_all;
 
 <span class="kw">use </span>std::{marker::PhantomData, str};
 
@@ -684,41 +715,29 @@
 <span class="kw">use crate</span>::{
     de::{DeserializerCommon, ValueParseStage},
     serialized::{Context, Format},
-    signature_parser::SignatureParser,
     utils::<span class="kw-2">*</span>,
     Basic, Error, ObjectPath, <span class="prelude-ty">Result</span>, Signature,
 };
-
-<span class="attr">#[cfg(unix)]
-</span><span class="kw">use </span><span class="kw">crate</span>::Fd;
 
 <span class="doccomment">/// Our D-Bus deserialization implementation.
 </span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;(<span class="kw">pub</span>(<span class="kw">crate</span>) DeserializerCommon&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;);
 
-<span class="macro">assert_impl_all!</span>(Deserializer&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, ()&gt;: Send, Sync, Unpin);
-
 <span class="kw">impl</span>&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
     <span class="doccomment">/// Create a Deserializer struct instance.
     ///
     /// On Windows, there is no `fds` argument.
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'r</span>: <span class="lifetime">'de</span>, S&gt;(
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'r</span>: <span class="lifetime">'de</span>&gt;(
         bytes: <span class="kw-2">&amp;</span><span class="lifetime">'r </span>[u8],
         <span class="attr">#[cfg(unix)] </span>fds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'f </span>[F]&gt;,
-        signature: S,
+        signature: <span class="kw-2">&amp;</span><span class="lifetime">'sig </span>Signature,
         ctxt: Context,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt;
-    <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'sig</span>&gt;&gt;,
-        S::Error: Into&lt;Error&gt;,
-    {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="macro">assert_eq!</span>(ctxt.format(), Format::DBus);
 
-        <span class="kw">let </span>signature = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
-        <span class="kw">let </span>sig_parser = SignatureParser::new(signature);
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(DeserializerCommon {
             ctxt,
-            sig_parser,
+            signature,
             bytes,
             <span class="attr">#[cfg(unix)]
             </span>fds,
@@ -771,9 +790,7 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>c = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
-
-        <span class="kw">crate</span>::de::deserialize_any::&lt;<span class="self">Self</span>, V&gt;(<span class="self">self</span>, c, visitor)
+        <span class="kw">crate</span>::de::deserialize_any::&lt;<span class="self">Self</span>, V&gt;(<span class="self">self</span>, <span class="self">self</span>.<span class="number">0</span>.signature, visitor)
     }
 
     <span class="kw">fn </span>deserialize_bool&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
@@ -842,10 +859,9 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>v = <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>{
+        <span class="kw">let </span>v = <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.signature {
             <span class="attr">#[cfg(unix)]
-            </span>Fd::SIGNATURE_CHAR =&gt; {
-                <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
+            </span>Signature::Fd =&gt; {
                 <span class="kw">let </span>alignment = u32::alignment(Format::DBus);
                 <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
                 <span class="kw">let </span>idx = <span class="self">self</span>.<span class="number">0</span>.ctxt.endian().read_u32(<span class="self">self</span>.<span class="number">0</span>.next_slice(alignment)<span class="question-mark">?</span>);
@@ -886,20 +902,20 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>len = <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>{
-            Signature::SIGNATURE_CHAR | VARIANT_SIGNATURE_CHAR =&gt; {
+        <span class="kw">let </span>len = <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.signature {
+            Signature::Signature | Signature::Variant =&gt; {
                 <span class="kw">let </span>len_slice = <span class="self">self</span>.<span class="number">0</span>.next_slice(<span class="number">1</span>)<span class="question-mark">?</span>;
 
                 len_slice[<span class="number">0</span>] <span class="kw">as </span>usize
             }
-            &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_CHAR | ObjectPath::SIGNATURE_CHAR =&gt; {
+            Signature::Str | Signature::ObjectPath =&gt; {
                 <span class="kw">let </span>alignment = u32::alignment(Format::DBus);
                 <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
                 <span class="kw">let </span>len_slice = <span class="self">self</span>.<span class="number">0</span>.next_slice(alignment)<span class="question-mark">?</span>;
 
                 <span class="self">self</span>.<span class="number">0</span>.ctxt.endian().read_u32(len_slice) <span class="kw">as </span>usize
             }
-            c =&gt; {
+            <span class="kw">_ </span>=&gt; {
                 <span class="kw">let </span>expected = <span class="macro">format!</span>(
                     <span class="string">"`{}`, `{}`, `{}` or `{}`"</span>,
                     &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_STR,
@@ -907,10 +923,7 @@
                     ObjectPath::SIGNATURE_STR,
                     VARIANT_SIGNATURE_CHAR,
                 );
-                <span class="kw">return </span><span class="prelude-val">Err</span>(de::Error::invalid_type(
-                    de::Unexpected::Char(c),
-                    <span class="kw-2">&amp;</span>expected.as_str(),
-                ));
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(<span class="self">self</span>.<span class="number">0</span>.signature.clone(), expected));
             }
         };
         <span class="kw">let </span>slice = <span class="self">self</span>.<span class="number">0</span>.next_slice(len)<span class="question-mark">?</span>;
@@ -922,7 +935,6 @@
         }
         <span class="self">self</span>.<span class="number">0</span>.pos += <span class="number">1</span>; <span class="comment">// skip trailing null byte
         </span><span class="kw">let </span>s = str::from_utf8(slice).map_err(Error::Utf8)<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
 
         visitor.visit_borrowed_str(s)
     }
@@ -933,23 +945,20 @@
     {
         <span class="attr">#[cfg(feature = <span class="string">"option-as-array"</span>)]
         </span>{
-            <span class="kw">let </span>c = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
-            <span class="kw">if </span>c != ARRAY_SIGNATURE_CHAR {
-                <span class="kw">return </span><span class="prelude-val">Err</span>(de::Error::invalid_type(
-                    de::Unexpected::Char(c),
-                    <span class="kw-2">&amp;</span>ARRAY_SIGNATURE_STR,
-                ));
-            }
-            <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
             <span class="comment">// This takes care of parsing all the padding and getting the byte length.
-            </span><span class="kw">let </span>len = ArrayDeserializer::new(<span class="self">self</span>)<span class="question-mark">?</span>.len;
-            <span class="kw">if </span>len == <span class="number">0 </span>{
-                <span class="self">self</span>.<span class="number">0</span>.sig_parser.parse_next_signature()<span class="question-mark">?</span>;
+            </span><span class="kw">let </span>ad = ArrayDeserializer::new(<span class="self">self</span>)<span class="question-mark">?</span>;
+            <span class="kw">let </span>len = ad.len;
+            <span class="kw">let </span>array_signature = ad.array_signature;
 
+            <span class="kw">let </span>v = <span class="kw">if </span>len == <span class="number">0 </span>{
                 visitor.visit_none()
             } <span class="kw">else </span>{
-                visitor.visit_some(<span class="self">self</span>)
-            }
+                visitor.visit_some(<span class="kw-2">&amp;mut *</span><span class="self">self</span>)
+            };
+            <span class="self">self</span>.<span class="number">0</span>.container_depths = <span class="self">self</span>.<span class="number">0</span>.container_depths.dec_array();
+            <span class="self">self</span>.<span class="number">0</span>.signature = array_signature;
+
+            v
         }
 
         <span class="attr">#[cfg(not(feature = <span class="string">"option-as-array"</span>))]
@@ -983,48 +992,34 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>{
-            VARIANT_SIGNATURE_CHAR =&gt; {
+        <span class="kw">let </span>alignment = <span class="self">self</span>.<span class="number">0</span>.signature.alignment(Format::DBus);
+        <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
+
+        <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.signature {
+            Signature::Variant =&gt; {
                 <span class="kw">let </span>value_de = ValueDeserializer::new(<span class="self">self</span>);
 
                 visitor.visit_seq(value_de)
             }
-            ARRAY_SIGNATURE_CHAR =&gt; {
-                <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-                <span class="kw">let </span>next_signature_char = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">?</span>;
+            Signature::Array(<span class="kw">_</span>) =&gt; {
                 <span class="kw">let </span>array_de = ArrayDeserializer::new(<span class="self">self</span>)<span class="question-mark">?</span>;
-
-                <span class="kw">if </span>next_signature_char == DICT_ENTRY_SIG_START_CHAR {
-                    visitor.visit_map(ArrayMapDeserializer(array_de))
-                } <span class="kw">else </span>{
-                    visitor.visit_seq(ArraySeqDeserializer(array_de))
-                }
+                visitor.visit_seq(ArraySeqDeserializer(array_de))
             }
-            STRUCT_SIG_START_CHAR =&gt; {
-                <span class="kw">let </span>signature = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-                <span class="kw">let </span>alignment = alignment_for_signature(<span class="kw-2">&amp;</span>signature, Format::DBus)<span class="question-mark">?</span>;
-                <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
-
-                <span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-
-                <span class="self">self</span>.<span class="number">0</span>.container_depths = <span class="self">self</span>.<span class="number">0</span>.container_depths.inc_structure()<span class="question-mark">?</span>;
-                <span class="kw">let </span>v = visitor.visit_seq(StructureDeserializer { de: <span class="self">self </span>});
-                <span class="self">self</span>.<span class="number">0</span>.container_depths = <span class="self">self</span>.<span class="number">0</span>.container_depths.dec_structure();
-
-                v
-            }
-            u8::SIGNATURE_CHAR =&gt; {
+            Signature::Dict { .. } =&gt; visitor.visit_map(ArrayMapDeserializer::new(<span class="self">self</span>)<span class="question-mark">?</span>),
+            Signature::Structure(<span class="kw">_</span>) =&gt; visitor.visit_seq(StructureDeserializer::new(<span class="self">self</span>)<span class="question-mark">?</span>),
+            Signature::U8 =&gt; {
                 <span class="comment">// Empty struct: encoded as a `0u8`.
                 </span><span class="kw">let _</span>: u8 = serde::Deserialize::deserialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>)<span class="question-mark">?</span>;
 
-                visitor.visit_seq(StructureDeserializer { de: <span class="self">self </span>})
+                visitor.visit_seq(StructureDeserializer {
+                    de: <span class="self">self</span>,
+                    field_idx: <span class="number">0</span>,
+                    num_fields: <span class="number">0</span>,
+                })
             }
-            c =&gt; <span class="prelude-val">Err</span>(de::Error::invalid_type(
-                de::Unexpected::Char(c),
-                <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                    <span class="string">"`{VARIANT_SIGNATURE_CHAR}`, `{ARRAY_SIGNATURE_CHAR}` or `{STRUCT_SIG_START_CHAR}`"</span>,
-                )
-                .as_str(),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                <span class="string">"a variant, array, dict, structure or u8"</span>.to_string(),
             )),
         }
     }
@@ -1038,41 +1033,47 @@
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>signature = <span class="self">self</span>.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>alignment = alignment_for_signature(<span class="kw-2">&amp;</span>signature, <span class="self">self</span>.<span class="number">0</span>.ctxt.format())<span class="question-mark">?</span>;
+        <span class="kw">let </span>alignment = <span class="self">self</span>.<span class="number">0</span>.signature.alignment(<span class="self">self</span>.<span class="number">0</span>.ctxt.format());
         <span class="self">self</span>.<span class="number">0</span>.parse_padding(alignment)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>non_unit = <span class="kw">if </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>== STRUCT_SIG_START_CHAR {
-            <span class="comment">// This means we've a non-unit enum. Let's skip the `(`.
-            </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-
-            <span class="bool-val">true
-        </span>} <span class="kw">else </span>{
-            <span class="bool-val">false
-        </span>};
-
-        <span class="kw">let </span>v = visitor.visit_enum(<span class="kw">crate</span>::de::Enum {
-            de: <span class="kw-2">&amp;mut *</span><span class="self">self</span>,
+        visitor.visit_enum(<span class="kw">crate</span>::de::Enum {
+            de: <span class="self">self</span>,
             name,
             _phantom: PhantomData,
-        })<span class="question-mark">?</span>;
-
-        <span class="kw">if </span>non_unit {
-            <span class="comment">// For non-unit enum, we need to skip the closing paren.
-            </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-        }
-
-        <span class="prelude-val">Ok</span>(v)
+        })
     }
 
     <span class="kw">fn </span>deserialize_identifier&lt;V&gt;(<span class="self">self</span>, visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
     <span class="kw">where
         </span>V: Visitor&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">if </span><span class="self">self</span>.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>== &lt;<span class="kw-2">&amp;</span>str&gt;::SIGNATURE_CHAR {
-            <span class="self">self</span>.deserialize_str(visitor)
-        } <span class="kw">else </span>{
-            <span class="self">self</span>.deserialize_u32(visitor)
+        <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.signature {
+            Signature::Str =&gt; <span class="self">self</span>.deserialize_str(visitor),
+            Signature::U32 =&gt; <span class="self">self</span>.deserialize_u32(visitor),
+            Signature::Structure(fields) =&gt; {
+                <span class="kw">let </span><span class="kw-2">mut </span>fields = fields.iter();
+                <span class="kw">let </span>index_signature = fields.next().ok_or_else(|| {
+                    Error::SignatureMismatch(
+                        <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                        <span class="string">"a structure with 2 fields and u32 as its first field"</span>.to_string(),
+                    )
+                })<span class="question-mark">?</span>;
+                <span class="self">self</span>.<span class="number">0</span>.signature = index_signature;
+                <span class="kw">let </span>v = <span class="self">self</span>.deserialize_u32(visitor);
+
+                <span class="self">self</span>.<span class="number">0</span>.signature = fields.next().ok_or_else(|| {
+                    Error::SignatureMismatch(
+                        <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                        <span class="string">"a structure with 2 fields and u32 as its first field"</span>.to_string(),
+                    )
+                })<span class="question-mark">?</span>;
+
+                v
+            }
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                <span class="self">self</span>.<span class="number">0</span>.signature.clone(),
+                <span class="string">"a string, object path or signature"</span>.to_string(),
+            )),
         }
     }
 
@@ -1087,8 +1088,7 @@
     start: usize,
     <span class="comment">// alignment of element
     </span>element_alignment: usize,
-    <span class="comment">// where value signature starts
-    </span>element_signature_len: usize,
+    array_signature: <span class="kw-2">&amp;</span><span class="lifetime">'sig </span>Signature,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;
@@ -1099,51 +1099,45 @@
         de.<span class="number">0</span>.container_depths = de.<span class="number">0</span>.container_depths.inc_array()<span class="question-mark">?</span>;
 
         <span class="kw">let </span>len = de.<span class="number">0</span>.ctxt.endian().read_u32(de.<span class="number">0</span>.next_slice(<span class="number">4</span>)<span class="question-mark">?</span>) <span class="kw">as </span>usize;
-        <span class="kw">let </span>element_signature = de.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">?</span>;
-        <span class="kw">let </span>element_alignment = alignment_for_signature(<span class="kw-2">&amp;</span>element_signature, Format::DBus)<span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>element_signature_len = element_signature.len();
 
-        <span class="comment">// D-Bus requires padding for the first element even when there is no first element
-        // (i-e empty array) so we parse padding already.
-        </span>de.<span class="number">0</span>.parse_padding(element_alignment)<span class="question-mark">?</span>;
+        <span class="comment">// D-Bus expects us to add padding for the first element even when there is no first
+        // element (i-e empty array) so we parse padding already.
+        </span><span class="kw">let </span>(element_alignment, child_signature) = <span class="kw">match </span>de.<span class="number">0</span>.signature {
+            Signature::Array(child) =&gt; (child.alignment(de.<span class="number">0</span>.ctxt.format()), child.signature()),
+            Signature::Dict { key, .. } =&gt; (DICT_ENTRY_ALIGNMENT_DBUS, key.signature()),
+            <span class="kw">_ </span>=&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    de.<span class="number">0</span>.signature.clone(),
+                    <span class="string">"an array or dict"</span>.to_string(),
+                ));
+            }
+        };
+        de.<span class="number">0</span>.parse_padding(element_alignment)<span class="question-mark">?</span>;
+
+        <span class="comment">// In case of an array, we'll only be serializing the array's child elements from now on and
+        // in case of a dict, we'll swap key and value signatures during serlization of each entry,
+        // so let's assume the element signature for array and key signature for dict, from now on.
+        // We restore the original signature at the end of deserialization.
+        </span><span class="kw">let </span>array_signature = de.<span class="number">0</span>.signature;
+        de.<span class="number">0</span>.signature = child_signature;
         <span class="kw">let </span>start = de.<span class="number">0</span>.pos;
-
-        <span class="kw">if </span>de.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>== DICT_ENTRY_SIG_START_CHAR {
-            de.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-            element_signature_len -= <span class="number">1</span>;
-        }
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             de,
             len,
             start,
             element_alignment,
-            element_signature_len,
+            array_signature,
         })
     }
 
-    <span class="kw">fn </span>next&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: T, sig_parser: SignatureParser&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value&gt;
+    <span class="kw">fn </span>next&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;T::Value&gt;
     <span class="kw">where
         </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>ctxt = Context::new_dbus(
-            <span class="self">self</span>.de.<span class="number">0</span>.ctxt.endian(),
-            <span class="self">self</span>.de.<span class="number">0</span>.ctxt.position() + <span class="self">self</span>.de.<span class="number">0</span>.pos,
-        );
+        <span class="kw">let </span>v = seed.deserialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.de);
 
-        <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;F&gt;(DeserializerCommon {
-            ctxt,
-            sig_parser,
-            bytes: subslice(<span class="self">self</span>.de.<span class="number">0</span>.bytes, <span class="self">self</span>.de.<span class="number">0</span>.pos..)<span class="question-mark">?</span>,
-            fds: <span class="self">self</span>.de.<span class="number">0</span>.fds,
-            pos: <span class="number">0</span>,
-            container_depths: <span class="self">self</span>.de.<span class="number">0</span>.container_depths,
-        });
-        <span class="kw">let </span>v = seed.deserialize(<span class="kw-2">&amp;mut </span>de);
-        <span class="self">self</span>.de.<span class="number">0</span>.pos += de.<span class="number">0</span>.pos;
-        <span class="comment">// No need for retaking the container depths as the child can't be incomplete.
-
-        </span><span class="kw">if </span><span class="self">self</span>.de.<span class="number">0</span>.pos &gt; <span class="self">self</span>.start + <span class="self">self</span>.len {
+        <span class="kw">if </span><span class="self">self</span>.de.<span class="number">0</span>.pos &gt; <span class="self">self</span>.start + <span class="self">self</span>.len {
             <span class="kw">return </span><span class="prelude-val">Err</span>(serde::de::Error::invalid_length(
                 <span class="self">self</span>.len,
                 <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"&gt;= {}"</span>, <span class="self">self</span>.de.<span class="number">0</span>.pos - <span class="self">self</span>.start).as_str(),
@@ -1153,45 +1147,42 @@
         v
     }
 
-    <span class="kw">fn </span>next_element&lt;T&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        seed: T,
-        sig_parser: SignatureParser&lt;<span class="lifetime">'_</span>&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T::Value&gt;&gt;
+    <span class="kw">fn </span>next_element&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: T) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;T::Value&gt;&gt;
     <span class="kw">where
         </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">if </span><span class="self">self</span>.done() {
-            <span class="self">self</span>.de
-                .<span class="number">0
-                </span>.sig_parser
-                .skip_chars(<span class="self">self</span>.element_signature_len)<span class="question-mark">?</span>;
-            <span class="self">self</span>.de.<span class="number">0</span>.container_depths = <span class="self">self</span>.de.<span class="number">0</span>.container_depths.dec_array();
+            <span class="self">self</span>.end();
 
             <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
         }
+        <span class="comment">// Redundant for normal arrays but dict requires each entry to be padded by 8 bytes.
+        </span><span class="self">self</span>.de.<span class="number">0</span>.parse_padding(<span class="self">self</span>.element_alignment)<span class="question-mark">?</span>;
 
-        <span class="self">self</span>.de.<span class="number">0</span>.parse_padding(<span class="self">self</span>.element_alignment)<span class="question-mark">?</span>;
-
-        <span class="self">self</span>.next(seed, sig_parser).map(<span class="prelude-val">Some</span>)
+        <span class="self">self</span>.next(seed).map(<span class="prelude-val">Some</span>)
     }
 
     <span class="kw">fn </span>done(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.de.<span class="number">0</span>.pos == <span class="self">self</span>.start + <span class="self">self</span>.len
+    }
+
+    <span class="kw">fn </span>end(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.de.<span class="number">0</span>.container_depths = <span class="self">self</span>.de.<span class="number">0</span>.container_depths.dec_array();
+        <span class="self">self</span>.de.<span class="number">0</span>.signature = <span class="self">self</span>.array_signature;
     }
 }
 
 <span class="kw">fn </span>deserialize_ay&lt;<span class="lifetime">'de</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;(
     de: <span class="kw-2">&amp;mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, F&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'de </span>[u8]&gt; {
-    <span class="kw">if </span>de.<span class="number">0</span>.sig_parser.next_signature()<span class="question-mark">? </span>!= <span class="string">"ay" </span>{
+    <span class="kw">if </span>!<span class="macro">matches!</span>(de.<span class="number">0</span>.signature, Signature::Array(child) <span class="kw">if </span>child.signature() == <span class="kw-2">&amp;</span>Signature::U8) {
         <span class="kw">return </span><span class="prelude-val">Err</span>(de::Error::invalid_type(de::Unexpected::Seq, <span class="kw-2">&amp;</span><span class="string">"ay"</span>));
     }
 
-    de.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
-    <span class="kw">let </span>ad = ArrayDeserializer::new(de)<span class="question-mark">?</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>ad = ArrayDeserializer::new(de)<span class="question-mark">?</span>;
     <span class="kw">let </span>len = ad.len;
-    de.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
+    ad.end();
+
     de.<span class="number">0</span>.next_slice(len)
 }
 
@@ -1206,12 +1197,37 @@
     <span class="kw">where
         </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>sig_parser = <span class="self">self</span>.<span class="number">0</span>.de.<span class="number">0</span>.sig_parser.clone();
-        <span class="self">self</span>.<span class="number">0</span>.next_element(seed, sig_parser)
+        <span class="self">self</span>.<span class="number">0</span>.next_element(seed)
     }
 }
 
-<span class="kw">struct </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;(ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;);
+<span class="kw">struct </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
+    ad: ArrayDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;,
+    key_signature: <span class="kw-2">&amp;</span><span class="lifetime">'sig </span>Signature,
+    value_signature: <span class="kw-2">&amp;</span><span class="lifetime">'sig </span>Signature,
+}
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;
+    ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
+{
+    <span class="kw">fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>(key_signature, value_signature) = <span class="kw">match </span>de.<span class="number">0</span>.signature {
+            Signature::Dict { key, value } =&gt; (key.signature(), value.signature()),
+            <span class="kw">_ </span>=&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    de.<span class="number">0</span>.signature.clone(),
+                    <span class="string">"a dict"</span>.to_string(),
+                ));
+            }
+        };
+        <span class="kw">let </span>ad = ArrayDeserializer::new(de)<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+            ad,
+            key_signature,
+            value_signature,
+        })
+    }
+}
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; MapAccess&lt;<span class="lifetime">'de</span>&gt;
     <span class="kw">for </span>ArrayMapDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
@@ -1222,24 +1238,47 @@
     <span class="kw">where
         </span>K: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>sig_parser = <span class="self">self</span>.<span class="number">0</span>.de.<span class="number">0</span>.sig_parser.clone();
-        <span class="self">self</span>.<span class="number">0</span>.next_element(seed, sig_parser)
+        <span class="self">self</span>.ad.next_element(seed)
     }
 
     <span class="kw">fn </span>next_value_seed&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, seed: V) -&gt; <span class="prelude-ty">Result</span>&lt;V::Value&gt;
     <span class="kw">where
         </span>V: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span><span class="kw-2">mut </span>sig_parser = <span class="self">self</span>.<span class="number">0</span>.de.<span class="number">0</span>.sig_parser.clone();
-        <span class="comment">// Skip key signature (always 1 char)
-        </span>sig_parser.skip_char()<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="number">0</span>.next(seed, sig_parser)
+        <span class="self">self</span>.ad.de.<span class="number">0</span>.signature = <span class="self">self</span>.value_signature;
+        <span class="kw">let </span>v = <span class="self">self</span>.ad.next(seed);
+        <span class="self">self</span>.ad.de.<span class="number">0</span>.signature = <span class="self">self</span>.key_signature;
+
+        v
     }
 }
 
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">struct </span>StructureDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt; {
     de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;,
+    <span class="doccomment">/// Index of the next field to serialize.
+    </span>field_idx: usize,
+    <span class="doccomment">/// The number of fields in the structure.
+    </span>num_fields: usize,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt;
+    StructureDeserializer&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;
+{
+    <span class="kw">fn </span>new(de: <span class="kw-2">&amp;</span><span class="lifetime">'d </span><span class="kw-2">mut </span>Deserializer&lt;<span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, F&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>num_fields = <span class="kw">match </span>de.<span class="number">0</span>.signature {
+            Signature::Structure(fields) =&gt; fields.iter().count(),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Incorrect signature for struct"</span>),
+        };
+        de.<span class="number">0</span>.parse_padding(STRUCT_ALIGNMENT_DBUS)<span class="question-mark">?</span>;
+        de.<span class="number">0</span>.container_depths = de.<span class="number">0</span>.container_depths.inc_structure()<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+            de,
+            field_idx: <span class="number">0</span>,
+            num_fields,
+        })
+    }
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'d</span>, <span class="lifetime">'de</span>, <span class="lifetime">'sig</span>, <span class="lifetime">'f</span>, <span class="attr">#[cfg(unix)] </span>F: AsFd, <span class="attr">#[cfg(not(unix))] </span>F&gt; SeqAccess&lt;<span class="lifetime">'de</span>&gt;
@@ -1251,14 +1290,40 @@
     <span class="kw">where
         </span>T: DeserializeSeed&lt;<span class="lifetime">'de</span>&gt;,
     {
-        <span class="kw">let </span>v = seed.deserialize(<span class="kw-2">&amp;mut *</span><span class="self">self</span>.de).map(<span class="prelude-val">Some</span>);
-
-        <span class="kw">if </span><span class="self">self</span>.de.<span class="number">0</span>.sig_parser.next_char()<span class="question-mark">? </span>== STRUCT_SIG_END_CHAR {
-            <span class="comment">// Last item in the struct
-            </span><span class="self">self</span>.de.<span class="number">0</span>.sig_parser.skip_char()<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.field_idx == <span class="self">self</span>.num_fields {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
         }
 
-        v
+        <span class="kw">let </span>signature = <span class="self">self</span>.de.<span class="number">0</span>.signature;
+        <span class="kw">let </span>field_signature = <span class="kw">match </span>signature {
+            Signature::Structure(fields) =&gt; {
+                <span class="kw">let </span>signature = fields.iter().nth(<span class="self">self</span>.field_idx).ok_or_else(|| {
+                    Error::SignatureMismatch(signature.clone(), <span class="string">"a struct"</span>.to_string())
+                })<span class="question-mark">?</span>;
+                <span class="self">self</span>.field_idx += <span class="number">1</span>;
+
+                signature
+            }
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Incorrect signature for struct"</span>),
+        };
+
+        <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;F&gt;(DeserializerCommon {
+            ctxt: <span class="self">self</span>.de.<span class="number">0</span>.ctxt,
+            signature: field_signature,
+            fds: <span class="self">self</span>.de.<span class="number">0</span>.fds,
+            bytes: <span class="self">self</span>.de.<span class="number">0</span>.bytes,
+            pos: <span class="self">self</span>.de.<span class="number">0</span>.pos,
+            container_depths: <span class="self">self</span>.de.<span class="number">0</span>.container_depths,
+        });
+        <span class="kw">let </span>v = seed.deserialize(<span class="kw-2">&amp;mut </span>de)<span class="question-mark">?</span>;
+        <span class="self">self</span>.de.<span class="number">0</span>.pos = de.<span class="number">0</span>.pos;
+
+        <span class="kw">if </span><span class="self">self</span>.field_idx == <span class="self">self</span>.num_fields {
+            <span class="comment">// All fields have been deserialized.
+            </span><span class="self">self</span>.de.<span class="number">0</span>.container_depths = <span class="self">self</span>.de.<span class="number">0</span>.container_depths.dec_structure();
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(v))
     }
 }
 
@@ -1308,8 +1373,7 @@
                 </span><span class="kw">let </span>value_start = sig_end + <span class="number">1</span>;
 
                 <span class="kw">let </span>slice = subslice(<span class="self">self</span>.de.<span class="number">0</span>.bytes, sig_start..sig_end)<span class="question-mark">?</span>;
-                <span class="kw">let </span>signature = Signature::try_from(slice)<span class="question-mark">?</span>;
-                <span class="kw">let </span>sig_parser = SignatureParser::new(signature);
+                <span class="kw">let </span>signature = Signature::from_bytes(slice)<span class="question-mark">?</span>;
 
                 <span class="kw">let </span>ctxt = Context::new(
                     Format::DBus,
@@ -1318,7 +1382,7 @@
                 );
                 <span class="kw">let </span><span class="kw-2">mut </span>de = Deserializer::&lt;F&gt;(DeserializerCommon {
                     ctxt,
-                    sig_parser,
+                    signature: <span class="kw-2">&amp;</span>signature,
                     bytes: subslice(<span class="self">self</span>.de.<span class="number">0</span>.bytes, value_start..)<span class="question-mark">?</span>,
                     fds: <span class="self">self</span>.de.<span class="number">0</span>.fds,
                     pos: <span class="number">0</span>,

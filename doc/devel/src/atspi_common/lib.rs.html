@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/bfa3bc4/atspi-common/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/5224bc0/atspi-common/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -260,6 +260,13 @@
 <a href="#260" id="260">260</a>
 <a href="#261" id="261">261</a>
 <a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(clippy::all, clippy::pedantic, clippy::cargo, unsafe_code, rustdoc::all)]
 #![allow(clippy::module_name_repetitions)]
 #![allow(clippy::multiple_crate_versions)]
@@ -276,14 +283,10 @@
 <span class="attr">#[macro_use]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>macros;
 
-<span class="kw">pub mod </span>action;
-<span class="kw">pub use </span>action::Action;
 <span class="kw">pub mod </span>object_match;
 <span class="kw">pub use </span>object_match::{MatchType, ObjectMatchRule, SortOrder, TreeTraversalType};
 <span class="kw">pub mod </span>object_ref;
 <span class="kw">pub use </span>object_ref::ObjectRef;
-<span class="kw">pub mod </span>operation;
-<span class="kw">pub use </span>operation::Operation;
 <span class="kw">pub mod </span>interface;
 <span class="kw">pub use </span>interface::{Interface, InterfaceSet};
 <span class="kw">pub mod </span>state;
@@ -305,6 +308,7 @@
 <span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, AtspiError&gt;;
 
 <span class="doccomment">/// Describes a selection of text, including selections across object boundaries.
+///
 /// For example, selecting from the beginning of a paragraph to half way through a link would cause
 /// the start and end object references to be different.
 </span><span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, Type)]
@@ -425,7 +429,9 @@
 }
 
 <span class="doccomment">/// Enumeration used to indicate a type of live region and how assertive it
-/// should be in terms of speaking notifications. Currently, this is only used
+/// should be in terms of speaking notifications.
+///
+/// Currently, this is only used
 /// for `Announcement` events, but it may be used for additional purposes
 /// in the future.
 /// The argument in the `Announcement` event is named `politeness`.
@@ -457,9 +463,11 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
 	<span class="kw">use super</span>::<span class="kw-2">*</span>;
+	<span class="kw">use </span>std::str::FromStr;
 	<span class="kw">use </span>zbus_lockstep::{
 		method_args_signature, method_return_signature, signal_body_type_signature,
 	};
+	<span class="kw">use </span>zvariant::Signature;
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>convert_i32_to_live() {
@@ -473,53 +481,59 @@
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_live_signature() {
 		<span class="kw">let </span>signature = <span class="macro">signal_body_type_signature!</span>(<span class="string">"Announcement"</span>);
-		<span class="kw">let </span>politeness_signature = signature.slice(<span class="number">1</span>..<span class="number">2</span>);
-		<span class="macro">assert_eq!</span>(Politeness::signature(), politeness_signature);
+		<span class="kw">let </span>politeness_signature_str = <span class="kw-2">&amp;</span>signature.to_string_no_parens();
+		<span class="kw">let </span>politeness_signature = Signature::from_str(<span class="kw-2">&amp;</span>politeness_signature_str.as_str()[<span class="number">1</span>..<span class="number">2</span>])
+			.expect(<span class="string">"Valid signature pattern"</span>);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;Politeness <span class="kw">as </span>Type&gt;::SIGNATURE, politeness_signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_scroll_type_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"ScrollTo"</span>, interface: <span class="string">"org.a11y.atspi.Component"</span>, argument: <span class="string">"type"</span>);
-		<span class="macro">assert_eq!</span>(ScrollType::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;ScrollType <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_layer_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_return_signature!</span>(<span class="string">"GetLayer"</span>);
-		<span class="macro">assert_eq!</span>(Layer::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;Layer <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_granularity_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetStringAtOffset"</span>, interface: <span class="string">"org.a11y.atspi.Text"</span>, argument: <span class="string">"granularity"</span>);
-		<span class="macro">assert_eq!</span>(Granularity::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;Granularity <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_clip_type_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetTextAtOffset"</span>, interface: <span class="string">"org.a11y.atspi.Text"</span>, argument: <span class="string">"type"</span>);
-		<span class="macro">assert_eq!</span>(ClipType::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;ClipType <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_coord_type_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetImagePosition"</span>, interface: <span class="string">"org.a11y.atspi.Image"</span>, argument: <span class="string">"coordType"</span>);
-		<span class="macro">assert_eq!</span>(CoordType::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;CoordType <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_match_type_signature() {
 		<span class="kw">let </span>rule_signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetMatchesTo"</span>, interface: <span class="string">"org.a11y.atspi.Collection"</span>, argument: <span class="string">"rule"</span>);
-		<span class="kw">let </span>match_type_signature = rule_signature.slice(<span class="number">3</span>..<span class="number">4</span>);
-		<span class="macro">assert_eq!</span>(MatchType::signature(), match_type_signature);
+		<span class="kw">let </span>match_type_signature_str = rule_signature.to_string();
+		<span class="kw">let </span>match_type_signature = Signature::from_str(<span class="kw-2">&amp;</span>match_type_signature_str.as_str()[<span class="number">3</span>..<span class="number">4</span>])
+			.expect(<span class="string">"Valid signature pattern"</span>);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;MatchType <span class="kw">as </span>Type&gt;::SIGNATURE, match_type_signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_text_selection_signature() {
-		<span class="kw">let </span>selection_signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetTextSelections"</span>, interface: <span class="string">"org.a11y.atspi.Document"</span>, argument: <span class="string">"selections"</span>)
-        .slice(<span class="number">1</span>..);
+		<span class="kw">let </span>selection_signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetTextSelections"</span>, interface: <span class="string">"org.a11y.atspi.Document"</span>, argument: <span class="string">"selections"</span>);
+		<span class="kw">let </span>selection_signature_str = selection_signature.to_string();
+		<span class="kw">let </span>selection_signature = Signature::from_str(<span class="kw-2">&amp;</span>selection_signature_str.as_str()[<span class="number">1</span>..])
+			.expect(<span class="string">"Valid signature pattern"</span>);
 		<span class="comment">// this signature is written: `a(...)`, where `(...)` is the signature we want to compare against
-		</span><span class="macro">assert_eq!</span>(TextSelection::signature(), selection_signature);
+		</span><span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;TextSelection <span class="kw">as </span>Type&gt;::SIGNATURE, selection_signature);
 	}
 }
 </code></pre></div></section></main></body></html>

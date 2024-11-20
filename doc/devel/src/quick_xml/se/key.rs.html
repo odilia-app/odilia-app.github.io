@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quick-xml-0.30.0/src/se/key.rs`."><title>key.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quick-xml-0.36.2/src/se/key.rs`."><title>key.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -299,10 +299,6 @@
 <a href="#299" id="299">299</a>
 <a href="#300" id="300">300</a>
 <a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::errors::serialize::DeError;
 <span class="kw">use </span>serde::ser::{Impossible, Serialize, Serializer};
 <span class="kw">use </span>serde::serde_if_integer128;
@@ -351,7 +347,7 @@
     /// a valid XML name, serialization of unit returns `Err(Unsupported)`
     </span><span class="kw">fn </span>serialize_unit(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
-            <span class="string">"unit type `()` cannot be serialized as an XML tag name"</span>.into(),
+            <span class="string">"cannot serialize unit type `()` as an XML tag name"</span>.into(),
         ))
     }
 
@@ -359,11 +355,7 @@
     /// a valid XML name, serialization of unit struct returns `Err(Unsupported)`
     </span><span class="kw">fn </span>serialize_unit_struct(<span class="self">self</span>, name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
-            <span class="macro">format!</span>(
-                <span class="string">"unit struct `{}` cannot be serialized as an XML tag name"</span>,
-                name
-            )
-            .into(),
+            <span class="macro">format!</span>(<span class="string">"cannot serialize unit struct `{}` as an XML tag name"</span>, name).into(),
         ))
     }
 
@@ -378,7 +370,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Ok, DeError&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
             <span class="macro">format!</span>(
-                <span class="string">"enum newtype variant `{}::{}` cannot be serialized as an XML tag name"</span>,
+                <span class="string">"cannot serialize enum newtype variant `{}::{}` as an XML tag name"</span>,
                 name, variant
             )
             .into(),
@@ -387,13 +379,13 @@
 
     <span class="kw">fn </span>serialize_seq(<span class="self">self</span>, _len: <span class="prelude-ty">Option</span>&lt;usize&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeSeq, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
-            <span class="string">"sequence cannot be serialized as an XML tag name"</span>.into(),
+            <span class="string">"cannot serialize sequence as an XML tag name"</span>.into(),
         ))
     }
 
     <span class="kw">fn </span>serialize_tuple(<span class="self">self</span>, _len: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTuple, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
-            <span class="string">"tuple cannot be serialized as an XML tag name"</span>.into(),
+            <span class="string">"cannot serialize tuple as an XML tag name"</span>.into(),
         ))
     }
 
@@ -404,7 +396,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleStruct, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
             <span class="macro">format!</span>(
-                <span class="string">"tuple struct `{}` cannot be serialized as an XML tag name"</span>,
+                <span class="string">"cannot serialize tuple struct `{}` as an XML tag name"</span>,
                 name
             )
             .into(),
@@ -420,7 +412,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeTupleVariant, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
             <span class="macro">format!</span>(
-                <span class="string">"enum tuple variant `{}::{}` cannot be serialized as an XML tag name"</span>,
+                <span class="string">"cannot serialize enum tuple variant `{}::{}` as an XML tag name"</span>,
                 name, variant
             )
             .into(),
@@ -429,7 +421,7 @@
 
     <span class="kw">fn </span>serialize_map(<span class="self">self</span>, _len: <span class="prelude-ty">Option</span>&lt;usize&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeMap, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
-            <span class="string">"map cannot be serialized as an XML tag name"</span>.into(),
+            <span class="string">"cannot serialize map as an XML tag name"</span>.into(),
         ))
     }
 
@@ -439,7 +431,7 @@
         _len: usize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStruct, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
-            <span class="macro">format!</span>(<span class="string">"struct `{}` cannot be serialized as an XML tag name"</span>, name).into(),
+            <span class="macro">format!</span>(<span class="string">"cannot serialize struct `{}` as an XML tag name"</span>, name).into(),
         ))
     }
 
@@ -452,7 +444,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::SerializeStructVariant, <span class="self">Self</span>::Error&gt; {
         <span class="prelude-val">Err</span>(DeError::Unsupported(
             <span class="macro">format!</span>(
-                <span class="string">"enum struct variant `{}::{}` cannot be serialized as an XML tag name"</span>,
+                <span class="string">"cannot serialize enum struct variant `{}::{}` as an XML tag name"</span>,
                 name, variant
             )
             .into(),
@@ -525,7 +517,7 @@
                 <span class="kw">match </span><span class="macro-nonterminal">$data</span>.serialize(ser).unwrap_err() {
                     DeError::<span class="macro-nonterminal">$kind</span>(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="macro-nonterminal">$reason</span>),
                     e =&gt; <span class="macro">panic!</span>(
-                        <span class="string">"Expected `{}({})`, found `{:?}`"</span>,
+                        <span class="string">"Expected `Err({}({}))`, but got `{:?}`"</span>,
                         <span class="macro">stringify!</span>(<span class="macro-nonterminal">$kind</span>),
                         <span class="macro-nonterminal">$reason</span>,
                         e
@@ -581,31 +573,31 @@
     <span class="macro">serialize_as!</span>(option_some: <span class="prelude-val">Some</span>(<span class="string">"non-escaped-string"</span>) =&gt; <span class="string">"non-escaped-string"</span>);
 
     <span class="macro">err!</span>(unit: ()
-        =&gt; Unsupported(<span class="string">"unit type `()` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize unit type `()` as an XML tag name"</span>));
     <span class="macro">err!</span>(unit_struct: Unit
-        =&gt; Unsupported(<span class="string">"unit struct `Unit` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize unit struct `Unit` as an XML tag name"</span>));
 
     <span class="macro">serialize_as!</span>(enum_unit: Enum::Unit =&gt; <span class="string">"Unit"</span>);
     <span class="macro">serialize_as!</span>(enum_unit_escaped: Enum::UnitEscaped =&gt; <span class="string">"&lt;\"&amp;'&gt;"</span>);
 
     <span class="macro">serialize_as!</span>(newtype: Newtype(<span class="bool-val">true</span>) =&gt; <span class="string">"true"</span>);
     <span class="macro">err!</span>(enum_newtype: Enum::Newtype(<span class="bool-val">false</span>)
-        =&gt; Unsupported(<span class="string">"enum newtype variant `Enum::Newtype` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize enum newtype variant `Enum::Newtype` as an XML tag name"</span>));
 
     <span class="macro">err!</span>(seq: <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
-        =&gt; Unsupported(<span class="string">"sequence cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize sequence as an XML tag name"</span>));
     <span class="macro">err!</span>(tuple: (<span class="string">"&lt;\"&amp;'&gt;"</span>, <span class="string">"with\t\r\n spaces"</span>, <span class="number">3usize</span>)
-        =&gt; Unsupported(<span class="string">"tuple cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize tuple as an XML tag name"</span>));
     <span class="macro">err!</span>(tuple_struct: Tuple(<span class="string">"first"</span>, <span class="number">42</span>)
-        =&gt; Unsupported(<span class="string">"tuple struct `Tuple` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize tuple struct `Tuple` as an XML tag name"</span>));
     <span class="macro">err!</span>(enum_tuple: Enum::Tuple(<span class="string">"first"</span>, <span class="number">42</span>)
-        =&gt; Unsupported(<span class="string">"enum tuple variant `Enum::Tuple` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize enum tuple variant `Enum::Tuple` as an XML tag name"</span>));
 
     <span class="macro">err!</span>(map: BTreeMap::from([(<span class="string">"_1"</span>, <span class="number">2</span>), (<span class="string">"_3"</span>, <span class="number">4</span>)])
-        =&gt; Unsupported(<span class="string">"map cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize map as an XML tag name"</span>));
     <span class="macro">err!</span>(struct_: Struct { key: <span class="string">"answer"</span>, val: <span class="number">42 </span>}
-        =&gt; Unsupported(<span class="string">"struct `Struct` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize struct `Struct` as an XML tag name"</span>));
     <span class="macro">err!</span>(enum_struct: Enum::Struct { key: <span class="string">"answer"</span>, val: <span class="number">42 </span>}
-        =&gt; Unsupported(<span class="string">"enum struct variant `Enum::Struct` cannot be serialized as an XML tag name"</span>));
+        =&gt; Unsupported(<span class="string">"cannot serialize enum struct variant `Enum::Struct` as an XML tag name"</span>));
 }
 </code></pre></div></section></main></body></html>

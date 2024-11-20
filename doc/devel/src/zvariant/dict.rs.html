@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/dict.rs`."><title>dict.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-5.1.0/src/dict.rs`."><title>dict.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -285,51 +285,13 @@
 <a href="#285" id="285">285</a>
 <a href="#286" id="286">286</a>
 <a href="#287" id="287">287</a>
-<a href="#288" id="288">288</a>
-<a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
-<a href="#299" id="299">299</a>
-<a href="#300" id="300">300</a>
-<a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-<a href="#307" id="307">307</a>
-<a href="#308" id="308">308</a>
-<a href="#309" id="309">309</a>
-<a href="#310" id="310">310</a>
-<a href="#311" id="311">311</a>
-<a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
-<a href="#315" id="315">315</a>
-<a href="#316" id="316">316</a>
-<a href="#317" id="317">317</a>
-<a href="#318" id="318">318</a>
-<a href="#319" id="319">319</a>
-<a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
-<a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
     collections::{BTreeMap, HashMap},
     fmt::{Display, Write},
     hash::{BuildHasher, Hash},
 };
 
-<span class="kw">use </span>serde::ser::{Serialize, SerializeSeq, SerializeStruct, Serializer};
+<span class="kw">use </span>serde::ser::{Serialize, SerializeMap, Serializer};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 
 <span class="kw">use crate</span>::{value_display_fmt, Basic, DynamicType, Error, Signature, Type, Value};
@@ -343,23 +305,18 @@
 </span><span class="attr">#[derive(Debug, Hash, PartialEq, PartialOrd, Eq, Ord)]
 </span><span class="kw">pub struct </span>Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
     map: BTreeMap&lt;Value&lt;<span class="lifetime">'k</span>&gt;, Value&lt;<span class="lifetime">'v</span>&gt;&gt;,
-    key_signature: Signature&lt;<span class="lifetime">'k</span>&gt;,
-    value_signature: Signature&lt;<span class="lifetime">'v</span>&gt;,
-    <span class="comment">// should use a separate lifetime or everything should use the same but API break.
-    </span>signature: Signature&lt;<span class="lifetime">'k</span>&gt;,
+    signature: Signature,
 }
 
 <span class="macro">assert_impl_all!</span>(Dict&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; Dict&lt;<span class="lifetime">'k</span>, <span class="lifetime">'v</span>&gt; {
     <span class="doccomment">/// Create a new empty `Dict`, given the signature of the keys and values.
-    </span><span class="kw">pub fn </span>new(key_signature: Signature&lt;<span class="lifetime">'k</span>&gt;, value_signature: Signature&lt;<span class="lifetime">'v</span>&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>key_signature, <span class="kw-2">&amp;</span>value_signature);
+    </span><span class="kw">pub fn </span>new(key_signature: <span class="kw-2">&amp;</span>Signature, value_signature: <span class="kw-2">&amp;</span>Signature) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>signature = Signature::dict(key_signature.clone(), value_signature.clone());
 
         <span class="self">Self </span>{
             map: BTreeMap::new(),
-            key_signature,
-            value_signature,
             signature,
         }
     }
@@ -378,8 +335,26 @@
         key: Value&lt;<span class="lifetime">'kv</span>&gt;,
         value: Value&lt;<span class="lifetime">'vv</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.key_signature, key.value_signature(), <span class="string">"key"</span>);
-        <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.value_signature, value.value_signature(), <span class="string">"value"</span>);
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.signature {
+            Signature::Dict { key: key_sig, .. }
+                <span class="kw">if </span>key.value_signature() != key_sig.signature() =&gt;
+            {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    key.value_signature().clone(),
+                    key_sig.signature().clone().to_string(),
+                ))
+            }
+            Signature::Dict {
+                value: value_sig, ..
+            } <span class="kw">if </span>value.value_signature() != value_sig.signature() =&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    value.value_signature().clone(),
+                    value_sig.signature().clone().to_string(),
+                ))
+            }
+            Signature::Dict { .. } =&gt; (),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Incorrect `Dict` signature"</span>),
+        }
 
         <span class="self">self</span>.map.insert(key, value);
 
@@ -392,12 +367,7 @@
         </span>K: Basic + Into&lt;Value&lt;<span class="lifetime">'k</span>&gt;&gt; + Ord,
         V: Into&lt;Value&lt;<span class="lifetime">'v</span>&gt;&gt; + DynamicType,
     {
-        <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.key_signature, K::signature(), <span class="string">"key"</span>);
-        <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.value_signature, value.dynamic_signature(), <span class="string">"value"</span>);
-
-        <span class="self">self</span>.map.insert(Value::new(key), Value::new(value));
-
-        <span class="prelude-val">Ok</span>(())
+        <span class="self">self</span>.append(Value::new(key), Value::new(value))
     }
 
     <span class="doccomment">/// Get the value for the given key.
@@ -415,25 +385,13 @@
     }
 
     <span class="doccomment">/// Get the signature of this `Dict`.
-    ///
-    /// NB: This method potentially allocates and copies. Use [`full_signature`] if you'd like to
-    /// avoid that.
-    ///
-    /// [`full_signature`]: #method.full_signature
-    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
-        <span class="self">self</span>.signature.to_owned()
-    }
-
-    <span class="doccomment">/// Get the signature of this `Dict`.
-    </span><span class="kw">pub fn </span>full_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt; {
+    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature {
         <span class="kw-2">&amp;</span><span class="self">self</span>.signature
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>try_to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">crate</span>::Result&lt;Dict&lt;<span class="lifetime">'static</span>, <span class="lifetime">'static</span>&gt;&gt; {
         <span class="prelude-val">Ok</span>(Dict {
-            key_signature: <span class="self">self</span>.key_signature.to_owned(),
-            value_signature: <span class="self">self</span>.value_signature.to_owned(),
-            signature: <span class="self">self</span>.signature.to_owned(),
+            signature: <span class="self">self</span>.signature.clone(),
             map: <span class="self">self
                 </span>.map
                 .iter()
@@ -457,22 +415,17 @@
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             map: entries,
-            key_signature: <span class="self">self</span>.key_signature.clone(),
-            value_signature: <span class="self">self</span>.value_signature.clone(),
             signature: <span class="self">self</span>.signature.clone(),
         })
     }
 
     <span class="doccomment">/// Create a new empty `Dict`, given the complete signature.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_full_signature&lt;<span class="lifetime">'s</span>: <span class="lifetime">'k </span>+ <span class="lifetime">'v</span>&gt;(signature: Signature&lt;<span class="lifetime">'s</span>&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>key_signature = signature.slice(<span class="number">2</span>..<span class="number">3</span>);
-        <span class="kw">let </span>value_signature = signature.slice(<span class="number">3</span>..signature.len() - <span class="number">1</span>);
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_full_signature(signature: <span class="kw-2">&amp;</span>Signature) -&gt; <span class="self">Self </span>{
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(signature, Signature::Dict { .. }));
 
         <span class="self">Self </span>{
             map: BTreeMap::new(),
-            key_signature,
-            value_signature,
-            signature,
+            signature: signature.clone(),
         }
     }
 
@@ -509,7 +462,7 @@
 ) -&gt; std::fmt::Result {
     <span class="kw">if </span>dict.map.is_empty() {
         <span class="kw">if </span>type_annotate {
-            <span class="macro">write!</span>(f, <span class="string">"@{} "</span>, dict.full_signature())<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(f, <span class="string">"@{} "</span>, dict.signature())<span class="question-mark">?</span>;
         }
         f.write_str(<span class="string">"{}"</span>)<span class="question-mark">?</span>;
     } <span class="kw">else </span>{
@@ -540,12 +493,13 @@
     <span class="kw">where
         </span>S: Serializer,
     {
-        <span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">Some</span>(<span class="self">self</span>.map.len()))<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>map = serializer.serialize_map(<span class="prelude-val">Some</span>(<span class="self">self</span>.map.len()))<span class="question-mark">?</span>;
         <span class="kw">for </span>(key, value) <span class="kw">in </span><span class="self">self</span>.map.iter() {
-            seq.serialize_element(<span class="kw-2">&amp;</span>DictEntry { key, value })<span class="question-mark">?</span>;
+            key.serialize_value_as_dict_key(<span class="kw-2">&amp;mut </span>map)<span class="question-mark">?</span>;
+            value.serialize_value_as_dict_value(<span class="kw-2">&amp;mut </span>map)<span class="question-mark">?</span>;
         }
 
-        seq.end()
+        map.end()
     }
 }
 
@@ -604,14 +558,12 @@
                     .into_iter()
                     .map(|(key, value)| (Value::new(key), Value::new(value)))
                     .collect();
-                <span class="kw">let </span>key_signature = K::signature();
-                <span class="kw">let </span>value_signature = V::signature();
-                <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>key_signature, <span class="kw-2">&amp;</span>value_signature);
+                <span class="kw">let </span>key_signature = K::SIGNATURE.clone();
+                <span class="kw">let </span>value_signature = V::SIGNATURE.clone();
+                <span class="kw">let </span>signature = Signature::dict(key_signature, value_signature);
 
                 <span class="self">Self </span>{
                     map: entries,
-                    key_signature,
-                    value_signature,
                     signature,
                 }
             }
@@ -620,32 +572,4 @@
 }
 <span class="macro">to_dict!</span>(HashMap&lt;K: Eq + Hash, V, H&gt;);
 <span class="macro">to_dict!</span>(BTreeMap&lt;K: Ord, V&gt;);
-
-<span class="attr">#[derive(Debug)]
-</span><span class="kw">struct </span>DictEntry&lt;<span class="lifetime">'kref</span>, <span class="lifetime">'k</span>, <span class="lifetime">'vref</span>, <span class="lifetime">'v</span>&gt; {
-    key: <span class="kw-2">&amp;</span><span class="lifetime">'kref </span>Value&lt;<span class="lifetime">'k</span>&gt;,
-    value: <span class="kw-2">&amp;</span><span class="lifetime">'vref </span>Value&lt;<span class="lifetime">'v</span>&gt;,
-}
-
-<span class="kw">impl </span>Serialize <span class="kw">for </span>DictEntry&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt; {
-    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
-    <span class="kw">where
-        </span>S: Serializer,
-    {
-        <span class="kw">let </span><span class="kw-2">mut </span>entry = serializer.serialize_struct(<span class="string">"zvariant::DictEntry"</span>, <span class="number">2</span>)<span class="question-mark">?</span>;
-        <span class="self">self</span>.key
-            .serialize_value_as_struct_field(<span class="string">"zvariant::DictEntry::Key"</span>, <span class="kw-2">&amp;mut </span>entry)<span class="question-mark">?</span>;
-        <span class="self">self</span>.value
-            .serialize_value_as_struct_field(<span class="string">"zvariant::DictEntry::Value"</span>, <span class="kw-2">&amp;mut </span>entry)<span class="question-mark">?</span>;
-
-        entry.end()
-    }
-}
-
-<span class="kw">fn </span>create_signature(
-    key_signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
-    value_signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;,
-) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
-    Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">"a{{{key_signature}{value_signature}}}"</span>,))
-}
 </code></pre></div></section></main></body></html>

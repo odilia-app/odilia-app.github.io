@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/connection/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/connection/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1705,6 +1705,151 @@
 <a href="#1705" id="1705">1705</a>
 <a href="#1706" id="1706">1706</a>
 <a href="#1707" id="1707">1707</a>
+<a href="#1708" id="1708">1708</a>
+<a href="#1709" id="1709">1709</a>
+<a href="#1710" id="1710">1710</a>
+<a href="#1711" id="1711">1711</a>
+<a href="#1712" id="1712">1712</a>
+<a href="#1713" id="1713">1713</a>
+<a href="#1714" id="1714">1714</a>
+<a href="#1715" id="1715">1715</a>
+<a href="#1716" id="1716">1716</a>
+<a href="#1717" id="1717">1717</a>
+<a href="#1718" id="1718">1718</a>
+<a href="#1719" id="1719">1719</a>
+<a href="#1720" id="1720">1720</a>
+<a href="#1721" id="1721">1721</a>
+<a href="#1722" id="1722">1722</a>
+<a href="#1723" id="1723">1723</a>
+<a href="#1724" id="1724">1724</a>
+<a href="#1725" id="1725">1725</a>
+<a href="#1726" id="1726">1726</a>
+<a href="#1727" id="1727">1727</a>
+<a href="#1728" id="1728">1728</a>
+<a href="#1729" id="1729">1729</a>
+<a href="#1730" id="1730">1730</a>
+<a href="#1731" id="1731">1731</a>
+<a href="#1732" id="1732">1732</a>
+<a href="#1733" id="1733">1733</a>
+<a href="#1734" id="1734">1734</a>
+<a href="#1735" id="1735">1735</a>
+<a href="#1736" id="1736">1736</a>
+<a href="#1737" id="1737">1737</a>
+<a href="#1738" id="1738">1738</a>
+<a href="#1739" id="1739">1739</a>
+<a href="#1740" id="1740">1740</a>
+<a href="#1741" id="1741">1741</a>
+<a href="#1742" id="1742">1742</a>
+<a href="#1743" id="1743">1743</a>
+<a href="#1744" id="1744">1744</a>
+<a href="#1745" id="1745">1745</a>
+<a href="#1746" id="1746">1746</a>
+<a href="#1747" id="1747">1747</a>
+<a href="#1748" id="1748">1748</a>
+<a href="#1749" id="1749">1749</a>
+<a href="#1750" id="1750">1750</a>
+<a href="#1751" id="1751">1751</a>
+<a href="#1752" id="1752">1752</a>
+<a href="#1753" id="1753">1753</a>
+<a href="#1754" id="1754">1754</a>
+<a href="#1755" id="1755">1755</a>
+<a href="#1756" id="1756">1756</a>
+<a href="#1757" id="1757">1757</a>
+<a href="#1758" id="1758">1758</a>
+<a href="#1759" id="1759">1759</a>
+<a href="#1760" id="1760">1760</a>
+<a href="#1761" id="1761">1761</a>
+<a href="#1762" id="1762">1762</a>
+<a href="#1763" id="1763">1763</a>
+<a href="#1764" id="1764">1764</a>
+<a href="#1765" id="1765">1765</a>
+<a href="#1766" id="1766">1766</a>
+<a href="#1767" id="1767">1767</a>
+<a href="#1768" id="1768">1768</a>
+<a href="#1769" id="1769">1769</a>
+<a href="#1770" id="1770">1770</a>
+<a href="#1771" id="1771">1771</a>
+<a href="#1772" id="1772">1772</a>
+<a href="#1773" id="1773">1773</a>
+<a href="#1774" id="1774">1774</a>
+<a href="#1775" id="1775">1775</a>
+<a href="#1776" id="1776">1776</a>
+<a href="#1777" id="1777">1777</a>
+<a href="#1778" id="1778">1778</a>
+<a href="#1779" id="1779">1779</a>
+<a href="#1780" id="1780">1780</a>
+<a href="#1781" id="1781">1781</a>
+<a href="#1782" id="1782">1782</a>
+<a href="#1783" id="1783">1783</a>
+<a href="#1784" id="1784">1784</a>
+<a href="#1785" id="1785">1785</a>
+<a href="#1786" id="1786">1786</a>
+<a href="#1787" id="1787">1787</a>
+<a href="#1788" id="1788">1788</a>
+<a href="#1789" id="1789">1789</a>
+<a href="#1790" id="1790">1790</a>
+<a href="#1791" id="1791">1791</a>
+<a href="#1792" id="1792">1792</a>
+<a href="#1793" id="1793">1793</a>
+<a href="#1794" id="1794">1794</a>
+<a href="#1795" id="1795">1795</a>
+<a href="#1796" id="1796">1796</a>
+<a href="#1797" id="1797">1797</a>
+<a href="#1798" id="1798">1798</a>
+<a href="#1799" id="1799">1799</a>
+<a href="#1800" id="1800">1800</a>
+<a href="#1801" id="1801">1801</a>
+<a href="#1802" id="1802">1802</a>
+<a href="#1803" id="1803">1803</a>
+<a href="#1804" id="1804">1804</a>
+<a href="#1805" id="1805">1805</a>
+<a href="#1806" id="1806">1806</a>
+<a href="#1807" id="1807">1807</a>
+<a href="#1808" id="1808">1808</a>
+<a href="#1809" id="1809">1809</a>
+<a href="#1810" id="1810">1810</a>
+<a href="#1811" id="1811">1811</a>
+<a href="#1812" id="1812">1812</a>
+<a href="#1813" id="1813">1813</a>
+<a href="#1814" id="1814">1814</a>
+<a href="#1815" id="1815">1815</a>
+<a href="#1816" id="1816">1816</a>
+<a href="#1817" id="1817">1817</a>
+<a href="#1818" id="1818">1818</a>
+<a href="#1819" id="1819">1819</a>
+<a href="#1820" id="1820">1820</a>
+<a href="#1821" id="1821">1821</a>
+<a href="#1822" id="1822">1822</a>
+<a href="#1823" id="1823">1823</a>
+<a href="#1824" id="1824">1824</a>
+<a href="#1825" id="1825">1825</a>
+<a href="#1826" id="1826">1826</a>
+<a href="#1827" id="1827">1827</a>
+<a href="#1828" id="1828">1828</a>
+<a href="#1829" id="1829">1829</a>
+<a href="#1830" id="1830">1830</a>
+<a href="#1831" id="1831">1831</a>
+<a href="#1832" id="1832">1832</a>
+<a href="#1833" id="1833">1833</a>
+<a href="#1834" id="1834">1834</a>
+<a href="#1835" id="1835">1835</a>
+<a href="#1836" id="1836">1836</a>
+<a href="#1837" id="1837">1837</a>
+<a href="#1838" id="1838">1838</a>
+<a href="#1839" id="1839">1839</a>
+<a href="#1840" id="1840">1840</a>
+<a href="#1841" id="1841">1841</a>
+<a href="#1842" id="1842">1842</a>
+<a href="#1843" id="1843">1843</a>
+<a href="#1844" id="1844">1844</a>
+<a href="#1845" id="1845">1845</a>
+<a href="#1846" id="1846">1846</a>
+<a href="#1847" id="1847">1847</a>
+<a href="#1848" id="1848">1848</a>
+<a href="#1849" id="1849">1849</a>
+<a href="#1850" id="1850">1850</a>
+<a href="#1851" id="1851">1851</a>
+<a href="#1852" id="1852">1852</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Connection API.
 </span><span class="kw">use </span>async_broadcast::{broadcast, InactiveReceiver, Receiver, Sender <span class="kw">as </span>Broadcaster};
 <span class="kw">use </span>enumflags2::BitFlags;
@@ -1715,7 +1860,6 @@
     collections::HashMap,
     io::{<span class="self">self</span>, ErrorKind},
     num::NonZeroU32,
-    ops::Deref,
     pin::Pin,
     sync::{Arc, OnceLock, Weak},
     task::{Context, Poll},
@@ -1728,9 +1872,9 @@
 <span class="kw">use </span>futures_util::StreamExt;
 
 <span class="kw">use crate</span>::{
-    async_lock::Mutex,
-    blocking,
+    async_lock::{Mutex, Semaphore, SemaphorePermit},
     fdo::{<span class="self">self</span>, ConnectionCredentials, RequestNameFlags, RequestNameReply},
+    is_flatpak,
     message::{Flags, Message, Type},
     proxy::CacheProperties,
     DBusError, Error, Executor, MatchRule, MessageStream, ObjectServer, OwnedGuid, OwnedMatchRule,
@@ -1747,6 +1891,7 @@
 <span class="kw">use </span>socket_reader::SocketReader;
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>handshake;
+<span class="kw">pub use </span>handshake::AuthMechanism;
 <span class="kw">use </span>handshake::Authenticated;
 
 <span class="kw">const </span>DEFAULT_MAX_QUEUED: usize = <span class="number">64</span>;
@@ -1779,8 +1924,19 @@
 
     subscriptions: Mutex&lt;Subscriptions&gt;,
 
-    object_server: OnceLock&lt;blocking::ObjectServer&gt;,
+    object_server: OnceLock&lt;ObjectServer&gt;,
     object_server_dispatch_task: OnceLock&lt;Task&lt;()&gt;&gt;,
+
+    drop_event: Event,
+}
+
+<span class="kw">impl </span>Drop <span class="kw">for </span>ConnectionInner {
+    <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="comment">// Notify anyone waiting that the connection is going away. Since we're being dropped, it's
+        // not possible for any new listeners to be created after this notification, so this is
+        // race-free.
+        </span><span class="self">self</span>.drop_event.notify(usize::MAX);
+    }
 }
 
 <span class="kw">type </span>Subscriptions = HashMap&lt;OwnedMatchRule, (u64, InactiveReceiver&lt;<span class="prelude-ty">Result</span>&lt;Message&gt;&gt;)&gt;;
@@ -1815,7 +1971,14 @@
 /// [`crate::blocking::MessageIterator`] instances are continuously polled and iterated on,
 /// respectively.
 ///
-/// For sending messages you can either use [`Connection::send`] method.
+/// For sending messages you can use the [`Connection::send`] method.
+///
+/// To gracefully close a connection while waiting for any outstanding method calls to complete,
+/// use [`Connection::graceful_shutdown`]. To immediately close a connection in a way that will
+/// disrupt any outstanding method calls, use [`Connection::close`]. If you do not need the
+/// shutdown to be immediate and do not care about waiting for outstanding method calls, you can
+/// also simply drop the `Connection` instance, which will act similarly to spawning
+/// `graceful_shutdown` in the background.
 ///
 /// [method calls]: struct.Connection.html#method.call_method
 /// [signals]: struct.Connection.html#method.emit_signal
@@ -2058,7 +2221,9 @@
         M::Error: Into&lt;Error&gt;,
         B: serde::ser::Serialize + zvariant::DynamicType,
     {
-        <span class="kw">let </span><span class="kw-2">mut </span>builder = Message::method(path, method_name)<span class="question-mark">?</span>;
+        <span class="kw">let </span>_permit = acquire_serial_num_semaphore().<span class="kw">await</span>;
+
+        <span class="kw">let </span><span class="kw-2">mut </span>builder = Message::method_call(path, method_name)<span class="question-mark">?</span>;
         <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = <span class="self">self</span>.unique_name() {
             builder = builder.sender(sender)<span class="question-mark">?
         </span>}
@@ -2111,6 +2276,8 @@
         M::Error: Into&lt;Error&gt;,
         B: serde::ser::Serialize + zvariant::DynamicType,
     {
+        <span class="kw">let </span>_permit = acquire_serial_num_semaphore().<span class="kw">await</span>;
+
         <span class="kw">let </span><span class="kw-2">mut </span>b = Message::signal(path, interface, signal_name)<span class="question-mark">?</span>;
         <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = <span class="self">self</span>.unique_name() {
             b = b.sender(sender)<span class="question-mark">?</span>;
@@ -2127,11 +2294,13 @@
     ///
     /// Given an existing message (likely a method call), send a reply back to the caller with the
     /// given `body`.
-    </span><span class="kw">pub async fn </span>reply&lt;B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>Message, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    </span><span class="kw">pub async fn </span>reply&lt;B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>zbus::message::Header&lt;<span class="lifetime">'_</span>&gt;, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>B: serde::ser::Serialize + zvariant::DynamicType,
     {
-        <span class="kw">let </span><span class="kw-2">mut </span>b = Message::method_reply(call)<span class="question-mark">?</span>;
+        <span class="kw">let </span>_permit = acquire_serial_num_semaphore().<span class="kw">await</span>;
+
+        <span class="kw">let </span><span class="kw-2">mut </span>b = Message::method_return(call)<span class="question-mark">?</span>;
         <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = <span class="self">self</span>.unique_name() {
             b = b.sender(sender)<span class="question-mark">?</span>;
         }
@@ -2143,13 +2312,20 @@
     ///
     /// Given an existing message (likely a method call), send an error reply back to the caller
     /// with the given `error_name` and `body`.
-    </span><span class="kw">pub async fn </span>reply_error&lt;<span class="lifetime">'e</span>, E, B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>Message, error_name: E, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    </span><span class="kw">pub async fn </span>reply_error&lt;<span class="lifetime">'e</span>, E, B&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        call: <span class="kw-2">&amp;</span>zbus::message::Header&lt;<span class="lifetime">'_</span>&gt;,
+        error_name: E,
+        body: <span class="kw-2">&amp;</span>B,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>B: serde::ser::Serialize + zvariant::DynamicType,
         E: TryInto&lt;ErrorName&lt;<span class="lifetime">'e</span>&gt;&gt;,
         E::Error: Into&lt;Error&gt;,
     {
-        <span class="kw">let </span><span class="kw-2">mut </span>b = Message::method_error(call, error_name)<span class="question-mark">?</span>;
+        <span class="kw">let </span>_permit = acquire_serial_num_semaphore().<span class="kw">await</span>;
+
+        <span class="kw">let </span><span class="kw-2">mut </span>b = Message::error(call, error_name)<span class="question-mark">?</span>;
         <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = <span class="self">self</span>.unique_name() {
             b = b.sender(sender)<span class="question-mark">?</span>;
         }
@@ -2166,6 +2342,8 @@
         call: <span class="kw-2">&amp;</span>zbus::message::Header&lt;<span class="lifetime">'_</span>&gt;,
         err: <span class="kw">impl </span>DBusError,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>_permit = acquire_serial_num_semaphore().<span class="kw">await</span>;
+
         <span class="kw">let </span>m = err.create_reply(call)<span class="question-mark">?</span>;
         <span class="self">self</span>.send(<span class="kw-2">&amp;</span>m).<span class="kw">await
     </span>}
@@ -2173,7 +2351,7 @@
     <span class="doccomment">/// Register a well-known name for this connection.
     ///
     /// When connecting to a bus, the name is requested from the bus. In case of p2p connection, the
-    /// name (if requested) is used of self-identification.
+    /// name (if requested) is used for self-identification.
     ///
     /// You can request multiple names for the same connection. Use [`Connection::release_name`] for
     /// deregistering names registered through this method.
@@ -2182,7 +2360,7 @@
     /// [`RequestNameFlags::ReplaceExisting`] and [`RequestNameFlags::DoNotQueue`] flags) since that
     /// is the most typical case. If that is not what you want, you should use
     /// [`Connection::request_name_with_flags`] instead (but make sure then that name is requested
-    /// **after** you've setup your service implementation with the `ObjectServer`).
+    /// **after** you've set up your service implementation with the `ObjectServer`).
     ///
     /// # Caveats
     ///
@@ -2282,9 +2460,9 @@
     ///
     /// * Same as that of [`Connection::request_name`].
     /// * If you wish to track changes to name ownership after this call, make sure that the
-    /// [`fdo::NameAcquired`] and/or [`fdo::NameLostStream`] instance(s) are created **before**
-    /// calling this method. Otherwise, you may loose the signal if it's emitted after this call but
-    /// just before the stream instance get created.
+    ///   [`fdo::NameAcquired`] and/or [`fdo::NameLostStream`] instance(s) are created **before**
+    ///   calling this method. Otherwise, you may loose the signal if it's emitted after this call
+    ///   but just before the stream instance get created.
     </span><span class="kw">pub async fn </span>request_name_with_flags&lt;<span class="lifetime">'w</span>, W&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         well_known_name: W,
@@ -2462,9 +2640,9 @@
             .map_err(Into::into)
     }
 
-    <span class="doccomment">/// Checks if `self` is a connection to a message bus.
+    <span class="doccomment">/// Check if `self` is a connection to a message bus.
     ///
-    /// This will return `false` for p2p connections. When the `p2p` feature is enabled, this will
+    /// This will return `false` for p2p connections. When the `p2p` feature is disabled, this will
     /// always return `true`.
     </span><span class="kw">pub fn </span>is_bus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
@@ -2485,7 +2663,7 @@
         <span class="self">self</span>.inner.unique_name.get()
     }
 
-    <span class="doccomment">/// Sets the unique name of the connection (if not already set).
+    <span class="doccomment">/// Set the unique name of the connection (if not already set).
     ///
     /// This is mainly provided for bus implementations. All other users should not need to use this
     /// method. Hence why this method is only available when the `bus-impl` feature is enabled.
@@ -2532,10 +2710,6 @@
     /// Here is how one would typically run the zbus executor through tokio's scheduler:
     ///
     /// ```
-    /// # // Disable on windows because somehow it triggers a stack overflow there:
-    /// # // https://gitlab.freedesktop.org/zeenix/zbus/-/jobs/34023494
-    /// # #[cfg(not(target_os = "unix"))]
-    /// # {
     /// use zbus::connection::Builder;
     /// use tokio::task::spawn;
     ///
@@ -2567,7 +2741,6 @@
     ///
     ///     // All your other async code goes here.
     /// }
-    /// # }
     /// ```
     ///
     /// **Note**: zbus 2.1 added support for tight integration with tokio. This means, if you use
@@ -2588,41 +2761,22 @@
     /// **Note**: Once the `ObjectServer` is created, it will be replying to all method calls
     /// received on `self`. If you want to manually reply to method calls, do not use this
     /// method (or any of the `ObjectServer` related API).
-    </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">'_ </span>{
-        <span class="comment">// FIXME: Maybe it makes sense after all to implement Deref&lt;Target= ObjectServer&gt; for
-        // crate::ObjectServer instead of this wrapper?
-        </span><span class="kw">struct </span>Wrapper&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>blocking::ObjectServer);
-        <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Deref <span class="kw">for </span>Wrapper&lt;<span class="lifetime">'a</span>&gt; {
-            <span class="kw">type </span>Target = ObjectServer;
-
-            <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-                <span class="self">self</span>.<span class="number">0</span>.inner()
-            }
-        }
-
-        Wrapper(<span class="self">self</span>.sync_object_server(<span class="bool-val">true</span>, <span class="prelude-val">None</span>))
+    </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ObjectServer {
+        <span class="self">self</span>.ensure_object_server(<span class="bool-val">true</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>sync_object_server(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        start: bool,
-        started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;,
-    ) -&gt; <span class="kw-2">&amp;</span>blocking::ObjectServer {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>ensure_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>, start: bool) -&gt; <span class="kw-2">&amp;</span>ObjectServer {
         <span class="self">self</span>.inner
             .object_server
-            .get_or_init(<span class="kw">move </span>|| <span class="self">self</span>.setup_object_server(start, started_event))
+            .get_or_init(<span class="kw">move </span>|| <span class="self">self</span>.setup_object_server(start, <span class="prelude-val">None</span>))
     }
 
-    <span class="kw">fn </span>setup_object_server(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        start: bool,
-        started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;,
-    ) -&gt; blocking::ObjectServer {
+    <span class="kw">fn </span>setup_object_server(<span class="kw-2">&amp;</span><span class="self">self</span>, start: bool, started_event: <span class="prelude-ty">Option</span>&lt;Event&gt;) -&gt; ObjectServer {
         <span class="kw">if </span>start {
             <span class="self">self</span>.start_object_server(started_event);
         }
 
-        blocking::ObjectServer::new(<span class="self">self</span>)
+        ObjectServer::new(<span class="self">self</span>)
     }
 
     <span class="attr">#[instrument(skip(<span class="self">self</span>))]
@@ -2670,20 +2824,25 @@
                     }) {
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(conn) = weak_conn.upgrade() {
                             <span class="kw">let </span>hdr = msg.header();
-                            <span class="kw">match </span>hdr.destination() {
-                                <span class="comment">// Unique name is already checked by the match rule.
-                                </span><span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>)) | <span class="prelude-val">None </span>=&gt; (),
-                                <span class="prelude-val">Some</span>(BusName::WellKnown(dest)) =&gt; {
-                                    <span class="kw">let </span>names = conn.inner.registered_names.lock().<span class="kw">await</span>;
-                                    <span class="comment">// destination doesn't matter if no name has been registered
-                                    // (probably means name it's registered through external means).
-                                    </span><span class="kw">if </span>!names.is_empty() &amp;&amp; !names.contains_key(dest) {
-                                        <span class="macro">trace!</span>(
-                                            <span class="string">"Got a method call for a different destination: {}"</span>,
-                                            dest
-                                        );
+                            <span class="comment">// If we're connected to a bus, skip the destination check as the
+                            // server will only send us method calls destined to us.
+                            </span><span class="kw">if </span>!conn.is_bus() {
+                                <span class="kw">match </span>hdr.destination() {
+                                    <span class="comment">// Unique name is already checked by the match rule.
+                                    </span><span class="prelude-val">Some</span>(BusName::Unique(<span class="kw">_</span>)) | <span class="prelude-val">None </span>=&gt; (),
+                                    <span class="prelude-val">Some</span>(BusName::WellKnown(dest)) =&gt; {
+                                        <span class="kw">let </span>names = conn.inner.registered_names.lock().<span class="kw">await</span>;
+                                        <span class="comment">// destination doesn't matter if no name has been registered
+                                        // (probably means the name is registered through external
+                                        // means).
+                                        </span><span class="kw">if </span>!names.is_empty() &amp;&amp; !names.contains_key(dest) {
+                                            <span class="macro">trace!</span>(
+                                                <span class="string">"Got a method call for a different destination: {}"</span>,
+                                                dest
+                                            );
 
-                                        <span class="kw">continue</span>;
+                                            <span class="kw">continue</span>;
+                                        }
                                     }
                                 }
                             }
@@ -2855,6 +3014,7 @@
                 msg_receiver,
                 method_return_receiver,
                 registered_names: Mutex::new(HashMap::new()),
+                drop_event: Event::new(),
             }),
         };
 
@@ -2875,14 +3035,14 @@
         Builder::system()<span class="question-mark">?</span>.build().<span class="kw">await
     </span>}
 
-    <span class="doccomment">/// Returns a listener, notified on various connection activity.
+    <span class="doccomment">/// Return a listener, notified on various connection activity.
     ///
     /// This function is meant for the caller to implement idle or timeout on inactivity.
     </span><span class="kw">pub fn </span>monitor_activity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; EventListener {
         <span class="self">self</span>.inner.activity_event.listen()
     }
 
-    <span class="doccomment">/// Returns the peer credentials.
+    <span class="doccomment">/// Return the peer credentials.
     ///
     /// The fields are populated on the best effort basis. Some or all fields may not even make
     /// sense for certain sockets or on certain platforms and hence will be set to `None`.
@@ -2911,6 +3071,55 @@
             </span>.close()
             .<span class="kw">await
             </span>.map_err(Into::into)
+    }
+
+    <span class="doccomment">/// Gracefully close the connection, waiting for all other references to be dropped.
+    ///
+    /// This will not disrupt any incoming or outgoing method calls, and will await their
+    /// completion.
+    ///
+    /// # Caveats
+    ///
+    /// * This will not prevent new incoming messages from keeping the connection alive (and
+    ///   indefinitely delaying this method's completion).
+    ///
+    /// * The shutdown will not complete until the underlying connection is fully dropped, so beware
+    ///   of deadlocks if you are holding any other clones of this `Connection`.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use std::error::Error;
+    /// # use zbus::connection::Builder;
+    /// # use zbus::interface;
+    /// #
+    /// # struct MyInterface;
+    /// #
+    /// # #[interface(name = "foo.bar.baz")]
+    /// # impl MyInterface {
+    /// #     async fn do_thing(&amp;self) {}
+    /// # }
+    /// #
+    /// # #[tokio::main]
+    /// # async fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    /// let conn = Builder::session()?
+    ///     .name("foo.bar.baz")?
+    ///     .serve_at("/foo/bar/baz", MyInterface)?
+    ///     .build()
+    ///     .await?;
+    ///
+    /// # let some_exit_condition = std::future::ready(());
+    /// some_exit_condition.await;
+    ///
+    /// conn.graceful_shutdown().await;
+    /// #
+    /// # Ok(())
+    /// # }
+    /// ```
+    </span><span class="kw">pub async fn </span>graceful_shutdown(<span class="self">self</span>) {
+        <span class="kw">let </span>listener = <span class="self">self</span>.inner.drop_event.listen();
+        drop(<span class="self">self</span>);
+        listener.<span class="kw">await</span>;
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>init_socket_reader(
@@ -2945,14 +3154,15 @@
     }
 }
 
-<span class="kw">impl </span>From&lt;<span class="kw">crate</span>::blocking::Connection&gt; <span class="kw">for </span>Connection {
+<span class="attr">#[cfg(feature = <span class="string">"blocking-api"</span>)]
+</span><span class="kw">impl </span>From&lt;<span class="kw">crate</span>::blocking::Connection&gt; <span class="kw">for </span>Connection {
     <span class="kw">fn </span>from(conn: <span class="kw">crate</span>::blocking::Connection) -&gt; <span class="self">Self </span>{
         conn.into_inner()
     }
 }
 
 <span class="comment">// Internal API that allows keeping a weak connection ref around.
-</span><span class="attr">#[derive(Debug)]
+</span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>WeakConnection {
     inner: Weak&lt;ConnectionInner&gt;,
 }
@@ -2980,11 +3190,26 @@
     </span>Queued(<span class="attr">#[allow(unused)] </span>Task&lt;()&gt;),
 }
 
+<span class="kw">static </span>SERIAL_NUM_SEMAPHORE: Semaphore = Semaphore::new(<span class="number">1</span>);
+
+<span class="comment">// Make message creation and sending an atomic operation, using an async
+// semaphore if flatpak portal is detected to workaround an xdg-dbus-proxy issue:
+//
+// https://github.com/flatpak/xdg-dbus-proxy/issues/46
+</span><span class="kw">async fn </span>acquire_serial_num_semaphore() -&gt; <span class="prelude-ty">Option</span>&lt;SemaphorePermit&lt;<span class="lifetime">'static</span>&gt;&gt; {
+    <span class="kw">if </span>is_flatpak() {
+        <span class="prelude-val">Some</span>(SERIAL_NUM_SEMAPHORE.acquire().<span class="kw">await</span>)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">None
+    </span>}
+}
+
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::fdo::DBusProxy;
     <span class="kw">use </span>ntest::timeout;
+    <span class="kw">use </span>std::{pin::pin, time::Duration};
     <span class="kw">use </span>test_log::test;
 
     <span class="attr">#[cfg(windows)]
@@ -3052,6 +3277,100 @@
         </span><span class="kw">let </span>name_has_owner = dbus.name_has_owner(name.try_into().unwrap()).<span class="kw">await</span>.unwrap();
         <span class="macro">assert!</span>(!name_has_owner);
     }
+
+    <span class="attr">#[tokio::test(start_paused = <span class="bool-val">true</span>)]
+    #[timeout(<span class="number">15000</span>)]
+    </span><span class="kw">async fn </span>test_graceful_shutdown() {
+        <span class="comment">// If we have a second reference, it should wait until we drop it.
+        </span><span class="kw">let </span>connection = Connection::session().<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>clone = connection.clone();
+        <span class="kw">let </span><span class="kw-2">mut </span>shutdown = <span class="macro">pin!</span>(connection.graceful_shutdown());
+        <span class="comment">// Due to start_paused above, tokio will auto-advance time once the runtime is idle.
+        // See https://docs.rs/tokio/latest/tokio/time/fn.pause.html.
+        </span><span class="macro">tokio::select!</span> {
+            <span class="kw">_ </span>= tokio::time::sleep(Duration::from_secs(u64::MAX)) =&gt; {},
+            <span class="kw">_ </span>= <span class="kw-2">&amp;mut </span>shutdown =&gt; {
+                <span class="macro">panic!</span>(<span class="string">"Graceful shutdown unexpectedly completed"</span>);
+            }
+        }
+
+        drop(clone);
+        shutdown.<span class="kw">await</span>;
+
+        <span class="comment">// An outstanding method call should also be sufficient to keep the connection alive.
+        </span><span class="kw">struct </span>GracefulInterface {
+            method_called: Event,
+            wait_before_return: <span class="prelude-ty">Option</span>&lt;EventListener&gt;,
+            announce_done: Event,
+        }
+
+        <span class="attr">#[<span class="kw">crate</span>::interface(name = <span class="string">"dev.peelz.TestGracefulShutdown"</span>)]
+        </span><span class="kw">impl </span>GracefulInterface {
+            <span class="kw">async fn </span>do_thing(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+                <span class="self">self</span>.method_called.notify(<span class="number">1</span>);
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(listener) = <span class="self">self</span>.wait_before_return.take() {
+                    listener.<span class="kw">await</span>;
+                }
+                <span class="self">self</span>.announce_done.notify(<span class="number">1</span>);
+            }
+        }
+
+        <span class="kw">let </span>method_called = Event::new();
+        <span class="kw">let </span>method_called_listener = method_called.listen();
+
+        <span class="kw">let </span>trigger_return = Event::new();
+        <span class="kw">let </span>wait_before_return = <span class="prelude-val">Some</span>(trigger_return.listen());
+
+        <span class="kw">let </span>announce_done = Event::new();
+        <span class="kw">let </span>done_listener = announce_done.listen();
+
+        <span class="kw">let </span>interface = GracefulInterface {
+            method_called,
+            wait_before_return,
+            announce_done,
+        };
+
+        <span class="kw">let </span>name = <span class="string">"dev.peelz.TestGracefulShutdown"</span>;
+        <span class="kw">let </span>obj = <span class="string">"/dev/peelz/TestGracefulShutdown"</span>;
+        <span class="kw">let </span>connection = Builder::session()
+            .unwrap()
+            .name(name)
+            .unwrap()
+            .serve_at(obj, interface)
+            .unwrap()
+            .build()
+            .<span class="kw">await
+            </span>.unwrap();
+
+        <span class="comment">// Call the method from another connection - it won't return until we tell it to.
+        </span><span class="kw">let </span>client_conn = Connection::session().<span class="kw">await</span>.unwrap();
+        tokio::spawn(<span class="kw">async move </span>{
+            client_conn
+                .call_method(<span class="prelude-val">Some</span>(name), obj, <span class="prelude-val">Some</span>(name), <span class="string">"DoThing"</span>, <span class="kw-2">&amp;</span>())
+                .<span class="kw">await
+                </span>.unwrap();
+        });
+
+        <span class="comment">// Avoid races - make sure we've actually received the method call before we drop our
+        // Connection handle.
+        </span>method_called_listener.<span class="kw">await</span>;
+
+        <span class="kw">let </span><span class="kw-2">mut </span>shutdown = <span class="macro">pin!</span>(connection.graceful_shutdown());
+        <span class="macro">tokio::select!</span> {
+            <span class="kw">_ </span>= tokio::time::sleep(Duration::from_secs(u64::MAX)) =&gt; {},
+            <span class="kw">_ </span>= <span class="kw-2">&amp;mut </span>shutdown =&gt; {
+                <span class="comment">// While that method call is outstanding, graceful shutdown should not complete.
+                </span><span class="macro">panic!</span>(<span class="string">"Graceful shutdown unexpectedly completed"</span>);
+            }
+        }
+
+        <span class="comment">// If we let the call complete, then the shutdown should complete eventually.
+        </span>trigger_return.notify(<span class="number">1</span>);
+        shutdown.<span class="kw">await</span>;
+
+        <span class="comment">// The method call should have been allowed to finish properly.
+        </span>done_listener.<span class="kw">await</span>;
+    }
 }
 
 <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
@@ -3062,7 +3381,7 @@
     <span class="kw">use </span>test_log::test;
     <span class="kw">use </span>zvariant::{Endian, NATIVE_ENDIAN};
 
-    <span class="kw">use crate</span>::{AuthMechanism, Guid};
+    <span class="kw">use crate</span>::{conn::AuthMechanism, Guid};
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
@@ -3116,7 +3435,7 @@
             </span>server2
                 .emit_signal(<span class="prelude-val">None</span>::&lt;()&gt;, <span class="string">"/"</span>, <span class="string">"org.zbus.p2p"</span>, <span class="string">"ASignalForYou"</span>, <span class="kw-2">&amp;</span>())
                 .<span class="kw">await</span><span class="question-mark">?</span>;
-            server2.reply(<span class="kw-2">&amp;</span>method, <span class="kw-2">&amp;</span>(<span class="string">"yay"</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
+            server2.reply(<span class="kw-2">&amp;</span>method.header(), <span class="kw-2">&amp;</span>(<span class="string">"yay"</span>)).<span class="kw">await</span><span class="question-mark">?</span>;
             client_done_listener.<span class="kw">await</span>;
 
             <span class="prelude-val">Ok</span>(())
@@ -3132,7 +3451,7 @@
                 Endian::Little =&gt; Endian::Big,
                 Endian::Big =&gt; Endian::Little,
             };
-            <span class="kw">let </span>method = Message::method(<span class="string">"/"</span>, <span class="string">"Test"</span>)<span class="question-mark">?
+            <span class="kw">let </span>method = Message::method_call(<span class="string">"/"</span>, <span class="string">"Test"</span>)<span class="question-mark">?
                 </span>.interface(<span class="string">"org.zbus.p2p"</span>)<span class="question-mark">?
                 </span>.endian(endian)
                 .build(<span class="kw-2">&amp;</span><span class="number">64u64</span>)<span class="question-mark">?</span>;
@@ -3241,14 +3560,57 @@
         )
     }
 
-    <span class="comment">// Compile-test only since we don't have a VM setup to run this with/in.
-    </span><span class="attr">#[cfg(any(
+    <span class="attr">#[cfg(any(
         all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
         feature = <span class="string">"tokio-vsock"
     </span>))]
     #[test]
     #[timeout(<span class="number">15000</span>)]
-    #[ignore]
+    </span><span class="kw">fn </span>vsock_connect() {
+        <span class="kw">let _ </span>= <span class="kw">crate</span>::utils::block_on(test_vsock_connect()).unwrap();
+    }
+
+    <span class="attr">#[cfg(any(
+        all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+        feature = <span class="string">"tokio-vsock"
+    </span>))]
+    </span><span class="kw">async fn </span>test_vsock_connect() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
+        <span class="kw">let </span>guid = Guid::generate();
+
+        <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
+        </span><span class="kw">let </span>listener = vsock::VsockListener::bind_with_cid_port(vsock::VMADDR_CID_LOCAL, u32::MAX)<span class="question-mark">?</span>;
+        <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
+        </span><span class="kw">let </span>listener = tokio_vsock::VsockListener::bind(tokio_vsock::VsockAddr::new(<span class="number">1</span>, u32::MAX))<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>addr = listener.local_addr()<span class="question-mark">?</span>;
+        <span class="kw">let </span>addr = <span class="macro">format!</span>(<span class="string">"vsock:cid={},port={},guid={guid}"</span>, addr.cid(), addr.port());
+
+        <span class="kw">let </span>server = <span class="kw">async </span>{
+            <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
+            </span><span class="kw">let </span>server = <span class="kw">crate</span>::Task::spawn_blocking(<span class="kw">move </span>|| listener.incoming().next(), <span class="string">""</span>).<span class="kw">await</span>;
+            <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
+            </span><span class="kw">let </span>server = listener.incoming().next().<span class="kw">await</span>;
+            Builder::vsock_stream(server.unwrap()<span class="question-mark">?</span>)
+                .server(guid)<span class="question-mark">?
+                </span>.p2p()
+                .auth_mechanism(AuthMechanism::Anonymous)
+                .build()
+                .<span class="kw">await
+        </span>};
+
+        <span class="kw">let </span>client = <span class="kw">crate</span>::connection::Builder::address(addr.as_str())<span class="question-mark">?
+            </span>.p2p()
+            .build();
+
+        <span class="macro">futures_util::try_join!</span>(server, client)
+    }
+
+    <span class="attr">#[cfg(any(
+        all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)),
+        feature = <span class="string">"tokio-vsock"
+    </span>))]
+    #[test]
+    #[timeout(<span class="number">15000</span>)]
     </span><span class="kw">fn </span>vsock_p2p() {
         <span class="kw">crate</span>::utils::block_on(test_vsock_p2p()).unwrap();
     }
@@ -3268,7 +3630,8 @@
     </span><span class="kw">async fn </span>vsock_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
         <span class="kw">let </span>guid = Guid::generate();
 
-        <span class="kw">let </span>listener = vsock::VsockListener::bind_with_cid_port(vsock::VMADDR_CID_ANY, <span class="number">42</span>).unwrap();
+        <span class="kw">let </span>listener =
+            vsock::VsockListener::bind_with_cid_port(vsock::VMADDR_CID_LOCAL, u32::MAX).unwrap();
         <span class="kw">let </span>addr = listener.local_addr().unwrap();
         <span class="kw">let </span>client = vsock::VsockStream::connect(<span class="kw-2">&amp;</span>addr).unwrap();
         <span class="kw">let </span>server = listener.incoming().next().unwrap().unwrap();
@@ -3286,10 +3649,13 @@
 
     <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
     </span><span class="kw">async fn </span>vsock_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
+        <span class="kw">use </span>tokio_vsock::VsockAddr;
+
         <span class="kw">let </span>guid = Guid::generate();
 
-        <span class="kw">let </span>listener = tokio_vsock::VsockListener::bind(<span class="number">2</span>, <span class="number">42</span>).unwrap();
-        <span class="kw">let </span>client = tokio_vsock::VsockStream::connect(<span class="number">3</span>, <span class="number">42</span>).<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>listener = tokio_vsock::VsockListener::bind(VsockAddr::new(<span class="number">1</span>, u32::MAX)).unwrap();
+        <span class="kw">let </span>addr = listener.local_addr().unwrap();
+        <span class="kw">let </span>client = tokio_vsock::VsockStream::connect(addr).<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>server = listener.incoming().next().<span class="kw">await</span>.unwrap().unwrap();
 
         <span class="macro">futures_util::try_join!</span>(
@@ -3301,82 +3667,6 @@
                 .build(),
             Builder::vsock_stream(client).p2p().build(),
         )
-    }
-    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">"tokio"</span>)))]
-    #[test]
-    #[timeout(<span class="number">15000</span>)]
-    </span><span class="kw">fn </span>unix_p2p_cookie_auth() {
-        <span class="kw">use </span><span class="kw">crate</span>::utils::block_on;
-        <span class="kw">use </span>std::{
-            fs::{create_dir_all, remove_file, write},
-            time::{SystemTime <span class="kw">as </span>Time, UNIX_EPOCH},
-        };
-        <span class="attr">#[cfg(unix)]
-        </span><span class="kw">use </span>std::{
-            fs::{set_permissions, Permissions},
-            os::unix::fs::PermissionsExt,
-        };
-        <span class="kw">use </span>xdg_home::home_dir;
-
-        <span class="kw">let </span>cookie_context = <span class="string">"zbus-test-cookie-context"</span>;
-        <span class="kw">let </span>cookie_id = <span class="number">123456789</span>;
-        <span class="kw">let </span>cookie = hex::encode(<span class="string">b"our cookie"</span>);
-
-        <span class="comment">// Ensure cookie directory exists.
-        </span><span class="kw">let </span>cookie_dir = home_dir().unwrap().join(<span class="string">".dbus-keyrings"</span>);
-        create_dir_all(<span class="kw-2">&amp;</span>cookie_dir).unwrap();
-        <span class="attr">#[cfg(unix)]
-        </span>set_permissions(<span class="kw-2">&amp;</span>cookie_dir, Permissions::from_mode(<span class="number">0o700</span>)).unwrap();
-
-        <span class="comment">// Create a cookie file.
-        </span><span class="kw">let </span>cookie_file = cookie_dir.join(cookie_context);
-        <span class="kw">let </span>ts = Time::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
-        <span class="kw">let </span>cookie_entry = <span class="macro">format!</span>(<span class="string">"{cookie_id} {ts} {cookie}"</span>);
-        write(<span class="kw-2">&amp;</span>cookie_file, cookie_entry).unwrap();
-
-        <span class="comment">// Explicit cookie ID.
-        </span><span class="kw">let </span>res1 = block_on(test_unix_p2p_cookie_auth(cookie_context, <span class="prelude-val">Some</span>(cookie_id)));
-        <span class="comment">// Implicit cookie ID (first one should be picked).
-        </span><span class="kw">let </span>res2 = block_on(test_unix_p2p_cookie_auth(cookie_context, <span class="prelude-val">None</span>));
-
-        <span class="comment">// Remove the cookie file.
-        </span>remove_file(<span class="kw-2">&amp;</span>cookie_file).unwrap();
-
-        res1.unwrap();
-        res2.unwrap();
-    }
-
-    <span class="attr">#[cfg(any(unix, not(feature = <span class="string">"tokio"</span>)))]
-    </span><span class="kw">async fn </span>test_unix_p2p_cookie_auth(
-        cookie_context: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
-        cookie_id: <span class="prelude-ty">Option</span>&lt;usize&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="attr">#[cfg(all(unix, not(feature = <span class="string">"tokio"</span>)))]
-        </span><span class="kw">use </span>std::os::unix::net::UnixStream;
-        <span class="attr">#[cfg(all(unix, feature = <span class="string">"tokio"</span>))]
-        </span><span class="kw">use </span>tokio::net::UnixStream;
-        <span class="attr">#[cfg(all(windows, not(feature = <span class="string">"tokio"</span>)))]
-        </span><span class="kw">use </span>uds_windows::UnixStream;
-
-        <span class="kw">let </span>guid = Guid::generate();
-
-        <span class="kw">let </span>(p0, p1) = UnixStream::pair().unwrap();
-        <span class="kw">let </span><span class="kw-2">mut </span>server_builder = Builder::unix_stream(p0)
-            .server(guid)
-            .unwrap()
-            .p2p()
-            .auth_mechanism(AuthMechanism::Cookie)
-            .cookie_context(cookie_context)
-            .unwrap();
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(cookie_id) = cookie_id {
-            server_builder = server_builder.cookie_id(cookie_id);
-        }
-
-        <span class="macro">futures_util::try_join!</span>(
-            Builder::unix_stream(p1).p2p().build(),
-            server_builder.build(),
-        )
-        .map(|<span class="kw">_</span>| ())
     }
 
     <span class="attr">#[test]

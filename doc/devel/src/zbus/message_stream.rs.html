@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/message_stream.rs`."><title>message_stream.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/message_stream.rs`."><title>message_stream.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -330,7 +330,7 @@
 /// **NOTE**: You must ensure a `MessageStream` is continuously polled or you will experience hangs.
 /// If you don't need to continuously poll the `MessageStream` but need to keep it around for later
 /// use, keep the connection around and convert it into a `MessageStream` when needed. The
-/// conversion is not an expensive operation so you don't need to  worry about performance, unless
+/// conversion is not an expensive operation so you don't need to worry about performance, unless
 /// you do it very frequently. If you need to convert back and forth frequently, you may want to
 /// consider keeping both a connection and stream around.
 </span><span class="attr">#[derive(Clone, Debug)]
@@ -347,13 +347,13 @@
     /// If `conn` is a bus connection and match rule is for a signal, the match rule will be
     /// registered with the bus and queued for deregistration when the stream is dropped. If you'd
     /// like immediate deregistration, use [`AsyncDrop::async_drop`]. The reason match rules are
-    /// only registered with the bus for signals is that D-Bus specification only allows signals to
-    /// be broadcasted and unicast messages are always sent to their destination (regardless of any
-    /// match rules registered by the destination) by the bus. Hence there is no need to register
-    /// match rules for non-signal messages with the bus.
+    /// only registered with the bus for signals is that the D-Bus specification only allows signals
+    /// to be broadcasted and unicast messages are always sent to their destination (regardless
+    /// of any match rules registered by the destination) by the bus. Hence there is no need to
+    /// register match rules for non-signal messages with the bus.
     ///
-    /// Having said that, stream created by this method can still very useful as it allows you to
-    /// avoid needless task wakeups and simplify your stream consuming code.
+    /// Having said that, streams created by this method can still be very useful as it allows you
+    /// to avoid needless task wakeups and simplify your stream consuming code.
     ///
     /// You can optionally also request the capacity of the underlying message queue through
     /// `max_queued`. If specified, the capacity is guaranteed to be at least `max_queued`. If not
@@ -392,10 +392,10 @@
     /// );
     ///
     /// // We register 2 names, starting with the uninteresting one. If `stream` wasn't filtering
-    /// // messages based on the match rule, we'd receive method return call for each of these 2
+    /// // messages based on the match rule, we'd receive method return calls for each of these 2
     /// // calls first.
     /// //
-    /// // Note that the `NameOwnerChanged` signal will not be sent by the bus  for the first name
+    /// // Note that the `NameOwnerChanged` signal will not be sent by the bus for the first name
     /// // we register since we setup an arg filter.
     /// conn.request_name("org.freedesktop.zbus.MatchRuleStreamTest44")
     ///     .await?;
@@ -460,7 +460,7 @@
         <span class="self">self</span>.inner.msg_receiver.capacity()
     }
 
-    <span class="doccomment">/// Set maximum number of messages to queue for this stream.
+    <span class="doccomment">/// Set the maximum number of messages to queue for this stream.
     ///
     /// After this call, the capacity is guaranteed to be at least `max_queued`.
     </span><span class="kw">pub fn </span>set_max_queued(<span class="kw-2">&amp;mut </span><span class="self">self</span>, max_queued: usize) {

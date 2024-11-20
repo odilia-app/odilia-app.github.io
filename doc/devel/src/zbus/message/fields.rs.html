@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/message/fields.rs`."><title>fields.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/message/fields.rs`."><title>fields.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -241,82 +241,214 @@
 <a href="#241" id="241">241</a>
 <a href="#242" id="242">242</a>
 <a href="#243" id="243">243</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{
+    de::{Error, SeqAccess, Visitor},
+    ser::{SerializeSeq, SerializeStruct},
+    Deserialize, Deserializer, Serialize, Serializer,
+};
 <span class="kw">use </span>static_assertions::assert_impl_all;
 <span class="kw">use </span>std::num::NonZeroU32;
 <span class="kw">use </span>zbus_names::{BusName, ErrorName, InterfaceName, MemberName, UniqueName};
-<span class="kw">use </span>zvariant::{ObjectPath, Signature, Type};
+<span class="kw">use </span>zvariant::{ObjectPath, Signature, Type, Value};
 
-<span class="kw">use crate</span>::{
-    message::{Field, FieldCode, Header, Message},
-    <span class="prelude-ty">Result</span>,
-};
-
-<span class="comment">// It's actually 10 (and even not that) but let's round it to next 8-byte alignment
-</span><span class="kw">const </span>MAX_FIELDS_IN_MESSAGE: usize = <span class="number">16</span>;
+<span class="kw">use </span><span class="kw">crate</span>::message::{FieldCode, Header, Message};
 
 <span class="doccomment">/// A collection of [`Field`] instances.
 ///
 /// [`Field`]: enum.Field.html
-</span><span class="attr">#[derive(Debug, Clone, Serialize, Deserialize, Type)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Fields&lt;<span class="lifetime">'m</span>&gt;(<span class="attr">#[serde(borrow)] </span>Vec&lt;Field&lt;<span class="lifetime">'m</span>&gt;&gt;);
+</span><span class="attr">#[derive(Debug, Default, Clone, Type)]
+#[zvariant(signature = <span class="string">"a(yv)"</span>)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Fields&lt;<span class="lifetime">'f</span>&gt; {
+    <span class="kw">pub </span>path: <span class="prelude-ty">Option</span>&lt;ObjectPath&lt;<span class="lifetime">'f</span>&gt;&gt;,
+    <span class="kw">pub </span>interface: <span class="prelude-ty">Option</span>&lt;InterfaceName&lt;<span class="lifetime">'f</span>&gt;&gt;,
+    <span class="kw">pub </span>member: <span class="prelude-ty">Option</span>&lt;MemberName&lt;<span class="lifetime">'f</span>&gt;&gt;,
+    <span class="kw">pub </span>error_name: <span class="prelude-ty">Option</span>&lt;ErrorName&lt;<span class="lifetime">'f</span>&gt;&gt;,
+    <span class="kw">pub </span>reply_serial: <span class="prelude-ty">Option</span>&lt;NonZeroU32&gt;,
+    <span class="kw">pub </span>destination: <span class="prelude-ty">Option</span>&lt;BusName&lt;<span class="lifetime">'f</span>&gt;&gt;,
+    <span class="kw">pub </span>sender: <span class="prelude-ty">Option</span>&lt;UniqueName&lt;<span class="lifetime">'f</span>&gt;&gt;,
+    <span class="kw">pub </span>signature: Signature,
+    <span class="kw">pub </span>unix_fds: <span class="prelude-ty">Option</span>&lt;u32&gt;,
+}
 
 <span class="macro">assert_impl_all!</span>(Fields&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; Fields&lt;<span class="lifetime">'m</span>&gt; {
-    <span class="doccomment">/// Creates an empty collection of fields.
+<span class="kw">impl </span>Fields&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="doccomment">/// Create an empty collection of fields.
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::default()
     }
+}
 
-    <span class="doccomment">/// Appends a [`Field`] to the collection of fields in the message.
-    ///
-    /// [`Field`]: enum.Field.html
-    </span><span class="kw">pub fn </span>add&lt;<span class="lifetime">'f</span>: <span class="lifetime">'m</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, field: Field&lt;<span class="lifetime">'f</span>&gt;) {
-        <span class="self">self</span>.<span class="number">0</span>.push(field);
+<span class="kw">impl</span>&lt;<span class="lifetime">'f</span>&gt; Serialize <span class="kw">for </span>Fields&lt;<span class="lifetime">'f</span>&gt; {
+    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
+    <span class="kw">where
+        </span>S: Serializer,
+    {
+        <span class="kw">let </span><span class="kw-2">mut </span>seq = serializer.serialize_seq(<span class="prelude-val">None</span>)<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(path) = <span class="kw-2">&amp;</span><span class="self">self</span>.path {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::Path, Value::from(path)))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(interface) = <span class="kw-2">&amp;</span><span class="self">self</span>.interface {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::Interface, Value::from(interface.as_str())))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(member) = <span class="kw-2">&amp;</span><span class="self">self</span>.member {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::Member, Value::from(member.as_str())))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(error_name) = <span class="kw-2">&amp;</span><span class="self">self</span>.error_name {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::ErrorName, Value::from(error_name.as_str())))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(reply_serial) = <span class="self">self</span>.reply_serial {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::ReplySerial, Value::from(reply_serial.get())))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(destination) = <span class="kw-2">&amp;</span><span class="self">self</span>.destination {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::Destination, Value::from(destination.as_str())))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(sender) = <span class="kw-2">&amp;</span><span class="self">self</span>.sender {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::Sender, Value::from(sender.as_str())))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if </span>!<span class="macro">matches!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.signature, Signature::Unit) {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::Signature, SignatureSerializer(<span class="kw-2">&amp;</span><span class="self">self</span>.signature)))<span class="question-mark">?</span>;
+        }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(unix_fds) = <span class="self">self</span>.unix_fds {
+            seq.serialize_element(<span class="kw-2">&amp;</span>(FieldCode::UnixFDs, Value::from(unix_fds)))<span class="question-mark">?</span>;
+        }
+        seq.end()
+    }
+}
+
+<span class="doccomment">/// Our special serializer for [`Value::Signature`].
+///
+/// Normally `Value` would use the default serializer for `Signature`, which will include the `()`
+/// for strucutures but for body signature, that's what what the D-Bus expects so we do the same as
+/// `Value` here, except we serialize signature value as string w/o the `()`.
+</span><span class="attr">#[derive(Debug, Type)]
+#[zvariant(signature = <span class="string">"v"</span>)]
+</span><span class="kw">struct </span>SignatureSerializer&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Signature);
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Serialize <span class="kw">for </span>SignatureSerializer&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>serialize&lt;S&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, serializer: S) -&gt; <span class="prelude-ty">Result</span>&lt;S::Ok, S::Error&gt;
+    <span class="kw">where
+        </span>S: Serializer,
+    {
+        <span class="kw">let </span><span class="kw-2">mut </span>structure = serializer.serialize_struct(<span class="string">"Variant"</span>, <span class="number">2</span>)<span class="question-mark">?</span>;
+
+        structure.serialize_field(<span class="string">"signature"</span>, <span class="kw-2">&amp;</span>Signature::Signature)<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>signature_str = <span class="self">self</span>.<span class="number">0</span>.to_string_no_parens();
+        structure.serialize_field(<span class="string">"value"</span>, <span class="kw-2">&amp;</span>signature_str)<span class="question-mark">?</span>;
+
+        structure.end()
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>: <span class="lifetime">'f</span>, <span class="lifetime">'f</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>Fields&lt;<span class="lifetime">'f</span>&gt; {
+    <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
+    <span class="kw">where
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+    {
+        deserializer.deserialize_seq(FieldsVisitor)
+    }
+}
+
+<span class="kw">struct </span>FieldsVisitor;
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>FieldsVisitor {
+    <span class="kw">type </span>Value = Fields&lt;<span class="lifetime">'de</span>&gt;;
+
+    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        formatter.write_str(<span class="string">"D-Bus message header fields"</span>)
     }
 
-    <span class="doccomment">/// Replaces a [`Field`] from the collection of fields with one with the same code,
-    /// returning the old value if present.
-    ///
-    /// [`Field`]: enum.Field.html
-    </span><span class="kw">pub fn </span>replace&lt;<span class="lifetime">'f</span>: <span class="lifetime">'m</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, field: Field&lt;<span class="lifetime">'f</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Field&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="kw">let </span>code = field.code();
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(found) = <span class="self">self</span>.<span class="number">0</span>.iter_mut().find(|f| f.code() == code) {
-            <span class="kw">return </span><span class="prelude-val">Some</span>(std::mem::replace(found, field));
+    <span class="kw">fn </span>visit_seq&lt;V&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>visitor: V) -&gt; <span class="prelude-ty">Result</span>&lt;Fields&lt;<span class="lifetime">'de</span>&gt;, V::Error&gt;
+    <span class="kw">where
+        </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
+    {
+        <span class="kw">let </span><span class="kw-2">mut </span>fields = Fields::new();
+        <span class="kw">while let </span><span class="prelude-val">Some</span>((code, value)) = visitor.next_element::&lt;(FieldCode, Value&lt;<span class="lifetime">'de</span>&gt;)&gt;()<span class="question-mark">? </span>{
+            <span class="kw">match </span>code {
+                FieldCode::Path =&gt; {
+                    fields.path = <span class="prelude-val">Some</span>(ObjectPath::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+                FieldCode::Interface =&gt; {
+                    fields.interface =
+                        <span class="prelude-val">Some</span>(InterfaceName::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+                FieldCode::Member =&gt; {
+                    fields.member = <span class="prelude-val">Some</span>(MemberName::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+                FieldCode::ErrorName =&gt; {
+                    fields.error_name = <span class="prelude-val">Some</span>(ErrorName::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+                FieldCode::ReplySerial =&gt; {
+                    <span class="kw">let </span>value = u32::try_from(value)
+                        .map_err(V::Error::custom)
+                        .and_then(|v| v.try_into().map_err(V::Error::custom))<span class="question-mark">?</span>;
+                    fields.reply_serial = <span class="prelude-val">Some</span>(value)
+                }
+                FieldCode::Destination =&gt; {
+                    fields.destination = <span class="prelude-val">Some</span>(BusName::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+                FieldCode::Sender =&gt; {
+                    fields.sender = <span class="prelude-val">Some</span>(UniqueName::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+                FieldCode::Signature =&gt; {
+                    fields.signature = Signature::try_from(value).map_err(V::Error::custom)<span class="question-mark">?
+                </span>}
+                FieldCode::UnixFDs =&gt; {
+                    fields.unix_fds = <span class="prelude-val">Some</span>(u32::try_from(value).map_err(V::Error::custom)<span class="question-mark">?</span>)
+                }
+            }
         }
-        <span class="self">self</span>.add(field);
-        <span class="prelude-val">None
-    </span>}
 
-    <span class="doccomment">/// Returns a slice with all the [`Field`] in the message.
-    ///
-    /// [`Field`]: enum.Field.html
-    </span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[Field&lt;<span class="lifetime">'m</span>&gt;] {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
-    </span>}
-
-    <span class="doccomment">/// Gets a reference to a specific [`Field`] by its code.
-    ///
-    /// Returns `None` if the message has no such field.
-    ///
-    /// [`Field`]: enum.Field.html
-    </span><span class="kw">pub fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, code: FieldCode) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Field&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="self">self</span>.<span class="number">0</span>.iter().find(|f| f.code() == code)
-    }
-
-    <span class="doccomment">/// Remove the field matching the `code`.
-    ///
-    /// Returns `true` if a field was found and removed, `false` otherwise.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, code: FieldCode) -&gt; bool {
-        <span class="kw">match </span><span class="self">self</span>.<span class="number">0</span>.iter().enumerate().find(|(<span class="kw">_</span>, f)| f.code() == code) {
-            <span class="prelude-val">Some</span>((i, <span class="kw">_</span>)) =&gt; {
-                <span class="self">self</span>.<span class="number">0</span>.remove(i);
-
-                <span class="bool-val">true
-            </span>}
-            <span class="prelude-val">None </span>=&gt; <span class="bool-val">false</span>,
-        }
+        <span class="prelude-val">Ok</span>(fields)
     }
 }
 
@@ -384,7 +516,7 @@
 }
 
 <span class="doccomment">/// A cache of the Message header fields.
-</span><span class="attr">#[derive(Debug, Default, Copy, Clone)]
+</span><span class="attr">#[derive(Debug, Default, Clone)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>QuickFields {
     path: FieldPos,
     interface: FieldPos,
@@ -393,13 +525,13 @@
     reply_serial: <span class="prelude-ty">Option</span>&lt;NonZeroU32&gt;,
     destination: FieldPos,
     sender: FieldPos,
-    signature: FieldPos,
+    signature: Signature,
     unix_fds: <span class="prelude-ty">Option</span>&lt;u32&gt;,
 }
 
 <span class="kw">impl </span>QuickFields {
-    <span class="kw">pub fn </span>new(buf: <span class="kw-2">&amp;</span>[u8], header: <span class="kw-2">&amp;</span>Header&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+    <span class="kw">pub fn </span>new(buf: <span class="kw-2">&amp;</span>[u8], header: <span class="kw-2">&amp;</span>Header&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
             path: FieldPos::new(buf, header.path()),
             interface: FieldPos::new(buf, header.interface()),
             member: FieldPos::new(buf, header.member()),
@@ -407,9 +539,9 @@
             reply_serial: header.reply_serial(),
             destination: FieldPos::new(buf, header.destination()),
             sender: FieldPos::new(buf, header.sender()),
-            signature: FieldPos::new(buf, header.signature()),
+            signature: header.signature().clone(),
             unix_fds: header.unix_fds(),
-        })
+        }
     }
 
     <span class="kw">pub fn </span>path&lt;<span class="lifetime">'m</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, msg: <span class="kw-2">&amp;</span><span class="lifetime">'m </span>Message) -&gt; <span class="prelude-ty">Option</span>&lt;ObjectPath&lt;<span class="lifetime">'m</span>&gt;&gt; {
@@ -440,48 +572,12 @@
         <span class="self">self</span>.sender.read(msg.data())
     }
 
-    <span class="kw">pub fn </span>signature&lt;<span class="lifetime">'m</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, msg: <span class="kw-2">&amp;</span><span class="lifetime">'m </span>Message) -&gt; <span class="prelude-ty">Option</span>&lt;Signature&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="self">self</span>.signature.read(msg.data())
+    <span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.signature
     }
 
     <span class="kw">pub fn </span>unix_fds(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
         <span class="self">self</span>.unix_fds
-    }
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; Default <span class="kw">for </span>Fields&lt;<span class="lifetime">'m</span>&gt; {
-    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="self">Self</span>(Vec::with_capacity(MAX_FIELDS_IN_MESSAGE))
-    }
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; std::ops::Deref <span class="kw">for </span>Fields&lt;<span class="lifetime">'m</span>&gt; {
-    <span class="kw">type </span>Target = [Field&lt;<span class="lifetime">'m</span>&gt;];
-
-    <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-        <span class="self">self</span>.get()
-    }
-}
-
-<span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use super</span>::{Field, Fields};
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test() {
-        <span class="kw">let </span><span class="kw-2">mut </span>mf = Fields::new();
-        <span class="macro">assert_eq!</span>(mf.len(), <span class="number">0</span>);
-        mf.add(Field::ReplySerial(<span class="number">42</span>.try_into().unwrap()));
-        <span class="macro">assert_eq!</span>(mf.len(), <span class="number">1</span>);
-        mf.add(Field::ReplySerial(<span class="number">43</span>.try_into().unwrap()));
-        <span class="macro">assert_eq!</span>(mf.len(), <span class="number">2</span>);
-
-        <span class="kw">let </span><span class="kw-2">mut </span>mf = Fields::new();
-        <span class="macro">assert_eq!</span>(mf.len(), <span class="number">0</span>);
-        mf.replace(Field::ReplySerial(<span class="number">42</span>.try_into().unwrap()));
-        <span class="macro">assert_eq!</span>(mf.len(), <span class="number">1</span>);
-        mf.replace(Field::ReplySerial(<span class="number">43</span>.try_into().unwrap()));
-        <span class="macro">assert_eq!</span>(mf.len(), <span class="number">1</span>);
     }
 }
 </code></pre></div></section></main></body></html>

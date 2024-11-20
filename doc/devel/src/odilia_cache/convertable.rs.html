@@ -157,6 +157,14 @@
 <a href="#157" id="157">157</a>
 <a href="#158" id="158">158</a>
 <a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>atspi::Interface;
 <span class="kw">use </span>atspi_proxies::{
 	accessible::AccessibleProxy, action::ActionProxy, application::ApplicationProxy,
@@ -166,7 +174,10 @@
 	table_cell::TableCellProxy, text::TextProxy, value::ValueProxy,
 };
 <span class="kw">use </span>std::future::Future;
-<span class="kw">use </span>zbus::{proxy::ProxyImpl, CacheProperties, Error, Proxy, ProxyBuilder, ProxyDefault};
+<span class="kw">use </span>zbus::{
+	names::InterfaceName, proxy::Builder <span class="kw">as </span>ProxyBuilder, proxy::CacheProperties,
+	proxy::Defaults <span class="kw">as </span>ProxyDefault, proxy::ProxyImpl, Error, Proxy,
+};
 
 <span class="attr">#[allow(clippy::module_name_repetitions)]
 </span><span class="kw">pub trait </span>Convertable&lt;<span class="lifetime">'a</span>&gt; {
@@ -247,10 +258,11 @@
 		</span>.build()
 		.<span class="kw">await</span><span class="question-mark">?</span>;
 	<span class="comment">// if the interface we're trying to convert to is not available as an interface; this can be problematic because the interface we're passing in could potentially be different from what we're converting to.
-	</span><span class="kw">let </span>new_interface_name: Interface = serde_plain::from_str(
-		&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE.ok_or(Error::InterfaceNotFound)<span class="question-mark">?</span>,
-	)
-	.map_err(|<span class="kw">_</span>| Error::InterfaceNotFound)<span class="question-mark">?</span>;
+	</span><span class="kw">let </span>new_interface_name_ref: <span class="kw-2">&amp;</span>InterfaceName = &lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE
+		.as_ref()
+		.ok_or(Error::InterfaceNotFound)<span class="question-mark">?</span>;
+	<span class="kw">let </span>new_interface_name: Interface = serde_plain::from_str(new_interface_name_ref)
+		.map_err(|<span class="kw">_</span>| Error::InterfaceNotFound)<span class="question-mark">?</span>;
 	<span class="kw">if </span>!accessible.get_interfaces().<span class="kw">await</span><span class="question-mark">?</span>.contains(new_interface_name) {
 		<span class="kw">return </span><span class="prelude-val">Err</span>(Error::InterfaceNotFound);
 	}
@@ -259,7 +271,11 @@
 	<span class="kw">let </span>dest = from.destination().to_owned();
 
 	ProxyBuilder::&lt;T&gt;::new(from.connection())
-		.interface(&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE.ok_or(Error::InterfaceNotFound)<span class="question-mark">?</span>)<span class="question-mark">?
+		.interface(
+			&lt;T <span class="kw">as </span>ProxyDefault&gt;::INTERFACE
+				.as_ref()
+				.ok_or(Error::InterfaceNotFound)<span class="question-mark">?</span>,
+		)<span class="question-mark">?
 		</span>.destination(dest)<span class="question-mark">?
 		</span>.cache_properties(CacheProperties::No)
 		.path(path)<span class="question-mark">?

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/tuple.rs`."><title>tuple.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-5.1.0/src/tuple.rs`."><title>tuple.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -150,18 +150,7 @@
 <a href="#150" id="150">150</a>
 <a href="#151" id="151">151</a>
 <a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
-    signature_parser::SignatureParser, utils::<span class="kw-2">*</span>, DynamicDeserialize, DynamicType, Signature,
-};
+</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{DynamicDeserialize, DynamicType, Signature};
 <span class="kw">use </span>serde::{
     de::{Deserialize, DeserializeSeed, Deserializer, Error, Visitor},
     Serialize, Serializer,
@@ -180,8 +169,8 @@
 </span><span class="kw">pub struct </span>DynamicTuple&lt;T&gt;(<span class="kw">pub </span>T);
 
 <span class="kw">impl </span>DynamicType <span class="kw">for </span>DynamicTuple&lt;()&gt; {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
-        Signature::from_static_str_unchecked(<span class="string">""</span>)
+    <span class="kw">fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature {
+        Signature::Unit
     }
 }
 
@@ -200,13 +189,13 @@
 <span class="doccomment">/// A helper type for [DynamicTuple]'s [DynamicDeserialize] implementation.
 </span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
 </span><span class="kw">pub struct </span>TupleSeed&lt;<span class="lifetime">'a</span>, T, S&gt; {
-    sig: Signature&lt;<span class="lifetime">'a</span>&gt;,
+    sig: Signature,
     seeds: S,
-    marker: PhantomData&lt;T&gt;,
+    markers: (PhantomData&lt;T&gt;, PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>()&gt;),
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T, S&gt; DynamicType <span class="kw">for </span>TupleSeed&lt;<span class="lifetime">'a</span>, T, S&gt; {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature {
         <span class="self">self</span>.sig.clone()
     }
 }
@@ -223,15 +212,14 @@
             <span class="kw">where
                 </span>$(<span class="macro-nonterminal">$name</span>: DynamicType,)+
             {
-                <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
-                    <span class="kw">let </span><span class="kw-2">mut </span>sig = String::with_capacity(<span class="number">255</span>);
-                    sig.push(STRUCT_SIG_START_CHAR);
-                    $(
-                        sig.push_str(DynamicType::dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0.</span><span class="macro-nonterminal">$n</span>).as_str());
-                    )+
-                    sig.push(STRUCT_SIG_END_CHAR);
-
-                    Signature::from_string_unchecked(sig)
+                <span class="kw">fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature {
+                    Signature::structure(
+                        [
+                            $(
+                                <span class="self">self</span>.<span class="number">0.</span><span class="macro-nonterminal">$n</span>.signature(),
+                            )+
+                        ]
+                    )
                 }
             }
 
@@ -242,7 +230,7 @@
                 <span class="kw">type </span>Value = DynamicTuple&lt;($(<span class="macro-nonterminal">$name</span>,)+)&gt;;
 
                 <span class="kw">fn </span>deserialize&lt;D: Deserializer&lt;<span class="lifetime">'de</span>&gt;&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt; {
-                    deserializer.deserialize_tuple(<span class="macro-nonterminal">$len</span>, TupleVisitor { seeds: <span class="self">self</span>.seeds, marker: <span class="self">self</span>.marker })
+                    deserializer.deserialize_tuple(<span class="macro-nonterminal">$len</span>, TupleVisitor { seeds: <span class="self">self</span>.seeds, marker: <span class="self">self</span>.markers.<span class="number">0 </span>})
                 }
             }
 
@@ -276,26 +264,20 @@
             {
                 <span class="kw">type </span>Deserializer = TupleSeed&lt;<span class="lifetime">'de</span>, ($(<span class="macro-nonterminal">$name</span>,)+), ($(&lt;<span class="macro-nonterminal">$name </span><span class="kw">as </span>DynamicDeserialize&lt;<span class="lifetime">'de</span>&gt;&gt;::Deserializer,)+)&gt;;
 
-                <span class="kw">fn </span>deserializer_for_signature&lt;S&gt;(signature: S) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt;
-                    <span class="kw">where </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'de</span>&gt;&gt;, S::Error: Into&lt;zvariant::Error&gt;
-                {
-                    <span class="kw">let </span>sig = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
-                    <span class="kw">if </span>!sig.starts_with(zvariant::STRUCT_SIG_START_CHAR) {
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(zvariant::Error::IncorrectType);
-                    }
-                    <span class="kw">if </span>!sig.ends_with(zvariant::STRUCT_SIG_END_CHAR) {
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(zvariant::Error::IncorrectType);
-                    }
-
-                    <span class="kw">let </span>end = sig.len() - <span class="number">1</span>;
-                    <span class="kw">let </span><span class="kw-2">mut </span>sig_parser = SignatureParser::new(sig.slice(<span class="number">1</span>..end));
+                <span class="kw">fn </span>deserializer_for_signature(
+                    signature: <span class="kw-2">&amp;</span>Signature,
+                ) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt; {
+                    <span class="kw">let </span><span class="kw-2">mut </span>fields_iter = <span class="kw">match </span><span class="kw-2">&amp;</span>signature {
+                        <span class="kw">crate</span>::Signature::Structure(fields) =&gt; fields.iter(),
+                        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(zvariant::Error::IncorrectType),
+                    };
 
                     <span class="kw">let </span>seeds = ($({
-                        <span class="kw">let </span>elt_sig = sig_parser.parse_next_signature()<span class="question-mark">?</span>;
+                        <span class="kw">let </span>elt_sig = fields_iter.next().ok_or(zvariant::Error::IncorrectType)<span class="question-mark">?</span>;
                         <span class="macro-nonterminal">$name::deserializer_for_signature</span>(elt_sig)<span class="question-mark">?
                     </span>},)+);
 
-                    <span class="prelude-val">Ok</span>(TupleSeed { sig, seeds, marker: PhantomData })
+                    <span class="prelude-val">Ok</span>(TupleSeed { sig: signature.clone(), seeds, markers: (PhantomData, PhantomData) })
                 }
             }
         )+

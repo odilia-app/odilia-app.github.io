@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-4.1.1/src/array.rs`."><title>array.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zvariant-5.1.0/src/array.rs`."><title>array.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zvariant" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -359,20 +359,6 @@
 <a href="#359" id="359">359</a>
 <a href="#360" id="360">360</a>
 <a href="#361" id="361">361</a>
-<a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
 </pre></div><pre class="rust"><code><span class="attr">#![allow(unknown_lints)]
 </span><span class="kw">use </span>serde::{
     de::{DeserializeSeed, Deserializer, SeqAccess, Visitor},
@@ -394,30 +380,29 @@
 /// [`Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 </span><span class="attr">#[derive(Debug, Hash, PartialEq, PartialOrd, Eq, Ord)]
 </span><span class="kw">pub struct </span>Array&lt;<span class="lifetime">'a</span>&gt; {
-    element_signature: Signature&lt;<span class="lifetime">'a</span>&gt;,
     elements: Vec&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
-    signature: Signature&lt;<span class="lifetime">'a</span>&gt;,
+    signature: Signature,
 }
 
 <span class="macro">assert_impl_all!</span>(Array&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Array&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Create a new empty `Array`, given the signature of the elements.
-    </span><span class="kw">pub fn </span>new(element_signature: Signature&lt;<span class="lifetime">'_</span>&gt;) -&gt; Array&lt;<span class="lifetime">'_</span>&gt; {
-        <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>element_signature);
+    </span><span class="kw">pub fn </span>new(element_signature: <span class="kw-2">&amp;</span>Signature) -&gt; Array&lt;<span class="lifetime">'a</span>&gt; {
+        <span class="kw">let </span>signature = Signature::array(element_signature.clone());
+
         Array {
-            element_signature,
             elements: <span class="macro">vec!</span>[],
             signature,
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_full_signature(signature: Signature&lt;<span class="lifetime">'_</span>&gt;) -&gt; Array&lt;<span class="lifetime">'_</span>&gt; {
-        <span class="kw">let </span>element_signature = signature.slice(<span class="number">1</span>..);
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_full_signature(signature: <span class="kw-2">&amp;</span>Signature) -&gt; Array&lt;<span class="lifetime">'a</span>&gt; {
+        <span class="macro">assert!</span>(<span class="macro">matches!</span>(signature, Signature::Array(<span class="kw">_</span>)));
+
         Array {
-            element_signature,
             elements: <span class="macro">vec!</span>[],
-            signature,
+            signature: signature.clone(),
         }
     }
 
@@ -427,7 +412,16 @@
     ///
     /// if `element`'s signature doesn't match the element signature `self` was created for.
     </span><span class="kw">pub fn </span>append&lt;<span class="lifetime">'e</span>: <span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, element: Value&lt;<span class="lifetime">'e</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="macro">check_child_value_signature!</span>(<span class="self">self</span>.element_signature, element.value_signature(), <span class="string">"element"</span>);
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.signature {
+            Signature::Array(child) <span class="kw">if </span>element.value_signature() != child.signature() =&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::SignatureMismatch(
+                    element.value_signature().clone(),
+                    child.signature().clone().to_string(),
+                ))
+            }
+            Signature::Array(<span class="kw">_</span>) =&gt; (),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Incorrect `Array` signature"</span>),
+        }
 
         <span class="self">self</span>.elements.push(element);
 
@@ -442,7 +436,7 @@
     <span class="doccomment">/// Get the value at the given index.
     </span><span class="kw">pub fn </span>get&lt;V&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, idx: usize) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;V&gt;&gt;
     <span class="kw">where
-        </span>V: <span class="question-mark">?</span>Sized + TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
+        </span>V: TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
         &lt;V <span class="kw">as </span>TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Value&lt;<span class="lifetime">'a</span>&gt;&gt;&gt;::Error: Into&lt;<span class="kw">crate</span>::Error&gt;,
     {
         <span class="self">self</span>.elements
@@ -461,35 +455,27 @@
         <span class="self">self</span>.elements.len() == <span class="number">0
     </span>}
 
-    <span class="doccomment">/// Get the signature of this `Array`.
-    ///
-    /// NB: This method potentially allocates and copies. Use [`full_signature`] if you'd like to
-    /// avoid that.
-    ///
-    /// [`full_signature`]: #method.full_signature
-    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
-        <span class="self">self</span>.signature.to_owned()
-    }
-
-    <span class="doccomment">/// Get the signature of this `Array`.
-    </span><span class="kw">pub fn </span>full_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="doccomment">/// The signature of the `Array`.
+    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature {
         <span class="kw-2">&amp;</span><span class="self">self</span>.signature
     }
 
     <span class="doccomment">/// Get the signature of the elements in the `Array`.
-    </span><span class="kw">pub fn </span>element_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.element_signature
+    </span><span class="kw">pub fn </span>element_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature {
+        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.signature {
+            Signature::Array(child) =&gt; child.signature(),
+            <span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"Incorrect `Array` signature"</span>),
+        }
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>try_to_owned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Array&lt;<span class="lifetime">'static</span>&gt;&gt; {
         <span class="prelude-val">Ok</span>(Array {
-            element_signature: <span class="self">self</span>.element_signature.to_owned(),
             elements: <span class="self">self
                 </span>.elements
                 .iter()
                 .map(|v| v.try_to_owned().map(Into::into))
                 .collect::&lt;<span class="prelude-ty">Result</span>&lt;<span class="kw">_</span>&gt;&gt;()<span class="question-mark">?</span>,
-            signature: <span class="self">self</span>.signature.to_owned(),
+            signature: <span class="self">self</span>.signature.clone(),
         })
     }
 
@@ -502,7 +488,6 @@
             .collect::&lt;<span class="kw">crate</span>::Result&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;&gt;()<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
-            element_signature: <span class="self">self</span>.element_signature.clone(),
             elements,
             signature: <span class="self">self</span>.signature.clone(),
         })
@@ -540,7 +525,7 @@
 
     <span class="kw">if </span>array.is_empty() {
         <span class="kw">if </span>type_annotate {
-            <span class="macro">write!</span>(f, <span class="string">"@{} "</span>, array.full_signature())<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(f, <span class="string">"@{} "</span>, array.signature())<span class="question-mark">?</span>;
         }
         f.write_str(<span class="string">"[]"</span>)<span class="question-mark">?</span>;
     } <span class="kw">else </span>{
@@ -565,53 +550,46 @@
 }
 
 <span class="doccomment">/// Use this to deserialize an [Array].
-</span><span class="kw">pub struct </span>ArraySeed&lt;<span class="lifetime">'a</span>&gt; {
-    signature: Signature&lt;<span class="lifetime">'a</span>&gt;,
+</span><span class="kw">pub struct </span>ArraySeed {
+    signature: Signature,
+    phantom: std::marker::PhantomData&lt;()&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ArraySeed&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="doccomment">/// Create a new empty `Array`, given the signature of the elements.
-    </span><span class="kw">pub fn </span>new(element_signature: Signature&lt;<span class="lifetime">'_</span>&gt;) -&gt; ArraySeed&lt;<span class="lifetime">'_</span>&gt; {
-        <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>element_signature);
-        ArraySeed { signature }
-    }
-
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new_full_signature(signature: Signature&lt;<span class="lifetime">'_</span>&gt;) -&gt; ArraySeed&lt;<span class="lifetime">'_</span>&gt; {
-        ArraySeed { signature }
+<span class="kw">impl </span>ArraySeed {
+    <span class="kw">fn </span>new(signature: <span class="kw-2">&amp;</span>Signature) -&gt; ArraySeed {
+        ArraySeed {
+            signature: signature.clone(),
+            phantom: std::marker::PhantomData,
+        }
     }
 }
 
-<span class="macro">assert_impl_all!</span>(ArraySeed&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
+<span class="macro">assert_impl_all!</span>(ArraySeed: Unpin);
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DynamicType <span class="kw">for </span>Array&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
+    <span class="kw">fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature {
         <span class="self">self</span>.signature.clone()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DynamicType <span class="kw">for </span>ArraySeed&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">fn </span>dynamic_signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature&lt;<span class="lifetime">'_</span>&gt; {
+<span class="kw">impl </span>DynamicType <span class="kw">for </span>ArraySeed {
+    <span class="kw">fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Signature {
         <span class="self">self</span>.signature.clone()
     }
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DynamicDeserialize&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>Array&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">type </span>Deserializer = ArraySeed&lt;<span class="lifetime">'a</span>&gt;;
+    <span class="kw">type </span>Deserializer = ArraySeed;
 
-    <span class="kw">fn </span>deserializer_for_signature&lt;S&gt;(signature: S) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt;
-    <span class="kw">where
-        </span>S: TryInto&lt;Signature&lt;<span class="lifetime">'a</span>&gt;&gt;,
-        S::Error: Into&lt;zvariant::Error&gt;,
-    {
-        <span class="kw">let </span>signature = signature.try_into().map_err(Into::into)<span class="question-mark">?</span>;
-        <span class="kw">if </span>signature.starts_with(zvariant::ARRAY_SIGNATURE_CHAR) {
-            <span class="prelude-val">Ok</span>(ArraySeed::new_full_signature(signature))
-        } <span class="kw">else </span>{
-            <span class="prelude-val">Err</span>(zvariant::Error::SignatureMismatch(
-                signature.to_owned(),
+    <span class="kw">fn </span>deserializer_for_signature(signature: <span class="kw-2">&amp;</span>Signature) -&gt; zvariant::Result&lt;<span class="self">Self</span>::Deserializer&gt; {
+        <span class="kw">if </span>!<span class="macro">matches!</span>(signature, Signature::Array(<span class="kw">_</span>)) {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(zvariant::Error::SignatureMismatch(
+                signature.clone(),
                 <span class="string">"an array signature"</span>.to_owned(),
-            ))
-        }
+            ));
+        };
+
+        <span class="prelude-val">Ok</span>(ArraySeed::new(signature))
     }
 }
 
@@ -628,12 +606,11 @@
     </span>T: Type + Into&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt;,
 {
     <span class="kw">fn </span>from(values: Vec&lt;T&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>element_signature = T::signature();
+        <span class="kw">let </span>element_signature = T::SIGNATURE.clone();
         <span class="kw">let </span>elements = values.into_iter().map(Value::new).collect();
-        <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>element_signature);
+        <span class="kw">let </span>signature = Signature::array(element_signature);
 
         <span class="self">Self </span>{
-            element_signature,
             elements,
             signature,
         }
@@ -645,15 +622,14 @@
     </span>T: Type + Into&lt;Value&lt;<span class="lifetime">'a</span>&gt;&gt; + Clone,
 {
     <span class="kw">fn </span>from(values: <span class="kw-2">&amp;</span>[T]) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>element_signature = T::signature();
+        <span class="kw">let </span>element_signature = T::SIGNATURE.clone();
         <span class="kw">let </span>elements = values
             .iter()
             .map(|value| Value::new(value.clone()))
             .collect();
-        <span class="kw">let </span>signature = create_signature(<span class="kw-2">&amp;</span>element_signature);
+        <span class="kw">let </span>signature = Signature::array(element_signature);
 
         <span class="self">Self </span>{
-            element_signature,
             elements,
             signature,
         }
@@ -710,7 +686,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; DeserializeSeed&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ArraySeed&lt;<span class="lifetime">'de</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; DeserializeSeed&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ArraySeed {
     <span class="kw">type </span>Value = Array&lt;<span class="lifetime">'de</span>&gt;;
     <span class="kw">fn </span>deserialize&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; std::result::Result&lt;<span class="self">Self</span>::Value, D::Error&gt;
     <span class="kw">where
@@ -723,11 +699,11 @@
 }
 
 <span class="attr">#[derive(Debug, Clone, PartialEq, Eq)]
-</span><span class="kw">struct </span>ArrayVisitor&lt;<span class="lifetime">'a</span>&gt; {
-    signature: Signature&lt;<span class="lifetime">'a</span>&gt;,
+</span><span class="kw">struct </span>ArrayVisitor {
+    signature: Signature,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ArrayVisitor&lt;<span class="lifetime">'de</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ArrayVisitor {
     <span class="kw">type </span>Value = Array&lt;<span class="lifetime">'de</span>&gt;;
 
     <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
@@ -739,13 +715,9 @@
         </span>V: SeqAccess&lt;<span class="lifetime">'de</span>&gt;,
     {
         SignatureSeed {
-            signature: <span class="self">self</span>.signature,
+            signature: <span class="kw-2">&amp;</span><span class="self">self</span>.signature,
         }
         .visit_array(visitor)
     }
-}
-
-<span class="kw">fn </span>create_signature(element_signature: <span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'_</span>&gt;) -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
-    Signature::from_string_unchecked(<span class="macro">format!</span>(<span class="string">"a{element_signature}"</span>))
 }
 </code></pre></div></section></main></body></html>

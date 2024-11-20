@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/blocking/connection/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/blocking/connection/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -338,6 +338,28 @@
 <a href="#338" id="338">338</a>
 <a href="#339" id="339">339</a>
 <a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Blocking connection API.
 
 </span><span class="kw">use </span>enumflags2::BitFlags;
@@ -468,7 +490,7 @@
     ///
     /// Given an existing message (likely a method call), send a reply back to the caller with the
     /// given `body`.
-    </span><span class="kw">pub fn </span>reply&lt;B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>Message, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    </span><span class="kw">pub fn </span>reply&lt;B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>zbus::message::Header&lt;<span class="lifetime">'_</span>&gt;, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>B: serde::ser::Serialize + zvariant::DynamicType,
     {
@@ -481,7 +503,12 @@
     /// with the given `error_name` and `body`.
     ///
     /// Returns the message serial number.
-    </span><span class="kw">pub fn </span>reply_error&lt;<span class="lifetime">'e</span>, E, B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, call: <span class="kw-2">&amp;</span>Message, error_name: E, body: <span class="kw-2">&amp;</span>B) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
+    </span><span class="kw">pub fn </span>reply_error&lt;<span class="lifetime">'e</span>, E, B&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        call: <span class="kw-2">&amp;</span>zbus::message::Header&lt;<span class="lifetime">'_</span>&gt;,
+        error_name: E,
+        body: <span class="kw-2">&amp;</span>B,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>B: serde::ser::Serialize + zvariant::DynamicType,
         E: TryInto&lt;ErrorName&lt;<span class="lifetime">'e</span>&gt;&gt;,
@@ -548,7 +575,7 @@
         block_on(<span class="self">self</span>.inner.release_name(well_known_name))
     }
 
-    <span class="doccomment">/// Checks if `self` is a connection to a message bus.
+    <span class="doccomment">/// Check if `self` is a connection to a message bus.
     ///
     /// This will return `false` for p2p connections.
     </span><span class="kw">pub fn </span>is_bus(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -559,7 +586,16 @@
     ///
     /// The `ObjectServer` is created on-demand.
     </span><span class="kw">pub fn </span>object_server(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Deref&lt;Target = ObjectServer&gt; + <span class="lifetime">'_ </span>{
-        <span class="self">self</span>.inner.sync_object_server(<span class="bool-val">true</span>, <span class="prelude-val">None</span>)
+        <span class="kw">struct </span>Wrapper(ObjectServer);
+        <span class="kw">impl </span>Deref <span class="kw">for </span>Wrapper {
+            <span class="kw">type </span>Target = ObjectServer;
+
+            <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
+                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
+            </span>}
+        }
+
+        Wrapper(ObjectServer::new(<span class="kw-2">&amp;</span><span class="self">self</span>.inner))
     }
 
     <span class="doccomment">/// Get a reference to the underlying async Connection.
@@ -572,14 +608,14 @@
         <span class="self">self</span>.inner
     }
 
-    <span class="doccomment">/// Returns a listener, notified on various connection activity.
+    <span class="doccomment">/// Return a listener, notified on various connection activity.
     ///
     /// This function is meant for the caller to implement idle or timeout on inactivity.
     </span><span class="kw">pub fn </span>monitor_activity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; EventListener {
         <span class="self">self</span>.inner.monitor_activity()
     }
 
-    <span class="doccomment">/// Returns the peer credentials.
+    <span class="doccomment">/// Return the peer credentials.
     ///
     /// The fields are populated on the best effort basis. Some or all fields may not even make
     /// sense for certain sockets or on certain platforms and hence will be set to `None`.
@@ -596,6 +632,14 @@
     /// After this call, all reading and writing operations will fail.
     </span><span class="kw">pub fn </span>close(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
         block_on(<span class="self">self</span>.inner.close())
+    }
+
+    <span class="doccomment">/// Gracefully close the connection, waiting for all other references to be dropped.
+    ///
+    /// Blocking version of [`crate::Connection::graceful_shutdown`]. See docs there for
+    /// more details and caveats.
+    </span><span class="kw">pub fn </span>graceful_shutdown(<span class="self">self</span>) {
+        block_on(<span class="self">self</span>.inner.graceful_shutdown())
     }
 }
 
@@ -657,7 +701,7 @@
         tx.send(()).unwrap();
         <span class="kw">let </span>m = s.next().unwrap().unwrap();
         <span class="macro">assert_eq!</span>(m.to_string(), <span class="string">"Method call Test"</span>);
-        c.reply(<span class="kw-2">&amp;</span>m, <span class="kw-2">&amp;</span>(<span class="string">"yay"</span>)).unwrap();
+        c.reply(<span class="kw-2">&amp;</span>m.header(), <span class="kw-2">&amp;</span>(<span class="string">"yay"</span>)).unwrap();
 
         <span class="kw">for _ in </span>s {}
 

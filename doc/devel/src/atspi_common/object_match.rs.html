@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/bfa3bc4/atspi-common/src/object_match.rs`."><title>object_match.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/5224bc0/atspi-common/src/object_match.rs`."><title>object_match.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -288,10 +288,25 @@
 <a href="#288" id="288">288</a>
 <a href="#289" id="289">289</a>
 <a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{borrow::Borrow, collections::HashMap, marker::PhantomData};
 
 <span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>zvariant::{Signature, Type};
+<span class="kw">use </span>zvariant::{signature::Child, Signature, Type};
 
 <span class="kw">use crate</span>::{Interface, InterfaceSet, Role, State, StateSet};
 
@@ -315,8 +330,9 @@
 /// Rule(s) against which we can match an  object or a collection thereof.
 ///
 /// # Examples
-///  ```Rust
-///     let builder = MatchRule::builder();
+/// ```rust
+/// # use zbus::MatchRule;
+/// let builder = MatchRule::builder();
 /// ```
 ///
 </span><span class="attr">#[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq, Eq)]
@@ -347,9 +363,20 @@
 //
 // https://gitlab.gnome.org/federico/at-spi2-core/-/commit/4885efedeef71e0df8210622771a0b1bb10e194d
 </span><span class="kw">impl </span>Type <span class="kw">for </span>ObjectMatchRule {
-	<span class="kw">fn </span>signature() -&gt; Signature&lt;<span class="lifetime">'static</span>&gt; {
-		Signature::from_str_unchecked(<span class="string">"(aiia{ss}iaiiasib)"</span>)
-	}
+	<span class="kw">const </span>SIGNATURE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>Signature = <span class="kw-2">&amp;</span>Signature::static_structure(<span class="kw-2">&amp;</span>[
+		<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::I32 }),
+		<span class="kw-2">&amp;</span>Signature::I32,
+		<span class="kw-2">&amp;</span>Signature::Dict {
+			key: Child::Static { child: <span class="kw-2">&amp;</span>Signature::Str },
+			value: Child::Static { child: <span class="kw-2">&amp;</span>Signature::Str },
+		},
+		<span class="kw-2">&amp;</span>Signature::I32,
+		<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::I32 }),
+		<span class="kw-2">&amp;</span>Signature::I32,
+		<span class="kw-2">&amp;</span>Signature::Array(Child::Static { child: <span class="kw-2">&amp;</span>Signature::Str }),
+		<span class="kw-2">&amp;</span>Signature::I32,
+		<span class="kw-2">&amp;</span>Signature::Bool,
+	]);
 }
 
 <span class="kw">impl </span>ObjectMatchRule {
@@ -516,32 +543,35 @@
 </span><span class="kw">mod </span>tests {
 	<span class="kw">use super</span>::<span class="kw-2">*</span>;
 	<span class="kw">use crate</span>::{SortOrder, State};
+	<span class="kw">use </span>std::str::FromStr;
 	<span class="kw">use </span>zbus_lockstep::method_args_signature;
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_match_rule_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetMatchesTo"</span>, interface: <span class="string">"org.a11y.atspi.Collection"</span>, argument: <span class="string">"rule"</span>);
-		<span class="macro">assert_eq!</span>(ObjectMatchRule::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;ObjectMatchRule <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_match_type_signature() {
 		<span class="kw">let </span>rule_signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetMatchesTo"</span>, interface: <span class="string">"org.a11y.atspi.Collection"</span>, argument: <span class="string">"rule"</span>);
 		<span class="comment">// The match type signature is the fourth element in the signature
-		</span><span class="kw">let </span>match_type_signature = rule_signature.slice(<span class="number">3</span>..<span class="number">4</span>);
-		<span class="macro">assert_eq!</span>(MatchType::signature(), match_type_signature);
+		</span><span class="kw">let </span>match_type_signature_str = rule_signature.to_string();
+		<span class="kw">let </span>match_type_signature = Signature::from_str(<span class="kw-2">&amp;</span>match_type_signature_str.as_str()[<span class="number">3</span>..<span class="number">4</span>])
+			.expect(<span class="string">"Valid signature pattern"</span>);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;MatchType <span class="kw">as </span>Type&gt;::SIGNATURE, match_type_signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_tree_traversal_type_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetMatchesTo"</span>, interface: <span class="string">"org.a11y.atspi.Collection"</span>, argument: <span class="string">"tree"</span>);
-		<span class="macro">assert_eq!</span>(TreeTraversalType::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;TreeTraversalType <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>validate_sort_order_signature() {
 		<span class="kw">let </span>signature = <span class="macro">method_args_signature!</span>(member: <span class="string">"GetMatches"</span>, interface: <span class="string">"org.a11y.atspi.Collection"</span>, argument: <span class="string">"sortby"</span>);
-		<span class="macro">assert_eq!</span>(SortOrder::signature(), signature);
+		<span class="macro">assert_eq!</span>(<span class="kw-2">*</span>&lt;SortOrder <span class="kw">as </span>Type&gt;::SIGNATURE, signature);
 	}
 
 	<span class="attr">#[test]

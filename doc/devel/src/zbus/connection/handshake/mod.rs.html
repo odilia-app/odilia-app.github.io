@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/connection/handshake/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/connection/handshake/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -277,58 +277,18 @@
 <a href="#277" id="277">277</a>
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
-<a href="#280" id="280">280</a>
-<a href="#281" id="281">281</a>
-<a href="#282" id="282">282</a>
-<a href="#283" id="283">283</a>
-<a href="#284" id="284">284</a>
-<a href="#285" id="285">285</a>
-<a href="#286" id="286">286</a>
-<a href="#287" id="287">287</a>
-<a href="#288" id="288">288</a>
-<a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
-<a href="#299" id="299">299</a>
-<a href="#300" id="300">300</a>
-<a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-<a href="#307" id="307">307</a>
-<a href="#308" id="308">308</a>
-<a href="#309" id="309">309</a>
-<a href="#310" id="310">310</a>
-<a href="#311" id="311">311</a>
-<a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
-<a href="#315" id="315">315</a>
-<a href="#316" id="316">316</a>
-<a href="#317" id="317">317</a>
 </pre></div><pre class="rust"><code><span class="kw">mod </span>auth_mechanism;
 <span class="kw">mod </span>client;
 <span class="kw">mod </span>command;
 <span class="kw">mod </span>common;
-<span class="kw">mod </span>cookies;
 <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
 </span><span class="kw">mod </span>server;
 
 <span class="kw">use </span>async_trait::async_trait;
 <span class="attr">#[cfg(unix)]
 </span><span class="kw">use </span>nix::unistd::Uid;
-<span class="kw">use </span>std::{collections::VecDeque, fmt::Debug};
+<span class="kw">use </span>std::fmt::Debug;
 <span class="kw">use </span>zbus_names::OwnedUniqueName;
-<span class="kw">use </span>zvariant::Str;
 
 <span class="attr">#[cfg(windows)]
 </span><span class="kw">use </span><span class="kw">crate</span>::win32;
@@ -340,8 +300,6 @@
 <span class="kw">use </span>client::Client;
 <span class="kw">use </span>command::Command;
 <span class="kw">use </span>common::Common;
-<span class="kw">use </span>cookies::Cookie;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>cookies::CookieContext;
 <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
 </span><span class="kw">use </span>server::Server;
 
@@ -372,10 +330,10 @@
     </span><span class="kw">pub async fn </span>client(
         socket: BoxedSplit,
         server_guid: <span class="prelude-ty">Option</span>&lt;OwnedGuid&gt;,
-        mechanisms: <span class="prelude-ty">Option</span>&lt;VecDeque&lt;AuthMechanism&gt;&gt;,
+        mechanism: <span class="prelude-ty">Option</span>&lt;AuthMechanism&gt;,
         bus: bool,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        Client::new(socket, mechanisms, server_guid, bus)
+        Client::new(socket, mechanism, server_guid, bus)
             .perform()
             .<span class="kw">await
     </span>}
@@ -389,9 +347,7 @@
         guid: OwnedGuid,
         <span class="attr">#[cfg(unix)] </span>client_uid: <span class="prelude-ty">Option</span>&lt;u32&gt;,
         <span class="attr">#[cfg(windows)] </span>client_sid: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        auth_mechanisms: <span class="prelude-ty">Option</span>&lt;VecDeque&lt;AuthMechanism&gt;&gt;,
-        cookie_id: <span class="prelude-ty">Option</span>&lt;usize&gt;,
-        cookie_context: CookieContext&lt;<span class="lifetime">'_</span>&gt;,
+        auth_mechanism: <span class="prelude-ty">Option</span>&lt;AuthMechanism&gt;,
         unique_name: <span class="prelude-ty">Option</span>&lt;OwnedUniqueName&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         Server::new(
@@ -401,9 +357,7 @@
             </span>client_uid,
             <span class="attr">#[cfg(windows)]
             </span>client_sid,
-            auth_mechanisms,
-            cookie_id,
-            cookie_context,
+            auth_mechanism,
             unique_name,
         )<span class="question-mark">?
         </span>.perform()
@@ -418,18 +372,6 @@
     /// On a successful handshake, you get an `Authenticated`. If you need to send a Bus Hello,
     /// this remains to be done.
     </span><span class="kw">async fn </span>perform(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Authenticated&gt;;
-}
-
-<span class="kw">fn </span>random_ascii(len: usize) -&gt; String {
-    <span class="kw">use </span>rand::{distributions::Alphanumeric, thread_rng, Rng};
-    <span class="kw">use </span>std::iter;
-
-    <span class="kw">let </span><span class="kw-2">mut </span>rng = thread_rng();
-    iter::repeat(())
-        .map(|()| rng.sample(Alphanumeric))
-        .map(char::from)
-        .take(len)
-        .collect()
 }
 
 <span class="kw">fn </span>sasl_auth_id() -&gt; <span class="prelude-ty">Result</span>&lt;String&gt; {
@@ -467,7 +409,7 @@
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">use crate</span>::{Guid, Socket};
+    <span class="kw">use crate</span>::{connection::Socket, Guid};
 
     <span class="kw">fn </span>create_async_socket_pair() -&gt; (<span class="kw">impl </span>AsyncWrite + Socket, <span class="kw">impl </span>AsyncWrite + Socket) {
         <span class="comment">// Tokio needs us to call the sync function from async context. :shrug:
@@ -495,16 +437,8 @@
 
         <span class="kw">let </span>guid = OwnedGuid::from(Guid::generate());
         <span class="kw">let </span>client = Client::new(p0.into(), <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(guid.clone()), <span class="bool-val">false</span>);
-        <span class="kw">let </span>server = Server::new(
-            p1.into(),
-            guid,
-            <span class="prelude-val">Some</span>(Uid::effective().into()),
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            CookieContext::default(),
-            <span class="prelude-val">None</span>,
-        )
-        .unwrap();
+        <span class="kw">let </span>server =
+            Server::new(p1.into(), guid, <span class="prelude-val">Some</span>(Uid::effective().into()), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>).unwrap();
 
         <span class="comment">// proceed to the handshakes
         </span><span class="kw">let </span>(client, server) = <span class="kw">crate</span>::utils::block_on(join(
@@ -525,8 +459,6 @@
             Guid::generate().into(),
             <span class="prelude-val">Some</span>(Uid::effective().into()),
             <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            CookieContext::default(),
             <span class="prelude-val">None</span>,
         )
         .unwrap();
@@ -556,8 +488,6 @@
             <span class="prelude-val">Some</span>(Uid::effective().into()),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
-            CookieContext::default(),
-            <span class="prelude-val">None</span>,
         )
         .unwrap();
 
@@ -584,8 +514,6 @@
             <span class="prelude-val">Some</span>(Uid::effective().into()),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
-            CookieContext::default(),
-            <span class="prelude-val">None</span>,
         )
         .unwrap();
 
@@ -601,9 +529,7 @@
             p1.into(),
             Guid::generate().into(),
             <span class="prelude-val">Some</span>(Uid::effective().into()),
-            <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[AuthMechanism::Anonymous].into()),
-            <span class="prelude-val">None</span>,
-            CookieContext::default(),
+            <span class="prelude-val">Some</span>(AuthMechanism::Anonymous),
             <span class="prelude-val">None</span>,
         )
         .unwrap();
@@ -620,9 +546,7 @@
             p1.into(),
             Guid::generate().into(),
             <span class="prelude-val">Some</span>(Uid::effective().into()),
-            <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[AuthMechanism::Anonymous].into()),
-            <span class="prelude-val">None</span>,
-            CookieContext::default(),
+            <span class="prelude-val">Some</span>(AuthMechanism::Anonymous),
             <span class="prelude-val">None</span>,
         )
         .unwrap();

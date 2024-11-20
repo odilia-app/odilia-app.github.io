@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["socket"],"struct":["Builder","Connection"]};
+window.SIDEBAR_ITEMS = {"enum":["AuthMechanism"],"mod":["socket"],"struct":["Builder","Connection"]};

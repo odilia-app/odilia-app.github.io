@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_names-3.0.0/src/member_name.rs`."><title>member_name.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_names" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_names-4.1.0/src/member_name.rs`."><title>member_name.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_names" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -317,10 +317,6 @@
 <a href="#317" id="317">317</a>
 <a href="#318" id="318">318</a>
 <a href="#319" id="319">319</a>
-<a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     utils::{impl_str_basic, impl_try_from},
     Error, <span class="prelude-ty">Result</span>,
@@ -389,7 +385,7 @@
 
     <span class="doccomment">/// Same as `try_from`, except it takes a `&amp;'static str`.
     </span><span class="kw">pub fn </span>from_static_str(name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        ensure_correct_member_name(name)<span class="question-mark">?</span>;
+        validate(name)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>(Str::from_static(name)))
     }
 
@@ -475,47 +471,43 @@
 <span class="macro">impl_try_from!</span> {
     ty: MemberName&lt;<span class="lifetime">'s</span>&gt;,
     owned_ty: OwnedMemberName,
-    validate_fn: ensure_correct_member_name,
+    validate_fn: validate,
     try_from: [<span class="kw-2">&amp;</span><span class="lifetime">'s </span>str, String, Arc&lt;str&gt;, Cow&lt;<span class="lifetime">'s</span>, str&gt;, Str&lt;<span class="lifetime">'s</span>&gt;],
 }
 
-<span class="kw">fn </span>ensure_correct_member_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<span class="kw">fn </span>validate(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    validate_bytes(name.as_bytes()).map_err(|<span class="kw">_</span>| {
+        Error::InvalidName(
+            <span class="string">"Invalid member name. See \
+            https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-member"</span>,
+        )
+    })
+}
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>validate_bytes(bytes: <span class="kw-2">&amp;</span>[u8]) -&gt; std::result::Result&lt;(), ()&gt; {
+    <span class="kw">use </span>winnow::{
+        stream::AsChar,
+        token::{one_of, take_while},
+        Parser,
+    };
     <span class="comment">// Rules
     //
     // * Only ASCII alphanumeric or `_`.
     // * Must not begin with a digit.
     // * Must contain at least 1 character.
     // * &lt;= 255 characters.
-    </span><span class="kw">if </span>name.is_empty() {
-        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMemberName(<span class="macro">format!</span>(
-            <span class="string">"`{}` is {} characters long, which is smaller than minimum allowed (1)"</span>,
-            name,
-            name.len(),
-        )));
-    } <span class="kw">else if </span>name.len() &gt; <span class="number">255 </span>{
-        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMemberName(<span class="macro">format!</span>(
-            <span class="string">"`{}` is {} characters long, which is longer than maximum allowed (255)"</span>,
-            name,
-            name.len(),
-        )));
-    }
+    </span><span class="kw">let </span>first_element_char = one_of((AsChar::is_alpha, <span class="string">b'_'</span>));
+    <span class="kw">let </span>subsequent_element_chars = take_while::&lt;<span class="kw">_</span>, <span class="kw">_</span>, ()&gt;(<span class="number">0</span>.., (AsChar::is_alphanum, <span class="string">b'_'</span>));
+    <span class="kw">let </span><span class="kw-2">mut </span>member_name = (first_element_char, subsequent_element_chars);
 
-    <span class="comment">// SAFETY: We established above that there is at least 1 character so unwrap is fine.
-    </span><span class="kw">if </span>name.chars().next().unwrap().is_ascii_digit() {
-        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMemberName(String::from(
-            <span class="string">"must not start with a digit"</span>,
-        )));
-    }
-
-    <span class="kw">for </span>c <span class="kw">in </span>name.chars() {
-        <span class="kw">if </span>!c.is_ascii_alphanumeric() &amp;&amp; c != <span class="string">'_' </span>{
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidMemberName(<span class="macro">format!</span>(
-                <span class="string">"`{c}` character not allowed"
-            </span>)));
+    member_name.parse(bytes).map_err(|<span class="kw">_</span>| ()).and_then(|<span class="kw">_</span>| {
+        <span class="comment">// Least likely scenario so we check this last.
+        </span><span class="kw">if </span>bytes.len() &gt; <span class="number">255 </span>{
+            <span class="kw">return </span><span class="prelude-val">Err</span>(());
         }
-    }
 
-    <span class="prelude-val">Ok</span>(())
+        <span class="prelude-val">Ok</span>(())
+    })
 }
 
 <span class="doccomment">/// This never succeeds but is provided so it's easier to pass `Option::None` values for API

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/nix-0.28.0/src/sys/socket/sockopt.rs`."><title>sockopt.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/nix-0.29.0/src/sys/socket/sockopt.rs`."><title>sockopt.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1568,6 +1568,56 @@
 <a href="#1568" id="1568">1568</a>
 <a href="#1569" id="1569">1569</a>
 <a href="#1570" id="1570">1570</a>
+<a href="#1571" id="1571">1571</a>
+<a href="#1572" id="1572">1572</a>
+<a href="#1573" id="1573">1573</a>
+<a href="#1574" id="1574">1574</a>
+<a href="#1575" id="1575">1575</a>
+<a href="#1576" id="1576">1576</a>
+<a href="#1577" id="1577">1577</a>
+<a href="#1578" id="1578">1578</a>
+<a href="#1579" id="1579">1579</a>
+<a href="#1580" id="1580">1580</a>
+<a href="#1581" id="1581">1581</a>
+<a href="#1582" id="1582">1582</a>
+<a href="#1583" id="1583">1583</a>
+<a href="#1584" id="1584">1584</a>
+<a href="#1585" id="1585">1585</a>
+<a href="#1586" id="1586">1586</a>
+<a href="#1587" id="1587">1587</a>
+<a href="#1588" id="1588">1588</a>
+<a href="#1589" id="1589">1589</a>
+<a href="#1590" id="1590">1590</a>
+<a href="#1591" id="1591">1591</a>
+<a href="#1592" id="1592">1592</a>
+<a href="#1593" id="1593">1593</a>
+<a href="#1594" id="1594">1594</a>
+<a href="#1595" id="1595">1595</a>
+<a href="#1596" id="1596">1596</a>
+<a href="#1597" id="1597">1597</a>
+<a href="#1598" id="1598">1598</a>
+<a href="#1599" id="1599">1599</a>
+<a href="#1600" id="1600">1600</a>
+<a href="#1601" id="1601">1601</a>
+<a href="#1602" id="1602">1602</a>
+<a href="#1603" id="1603">1603</a>
+<a href="#1604" id="1604">1604</a>
+<a href="#1605" id="1605">1605</a>
+<a href="#1606" id="1606">1606</a>
+<a href="#1607" id="1607">1607</a>
+<a href="#1608" id="1608">1608</a>
+<a href="#1609" id="1609">1609</a>
+<a href="#1610" id="1610">1610</a>
+<a href="#1611" id="1611">1611</a>
+<a href="#1612" id="1612">1612</a>
+<a href="#1613" id="1613">1613</a>
+<a href="#1614" id="1614">1614</a>
+<a href="#1615" id="1615">1615</a>
+<a href="#1616" id="1616">1616</a>
+<a href="#1617" id="1617">1617</a>
+<a href="#1618" id="1618">1618</a>
+<a href="#1619" id="1619">1619</a>
+<a href="#1620" id="1620">1620</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Socket options as used by `setsockopt` and `getsockopt`.
 </span><span class="kw">use super</span>::{GetSockOpt, SetSockOpt};
 <span class="kw">use </span><span class="kw">crate</span>::errno::Errno;
@@ -1575,7 +1625,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::Result;
 <span class="kw">use </span>cfg_if::cfg_if;
 <span class="kw">use </span>libc::{<span class="self">self</span>, c_int, c_void, socklen_t};
-<span class="kw">use </span>std::ffi::{OsStr, OsString};
+<span class="kw">use </span>std::ffi::{CStr, CString, OsStr, OsString};
 <span class="kw">use </span>std::mem::{<span class="self">self</span>, MaybeUninit};
 <span class="kw">use </span>std::os::unix::ffi::OsStrExt;
 <span class="kw">use </span>std::os::unix::io::{AsFd, AsRawFd};
@@ -1838,6 +1888,16 @@
     Both,
     libc::SOL_SOCKET,
     libc::SO_REUSEPORT,
+    bool
+);
+<span class="attr">#[cfg(target_os = <span class="string">"freebsd"</span>)]
+</span><span class="macro">sockopt_impl!</span>(
+    <span class="doccomment">/// Enables incoming connections to be distributed among N sockets (up to 256)
+    /// via a Load-Balancing hash based algorithm.
+    </span>ReusePortLb,
+    Both,
+    libc::SOL_SOCKET,
+    libc::SO_REUSEPORT_LB,
     bool
 );
 <span class="attr">#[cfg(feature = <span class="string">"net"</span>)]
@@ -2596,7 +2656,7 @@
     libc::IP_TTL,
     libc::c_int
 );
-<span class="attr">#[cfg(any(linux_android, target_os = <span class="string">"freebsd"</span>))]
+<span class="attr">#[cfg(any(apple_targets, linux_android, target_os = <span class="string">"freebsd"</span>))]
 </span><span class="macro">sockopt_impl!</span>(
     <span class="doccomment">/// Set the unicast hop limit for the socket.
     </span>Ipv6Ttl,
@@ -2634,6 +2694,17 @@
     libc::IPPROTO_IPV6,
     libc::IPV6_DONTFRAG,
     bool
+);
+<span class="attr">#[cfg(apple_targets)]
+#[cfg(feature = <span class="string">"net"</span>)]
+</span><span class="macro">sockopt_impl!</span>(
+    <span class="doccomment">/// Get the utun interface name.
+    </span>UtunIfname,
+    GetOnly,
+    libc::SYSPROTO_CONTROL,
+    libc::UTUN_OPT_IFNAME,
+    CString,
+    GetCString&lt;[u8; libc::IFNAMSIZ]&gt;
 );
 
 <span class="attr">#[allow(missing_docs)]
@@ -3138,4 +3209,33 @@
     }
 }
 
+<span class="doccomment">/// Getter for a `CString` value.
+</span><span class="kw">struct </span>GetCString&lt;T: AsMut&lt;[u8]&gt;&gt; {
+    len: socklen_t,
+    val: MaybeUninit&lt;T&gt;,
+}
+
+<span class="kw">impl</span>&lt;T: AsMut&lt;[u8]&gt;&gt; Get&lt;CString&gt; <span class="kw">for </span>GetCString&lt;T&gt; {
+    <span class="kw">fn </span>uninit() -&gt; <span class="self">Self </span>{
+        GetCString {
+            len: mem::size_of::&lt;T&gt;() <span class="kw">as </span>socklen_t,
+            val: MaybeUninit::uninit(),
+        }
+    }
+
+    <span class="kw">fn </span>ffi_ptr(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>c_void {
+        <span class="self">self</span>.val.as_mut_ptr().cast()
+    }
+
+    <span class="kw">fn </span>ffi_len(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>socklen_t {
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>.len
+    }
+
+    <span class="kw">unsafe fn </span>assume_init(<span class="self">self</span>) -&gt; CString {
+        <span class="kw">let </span><span class="kw-2">mut </span>v = <span class="kw">unsafe </span>{ <span class="self">self</span>.val.assume_init() };
+        CStr::from_bytes_until_nul(v.as_mut())
+            .expect(<span class="string">"string should be null-terminated"</span>)
+            .to_owned()
+    }
+}
 </code></pre></div></section></main></body></html>

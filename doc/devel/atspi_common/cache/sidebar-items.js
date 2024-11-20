@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["CacheItem","LegacyCacheItem"]};
+window.SIDEBAR_ITEMS = {"constant":["CACHE_ITEM_SIGNATURE","LEGACY_CACHE_ITEM_SIGNATURE"],"struct":["CacheItem","LegacyCacheItem"]};

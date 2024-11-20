@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/connection/socket/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/connection/socket/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -412,6 +412,22 @@
 <a href="#412" id="412">412</a>
 <a href="#413" id="413">413</a>
 <a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
 </span><span class="kw">pub mod </span>channel;
 <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
@@ -420,6 +436,10 @@
 <span class="kw">mod </span>split;
 <span class="kw">pub use </span>split::{BoxedSplit, Split};
 
+<span class="attr">#[cfg(unix)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>command;
+<span class="attr">#[cfg(unix)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>command::Command;
 <span class="kw">mod </span>tcp;
 <span class="kw">mod </span>unix;
 <span class="kw">mod </span>vsock;
@@ -432,6 +452,7 @@
 <span class="kw">use </span>tracing::trace;
 
 <span class="kw">use crate</span>::{
+    conn::AuthMechanism,
     fdo::ConnectionCredentials,
     message::{
         header::{MAX_MESSAGE_SIZE, MIN_MESSAGE_SIZE},
@@ -452,7 +473,7 @@
 <span class="attr">#[cfg(not(unix))]
 </span><span class="kw">type </span>RecvmsgResult = io::Result&lt;usize&gt;;
 
-<span class="doccomment">/// Trait representing some transport layer over which the DBus protocol can be used
+<span class="doccomment">/// Trait representing some transport layer over which the DBus protocol can be used.
 ///
 /// In order to allow simultaneous reading and writing, this trait requires you to split the socket
 /// into a read half and a write half. The reader and writer halves can be any types that implement
@@ -598,14 +619,14 @@
 
         <span class="attr">#[cfg(unix)]
         </span><span class="kw">if </span>!already_received_fds.is_empty() {
-            <span class="kw">use </span><span class="kw">crate</span>::message::{header::PRIMARY_HEADER_SIZE, Field};
+            <span class="kw">use </span><span class="kw">crate</span>::message::header::PRIMARY_HEADER_SIZE;
 
             <span class="kw">let </span>ctxt = Context::new_dbus(endian, PRIMARY_HEADER_SIZE);
             <span class="kw">let </span>encoded_fields =
                 serialized::Data::new(<span class="kw-2">&amp;</span>bytes[PRIMARY_HEADER_SIZE..header_len], ctxt);
             <span class="kw">let </span>fields: <span class="kw">crate</span>::message::Fields&lt;<span class="lifetime">'_</span>&gt; = encoded_fields.deserialize()<span class="question-mark">?</span>.<span class="number">0</span>;
-            <span class="kw">let </span>num_required_fds = <span class="kw">match </span>fields.get_field(<span class="kw">crate</span>::message::FieldCode::UnixFDs) {
-                <span class="prelude-val">Some</span>(Field::UnixFDs(num_fds)) =&gt; <span class="kw-2">*</span>num_fds <span class="kw">as </span>usize,
+            <span class="kw">let </span>num_required_fds = <span class="kw">match </span>fields.unix_fds {
+                <span class="prelude-val">Some</span>(num_fds) =&gt; num_fds <span class="kw">as </span>usize,
                 <span class="kw">_ </span>=&gt; <span class="number">0</span>,
             };
             <span class="kw">let </span>num_pending = num_required_fds
@@ -640,16 +661,23 @@
         <span class="macro">unimplemented!</span>(<span class="string">"`ReadHalf` implementers must either override `read_message` or `recvmsg`"</span>);
     }
 
-    <span class="doccomment">/// Supports passing file descriptors.
+    <span class="doccomment">/// Return whether passing file descriptors is supported.
     ///
     /// Default implementation returns `false`.
     </span><span class="kw">fn </span>can_pass_unix_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="bool-val">false
     </span>}
 
-    <span class="doccomment">/// Return the peer credentials.
+    <span class="doccomment">/// The peer credentials.
     </span><span class="kw">async fn </span>peer_credentials(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; io::Result&lt;ConnectionCredentials&gt; {
         <span class="prelude-val">Ok</span>(ConnectionCredentials::default())
+    }
+
+    <span class="doccomment">/// The authentication mechanism to use for this socket on the target OS.
+    ///
+    /// Default is `AuthMechanism::External`.
+    </span><span class="kw">fn </span>auth_mechanism(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; AuthMechanism {
+        AuthMechanism::External
     }
 }
 
@@ -693,7 +721,7 @@
     <span class="doccomment">/// Attempt to send a message on the socket
     ///
     /// On success, return the number of bytes written. There may be a partial write, in
-    /// which case the caller is responsible of sending the remaining data by calling this
+    /// which case the caller is responsible for sending the remaining data by calling this
     /// method again until everything is written or it returns an error of kind `WouldBlock`.
     ///
     /// If at least one byte has been written, then all the provided file descriptors will
@@ -726,14 +754,14 @@
     /// After this call, it is valid for all reading and writing operations to fail.
     </span><span class="kw">async fn </span>close(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; io::Result&lt;()&gt;;
 
-    <span class="doccomment">/// Supports passing file descriptors.
+    <span class="doccomment">/// Whether passing file descriptors is supported.
     ///
     /// Default implementation returns `false`.
     </span><span class="kw">fn </span>can_pass_unix_fd(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="bool-val">false
     </span>}
 
-    <span class="doccomment">/// Return the peer credentials.
+    <span class="doccomment">/// The peer credentials.
     </span><span class="kw">async fn </span>peer_credentials(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; io::Result&lt;ConnectionCredentials&gt; {
         <span class="prelude-val">Ok</span>(ConnectionCredentials::default())
     }
@@ -768,6 +796,10 @@
     <span class="kw">async fn </span>peer_credentials(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; io::Result&lt;ConnectionCredentials&gt; {
         (<span class="kw-2">**</span><span class="self">self</span>).peer_credentials().<span class="kw">await
     </span>}
+
+    <span class="kw">fn </span>auth_mechanism(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; AuthMechanism {
+        (<span class="kw-2">**</span><span class="self">self</span>).auth_mechanism()
+    }
 }
 
 <span class="attr">#[async_trait::async_trait]

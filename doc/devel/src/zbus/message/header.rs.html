@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-4.3.0/src/message/header.rs`."><title>header.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/message/header.rs`."><title>header.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -379,39 +379,9 @@
 <a href="#379" id="379">379</a>
 <a href="#380" id="380">380</a>
 <a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
-<a href="#394" id="394">394</a>
-<a href="#395" id="395">395</a>
-<a href="#396" id="396">396</a>
-<a href="#397" id="397">397</a>
-<a href="#398" id="398">398</a>
-<a href="#399" id="399">399</a>
-<a href="#400" id="400">400</a>
-<a href="#401" id="401">401</a>
-<a href="#402" id="402">402</a>
-<a href="#403" id="403">403</a>
-<a href="#404" id="404">404</a>
-<a href="#405" id="405">405</a>
-<a href="#406" id="406">406</a>
-<a href="#407" id="407">407</a>
-<a href="#408" id="408">408</a>
-<a href="#409" id="409">409</a>
-<a href="#410" id="410">410</a>
-<a href="#411" id="411">411</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
     num::NonZeroU32,
-    sync::atomic::{AtomicU32, Ordering::SeqCst},
+    sync::atomic::{AtomicU32, Ordering::Relaxed},
 };
 
 <span class="kw">use </span>enumflags2::{bitflags, BitFlags};
@@ -425,10 +395,7 @@
     Endian, ObjectPath, Signature, Type <span class="kw">as </span>VariantType,
 };
 
-<span class="kw">use crate</span>::{
-    message::{Field, FieldCode, Fields},
-    Error,
-};
+<span class="kw">use crate</span>::{message::Fields, Error};
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>PRIMARY_HEADER_SIZE: usize = <span class="number">12</span>;
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>MIN_MESSAGE_SIZE: usize = PRIMARY_HEADER_SIZE + <span class="number">4</span>;
@@ -503,7 +470,7 @@
 
 <span class="macro">assert_impl_all!</span>(Type: Send, Sync, Unpin);
 
-<span class="doccomment">/// Pre-defined flags that can be passed in Message header.
+<span class="doccomment">/// Pre-defined flags that can be passed in message headers.
 </span><span class="attr">#[bitflags]
 #[repr(u8)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, VariantType)]
@@ -545,13 +512,18 @@
 <span class="kw">impl </span>PrimaryHeader {
     <span class="doccomment">/// Create a new `PrimaryHeader` instance.
     </span><span class="kw">pub fn </span>new(msg_type: Type, body_len: u32) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>serial_num = SERIAL_NUM.fetch_add(<span class="number">1</span>, Relaxed);
+        <span class="kw">if </span>serial_num == <span class="number">0 </span>{
+            serial_num = SERIAL_NUM.fetch_add(<span class="number">1</span>, Relaxed);
+        }
+
         <span class="self">Self </span>{
             endian_sig: NATIVE_ENDIAN_SIG,
             msg_type,
             flags: BitFlags::empty(),
             protocol_version: <span class="number">1</span>,
             body_len,
-            serial_num: SERIAL_NUM.fetch_add(<span class="number">1</span>, SeqCst).try_into().unwrap(),
+            serial_num: serial_num.try_into().unwrap(),
         }
     }
 
@@ -643,10 +615,9 @@
 
 <span class="doccomment">/// The message header, containing all the metadata about the message.
 ///
-/// This includes both the [`PrimaryHeader`] and [`Fields`].
+/// This includes both the [`PrimaryHeader`] and the dynamic fields.
 ///
 /// [`PrimaryHeader`]: struct.PrimaryHeader.html
-/// [`Fields`]: struct.Fields.html
 </span><span class="attr">#[derive(Debug, Clone, Serialize, Deserialize, VariantType)]
 </span><span class="kw">pub struct </span>Header&lt;<span class="lifetime">'m</span>&gt; {
     primary: PrimaryHeader,
@@ -655,27 +626,6 @@
 }
 
 <span class="macro">assert_impl_all!</span>(Header&lt;<span class="lifetime">'_</span>&gt;: Send, Sync, Unpin);
-
-<span class="macro">macro_rules!</span> get_field {
-    (<span class="macro-nonterminal">$self</span>:ident, <span class="macro-nonterminal">$kind</span>:ident) =&gt; {
-        <span class="macro">get_field!</span>(<span class="macro-nonterminal">$self</span>, <span class="macro-nonterminal">$kind</span>, (|v| v))
-    };
-    (<span class="macro-nonterminal">$self</span>:ident, <span class="macro-nonterminal">$kind</span>:ident, <span class="macro-nonterminal">$closure</span>:tt) =&gt; {
-        <span class="attr">#[allow(clippy::redundant_closure_call)]
-        </span><span class="kw">match </span><span class="macro-nonterminal">$self</span>.fields().get_field(FieldCode::<span class="macro-nonterminal">$kind</span>) {
-            <span class="prelude-val">Some</span>(Field::<span class="macro-nonterminal">$kind</span>(value)) =&gt; <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$closure</span>(value)),
-            <span class="comment">// SAFETY: `Deserialize` impl for `Field` ensures that the code and field match.
-            </span><span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="macro">unreachable!</span>(<span class="string">"FieldCode and Field mismatch"</span>),
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
-        }
-    };
-}
-
-<span class="macro">macro_rules!</span> get_field_u32 {
-    (<span class="macro-nonterminal">$self</span>:ident, <span class="macro-nonterminal">$kind</span>:ident) =&gt; {
-        <span class="macro">get_field!</span>(<span class="macro-nonterminal">$self</span>, <span class="macro-nonterminal">$kind</span>, (|v: <span class="kw-2">&amp;</span>u32| <span class="kw-2">*</span>v))
-    };
-}
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'m</span>&gt; Header&lt;<span class="lifetime">'m</span>&gt; {
     <span class="doccomment">/// Create a new `Header` instance.
@@ -698,77 +648,67 @@
         <span class="self">self</span>.primary
     }
 
-    <span class="doccomment">/// Get a reference to the message fields.
-    </span><span class="kw">fn </span>fields(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Fields&lt;<span class="lifetime">'m</span>&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.fields
-    }
-
     <span class="doccomment">/// Get a mutable reference to the message fields.
     </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>fields_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>Fields&lt;<span class="lifetime">'m</span>&gt; {
         <span class="kw-2">&amp;mut </span><span class="self">self</span>.fields
     }
 
-    <span class="doccomment">/// The message type
+    <span class="doccomment">/// The message type.
     </span><span class="kw">pub fn </span>message_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Type {
         <span class="self">self</span>.primary().msg_type()
     }
 
     <span class="doccomment">/// The object to send a call to, or the object a signal is emitted from.
     </span><span class="kw">pub fn </span>path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ObjectPath&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, Path)
+        <span class="self">self</span>.fields.path.as_ref()
     }
 
     <span class="doccomment">/// The interface to invoke a method call on, or that a signal is emitted from.
     </span><span class="kw">pub fn </span>interface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>InterfaceName&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, Interface)
+        <span class="self">self</span>.fields.interface.as_ref()
     }
 
     <span class="doccomment">/// The member, either the method name or signal name.
     </span><span class="kw">pub fn </span>member(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>MemberName&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, Member)
+        <span class="self">self</span>.fields.member.as_ref()
     }
 
     <span class="doccomment">/// The name of the error that occurred, for errors.
     </span><span class="kw">pub fn </span>error_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ErrorName&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, ErrorName)
+        <span class="self">self</span>.fields.error_name.as_ref()
     }
 
     <span class="doccomment">/// The serial number of the message this message is a reply to.
     </span><span class="kw">pub fn </span>reply_serial(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NonZeroU32&gt; {
-        <span class="kw">match </span><span class="self">self</span>.fields().get_field(FieldCode::ReplySerial) {
-            <span class="prelude-val">Some</span>(Field::ReplySerial(value)) =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">*</span>value),
-            <span class="comment">// SAFETY: `Deserialize` impl for `Field` ensures that the code and field match.
-            </span><span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="macro">unreachable!</span>(<span class="string">"FieldCode and Field mismatch"</span>),
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
-        }
+        <span class="self">self</span>.fields.reply_serial
     }
 
     <span class="doccomment">/// The name of the connection this message is intended for.
     </span><span class="kw">pub fn </span>destination(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>BusName&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, Destination)
+        <span class="self">self</span>.fields.destination.as_ref()
     }
 
     <span class="doccomment">/// Unique name of the sending connection.
     </span><span class="kw">pub fn </span>sender(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UniqueName&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, Sender)
+        <span class="self">self</span>.fields.sender.as_ref()
     }
 
     <span class="doccomment">/// The signature of the message body.
-    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Signature&lt;<span class="lifetime">'m</span>&gt;&gt; {
-        <span class="macro">get_field!</span>(<span class="self">self</span>, Signature)
+    </span><span class="kw">pub fn </span>signature(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Signature {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.fields.signature
     }
 
     <span class="doccomment">/// The number of Unix file descriptors that accompany the message.
     </span><span class="kw">pub fn </span>unix_fds(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
-        <span class="macro">get_field_u32!</span>(<span class="self">self</span>, UnixFDs)
+        <span class="self">self</span>.fields.unix_fds
     }
 }
 
-<span class="kw">static </span>SERIAL_NUM: AtomicU32 = AtomicU32::new(<span class="number">1</span>);
+<span class="kw">static </span>SERIAL_NUM: AtomicU32 = AtomicU32::new(<span class="number">0</span>);
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span><span class="kw">crate</span>::message::{Field, Fields, Header, PrimaryHeader, Type};
+    <span class="kw">use </span><span class="kw">crate</span>::message::{Fields, Header, PrimaryHeader, Type};
 
     <span class="kw">use </span>std::error::Error;
     <span class="kw">use </span>test_log::test;
@@ -781,10 +721,10 @@
         <span class="kw">let </span>iface = InterfaceName::try_from(<span class="string">"some.interface"</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>member = MemberName::try_from(<span class="string">"Member"</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>f = Fields::new();
-        f.add(Field::Path(path.clone()));
-        f.add(Field::Interface(iface.clone()));
-        f.add(Field::Member(member.clone()));
-        f.add(Field::Sender(<span class="string">":1.84"</span>.try_into()<span class="question-mark">?</span>));
+        f.path = <span class="prelude-val">Some</span>(path.clone());
+        f.interface = <span class="prelude-val">Some</span>(iface.clone());
+        f.member = <span class="prelude-val">Some</span>(member.clone());
+        f.sender = <span class="prelude-val">Some</span>(<span class="string">":1.84"</span>.try_into()<span class="question-mark">?</span>);
         <span class="kw">let </span>h = Header::new(PrimaryHeader::new(Type::Signal, <span class="number">77</span>), f);
 
         <span class="macro">assert_eq!</span>(h.message_type(), Type::Signal);
@@ -795,15 +735,15 @@
         <span class="macro">assert_eq!</span>(h.destination(), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(h.reply_serial(), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(h.sender().unwrap(), <span class="string">":1.84"</span>);
-        <span class="macro">assert_eq!</span>(h.signature(), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(h.signature(), <span class="kw-2">&amp;</span>Signature::Unit);
         <span class="macro">assert_eq!</span>(h.unix_fds(), <span class="prelude-val">None</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>f = Fields::new();
-        f.add(Field::ErrorName(<span class="string">"org.zbus.Error"</span>.try_into()<span class="question-mark">?</span>));
-        f.add(Field::Destination(<span class="string">":1.11"</span>.try_into()<span class="question-mark">?</span>));
-        f.add(Field::ReplySerial(<span class="number">88</span>.try_into()<span class="question-mark">?</span>));
-        f.add(Field::Signature(Signature::from_str_unchecked(<span class="string">"say"</span>)));
-        f.add(Field::UnixFDs(<span class="number">12</span>));
+        f.error_name = <span class="prelude-val">Some</span>(<span class="string">"org.zbus.Error"</span>.try_into()<span class="question-mark">?</span>);
+        f.destination = <span class="prelude-val">Some</span>(<span class="string">":1.11"</span>.try_into()<span class="question-mark">?</span>);
+        f.reply_serial = <span class="prelude-val">Some</span>(<span class="number">88</span>.try_into()<span class="question-mark">?</span>);
+        f.signature = <span class="string">"say"</span>.try_into().unwrap();
+        f.unix_fds = <span class="prelude-val">Some</span>(<span class="number">12</span>);
         <span class="kw">let </span>h = Header::new(PrimaryHeader::new(Type::MethodReturn, <span class="number">77</span>), f);
 
         <span class="macro">assert_eq!</span>(h.message_type(), Type::MethodReturn);
@@ -814,7 +754,7 @@
         <span class="macro">assert_eq!</span>(h.destination().unwrap(), <span class="string">":1.11"</span>);
         <span class="macro">assert_eq!</span>(h.reply_serial().map(Into::into), <span class="prelude-val">Some</span>(<span class="number">88</span>));
         <span class="macro">assert_eq!</span>(h.sender(), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq!</span>(h.signature(), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>Signature::from_str_unchecked(<span class="string">"say"</span>)));
+        <span class="macro">assert_eq!</span>(h.signature(), <span class="kw-2">&amp;</span>Signature::try_from(<span class="string">"say"</span>).unwrap());
         <span class="macro">assert_eq!</span>(h.unix_fds(), <span class="prelude-val">Some</span>(<span class="number">12</span>));
 
         <span class="prelude-val">Ok</span>(())

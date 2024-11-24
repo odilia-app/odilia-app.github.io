@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-buffered-0.2.6/src/arc_slice.rs`."><title>arc_slice.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="futures_buffered" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-buffered-0.2.9/src/arc_slice.rs`."><title>arc_slice.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="futures_buffered" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -452,43 +452,19 @@
 <a href="#452" id="452">452</a>
 <a href="#453" id="453">453</a>
 <a href="#454" id="454">454</a>
-<a href="#455" id="455">455</a>
-<a href="#456" id="456">456</a>
-<a href="#457" id="457">457</a>
-<a href="#458" id="458">458</a>
-<a href="#459" id="459">459</a>
-<a href="#460" id="460">460</a>
-<a href="#461" id="461">461</a>
-<a href="#462" id="462">462</a>
-<a href="#463" id="463">463</a>
-<a href="#464" id="464">464</a>
-<a href="#465" id="465">465</a>
-<a href="#466" id="466">466</a>
-<a href="#467" id="467">467</a>
-<a href="#468" id="468">468</a>
-<a href="#469" id="469">469</a>
-<a href="#470" id="470">470</a>
-<a href="#471" id="471">471</a>
-<a href="#472" id="472">472</a>
-<a href="#473" id="473">473</a>
-<a href="#474" id="474">474</a>
-<a href="#475" id="475">475</a>
-<a href="#476" id="476">476</a>
-<a href="#477" id="477">477</a>
-<a href="#478" id="478">478</a>
-<a href="#479" id="479">479</a>
-<a href="#480" id="480">480</a>
-<a href="#481" id="481">481</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>alloc::alloc::{dealloc, handle_alloc_error, Layout};
+<span class="kw">use </span>cordyceps::{
+    mpsc_queue::{Links, TryDequeueError},
+    Linked, MpscQueue,
+};
 <span class="kw">use </span>core::{
-    cell::UnsafeCell,
     marker::PhantomData,
-    ops::Deref,
+    mem::ManuallyDrop,
     ptr::{<span class="self">self</span>, drop_in_place, NonNull},
-    sync::atomic::{<span class="self">self</span>, AtomicUsize},
+    sync::atomic::{<span class="self">self</span>, AtomicBool, AtomicUsize, Ordering},
     task::Waker,
 };
-<span class="kw">use </span>futures_util::task::AtomicWaker;
+<span class="kw">use </span>diatomic_waker::primitives::DiatomicWaker;
 
 <span class="doccomment">/// [`ArcSlice`] is a fun optimisation. For `FuturesUnorderedBounded`, we have `n` slots for futures,
 /// and we create a separate context when polling each individual future to avoid having n^2 polling.
@@ -511,12 +487,12 @@
 /// Since the layouts of the internals are fixed (`repr(C)`) - we can count back from the index to find
 /// the shared data.
 ///
-/// For example, if we have an ArcSlot pointing at the number 2, we can count back to pointer 2 `usize`s + [`ArcSliceInnerMeta`] to find
+/// For example, if we have an `ArcSlot` pointing at the number 2, we can count back to pointer 2 `usize`s + [`ArcSliceInnerMeta`] to find
 /// the start of the [`ArcSlice`], and then we can insert `2` into the list of futures to poll, finally calling `waker.wake()`.
 ///
 /// Each slot also forms part of a linked list.
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ArcSlice {
-    ptr: NonNull&lt;ArcSliceInner&gt;,
+    ptr: NonNull&lt;ArcSliceInnerMeta&gt;,
     phantom: PhantomData&lt;ArcSliceInner&gt;,
 }
 
@@ -531,10 +507,9 @@
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ArcSliceInnerMeta {
     strong: AtomicUsize,
-    waker: AtomicWaker,
-    list_head: AtomicUsize,
-    list_tail: UnsafeCell&lt;usize&gt;,
+    waker: DiatomicWaker,
     len: usize,
+    queue: MpscQueue&lt;ArcSlotInner&gt;,
 }
 
 <span class="comment">// This is repr(C) to future-proof against possible field-reordering, which
@@ -543,7 +518,24 @@
 </span><span class="attr">#[repr(C)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ArcSlotInner {
     index: usize,
-    next: AtomicUsize,
+    wake_lock: AtomicBool,
+    links: Links&lt;<span class="self">Self</span>&gt;,
+}
+
+<span class="kw">unsafe impl </span>Linked&lt;Links&lt;<span class="self">Self</span>&gt;&gt; <span class="kw">for </span>ArcSlotInner {
+    <span class="kw">type </span>Handle = NonNull&lt;<span class="self">Self</span>&gt;;
+
+    <span class="kw">fn </span>into_ptr(r: <span class="self">Self</span>::Handle) -&gt; NonNull&lt;<span class="self">Self</span>&gt; {
+        r
+    }
+
+    <span class="kw">unsafe fn </span>from_ptr(ptr: NonNull&lt;<span class="self">Self</span>&gt;) -&gt; <span class="self">Self</span>::Handle {
+        ptr
+    }
+
+    <span class="kw">unsafe fn </span>links(ptr: NonNull&lt;<span class="self">Self</span>&gt;) -&gt; NonNull&lt;Links&lt;<span class="self">Self</span>&gt;&gt; {
+        NonNull::new_unchecked(<span class="macro">ptr::addr_of_mut!</span>((<span class="kw-2">*</span>ptr.as_ptr()).links))
+    }
 }
 
 <span class="kw">const fn </span>__assert_send_sync&lt;T: Send + Sync&gt;() {}
@@ -557,33 +549,41 @@
     <span class="kw">unsafe impl </span>Sync <span class="kw">for </span>ArcSlice {}
 };
 
-<span class="kw">impl </span>Deref <span class="kw">for </span>ArcSlice {
-    <span class="kw">type </span>Target = ArcSliceInner;
-
-    <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-        <span class="comment">// This unsafety is ok because while this arc is alive we're guaranteed
-        // that the inner pointer is valid. Furthermore, we know that the
-        // `ArcInner` structure itself is `Sync` because the inner data is
-        // `Sync` as well, so we're ok loaning out an immutable pointer to these
-        // contents.
-        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.ptr.as_ref() }
-    }
-}
-
 <span class="kw">impl </span>ArcSlice {
-    <span class="doccomment">/// Register the waker
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>register(<span class="kw-2">&amp;</span><span class="self">self</span>, waker: <span class="kw-2">&amp;</span>Waker) {
-        <span class="self">self</span>.meta.waker.register(waker)
+    <span class="kw">fn </span>slice_start(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>ArcSlotInner {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>ptr = <span class="self">self</span>.ptr.as_ptr().cast::&lt;u8&gt;();
+            ptr.add(slice_offset()).cast::&lt;ArcSlotInner&gt;()
+        }
     }
 
-    <span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; Waker {
-        <span class="self">self</span>.meta.inc_strong();
-        <span class="kw">let </span>ptr: <span class="kw-2">*mut </span>ArcSliceInner = NonNull::as_ptr(<span class="self">self</span>.ptr);
+    <span class="doccomment">/// The push function from the 1024cores intrusive MPSC queue algorithm.
+    /// &lt;https://www.1024cores.net/home/lock-free-algorithms/queues/intrusive-mpsc-node-based-queue&gt;
+    ///
+    /// Safety: index must be within capacity
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>push(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) {
+        <span class="kw">let </span>queue = <span class="kw-2">&amp;*</span><span class="macro">ptr::addr_of!</span>((<span class="kw-2">*</span><span class="self">self</span>.ptr.as_ptr()).queue);
+        <span class="kw">let </span>slot = <span class="self">self</span>.slice_start().add(index);
 
+        queue.enqueue(NonNull::new_unchecked(slot));
+    }
+
+    <span class="doccomment">/// Register the waker
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>register(<span class="kw-2">&amp;mut </span><span class="self">self</span>, waker: <span class="kw-2">&amp;</span>Waker) {
+        <span class="comment">// Safety:
+        // Diatomic waker requires we do not concurrently run
+        // "register", "unregister", and "wait_until".
+        // we only call register with mut access, thus we are safe.
+        </span><span class="kw">let </span>meta = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span><span class="self">self</span>.ptr.as_ptr() };
+        <span class="kw">unsafe </span>{ meta.waker.register(waker) }
+    }
+
+    <span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; ManuallyDrop&lt;Waker&gt; {
         <span class="comment">// SAFETY: This cannot go through Deref::deref or RcBoxPtr::inner because
         // this is required to retain raw/mut provenance such that e.g. `get_mut` can
         // write through the pointer after the Rc is recovered through `from_raw`.
-        </span><span class="kw">let </span>slot = <span class="kw">unsafe </span>{ (<span class="macro">ptr::addr_of_mut!</span>((<span class="kw-2">*</span>ptr).slice) <span class="kw">as </span><span class="kw-2">*mut </span>ArcSlotInner).add(index) };
+        </span><span class="kw">let </span>slot = <span class="kw">unsafe </span>{ <span class="self">self</span>.slice_start().add(index) };
+
         <span class="macro">debug_assert_eq!</span>(
             <span class="kw">unsafe </span>{ (<span class="kw-2">*</span>slot).index },
             index,
@@ -596,77 +596,18 @@
     ///
     /// Note that this is unsafe as it required mutual exclusion (only one
     /// thread can call this) to be guaranteed elsewhere.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>pop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ReadySlot&lt;(usize, Waker)&gt; {
-        <span class="kw">match </span>ArcSliceInner::pop(<span class="self">self</span>) {
-            ReadySlot::Ready(i) =&gt; ReadySlot::Ready((i, <span class="self">self</span>.get(i))),
-            ReadySlot::Inconsistent =&gt; ReadySlot::Inconsistent,
-            ReadySlot::None =&gt; ReadySlot::None,
-        }
-    }
-}
-
-<span class="kw">impl </span>ArcSliceInner {
-    <span class="doccomment">/// The push function from the 1024cores intrusive MPSC queue algorithm.
-    ///
-    /// Safety: index must be within capacity
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>push(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) {
-        <span class="self">self</span>.slice
-            .get_unchecked(index)
-            .next
-            .store(<span class="self">self</span>.meta.len + <span class="number">1</span>, atomic::Ordering::Relaxed);
-        <span class="kw">let </span>prev = <span class="self">self</span>.meta.list_head.swap(index, atomic::Ordering::AcqRel);
-        <span class="self">self</span>.slice
-            .get_unchecked(prev)
-            .next
-            .store(index, atomic::Ordering::Release);
-    }
-
-    <span class="doccomment">/// The pop function from the 1024cores intrusive MPSC queue algorithm
-    ///
-    /// Note that this is unsafe as it required mutual exclusion (only one
-    /// thread can call this) to be guaranteed elsewhere.
-    </span><span class="kw">unsafe fn </span>pop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ReadySlot&lt;usize&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>tail = <span class="kw-2">*</span><span class="self">self</span>.meta.list_tail.get();
-        <span class="kw">let </span><span class="kw-2">mut </span>next = <span class="self">self</span>.slice[tail].next.load(atomic::Ordering::Acquire);
-
-        <span class="kw">if </span>tail == <span class="self">self</span>.meta.len {
-            <span class="kw">if </span>next &gt; <span class="self">self</span>.meta.len {
-                <span class="kw">return </span>ReadySlot::None;
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>pop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ReadySlot&lt;(usize, ManuallyDrop&lt;Waker&gt;)&gt; {
+        <span class="kw">let </span>queue = <span class="kw-2">&amp;*</span><span class="macro">ptr::addr_of!</span>((<span class="kw-2">*</span><span class="self">self</span>.ptr.as_ptr()).queue);
+        <span class="kw">match </span>queue.try_dequeue_unchecked() {
+            <span class="prelude-val">Ok</span>(slot) =&gt; {
+                (<span class="kw-2">*</span>slot.as_ptr()).wake_lock.store(<span class="bool-val">false</span>, Ordering::SeqCst);
+                <span class="kw">let </span>i = (<span class="kw-2">*</span>slot.as_ptr()).index;
+                ReadySlot::Ready((i, <span class="self">self</span>.get(i)))
             }
-
-            <span class="kw-2">*</span><span class="self">self</span>.meta.list_tail.get() = next;
-            tail = next;
-            next = <span class="self">self
-                </span>.slice
-                .get_unchecked(next)
-                .next
-                .load(atomic::Ordering::Acquire);
+            <span class="prelude-val">Err</span>(TryDequeueError::Inconsistent) =&gt; ReadySlot::Inconsistent,
+            <span class="prelude-val">Err</span>(TryDequeueError::Empty) =&gt; ReadySlot::None,
+            <span class="prelude-val">Err</span>(TryDequeueError::Busy) =&gt; <span class="macro">unreachable!</span>(),
         }
-
-        <span class="kw">if </span>next &lt;= <span class="self">self</span>.meta.len {
-            <span class="kw-2">*</span><span class="self">self</span>.meta.list_tail.get() = next;
-            <span class="macro">debug_assert!</span>(tail != <span class="self">self</span>.meta.len);
-            <span class="kw">return </span>ReadySlot::Ready(tail);
-        }
-
-        <span class="kw">if </span><span class="self">self</span>.meta.list_head.load(atomic::Ordering::Acquire) != tail {
-            <span class="kw">return </span>ReadySlot::Inconsistent;
-        }
-
-        <span class="self">self</span>.push(<span class="self">self</span>.meta.len);
-
-        next = <span class="self">self
-            </span>.slice
-            .get_unchecked(tail)
-            .next
-            .load(atomic::Ordering::Acquire);
-
-        <span class="kw">if </span>next &lt;= <span class="self">self</span>.meta.len {
-            <span class="kw-2">*</span><span class="self">self</span>.meta.list_tail.get() = next;
-            <span class="kw">return </span>ReadySlot::Ready(tail);
-        }
-
-        ReadySlot::Inconsistent
     }
 }
 
@@ -678,52 +619,23 @@
 
 <span class="kw">mod </span>slot {
     <span class="kw">use </span>core::{
-        alloc::Layout,
-        mem::align_of,
-        ptr,
+        mem::ManuallyDrop,
+        ptr::NonNull,
+        sync::atomic::Ordering,
         task::{RawWaker, RawWakerVTable, Waker},
     };
 
-    <span class="kw">use super</span>::{ArcSliceInner, ArcSliceInnerMeta, ArcSlotInner};
+    <span class="kw">use super</span>::{slice_offset, ArcSliceInnerMeta, ArcSlotInner};
 
     <span class="doccomment">/// Traverses back the [`ArcSlice`] to find the [`ArcSliceInnerMeta`] pointer
     ///
     /// # Safety:
     /// `ptr` must be from an `ArcSlot` originally
     </span><span class="kw">unsafe fn </span>meta_raw(ptr: <span class="kw-2">*mut </span>ArcSlotInner) -&gt; <span class="kw-2">*mut </span>ArcSliceInnerMeta {
-        <span class="kw">fn </span>padding_needed_for(layout: <span class="kw-2">&amp;</span>Layout, align: usize) -&gt; usize {
-            <span class="kw">let </span>len = layout.size();
-
-            <span class="comment">// Rounded up value is:
-            //   len_rounded_up = (len + align - 1) &amp; !(align - 1);
-            // and then we return the padding difference: `len_rounded_up - len`.
-            //
-            // We use modular arithmetic throughout:
-            //
-            // 1. align is guaranteed to be &gt; 0, so align - 1 is always
-            //    valid.
-            //
-            // 2. `len + align - 1` can overflow by at most `align - 1`,
-            //    so the &amp;-mask with `!(align - 1)` will ensure that in the
-            //    case of overflow, `len_rounded_up` will itself be 0.
-            //    Thus the returned padding, when added to `len`, yields 0,
-            //    which trivially satisfies the alignment `align`.
-            //
-            // (Of course, attempts to allocate blocks of memory whose
-            // size and padding overflow in the above manner should cause
-            // the allocator to yield an error anyway.)
-
-            </span><span class="kw">let </span>len_rounded_up = len.wrapping_add(align).wrapping_sub(<span class="number">1</span>) &amp; !align.wrapping_sub(<span class="number">1</span>);
-            len_rounded_up.wrapping_sub(len)
-        }
-
         <span class="kw">let </span>index = (<span class="kw-2">*</span>ptr).index;
         <span class="kw">let </span>slice_start = ptr.sub(index);
 
-        <span class="kw">let </span>layout = Layout::new::&lt;ArcSliceInnerMeta&gt;();
-        <span class="kw">let </span>offset = layout.size() + padding_needed_for(<span class="kw-2">&amp;</span>layout, align_of::&lt;ArcSlotInner&gt;());
-
-        <span class="kw">unsafe </span>{ slice_start.cast::&lt;u8&gt;().sub(offset) }.cast::&lt;ArcSliceInnerMeta&gt;()
+        <span class="kw">unsafe </span>{ slice_start.cast::&lt;u8&gt;().sub(slice_offset()) }.cast::&lt;ArcSliceInnerMeta&gt;()
     }
 
     <span class="doccomment">/// Traverses back the [`ArcSlice`] to find the [`ArcSliceInnerMeta`] pointer
@@ -732,30 +644,17 @@
     /// * `ptr` must be from an `ArcSlot` originally
     /// * The original `ArcSlot` must outlive `'a`
     </span><span class="kw">unsafe fn </span>meta_ref&lt;<span class="lifetime">'a</span>&gt;(ptr: <span class="kw-2">*const </span>ArcSlotInner) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span>ArcSliceInnerMeta {
-        <span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>meta_raw(ptr <span class="kw">as </span><span class="kw-2">*mut </span>ArcSlotInner) }
+        <span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span>meta_raw(ptr.cast_mut()) }
     }
 
-    <span class="doccomment">/// Traverses back the [`ArcSlice`] to find the [`ArcSliceInner`] pointer
-    ///
-    /// # Safety:
-    /// * `ptr` must be from an `ArcSlot` originally
-    /// * The original `ArcSlot` must outlive `'a`
-    </span><span class="kw">unsafe fn </span>inner_ref&lt;<span class="lifetime">'a</span>&gt;(ptr: <span class="kw-2">*const </span>ArcSlotInner) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span>ArcSliceInner {
-        <span class="kw">let </span>ptr = meta_raw(ptr <span class="kw">as </span><span class="kw-2">*mut </span>ArcSlotInner);
-        <span class="kw">let </span>len = <span class="kw-2">*</span><span class="macro">core::ptr::addr_of!</span>((<span class="kw-2">*</span>ptr).len);
-
-        <span class="kw">let </span>ptr = ptr <span class="kw">as </span><span class="kw-2">*const </span>ArcSliceInnerMeta <span class="kw">as </span><span class="kw-2">*const </span>ArcSlotInner;
-        <span class="kw-2">&amp;*</span>(ptr::slice_from_raw_parts(ptr, len + <span class="number">1</span>) <span class="kw">as </span><span class="kw-2">*const </span>ArcSliceInner)
-    }
-
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>waker(ptr: <span class="kw-2">*const </span>ArcSlotInner) -&gt; Waker {
-        <span class="kw">static </span>VTABLE: RawWakerVTable =
-            RawWakerVTable::new(clone_waker, wake, wake_by_ref, drop_waker);
+    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn </span>waker(ptr: <span class="kw-2">*const </span>ArcSlotInner) -&gt; ManuallyDrop&lt;Waker&gt; {
+        <span class="kw">static </span>VTABLE: <span class="kw-2">&amp;</span>RawWakerVTable =
+            <span class="kw-2">&amp;</span>RawWakerVTable::new(clone_waker, wake, wake_by_ref, drop_waker);
 
         <span class="comment">// Increment the reference count of the arc to clone it.
         </span><span class="kw">unsafe fn </span>clone_waker(waker: <span class="kw-2">*const </span>()) -&gt; RawWaker {
             meta_ref(waker.cast()).inc_strong();
-            RawWaker::new(waker, <span class="kw-2">&amp;</span>VTABLE)
+            RawWaker::new(waker, VTABLE)
         }
 
         <span class="comment">// We don't need ownership. Just wake_by_ref and drop the waker
@@ -767,10 +666,17 @@
         <span class="comment">// Find the `ArcSliceInnerMeta` and push the current index value into it,
         // then call the stored waker to trigger a poll
         </span><span class="kw">unsafe fn </span>wake_by_ref(waker: <span class="kw-2">*const </span>()) {
-            <span class="kw">let </span>slot = waker.cast();
-            <span class="kw">let </span>inner = inner_ref(slot);
-            inner.push((<span class="kw-2">*</span>slot).index);
-            inner.meta.waker.wake();
+            <span class="kw">let </span>slot = waker.cast::&lt;ArcSlotInner&gt;();
+
+            <span class="kw">let </span>node = <span class="kw-2">&amp;*</span>slot;
+            <span class="comment">// node.woken.store(true, Ordering::Relaxed);
+            </span><span class="kw">let </span>prev = node.wake_lock.swap(<span class="bool-val">true</span>, Ordering::SeqCst);
+
+            <span class="kw">if </span>!prev {
+                <span class="kw">let </span>meta = meta_ref(slot);
+                meta.queue.enqueue(NonNull::new_unchecked(slot.cast_mut()));
+                meta.waker.notify();
+            }
         }
 
         <span class="comment">// Decrement the reference count of the Arc on drop
@@ -778,13 +684,13 @@
             <span class="kw">let </span>meta = meta_ref(waker.cast());
             <span class="kw">if </span>meta.dec_strong() {
                 <span class="kw">unsafe </span>{
-                    <span class="kw">super</span>::drop_inner(meta_raw(waker.cast::&lt;ArcSlotInner&gt;() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>), meta.len)
+                    <span class="kw">super</span>::drop_inner(meta_raw(waker.cast::&lt;ArcSlotInner&gt;().cast_mut()), meta.len);
                 }
             }
         }
 
-        <span class="kw">let </span>raw_waker = RawWaker::new(ptr <span class="kw">as </span><span class="kw-2">*const </span>(), <span class="kw-2">&amp;</span>VTABLE);
-        <span class="kw">unsafe </span>{ Waker::from_raw(raw_waker) }
+        <span class="kw">let </span>raw_waker = RawWaker::new(ptr.cast(), VTABLE);
+        <span class="kw">unsafe </span>{ ManuallyDrop::new(Waker::from_raw(raw_waker)) }
     }
 }
 
@@ -801,9 +707,7 @@
         // another must already provide any required synchronization.
         //
         // [1]: (www.boost.org/doc/libs/1_55_0/doc/html/atomic/usage_examples.html)
-        </span><span class="kw">let </span>old_size = <span class="self">self
-            </span>.strong
-            .fetch_add(<span class="number">1</span>, core::sync::atomic::Ordering::Relaxed);
+        </span><span class="kw">let </span>old_size = <span class="self">self</span>.strong.fetch_add(<span class="number">1</span>, Ordering::Relaxed);
 
         <span class="comment">// However we need to guard against massive refcounts in case someone is `mem::forget`ing
         // Arcs. If we don't do this the count can overflow and users will use-after free. This
@@ -823,9 +727,7 @@
         <span class="comment">// Because `fetch_sub` is already atomic, we do not need to synchronize
         // with other threads unless we are going to delete the object. This
         // same logic applies to the below `fetch_sub` to the `weak` count.
-        </span><span class="kw">let </span>old_size = <span class="self">self
-            </span>.strong
-            .fetch_sub(<span class="number">1</span>, core::sync::atomic::Ordering::Release);
+        </span><span class="kw">let </span>old_size = <span class="self">self</span>.strong.fetch_sub(<span class="number">1</span>, Ordering::Release);
         <span class="kw">if </span>old_size != <span class="number">1 </span>{
             <span class="kw">return </span><span class="bool-val">false</span>;
         }
@@ -858,9 +760,40 @@
         //
         // [1]: (www.boost.org/doc/libs/1_55_0/doc/html/atomic/usage_examples.html)
         // [2]: (https://github.com/rust-lang/rust/pull/41714)
-        </span>atomic::fence(atomic::Ordering::Acquire);
+        </span>atomic::fence(Ordering::Acquire);
         <span class="bool-val">true
     </span>}
+}
+
+<span class="kw">fn </span>slice_offset() -&gt; usize {
+    <span class="kw">fn </span>padding_needed_for(layout: <span class="kw-2">&amp;</span>Layout, align: usize) -&gt; usize {
+        <span class="kw">let </span>len = layout.size();
+
+        <span class="comment">// Rounded up value is:
+        //   len_rounded_up = (len + align - 1) &amp; !(align - 1);
+        // and then we return the padding difference: `len_rounded_up - len`.
+        //
+        // We use modular arithmetic throughout:
+        //
+        // 1. align is guaranteed to be &gt; 0, so align - 1 is always
+        //    valid.
+        //
+        // 2. `len + align - 1` can overflow by at most `align - 1`,
+        //    so the &amp;-mask with `!(align - 1)` will ensure that in the
+        //    case of overflow, `len_rounded_up` will itself be 0.
+        //    Thus the returned padding, when added to `len`, yields 0,
+        //    which trivially satisfies the alignment `align`.
+        //
+        // (Of course, attempts to allocate blocks of memory whose
+        // size and padding overflow in the above manner should cause
+        // the allocator to yield an error anyway.)
+
+        </span><span class="kw">let </span>len_rounded_up = len.wrapping_add(align).wrapping_sub(<span class="number">1</span>) &amp; !align.wrapping_sub(<span class="number">1</span>);
+        len_rounded_up.wrapping_sub(len)
+    }
+
+    <span class="kw">let </span>layout = Layout::new::&lt;ArcSliceInnerMeta&gt;();
+    layout.size() + padding_needed_for(<span class="kw-2">&amp;</span>layout, core::mem::align_of::&lt;ArcSlotInner&gt;())
 }
 
 <span class="doccomment">/// Drops the internals of the [`ArcSlice`].
@@ -879,8 +812,9 @@
 
 <span class="kw">impl </span>Drop <span class="kw">for </span>ArcSlice {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">if </span><span class="self">self</span>.meta.dec_strong() {
-            <span class="kw">unsafe </span>{ drop_inner(<span class="self">self</span>.ptr.as_ptr().cast(), <span class="self">self</span>.meta.len) }
+        <span class="kw">let </span>meta = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;*</span><span class="self">self</span>.ptr.as_ptr() };
+        <span class="kw">if </span>meta.dec_strong() {
+            <span class="kw">unsafe </span>{ drop_inner(<span class="self">self</span>.ptr.as_ptr().cast(), meta.len) }
         }
     }
 }
@@ -901,35 +835,47 @@
             handle_alloc_error(arc_slice_layout)
         }
 
-        <span class="comment">// Initialize the ArcInner
-        </span><span class="kw">let </span>inner = ptr::slice_from_raw_parts_mut(ptr.cast::&lt;ArcSlotInner&gt;(), cap + <span class="number">1</span>)
-            <span class="kw">as </span><span class="kw-2">*mut </span>ArcSliceInner;
-        <span class="macro">debug_assert_eq!</span>(<span class="kw">unsafe </span>{ Layout::for_value(<span class="kw-2">&amp;*</span>inner) }, arc_slice_layout);
+        <span class="comment">// meta should be the first item in the alloc
+        </span><span class="kw">let </span>meta = ptr.cast::&lt;ArcSliceInnerMeta&gt;();
+        <span class="kw">let </span>slice = <span class="kw">unsafe </span>{ ptr.add(slice_offset()).cast::&lt;ArcSlotInner&gt;() };
 
         <span class="comment">// SAFETY:
         // The inner pointer is allocated and aligned, they just need to be initialised
         </span><span class="kw">unsafe </span>{
-            <span class="kw">let </span>meta = ArcSliceInnerMeta {
-                strong: AtomicUsize::new(<span class="number">1</span>),
-                len: cap,
-                list_head: AtomicUsize::new(cap),
-                list_tail: UnsafeCell::new(cap),
-                waker: AtomicWaker::new(),
-            };
-            ptr::write(<span class="macro">ptr::addr_of_mut!</span>((<span class="kw-2">*</span>inner).meta), meta);
+            <span class="kw">let </span>stub = slice.add(cap);
+
             <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..cap {
                 ptr::write(
-                    <span class="macro">ptr::addr_of_mut!</span>((<span class="kw-2">*</span>inner).slice[i]),
+                    slice.add(i),
                     ArcSlotInner {
                         index: i,
-                        next: AtomicUsize::new(cap + <span class="number">1</span>),
+                        wake_lock: AtomicBool::new(<span class="bool-val">false</span>),
+                        links: Links::new(),
                     },
                 );
             }
+            ptr::write(
+                slice.add(cap),
+                ArcSlotInner {
+                    index: cap,
+                    wake_lock: AtomicBool::new(<span class="bool-val">false</span>),
+                    links: Links::new_stub(),
+                },
+            );
+
+            ptr::write(
+                meta,
+                ArcSliceInnerMeta {
+                    strong: AtomicUsize::new(<span class="number">1</span>),
+                    len: cap,
+                    waker: DiatomicWaker::new(),
+                    queue: MpscQueue::new_with_stub(NonNull::new_unchecked(stub)),
+                },
+            );
         }
 
         <span class="self">Self </span>{
-            ptr: <span class="kw">unsafe </span>{ NonNull::new_unchecked(inner) },
+            ptr: <span class="kw">unsafe </span>{ NonNull::new_unchecked(meta) },
             phantom: PhantomData,
         }
     }

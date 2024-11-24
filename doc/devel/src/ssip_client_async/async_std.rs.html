@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ssip-client-async-0.13.0/src/async_std.rs`."><title>async_std.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ssip_client_async" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ssip-client-async-0.14.0/src/async_std.rs`."><title>async_std.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ssip_client_async" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -684,6 +684,49 @@
 <a href="#684" id="684">684</a>
 <a href="#685" id="685">685</a>
 <a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
 </pre></div><pre class="rust"><code><span class="comment">// ssip-client -- Speech Dispatcher client in Rust
 // Copyright (c) 2021-2022 Laurent Pelecq
 //
@@ -697,8 +740,8 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::constants::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::protocol::{
-    flush_lines, parse_event_id, parse_single_integer, parse_single_value, parse_typed_lines,
-    flush_lines_async_std, write_lines_async_std,
+    flush_lines, flush_lines_async_std, parse_event_id, parse_single_integer, parse_single_value,
+    parse_typed_lines, write_lines_async_std,
 };
 <span class="kw">use </span><span class="kw">crate</span>::types::<span class="kw-2">*</span>;
 
@@ -765,7 +808,8 @@
                 .map(|s| s.as_str())
                 .collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>str&gt;&gt;()
                 .as_slice(),
-        ).<span class="kw">await</span><span class="question-mark">?</span>;
+        )
+        .<span class="kw">await</span><span class="question-mark">?</span>;
         flush_lines_async_std(<span class="kw-2">&amp;mut </span><span class="self">self</span>.output, <span class="kw-2">&amp;</span>END_OF_DATA).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">self</span>)
     }
@@ -1019,7 +1063,8 @@
         scope: ClientScope,
         value: <span class="kw-2">&amp;</span>str,
     ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::SetOutputModule(scope, value.to_string())).<span class="kw">await
+        <span class="self">self</span>.send(Request::SetOutputModule(scope, value.to_string()))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Get the current output module
@@ -1033,8 +1078,13 @@
     </span>}
 
     <span class="doccomment">/// Set language code
-    </span><span class="kw">pub async fn </span>set_language(<span class="kw-2">&amp;mut </span><span class="self">self</span>, scope: ClientScope, value: <span class="kw-2">&amp;</span>str) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::SetLanguage(scope, value.to_string())).<span class="kw">await
+    </span><span class="kw">pub async fn </span>set_language(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        scope: ClientScope,
+        value: <span class="kw-2">&amp;</span>str,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+        <span class="self">self</span>.send(Request::SetLanguage(scope, value.to_string()))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Get the current language
@@ -1057,7 +1107,11 @@
     </span>}
 
     <span class="doccomment">/// Set spelling on or off
-    </span><span class="kw">pub async fn </span>set_spelling(<span class="kw-2">&amp;mut </span><span class="self">self</span>, scope: ClientScope, value: bool) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+    </span><span class="kw">pub async fn </span>set_spelling(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        scope: ClientScope,
+        value: bool,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
         <span class="self">self</span>.send(Request::SetSpelling(scope, value)).<span class="kw">await
     </span>}
 
@@ -1067,12 +1121,18 @@
         scope: ClientScope,
         mode: CapitalLettersRecognitionMode,
     ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::SetCapitalLettersRecognitionMode(scope, mode)).<span class="kw">await
+        <span class="self">self</span>.send(Request::SetCapitalLettersRecognitionMode(scope, mode))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Set the voice type (MALE1, FEMALE1, …)
-    </span><span class="kw">pub async fn </span>set_voice_type(<span class="kw-2">&amp;mut </span><span class="self">self</span>, scope: ClientScope, value: <span class="kw-2">&amp;</span>str) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::SetVoiceType(scope, value.to_string())).<span class="kw">await
+    </span><span class="kw">pub async fn </span>set_voice_type(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        scope: ClientScope,
+        value: <span class="kw-2">&amp;</span>str,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+        <span class="self">self</span>.send(Request::SetVoiceType(scope, value.to_string()))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Get the current pre-defined voice
@@ -1091,7 +1151,8 @@
         scope: ClientScope,
         value: <span class="kw-2">&amp;</span>str,
     ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::SetSynthesisVoice(scope, value.to_string())).<span class="kw">await
+        <span class="self">self</span>.send(Request::SetSynthesisVoice(scope, value.to_string()))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Lists the available voices for the current synthesizer
@@ -1130,7 +1191,11 @@
     </span>}
 
     <span class="doccomment">/// Set the number of (more or less) sentences that should be repeated after a previously paused text is resumed.
-    </span><span class="kw">pub async fn </span>set_pause_context(<span class="kw-2">&amp;mut </span><span class="self">self</span>, scope: ClientScope, value: u32) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+    </span><span class="kw">pub async fn </span>set_pause_context(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        scope: ClientScope,
+        value: u32,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
         <span class="self">self</span>.send(Request::SetPauseContext(scope, value)).<span class="kw">await
     </span>}
 
@@ -1154,7 +1219,11 @@
     </span>}
 
     <span class="doccomment">/// Enable or disable history of received messages.
-    </span><span class="kw">pub async fn </span>set_history(<span class="kw-2">&amp;mut </span><span class="self">self</span>, scope: ClientScope, value: bool) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+    </span><span class="kw">pub async fn </span>set_history(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        scope: ClientScope,
+        value: bool,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
         <span class="self">self</span>.send(Request::SetHistory(scope, value)).<span class="kw">await
     </span>}
 
@@ -1180,7 +1249,8 @@
         start: u32,
         number: u32,
     ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::HistoryGetClientMsgs(scope, start, number)).<span class="kw">await
+        <span class="self">self</span>.send(Request::HistoryGetClientMsgs(scope, start, number))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Get the id of the last message sent by the client.
@@ -1208,7 +1278,10 @@
     </span>}
 
     <span class="doccomment">/// Move the cursor position backward or forward.
-    </span><span class="kw">pub async fn </span>history_move_cursor(<span class="kw-2">&amp;mut </span><span class="self">self</span>, direction: CursorDirection) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+    </span><span class="kw">pub async fn </span>history_move_cursor(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        direction: CursorDirection,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
         <span class="self">self</span>.send(Request::HistoryCursorMove(direction)).<span class="kw">await
     </span>}
 
@@ -1227,13 +1300,20 @@
     </span>}
 
     <span class="doccomment">/// Set the maximum length of short versions of history messages.
-    </span><span class="kw">pub async fn </span>history_set_short_message_length(<span class="kw-2">&amp;mut </span><span class="self">self</span>, length: u32) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+    </span><span class="kw">pub async fn </span>history_set_short_message_length(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        length: u32,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
         <span class="self">self</span>.send(Request::HistorySetShortMsgLength(length)).<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Set the ordering of the message types, from the minimum to the maximum.
-    </span><span class="kw">pub async fn </span>history_set_ordering(<span class="kw-2">&amp;mut </span><span class="self">self</span>, ordering: Vec&lt;Ordering&gt;) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::HistorySetMsgTypeOrdering(ordering)).<span class="kw">await
+    </span><span class="kw">pub async fn </span>history_set_ordering(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        ordering: Vec&lt;Ordering&gt;,
+    ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
+        <span class="self">self</span>.send(Request::HistorySetMsgTypeOrdering(ordering))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Search in message history.
@@ -1242,7 +1322,8 @@
         scope: ClientScope,
         condition: <span class="kw-2">&amp;</span>str,
     ) -&gt; ClientResult&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
-        <span class="self">self</span>.send(Request::HistorySearch(scope, condition.to_string())).<span class="kw">await
+        <span class="self">self</span>.send(Request::HistorySearch(scope, condition.to_string()))
+            .<span class="kw">await
     </span>}
 
     <span class="doccomment">/// Close the connection
@@ -1275,7 +1356,8 @@
     <span class="doccomment">/// Receive a single string
     </span><span class="kw">pub async fn </span>receive_string(<span class="kw-2">&amp;mut </span><span class="self">self</span>, expected_code: ReturnCode) -&gt; ClientResult&lt;String&gt; {
         <span class="self">self</span>.receive_lines(expected_code)
-            .<span class="kw">await</span>.and_then(|lines| parse_single_value(<span class="kw-2">&amp;</span>lines))
+            .<span class="kw">await
+            </span>.and_then(|lines| parse_single_value(<span class="kw-2">&amp;</span>lines))
     }
 
     <span class="doccomment">/// Receive signed 8-bit integer
@@ -1322,42 +1404,46 @@
     <span class="doccomment">/// Receive a list of synthesis voices
     </span><span class="kw">pub async fn </span>receive_synthesis_voices(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;Vec&lt;SynthesisVoice&gt;&gt; {
         <span class="self">self</span>.receive_lines(OK_VOICES_LIST_SENT)
-            .<span class="kw">await</span>.and_then(|lines| parse_typed_lines::&lt;SynthesisVoice&gt;(<span class="kw-2">&amp;</span>lines))
+            .<span class="kw">await
+            </span>.and_then(|lines| parse_typed_lines::&lt;SynthesisVoice&gt;(<span class="kw-2">&amp;</span>lines))
     }
 
     <span class="doccomment">/// Receive a notification
     </span><span class="kw">pub async fn </span>receive_event(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;Event&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>lines = Vec::new();
-        <span class="self">self</span>.receive_answer(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut </span>lines)).<span class="kw">await</span>.and_then(|status| {
-            <span class="kw">if </span>lines.len() &lt; <span class="number">2 </span>{
-                <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">"event truncated"</span>))
-            } <span class="kw">else </span>{
-                <span class="kw">let </span>message = <span class="kw-2">&amp;</span>lines[<span class="number">0</span>];
-                <span class="kw">let </span>client = <span class="kw-2">&amp;</span>lines[<span class="number">1</span>];
-                <span class="kw">match </span>status.code {
-                    <span class="number">700 </span>=&gt; {
-                        <span class="kw">if </span>lines.len() != <span class="number">3 </span>{
-                            <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">"index markevent truncated"</span>))
-                        } <span class="kw">else </span>{
-                            <span class="kw">let </span>mark = lines[<span class="number">3</span>].to_owned();
-                            <span class="prelude-val">Ok</span>(Event::index_mark(mark, message, client))
+        <span class="self">self</span>.receive_answer(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;mut </span>lines))
+            .<span class="kw">await
+            </span>.and_then(|status| {
+                <span class="kw">if </span>lines.len() &lt; <span class="number">2 </span>{
+                    <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">"event truncated"</span>))
+                } <span class="kw">else </span>{
+                    <span class="kw">let </span>message = <span class="kw-2">&amp;</span>lines[<span class="number">0</span>];
+                    <span class="kw">let </span>client = <span class="kw-2">&amp;</span>lines[<span class="number">1</span>];
+                    <span class="kw">match </span>status.code {
+                        <span class="number">700 </span>=&gt; {
+                            <span class="kw">if </span>lines.len() != <span class="number">3 </span>{
+                                <span class="prelude-val">Err</span>(ClientError::unexpected_eof(<span class="string">"index markevent truncated"</span>))
+                            } <span class="kw">else </span>{
+                                <span class="kw">let </span>mark = lines[<span class="number">3</span>].to_owned();
+                                <span class="prelude-val">Ok</span>(Event::index_mark(mark, message, client))
+                            }
                         }
+                        <span class="number">701 </span>=&gt; <span class="prelude-val">Ok</span>(Event::begin(message, client)),
+                        <span class="number">702 </span>=&gt; <span class="prelude-val">Ok</span>(Event::end(message, client)),
+                        <span class="number">703 </span>=&gt; <span class="prelude-val">Ok</span>(Event::cancel(message, client)),
+                        <span class="number">704 </span>=&gt; <span class="prelude-val">Ok</span>(Event::pause(message, client)),
+                        <span class="number">705 </span>=&gt; <span class="prelude-val">Ok</span>(Event::resume(message, client)),
+                        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ClientError::invalid_data(<span class="string">"wrong status code for event"</span>)),
                     }
-                    <span class="number">701 </span>=&gt; <span class="prelude-val">Ok</span>(Event::begin(message, client)),
-                    <span class="number">702 </span>=&gt; <span class="prelude-val">Ok</span>(Event::end(message, client)),
-                    <span class="number">703 </span>=&gt; <span class="prelude-val">Ok</span>(Event::cancel(message, client)),
-                    <span class="number">704 </span>=&gt; <span class="prelude-val">Ok</span>(Event::pause(message, client)),
-                    <span class="number">705 </span>=&gt; <span class="prelude-val">Ok</span>(Event::resume(message, client)),
-                    <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(ClientError::invalid_data(<span class="string">"wrong status code for event"</span>)),
                 }
-            }
-        })
+            })
     }
 
     <span class="doccomment">/// Receive a list of client status from history.
     </span><span class="kw">pub async fn </span>receive_history_clients(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientResult&lt;Vec&lt;HistoryClientStatus&gt;&gt; {
         <span class="self">self</span>.receive_lines(OK_CLIENTS_LIST_SENT)
-            .<span class="kw">await</span>.and_then(|lines| parse_typed_lines::&lt;HistoryClientStatus&gt;(<span class="kw-2">&amp;</span>lines))
+            .<span class="kw">await
+            </span>.and_then(|lines| parse_typed_lines::&lt;HistoryClientStatus&gt;(<span class="kw-2">&amp;</span>lines))
     }
 
     <span class="doccomment">/// Check the result of `set_client_name`.

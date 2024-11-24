@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/strum_macros-0.24.3/src/lib.rs`."><title>lib.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="strum_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../strum_macros/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/strum_macros-0.26.4/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="strum_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -755,11 +753,216 @@
 <a href="#753" id="753">753</a>
 <a href="#754" id="754">754</a>
 <a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
+<a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
+<a href="#789" id="789">789</a>
+<a href="#790" id="790">790</a>
+<a href="#791" id="791">791</a>
+<a href="#792" id="792">792</a>
+<a href="#793" id="793">793</a>
+<a href="#794" id="794">794</a>
+<a href="#795" id="795">795</a>
+<a href="#796" id="796">796</a>
+<a href="#797" id="797">797</a>
+<a href="#798" id="798">798</a>
+<a href="#799" id="799">799</a>
+<a href="#800" id="800">800</a>
+<a href="#801" id="801">801</a>
+<a href="#802" id="802">802</a>
+<a href="#803" id="803">803</a>
+<a href="#804" id="804">804</a>
+<a href="#805" id="805">805</a>
+<a href="#806" id="806">806</a>
+<a href="#807" id="807">807</a>
+<a href="#808" id="808">808</a>
+<a href="#809" id="809">809</a>
+<a href="#810" id="810">810</a>
+<a href="#811" id="811">811</a>
+<a href="#812" id="812">812</a>
+<a href="#813" id="813">813</a>
+<a href="#814" id="814">814</a>
+<a href="#815" id="815">815</a>
+<a href="#816" id="816">816</a>
+<a href="#817" id="817">817</a>
+<a href="#818" id="818">818</a>
+<a href="#819" id="819">819</a>
+<a href="#820" id="820">820</a>
+<a href="#821" id="821">821</a>
+<a href="#822" id="822">822</a>
+<a href="#823" id="823">823</a>
+<a href="#824" id="824">824</a>
+<a href="#825" id="825">825</a>
+<a href="#826" id="826">826</a>
+<a href="#827" id="827">827</a>
+<a href="#828" id="828">828</a>
+<a href="#829" id="829">829</a>
+<a href="#830" id="830">830</a>
+<a href="#831" id="831">831</a>
+<a href="#832" id="832">832</a>
+<a href="#833" id="833">833</a>
+<a href="#834" id="834">834</a>
+<a href="#835" id="835">835</a>
+<a href="#836" id="836">836</a>
+<a href="#837" id="837">837</a>
+<a href="#838" id="838">838</a>
+<a href="#839" id="839">839</a>
+<a href="#840" id="840">840</a>
+<a href="#841" id="841">841</a>
+<a href="#842" id="842">842</a>
+<a href="#843" id="843">843</a>
+<a href="#844" id="844">844</a>
+<a href="#845" id="845">845</a>
+<a href="#846" id="846">846</a>
+<a href="#847" id="847">847</a>
+<a href="#848" id="848">848</a>
+<a href="#849" id="849">849</a>
+<a href="#850" id="850">850</a>
+<a href="#851" id="851">851</a>
+<a href="#852" id="852">852</a>
+<a href="#853" id="853">853</a>
+<a href="#854" id="854">854</a>
+<a href="#855" id="855">855</a>
+<a href="#856" id="856">856</a>
+<a href="#857" id="857">857</a>
+<a href="#858" id="858">858</a>
+<a href="#859" id="859">859</a>
+<a href="#860" id="860">860</a>
+<a href="#861" id="861">861</a>
+<a href="#862" id="862">862</a>
+<a href="#863" id="863">863</a>
+<a href="#864" id="864">864</a>
+<a href="#865" id="865">865</a>
+<a href="#866" id="866">866</a>
+<a href="#867" id="867">867</a>
+<a href="#868" id="868">868</a>
+<a href="#869" id="869">869</a>
+<a href="#870" id="870">870</a>
+<a href="#871" id="871">871</a>
+<a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+<a href="#920" id="920">920</a>
+<a href="#921" id="921">921</a>
+<a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
+<a href="#936" id="936">936</a>
+<a href="#937" id="937">937</a>
+<a href="#938" id="938">938</a>
+<a href="#939" id="939">939</a>
+<a href="#940" id="940">940</a>
+<a href="#941" id="941">941</a>
+<a href="#942" id="942">942</a>
+<a href="#943" id="943">943</a>
+<a href="#944" id="944">944</a>
+<a href="#945" id="945">945</a>
+<a href="#946" id="946">946</a>
+<a href="#947" id="947">947</a>
+<a href="#948" id="948">948</a>
+<a href="#949" id="949">949</a>
+<a href="#950" id="950">950</a>
+<a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Strum
 //!
 //! Strum is a set of macros and traits for working with
 //! enums and strings easier in Rust.
 //!
+//! This crate only contains derive macros for use with the
+//! [`strum`](https://docs.rs/strum)
+//! crate.  The macros provied by this crate are also available by
+//! enabling the `derive` feature in aforementioned `strum` crate.
 
 </span><span class="attr">#![recursion_limit = <span class="string">"128"</span>]
 
@@ -801,7 +1004,7 @@
 /// variant. There is an option to match on different case conversions through the
 /// `#[strum(serialize_all = "snake_case")]` type attribute.
 ///
-/// See the [Additional Attributes](https://docs.rs/strum/0.22/strum/additional_attributes/index.html)
+/// See the [Additional Attributes](https://docs.rs/strum/latest/strum/additional_attributes/index.html)
 /// Section for more information on using this feature.
 ///
 /// If you have a large enum, you may want to consider using the `use_phf` attribute here. It leverages
@@ -875,11 +1078,14 @@
     toks.into()
 }
 
-<span class="doccomment">/// Converts enum variants to `&amp;'static str`.
+<span class="doccomment">/// Converts enum variants to `&amp;'a str`, where `'a` is the lifetime of the input enum reference.
 ///
 /// Implements `AsRef&lt;str&gt;` on your enum using the same rules as
 /// `Display` for determining what string is returned. The difference is that `as_ref()` returns
 /// a `&amp;str` instead of a `String` so you don't allocate any additional memory with each call.
+///
+/// If you require a `&amp;'static str`, you can use
+/// [`strum::IntoStaticStr`](crate::IntoStaticStr) instead.
 ///
 /// ```
 /// // You need to bring the AsRef trait into scope to use it
@@ -909,6 +1115,18 @@
 ///     Color::Blue(10).as_ref(),
 ///     Color::Green { range: 42 }.as_ref()
 /// );
+///
+/// // With prefix on all variants
+/// #[derive(AsRefStr, Debug)]
+/// #[strum(prefix = "/")]
+/// enum ColorWithPrefix {
+///     #[strum(serialize = "redred")]
+///     Red,
+///     Green,
+/// }
+///
+/// assert_eq!("/redred", ColorWithPrefix::Red.as_ref());
+/// assert_eq!("/Green", ColorWithPrefix::Green.as_ref());
 /// ```
 </span><span class="attr">#[proc_macro_derive(AsRefStr, attributes(strum))]
 </span><span class="kw">pub fn </span>as_ref_str(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
@@ -920,19 +1138,19 @@
     toks.into()
 }
 
-<span class="doccomment">/// Implements `Strum::VariantNames` which adds an associated constant `VARIANTS` which is an array of discriminant names.
+<span class="doccomment">/// Implements `Strum::VariantNames` which adds an associated constant `VARIANTS` which is a `'static` slice of discriminant names.
 ///
 /// Adds an `impl` block for the `enum` that adds a static `VARIANTS` array of `&amp;'static str` that are the discriminant names.
 /// This will respect the `serialize_all` attribute on the `enum` (like `#[strum(serialize_all = "snake_case")]`.
 ///
 /// ```
 /// // import the macros needed
-/// use strum_macros::{EnumString, EnumVariantNames};
+/// use strum_macros::{EnumString};
 /// // You need to import the trait, to have access to VARIANTS
 /// use strum::VariantNames;
 ///
-/// #[derive(Debug, EnumString, EnumVariantNames)]
-/// #[strum(serialize_all = "kebab_case")]
+/// #[derive(Debug, EnumString, strum_macros::VariantNames)]
+/// #[strum(serialize_all = "kebab-case")]
 /// enum Color {
 ///     Red,
 ///     Blue,
@@ -941,7 +1159,7 @@
 /// }
 /// assert_eq!(["red", "blue", "yellow", "rebecca-purple"], Color::VARIANTS);
 /// ```
-</span><span class="attr">#[proc_macro_derive(EnumVariantNames, attributes(strum))]
+</span><span class="attr">#[proc_macro_derive(VariantNames, attributes(strum))]
 </span><span class="kw">pub fn </span>variant_names(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
     <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
 
@@ -951,7 +1169,54 @@
     toks.into()
 }
 
+<span class="attr">#[doc(hidden)]
+#[proc_macro_derive(EnumVariantNames, attributes(strum))]
+#[deprecated(
+    since = <span class="string">"0.26.0"</span>,
+    note = <span class="string">"please use `#[derive(VariantNames)]` instead"
+</span>)]
+</span><span class="kw">pub fn </span>variant_names_deprecated(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
+    <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+
+    <span class="kw">let </span>toks = macros::enum_variant_names::enum_variant_names_inner(<span class="kw-2">&amp;</span>ast)
+        .unwrap_or_else(|err| err.to_compile_error());
+    debug_print_generated(<span class="kw-2">&amp;</span>ast, <span class="kw-2">&amp;</span>toks);
+    toks.into()
+}
+
+<span class="doccomment">/// Adds a `'static` slice with all of the Enum's variants.
+///
+/// Implements `strum::VariantArray` which adds an associated constant `VARIANTS`.
+/// This constant contains an array with all the variants of the enumerator.
+///
+/// This trait can only be autoderived if the enumerator is composed only of unit-type variants,
+/// meaning that the variants must not have any data.
+///
+/// ```
+/// use strum::VariantArray;
+///
+/// #[derive(VariantArray, Debug, PartialEq, Eq)]
+/// enum Op {
+///     Add,
+///     Sub,
+///     Mul,
+///     Div,
+/// }
+///
+/// assert_eq!(Op::VARIANTS, &amp;[Op::Add, Op::Sub, Op::Mul, Op::Div]);
+/// ```
+</span><span class="attr">#[proc_macro_derive(VariantArray, attributes(strum))]
+</span><span class="kw">pub fn </span>static_variants_array(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
+    <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+
+    <span class="kw">let </span>toks = macros::enum_variant_array::static_variants_array_inner(<span class="kw-2">&amp;</span>ast)
+        .unwrap_or_else(|err| err.to_compile_error());
+    debug_print_generated(<span class="kw-2">&amp;</span>ast, <span class="kw-2">&amp;</span>toks);
+    toks.into()
+}
+
 <span class="attr">#[proc_macro_derive(AsStaticStr, attributes(strum))]
+#[doc(hidden)]
 #[deprecated(
     since = <span class="string">"0.22.0"</span>,
     note = <span class="string">"please use `#[derive(IntoStaticStr)]` instead"
@@ -1010,7 +1275,7 @@
     toks.into()
 }
 
-<span class="doccomment">/// implements `std::string::ToString` on en enum
+<span class="doccomment">/// implements `std::string::ToString` on an enum
 ///
 /// ```
 /// // You need to bring the ToString trait into scope to use it
@@ -1039,6 +1304,7 @@
     since = <span class="string">"0.22.0"</span>,
     note = <span class="string">"please use `#[derive(Display)]` instead. See issue https://github.com/Peternator7/strum/issues/132"
 </span>)]
+#[doc(hidden)]
 #[proc_macro_derive(ToString, attributes(strum))]
 </span><span class="kw">pub fn </span>to_string(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
     <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
@@ -1056,9 +1322,23 @@
 /// choose which serialization to used based on the following criteria:
 ///
 /// 1. If there is a `to_string` property, this value will be used. There can only be one per variant.
-/// 1. Of the various `serialize` properties, the value with the longest length is chosen. If that
+/// 2. Of the various `serialize` properties, the value with the longest length is chosen. If that
 ///    behavior isn't desired, you should use `to_string`.
-/// 1. The name of the variant will be used if there are no `serialize` or `to_string` attributes.
+/// 3. The name of the variant will be used if there are no `serialize` or `to_string` attributes.
+/// 4. If the enum has a `strum(prefix = "some_value_")`, every variant will have that prefix prepended
+///    to the serialization.
+/// 5. Enums with fields support string interpolation.
+///    Note this means the variant will not "round trip" if you then deserialize the string.
+///
+///    ```rust
+///    #[derive(strum_macros::Display)]
+///    pub enum Color {
+///        #[strum(to_string = "saturation is {sat}")]
+///        Red { sat: usize },
+///        #[strum(to_string = "hue is {1}, saturation is {0}")]
+///        Blue(usize, usize),
+///    }
+///    ```
 ///
 /// ```
 /// // You need to bring the ToString trait into scope to use it
@@ -1074,6 +1354,10 @@
 ///     },
 ///     Blue(usize),
 ///     Yellow,
+///     #[strum(to_string = "purple with {sat} saturation")]
+///     Purple {
+///         sat: usize,
+///     },
 /// }
 ///
 /// // uses the serialize string for Display
@@ -1088,6 +1372,9 @@
 ///     Color::Blue(10),
 ///     Color::Green { range: 42 }
 /// );
+/// // you can also use named fields in message
+/// let purple = Color::Purple { sat: 10 };
+/// assert_eq!(String::from("purple with 10 saturation"), purple.to_string());
 /// ```
 </span><span class="attr">#[proc_macro_derive(Display, attributes(strum))]
 </span><span class="kw">pub fn </span>display(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
@@ -1101,7 +1388,7 @@
 <span class="doccomment">/// Creates a new type that iterates of the variants of an enum.
 ///
 /// Iterate over the variants of an Enum. Any additional data on your variants will be set to `Default::default()`.
-/// The macro implements `strum::IntoEnumIter` on your enum and creates a new type called `YourEnumIter` that is the iterator object.
+/// The macro implements [`strum::IntoEnumIterator`](https://docs.rs/strum/latest/strum/trait.IntoEnumIterator.html) on your enum and creates a new type called `YourEnumIter` that is the iterator object.
 /// You cannot derive `EnumIter` on any type with a lifetime bound (`&lt;'a&gt;`) because the iterator would surely
 /// create [unbounded lifetimes](https://doc.rust-lang.org/nightly/nomicon/unbounded-lifetimes.html).
 ///
@@ -1141,15 +1428,129 @@
     toks.into()
 }
 
+<span class="doccomment">/// Generated `is_*()` methods for each variant.
+/// E.g. `Color.is_red()`.
+///
+/// ```
+///
+/// use strum_macros::EnumIs;
+///
+/// #[derive(EnumIs, Debug)]
+/// enum Color {
+///     Red,
+///     Green { range: usize },
+/// }
+///
+/// assert!(Color::Red.is_red());
+/// assert!(Color::Green{range: 0}.is_green());
+/// ```
+</span><span class="attr">#[proc_macro_derive(EnumIs, attributes(strum))]
+</span><span class="kw">pub fn </span>enum_is(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
+    <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+
+    <span class="kw">let </span>toks = macros::enum_is::enum_is_inner(<span class="kw-2">&amp;</span>ast).unwrap_or_else(|err| err.to_compile_error());
+    debug_print_generated(<span class="kw-2">&amp;</span>ast, <span class="kw-2">&amp;</span>toks);
+    toks.into()
+}
+
+<span class="doccomment">/// Generated `try_as_*()` methods for all tuple-style variants.
+/// E.g. `Message.try_as_write()`.
+///
+/// These methods will only be generated for tuple-style variants, not for named or unit variants.
+///
+/// ```
+/// use strum_macros::EnumTryAs;
+///
+/// #[derive(EnumTryAs, Debug)]
+/// enum Message {
+///     Quit,
+///     Move { x: i32, y: i32 },
+///     Write(String),
+///     ChangeColor(i32, i32, i32),
+/// }
+///
+/// assert_eq!(
+///     Message::Write(String::from("Hello")).try_as_write(),
+///     Some(String::from("Hello"))
+/// );
+/// assert_eq!(
+///     Message::ChangeColor(1, 2, 3).try_as_change_color(),
+///     Some((1, 2, 3))
+/// );
+/// ```
+</span><span class="attr">#[proc_macro_derive(EnumTryAs, attributes(strum))]
+</span><span class="kw">pub fn </span>enum_try_as(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
+    <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+
+    <span class="kw">let </span>toks =
+        macros::enum_try_as::enum_try_as_inner(<span class="kw-2">&amp;</span>ast).unwrap_or_else(|err| err.to_compile_error());
+    debug_print_generated(<span class="kw-2">&amp;</span>ast, <span class="kw-2">&amp;</span>toks);
+    toks.into()
+}
+
+<span class="doccomment">/// Creates a new type that maps all the variants of an enum to another generic value.
+///
+/// This macro only supports enums with unit type variants.A new type called `YourEnumTable&lt;T&gt;`. Essentially, it's a wrapper
+/// `[T; YourEnum::Count]` where gets/sets are infallible. Some important caveats to note:
+///
+/// * The size of `YourEnumTable&lt;T&gt;` increases with the number of variants, not the number of values because it's always
+///   fully populated. This means it may not be a good choice for sparsely populated maps.
+///
+/// * Lookups are basically constant time since it's functionally an array index.
+///
+/// * Your variants cannot have associated data. You can use `EnumDiscriminants` to generate an Enum with the same
+///   names to work around this.
+///
+/// # Stability
+///
+/// Several people expressed interest in a data structure like this and pushed the PR through to completion, but the api
+/// seems incomplete, and I reserve the right to deprecate it in the future if it becomes clear the design is flawed.
+///
+/// # Example
+/// ```rust
+/// use strum_macros::EnumTable;
+///
+/// #[derive(EnumTable)]
+/// enum Color {
+///     Red,
+///     Yellow,
+///     Green,
+///     Blue,
+/// }
+///
+/// assert_eq!(ColorTable::default(), ColorTable::new(0, 0, 0, 0));
+/// assert_eq!(ColorTable::filled(2), ColorTable::new(2, 2, 2, 2));
+/// assert_eq!(ColorTable::from_closure(|_| 3), ColorTable::new(3, 3, 3, 3));
+/// assert_eq!(ColorTable::default().transform(|_, val| val + 2), ColorTable::new(2, 2, 2, 2));
+///
+/// let mut complex_map = ColorTable::from_closure(|color| match color {
+///     Color::Red =&gt; 0,
+///     _ =&gt; 3
+/// });
+///
+/// complex_map[Color::Green] = complex_map[Color::Red];
+/// assert_eq!(complex_map, ColorTable::new(0, 3, 0, 3));
+/// ```
+</span><span class="attr">#[doc(hidden)]
+#[proc_macro_derive(EnumTable, attributes(strum))]
+</span><span class="kw">pub fn </span>enum_table(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
+    <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+
+    <span class="kw">let </span>toks =
+        macros::enum_table::enum_table_inner(<span class="kw-2">&amp;</span>ast).unwrap_or_else(|err| err.to_compile_error());
+    debug_print_generated(<span class="kw-2">&amp;</span>ast, <span class="kw-2">&amp;</span>toks);
+    toks.into()
+}
+
 <span class="doccomment">/// Add a function to enum that allows accessing variants by its discriminant
 ///
 /// This macro adds a standalone function to obtain an enum variant by its discriminant. The macro adds
 /// `from_repr(discriminant: usize) -&gt; Option&lt;YourEnum&gt;` as a standalone function on the enum. For
 /// variants with additional data, the returned variant will use the `Default` trait to fill the
 /// data. The discriminant follows the same rules as `rustc`. The first discriminant is zero and each
-/// successive variant has a discriminant of one greater than the previous variant, expect where an
+/// successive variant has a discriminant of one greater than the previous variant, except where an
 /// explicit discriminant is specified. The type of the discriminant will match the `repr` type if
-/// it is specifed.
+/// it is specified.
 ///
 /// When the macro is applied using rustc &gt;= 1.46 and when there is no additional data on any of
 /// the variants, the `from_repr` function is marked `const`. rustc &gt;= 1.46 is required
@@ -1215,7 +1616,6 @@
 /// assert_eq!(Some(Number::Three), number_from_repr(3));
 /// assert_eq!(None, number_from_repr(4));
 /// ```
-
 </span><span class="attr">#[proc_macro_derive(FromRepr, attributes(strum))]
 </span><span class="kw">pub fn </span>from_repr(input: proc_macro::TokenStream) -&gt; proc_macro::TokenStream {
     <span class="kw">let </span>ast = <span class="macro">syn::parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
@@ -1230,7 +1630,7 @@
 ///
 /// Encode strings into the enum itself. The `strum_macros::EmumMessage` macro implements the `strum::EnumMessage` trait.
 /// `EnumMessage` looks for `#[strum(message="...")]` attributes on your variants.
-/// You can also provided a `detailed_message="..."` attribute to create a seperate more detailed message than the first.
+/// You can also provided a `detailed_message="..."` attribute to create a separate more detailed message than the first.
 ///
 /// `EnumMessage` also exposes the variants doc comments through `get_documentation()`. This is useful in some scenarios,
 /// but `get_message` should generally be preferred. Rust doc comments are intended for developer facing documentation,
@@ -1316,7 +1716,7 @@
 
 <span class="doccomment">/// Add custom properties to enum variants.
 ///
-/// Enables the encoding of arbitary constants into enum variants. This method
+/// Enables the encoding of arbitrary constants into enum variants. This method
 /// currently only supports adding additional string values. Other types of literals are still
 /// experimental in the rustc compiler. The generated code works by nesting match statements.
 /// The first match statement matches on the type of the enum, and the inner match statement
@@ -1387,7 +1787,7 @@
 /// // Bring trait into scope
 /// use std::str::FromStr;
 /// use strum::{IntoEnumIterator, EnumMessage};
-/// use strum_macros::{EnumDiscriminants, EnumIter, EnumString, EnumMessage};
+/// use strum_macros::{EnumDiscriminants, EnumIter, EnumString};
 ///
 /// #[derive(Debug)]
 /// struct NonDefault;
@@ -1445,7 +1845,7 @@
 /// of the generated enum. By default, the generated enum inherits the
 /// visibility of the parent enum it was generated from.
 ///
-/// ```nocompile
+/// ```
 /// use strum_macros::EnumDiscriminants;
 ///
 /// // You can set the visibility of the generated enum using the `#[strum_discriminants(vis(..))]` attribute:

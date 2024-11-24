@@ -870,6 +870,30 @@
 <a href="#870" id="870">870</a>
 <a href="#871" id="871">871</a>
 <a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -891,7 +915,7 @@
 <span class="kw">use </span>std::{
 	collections::HashMap,
 	fmt::Debug,
-	ops::Deref,
+	future::Future,
 	sync::{Arc, RwLock, Weak},
 };
 
@@ -983,7 +1007,11 @@
 		connection: <span class="kw-2">&amp;</span>zbus::Connection,
 	) -&gt; OdiliaResult&lt;<span class="self">Self</span>&gt; {
 		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(event);
-		accessible_to_cache_item(<span class="kw-2">&amp;</span>a11y_prim.into_accessible(connection).<span class="kw">await</span><span class="question-mark">?</span>, cache).<span class="kw">await
+		accessible_to_cache_item(
+			<span class="kw-2">&amp;</span>a11y_prim.into_accessible(connection).<span class="kw">await</span><span class="question-mark">?</span>,
+			Arc::downgrade(<span class="kw-2">&amp;</span>cache),
+		)
+		.<span class="kw">await
 	</span>}
 	<span class="doccomment">/// Convert an [`atspi::CacheItem`] into a [`crate::CacheItem`].
 	/// This requires calls to `DBus`, which is quite expensive. Beware calling this too often.
@@ -1479,6 +1507,42 @@
 	}
 }
 
+<span class="kw">pub trait </span>CacheExt {
+	<span class="kw">fn </span>get_ipc(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		id: <span class="kw-2">&amp;</span>CacheKey,
+	) -&gt; <span class="kw">impl </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;CacheItem, OdiliaError&gt;&gt; + Send;
+	<span class="kw">fn </span>item_from_event&lt;T: EventProperties + Sync&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		ev: <span class="kw-2">&amp;</span>T,
+	) -&gt; <span class="kw">impl </span>Future&lt;Output = OdiliaResult&lt;CacheItem&gt;&gt; + Send;
+}
+
+<span class="kw">impl </span>CacheExt <span class="kw">for </span>Arc&lt;Cache&gt; {
+	<span class="doccomment">/// Get a single item from the cache. This will also get the information from DBus if it does not
+	/// exist in the cache.
+	</span><span class="attr">#[must_use]
+	#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
+	</span><span class="kw">async fn </span>get_ipc(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Result</span>&lt;CacheItem, OdiliaError&gt; {
+		<span class="kw">if let </span><span class="prelude-val">Some</span>(ci) = <span class="self">self</span>.get(id) {
+			<span class="kw">return </span><span class="prelude-val">Ok</span>(ci);
+		}
+		<span class="kw">let </span>acc = id.clone().into_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>.connection).<span class="kw">await</span><span class="question-mark">?</span>;
+		accessible_to_cache_item(<span class="kw-2">&amp;</span>acc, Arc::downgrade(<span class="self">self</span>)).<span class="kw">await
+	</span>}
+	<span class="kw">async fn </span>item_from_event&lt;T: EventProperties + Sync&gt;(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
+		ev: <span class="kw-2">&amp;</span>T,
+	) -&gt; OdiliaResult&lt;CacheItem&gt; {
+		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(ev);
+		accessible_to_cache_item(
+			<span class="kw-2">&amp;</span>a11y_prim.into_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>.connection).<span class="kw">await</span><span class="question-mark">?</span>,
+			Arc::downgrade(<span class="self">self</span>),
+		)
+		.<span class="kw">await
+	</span>}
+}
+
 <span class="comment">// N.B.: we are using std RwLockes internally here, within the cache hashmap
 // entries. When adding async methods, take care not to hold these mutexes
 // across .await points.
@@ -1543,18 +1607,6 @@
 	</span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Option</span>&lt;CacheItem&gt; {
 		<span class="prelude-val">Some</span>(<span class="self">self</span>.by_id.get(id).as_deref()<span class="question-mark">?</span>.read().ok()<span class="question-mark">?</span>.clone())
 	}
-
-	<span class="doccomment">/// Get a single item from the cache. This will also get the information from DBus if it does not
-	/// exist in the cache.
-	</span><span class="attr">#[must_use]
-	#[tracing::instrument(level = <span class="string">"trace"</span>, ret)]
-	</span><span class="kw">pub async fn </span>get_ipc(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>CacheKey) -&gt; <span class="prelude-ty">Result</span>&lt;CacheItem, OdiliaError&gt; {
-		<span class="kw">if let </span><span class="prelude-val">Some</span>(ci) = <span class="self">self</span>.get(id) {
-			<span class="kw">return </span><span class="prelude-val">Ok</span>(ci);
-		}
-		<span class="kw">let </span>acc = id.clone().into_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>.connection).<span class="kw">await</span><span class="question-mark">?</span>;
-		accessible_to_cache_item(<span class="kw-2">&amp;</span>acc, <span class="self">self</span>).<span class="kw">await
-	</span>}
 
 	<span class="doccomment">/// get a many items from the cache; this only creates one read handle (note that this will copy all data you would like to access)
 	</span><span class="attr">#[must_use]
@@ -1637,7 +1689,8 @@
 		}
 		<span class="comment">// otherwise, build a cache item
 		</span><span class="kw">let </span>start = std::time::Instant::now();
-		<span class="kw">let </span>cache_item = accessible_to_cache_item(accessible, cache).<span class="kw">await</span><span class="question-mark">?</span>;
+		<span class="kw">let </span>cache_item =
+			accessible_to_cache_item(accessible, Arc::downgrade(<span class="kw-2">&amp;</span>cache)).<span class="kw">await</span><span class="question-mark">?</span>;
 		<span class="kw">let </span>end = std::time::Instant::now();
 		<span class="kw">let </span>diff = end - start;
 		<span class="macro">tracing::debug!</span>(<span class="string">"Time to create cache item: {:?}"</span>, diff);
@@ -1688,11 +1741,6 @@
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
-	<span class="kw">pub async fn </span>from_event&lt;T: EventProperties&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, ev: <span class="kw-2">&amp;</span>T) -&gt; OdiliaResult&lt;CacheItem&gt; {
-		<span class="kw">let </span>a11y_prim = AccessiblePrimitive::from_event(ev);
-		accessible_to_cache_item(<span class="kw-2">&amp;</span>a11y_prim.into_accessible(<span class="kw-2">&amp;</span><span class="self">self</span>.connection).<span class="kw">await</span><span class="question-mark">?</span>, <span class="self">self</span>)
-			.<span class="kw">await
-	</span>}
 }
 
 <span class="doccomment">/// Convert an [`atspi_proxies::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
@@ -1707,9 +1755,9 @@
 /// 2. Any of the function calls on the `accessible` fail.
 /// 3. Any `(String, OwnedObjectPath) -&gt; AccessiblePrimitive` conversions fail. This *should* never happen, but technically it is possible.
 </span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err)]
-</span><span class="kw">pub async fn </span>accessible_to_cache_item&lt;C: Deref&lt;Target = Cache&gt; + Debug&gt;(
+</span><span class="kw">pub async fn </span>accessible_to_cache_item(
 	accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;,
-	cache: C,
+	cache: Weak&lt;Cache&gt;,
 ) -&gt; OdiliaResult&lt;CacheItem&gt; {
 	<span class="kw">let </span>(app, parent, index, children_num, interfaces, role, states, children) = <span class="macro">tokio::try_join!</span>(
 		accessible.get_application(),
@@ -1739,7 +1787,7 @@
 		states,
 		text,
 		children: children.into_iter().map(|k| CacheRef::new(k.into())).collect(),
-		cache: Arc::downgrade(<span class="kw-2">&amp;</span>Arc::new(cache.deref().clone())),
+		cache,
 	})
 }
 </code></pre></div></section></main></body></html>

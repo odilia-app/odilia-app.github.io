@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.0/src/connection/builder.rs`."><title>builder.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.1.1/src/connection/builder.rs`."><title>builder.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -536,6 +536,10 @@
 <a href="#536" id="536">536</a>
 <a href="#537" id="537">537</a>
 <a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 </span><span class="kw">use </span>async_io::Async;
 <span class="kw">use </span>event_listener::Event;
@@ -889,63 +893,7 @@
         <span class="attr">#[cfg(not(feature = <span class="string">"p2p"</span>))]
         </span><span class="kw">let </span>is_bus_conn = <span class="bool-val">true</span>;
 
-        <span class="attr">#[cfg(not(feature = <span class="string">"bus-impl"</span>))]
-        </span><span class="kw">let </span>unique_name = <span class="prelude-val">None</span>;
-        <span class="attr">#[cfg(feature = <span class="string">"bus-impl"</span>)]
-        </span><span class="kw">let </span>unique_name = <span class="self">self</span>.unique_name.take().map(Into::into);
-
-        <span class="attr">#[allow(unused_mut)]
-        </span><span class="kw">let </span>(<span class="kw-2">mut </span>stream, server_guid, authenticated) = <span class="self">self</span>.target_connect().<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">let </span><span class="kw-2">mut </span>auth = <span class="kw">if </span>authenticated {
-            <span class="kw">let </span>(socket_read, socket_write) = stream.take();
-            Authenticated {
-                <span class="attr">#[cfg(unix)]
-                </span>cap_unix_fd: socket_read.can_pass_unix_fd(),
-                socket_read: <span class="prelude-val">Some</span>(socket_read),
-                socket_write,
-                <span class="comment">// SAFETY: `server_guid` is provided as arg of `Builder::authenticated_socket`.
-                </span>server_guid: server_guid.unwrap(),
-                already_received_bytes: <span class="macro">vec!</span>[],
-                unique_name,
-                <span class="attr">#[cfg(unix)]
-                </span>already_received_fds: <span class="macro">vec!</span>[],
-            }
-        } <span class="kw">else </span>{
-            <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
-            </span><span class="kw">match </span><span class="self">self</span>.guid {
-                <span class="prelude-val">None </span>=&gt; {
-                    <span class="comment">// SASL Handshake
-                    </span>Authenticated::client(stream, server_guid, <span class="self">self</span>.auth_mechanism, is_bus_conn)
-                        .<span class="kw">await</span><span class="question-mark">?
-                </span>}
-                <span class="prelude-val">Some</span>(guid) =&gt; {
-                    <span class="kw">if </span>!<span class="self">self</span>.p2p {
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Unsupported);
-                    }
-
-                    <span class="kw">let </span>creds = stream.read_mut().peer_credentials().<span class="kw">await</span><span class="question-mark">?</span>;
-                    <span class="attr">#[cfg(unix)]
-                    </span><span class="kw">let </span>client_uid = creds.unix_user_id();
-                    <span class="attr">#[cfg(windows)]
-                    </span><span class="kw">let </span>client_sid = creds.into_windows_sid();
-
-                    Authenticated::server(
-                        stream,
-                        guid.to_owned().into(),
-                        <span class="attr">#[cfg(unix)]
-                        </span>client_uid,
-                        <span class="attr">#[cfg(windows)]
-                        </span>client_sid,
-                        <span class="self">self</span>.auth_mechanism,
-                        unique_name,
-                    )
-                    .<span class="kw">await</span><span class="question-mark">?
-                </span>}
-            }
-
-            <span class="attr">#[cfg(not(feature = <span class="string">"p2p"</span>))]
-            </span>Authenticated::client(stream, server_guid, <span class="self">self</span>.auth_mechanism, is_bus_conn).<span class="kw">await</span><span class="question-mark">?
-        </span>};
+        <span class="kw">let </span><span class="kw-2">mut </span>auth = <span class="self">self</span>.connect(is_bus_conn).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="comment">// SAFETY: `Authenticated` is always built with these fields set to `Some`.
         </span><span class="kw">let </span>socket_read = auth.socket_read.take().unwrap();
@@ -1005,6 +953,66 @@
             <span class="attr">#[cfg(feature = <span class="string">"bus-impl"</span>)]
             </span>unique_name: <span class="prelude-val">None</span>,
         }
+    }
+
+    <span class="kw">async fn </span>connect(<span class="kw-2">&amp;mut </span><span class="self">self</span>, is_bus_conn: bool) -&gt; <span class="prelude-ty">Result</span>&lt;Authenticated&gt; {
+        <span class="attr">#[cfg(not(feature = <span class="string">"bus-impl"</span>))]
+        </span><span class="kw">let </span>unique_name = <span class="prelude-val">None</span>;
+        <span class="attr">#[cfg(feature = <span class="string">"bus-impl"</span>)]
+        </span><span class="kw">let </span>unique_name = <span class="self">self</span>.unique_name.take().map(Into::into);
+
+        <span class="attr">#[allow(unused_mut)]
+        </span><span class="kw">let </span>(<span class="kw-2">mut </span>stream, server_guid, authenticated) = <span class="self">self</span>.target_connect().<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">if </span>authenticated {
+            <span class="kw">let </span>(socket_read, socket_write) = stream.take();
+            <span class="prelude-val">Ok</span>(Authenticated {
+                <span class="attr">#[cfg(unix)]
+                </span>cap_unix_fd: socket_read.can_pass_unix_fd(),
+                socket_read: <span class="prelude-val">Some</span>(socket_read),
+                socket_write,
+                <span class="comment">// SAFETY: `server_guid` is provided as arg of `Builder::authenticated_socket`.
+                </span>server_guid: server_guid.unwrap(),
+                already_received_bytes: <span class="macro">vec!</span>[],
+                unique_name,
+                <span class="attr">#[cfg(unix)]
+                </span>already_received_fds: <span class="macro">vec!</span>[],
+            })
+        } <span class="kw">else </span>{
+            <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
+            </span><span class="kw">match </span><span class="self">self</span>.guid.take() {
+                <span class="prelude-val">None </span>=&gt; {
+                    <span class="comment">// SASL Handshake
+                    </span>Authenticated::client(stream, server_guid, <span class="self">self</span>.auth_mechanism, is_bus_conn)
+                        .<span class="kw">await
+                </span>}
+                <span class="prelude-val">Some</span>(guid) =&gt; {
+                    <span class="kw">if </span>!<span class="self">self</span>.p2p {
+                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Unsupported);
+                    }
+
+                    <span class="kw">let </span>creds = stream.read_mut().peer_credentials().<span class="kw">await</span><span class="question-mark">?</span>;
+                    <span class="attr">#[cfg(unix)]
+                    </span><span class="kw">let </span>client_uid = creds.unix_user_id();
+                    <span class="attr">#[cfg(windows)]
+                    </span><span class="kw">let </span>client_sid = creds.into_windows_sid();
+
+                    Authenticated::server(
+                        stream,
+                        guid.to_owned().into(),
+                        <span class="attr">#[cfg(unix)]
+                        </span>client_uid,
+                        <span class="attr">#[cfg(windows)]
+                        </span>client_sid,
+                        <span class="self">self</span>.auth_mechanism,
+                        unique_name,
+                    )
+                    .<span class="kw">await
+                </span>}
+            }
+
+            <span class="attr">#[cfg(not(feature = <span class="string">"p2p"</span>))]
+            </span>Authenticated::client(stream, server_guid, <span class="self">self</span>.auth_mechanism, is_bus_conn).<span class="kw">await
+        </span>}
     }
 
     <span class="kw">async fn </span>target_connect(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(BoxedSplit, <span class="prelude-ty">Option</span>&lt;OwnedGuid&gt;, bool)&gt; {

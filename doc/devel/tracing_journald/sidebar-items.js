@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["layer"],"struct":["Layer"]};
+window.SIDEBAR_ITEMS = {"enum":["Priority"],"fn":["layer"],"struct":["Layer","PriorityMappings"]};

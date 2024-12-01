@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/8bd8ac2/atspi-common/src/events/document.rs`."><title>document.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/2ddb9e1/atspi-common/src/events/document.rs`."><title>document.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -349,108 +349,17 @@
 <a href="#349" id="349">349</a>
 <a href="#350" id="350">350</a>
 <a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-<a href="#353" id="353">353</a>
-<a href="#354" id="354">354</a>
-<a href="#355" id="355">355</a>
-<a href="#356" id="356">356</a>
-<a href="#357" id="357">357</a>
-<a href="#358" id="358">358</a>
-<a href="#359" id="359">359</a>
-<a href="#360" id="360">360</a>
-<a href="#361" id="361">361</a>
-<a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
-<a href="#394" id="394">394</a>
-<a href="#395" id="395">395</a>
-<a href="#396" id="396">396</a>
-<a href="#397" id="397">397</a>
-<a href="#398" id="398">398</a>
-<a href="#399" id="399">399</a>
-<a href="#400" id="400">400</a>
-<a href="#401" id="401">401</a>
-<a href="#402" id="402">402</a>
-<a href="#403" id="403">403</a>
-<a href="#404" id="404">404</a>
-<a href="#405" id="405">405</a>
-<a href="#406" id="406">406</a>
-<a href="#407" id="407">407</a>
-<a href="#408" id="408">408</a>
-<a href="#409" id="409">409</a>
-<a href="#410" id="410">410</a>
-<a href="#411" id="411">411</a>
-<a href="#412" id="412">412</a>
-<a href="#413" id="413">413</a>
-<a href="#414" id="414">414</a>
-<a href="#415" id="415">415</a>
-<a href="#416" id="416">416</a>
-<a href="#417" id="417">417</a>
-<a href="#418" id="418">418</a>
-<a href="#419" id="419">419</a>
-<a href="#420" id="420">420</a>
-<a href="#421" id="421">421</a>
-<a href="#422" id="422">422</a>
-<a href="#423" id="423">423</a>
-<a href="#424" id="424">424</a>
-<a href="#425" id="425">425</a>
-<a href="#426" id="426">426</a>
-<a href="#427" id="427">427</a>
-<a href="#428" id="428">428</a>
-<a href="#429" id="429">429</a>
-<a href="#430" id="430">430</a>
-<a href="#431" id="431">431</a>
-<a href="#432" id="432">432</a>
-<a href="#433" id="433">433</a>
-<a href="#434" id="434">434</a>
-<a href="#435" id="435">435</a>
-<a href="#436" id="436">436</a>
-<a href="#437" id="437">437</a>
-<a href="#438" id="438">438</a>
-<a href="#439" id="439">439</a>
-<a href="#440" id="440">440</a>
-<a href="#441" id="441">441</a>
-<a href="#442" id="442">442</a>
-<a href="#443" id="443">443</a>
-<a href="#444" id="444">444</a>
-<a href="#445" id="445">445</a>
-<a href="#446" id="446">446</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+</span><span class="kw">use </span><span class="kw">crate</span>::events::{
+	EventWrapperMessageConversion, MessageConversion, MessageConversionExt, TryFromMessage,
+};
+<span class="kw">use crate</span>::{
 	error::AtspiError,
-	events::{BusProperties, EventBodyOwned, HasMatchRule, HasRegistryEventString, ObjectRef},
+	events::{BusProperties, HasInterfaceName, HasMatchRule, HasRegistryEventString},
 	Event, EventProperties, EventTypeProperties,
 };
 <span class="kw">use </span>zbus_names::UniqueName;
-<span class="kw">use </span>zvariant::{ObjectPath, OwnedValue};
+<span class="kw">use </span>zvariant::ObjectPath;
 
 <span class="attr">#[derive(Clone, Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash)]
 </span><span class="kw">pub enum </span>DocumentEvents {
@@ -548,7 +457,7 @@
 /// `LibreOffice` has loaded a document from disk.
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>LoadCompleteEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
@@ -556,7 +465,7 @@
 /// For example: pressing F5, or `Control + r` will reload a page in a web browser.
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ReloadEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
@@ -564,19 +473,19 @@
 /// For example: during the loading of a large web page, a user may press `Escape` to stop loading the page.
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>LoadStoppedEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>ContentChangedEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>AttributesChangedEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
@@ -591,7 +500,7 @@
 /// page number.
 </span><span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>PageChangedEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
@@ -601,16 +510,6 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Document',member='LoadComplete'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;
-
-	<span class="kw">type </span>Body = EventBodyOwned;
-
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
-	}
 }
 
 <span class="kw">impl </span>BusProperties <span class="kw">for </span>ReloadEvent {
@@ -619,16 +518,6 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Document',member='Reload'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;
-
-	<span class="kw">type </span>Body = EventBodyOwned;
-
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
-	}
 }
 
 <span class="kw">impl </span>BusProperties <span class="kw">for </span>LoadStoppedEvent {
@@ -637,16 +526,6 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Document',member='LoadStopped'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;
-
-	<span class="kw">type </span>Body = EventBodyOwned;
-
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
-	}
 }
 
 <span class="kw">impl </span>BusProperties <span class="kw">for </span>ContentChangedEvent {
@@ -655,16 +534,6 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Document',member='ContentChanged'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;
-
-	<span class="kw">type </span>Body = EventBodyOwned;
-
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
-	}
 }
 
 <span class="kw">impl </span>BusProperties <span class="kw">for </span>AttributesChangedEvent {
@@ -673,16 +542,6 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Document',member='AttributesChanged'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;
-
-	<span class="kw">type </span>Body = EventBodyOwned;
-
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
-	}
 }
 
 <span class="kw">impl </span>BusProperties <span class="kw">for </span>PageChangedEvent {
@@ -691,35 +550,46 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Document',member='PageChanged'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;
+}
 
-	<span class="kw">type </span>Body = EventBodyOwned;
+<span class="kw">impl </span>HasInterfaceName <span class="kw">for </span>DocumentEvents {
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Document"</span>;
+}
 
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
+<span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+</span><span class="kw">impl </span>EventWrapperMessageConversion <span class="kw">for </span>DocumentEvents {
+	<span class="kw">fn </span>try_from_message_interface_checked(msg: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+		<span class="kw">let </span>header = msg.header();
+		<span class="kw">let </span>member = header.member().ok_or(AtspiError::MissingMember)<span class="question-mark">?</span>;
+		<span class="kw">match </span>member.as_str() {
+			LoadCompleteEvent::DBUS_MEMBER =&gt; {
+				<span class="prelude-val">Ok</span>(DocumentEvents::LoadComplete(LoadCompleteEvent::from_message_unchecked(msg)<span class="question-mark">?</span>))
+			}
+			ReloadEvent::DBUS_MEMBER =&gt; {
+				<span class="prelude-val">Ok</span>(DocumentEvents::Reload(ReloadEvent::from_message_unchecked(msg)<span class="question-mark">?</span>))
+			}
+			LoadStoppedEvent::DBUS_MEMBER =&gt; {
+				<span class="prelude-val">Ok</span>(DocumentEvents::LoadStopped(LoadStoppedEvent::from_message_unchecked(msg)<span class="question-mark">?</span>))
+			}
+			ContentChangedEvent::DBUS_MEMBER =&gt; <span class="prelude-val">Ok</span>(DocumentEvents::ContentChanged(
+				ContentChangedEvent::from_message_unchecked(msg)<span class="question-mark">?</span>,
+			)),
+			AttributesChangedEvent::DBUS_MEMBER =&gt; <span class="prelude-val">Ok</span>(DocumentEvents::AttributesChanged(
+				AttributesChangedEvent::from_message_unchecked(msg)<span class="question-mark">?</span>,
+			)),
+			PageChangedEvent::DBUS_MEMBER =&gt; {
+				<span class="prelude-val">Ok</span>(DocumentEvents::PageChanged(PageChangedEvent::from_message_unchecked(msg)<span class="question-mark">?</span>))
+			}
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">"No matching member for Document"</span>.into())),
+		}
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>DocumentEvents {
 	<span class="kw">type </span>Error = AtspiError;
-	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>header = ev.header();
-		<span class="kw">let </span>member = header
-			.member()
-			.ok_or(AtspiError::MemberMatch(<span class="string">"Event without member"</span>.into()))<span class="question-mark">?</span>;
-		<span class="kw">match </span>member.as_str() {
-			<span class="string">"LoadComplete" </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::LoadComplete(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">"Reload" </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::Reload(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">"LoadStopped" </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::LoadStopped(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">"ContentChanged" </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::ContentChanged(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">"AttributesChanged" </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::AttributesChanged(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="string">"PageChanged" </span>=&gt; <span class="prelude-val">Ok</span>(DocumentEvents::PageChanged(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">"No matching member for Document"</span>.into())),
-		}
+	<span class="kw">fn </span>try_from(msg: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="self">Self</span>::try_from_message(msg)
 	}
 }
 
@@ -739,17 +609,7 @@
 <span class="macro">impl_to_dbus_message!</span>(LoadCompleteEvent);
 <span class="macro">impl_from_dbus_message!</span>(LoadCompleteEvent);
 <span class="macro">impl_event_properties!</span>(LoadCompleteEvent);
-<span class="kw">impl </span>From&lt;LoadCompleteEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: LoadCompleteEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(LoadCompleteEvent);
 
 <span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ReloadEvent,
@@ -763,17 +623,7 @@
 <span class="macro">impl_to_dbus_message!</span>(ReloadEvent);
 <span class="macro">impl_from_dbus_message!</span>(ReloadEvent);
 <span class="macro">impl_event_properties!</span>(ReloadEvent);
-<span class="kw">impl </span>From&lt;ReloadEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: ReloadEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(ReloadEvent);
 
 <span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	LoadStoppedEvent,
@@ -791,17 +641,7 @@
 <span class="macro">impl_to_dbus_message!</span>(LoadStoppedEvent);
 <span class="macro">impl_from_dbus_message!</span>(LoadStoppedEvent);
 <span class="macro">impl_event_properties!</span>(LoadStoppedEvent);
-<span class="kw">impl </span>From&lt;LoadStoppedEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: LoadStoppedEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(LoadStoppedEvent);
 
 <span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	ContentChangedEvent,
@@ -819,17 +659,7 @@
 <span class="macro">impl_to_dbus_message!</span>(ContentChangedEvent);
 <span class="macro">impl_from_dbus_message!</span>(ContentChangedEvent);
 <span class="macro">impl_event_properties!</span>(ContentChangedEvent);
-<span class="kw">impl </span>From&lt;ContentChangedEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: ContentChangedEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(ContentChangedEvent);
 
 <span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	AttributesChangedEvent,
@@ -847,17 +677,7 @@
 <span class="macro">impl_to_dbus_message!</span>(AttributesChangedEvent);
 <span class="macro">impl_from_dbus_message!</span>(AttributesChangedEvent);
 <span class="macro">impl_event_properties!</span>(AttributesChangedEvent);
-<span class="kw">impl </span>From&lt;AttributesChangedEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: AttributesChangedEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(AttributesChangedEvent);
 
 <span class="macro">impl_from_user_facing_event_for_interface_event_enum!</span>(
 	PageChangedEvent,
@@ -875,17 +695,7 @@
 <span class="macro">impl_to_dbus_message!</span>(PageChangedEvent);
 <span class="macro">impl_from_dbus_message!</span>(PageChangedEvent);
 <span class="macro">impl_event_properties!</span>(PageChangedEvent);
-<span class="kw">impl </span>From&lt;PageChangedEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: PageChangedEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(PageChangedEvent);
 
 <span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>DocumentEvents {
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Document:"</span>;

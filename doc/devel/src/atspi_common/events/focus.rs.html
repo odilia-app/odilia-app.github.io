@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/8bd8ac2/atspi-common/src/events/focus.rs`."><title>focus.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-0ba390d57fe75a7e/2ddb9e1/atspi-common/src/events/focus.rs`."><title>focus.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="atspi_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -117,15 +117,17 @@
 <a href="#117" id="117">117</a>
 <a href="#118" id="118">118</a>
 <a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
+</pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+</span><span class="kw">use </span><span class="kw">crate</span>::events::{
+	EventWrapperMessageConversion, MessageConversion, MessageConversionExt, TryFromMessage,
+};
+<span class="kw">use crate</span>::{
 	error::AtspiError,
-	events::{BusProperties, EventBodyOwned, HasMatchRule, HasRegistryEventString, ObjectRef},
+	events::{BusProperties, HasInterfaceName, HasMatchRule, HasRegistryEventString},
 	Event, EventProperties, EventTypeProperties,
 };
 <span class="kw">use </span>zbus_names::UniqueName;
-<span class="kw">use </span>zvariant::{ObjectPath, OwnedValue};
+<span class="kw">use </span>zvariant::ObjectPath;
 
 <span class="attr">#[derive(Clone, Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash)]
 </span><span class="kw">pub enum </span>FocusEvents {
@@ -180,7 +182,7 @@
 
 <span class="attr">#[derive(Debug, PartialEq, Clone, serde::Serialize, serde::Deserialize, Eq, Hash, Default)]
 </span><span class="kw">pub struct </span>FocusEvent {
-	<span class="doccomment">/// The [`ObjectRef`] which the event applies to.
+	<span class="doccomment">/// The [`crate::ObjectRef`] which the event applies to.
 	</span><span class="kw">pub </span>item: <span class="kw">crate</span>::events::ObjectRef,
 }
 
@@ -190,30 +192,34 @@
 	<span class="kw">const </span>MATCH_RULE_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str =
 		<span class="string">"type='signal',interface='org.a11y.atspi.Event.Focus',member='Focus'"</span>;
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Focus:"</span>;
+}
 
-	<span class="kw">type </span>Body = EventBodyOwned;
+<span class="kw">impl </span>HasInterfaceName <span class="kw">for </span>FocusEvents {
+	<span class="kw">const </span>DBUS_INTERFACE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"org.a11y.atspi.Event.Focus"</span>;
+}
 
-	<span class="kw">fn </span>from_message_parts(item: ObjectRef, _body: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-		<span class="prelude-val">Ok</span>(<span class="self">Self </span>{ item })
-	}
-	<span class="kw">fn </span>body(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>::Body {
-		<span class="kw">let </span>copy = <span class="self">self</span>.clone();
-		copy.into()
+<span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
+</span><span class="kw">impl </span>EventWrapperMessageConversion <span class="kw">for </span>FocusEvents {
+	<span class="kw">fn </span>try_from_message_interface_checked(msg: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+		<span class="kw">let </span>header = msg.header();
+		<span class="kw">let </span>member = header.member().ok_or(AtspiError::MissingMember)<span class="question-mark">?</span>;
+		<span class="kw">match </span>member.as_str() {
+			FocusEvent::DBUS_MEMBER =&gt; {
+				<span class="prelude-val">Ok</span>(FocusEvents::Focus(FocusEvent::from_message_unchecked(msg)<span class="question-mark">?</span>))
+			}
+			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="macro">format!</span>(
+				<span class="string">"No matching member {member} for interface {}"</span>,
+				<span class="self">Self</span>::DBUS_INTERFACE,
+			))),
+		}
 	}
 }
 
 <span class="attr">#[cfg(feature = <span class="string">"zbus"</span>)]
 </span><span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>zbus::Message&gt; <span class="kw">for </span>FocusEvents {
 	<span class="kw">type </span>Error = AtspiError;
-	<span class="kw">fn </span>try_from(ev: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-		<span class="kw">let </span>header = ev.header();
-		<span class="kw">let </span>member = header
-			.member()
-			.ok_or(AtspiError::MemberMatch(<span class="string">"Event without member"</span>.into()))<span class="question-mark">?</span>;
-		<span class="kw">match </span>member.as_str() {
-			<span class="string">"Focus" </span>=&gt; <span class="prelude-val">Ok</span>(FocusEvents::Focus(ev.try_into()<span class="question-mark">?</span>)),
-			<span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(AtspiError::MemberMatch(<span class="string">"No matching member for Focus"</span>.into())),
-		}
+	<span class="kw">fn </span>try_from(msg: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+		<span class="self">Self</span>::try_from_message(msg)
 	}
 }
 
@@ -225,17 +231,7 @@
 <span class="macro">impl_to_dbus_message!</span>(FocusEvent);
 <span class="macro">impl_from_dbus_message!</span>(FocusEvent);
 <span class="macro">impl_event_properties!</span>(FocusEvent);
-<span class="kw">impl </span>From&lt;FocusEvent&gt; <span class="kw">for </span>EventBodyOwned {
-	<span class="kw">fn </span>from(_event: FocusEvent) -&gt; <span class="self">Self </span>{
-		EventBodyOwned {
-			properties: std::collections::HashMap::new(),
-			kind: String::default(),
-			detail1: i32::default(),
-			detail2: i32::default(),
-			any_data: OwnedValue::from(<span class="number">0u8</span>),
-		}
-	}
-}
+<span class="macro">impl_from_object_ref!</span>(FocusEvent);
 
 <span class="kw">impl </span>HasRegistryEventString <span class="kw">for </span>FocusEvents {
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"Focus:"</span>;

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CacheEvents"],"struct":["AddAccessibleEvent","LegacyAddAccessibleEvent","RemoveAccessibleEvent"]};

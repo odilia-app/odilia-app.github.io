@@ -277,9 +277,13 @@
 <a href="#277" id="277">277</a>
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>atspi_common::{
-  events::MessageConversion,
-	events::object::StateChangedEvent, AtspiError, EventProperties, State <span class="kw">as </span>AtspiState,
+	events::object::StateChangedEvent, events::MessageConversion, AtspiError, EventProperties,
+	State <span class="kw">as </span>AtspiState,
 };
 <span class="kw">use </span>derived_deref::{Deref, DerefMut};
 <span class="kw">use </span>refinement::Predicate;
@@ -313,13 +317,17 @@
 	<span class="kw">const </span>REGISTRY_EVENT_STRING: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = StateChangedEvent::REGISTRY_EVENT_STRING;
 }
 <span class="kw">impl</span>&lt;S, E&gt; MessageConversion <span class="kw">for </span>StateChanged&lt;S, E&gt;
-    <span class="kw">where </span>StateChanged&lt;S, E&gt;: TryFrom&lt;StateChangedEvent&gt;, 
+<span class="kw">where
+	</span>StateChanged&lt;S, E&gt;: TryFrom&lt;StateChangedEvent&gt;,
 {
 	<span class="kw">type </span>Body = &lt;StateChangedEvent <span class="kw">as </span>MessageConversion&gt;::Body;
-  <span class="kw">fn </span>from_message_unchecked(msg: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
-      <span class="self">Self</span>::from_message_unchecked_parts(msg.try_into()<span class="question-mark">?</span>, msg.body().deserialize()<span class="question-mark">?</span>)
-  }
-	<span class="kw">fn </span>from_message_unchecked_parts(or: atspi::ObjectRef, bdy: <span class="self">Self</span>::Body) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+	<span class="kw">fn </span>from_message_unchecked(msg: <span class="kw-2">&amp;</span>zbus::Message) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
+		<span class="self">Self</span>::from_message_unchecked_parts(msg.try_into()<span class="question-mark">?</span>, msg.body().deserialize()<span class="question-mark">?</span>)
+	}
+	<span class="kw">fn </span>from_message_unchecked_parts(
+		or: atspi::ObjectRef,
+		bdy: <span class="self">Self</span>::Body,
+	) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, AtspiError&gt; {
 		<span class="kw">let </span>ev = StateChangedEvent::from_message_unchecked_parts(or, bdy)<span class="question-mark">?</span>;
 		<span class="comment">// TODO: we do not have an appropriate event type here; this should really be an OdiliaError.
 		// We may want to consider adding a type Error in the BusProperties impl.

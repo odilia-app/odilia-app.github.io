@@ -19,7 +19,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["atspi",["",[],["lib.rs"]]],\
 ["atspi_common",["",[["events",[],["cache.rs","document.rs","focus.rs","keyboard.rs","mod.rs","mouse.rs","object.rs","terminal.rs","window.rs"]]],["action.rs","cache.rs","error.rs","interface.rs","lib.rs","macros.rs","object_match.rs","object_ref.rs","operation.rs","relation_type.rs","role.rs","state.rs"]]],\
 ["atspi_connection",["",[],["lib.rs"]]],\
-["atspi_proxies",["",[],["accessible.rs","action.rs","application.rs","bus.rs","cache.rs","collection.rs","component.rs","device_event_controller.rs","device_event_listener.rs","document.rs","editable_text.rs","hyperlink.rs","hypertext.rs","image.rs","lib.rs","registry.rs","selection.rs","socket.rs","table.rs","table_cell.rs","text.rs","value.rs"]]],\
+["atspi_proxies",["",[],["accessible.rs","action.rs","application.rs","bus.rs","cache.rs","collection.rs","component.rs","device_event_controller.rs","device_event_listener.rs","document.rs","editable_text.rs","hyperlink.rs","hypertext.rs","image.rs","lib.rs","proxy_ext.rs","registry.rs","selection.rs","socket.rs","table.rs","table_cell.rs","text.rs","value.rs"]]],\
 ["bitflags",["",[],["external.rs","internal.rs","iter.rs","lib.rs","parser.rs","public.rs","traits.rs"]]],\
 ["blocking",["",[],["lib.rs"]]],\
 ["byteorder",["",[],["io.rs","lib.rs"]]],\
@@ -45,7 +45,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["enumflags2",["",[],["const_api.rs","fallible.rs","formatting.rs","iter.rs","lib.rs"]]],\
 ["enumflags2_derive",["",[],["lib.rs"]]],\
 ["equivalent",["",[],["lib.rs"]]],\
-["event_listener",["",[],["lib.rs","notify.rs","std.rs"]]],\
+["event_listener",["",[],["intrusive.rs","lib.rs","notify.rs"]]],\
 ["event_listener_strategy",["",[],["lib.rs"]]],\
 ["eyre",["",[],["backtrace.rs","chain.rs","context.rs","error.rs","fmt.rs","kind.rs","lib.rs","macros.rs","option.rs","ptr.rs","wrapper.rs"]]],\
 ["fastrand",["",[],["global_rng.rs","lib.rs"]]],\
@@ -85,7 +85,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["mio",["",[["event",[],["event.rs","events.rs","mod.rs","source.rs"]],["net",[["tcp",[],["listener.rs","mod.rs","stream.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","stream.rs"]]],["mod.rs","udp.rs"]],["sys",[["unix",[["selector",[],["epoll.rs","stateless_io_source.rs"]],["uds",[],["datagram.rs","listener.rs","mod.rs","stream.rs"]],["waker",[],["eventfd.rs"]]],["mod.rs","net.rs","pipe.rs","sourcefd.rs","tcp.rs","udp.rs"]]],["mod.rs"]]],["interest.rs","io_source.rs","lib.rs","macros.rs","poll.rs","token.rs","waker.rs"]]],\
 ["nix",["",[["sys",[["socket",[],["addr.rs","mod.rs","sockopt.rs"]]],["mod.rs","signal.rs","sysinfo.rs","time.rs","uio.rs","utsname.rs"]]],["errno.rs","fcntl.rs","features.rs","lib.rs","macros.rs","unistd.rs"]]],\
 ["nu_ansi_term",["",[],["ansi.rs","debug.rs","difference.rs","display.rs","gradient.rs","lib.rs","rgb.rs","style.rs","util.rs","windows.rs","write.rs"]]],\
-["odilia",["",[["events",[],["cache.rs","document.rs","mod.rs"]],["tower",[],["async_try.rs","cache_event.rs","choice.rs","from_state.rs","handler.rs","handlers.rs","iter_svc.rs","mod.rs","service_ext.rs","service_set.rs","state_changed.rs","state_svc.rs","sync_try.rs","unwrap_svc.rs"]]],["cli.rs","logging.rs","main.rs","state.rs"]]],\
+["odilia",["",[["events",[],["cache.rs","document.rs","mod.rs"]],["tower",[["extractors",[],["cache_event.rs","description.rs","event_property.rs","mod.rs","name.rs","relation_set.rs"]]],["async_try.rs","choice.rs","from_state.rs","handler.rs","handlers.rs","iter_svc.rs","mod.rs","service_ext.rs","service_set.rs","state_changed.rs","state_svc.rs","sync_try.rs","unwrap_svc.rs"]]],["cli.rs","logging.rs","main.rs","state.rs"]]],\
 ["odilia_cache",["",[],["accessible_ext.rs","convertable.rs","lib.rs"]]],\
 ["odilia_common",["",[["settings",[],["log.rs","mod.rs","speech.rs"]]],["cache.rs","command.rs","elements.rs","errors.rs","events.rs","lib.rs","modes.rs","result.rs","types.rs"]]],\
 ["odilia_input",["",[],["lib.rs"]]],\
@@ -161,7 +161,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["unicode_ident",["",[],["lib.rs","tables.rs"]]],\
 ["utf8parse",["",[],["lib.rs","types.rs"]]],\
 ["value_bag",["",[["internal",[["cast",[],["mod.rs","primitive.rs"]]],["fmt.rs","mod.rs"]]],["error.rs","fill.rs","impls.rs","lib.rs","visit.rs"]]],\
-["winnow",["",[["ascii",[],["mod.rs"]],["binary",[["bits",[],["mod.rs"]]],["mod.rs"]],["combinator",[["debug",[],["mod.rs"]]],["branch.rs","core.rs","mod.rs","multi.rs","parser.rs","sequence.rs"]],["macros",[],["dispatch.rs","mod.rs","seq.rs"]],["stream",[],["impls.rs","mod.rs"]],["token",[],["mod.rs"]]],["error.rs","lib.rs","parser.rs"]]],\
+["winnow",["",[["ascii",[],["mod.rs"]],["binary",[["bits",[],["mod.rs"]]],["mod.rs"]],["combinator",[["debug",[],["mod.rs"]]],["branch.rs","core.rs","impls.rs","mod.rs","multi.rs","sequence.rs"]],["macros",[],["dispatch.rs","mod.rs","seq.rs"]],["stream",[],["impls.rs","mod.rs"]],["token",[],["mod.rs"]]],["error.rs","lib.rs","parser.rs"]]],\
 ["xdg",["",[],["base_directories.rs","lib.rs"]]],\
 ["xdg_home",["",[],["lib.rs"]]],\
 ["yansi",["",[],["attr_quirk.rs","color.rs","condition.rs","global.rs","lib.rs","macros.rs","paint.rs","set.rs","style.rs","windows.rs"]]],\

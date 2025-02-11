@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["cache_event","description","event_property","name","relation_set"]};

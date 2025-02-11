@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["ActiveApplication","Always","EventPredicate","InnerEvent"],"type":["ActiveAppEvent","CacheEvent"]};

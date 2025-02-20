@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.3.0/src/connection/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus-5.5.0/src/connection/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1867,6 +1867,10 @@
 <a href="#1867" id="1867">1867</a>
 <a href="#1868" id="1868">1868</a>
 <a href="#1869" id="1869">1869</a>
+<a href="#1870" id="1870">1870</a>
+<a href="#1871" id="1871">1871</a>
+<a href="#1872" id="1872">1872</a>
+<a href="#1873" id="1873">1873</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Connection API.
 </span><span class="kw">use </span>async_broadcast::{broadcast, InactiveReceiver, Receiver, Sender <span class="kw">as </span>Broadcaster};
 <span class="kw">use </span>enumflags2::BitFlags;
@@ -1886,7 +1890,7 @@
 <span class="kw">use </span>zvariant::ObjectPath;
 
 <span class="kw">use </span>futures_core::Future;
-<span class="kw">use </span>futures_util::StreamExt;
+<span class="kw">use </span>futures_lite::StreamExt;
 
 <span class="kw">use crate</span>::{
     async_lock::{Mutex, Semaphore, SemaphorePermit},
@@ -3410,14 +3414,14 @@
 <span class="attr">#[cfg(feature = <span class="string">"p2p"</span>)]
 #[cfg(test)]
 </span><span class="kw">mod </span>p2p_tests {
-    <span class="kw">use </span>futures_util::stream::TryStreamExt;
+    <span class="kw">use </span>event_listener::Event;
+    <span class="kw">use </span>futures_util::TryStreamExt;
     <span class="kw">use </span>ntest::timeout;
     <span class="kw">use </span>test_log::test;
     <span class="kw">use </span>zvariant::{Endian, NATIVE_ENDIAN};
 
-    <span class="kw">use crate</span>::{conn::AuthMechanism, Guid};
-
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use super</span>::{socket, Builder, Connection};
+    <span class="kw">use crate</span>::{conn::AuthMechanism, Guid, Message, MessageStream, <span class="prelude-ty">Result</span>};
 
     <span class="comment">// Same numbered client and server are already paired up.
     </span><span class="kw">async fn </span>test_p2p(
@@ -3609,6 +3613,9 @@
         feature = <span class="string">"tokio-vsock"
     </span>))]
     </span><span class="kw">async fn </span>test_vsock_connect() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
+        <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
+        </span><span class="kw">use </span>futures_util::StreamExt;
+
         <span class="kw">let </span>guid = Guid::generate();
 
         <span class="attr">#[cfg(all(feature = <span class="string">"vsock"</span>, not(feature = <span class="string">"tokio"</span>)))]
@@ -3683,6 +3690,7 @@
 
     <span class="attr">#[cfg(feature = <span class="string">"tokio-vsock"</span>)]
     </span><span class="kw">async fn </span>vsock_p2p_pipe() -&gt; <span class="prelude-ty">Result</span>&lt;(Connection, Connection)&gt; {
+        <span class="kw">use </span>futures_util::StreamExt;
         <span class="kw">use </span>tokio_vsock::VsockAddr;
 
         <span class="kw">let </span>guid = Guid::generate();

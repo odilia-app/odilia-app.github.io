@@ -161,7 +161,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["unicode_ident",["",[],["lib.rs","tables.rs"]]],\
 ["utf8parse",["",[],["lib.rs","types.rs"]]],\
 ["value_bag",["",[["internal",[["cast",[],["mod.rs","primitive.rs"]]],["fmt.rs","mod.rs"]]],["error.rs","fill.rs","impls.rs","lib.rs","visit.rs"]]],\
-["winnow",["",[["ascii",[],["mod.rs"]],["binary",[["bits",[],["mod.rs"]]],["mod.rs"]],["combinator",[["debug",[],["mod.rs"]]],["branch.rs","core.rs","impls.rs","mod.rs","multi.rs","sequence.rs"]],["macros",[],["dispatch.rs","mod.rs","seq.rs"]],["stream",[],["impls.rs","mod.rs"]],["token",[],["mod.rs"]]],["error.rs","lib.rs","parser.rs"]]],\
+["winnow",["",[["ascii",[],["mod.rs"]],["binary",[["bits",[],["mod.rs"]]],["mod.rs"]],["combinator",[["debug",[],["mod.rs"]]],["branch.rs","core.rs","impls.rs","mod.rs","multi.rs","sequence.rs"]],["macros",[],["dispatch.rs","mod.rs","seq.rs"]],["stream",[],["bstr.rs","bytes.rs","locating.rs","mod.rs","partial.rs","range.rs","stateful.rs","token.rs"]],["token",[],["mod.rs"]]],["error.rs","lib.rs","parser.rs"]]],\
 ["xdg",["",[],["base_directories.rs","lib.rs"]]],\
 ["xdg_home",["",[],["lib.rs"]]],\
 ["yansi",["",[],["attr_quirk.rs","color.rs","condition.rs","global.rs","lib.rs","macros.rs","paint.rs","set.rs","style.rs","windows.rs"]]],\

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-5.3.0/src/iface.rs`."><title>iface.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/zbus_macros-5.5.0/src/iface.rs`."><title>iface.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-d10b2a06af903387.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0-nightly (8b3870784 2024-08-07)" data-channel="nightly" data-search-js="search-ef54e092fea9c776.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-04a29ac50d05d0b1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -2139,12 +2139,8 @@
                         <span class="macro">quote!</span>(<span class="self">self</span>.#ident(#args_names)#method_await)
                     } <span class="kw">else if </span>is_async {
                         <span class="macro">quote!</span>(
-                                #zbus::export::futures_util::future::FutureExt::map(
-                                    <span class="self">self</span>.#ident(#args_names),
-                                    ::std::result::Result::Ok,
-                                )
-                                .<span class="kw">await
-                        </span>)
+                            ::std::result::Result::Ok(<span class="self">self</span>.#ident(#args_names).<span class="kw">await</span>)
+                        )
                     } <span class="kw">else </span>{
                         <span class="macro">quote!</span>(
                             ::std::result::Result::Ok(<span class="self">self</span>.#ident(#args_names))
@@ -2308,7 +2304,7 @@
                     get_dispatch.extend(q);
 
                     <span class="kw">let </span>q = <span class="kw">if </span>is_fallible_property {
-                        <span class="macro">quote!</span>(
+                        <span class="macro">quote!</span>({
                             #args_from_msg
                             <span class="kw">if let </span><span class="prelude-val">Ok</span>(prop) = <span class="self">self</span>.#ident(#args_names)#method_await {
                             props.insert(
@@ -2320,9 +2316,9 @@
                                 )
                                 .map_err(|e| #zbus::fdo::Error::Failed(e.to_string()))<span class="question-mark">?</span>,
                             );
-                        })
+                        }})
                     } <span class="kw">else </span>{
-                        <span class="macro">quote!</span>(
+                        <span class="macro">quote!</span>({
                             #args_from_msg
                             props.insert(
                         ::std::string::ToString::to_string(#member_name),
@@ -2332,7 +2328,7 @@
                             ),
                         )
                         .map_err(|e| #zbus::fdo::Error::Failed(e.to_string()))<span class="question-mark">?</span>,
-                    );)
+                    );})
                     };
 
                     get_all.extend(q);
@@ -2398,7 +2394,11 @@
                             #args_from_msg
                             <span class="kw">let </span>reply = <span class="self">self</span>.#ident(#args_names)#method_await;
                             <span class="kw">let </span>hdr = message.header();
-                            #reply
+                            <span class="kw">if </span>hdr.primary().flags().contains(zbus::message::Flags::NoReplyExpected) {
+                                <span class="prelude-val">Ok</span>(())
+                            } <span class="kw">else </span>{
+                                #reply
+                            }
                         };
                         #zbus::object_server::DispatchResult::Async(::std::boxed::Box::pin(<span class="kw">async move </span>{
                             future.<span class="kw">await

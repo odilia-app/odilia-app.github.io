@@ -340,17 +340,6 @@
 <a href="#340" id="340">340</a>
 <a href="#341" id="341">341</a>
 <a href="#342" id="342">342</a>
-<a href="#343" id="343">343</a>
-<a href="#344" id="344">344</a>
-<a href="#345" id="345">345</a>
-<a href="#346" id="346">346</a>
-<a href="#347" id="347">347</a>
-<a href="#348" id="348">348</a>
-<a href="#349" id="349">349</a>
-<a href="#350" id="350">350</a>
-<a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-<a href="#353" id="353">353</a>
 </pre></div><pre class="rust"><code><span class="attr">#![deny(
 	clippy::all,
 	clippy::pedantic,
@@ -468,7 +457,7 @@
 	(Priority::Text, <span class="string">"Doc loaded"</span>)
 }
 
-<span class="kw">use </span><span class="kw">crate</span>::tower::state_changed::{Focused, Unfocused};
+<span class="kw">use </span><span class="kw">crate</span>::tower::state_changed::Focused;
 
 <span class="attr">#[tracing::instrument(ret)]
 </span><span class="kw">async fn </span>focused(
@@ -489,8 +478,7 @@
 			n.to_string()
 		} <span class="kw">else if let </span><span class="prelude-val">Some</span>(d) = description.as_deref() {
 			d.to_string()
-		<span class="comment">// if both of those errored out, we'd know, because we'd be out of here
-		//otherwise, if this is empty too, we try to use the relations set to find the element labeling this one
+		<span class="comment">//otherwise, if this is empty too, we try to use the relations set to find the element labeling this one
 		</span>} <span class="kw">else </span>{
 			relation_set
 				.iter()
@@ -516,14 +504,6 @@
 	<span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[
 		Focus(state_changed.item.object).into(),
 		Speak(utterance_buffer, Priority::Text).into(),
-	])
-}
-
-<span class="attr">#[tracing::instrument(ret)]
-</span><span class="kw">async fn </span>unfocused(state_changed: CacheEvent&lt;Unfocused&gt;) -&gt; <span class="kw">impl </span>TryIntoCommands {
-	<span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[
-		Focus(state_changed.item.object).into(),
-		Speak(state_changed.item.text, Priority::Text).into(),
 	])
 }
 
@@ -637,9 +617,7 @@
 		.command_listener(new_caret_pos)
 		.atspi_listener(doc_loaded)
 		.atspi_listener(caret_moved)
-		.atspi_listener(focused)
-		.atspi_listener(unfocused);
-
+		.atspi_listener(focused);
 	<span class="kw">let </span>ssip_event_receiver =
 		odilia_tts::handle_ssip_commands(ssip, ssip_req_rx, token.clone())
 			.map(|r| r.wrap_err(<span class="string">"Could no process SSIP request"</span>));

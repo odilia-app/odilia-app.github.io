@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AsyncTryIntoLayer","AsyncTryIntoService"],"trait":["AsyncTryFrom","AsyncTryInto"]};
+window.SIDEBAR_ITEMS = {"struct":["AndThenCall","AsyncTryIntoLayer","AsyncTryIntoService"],"trait":["AsyncTryFrom","AsyncTryInto"]};

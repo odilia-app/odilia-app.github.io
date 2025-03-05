@@ -1,3 +1,9 @@
-(function() {var type_impls = {
-"ssip":[]
-};if (window.register_type_impls) {window.register_type_impls(type_impls);} else {window.pending_type_impls = type_impls;}})()
+(function() {
+    var type_impls = Object.fromEntries([["ssip",[]]]);
+    if (window.register_type_impls) {
+        window.register_type_impls(type_impls);
+    } else {
+        window.pending_type_impls = type_impls;
+    }
+})()
+//{"start":55,"fragment_lengths":[11]}

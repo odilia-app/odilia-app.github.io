@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["MapM","MapReady","MapServiceCall","ReverseTuple","ServiceCall"],"trait":["MapMExt"]};

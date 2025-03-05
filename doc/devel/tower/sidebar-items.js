@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["service_fn"],"mod":["builder","filter","layer","steer","util"],"struct":["ServiceBuilder"],"trait":["Layer","Service","ServiceExt"],"type":["BoxError"]};
+window.SIDEBAR_ITEMS = {"fn":["service_fn"],"mod":["builder","filter","layer","util"],"struct":["ServiceBuilder"],"trait":["Layer","Service","ServiceExt"],"type":["BoxError"]};

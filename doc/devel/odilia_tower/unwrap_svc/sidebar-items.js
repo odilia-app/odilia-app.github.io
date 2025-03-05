@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["FlattenFutResult","MapResponseIntoService","MapResponseTryIntoCommandsService","TryIntoCommandFut","UnwrapFut"],"trait":["UnwrapFutExt"]};

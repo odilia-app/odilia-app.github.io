@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Handlers"],"type":["AtspiHandler","CommandHandler","Error","Request","Response"]};
+window.SIDEBAR_ITEMS = {"struct":["Handlers"],"type":["AtspiHandler","CommandHandler","Error","OdiliaResult","Request","Response","ResultList"]};

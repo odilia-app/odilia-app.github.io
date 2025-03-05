@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["caret_moved","doc_loaded","focused","load_configuration","main","new_caret_pos","new_focused_item","notifications_monitor","sigterm_signal_watcher","speak"],"mod":["cli","events","logging","state","tower"]};
+window.SIDEBAR_ITEMS = {"fn":["caret_moved","doc_loaded","focused","load_configuration","main","new_caret_pos","new_focused_item","notifications_monitor","sigterm_signal_watcher","speak","unfocused"],"mod":["cli","events","logging","state","tower"]};

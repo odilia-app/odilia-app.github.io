@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"macro":["impl_handler"],"struct":["HandlerService"],"trait":["Handler"]};
+window.SIDEBAR_ITEMS = {"macro":["impl_handler"],"struct":["HandlerService","MapOk"],"trait":["FutureExt2","Handler"]};

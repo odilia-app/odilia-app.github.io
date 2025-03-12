@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["TerminalEvents"],"struct":["ApplicationChangedEvent","CharWidthChangedEvent","ColumnCountChangedEvent","LineChangedEvent","LineCountChangedEvent"]};
+window.SIDEBAR_ITEMS = {"struct":["ApplicationChangedEvent","CharWidthChangedEvent","ColumnCountChangedEvent","LineChangedEvent","LineCountChangedEvent"]};

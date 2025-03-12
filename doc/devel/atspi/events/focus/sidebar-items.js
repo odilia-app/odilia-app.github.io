@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["FocusEvents"],"struct":["FocusEvent"]};
+window.SIDEBAR_ITEMS = {"struct":["FocusEvent"]};

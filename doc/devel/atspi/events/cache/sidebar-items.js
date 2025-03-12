@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["CacheEvents"],"struct":["AddAccessibleEvent","LegacyAddAccessibleEvent","RemoveAccessibleEvent"]};
+window.SIDEBAR_ITEMS = {"struct":["AddAccessibleEvent","LegacyAddAccessibleEvent","RemoveAccessibleEvent"]};

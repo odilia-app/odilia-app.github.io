@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"trait":["BusProperties","EventProperties","EventTypeProperties","HasInterfaceName","HasMatchRule","HasRegistryEventString","MessageConversion","MessageConversionExt"]};

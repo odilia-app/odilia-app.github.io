@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["cache","command","elements","errors","events","modes","result","settings","types"],"type":["Accessible"]};
+window.SIDEBAR_ITEMS = {"mod":["cache","command","elements","errors","events","from_state","modes","result","settings","types"],"type":["Accessible"]};

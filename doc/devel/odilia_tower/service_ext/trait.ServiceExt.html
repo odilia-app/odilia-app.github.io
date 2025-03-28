@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `ServiceExt` trait in crate `odilia_tower`."><title>ServiceExt in odilia_tower::service_ext - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_tower" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (665025243 2025-03-11)" data-channel="nightly" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../static.files/storage-d8ac8691.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-a7bf3405.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../odilia_tower/index.html">odilia_<wbr>tower</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Service<wbr>Ext</a></h2><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.request_async_try_from" title="request_async_try_from">request_async_try_from</a></li><li><a href="#method.request_try_from" title="request_try_from">request_try_from</a></li><li><a href="#method.with_state" title="with_state">with_state</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In odilia_<wbr>tower::<wbr>service_<wbr>ext</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">odilia_tower</a>::<wbr><a href="index.html">service_ext</a></div><h1>Trait <span class="trait">ServiceExt</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/odilia_tower/service_ext.rs.html#8-33">Source</a> </span></div><pre class="rust item-decl"><code>pub trait ServiceExt&lt;Request&gt;: <a class="trait" href="../../tower_service/trait.Service.html" title="trait tower_service::Service">Service</a>&lt;Request&gt; {
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Use postfix notation on your `tower::Service`s to produce nested services."><title>ServiceExt in odilia_tower::service_ext - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-916cea96.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_tower" data-themes="" data-resource-suffix="" data-rustdoc-version="1.87.0-nightly (3f5502370 2025-03-27)" data-channel="nightly" data-search-js="search-e7298875.js" data-settings-js="settings-d72f25bb.js" ><script src="../../static.files/storage-82c7156e.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-fb8c74a8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../odilia_tower/index.html">odilia_<wbr>tower</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Service<wbr>Ext</a></h2><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.request_async_try_from" title="request_async_try_from">request_async_try_from</a></li><li><a href="#method.request_try_from" title="request_try_from">request_try_from</a></li><li><a href="#method.with_state" title="with_state">with_state</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In odilia_<wbr>tower::<wbr>service_<wbr>ext</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">odilia_tower</a>::<wbr><a href="index.html">service_ext</a></div><h1>Trait <span class="trait">ServiceExt</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/odilia_tower/service_ext.rs.html#11-155">Source</a> </span></div><pre class="rust item-decl"><code>pub trait ServiceExt&lt;Request&gt;: <a class="trait" href="../../tower_service/trait.Service.html" title="trait tower_service::Service">Service</a>&lt;Request&gt; {
     // Provided methods
     fn <a href="#method.request_try_from" class="fn">request_try_from</a>&lt;I, R, Fut1&gt;(
         self,
@@ -13,15 +13,130 @@
 <span class="item-spacer"></span>    fn <a href="#method.with_state" class="fn">with_state</a>&lt;S&gt;(self, s: S) -&gt; <a class="struct" href="../state_svc/struct.StateService.html" title="struct odilia_tower::state_svc::StateService">StateService</a>&lt;Self, S&gt;
        <span class="where">where Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,
              S: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a></span> { ... }
-}</code></pre><h2 id="provided-methods" class="section-header">Provided Methods<a href="#provided-methods" class="anchor">§</a></h2><div class="methods"><section id="method.request_try_from" class="method"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#9-16">Source</a><h4 class="code-header">fn <a href="#method.request_try_from" class="fn">request_try_from</a>&lt;I, R, Fut1&gt;(
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Use postfix notation on your <a href="../../tower_service/trait.Service.html" title="trait tower_service::Service"><code>tower::Service</code></a>s to produce nested services.</p>
+</div></details><h2 id="provided-methods" class="section-header">Provided Methods<a href="#provided-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="method.request_try_from" class="method"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#42-49">Source</a><h4 class="code-header">fn <a href="#method.request_try_from" class="fn">request_try_from</a>&lt;I, R, Fut1&gt;(
     self,
 ) -&gt; <a class="struct" href="../sync_try/struct.TryIntoService.html" title="struct odilia_tower::sync_try::TryIntoService">TryIntoService</a>&lt;Request, I, Self, R, Fut1&gt;<div class="where">where
     Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../tower_service/trait.Service.html" title="trait tower_service::Service">Service</a>&lt;Request, Response = R, Future = Fut1&gt;,
-    I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html" title="trait core::convert::TryInto">TryInto</a>&lt;Request&gt;,</div></h4></section><section id="method.request_async_try_from" class="method"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#17-25">Source</a><h4 class="code-header">fn <a href="#method.request_async_try_from" class="fn">request_async_try_from</a>&lt;I, R, Fut1&gt;(
+    I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html" title="trait core::convert::TryInto">TryInto</a>&lt;Request&gt;,</div></h4></section></summary><div class="docblock"><p>Map a new input type into your service’s input using a <a href="https://doc.rust-lang.org/nightly/core/convert/trait.TryInto.html" title="trait core::convert::TryInto"><code>TryInto</code></a> impl.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>assert_matches::assert_matches;
+<span class="kw">use </span>odilia_tower::service_ext::ServiceExt;
+<span class="kw">use </span>tower::{service_fn, Service};
+<span class="kw">use </span>futures::executor::block_on;
+<span class="kw">use </span>std::num::TryFromIntError;
+<span class="comment">// NOTE: the associated error type must implement From&lt;E&gt;, where E is the error in converting
+// from the new input type (in this example, u64) to the inner one (u8).
+</span><span class="attr">#[derive(Debug, PartialEq, Eq)]
+</span><span class="kw">pub enum </span>Error {
+  IntConv(TryFromIntError)
+}
+<span class="kw">impl </span>From&lt;TryFromIntError&gt; <span class="kw">for </span>Error {
+  <span class="kw">fn </span>from(ie: TryFromIntError) -&gt; Error {
+      Error::IntConv(ie)
+  }
+}
+
+<span class="kw">async fn </span>double(input: u8) -&gt; <span class="prelude-ty">Result</span>&lt;u8, Error&gt; {
+  <span class="prelude-val">Ok</span>(input * <span class="number">2</span>)
+}
+<span class="kw">let </span><span class="kw-2">mut </span>service = service_fn(double)
+    <span class="comment">// try to convert u64 to u8 before passing to the service function
+    </span>.request_try_from();
+<span class="macro">assert_eq!</span>(block_on(service.call(<span class="number">100u64</span>)), <span class="prelude-val">Ok</span>(<span class="number">200u8</span>));
+<span class="comment">// can not be successfully converted to u8!
+</span><span class="macro">assert_matches!</span>(block_on(service.call(<span class="number">300u64</span>)), <span class="prelude-val">Err</span>(<span class="kw">_</span>));</code></pre></div>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.request_async_try_from" class="method"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#111-119">Source</a><h4 class="code-header">fn <a href="#method.request_async_try_from" class="fn">request_async_try_from</a>&lt;I, R, Fut1&gt;(
     self,
 ) -&gt; <a class="struct" href="../async_try/struct.AsyncTryIntoService.html" title="struct odilia_tower::async_try::AsyncTryIntoService">AsyncTryIntoService</a>&lt;Request, I, Self, R, Fut1&gt;<div class="where">where
     I: <a class="trait" href="../async_try/trait.AsyncTryInto.html" title="trait odilia_tower::async_try::AsyncTryInto">AsyncTryInto</a>&lt;Request&gt;,
-    Self: <a class="trait" href="../../tower_service/trait.Service.html" title="trait tower_service::Service">Service</a>&lt;Request, Response = R, Future = Fut1&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,</div></h4></section><section id="method.with_state" class="method"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#26-32">Source</a><h4 class="code-header">fn <a href="#method.with_state" class="fn">with_state</a>&lt;S&gt;(self, s: S) -&gt; <a class="struct" href="../state_svc/struct.StateService.html" title="struct odilia_tower::state_svc::StateService">StateService</a>&lt;Self, S&gt;<div class="where">where
+    Self: <a class="trait" href="../../tower_service/trait.Service.html" title="trait tower_service::Service">Service</a>&lt;Request, Response = R, Future = Fut1&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,</div></h4></section></summary><div class="docblock"><p>Map a new input type into your service’s input using a custom <a href="../async_try/trait.AsyncTryInto.html" title="trait odilia_tower::async_try::AsyncTryInto"><code>AsyncTryInto</code></a> impl.
+This is mostly used in conjunction with state extraction, but doesn’t inherently have to.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>assert_matches::assert_matches;
+<span class="kw">use </span>odilia_tower::{
+  service_ext::ServiceExt,
+  async_try::AsyncTryFrom,
+};
+<span class="kw">use </span>tower::{service_fn, Service};
+<span class="kw">use </span>futures::{
+  executor::block_on,
+  future::{ready, Ready},
+};
+<span class="kw">use </span>std::num::TryFromIntError;
+<span class="comment">// Used to get around "foreign traits on foreign types" rule.
+</span><span class="attr">#[derive(Debug, PartialEq, Eq)]
+</span><span class="kw">struct </span>U8(u8);
+<span class="kw">impl </span>From&lt;u8&gt; <span class="kw">for </span>U8 {
+  <span class="kw">fn </span>from(inner: u8) -&gt; U8 {
+    U8(inner)
+  }
+}
+<span class="attr">#[derive(Debug, PartialEq, Eq)]
+</span><span class="kw">struct </span>U64(u64);
+<span class="kw">impl </span>From&lt;u64&gt; <span class="kw">for </span>U64 {
+  <span class="kw">fn </span>from(inner: u64) -&gt; U64 {
+    U64(inner)
+  }
+}
+
+<span class="kw">impl </span>AsyncTryFrom&lt;U64&gt; <span class="kw">for </span>U8 {
+  <span class="kw">type </span>Error = TryFromIntError;
+  <span class="kw">type </span>Future = Ready&lt;<span class="prelude-ty">Result</span>&lt;U8, <span class="self">Self</span>::Error&gt;&gt;;
+  <span class="kw">fn </span>try_from_async(big: U64) -&gt; <span class="self">Self</span>::Future {
+      ready(big.<span class="number">0</span>.try_into().map(U8))
+  }
+}
+<span class="comment">// NOTE: the associated error type must implement From&lt;E&gt;, where E is the error in converting
+// from the new input type (in this example, u64) to the inner one (u8).
+</span><span class="attr">#[derive(Debug, PartialEq, Eq)]
+</span><span class="kw">pub enum </span>Error {
+  IntConv(TryFromIntError)
+}
+<span class="kw">impl </span>From&lt;TryFromIntError&gt; <span class="kw">for </span>Error {
+  <span class="kw">fn </span>from(ie: TryFromIntError) -&gt; Error {
+      Error::IntConv(ie)
+  }
+}
+
+<span class="kw">async fn </span>double(input: U8) -&gt; <span class="prelude-ty">Result</span>&lt;U8, Error&gt; {
+  <span class="prelude-val">Ok</span>((input.<span class="number">0 </span>* <span class="number">2</span>).into())
+}
+<span class="kw">let </span><span class="kw-2">mut </span>service = service_fn(double)
+    <span class="comment">// try to convert u64 to u8 before passing to the service function
+    // this time, use the async function we described above
+    </span>.request_async_try_from::&lt;U64, U8, <span class="kw">_</span>&gt;();
+<span class="macro">assert_eq!</span>(block_on(service.call(<span class="number">100u64</span>.into())), <span class="prelude-val">Ok</span>(<span class="number">200u8</span>.into()));
+<span class="comment">// can not be successfully converted to u8!
+</span><span class="macro">assert_matches!</span>(block_on(service.call(<span class="number">300u64</span>.into())), <span class="prelude-val">Err</span>(<span class="kw">_</span>));</code></pre></div>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.with_state" class="method"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#148-154">Source</a><h4 class="code-header">fn <a href="#method.with_state" class="fn">with_state</a>&lt;S&gt;(self, s: S) -&gt; <a class="struct" href="../state_svc/struct.StateService.html" title="struct odilia_tower::state_svc::StateService">StateService</a>&lt;Self, S&gt;<div class="where">where
     Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,
-    S: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,</div></h4></section></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><section id="impl-ServiceExt%3CRequest%3E-for-T" class="impl"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#35">Source</a><a href="#impl-ServiceExt%3CRequest%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, Request&gt; <a class="trait" href="trait.ServiceExt.html" title="trait odilia_tower::service_ext::ServiceExt">ServiceExt</a>&lt;Request&gt; for T<div class="where">where
+    S: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,</div></h4></section></summary><div class="docblock"><p>Inject a clonable state into each invocation of the inner service.
+NOTE:</p>
+<ul>
+<li>since <a href="../../tower_service/trait.Service.html" title="trait tower_service::Service"><code>tower::Service</code></a> only accepts functions with one parameter, this is passed as
+<code>(S, P)</code> where <code>S</code> is the state type and <code>P</code> is the parameter type.</li>
+<li>The <code>S</code> parameter will be cloned upon each invocation to <a href="../../tower_service/trait.Service.html#tymethod.call" title="method tower_service::Service::call"><code>Service::call</code></a>. It should be
+relatively cheap to clone.</li>
+</ul>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>odilia_tower::service_ext::ServiceExt;
+<span class="kw">use </span>tower::{service_fn, Service};
+<span class="kw">use </span>futures::executor::block_on;
+<span class="kw">use </span>std::{convert::Infallible, sync::Arc};
+<span class="comment">// a stand in for some comlpex type, don't actually do this.
+</span><span class="kw">type </span>State = Arc&lt;usize&gt;;
+
+<span class="comment">// NOTE: `tower` does not allow multiple parameters to services.
+</span><span class="kw">async fn </span>state_and_param((state, param): (Arc&lt;usize&gt;, u8)) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;u8&gt;, Infallible&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>vec = Vec::with_capacity(<span class="kw-2">*</span>state);
+    <span class="kw">for _ in </span><span class="number">0</span>..<span class="kw-2">*</span>state {
+        vec.push(param);
+    }
+    <span class="prelude-val">Ok</span>(vec)
+}
+<span class="kw">let </span><span class="kw-2">mut </span>service = service_fn(state_and_param)
+    .with_state(Arc::new(<span class="number">5</span>));
+<span class="macro">assert_eq!</span>(block_on(service.call(<span class="number">2</span>)), <span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[<span class="number">2u8</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]));</code></pre></div>
+</div></details></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><section id="impl-ServiceExt%3CRequest%3E-for-T" class="impl"><a class="src rightside" href="../../src/odilia_tower/service_ext.rs.html#157">Source</a><a href="#impl-ServiceExt%3CRequest%3E-for-T" class="anchor">§</a><h3 class="code-header">impl&lt;T, Request&gt; <a class="trait" href="trait.ServiceExt.html" title="trait odilia_tower::service_ext::ServiceExt">ServiceExt</a>&lt;Request&gt; for T<div class="where">where
     T: <a class="trait" href="../../tower_service/trait.Service.html" title="trait tower_service::Service">Service</a>&lt;Request&gt; + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,</div></h3></section></div><script src="../../trait.impl/odilia_tower/service_ext/trait.ServiceExt.js" async></script></section></div></main></body></html>

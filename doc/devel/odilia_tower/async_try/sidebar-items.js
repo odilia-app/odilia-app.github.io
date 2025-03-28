@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AndThenCall","AsyncTryIntoLayer","AsyncTryIntoService"],"trait":["AndThenCallExt","AsyncTryFrom","AsyncTryInto"]};
+window.SIDEBAR_ITEMS = {"struct":["AndThenCall","AsyncTryIntoLayer","AsyncTryIntoService"],"trait":["AsyncTryFrom","AsyncTryInto"]};

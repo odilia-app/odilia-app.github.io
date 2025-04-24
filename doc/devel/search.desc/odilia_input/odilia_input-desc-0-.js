@@ -1,1 +1,1 @@
-searchState.loadedDescShard("odilia_input", 0, "Receives <code>odilia_common::events::ScreenReaderEvent</code> structs, …")
+searchState.loadedDescShard("odilia_input", 0, "Open a socket to handle Odilia’s input events from an …\nReceives <code>odilia_common::events::ScreenReaderEvent</code> structs, …")

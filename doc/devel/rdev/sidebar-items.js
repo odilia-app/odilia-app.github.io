@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Button","DisplayError","EventType","GrabError","Key","ListenError"],"fn":["_grab","display_size","grab","listen","simulate"],"struct":["Event","SimulateError"],"trait":["KeyboardState"],"type":["GrabCallback"]};

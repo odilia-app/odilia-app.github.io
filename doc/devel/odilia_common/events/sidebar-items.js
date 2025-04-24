@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Direction","Feature","ScreenReaderEvent"]};
+window.SIDEBAR_ITEMS = {"enum":["Direction","Feature","ScreenReaderEvent","ScreenReaderEventDiscriminants"],"macro":["impl_event_type"],"struct":["ChangeMode","Disable","Enable","Quit","StopSpeech","StructuralNavigation"],"trait":["EventType","EventTypeDynamic"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["log","speech"],"struct":["ApplicationConfig"]};
+window.SIDEBAR_ITEMS = {"mod":["input","log","speech"],"struct":["ApplicationConfig"]};

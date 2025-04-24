@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["ACTIVATION_KEY"],"enum":["ComboError","KeySetError","SetError"],"fn":["callback","val_key"],"struct":["ComboSet","ComboSets","KeySet","State"]};

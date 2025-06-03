@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AtFlags"]};
+window.SIDEBAR_ITEMS = {"constant":["AT_FDCWD"],"struct":["AtFlags"]};

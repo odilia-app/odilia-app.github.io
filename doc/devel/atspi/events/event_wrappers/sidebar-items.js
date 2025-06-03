@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["CacheEvents","DocumentEvents","Event","FocusEvents","KeyboardEvents","MouseEvents","ObjectEvents","TerminalEvents","WindowEvents"]};
+window.SIDEBAR_ITEMS = {"enum":["CacheEvents","DocumentEvents","Event","EventListenerEvents","FocusEvents","KeyboardEvents","MouseEvents","ObjectEvents","TerminalEvents","WindowEvents"]};

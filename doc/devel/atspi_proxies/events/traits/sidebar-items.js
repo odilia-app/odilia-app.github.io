@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":["BusProperties","EventProperties","EventTypeProperties","HasInterfaceName","HasMatchRule","HasRegistryEventString","MessageConversion","MessageConversionExt"]};
+window.SIDEBAR_ITEMS = {"trait":["DBusInterface","DBusMatchRule","DBusMember","DBusProperties","EventProperties","EventTypeProperties","MessageConversion","MessageConversionExt","RegistryEventString"]};

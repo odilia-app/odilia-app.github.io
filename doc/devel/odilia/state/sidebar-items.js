@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AccessibleHistory","Command","CurrentCaretPos","InputEvent","LastCaretPos","LastFocused","ScreenReaderState","Speech"]};
+window.SIDEBAR_ITEMS = {"struct":["AccessibleHistory","Cache","Command","CurrentCaretPos","InputEvent","LastCaretPos","LastFocused","ScreenReaderState","Speech"]};

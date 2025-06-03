@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["OdiliaCommand","OdiliaCommandDiscriminants"],"macro":["impl_command_type"],"struct":["CaretPos","Focus","Speak"],"trait":["CommandType","CommandTypeDynamic","IntoCommands","TryIntoCommands"]};
+window.SIDEBAR_ITEMS = {"enum":["OdiliaCommand","OdiliaCommandDiscriminants"],"macro":["impl_command_type"],"struct":["CaretPos","Focus","SetState","Speak"],"trait":["CommandType","CommandTypeDynamic","IntoCommands","TryIntoCommands"]};

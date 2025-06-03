@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["EventListenerEvents"],"mod":["cache","document","event_body","event_wrappers","focus","keyboard","mouse","object","terminal","traits","window"],"struct":["AvailableEvent","EventListenerDeregisteredEvent","EventListenerRegisteredEvent","EventListeners"]};
+window.SIDEBAR_ITEMS = {"mod":["cache","document","event_body","event_wrappers","focus","keyboard","mouse","object","registry","terminal","traits","window"]};

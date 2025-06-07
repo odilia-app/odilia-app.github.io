@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["create_ssip_client","handle_ssip_commands"]};
+window.SIDEBAR_ITEMS = {"fn":["create_ssip_client","handle_ssip_commands","or_cancel"]};

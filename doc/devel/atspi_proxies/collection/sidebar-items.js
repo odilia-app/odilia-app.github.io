@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["CollectionProxy","CollectionProxyBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["CollectionProxy"]};

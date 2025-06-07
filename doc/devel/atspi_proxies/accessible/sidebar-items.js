@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AccessibleProxy","AccessibleProxyBlocking"],"trait":["ObjectRefExt"]};
+window.SIDEBAR_ITEMS = {"struct":["AccessibleProxy"],"trait":["ObjectRefExt"]};

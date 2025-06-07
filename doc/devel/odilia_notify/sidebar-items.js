@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["listen_to_dbus_notifications"],"mod":["action","error","notification","urgency"]};
+window.SIDEBAR_ITEMS = {"fn":["listen_to_dbus_notifications"],"mod":["action","notification","urgency"]};

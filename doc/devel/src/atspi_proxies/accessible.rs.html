@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/atspi-proxies-0.10.2/src/accessible.rs`."><title>accessible.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_proxies" data-themes="" data-resource-suffix="" data-rustdoc-version="1.89.0-nightly (4b27a04cc 2025-06-04)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-4e99c027.js"></script><script defer src="../../static.files/src-script-63605ae7.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-fd3af306.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">atspi_proxies/</div>accessible.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! # `AccessibleProxy`
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/git/checkouts/atspi-eebdb870d3c4434a/ff47522/atspi-proxies/src/accessible.rs`."><title>accessible.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atspi_proxies" data-themes="" data-resource-suffix="" data-rustdoc-version="1.89.0-nightly (44f415c1d 2025-06-06)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-4e99c027.js"></script><script defer src="../../static.files/src-script-63605ae7.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-fd3af306.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">atspi_proxies/</div>accessible.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! # `AccessibleProxy`
 <a href=#2 id=2 data-nosnippet>2</a>//!
 <a href=#3 id=3 data-nosnippet>3</a>//! A handle for a remote object implementing the `org.a11y.atspi.Accessible`
 <a href=#4 id=4 data-nosnippet>4</a>//! interface.
@@ -29,8 +29,8 @@
 <a href=#29 id=29 data-nosnippet>29</a>	/// guaranteed to be persistent for the lifetime of the application.
 <a href=#30 id=30 data-nosnippet>30</a>	/// All other objects in the accessibility hierarchy may be created and destroyed dynamically.
 <a href=#31 id=31 data-nosnippet>31</a>	///
-<a href=#32 id=32 data-nosnippet>32</a>	/// [`ObjectRef`]: ../crate::common::events::ObjectRef
-<a href=#33 id=33 data-nosnippet>33</a>	/// [`Application`]: crate::application::ApplicationProxy
+<a href=#32 id=32 data-nosnippet>32</a>	/// [`ObjectRef`]: [`crate::common::events::ObjectRef`]
+<a href=#33 id=33 data-nosnippet>33</a>	/// [`Application`]: [`crate::application::ApplicationProxy`]
 <a href=#34 id=34 data-nosnippet>34</a>	</span><span class="kw">fn </span>get_application(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;ObjectRef&gt;;
 <a href=#35 id=35 data-nosnippet>35</a>
 <a href=#36 id=36 data-nosnippet>36</a>	<span class="doccomment">/// Gets a list of name/value pairs of attributes or annotations for this object.
@@ -39,8 +39,8 @@
 <a href=#39 id=39 data-nosnippet>39</a>	/// For	typographic, textual, or textually-semantic attributes,
 <a href=#40 id=40 data-nosnippet>40</a>	/// see [`TextProxy`]'s [`get_attributes`] method instead.
 <a href=#41 id=41 data-nosnippet>41</a>	///
-<a href=#42 id=42 data-nosnippet>42</a>	/// [`TextProxy`]: crate::text::TextProxy
-<a href=#43 id=43 data-nosnippet>43</a>	/// [`get_attributes`]: crate::text::TextProxy#method.get_attributes
+<a href=#42 id=42 data-nosnippet>42</a>	/// [`TextProxy`]: [`crate::text::TextProxy`]
+<a href=#43 id=43 data-nosnippet>43</a>	/// [`get_attributes`]: [`crate::text::TextProxy#method.get_attributes`]
 <a href=#44 id=44 data-nosnippet>44</a>	</span><span class="kw">fn </span>get_attributes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;std::collections::HashMap&lt;String, String&gt;&gt;;
 <a href=#45 id=45 data-nosnippet>45</a>
 <a href=#46 id=46 data-nosnippet>46</a>	<span class="doccomment">/// Retrieve child by index (starting from 0),
@@ -53,7 +53,7 @@
 <a href=#53 id=53 data-nosnippet>53</a>	/// GTK4 returns an error, while atk-adaptor (e.g. Gtk3) returns the
 <a href=#54 id=54 data-nosnippet>54</a>	/// null object path "/org/a11y/atspi/null".
 <a href=#55 id=55 data-nosnippet>55</a>	///
-<a href=#56 id=56 data-nosnippet>56</a>	/// Documentation advises implementors to return a DBus Error when the index is
+<a href=#56 id=56 data-nosnippet>56</a>	/// Documentation advises implementors to return a `DBus` Error when the index is
 <a href=#57 id=57 data-nosnippet>57</a>	/// out of range, to "keep the type system gods happy".
 <a href=#58 id=58 data-nosnippet>58</a>	///
 <a href=#59 id=59 data-nosnippet>59</a>	/// [`get_children`]: #method.get_children
@@ -68,7 +68,7 @@
 <a href=#68 id=68 data-nosnippet>68</a>	/// On the [`Accessible`] interface of `org.a11y.atspi.Registry`, the registry daemon, this method retrieves a list
 <a href=#69 id=69 data-nosnippet>69</a>	/// of all accessible applications' root objects on the bus.
 <a href=#70 id=70 data-nosnippet>70</a>	///
-<a href=#71 id=71 data-nosnippet>71</a>	/// [`Accessible`]: crate::accessible::AccessibleProxy
+<a href=#71 id=71 data-nosnippet>71</a>	/// [`Accessible`]: [`crate::accessible::AccessibleProxy`]
 <a href=#72 id=72 data-nosnippet>72</a>	</span><span class="kw">fn </span>get_children(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;ObjectRef&gt;&gt;;
 <a href=#73 id=73 data-nosnippet>73</a>
 <a href=#74 id=74 data-nosnippet>74</a>	<span class="doccomment">/// This object resides in its parent's list of children.
@@ -79,7 +79,7 @@
 <a href=#79 id=79 data-nosnippet>79</a>	</span><span class="kw">fn </span>get_index_in_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;i32&gt;;
 <a href=#80 id=80 data-nosnippet>80</a>
 <a href=#81 id=81 data-nosnippet>81</a>	<span class="doccomment">/// Returns an [`InterfaceSet`] accessible interface names supported by the `self` object.
-<a href=#82 id=82 data-nosnippet>82</a>	/// [`InterfaceSet`]: crate::common::InterfaceSet
+<a href=#82 id=82 data-nosnippet>82</a>	/// [`InterfaceSet`]: [`crate::common::InterfaceSet`]
 <a href=#83 id=83 data-nosnippet>83</a>	</span><span class="kw">fn </span>get_interfaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;InterfaceSet&gt;;
 <a href=#84 id=84 data-nosnippet>84</a>
 <a href=#85 id=85 data-nosnippet>85</a>	<span class="doccomment">/// Gets a `String` corresponding to the name of the role played by an object,
@@ -113,11 +113,11 @@
 <a href=#113 id=113 data-nosnippet>113</a>	/// and/or the other UI components that are directly affected by user interactions with the valuator.
 <a href=#114 id=114 data-nosnippet>114</a>	/// Common examples include the association of scrollbars with the viewport or panel that they control.
 <a href=#115 id=115 data-nosnippet>115</a>	///
-<a href=#116 id=116 data-nosnippet>116</a>	/// [`RelationType`]: crate::common::RelationType
-<a href=#117 id=117 data-nosnippet>117</a>	/// [`RelationType::LabelledBy`]: crate::common::RelationType::LabelledBy
-<a href=#118 id=118 data-nosnippet>118</a>	/// [`RelationType::ControllerFor`]: crate::common::RelationType::ControllerFor
+<a href=#116 id=116 data-nosnippet>116</a>	/// [`RelationType`]: [`crate::common::RelationType`]
+<a href=#117 id=117 data-nosnippet>117</a>	/// [`RelationType::LabelledBy`]: [`crate::common::RelationType::LabelledBy`]
+<a href=#118 id=118 data-nosnippet>118</a>	/// [`RelationType::ControllerFor`]: [`crate::common::RelationType::ControllerFor`]
 <a href=#119 id=119 data-nosnippet>119</a>	/// [`name`]: #method.name
-<a href=#120 id=120 data-nosnippet>120</a>	/// [`Accessible`]: ../crate::common::events::Accessible
+<a href=#120 id=120 data-nosnippet>120</a>	/// [`Accessible`]: [`crate::common::events::Accessible`]
 <a href=#121 id=121 data-nosnippet>121</a>	</span><span class="kw">fn </span>get_relation_set(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Vec&lt;(RelationType, Vec&lt;ObjectRef&gt;)&gt;&gt;;
 <a href=#122 id=122 data-nosnippet>122</a>
 <a href=#123 id=123 data-nosnippet>123</a>	<span class="doccomment">/// Gets the [`Role`] that the current accessible object represents.
@@ -129,8 +129,8 @@
 <a href=#129 id=129 data-nosnippet>129</a>	/// (appears unpressed; presses	when acted upon; invokes a certain action
 <a href=#130 id=130 data-nosnippet>130</a>	/// when pressed) can expose an	[`Role::Button`] role.
 <a href=#131 id=131 data-nosnippet>131</a>	///
-<a href=#132 id=132 data-nosnippet>132</a>	/// [`Role::Button`]: crate::common::Role::Button
-<a href=#133 id=133 data-nosnippet>133</a>	/// [`Role`]: crate::common::Role
+<a href=#132 id=132 data-nosnippet>132</a>	/// [`Role::Button`]: [`crate::common::Role::Button`]
+<a href=#133 id=133 data-nosnippet>133</a>	/// [`Role`]: [`crate::common::Role`]
 <a href=#134 id=134 data-nosnippet>134</a>	</span><span class="kw">fn </span>get_role(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;Role&gt;;
 <a href=#135 id=135 data-nosnippet>135</a>
 <a href=#136 id=136 data-nosnippet>136</a>	<span class="doccomment">/// Gets a `String` corresponding to the name of the role played by an object,
@@ -149,14 +149,14 @@
 <a href=#149 id=149 data-nosnippet>149</a>	</span><span class="kw">fn </span>get_role_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;String&gt;;
 <a href=#150 id=150 data-nosnippet>150</a>
 <a href=#151 id=151 data-nosnippet>151</a>	<span class="doccomment">/// Method to retrieve the [`StateSet`] of states currently held by `self`.
-<a href=#152 id=152 data-nosnippet>152</a>	/// [`StateSet`]: crate::common::StateSet
+<a href=#152 id=152 data-nosnippet>152</a>	/// [`StateSet`]: [`crate::common::StateSet`]
 <a href=#153 id=153 data-nosnippet>153</a>	</span><span class="kw">fn </span>get_state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;StateSet&gt;;
 <a href=#154 id=154 data-nosnippet>154</a>
 <a href=#155 id=155 data-nosnippet>155</a>	<span class="doccomment">/// Application-specific identifier for the current object.
 <a href=#156 id=156 data-nosnippet>156</a>	///
 <a href=#157 id=157 data-nosnippet>157</a>	/// A special id given to an object.
 <a href=#158 id=158 data-nosnippet>158</a>	/// Accessible application developers can use this to give a special id to an object
-<a href=#159 id=159 data-nosnippet>159</a>	/// to use in tests, for example, "my_widget".
+<a href=#159 id=159 data-nosnippet>159</a>	/// to use in tests, for example, "`my_widget`".
 <a href=#160 id=160 data-nosnippet>160</a>	///
 <a href=#161 id=161 data-nosnippet>161</a>	/// Note that there is no way to directly find an object by its id;
 <a href=#162 id=162 data-nosnippet>162</a>	/// a test program may have to recursively get the children to find a specific id.
@@ -185,7 +185,7 @@
 <a href=#185 id=185 data-nosnippet>185</a>
 <a href=#186 id=186 data-nosnippet>186</a>	<span class="doccomment">/// Unix locale for the current object.
 <a href=#187 id=187 data-nosnippet>187</a>	///
-<a href=#188 id=188 data-nosnippet>188</a>	/// This is a string in the form of "language_territory.codeset".
+<a href=#188 id=188 data-nosnippet>188</a>	/// This is a string in the form of "`language_territory.codeset`".
 <a href=#189 id=189 data-nosnippet>189</a>	/// For example, "en_US.UTF-8" or "de_DE.UTF-8".
 <a href=#190 id=190 data-nosnippet>190</a>	///
 <a href=#191 id=191 data-nosnippet>191</a>	/// For an application, this may be the locale for the language that the application
@@ -211,11 +211,11 @@
 <a href=#211 id=211 data-nosnippet>211</a>	/// slider had a `LabeledBy` relation to corresponding labels visible in the user
 <a href=#212 id=212 data-nosnippet>212</a>	/// interface.
 <a href=#213 id=213 data-nosnippet>213</a>	///
-<a href=#214 id=214 data-nosnippet>214</a>	/// [`RelationType::LabelledBy`]: crate::common::RelationType::LabelledBy
+<a href=#214 id=214 data-nosnippet>214</a>	/// [`RelationType::LabelledBy`]: [`crate::common::RelationType::LabelledBy`]
 <a href=#215 id=215 data-nosnippet>215</a>	</span><span class="attr">#[zbus(property)]
 <a href=#216 id=216 data-nosnippet>216</a>	</span><span class="kw">fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; zbus::Result&lt;String&gt;;
 <a href=#217 id=217 data-nosnippet>217</a>
-<a href=#218 id=218 data-nosnippet>218</a>	<span class="doccomment">/// ObjectRef parent object of the current object.
+<a href=#218 id=218 data-nosnippet>218</a>	<span class="doccomment">/// `ObjectRef` parent object of the current object.
 <a href=#219 id=219 data-nosnippet>219</a>	///
 <a href=#220 id=220 data-nosnippet>220</a>	/// Null parent:
 <a href=#221 id=221 data-nosnippet>221</a>	/// If the object has no parent (e.g. the application's root object is being queried),

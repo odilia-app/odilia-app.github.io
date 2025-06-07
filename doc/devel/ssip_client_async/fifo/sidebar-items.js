@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["asynchronous_tokio"],"struct":["Builder","UnixStream"]};
+window.SIDEBAR_ITEMS = {"mod":["asynchronous_async_io","synchronous"]};

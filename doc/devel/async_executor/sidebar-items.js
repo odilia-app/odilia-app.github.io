@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Executor","LocalExecutor"]};
+window.SIDEBAR_ITEMS = {"struct":["Executor","LocalExecutor","StaticExecutor","StaticLocalExecutor"]};

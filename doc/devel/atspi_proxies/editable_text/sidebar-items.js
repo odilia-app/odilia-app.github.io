@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["EditableTextProxy","EditableTextProxyBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["EditableTextProxy"]};

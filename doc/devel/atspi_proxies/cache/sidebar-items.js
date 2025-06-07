@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["CacheProxy","CacheProxyBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["CacheProxy"]};

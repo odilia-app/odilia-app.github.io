@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A pathologically simple command line argument parser."><title>lexopt - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-84e720fa.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="lexopt" data-themes="" data-resource-suffix="" data-rustdoc-version="1.89.0-nightly (44f415c1d 2025-06-06)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-fd3af306.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../lexopt/index.html">lexopt</a><span class="version">0.3.1</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#example" title="Example">Example</a></li></ul><h3><a href="#modules">Crate Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#traits" title="Traits">Traits</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Crate <span>lexopt</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/lexopt/lib.rs.html#1-1861">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A pathologically simple command line argument parser.</p>
+<p>Most argument parsers are declarative: you tell them what to parse,
+and they do it.</p>
+<p>This one provides you with a stream of options and values and lets you
+figure out the rest.</p>
+<h3 id="example"><a class="doc-anchor" href="#example">§</a>Example</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">struct </span>Args {
+    thing: String,
+    number: u32,
+    shout: bool,
+}
+
+<span class="kw">fn </span>parse_args() -&gt; <span class="prelude-ty">Result</span>&lt;Args, lexopt::Error&gt; {
+    <span class="kw">use </span>lexopt::prelude::<span class="kw-2">*</span>;
+
+    <span class="kw">let </span><span class="kw-2">mut </span>thing = <span class="prelude-val">None</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>number = <span class="number">1</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>shout = <span class="bool-val">false</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>parser = lexopt::Parser::from_env();
+    <span class="kw">while let </span><span class="prelude-val">Some</span>(arg) = parser.next()<span class="question-mark">? </span>{
+        <span class="kw">match </span>arg {
+            Short(<span class="string">'n'</span>) | Long(<span class="string">"number"</span>) =&gt; {
+                number = parser.value()<span class="question-mark">?</span>.parse()<span class="question-mark">?</span>;
+            }
+            Long(<span class="string">"shout"</span>) =&gt; {
+                shout = <span class="bool-val">true</span>;
+            }
+            Value(val) <span class="kw">if </span>thing.is_none() =&gt; {
+                thing = <span class="prelude-val">Some</span>(val.string()<span class="question-mark">?</span>);
+            }
+            Long(<span class="string">"help"</span>) =&gt; {
+                <span class="macro">println!</span>(<span class="string">"Usage: hello [-n|--number=NUM] [--shout] THING"</span>);
+                std::process::exit(<span class="number">0</span>);
+            }
+            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(arg.unexpected()),
+        }
+    }
+
+    <span class="prelude-val">Ok</span>(Args {
+        thing: thing.ok_or(<span class="string">"missing argument THING"</span>)<span class="question-mark">?</span>,
+        number,
+        shout,
+    })
+}
+
+<span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;(), lexopt::Error&gt; {
+    <span class="kw">let </span>args = parse_args()<span class="question-mark">?</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>message = <span class="macro">format!</span>(<span class="string">"Hello {}"</span>, args.thing);
+    <span class="kw">if </span>args.shout {
+        message = message.to_uppercase();
+    }
+    <span class="kw">for _ in </span><span class="number">0</span>..args.number {
+        <span class="macro">println!</span>(<span class="string">"{}"</span>, message);
+    }
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div>
+<p>Let’s walk through this:</p>
+<ul>
+<li>We start parsing with <a href="struct.Parser.html#method.from_env" title="associated function lexopt::Parser::from_env"><code>Parser::from_env</code></a>.</li>
+<li>We call <a href="struct.Parser.html#method.next" title="method lexopt::Parser::next"><code>parser.next()</code></a> in a loop to get all the arguments until they run out.</li>
+<li>We match on arguments. <a href="enum.Arg.html#variant.Short" title="variant lexopt::Arg::Short"><code>Short</code></a> and <a href="enum.Arg.html#variant.Long" title="variant lexopt::Arg::Long"><code>Long</code></a> indicate an option.</li>
+<li>To get the value that belongs to an option (like <code>10</code> in <code>-n 10</code>) we call <a href="struct.Parser.html#method.value" title="method lexopt::Parser::value"><code>parser.value()</code></a>.
+<ul>
+<li>This returns a standard <a href="https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsString.html" title="struct std::ffi::os_str::OsString"><code>OsString</code></a>.</li>
+<li>For convenience, <a href="prelude/index.html" title="mod lexopt::prelude"><code>use lexopt::prelude::*</code></a> adds a <a href="trait.ValueExt.html#tymethod.parse" title="method lexopt::ValueExt::parse"><code>.parse()</code></a> method, analogous to <a href="https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse" title="method str::parse"><code>str::parse</code></a>.</li>
+<li>Calling <code>parser.value()</code> is how we tell <code>Parser</code> that <code>-n</code> takes a value at all.</li>
+</ul>
+</li>
+<li><code>Value</code> indicates a free-standing argument.
+<ul>
+<li><code>if thing.is_none()</code> is a useful pattern for positional arguments. If we already found <code>thing</code> we pass it on to another case.</li>
+<li>It also contains an <code>OsString</code>.
+<ul>
+<li>The <a href="trait.ValueExt.html#tymethod.string" title="method lexopt::ValueExt::string"><code>.string()</code></a> method decodes it into a plain <code>String</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If we don’t know what to do with an argument we use <a href="enum.Arg.html#method.unexpected" title="method lexopt::Arg::unexpected"><code>return Err(arg.unexpected())</code></a> to turn it into an error message.</li>
+<li>Strings can be promoted to errors for custom error messages.</li>
+</ul>
+</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="prelude/index.html" title="mod lexopt::prelude">prelude</a></dt><dd>A small prelude for processing arguments.</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Parser.html" title="struct lexopt::Parser">Parser</a></dt><dd>A parser for command line arguments.</dd><dt><a class="struct" href="struct.RawArgs.html" title="struct lexopt::RawArgs">RawArgs</a></dt><dd>An iterator for the remaining raw arguments, returned by <a href="struct.Parser.html#method.raw_args" title="method lexopt::Parser::raw_args"><code>Parser::raw_args</code></a>.</dd><dt><a class="struct" href="struct.ValuesIter.html" title="struct lexopt::ValuesIter">Values<wbr>Iter</a></dt><dd>An iterator for multiple option-arguments, returned by <a href="struct.Parser.html#method.values" title="method lexopt::Parser::values"><code>Parser::values</code></a>.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.Arg.html" title="enum lexopt::Arg">Arg</a></dt><dd>A command line argument found by <a href="struct.Parser.html" title="struct lexopt::Parser"><code>Parser</code></a>, either an option or a positional argument.</dd><dt><a class="enum" href="enum.Error.html" title="enum lexopt::Error">Error</a></dt><dd>An error during argument parsing.</dd></dl><h2 id="traits" class="section-header">Traits<a href="#traits" class="anchor">§</a></h2><dl class="item-table"><dt><a class="trait" href="trait.ValueExt.html" title="trait lexopt::ValueExt">Value<wbr>Ext</a></dt><dd>An optional extension trait with methods for parsing <a href="https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsString.html" title="struct std::ffi::os_str::OsString"><code>OsString</code></a>s.</dd></dl></section></div></main></body></html>

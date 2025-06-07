@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["RegistryProxy","RegistryProxyBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["RegistryProxy"]};

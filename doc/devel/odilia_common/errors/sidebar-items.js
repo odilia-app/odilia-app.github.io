@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["AccessiblePrimitiveConversionError","CacheError","ConfigError","KeyFromStrError","ModeFromStrError","OdiliaError","SendError"],"macro":["send_err_impl"]};
+window.SIDEBAR_ITEMS = {"enum":["AccessiblePrimitiveConversionError","CacheError","KeyFromStrError","ModeFromStrError","NotifyError","OdiliaError","SendError"],"macro":["send_err_impl"]};

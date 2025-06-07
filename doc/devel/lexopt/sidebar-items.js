@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Arg","Error"],"mod":["prelude"],"struct":["Parser","RawArgs","ValuesIter"],"trait":["ValueExt"]};

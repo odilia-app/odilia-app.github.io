@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Builder","TcpStream"]};
+window.SIDEBAR_ITEMS = {"mod":["synchronous"]};

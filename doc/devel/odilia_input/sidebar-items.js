@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["get_file_paths","get_log_file_name","handle_event","setup_input_server","sr_event_receiver"],"mod":["proxy"]};
+window.SIDEBAR_ITEMS = {"fn":["get_file_paths","get_log_file_name","handle_event","or_cancel","setup_input_server","sr_event_receiver","sr_event_receiver_inner"],"mod":["proxy"]};

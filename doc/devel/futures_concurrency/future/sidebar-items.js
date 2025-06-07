@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["future_group"],"struct":["FutureGroup","WaitUntil"],"trait":["FutureExt","Join","Race","RaceOk","TryJoin"]};
+window.SIDEBAR_ITEMS = {"struct":["WaitUntil"],"trait":["FutureExt","Join","Race","RaceOk","TryJoin"]};

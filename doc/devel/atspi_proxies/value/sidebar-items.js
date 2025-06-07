@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ValueProxy","ValueProxyBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["ValueProxy"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ComponentProxy","ComponentProxyBlocking"]};
+window.SIDEBAR_ITEMS = {"struct":["ComponentProxy"]};

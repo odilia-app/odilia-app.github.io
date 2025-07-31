@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["cache_event","event_property","relation_set"]};
+window.SIDEBAR_ITEMS = {"mod":["cache_event","event_property","relation_set","subtree"]};

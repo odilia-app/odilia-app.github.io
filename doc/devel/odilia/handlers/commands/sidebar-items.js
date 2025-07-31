@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["new_caret_pos","new_focused_item","speak","stop_speech","structural_nav"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["caret_moved","caret_moved_update_state","doc_loaded","focused","state_set"]};

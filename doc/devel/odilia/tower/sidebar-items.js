@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["async_try","choice","extractors","from_state","handler","handlers","iter_svc","service_ext","service_set","state_changed","state_svc","sync_try","unwrap_svc"]};
+window.SIDEBAR_ITEMS = {"mod":["async_try","choice","extractors","from_state","handler","handlers","iter_svc","predicate","service_ext","service_set","state_changed","state_svc","sync_try","unwrap_svc"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.7.1/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (ab68b0fb2 2025-07-08)" data-channel="nightly" data-search-js="search-179e01a3.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-4e99c027.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-673ee1e0.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">zbus_macros/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#![deny(rust_2018_idioms)]
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus_macros-5.8.0/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="zbus_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (3048886e5 2025-07-30)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-68b7e25d.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-eebb9057.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">zbus_macros/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#![deny(rust_2018_idioms)]
 <a href=#2 id=2 data-nosnippet>2</a>#![doc(
 <a href=#3 id=3 data-nosnippet>3</a>    html_logo_url = <span class="string">"https://raw.githubusercontent.com/dbus2/zbus/9f7a90d2b594ddc48b7a5f39fda5e00cd56a7dfb/logo.png"
 <a href=#4 id=4 data-nosnippet>4</a></span>)]
@@ -250,173 +250,174 @@
 <a href=#250 id=250 data-nosnippet>250</a>///     * `"invalidates"` - the change signal is emitted, but the value is not included in the
 <a href=#251 id=251 data-nosnippet>251</a>///       signal.
 <a href=#252 id=252 data-nosnippet>252</a>///     * `"const"` - the property never changes, thus no signal is ever emitted for it.
-<a href=#253 id=253 data-nosnippet>253</a>///     * `"false"` - the change signal is not emitted if the property changes.
-<a href=#254 id=254 data-nosnippet>254</a>///
-<a href=#255 id=255 data-nosnippet>255</a>/// * `signal` - the method is a "signal". It must be a method declaration (without body). Its code
-<a href=#256 id=256 data-nosnippet>256</a>///   block will be expanded to emit the signal from the object path associated with the interface
-<a href=#257 id=257 data-nosnippet>257</a>///   instance. Moreover, `interface` will also generate a trait named `&lt;Interface&gt;Signals` that
-<a href=#258 id=258 data-nosnippet>258</a>///   provides all the signal methods but without the `SignalEmitter` argument. The macro implements
-<a href=#259 id=259 data-nosnippet>259</a>///   this trait for two types, `zbus::object_server::InterfaceRef&lt;Interface&gt;` and
-<a href=#260 id=260 data-nosnippet>260</a>///   `SignalEmitter&lt;'_&gt;`. The former is useful for emitting signals from outside the context of an
-<a href=#261 id=261 data-nosnippet>261</a>///   interface method and the latter is useful for emitting signals from inside interface methods.
-<a href=#262 id=262 data-nosnippet>262</a>///
-<a href=#263 id=263 data-nosnippet>263</a>///   You can call a signal method from a an interface method, or from an [`ObjectServer::with`]
-<a href=#264 id=264 data-nosnippet>264</a>///   function.
-<a href=#265 id=265 data-nosnippet>265</a>///
-<a href=#266 id=266 data-nosnippet>266</a>/// * `out_args` - When returning multiple values from a method, naming the out arguments become
-<a href=#267 id=267 data-nosnippet>267</a>///   important. You can use `out_args` to specify their names.
-<a href=#268 id=268 data-nosnippet>268</a>///
-<a href=#269 id=269 data-nosnippet>269</a>/// * `proxy` - Use this to specify the [`macro@proxy`]-specific method sub-attributes (e.g
-<a href=#270 id=270 data-nosnippet>270</a>///   `object`). The common sub-attributes (e.g `name`) are automatically forworded to the
-<a href=#271 id=271 data-nosnippet>271</a>///   [`macro@proxy`] macro. Moreover, you can use `visibility` sub-attribute to specify the
-<a href=#272 id=272 data-nosnippet>272</a>///   visibility of the generated proxy type(s).
-<a href=#273 id=273 data-nosnippet>273</a>///
-<a href=#274 id=274 data-nosnippet>274</a>///   In such case, your method must return a tuple containing
-<a href=#275 id=275 data-nosnippet>275</a>///   your out arguments, in the same order as passed to `out_args`.
-<a href=#276 id=276 data-nosnippet>276</a>///
-<a href=#277 id=277 data-nosnippet>277</a>/// The `struct_return` attribute (from zbus 1.x) is no longer supported. If you want to return a
-<a href=#278 id=278 data-nosnippet>278</a>/// single structure from a method, declare it to return a tuple containing either a named structure
-<a href=#279 id=279 data-nosnippet>279</a>/// or a nested tuple.
-<a href=#280 id=280 data-nosnippet>280</a>///
-<a href=#281 id=281 data-nosnippet>281</a>/// Note: a `&lt;property_name_in_snake_case&gt;_changed` method is generated for each property: this
-<a href=#282 id=282 data-nosnippet>282</a>/// method emits the "PropertiesChanged" signal for the associated property. The setter (if it
-<a href=#283 id=283 data-nosnippet>283</a>/// exists) will automatically call this method. For instance, a property setter named `set_foo`
-<a href=#284 id=284 data-nosnippet>284</a>/// will be called to set the property "Foo", and will emit the "PropertiesChanged" signal with the
-<a href=#285 id=285 data-nosnippet>285</a>/// new value for "Foo". Other changes to the "Foo" property can be signaled manually with the
-<a href=#286 id=286 data-nosnippet>286</a>/// generated `foo_changed` method. In addition, a `&lt;property_name_in_snake_case&gt;_invalidated`
-<a href=#287 id=287 data-nosnippet>287</a>/// method is also generated that much like `_changed` method, emits a "PropertyChanged" signal
-<a href=#288 id=288 data-nosnippet>288</a>/// but does not send over the new value of the property along with it. It is usually best to avoid
-<a href=#289 id=289 data-nosnippet>289</a>/// using this since it will force all interested peers to fetch the new value and hence result in
-<a href=#290 id=290 data-nosnippet>290</a>/// excess traffic on the bus.
-<a href=#291 id=291 data-nosnippet>291</a>///
-<a href=#292 id=292 data-nosnippet>292</a>/// The method arguments support the following `zbus` attributes:
-<a href=#293 id=293 data-nosnippet>293</a>///
-<a href=#294 id=294 data-nosnippet>294</a>/// * `object_server` - This marks the method argument to receive a reference to the
-<a href=#295 id=295 data-nosnippet>295</a>///   [`ObjectServer`] this method was called by.
-<a href=#296 id=296 data-nosnippet>296</a>/// * `connection` - This marks the method argument to receive a reference to the [`Connection`] on
-<a href=#297 id=297 data-nosnippet>297</a>///   which the method call was received.
-<a href=#298 id=298 data-nosnippet>298</a>/// * `header` - This marks the method argument to receive the message header associated with the
-<a href=#299 id=299 data-nosnippet>299</a>///   D-Bus method call being handled. For property methods, this will be an `Option&lt;Header&lt;'_&gt;&gt;`,
-<a href=#300 id=300 data-nosnippet>300</a>///   which will be set to `None` if the method is called for reasons other than to respond to an
-<a href=#301 id=301 data-nosnippet>301</a>///   external property access.
-<a href=#302 id=302 data-nosnippet>302</a>/// * `signal_emitter` - This marks the method argument to receive a [`SignalEmitter`] instance,
-<a href=#303 id=303 data-nosnippet>303</a>///   which is needed for emitting signals the easy way.
-<a href=#304 id=304 data-nosnippet>304</a>///
-<a href=#305 id=305 data-nosnippet>305</a>/// # Example
-<a href=#306 id=306 data-nosnippet>306</a>///
-<a href=#307 id=307 data-nosnippet>307</a>/// ```
-<a href=#308 id=308 data-nosnippet>308</a>/// # use std::error::Error;
-<a href=#309 id=309 data-nosnippet>309</a>/// use zbus_macros::interface;
-<a href=#310 id=310 data-nosnippet>310</a>/// use zbus::{ObjectServer, object_server::SignalEmitter, message::Header};
-<a href=#311 id=311 data-nosnippet>311</a>///
-<a href=#312 id=312 data-nosnippet>312</a>/// struct Example {
-<a href=#313 id=313 data-nosnippet>313</a>///     _some_data: String,
-<a href=#314 id=314 data-nosnippet>314</a>/// }
-<a href=#315 id=315 data-nosnippet>315</a>///
-<a href=#316 id=316 data-nosnippet>316</a>/// #[interface(name = "org.myservice.Example")]
-<a href=#317 id=317 data-nosnippet>317</a>/// impl Example {
-<a href=#318 id=318 data-nosnippet>318</a>///     // "Quit" method. A method may throw errors.
-<a href=#319 id=319 data-nosnippet>319</a>///     async fn quit(
-<a href=#320 id=320 data-nosnippet>320</a>///         &amp;self,
-<a href=#321 id=321 data-nosnippet>321</a>///         #[zbus(header)]
-<a href=#322 id=322 data-nosnippet>322</a>///         hdr: Header&lt;'_&gt;,
-<a href=#323 id=323 data-nosnippet>323</a>///         #[zbus(signal_emitter)]
-<a href=#324 id=324 data-nosnippet>324</a>///         emitter: SignalEmitter&lt;'_&gt;,
-<a href=#325 id=325 data-nosnippet>325</a>///         #[zbus(object_server)]
-<a href=#326 id=326 data-nosnippet>326</a>///         _server: &amp;ObjectServer,
-<a href=#327 id=327 data-nosnippet>327</a>///     ) -&gt; zbus::fdo::Result&lt;()&gt; {
-<a href=#328 id=328 data-nosnippet>328</a>///         let path = hdr.path().unwrap();
-<a href=#329 id=329 data-nosnippet>329</a>///         let msg = format!("You are leaving me on the {} path?", path);
-<a href=#330 id=330 data-nosnippet>330</a>///         emitter.bye(&amp;msg).await?;
-<a href=#331 id=331 data-nosnippet>331</a>///
-<a href=#332 id=332 data-nosnippet>332</a>///         // Do some asynchronous tasks before quitting..
-<a href=#333 id=333 data-nosnippet>333</a>///
-<a href=#334 id=334 data-nosnippet>334</a>///         Ok(())
-<a href=#335 id=335 data-nosnippet>335</a>///     }
-<a href=#336 id=336 data-nosnippet>336</a>///
-<a href=#337 id=337 data-nosnippet>337</a>///     // "TheAnswer" property (note: the "name" attribute), with its associated getter.
-<a href=#338 id=338 data-nosnippet>338</a>///     // A `the_answer_changed` method has also been generated to emit the
-<a href=#339 id=339 data-nosnippet>339</a>///     // "PropertiesChanged" signal for this property.
-<a href=#340 id=340 data-nosnippet>340</a>///     #[zbus(property, name = "TheAnswer")]
-<a href=#341 id=341 data-nosnippet>341</a>///     fn answer(&amp;self) -&gt; u32 {
-<a href=#342 id=342 data-nosnippet>342</a>///         2 * 3 * 7
-<a href=#343 id=343 data-nosnippet>343</a>///     }
-<a href=#344 id=344 data-nosnippet>344</a>///
-<a href=#345 id=345 data-nosnippet>345</a>///     // "IFail" property with its associated getter.
-<a href=#346 id=346 data-nosnippet>346</a>///     // An `i_fail_changed` method has also been generated to emit the
-<a href=#347 id=347 data-nosnippet>347</a>///     // "PropertiesChanged" signal for this property.
-<a href=#348 id=348 data-nosnippet>348</a>///     #[zbus(property)]
-<a href=#349 id=349 data-nosnippet>349</a>///     fn i_fail(&amp;self) -&gt; zbus::fdo::Result&lt;i32&gt; {
-<a href=#350 id=350 data-nosnippet>350</a>///         Err(zbus::fdo::Error::UnknownProperty("IFail".into()))
-<a href=#351 id=351 data-nosnippet>351</a>///     }
-<a href=#352 id=352 data-nosnippet>352</a>///
-<a href=#353 id=353 data-nosnippet>353</a>///     // "Bye" signal (note: no implementation body).
-<a href=#354 id=354 data-nosnippet>354</a>///     #[zbus(signal)]
-<a href=#355 id=355 data-nosnippet>355</a>///     async fn bye(signal_emitter: &amp;SignalEmitter&lt;'_&gt;, message: &amp;str) -&gt; zbus::Result&lt;()&gt;;
-<a href=#356 id=356 data-nosnippet>356</a>///
-<a href=#357 id=357 data-nosnippet>357</a>///     #[zbus(out_args("answer", "question"))]
-<a href=#358 id=358 data-nosnippet>358</a>///     fn meaning_of_life(&amp;self) -&gt; zbus::fdo::Result&lt;(i32, String)&gt; {
-<a href=#359 id=359 data-nosnippet>359</a>///         Ok((42, String::from("Meaning of life")))
-<a href=#360 id=360 data-nosnippet>360</a>///     }
-<a href=#361 id=361 data-nosnippet>361</a>/// }
-<a href=#362 id=362 data-nosnippet>362</a>///
-<a href=#363 id=363 data-nosnippet>363</a>/// # Ok::&lt;_, Box&lt;dyn Error + Send + Sync&gt;&gt;(())
-<a href=#364 id=364 data-nosnippet>364</a>/// ```
-<a href=#365 id=365 data-nosnippet>365</a>///
-<a href=#366 id=366 data-nosnippet>366</a>/// See also [`ObjectServer`] documentation to learn how to export an interface over a `Connection`.
-<a href=#367 id=367 data-nosnippet>367</a>///
-<a href=#368 id=368 data-nosnippet>368</a>/// [`ObjectServer`]: https://docs.rs/zbus/latest/zbus/object_server/struct.ObjectServer.html
-<a href=#369 id=369 data-nosnippet>369</a>/// [`ObjectServer::with`]: https://docs.rs/zbus/latest/zbus/object_server/struct.ObjectServer.html#method.with
-<a href=#370 id=370 data-nosnippet>370</a>/// [`Connection`]: https://docs.rs/zbus/latest/zbus/connection/struct.Connection.html
-<a href=#371 id=371 data-nosnippet>371</a>/// [`Connection::emit_signal()`]: https://docs.rs/zbus/latest/zbus/connection/struct.Connection.html#method.emit_signal
-<a href=#372 id=372 data-nosnippet>372</a>/// [`SignalEmitter`]: https://docs.rs/zbus/latest/zbus/object_server/struct.SignalEmitter.html
-<a href=#373 id=373 data-nosnippet>373</a>/// [`Interface`]: https://docs.rs/zbus/latest/zbus/object_server/trait.Interface.html
-<a href=#374 id=374 data-nosnippet>374</a>/// [dbus_emits_changed_signal]: https://dbus.freedesktop.org/doc/dbus-specification.html#introspection-format
-<a href=#375 id=375 data-nosnippet>375</a></span><span class="attr">#[proc_macro_attribute]
-<a href=#376 id=376 data-nosnippet>376</a></span><span class="kw">pub fn </span>interface(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
-<a href=#377 id=377 data-nosnippet>377</a>    <span class="kw">let </span>args = <span class="macro">parse_macro_input!</span>(attr with Punctuated&lt;Meta, <span class="macro">Token!</span>[,]&gt;::parse_terminated);
-<a href=#378 id=378 data-nosnippet>378</a>    <span class="kw">let </span>input = <span class="macro">parse_macro_input!</span>(item <span class="kw">as </span>ItemImpl);
-<a href=#379 id=379 data-nosnippet>379</a>    iface::expand(args, input)
-<a href=#380 id=380 data-nosnippet>380</a>        .unwrap_or_else(|err| err.to_compile_error())
-<a href=#381 id=381 data-nosnippet>381</a>        .into()
-<a href=#382 id=382 data-nosnippet>382</a>}
-<a href=#383 id=383 data-nosnippet>383</a>
-<a href=#384 id=384 data-nosnippet>384</a><span class="doccomment">/// Derive macro for implementing [`zbus::DBusError`] trait.
-<a href=#385 id=385 data-nosnippet>385</a>///
-<a href=#386 id=386 data-nosnippet>386</a>/// This macro makes it easy to implement the [`zbus::DBusError`] trait for your custom error type
-<a href=#387 id=387 data-nosnippet>387</a>/// (currently only enums are supported).
-<a href=#388 id=388 data-nosnippet>388</a>///
-<a href=#389 id=389 data-nosnippet>389</a>/// If a special variant marked with the `zbus` attribute is present, `From&lt;zbus::Error&gt;` is
-<a href=#390 id=390 data-nosnippet>390</a>/// also implemented for your type. This variant can only have a single unnamed field of type
-<a href=#391 id=391 data-nosnippet>391</a>/// [`zbus::Error`]. This implementation makes it possible for you to declare proxy methods to
-<a href=#392 id=392 data-nosnippet>392</a>/// directly return this type, rather than [`zbus::Error`].
-<a href=#393 id=393 data-nosnippet>393</a>///
-<a href=#394 id=394 data-nosnippet>394</a>/// Each variant (except for the special `zbus` one) can optionally have a (named or unnamed)
-<a href=#395 id=395 data-nosnippet>395</a>/// `String` field (which is used as the human-readable error description).
-<a href=#396 id=396 data-nosnippet>396</a>///
-<a href=#397 id=397 data-nosnippet>397</a>/// # Example
-<a href=#398 id=398 data-nosnippet>398</a>///
-<a href=#399 id=399 data-nosnippet>399</a>/// ```
-<a href=#400 id=400 data-nosnippet>400</a>/// use zbus_macros::DBusError;
-<a href=#401 id=401 data-nosnippet>401</a>///
-<a href=#402 id=402 data-nosnippet>402</a>/// #[derive(DBusError, Debug)]
-<a href=#403 id=403 data-nosnippet>403</a>/// #[zbus(prefix = "org.myservice.App")]
-<a href=#404 id=404 data-nosnippet>404</a>/// enum Error {
-<a href=#405 id=405 data-nosnippet>405</a>///     #[zbus(error)]
-<a href=#406 id=406 data-nosnippet>406</a>///     ZBus(zbus::Error),
-<a href=#407 id=407 data-nosnippet>407</a>///     FileNotFound(String),
-<a href=#408 id=408 data-nosnippet>408</a>///     OutOfMemory,
-<a href=#409 id=409 data-nosnippet>409</a>/// }
-<a href=#410 id=410 data-nosnippet>410</a>/// ```
-<a href=#411 id=411 data-nosnippet>411</a>///
-<a href=#412 id=412 data-nosnippet>412</a>/// [`zbus::DBusError`]: https://docs.rs/zbus/latest/zbus/trait.DBusError.html
-<a href=#413 id=413 data-nosnippet>413</a>/// [`zbus::Error`]: https://docs.rs/zbus/latest/zbus/enum.Error.html
-<a href=#414 id=414 data-nosnippet>414</a>/// [`zvariant::Type`]: https://docs.rs/zvariant/latest/zvariant/trait.Type.html
-<a href=#415 id=415 data-nosnippet>415</a>/// [`serde::Serialize`]: https://docs.rs/serde/1.0.132/serde/trait.Serialize.html
-<a href=#416 id=416 data-nosnippet>416</a></span><span class="attr">#[proc_macro_derive(DBusError, attributes(zbus))]
-<a href=#417 id=417 data-nosnippet>417</a></span><span class="kw">pub fn </span>derive_dbus_error(input: TokenStream) -&gt; TokenStream {
-<a href=#418 id=418 data-nosnippet>418</a>    <span class="kw">let </span>input = <span class="macro">parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
-<a href=#419 id=419 data-nosnippet>419</a>    error::expand_derive(input)
-<a href=#420 id=420 data-nosnippet>420</a>        .unwrap_or_else(|err| err.to_compile_error())
-<a href=#421 id=421 data-nosnippet>421</a>        .into()
-<a href=#422 id=422 data-nosnippet>422</a>}</code></pre></div></section></main></body></html>
+<a href=#253 id=253 data-nosnippet>253</a>///     * `"false"` - the change signal is not emitted if the property changes. If a property is
+<a href=#254 id=254 data-nosnippet>254</a>///       write-only, the change signal will not be emitted in this interface.
+<a href=#255 id=255 data-nosnippet>255</a>///
+<a href=#256 id=256 data-nosnippet>256</a>/// * `signal` - the method is a "signal". It must be a method declaration (without body). Its code
+<a href=#257 id=257 data-nosnippet>257</a>///   block will be expanded to emit the signal from the object path associated with the interface
+<a href=#258 id=258 data-nosnippet>258</a>///   instance. Moreover, `interface` will also generate a trait named `&lt;Interface&gt;Signals` that
+<a href=#259 id=259 data-nosnippet>259</a>///   provides all the signal methods but without the `SignalEmitter` argument. The macro implements
+<a href=#260 id=260 data-nosnippet>260</a>///   this trait for two types, `zbus::object_server::InterfaceRef&lt;Interface&gt;` and
+<a href=#261 id=261 data-nosnippet>261</a>///   `SignalEmitter&lt;'_&gt;`. The former is useful for emitting signals from outside the context of an
+<a href=#262 id=262 data-nosnippet>262</a>///   interface method and the latter is useful for emitting signals from inside interface methods.
+<a href=#263 id=263 data-nosnippet>263</a>///
+<a href=#264 id=264 data-nosnippet>264</a>///   You can call a signal method from a an interface method, or from an [`ObjectServer::with`]
+<a href=#265 id=265 data-nosnippet>265</a>///   function.
+<a href=#266 id=266 data-nosnippet>266</a>///
+<a href=#267 id=267 data-nosnippet>267</a>/// * `out_args` - When returning multiple values from a method, naming the out arguments become
+<a href=#268 id=268 data-nosnippet>268</a>///   important. You can use `out_args` to specify their names.
+<a href=#269 id=269 data-nosnippet>269</a>///
+<a href=#270 id=270 data-nosnippet>270</a>/// * `proxy` - Use this to specify the [`macro@proxy`]-specific method sub-attributes (e.g
+<a href=#271 id=271 data-nosnippet>271</a>///   `object`). The common sub-attributes (e.g `name`) are automatically forworded to the
+<a href=#272 id=272 data-nosnippet>272</a>///   [`macro@proxy`] macro. Moreover, you can use `visibility` sub-attribute to specify the
+<a href=#273 id=273 data-nosnippet>273</a>///   visibility of the generated proxy type(s).
+<a href=#274 id=274 data-nosnippet>274</a>///
+<a href=#275 id=275 data-nosnippet>275</a>///   In such case, your method must return a tuple containing
+<a href=#276 id=276 data-nosnippet>276</a>///   your out arguments, in the same order as passed to `out_args`.
+<a href=#277 id=277 data-nosnippet>277</a>///
+<a href=#278 id=278 data-nosnippet>278</a>/// The `struct_return` attribute (from zbus 1.x) is no longer supported. If you want to return a
+<a href=#279 id=279 data-nosnippet>279</a>/// single structure from a method, declare it to return a tuple containing either a named structure
+<a href=#280 id=280 data-nosnippet>280</a>/// or a nested tuple.
+<a href=#281 id=281 data-nosnippet>281</a>///
+<a href=#282 id=282 data-nosnippet>282</a>/// Note: a `&lt;property_name_in_snake_case&gt;_changed` method is generated for each property: this
+<a href=#283 id=283 data-nosnippet>283</a>/// method emits the "PropertiesChanged" signal for the associated property. The setter (if it
+<a href=#284 id=284 data-nosnippet>284</a>/// exists) will automatically call this method. For instance, a property setter named `set_foo`
+<a href=#285 id=285 data-nosnippet>285</a>/// will be called to set the property "Foo", and will emit the "PropertiesChanged" signal with the
+<a href=#286 id=286 data-nosnippet>286</a>/// new value for "Foo". Other changes to the "Foo" property can be signaled manually with the
+<a href=#287 id=287 data-nosnippet>287</a>/// generated `foo_changed` method. In addition, a `&lt;property_name_in_snake_case&gt;_invalidated`
+<a href=#288 id=288 data-nosnippet>288</a>/// method is also generated that much like `_changed` method, emits a "PropertyChanged" signal
+<a href=#289 id=289 data-nosnippet>289</a>/// but does not send over the new value of the property along with it. It is usually best to avoid
+<a href=#290 id=290 data-nosnippet>290</a>/// using this since it will force all interested peers to fetch the new value and hence result in
+<a href=#291 id=291 data-nosnippet>291</a>/// excess traffic on the bus.
+<a href=#292 id=292 data-nosnippet>292</a>///
+<a href=#293 id=293 data-nosnippet>293</a>/// The method arguments support the following `zbus` attributes:
+<a href=#294 id=294 data-nosnippet>294</a>///
+<a href=#295 id=295 data-nosnippet>295</a>/// * `object_server` - This marks the method argument to receive a reference to the
+<a href=#296 id=296 data-nosnippet>296</a>///   [`ObjectServer`] this method was called by.
+<a href=#297 id=297 data-nosnippet>297</a>/// * `connection` - This marks the method argument to receive a reference to the [`Connection`] on
+<a href=#298 id=298 data-nosnippet>298</a>///   which the method call was received.
+<a href=#299 id=299 data-nosnippet>299</a>/// * `header` - This marks the method argument to receive the message header associated with the
+<a href=#300 id=300 data-nosnippet>300</a>///   D-Bus method call being handled. For property methods, this will be an `Option&lt;Header&lt;'_&gt;&gt;`,
+<a href=#301 id=301 data-nosnippet>301</a>///   which will be set to `None` if the method is called for reasons other than to respond to an
+<a href=#302 id=302 data-nosnippet>302</a>///   external property access.
+<a href=#303 id=303 data-nosnippet>303</a>/// * `signal_emitter` - This marks the method argument to receive a [`SignalEmitter`] instance,
+<a href=#304 id=304 data-nosnippet>304</a>///   which is needed for emitting signals the easy way.
+<a href=#305 id=305 data-nosnippet>305</a>///
+<a href=#306 id=306 data-nosnippet>306</a>/// # Example
+<a href=#307 id=307 data-nosnippet>307</a>///
+<a href=#308 id=308 data-nosnippet>308</a>/// ```
+<a href=#309 id=309 data-nosnippet>309</a>/// # use std::error::Error;
+<a href=#310 id=310 data-nosnippet>310</a>/// use zbus_macros::interface;
+<a href=#311 id=311 data-nosnippet>311</a>/// use zbus::{ObjectServer, object_server::SignalEmitter, message::Header};
+<a href=#312 id=312 data-nosnippet>312</a>///
+<a href=#313 id=313 data-nosnippet>313</a>/// struct Example {
+<a href=#314 id=314 data-nosnippet>314</a>///     _some_data: String,
+<a href=#315 id=315 data-nosnippet>315</a>/// }
+<a href=#316 id=316 data-nosnippet>316</a>///
+<a href=#317 id=317 data-nosnippet>317</a>/// #[interface(name = "org.myservice.Example")]
+<a href=#318 id=318 data-nosnippet>318</a>/// impl Example {
+<a href=#319 id=319 data-nosnippet>319</a>///     // "Quit" method. A method may throw errors.
+<a href=#320 id=320 data-nosnippet>320</a>///     async fn quit(
+<a href=#321 id=321 data-nosnippet>321</a>///         &amp;self,
+<a href=#322 id=322 data-nosnippet>322</a>///         #[zbus(header)]
+<a href=#323 id=323 data-nosnippet>323</a>///         hdr: Header&lt;'_&gt;,
+<a href=#324 id=324 data-nosnippet>324</a>///         #[zbus(signal_emitter)]
+<a href=#325 id=325 data-nosnippet>325</a>///         emitter: SignalEmitter&lt;'_&gt;,
+<a href=#326 id=326 data-nosnippet>326</a>///         #[zbus(object_server)]
+<a href=#327 id=327 data-nosnippet>327</a>///         _server: &amp;ObjectServer,
+<a href=#328 id=328 data-nosnippet>328</a>///     ) -&gt; zbus::fdo::Result&lt;()&gt; {
+<a href=#329 id=329 data-nosnippet>329</a>///         let path = hdr.path().unwrap();
+<a href=#330 id=330 data-nosnippet>330</a>///         let msg = format!("You are leaving me on the {} path?", path);
+<a href=#331 id=331 data-nosnippet>331</a>///         emitter.bye(&amp;msg).await?;
+<a href=#332 id=332 data-nosnippet>332</a>///
+<a href=#333 id=333 data-nosnippet>333</a>///         // Do some asynchronous tasks before quitting..
+<a href=#334 id=334 data-nosnippet>334</a>///
+<a href=#335 id=335 data-nosnippet>335</a>///         Ok(())
+<a href=#336 id=336 data-nosnippet>336</a>///     }
+<a href=#337 id=337 data-nosnippet>337</a>///
+<a href=#338 id=338 data-nosnippet>338</a>///     // "TheAnswer" property (note: the "name" attribute), with its associated getter.
+<a href=#339 id=339 data-nosnippet>339</a>///     // A `the_answer_changed` method has also been generated to emit the
+<a href=#340 id=340 data-nosnippet>340</a>///     // "PropertiesChanged" signal for this property.
+<a href=#341 id=341 data-nosnippet>341</a>///     #[zbus(property, name = "TheAnswer")]
+<a href=#342 id=342 data-nosnippet>342</a>///     fn answer(&amp;self) -&gt; u32 {
+<a href=#343 id=343 data-nosnippet>343</a>///         2 * 3 * 7
+<a href=#344 id=344 data-nosnippet>344</a>///     }
+<a href=#345 id=345 data-nosnippet>345</a>///
+<a href=#346 id=346 data-nosnippet>346</a>///     // "IFail" property with its associated getter.
+<a href=#347 id=347 data-nosnippet>347</a>///     // An `i_fail_changed` method has also been generated to emit the
+<a href=#348 id=348 data-nosnippet>348</a>///     // "PropertiesChanged" signal for this property.
+<a href=#349 id=349 data-nosnippet>349</a>///     #[zbus(property)]
+<a href=#350 id=350 data-nosnippet>350</a>///     fn i_fail(&amp;self) -&gt; zbus::fdo::Result&lt;i32&gt; {
+<a href=#351 id=351 data-nosnippet>351</a>///         Err(zbus::fdo::Error::UnknownProperty("IFail".into()))
+<a href=#352 id=352 data-nosnippet>352</a>///     }
+<a href=#353 id=353 data-nosnippet>353</a>///
+<a href=#354 id=354 data-nosnippet>354</a>///     // "Bye" signal (note: no implementation body).
+<a href=#355 id=355 data-nosnippet>355</a>///     #[zbus(signal)]
+<a href=#356 id=356 data-nosnippet>356</a>///     async fn bye(signal_emitter: &amp;SignalEmitter&lt;'_&gt;, message: &amp;str) -&gt; zbus::Result&lt;()&gt;;
+<a href=#357 id=357 data-nosnippet>357</a>///
+<a href=#358 id=358 data-nosnippet>358</a>///     #[zbus(out_args("answer", "question"))]
+<a href=#359 id=359 data-nosnippet>359</a>///     fn meaning_of_life(&amp;self) -&gt; zbus::fdo::Result&lt;(i32, String)&gt; {
+<a href=#360 id=360 data-nosnippet>360</a>///         Ok((42, String::from("Meaning of life")))
+<a href=#361 id=361 data-nosnippet>361</a>///     }
+<a href=#362 id=362 data-nosnippet>362</a>/// }
+<a href=#363 id=363 data-nosnippet>363</a>///
+<a href=#364 id=364 data-nosnippet>364</a>/// # Ok::&lt;_, Box&lt;dyn Error + Send + Sync&gt;&gt;(())
+<a href=#365 id=365 data-nosnippet>365</a>/// ```
+<a href=#366 id=366 data-nosnippet>366</a>///
+<a href=#367 id=367 data-nosnippet>367</a>/// See also [`ObjectServer`] documentation to learn how to export an interface over a `Connection`.
+<a href=#368 id=368 data-nosnippet>368</a>///
+<a href=#369 id=369 data-nosnippet>369</a>/// [`ObjectServer`]: https://docs.rs/zbus/latest/zbus/object_server/struct.ObjectServer.html
+<a href=#370 id=370 data-nosnippet>370</a>/// [`ObjectServer::with`]: https://docs.rs/zbus/latest/zbus/object_server/struct.ObjectServer.html#method.with
+<a href=#371 id=371 data-nosnippet>371</a>/// [`Connection`]: https://docs.rs/zbus/latest/zbus/connection/struct.Connection.html
+<a href=#372 id=372 data-nosnippet>372</a>/// [`Connection::emit_signal()`]: https://docs.rs/zbus/latest/zbus/connection/struct.Connection.html#method.emit_signal
+<a href=#373 id=373 data-nosnippet>373</a>/// [`SignalEmitter`]: https://docs.rs/zbus/latest/zbus/object_server/struct.SignalEmitter.html
+<a href=#374 id=374 data-nosnippet>374</a>/// [`Interface`]: https://docs.rs/zbus/latest/zbus/object_server/trait.Interface.html
+<a href=#375 id=375 data-nosnippet>375</a>/// [dbus_emits_changed_signal]: https://dbus.freedesktop.org/doc/dbus-specification.html#introspection-format
+<a href=#376 id=376 data-nosnippet>376</a></span><span class="attr">#[proc_macro_attribute]
+<a href=#377 id=377 data-nosnippet>377</a></span><span class="kw">pub fn </span>interface(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+<a href=#378 id=378 data-nosnippet>378</a>    <span class="kw">let </span>args = <span class="macro">parse_macro_input!</span>(attr with Punctuated&lt;Meta, <span class="macro">Token!</span>[,]&gt;::parse_terminated);
+<a href=#379 id=379 data-nosnippet>379</a>    <span class="kw">let </span>input = <span class="macro">parse_macro_input!</span>(item <span class="kw">as </span>ItemImpl);
+<a href=#380 id=380 data-nosnippet>380</a>    iface::expand(args, input)
+<a href=#381 id=381 data-nosnippet>381</a>        .unwrap_or_else(|err| err.to_compile_error())
+<a href=#382 id=382 data-nosnippet>382</a>        .into()
+<a href=#383 id=383 data-nosnippet>383</a>}
+<a href=#384 id=384 data-nosnippet>384</a>
+<a href=#385 id=385 data-nosnippet>385</a><span class="doccomment">/// Derive macro for implementing [`zbus::DBusError`] trait.
+<a href=#386 id=386 data-nosnippet>386</a>///
+<a href=#387 id=387 data-nosnippet>387</a>/// This macro makes it easy to implement the [`zbus::DBusError`] trait for your custom error type
+<a href=#388 id=388 data-nosnippet>388</a>/// (currently only enums are supported).
+<a href=#389 id=389 data-nosnippet>389</a>///
+<a href=#390 id=390 data-nosnippet>390</a>/// If a special variant marked with the `zbus` attribute is present, `From&lt;zbus::Error&gt;` is
+<a href=#391 id=391 data-nosnippet>391</a>/// also implemented for your type. This variant can only have a single unnamed field of type
+<a href=#392 id=392 data-nosnippet>392</a>/// [`zbus::Error`]. This implementation makes it possible for you to declare proxy methods to
+<a href=#393 id=393 data-nosnippet>393</a>/// directly return this type, rather than [`zbus::Error`].
+<a href=#394 id=394 data-nosnippet>394</a>///
+<a href=#395 id=395 data-nosnippet>395</a>/// Each variant (except for the special `zbus` one) can optionally have a (named or unnamed)
+<a href=#396 id=396 data-nosnippet>396</a>/// `String` field (which is used as the human-readable error description).
+<a href=#397 id=397 data-nosnippet>397</a>///
+<a href=#398 id=398 data-nosnippet>398</a>/// # Example
+<a href=#399 id=399 data-nosnippet>399</a>///
+<a href=#400 id=400 data-nosnippet>400</a>/// ```
+<a href=#401 id=401 data-nosnippet>401</a>/// use zbus_macros::DBusError;
+<a href=#402 id=402 data-nosnippet>402</a>///
+<a href=#403 id=403 data-nosnippet>403</a>/// #[derive(DBusError, Debug)]
+<a href=#404 id=404 data-nosnippet>404</a>/// #[zbus(prefix = "org.myservice.App")]
+<a href=#405 id=405 data-nosnippet>405</a>/// enum Error {
+<a href=#406 id=406 data-nosnippet>406</a>///     #[zbus(error)]
+<a href=#407 id=407 data-nosnippet>407</a>///     ZBus(zbus::Error),
+<a href=#408 id=408 data-nosnippet>408</a>///     FileNotFound(String),
+<a href=#409 id=409 data-nosnippet>409</a>///     OutOfMemory,
+<a href=#410 id=410 data-nosnippet>410</a>/// }
+<a href=#411 id=411 data-nosnippet>411</a>/// ```
+<a href=#412 id=412 data-nosnippet>412</a>///
+<a href=#413 id=413 data-nosnippet>413</a>/// [`zbus::DBusError`]: https://docs.rs/zbus/latest/zbus/trait.DBusError.html
+<a href=#414 id=414 data-nosnippet>414</a>/// [`zbus::Error`]: https://docs.rs/zbus/latest/zbus/enum.Error.html
+<a href=#415 id=415 data-nosnippet>415</a>/// [`zvariant::Type`]: https://docs.rs/zvariant/latest/zvariant/trait.Type.html
+<a href=#416 id=416 data-nosnippet>416</a>/// [`serde::Serialize`]: https://docs.rs/serde/1.0.132/serde/trait.Serialize.html
+<a href=#417 id=417 data-nosnippet>417</a></span><span class="attr">#[proc_macro_derive(DBusError, attributes(zbus))]
+<a href=#418 id=418 data-nosnippet>418</a></span><span class="kw">pub fn </span>derive_dbus_error(input: TokenStream) -&gt; TokenStream {
+<a href=#419 id=419 data-nosnippet>419</a>    <span class="kw">let </span>input = <span class="macro">parse_macro_input!</span>(input <span class="kw">as </span>DeriveInput);
+<a href=#420 id=420 data-nosnippet>420</a>    error::expand_derive(input)
+<a href=#421 id=421 data-nosnippet>421</a>        .unwrap_or_else(|err| err.to_compile_error())
+<a href=#422 id=422 data-nosnippet>422</a>        .into()
+<a href=#423 id=423 data-nosnippet>423</a>}</code></pre></div></section></main></body></html>

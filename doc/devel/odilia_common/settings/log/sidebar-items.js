@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["LoggingKind"],"struct":["LogSettings"]};
+window.SIDEBAR_ITEMS = {"enum":["LogLevel","LoggingKind"],"struct":["LogSettings"]};

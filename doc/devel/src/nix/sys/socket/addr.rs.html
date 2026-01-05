@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/nix-0.30.0/src/sys/socket/addr.rs`."><title>addr.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (adcb3d3b4 2025-07-31)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../../../static.files/storage-68b7e25d.js"></script><script defer src="../../../../static.files/src-script-813739b1.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-eebb9057.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">nix/sys/socket/</div>addr.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#[cfg(any(
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/nix-0.30.1/src/sys/socket/addr.rs`."><title>addr.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-2eb46af5.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nix" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0-nightly (e29fcf45e 2026-01-04)" data-channel="nightly" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../../static.files/src-script-813739b1.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">nix/sys/socket/</div>addr.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#[cfg(any(
 <a href=#2 id=2 data-nosnippet>2</a>    bsd,
 <a href=#3 id=3 data-nosnippet>3</a>    linux_android,
 <a href=#4 id=4 data-nosnippet>4</a>    solarish,
@@ -18,7 +18,7 @@
 <a href=#18 id=18 data-nosnippet>18</a></span><span class="kw">use </span><span class="kw">crate</span>::sys::socket::addr::netlink::NetlinkAddr;
 <a href=#19 id=19 data-nosnippet>19</a><span class="attr">#[cfg(all(feature = <span class="string">"ioctl"</span>, apple_targets))]
 <a href=#20 id=20 data-nosnippet>20</a></span><span class="kw">use </span><span class="kw">crate</span>::sys::socket::addr::sys_control::SysControlAddr;
-<a href=#21 id=21 data-nosnippet>21</a><span class="kw">use crate</span>::{NixPath, <span class="prelude-ty">Result</span>};
+<a href=#21 id=21 data-nosnippet>21</a><span class="kw">use </span>crate::{NixPath, <span class="prelude-ty">Result</span>};
 <a href=#22 id=22 data-nosnippet>22</a><span class="kw">use </span>cfg_if::cfg_if;
 <a href=#23 id=23 data-nosnippet>23</a><span class="kw">use </span>memoffset::offset_of;
 <a href=#24 id=24 data-nosnippet>24</a><span class="kw">use </span>std::convert::TryInto;
@@ -551,7 +551,7 @@
 <a href=#551 id=551 data-nosnippet>551</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#552 id=552 data-nosnippet>552</a>            }
 <a href=#553 id=553 data-nosnippet>553</a>        }
-<a href=#554 id=554 data-nosnippet>554</a>        <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_UNIX } {
+<a href=#554 id=554 data-nosnippet>554</a>        <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_UNIX } {
 <a href=#555 id=555 data-nosnippet>555</a>            <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#556 id=556 data-nosnippet>556</a>        }
 <a href=#557 id=557 data-nosnippet>557</a>        <span class="kw">let </span><span class="kw-2">mut </span>su: libc::sockaddr_un = <span class="kw">unsafe </span>{ mem::zeroed() };
@@ -859,11 +859,11 @@
 <a href=#859 id=859 data-nosnippet>859</a>        </span><span class="self">Self</span>: Sized,
 <a href=#860 id=860 data-nosnippet>860</a>    {
 <a href=#861 id=861 data-nosnippet>861</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#862 id=862 data-nosnippet>862</a>            <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_in&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#862 id=862 data-nosnippet>862</a>            <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_in&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#863 id=863 data-nosnippet>863</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#864 id=864 data-nosnippet>864</a>            }
 <a href=#865 id=865 data-nosnippet>865</a>        }
-<a href=#866 id=866 data-nosnippet>866</a>        <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_INET } {
+<a href=#866 id=866 data-nosnippet>866</a>        <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_INET } {
 <a href=#867 id=867 data-nosnippet>867</a>            <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#868 id=868 data-nosnippet>868</a>        }
 <a href=#869 id=869 data-nosnippet>869</a>        <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) }))
@@ -1019,11 +1019,11 @@
 <a href=#1019 id=1019 data-nosnippet>1019</a>        </span><span class="self">Self</span>: Sized,
 <a href=#1020 id=1020 data-nosnippet>1020</a>    {
 <a href=#1021 id=1021 data-nosnippet>1021</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#1022 id=1022 data-nosnippet>1022</a>            <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_in6&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#1022 id=1022 data-nosnippet>1022</a>            <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_in6&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#1023 id=1023 data-nosnippet>1023</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1024 id=1024 data-nosnippet>1024</a>            }
 <a href=#1025 id=1025 data-nosnippet>1025</a>        }
-<a href=#1026 id=1026 data-nosnippet>1026</a>        <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_INET6 } {
+<a href=#1026 id=1026 data-nosnippet>1026</a>        <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_INET6 } {
 <a href=#1027 id=1027 data-nosnippet>1027</a>            <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1028 id=1028 data-nosnippet>1028</a>        }
 <a href=#1029 id=1029 data-nosnippet>1029</a>        <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) }))
@@ -1535,7 +1535,7 @@
 <a href=#1535 id=1535 data-nosnippet>1535</a>
 <a href=#1536 id=1536 data-nosnippet>1536</a><span class="attr">#[cfg(linux_android)]
 <a href=#1537 id=1537 data-nosnippet>1537</a></span><span class="kw">pub mod </span>netlink {
-<a href=#1538 id=1538 data-nosnippet>1538</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#1538 id=1538 data-nosnippet>1538</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#1539 id=1539 data-nosnippet>1539</a>    <span class="kw">use </span><span class="kw">crate</span>::sys::socket::addr::AddressFamily;
 <a href=#1540 id=1540 data-nosnippet>1540</a>    <span class="kw">use </span>libc::{sa_family_t, sockaddr_nl};
 <a href=#1541 id=1541 data-nosnippet>1541</a>    <span class="kw">use </span>std::{fmt, mem};
@@ -1582,11 +1582,11 @@
 <a href=#1582 id=1582 data-nosnippet>1582</a>            </span><span class="self">Self</span>: Sized,
 <a href=#1583 id=1583 data-nosnippet>1583</a>        {
 <a href=#1584 id=1584 data-nosnippet>1584</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#1585 id=1585 data-nosnippet>1585</a>                <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_nl&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#1585 id=1585 data-nosnippet>1585</a>                <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_nl&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#1586 id=1586 data-nosnippet>1586</a>                    <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1587 id=1587 data-nosnippet>1587</a>                }
 <a href=#1588 id=1588 data-nosnippet>1588</a>            }
-<a href=#1589 id=1589 data-nosnippet>1589</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_NETLINK } {
+<a href=#1589 id=1589 data-nosnippet>1589</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_NETLINK } {
 <a href=#1590 id=1590 data-nosnippet>1590</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1591 id=1591 data-nosnippet>1591</a>            }
 <a href=#1592 id=1592 data-nosnippet>1592</a>            <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) }))
@@ -1608,7 +1608,7 @@
 <a href=#1608 id=1608 data-nosnippet>1608</a>
 <a href=#1609 id=1609 data-nosnippet>1609</a><span class="attr">#[cfg(linux_android)]
 <a href=#1610 id=1610 data-nosnippet>1610</a></span><span class="kw">pub mod </span>alg {
-<a href=#1611 id=1611 data-nosnippet>1611</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#1611 id=1611 data-nosnippet>1611</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#1612 id=1612 data-nosnippet>1612</a>    <span class="kw">use </span>libc::{sockaddr_alg, AF_ALG};
 <a href=#1613 id=1613 data-nosnippet>1613</a>    <span class="kw">use </span>std::ffi::CStr;
 <a href=#1614 id=1614 data-nosnippet>1614</a>    <span class="kw">use </span>std::hash::{Hash, Hasher};
@@ -1629,12 +1629,12 @@
 <a href=#1629 id=1629 data-nosnippet>1629</a>            </span><span class="self">Self</span>: Sized,
 <a href=#1630 id=1630 data-nosnippet>1630</a>        {
 <a href=#1631 id=1631 data-nosnippet>1631</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = l {
-<a href=#1632 id=1632 data-nosnippet>1632</a>                <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_alg&gt;() <span class="kw">as </span>libc::socklen_t
+<a href=#1632 id=1632 data-nosnippet>1632</a>                <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_alg&gt;() <span class="kw">as </span>libc::socklen_t
 <a href=#1633 id=1633 data-nosnippet>1633</a>                {
 <a href=#1634 id=1634 data-nosnippet>1634</a>                    <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1635 id=1635 data-nosnippet>1635</a>                }
 <a href=#1636 id=1636 data-nosnippet>1636</a>            }
-<a href=#1637 id=1637 data-nosnippet>1637</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_ALG } {
+<a href=#1637 id=1637 data-nosnippet>1637</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_ALG } {
 <a href=#1638 id=1638 data-nosnippet>1638</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1639 id=1639 data-nosnippet>1639</a>            }
 <a href=#1640 id=1640 data-nosnippet>1640</a>            <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) }))
@@ -1733,8 +1733,8 @@
 <a href=#1733 id=1733 data-nosnippet>1733</a>    <span class="kw">use </span>libc::{<span class="self">self</span>, c_uchar};
 <a href=#1734 id=1734 data-nosnippet>1734</a>    <span class="kw">use </span>std::{fmt, mem, ptr};
 <a href=#1735 id=1735 data-nosnippet>1735</a>    <span class="kw">use </span>std::os::unix::io::RawFd;
-<a href=#1736 id=1736 data-nosnippet>1736</a>    <span class="kw">use crate</span>::{Errno, <span class="prelude-ty">Result</span>};
-<a href=#1737 id=1737 data-nosnippet>1737</a>    <span class="kw">use super</span>::{private, SockaddrLike};
+<a href=#1736 id=1736 data-nosnippet>1736</a>    <span class="kw">use </span>crate::{Errno, <span class="prelude-ty">Result</span>};
+<a href=#1737 id=1737 data-nosnippet>1737</a>    <span class="kw">use </span>super::{private, SockaddrLike};
 <a href=#1738 id=1738 data-nosnippet>1738</a>
 <a href=#1739 id=1739 data-nosnippet>1739</a>    <span class="comment">// FIXME: Move type into `libc`
 <a href=#1740 id=1740 data-nosnippet>1740</a>    </span><span class="attr">#[repr(C)]
@@ -1766,11 +1766,11 @@
 <a href=#1766 id=1766 data-nosnippet>1766</a>            -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; <span class="kw">where </span><span class="self">Self</span>: Sized
 <a href=#1767 id=1767 data-nosnippet>1767</a>        {
 <a href=#1768 id=1768 data-nosnippet>1768</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#1769 id=1769 data-nosnippet>1769</a>                <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_ctl&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#1769 id=1769 data-nosnippet>1769</a>                <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_ctl&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#1770 id=1770 data-nosnippet>1770</a>                    <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1771 id=1771 data-nosnippet>1771</a>                }
 <a href=#1772 id=1772 data-nosnippet>1772</a>            }
-<a href=#1773 id=1773 data-nosnippet>1773</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_SYSTEM } {
+<a href=#1773 id=1773 data-nosnippet>1773</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_SYSTEM } {
 <a href=#1774 id=1774 data-nosnippet>1774</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1775 id=1775 data-nosnippet>1775</a>            }
 <a href=#1776 id=1776 data-nosnippet>1776</a>            <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) } ))
@@ -1838,7 +1838,7 @@
 <a href=#1838 id=1838 data-nosnippet>1838</a></span><span class="kw">mod </span>datalink {
 <a href=#1839 id=1839 data-nosnippet>1839</a>    <span class="macro">feature!</span> {
 <a href=#1840 id=1840 data-nosnippet>1840</a>    <span class="attr">#![feature = <span class="string">"net"</span>]
-<a href=#1841 id=1841 data-nosnippet>1841</a>    </span><span class="kw">use super</span>::{fmt, mem, private, ptr, SockaddrLike};
+<a href=#1841 id=1841 data-nosnippet>1841</a>    </span><span class="kw">use </span>super::{fmt, mem, private, ptr, SockaddrLike};
 <a href=#1842 id=1842 data-nosnippet>1842</a>
 <a href=#1843 id=1843 data-nosnippet>1843</a>    <span class="doccomment">/// Hardware Address
 <a href=#1844 id=1844 data-nosnippet>1844</a>    </span><span class="attr">#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -1907,11 +1907,11 @@
 <a href=#1907 id=1907 data-nosnippet>1907</a>            -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; <span class="kw">where </span><span class="self">Self</span>: Sized
 <a href=#1908 id=1908 data-nosnippet>1908</a>        {
 <a href=#1909 id=1909 data-nosnippet>1909</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#1910 id=1910 data-nosnippet>1910</a>                <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_ll&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#1910 id=1910 data-nosnippet>1910</a>                <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_ll&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#1911 id=1911 data-nosnippet>1911</a>                    <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1912 id=1912 data-nosnippet>1912</a>                }
 <a href=#1913 id=1913 data-nosnippet>1913</a>            }
-<a href=#1914 id=1914 data-nosnippet>1914</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_PACKET } {
+<a href=#1914 id=1914 data-nosnippet>1914</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_PACKET } {
 <a href=#1915 id=1915 data-nosnippet>1915</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#1916 id=1916 data-nosnippet>1916</a>            }
 <a href=#1917 id=1917 data-nosnippet>1917</a>            <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) }))
@@ -1931,7 +1931,7 @@
 <a href=#1931 id=1931 data-nosnippet>1931</a></span><span class="kw">mod </span>datalink {
 <a href=#1932 id=1932 data-nosnippet>1932</a>    <span class="macro">feature!</span> {
 <a href=#1933 id=1933 data-nosnippet>1933</a>    <span class="attr">#![feature = <span class="string">"net"</span>]
-<a href=#1934 id=1934 data-nosnippet>1934</a>    </span><span class="kw">use super</span>::{fmt, mem, private, ptr, SockaddrLike};
+<a href=#1934 id=1934 data-nosnippet>1934</a>    </span><span class="kw">use </span>super::{fmt, mem, private, ptr, SockaddrLike};
 <a href=#1935 id=1935 data-nosnippet>1935</a>
 <a href=#1936 id=1936 data-nosnippet>1936</a>    <span class="doccomment">/// Hardware Address
 <a href=#1937 id=1937 data-nosnippet>1937</a>    </span><span class="attr">#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -2021,11 +2021,11 @@
 <a href=#2021 id=2021 data-nosnippet>2021</a>            -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; <span class="kw">where </span><span class="self">Self</span>: Sized
 <a href=#2022 id=2022 data-nosnippet>2022</a>        {
 <a href=#2023 id=2023 data-nosnippet>2023</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#2024 id=2024 data-nosnippet>2024</a>                <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_dl&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#2024 id=2024 data-nosnippet>2024</a>                <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_dl&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#2025 id=2025 data-nosnippet>2025</a>                    <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#2026 id=2026 data-nosnippet>2026</a>                }
 <a href=#2027 id=2027 data-nosnippet>2027</a>            }
-<a href=#2028 id=2028 data-nosnippet>2028</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_LINK } {
+<a href=#2028 id=2028 data-nosnippet>2028</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_LINK } {
 <a href=#2029 id=2029 data-nosnippet>2029</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#2030 id=2030 data-nosnippet>2030</a>            }
 <a href=#2031 id=2031 data-nosnippet>2031</a>            <span class="prelude-val">Some</span>(<span class="self">Self</span>(<span class="kw">unsafe </span>{ ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>) }))
@@ -2042,7 +2042,7 @@
 <a href=#2042 id=2042 data-nosnippet>2042</a>
 <a href=#2043 id=2043 data-nosnippet>2043</a><span class="attr">#[cfg(any(linux_android, apple_targets))]
 <a href=#2044 id=2044 data-nosnippet>2044</a></span><span class="kw">pub mod </span>vsock {
-<a href=#2045 id=2045 data-nosnippet>2045</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2045 id=2045 data-nosnippet>2045</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2046 id=2046 data-nosnippet>2046</a>    <span class="kw">use </span><span class="kw">crate</span>::sys::socket::addr::AddressFamily;
 <a href=#2047 id=2047 data-nosnippet>2047</a>    <span class="kw">use </span>libc::{sa_family_t, sockaddr_vm};
 <a href=#2048 id=2048 data-nosnippet>2048</a>    <span class="kw">use </span>std::hash::{Hash, Hasher};
@@ -2067,11 +2067,11 @@
 <a href=#2067 id=2067 data-nosnippet>2067</a>            </span><span class="self">Self</span>: Sized,
 <a href=#2068 id=2068 data-nosnippet>2068</a>        {
 <a href=#2069 id=2069 data-nosnippet>2069</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(l) = len {
-<a href=#2070 id=2070 data-nosnippet>2070</a>                <span class="kw">if </span>l != mem::size_of::&lt;libc::sockaddr_vm&gt;() <span class="kw">as </span>libc::socklen_t {
+<a href=#2070 id=2070 data-nosnippet>2070</a>                <span class="kw">if </span><span class="macro">l !</span>= mem::size_of::&lt;libc::sockaddr_vm&gt;() <span class="kw">as </span>libc::socklen_t {
 <a href=#2071 id=2071 data-nosnippet>2071</a>                    <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#2072 id=2072 data-nosnippet>2072</a>                }
 <a href=#2073 id=2073 data-nosnippet>2073</a>            }
-<a href=#2074 id=2074 data-nosnippet>2074</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span>i32 != libc::AF_VSOCK } {
+<a href=#2074 id=2074 data-nosnippet>2074</a>            <span class="kw">if unsafe </span>{ (<span class="kw-2">*</span>addr).sa_family <span class="kw">as </span><span class="macro">i32 !</span>= libc::AF_VSOCK } {
 <a href=#2075 id=2075 data-nosnippet>2075</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#2076 id=2076 data-nosnippet>2076</a>            }
 <a href=#2077 id=2077 data-nosnippet>2077</a>            <span class="kw">unsafe </span>{ <span class="prelude-val">Some</span>(<span class="self">Self</span>(ptr::read_unaligned(addr <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>))) }
@@ -2174,10 +2174,10 @@
 <a href=#2174 id=2174 data-nosnippet>2174</a>
 <a href=#2175 id=2175 data-nosnippet>2175</a><span class="attr">#[cfg(test)]
 <a href=#2176 id=2176 data-nosnippet>2176</a></span><span class="kw">mod </span>tests {
-<a href=#2177 id=2177 data-nosnippet>2177</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2177 id=2177 data-nosnippet>2177</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2178 id=2178 data-nosnippet>2178</a>
 <a href=#2179 id=2179 data-nosnippet>2179</a>    <span class="kw">mod </span>types {
-<a href=#2180 id=2180 data-nosnippet>2180</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2180 id=2180 data-nosnippet>2180</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2181 id=2181 data-nosnippet>2181</a>
 <a href=#2182 id=2182 data-nosnippet>2182</a>        <span class="attr">#[test]
 <a href=#2183 id=2183 data-nosnippet>2183</a>        </span><span class="kw">fn </span>test_ipv4addr_to_libc() {
@@ -2202,7 +2202,7 @@
 <a href=#2202 id=2202 data-nosnippet>2202</a>    </span><span class="kw">mod </span>link {
 <a href=#2203 id=2203 data-nosnippet>2203</a>        <span class="attr">#[cfg(any(apple_targets, solarish))]
 <a href=#2204 id=2204 data-nosnippet>2204</a>        </span><span class="kw">use </span><span class="kw">super</span>::<span class="kw">super</span>::<span class="kw">super</span>::socklen_t;
-<a href=#2205 id=2205 data-nosnippet>2205</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2205 id=2205 data-nosnippet>2205</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2206 id=2206 data-nosnippet>2206</a>
 <a href=#2207 id=2207 data-nosnippet>2207</a>        <span class="doccomment">/// Don't panic when trying to display an empty datalink address
 <a href=#2208 id=2208 data-nosnippet>2208</a>        </span><span class="attr">#[cfg(bsd)]
@@ -2319,7 +2319,7 @@
 <a href=#2319 id=2319 data-nosnippet>2319</a>    }
 <a href=#2320 id=2320 data-nosnippet>2320</a>
 <a href=#2321 id=2321 data-nosnippet>2321</a>    <span class="kw">mod </span>sockaddr_in {
-<a href=#2322 id=2322 data-nosnippet>2322</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2322 id=2322 data-nosnippet>2322</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2323 id=2323 data-nosnippet>2323</a>        <span class="kw">use </span>std::str::FromStr;
 <a href=#2324 id=2324 data-nosnippet>2324</a>
 <a href=#2325 id=2325 data-nosnippet>2325</a>        <span class="attr">#[test]
@@ -2346,7 +2346,7 @@
 <a href=#2346 id=2346 data-nosnippet>2346</a>    }
 <a href=#2347 id=2347 data-nosnippet>2347</a>
 <a href=#2348 id=2348 data-nosnippet>2348</a>    <span class="kw">mod </span>sockaddr_in6 {
-<a href=#2349 id=2349 data-nosnippet>2349</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2349 id=2349 data-nosnippet>2349</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2350 id=2350 data-nosnippet>2350</a>        <span class="kw">use </span>std::str::FromStr;
 <a href=#2351 id=2351 data-nosnippet>2351</a>
 <a href=#2352 id=2352 data-nosnippet>2352</a>        <span class="attr">#[test]
@@ -2385,7 +2385,7 @@
 <a href=#2385 id=2385 data-nosnippet>2385</a>    }
 <a href=#2386 id=2386 data-nosnippet>2386</a>
 <a href=#2387 id=2387 data-nosnippet>2387</a>    <span class="kw">mod </span>sockaddr_storage {
-<a href=#2388 id=2388 data-nosnippet>2388</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2388 id=2388 data-nosnippet>2388</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2389 id=2389 data-nosnippet>2389</a>
 <a href=#2390 id=2390 data-nosnippet>2390</a>        <span class="attr">#[test]
 <a href=#2391 id=2391 data-nosnippet>2391</a>        </span><span class="kw">fn </span>from_sockaddr_un_named() {
@@ -2419,7 +2419,7 @@
 <a href=#2419 id=2419 data-nosnippet>2419</a>    }
 <a href=#2420 id=2420 data-nosnippet>2420</a>
 <a href=#2421 id=2421 data-nosnippet>2421</a>    <span class="kw">mod </span>unixaddr {
-<a href=#2422 id=2422 data-nosnippet>2422</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#2422 id=2422 data-nosnippet>2422</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#2423 id=2423 data-nosnippet>2423</a>
 <a href=#2424 id=2424 data-nosnippet>2424</a>        <span class="attr">#[cfg(linux_android)]
 <a href=#2425 id=2425 data-nosnippet>2425</a>        #[test]
@@ -2428,7 +2428,7 @@
 <a href=#2428 id=2428 data-nosnippet>2428</a>            <span class="kw">let </span>addr = UnixAddr::new_abstract(name.as_bytes()).unwrap();
 <a href=#2429 id=2429 data-nosnippet>2429</a>
 <a href=#2430 id=2430 data-nosnippet>2430</a>            <span class="kw">let </span>sun_path1 =
-<a href=#2431 id=2431 data-nosnippet>2431</a>                <span class="kw">unsafe </span>{ <span class="kw-2">&amp;</span>(<span class="kw-2">*</span>addr.as_ptr()).sun_path[..addr.path_len()] };
+<a href=#2431 id=2431 data-nosnippet>2431</a>                <span class="kw">unsafe </span>{ <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span>(<span class="kw-2">*</span>addr.as_ptr()).sun_path)[..addr.path_len()] };
 <a href=#2432 id=2432 data-nosnippet>2432</a>            <span class="kw">let </span>sun_path2 = [
 <a href=#2433 id=2433 data-nosnippet>2433</a>                <span class="number">0</span>, <span class="number">110</span>, <span class="number">105</span>, <span class="number">120</span>, <span class="number">0</span>, <span class="number">97</span>, <span class="number">98</span>, <span class="number">115</span>, <span class="number">116</span>, <span class="number">114</span>, <span class="number">97</span>, <span class="number">99</span>, <span class="number">116</span>, <span class="number">0</span>,
 <a href=#2434 id=2434 data-nosnippet>2434</a>                <span class="number">116</span>, <span class="number">101</span>, <span class="number">115</span>, <span class="number">116</span>,
@@ -2444,4 +2444,5 @@
 <a href=#2444 id=2444 data-nosnippet>2444</a>            );
 <a href=#2445 id=2445 data-nosnippet>2445</a>        }
 <a href=#2446 id=2446 data-nosnippet>2446</a>    }
-<a href=#2447 id=2447 data-nosnippet>2447</a>}</code></pre></div></section></main></body></html>
+<a href=#2447 id=2447 data-nosnippet>2447</a>}
+</code></pre></div></section></main></body></html>

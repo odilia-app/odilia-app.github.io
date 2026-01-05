@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.36.2/src/de/key.rs`."><title>key.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (adcb3d3b4 2025-07-31)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../../static.files/storage-68b7e25d.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-eebb9057.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">quick_xml/de/</div>key.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span><span class="kw">crate</span>::de::simple_type::UnitOnly;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.36.2/src/de/key.rs`."><title>key.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-2eb46af5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0-nightly (e29fcf45e 2026-01-04)" data-channel="nightly" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">quick_xml/de/</div>key.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span><span class="kw">crate</span>::de::simple_type::UnitOnly;
 <a href=#2 id=2 data-nosnippet>2</a><span class="kw">use </span><span class="kw">crate</span>::de::str2bool;
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span><span class="kw">crate</span>::encoding::Decoder;
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span><span class="kw">crate</span>::errors::serialize::DeError;
@@ -264,7 +264,7 @@
 <a href=#264 id=264 data-nosnippet>264</a>
 <a href=#265 id=265 data-nosnippet>265</a></span><span class="attr">#[cfg(test)]
 <a href=#266 id=266 data-nosnippet>266</a></span><span class="kw">mod </span>tests {
-<a href=#267 id=267 data-nosnippet>267</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#267 id=267 data-nosnippet>267</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#268 id=268 data-nosnippet>268</a>    <span class="kw">use </span><span class="kw">crate</span>::se::key::QNameSerializer;
 <a href=#269 id=269 data-nosnippet>269</a>    <span class="kw">use </span><span class="kw">crate</span>::utils::{ByteBuf, Bytes};
 <a href=#270 id=270 data-nosnippet>270</a>    <span class="kw">use </span>pretty_assertions::assert_eq;
@@ -317,13 +317,13 @@
 <a href=#317 id=317 data-nosnippet>317</a>
 <a href=#318 id=318 data-nosnippet>318</a>    <span class="doccomment">/// Checks that given `$input` successfully deserializing into given `$result`
 <a href=#319 id=319 data-nosnippet>319</a>    </span><span class="macro">macro_rules!</span> deserialized_to_only {
-<a href=#320 id=320 data-nosnippet>320</a>        (<span class="macro-nonterminal">$name</span>:ident: <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty </span>= <span class="macro-nonterminal">$input</span>:literal =&gt; <span class="macro-nonterminal">$result</span>:expr) =&gt; {
+<a href=#320 id=320 data-nosnippet>320</a>        (<span class="macro-nonterminal">$name</span>:ident: <span class="macro-nonterminal">$type</span>:ty = <span class="macro-nonterminal">$input</span>:literal =&gt; <span class="macro-nonterminal">$result</span>:expr) =&gt; {
 <a href=#321 id=321 data-nosnippet>321</a>            <span class="attr">#[test]
 <a href=#322 id=322 data-nosnippet>322</a>            </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>() {
 <a href=#323 id=323 data-nosnippet>323</a>                <span class="kw">let </span>de = QNameDeserializer {
 <a href=#324 id=324 data-nosnippet>324</a>                    name: CowRef::Input(<span class="macro-nonterminal">$input</span>),
 <a href=#325 id=325 data-nosnippet>325</a>                };
-<a href=#326 id=326 data-nosnippet>326</a>                <span class="kw">let </span>data: <span class="macro-nonterminal">$</span><span class="kw">type </span>= <span class="macro-nonterminal">Deserialize::deserialize</span>(de).unwrap();
+<a href=#326 id=326 data-nosnippet>326</a>                <span class="kw">let </span>data: <span class="macro-nonterminal">$type </span>= Deserialize::deserialize(de).unwrap();
 <a href=#327 id=327 data-nosnippet>327</a>
 <a href=#328 id=328 data-nosnippet>328</a>                <span class="macro">assert_eq!</span>(data, <span class="macro-nonterminal">$result</span>);
 <a href=#329 id=329 data-nosnippet>329</a>            }
@@ -332,13 +332,13 @@
 <a href=#332 id=332 data-nosnippet>332</a>
 <a href=#333 id=333 data-nosnippet>333</a>    <span class="doccomment">/// Checks that given `$input` successfully deserializing into given `$result`
 <a href=#334 id=334 data-nosnippet>334</a>    </span><span class="macro">macro_rules!</span> deserialized_to {
-<a href=#335 id=335 data-nosnippet>335</a>        (<span class="macro-nonterminal">$name</span>:ident: <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty </span>= <span class="macro-nonterminal">$input</span>:literal =&gt; <span class="macro-nonterminal">$result</span>:expr) =&gt; {
+<a href=#335 id=335 data-nosnippet>335</a>        (<span class="macro-nonterminal">$name</span>:ident: <span class="macro-nonterminal">$type</span>:ty = <span class="macro-nonterminal">$input</span>:literal =&gt; <span class="macro-nonterminal">$result</span>:expr) =&gt; {
 <a href=#336 id=336 data-nosnippet>336</a>            <span class="attr">#[test]
 <a href=#337 id=337 data-nosnippet>337</a>            </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>() {
 <a href=#338 id=338 data-nosnippet>338</a>                <span class="kw">let </span>de = QNameDeserializer {
 <a href=#339 id=339 data-nosnippet>339</a>                    name: CowRef::Input(<span class="macro-nonterminal">$input</span>),
 <a href=#340 id=340 data-nosnippet>340</a>                };
-<a href=#341 id=341 data-nosnippet>341</a>                <span class="kw">let </span>data: <span class="macro-nonterminal">$</span><span class="kw">type </span>= <span class="macro-nonterminal">Deserialize::deserialize</span>(de).unwrap();
+<a href=#341 id=341 data-nosnippet>341</a>                <span class="kw">let </span>data: <span class="macro-nonterminal">$type </span>= Deserialize::deserialize(de).unwrap();
 <a href=#342 id=342 data-nosnippet>342</a>
 <a href=#343 id=343 data-nosnippet>343</a>                <span class="macro">assert_eq!</span>(data, <span class="macro-nonterminal">$result</span>);
 <a href=#344 id=344 data-nosnippet>344</a>
@@ -357,13 +357,13 @@
 <a href=#357 id=357 data-nosnippet>357</a>    <span class="doccomment">/// Checks that attempt to deserialize given `$input` as a `$type` results to a
 <a href=#358 id=358 data-nosnippet>358</a>    /// deserialization error `$kind` with `$reason`
 <a href=#359 id=359 data-nosnippet>359</a>    </span><span class="macro">macro_rules!</span> err {
-<a href=#360 id=360 data-nosnippet>360</a>        (<span class="macro-nonterminal">$name</span>:ident: <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty </span>= <span class="macro-nonterminal">$input</span>:literal =&gt; <span class="macro-nonterminal">$kind</span>:ident(<span class="macro-nonterminal">$reason</span>:literal)) =&gt; {
+<a href=#360 id=360 data-nosnippet>360</a>        (<span class="macro-nonterminal">$name</span>:ident: <span class="macro-nonterminal">$type</span>:ty = <span class="macro-nonterminal">$input</span>:literal =&gt; <span class="macro-nonterminal">$kind</span>:ident(<span class="macro-nonterminal">$reason</span>:literal)) =&gt; {
 <a href=#361 id=361 data-nosnippet>361</a>            <span class="attr">#[test]
 <a href=#362 id=362 data-nosnippet>362</a>            </span><span class="kw">fn </span><span class="macro-nonterminal">$name</span>() {
 <a href=#363 id=363 data-nosnippet>363</a>                <span class="kw">let </span>de = QNameDeserializer {
 <a href=#364 id=364 data-nosnippet>364</a>                    name: CowRef::Input(<span class="macro-nonterminal">$input</span>),
 <a href=#365 id=365 data-nosnippet>365</a>                };
-<a href=#366 id=366 data-nosnippet>366</a>                <span class="kw">let </span>err = &lt;<span class="macro-nonterminal">$</span><span class="kw">type as </span><span class="macro-nonterminal">Deserialize</span>&gt;::deserialize(de).unwrap_err();
+<a href=#366 id=366 data-nosnippet>366</a>                <span class="kw">let </span>err = &lt;<span class="macro-nonterminal">$type </span><span class="kw">as </span>Deserialize&gt;::deserialize(de).unwrap_err();
 <a href=#367 id=367 data-nosnippet>367</a>
 <a href=#368 id=368 data-nosnippet>368</a>                <span class="kw">match </span>err {
 <a href=#369 id=369 data-nosnippet>369</a>                    DeError::<span class="macro-nonterminal">$kind</span>(e) =&gt; <span class="macro">assert_eq!</span>(e, <span class="macro-nonterminal">$reason</span>),
@@ -446,4 +446,5 @@
 <a href=#446 id=446 data-nosnippet>446</a>    // which is not concrete
 <a href=#447 id=447 data-nosnippet>447</a>    </span><span class="macro">deserialized_to_only!</span>(identifier: Id = <span class="string">"Field" </span>=&gt; Id::Field);
 <a href=#448 id=448 data-nosnippet>448</a>    <span class="macro">deserialized_to_only!</span>(ignored_any: Any = <span class="string">"any-name" </span>=&gt; Any(IgnoredAny));
-<a href=#449 id=449 data-nosnippet>449</a>}</code></pre></div></section></main></body></html>
+<a href=#449 id=449 data-nosnippet>449</a>}
+</code></pre></div></section></main></body></html>

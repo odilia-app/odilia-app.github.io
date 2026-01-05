@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus-5.8.0/src/connection/socket/unix.rs`."><title>unix.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (adcb3d3b4 2025-07-31)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../../../static.files/storage-68b7e25d.js"></script><script defer src="../../../../static.files/src-script-813739b1.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-eebb9057.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">zbus/connection/socket/</div>unix.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/zbus-5.12.0/src/connection/socket/unix.rs`."><title>unix.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-2eb46af5.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="zbus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0-nightly (e29fcf45e 2026-01-04)" data-channel="nightly" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../../../static.files/storage-e2aeef58.js"></script><script defer src="../../../../static.files/src-script-813739b1.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">zbus/connection/socket/</div>unix.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#[cfg(not(feature = <span class="string">"tokio"</span>))]
 <a href=#2 id=2 data-nosnippet>2</a></span><span class="kw">use </span>async_io::Async;
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span>std::io;
 <a href=#4 id=4 data-nosnippet>4</a><span class="attr">#[cfg(unix)]
@@ -228,7 +228,7 @@
 <a href=#228 id=228 data-nosnippet>228</a>                <span class="kw">use </span><span class="kw">crate</span>::win32::{unix_stream_get_peer_pid, ProcessToken};
 <a href=#229 id=229 data-nosnippet>229</a>
 <a href=#230 id=230 data-nosnippet>230</a>                <span class="kw">let </span>pid = unix_stream_get_peer_pid(stream.get_ref())<span class="question-mark">? </span><span class="kw">as _</span>;
-<a href=#231 id=231 data-nosnippet>231</a>                <span class="kw">let </span>sid = ProcessToken::open(<span class="kw">if </span>pid != <span class="number">0 </span>{ <span class="prelude-val">Some</span>(pid <span class="kw">as _</span>) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
+<a href=#231 id=231 data-nosnippet>231</a>                <span class="kw">let </span>sid = ProcessToken::open(<span class="kw">if </span><span class="macro">pid !</span>= <span class="number">0 </span>{ <span class="prelude-val">Some</span>(pid <span class="kw">as _</span>) } <span class="kw">else </span>{ <span class="prelude-val">None </span>})
 <a href=#232 id=232 data-nosnippet>232</a>                    .and_then(|process_token| process_token.sid())<span class="question-mark">?</span>;
 <a href=#233 id=233 data-nosnippet>233</a>                <span class="prelude-val">Ok</span>(<span class="kw">crate</span>::fdo::ConnectionCredentials::default()
 <a href=#234 id=234 data-nosnippet>234</a>                    .set_process_id(pid)
@@ -340,80 +340,86 @@
 <a href=#340 id=340 data-nosnippet>340</a>            unistd::{getgrouplist, Gid, Uid, User},
 <a href=#341 id=341 data-nosnippet>341</a>        };
 <a href=#342 id=342 data-nosnippet>342</a>        <span class="kw">use </span>std::ffi::CString;
-<a href=#343 id=343 data-nosnippet>343</a>
-<a href=#344 id=344 data-nosnippet>344</a>        <span class="kw">let </span>(uid, gid, pid) = {
-<a href=#345 id=345 data-nosnippet>345</a>            <span class="kw">let </span>unix_creds = getsockopt(<span class="kw-2">&amp;</span>fd, PeerCredentials)<span class="question-mark">?</span>;
-<a href=#346 id=346 data-nosnippet>346</a>            (
-<a href=#347 id=347 data-nosnippet>347</a>                Uid::from_raw(unix_creds.uid()),
-<a href=#348 id=348 data-nosnippet>348</a>                Gid::from_raw(unix_creds.uid()),
-<a href=#349 id=349 data-nosnippet>349</a>                unix_creds.pid() <span class="kw">as </span>u32,
-<a href=#350 id=350 data-nosnippet>350</a>            )
-<a href=#351 id=351 data-nosnippet>351</a>        };
-<a href=#352 id=352 data-nosnippet>352</a>        creds = creds.set_unix_user_id(uid.as_raw()).set_process_id(pid);
-<a href=#353 id=353 data-nosnippet>353</a>
-<a href=#354 id=354 data-nosnippet>354</a>        <span class="comment">// the dbus spec requires groups to be either absent or complete (primary + secondary
-<a href=#355 id=355 data-nosnippet>355</a>        // groups)
-<a href=#356 id=356 data-nosnippet>356</a>        </span><span class="kw">let </span><span class="kw-2">mut </span>groups = User::from_uid(uid)<span class="question-mark">?
-<a href=#357 id=357 data-nosnippet>357</a>            </span>.map(|user| CString::new(user.name))
-<a href=#358 id=358 data-nosnippet>358</a>            .transpose()<span class="question-mark">?
-<a href=#359 id=359 data-nosnippet>359</a>            </span>.map(|user| getgrouplist(<span class="kw-2">&amp;</span>user, gid))
-<a href=#360 id=360 data-nosnippet>360</a>            .transpose()
-<a href=#361 id=361 data-nosnippet>361</a>            .ok()
-<a href=#362 id=362 data-nosnippet>362</a>            .flatten()
-<a href=#363 id=363 data-nosnippet>363</a>            .unwrap_or(Vec::new());
-<a href=#364 id=364 data-nosnippet>364</a>        <span class="comment">// it also requires the groups to be numerically sorted
-<a href=#365 id=365 data-nosnippet>365</a>        </span>groups.sort_by_key(|gid| gid.as_raw());
-<a href=#366 id=366 data-nosnippet>366</a>        <span class="kw">for </span>group <span class="kw">in </span>groups.iter() {
-<a href=#367 id=367 data-nosnippet>367</a>            creds = creds.add_unix_group_id(group.as_raw());
-<a href=#368 id=368 data-nosnippet>368</a>        }
-<a href=#369 id=369 data-nosnippet>369</a>
-<a href=#370 id=370 data-nosnippet>370</a>        <span class="attr">#[cfg(target_os = <span class="string">"linux"</span>)]
-<a href=#371 id=371 data-nosnippet>371</a>        </span>{
-<a href=#372 id=372 data-nosnippet>372</a>            <span class="kw">use </span>nix::{errno::Errno, sys::socket::sockopt::PeerPidfd};
-<a href=#373 id=373 data-nosnippet>373</a>            <span class="kw">use </span>zvariant::OwnedFd;
+<a href=#343 id=343 data-nosnippet>343</a>        <span class="kw">use </span>tracing::debug;
+<a href=#344 id=344 data-nosnippet>344</a>
+<a href=#345 id=345 data-nosnippet>345</a>        <span class="kw">let </span>(uid, gid, pid) = {
+<a href=#346 id=346 data-nosnippet>346</a>            <span class="kw">let </span>unix_creds = getsockopt(<span class="kw-2">&amp;</span>fd, PeerCredentials)<span class="question-mark">?</span>;
+<a href=#347 id=347 data-nosnippet>347</a>            (
+<a href=#348 id=348 data-nosnippet>348</a>                Uid::from_raw(unix_creds.uid()),
+<a href=#349 id=349 data-nosnippet>349</a>                Gid::from_raw(unix_creds.uid()),
+<a href=#350 id=350 data-nosnippet>350</a>                unix_creds.pid() <span class="kw">as </span>u32,
+<a href=#351 id=351 data-nosnippet>351</a>            )
+<a href=#352 id=352 data-nosnippet>352</a>        };
+<a href=#353 id=353 data-nosnippet>353</a>        creds = creds.set_unix_user_id(uid.as_raw()).set_process_id(pid);
+<a href=#354 id=354 data-nosnippet>354</a>
+<a href=#355 id=355 data-nosnippet>355</a>        <span class="comment">// the dbus spec requires groups to be either absent or complete (primary + secondary
+<a href=#356 id=356 data-nosnippet>356</a>        // groups)
+<a href=#357 id=357 data-nosnippet>357</a>        </span><span class="kw">let </span><span class="kw-2">mut </span>groups = User::from_uid(uid)
+<a href=#358 id=358 data-nosnippet>358</a>            .map_err(|e| <span class="macro">debug!</span>(<span class="string">"User lookup failed: {}"</span>, e))
+<a href=#359 id=359 data-nosnippet>359</a>            .ok()
+<a href=#360 id=360 data-nosnippet>360</a>            .flatten()
+<a href=#361 id=361 data-nosnippet>361</a>            .map(|user| CString::new(user.name))
+<a href=#362 id=362 data-nosnippet>362</a>            .transpose()<span class="question-mark">?
+<a href=#363 id=363 data-nosnippet>363</a>            </span>.map(|user| getgrouplist(<span class="kw-2">&amp;</span>user, gid))
+<a href=#364 id=364 data-nosnippet>364</a>            .transpose()
+<a href=#365 id=365 data-nosnippet>365</a>            .map_err(|e| <span class="macro">debug!</span>(<span class="string">"Group lookup failed: {}"</span>, e))
+<a href=#366 id=366 data-nosnippet>366</a>            .ok()
+<a href=#367 id=367 data-nosnippet>367</a>            .flatten()
+<a href=#368 id=368 data-nosnippet>368</a>            .unwrap_or(Vec::new());
+<a href=#369 id=369 data-nosnippet>369</a>        <span class="comment">// it also requires the groups to be numerically sorted
+<a href=#370 id=370 data-nosnippet>370</a>        </span>groups.sort_by_key(|gid| gid.as_raw());
+<a href=#371 id=371 data-nosnippet>371</a>        <span class="kw">for </span>group <span class="kw">in </span>groups.iter() {
+<a href=#372 id=372 data-nosnippet>372</a>            creds = creds.add_unix_group_id(group.as_raw());
+<a href=#373 id=373 data-nosnippet>373</a>        }
 <a href=#374 id=374 data-nosnippet>374</a>
-<a href=#375 id=375 data-nosnippet>375</a>            <span class="kw">match </span>getsockopt(<span class="kw-2">&amp;</span>fd, PeerPidfd) {
-<a href=#376 id=376 data-nosnippet>376</a>                <span class="prelude-val">Err</span>(Errno::ENOPROTOOPT) =&gt; (),
-<a href=#377 id=377 data-nosnippet>377</a>                <span class="prelude-val">Ok</span>(pidfd) =&gt; creds = creds.set_process_fd(OwnedFd::from(pidfd)),
-<a href=#378 id=378 data-nosnippet>378</a>                <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e.into()),
-<a href=#379 id=379 data-nosnippet>379</a>            };
-<a href=#380 id=380 data-nosnippet>380</a>        }
-<a href=#381 id=381 data-nosnippet>381</a>    }
-<a href=#382 id=382 data-nosnippet>382</a>
-<a href=#383 id=383 data-nosnippet>383</a>    <span class="attr">#[cfg(any(
-<a href=#384 id=384 data-nosnippet>384</a>        target_os = <span class="string">"macos"</span>,
-<a href=#385 id=385 data-nosnippet>385</a>        target_os = <span class="string">"ios"</span>,
-<a href=#386 id=386 data-nosnippet>386</a>        target_os = <span class="string">"freebsd"</span>,
-<a href=#387 id=387 data-nosnippet>387</a>        target_os = <span class="string">"dragonfly"</span>,
-<a href=#388 id=388 data-nosnippet>388</a>        target_os = <span class="string">"openbsd"</span>,
-<a href=#389 id=389 data-nosnippet>389</a>        target_os = <span class="string">"netbsd"
-<a href=#390 id=390 data-nosnippet>390</a>    </span>))]
-<a href=#391 id=391 data-nosnippet>391</a>    </span>{
-<a href=#392 id=392 data-nosnippet>392</a>        <span class="kw">let </span>(uid, _gid) = nix::unistd::getpeereid(fd)<span class="question-mark">?</span>;
-<a href=#393 id=393 data-nosnippet>393</a>        creds = creds.set_unix_user_id(uid.as_raw())
-<a href=#394 id=394 data-nosnippet>394</a>
-<a href=#395 id=395 data-nosnippet>395</a>        <span class="comment">// FIXME: Handle pid fetching too
-<a href=#396 id=396 data-nosnippet>396</a>    </span>}
-<a href=#397 id=397 data-nosnippet>397</a>
-<a href=#398 id=398 data-nosnippet>398</a>    <span class="prelude-val">Ok</span>(creds)
-<a href=#399 id=399 data-nosnippet>399</a>}
-<a href=#400 id=400 data-nosnippet>400</a>
-<a href=#401 id=401 data-nosnippet>401</a><span class="comment">// Send 0 byte as a separate SCM_CREDS message.
-<a href=#402 id=402 data-nosnippet>402</a></span><span class="attr">#[cfg(any(target_os = <span class="string">"freebsd"</span>, target_os = <span class="string">"dragonfly"</span>))]
-<a href=#403 id=403 data-nosnippet>403</a></span><span class="kw">async fn </span>send_zero_byte(fd: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; io::Result&lt;usize&gt; {
-<a href=#404 id=404 data-nosnippet>404</a>    <span class="kw">let </span>fd = fd.as_raw_fd();
-<a href=#405 id=405 data-nosnippet>405</a>    <span class="kw">crate</span>::Task::spawn_blocking(<span class="kw">move </span>|| send_zero_byte_blocking(fd), <span class="string">"send zero byte"</span>).<span class="kw">await
-<a href=#406 id=406 data-nosnippet>406</a></span>}
-<a href=#407 id=407 data-nosnippet>407</a>
-<a href=#408 id=408 data-nosnippet>408</a><span class="attr">#[cfg(any(target_os = <span class="string">"freebsd"</span>, target_os = <span class="string">"dragonfly"</span>))]
-<a href=#409 id=409 data-nosnippet>409</a></span><span class="kw">fn </span>send_zero_byte_blocking(fd: RawFd) -&gt; io::Result&lt;usize&gt; {
-<a href=#410 id=410 data-nosnippet>410</a>    <span class="kw">let </span>iov = [std::io::IoSlice::new(<span class="string">b"\0"</span>)];
-<a href=#411 id=411 data-nosnippet>411</a>    sendmsg::&lt;()&gt;(
-<a href=#412 id=412 data-nosnippet>412</a>        fd,
-<a href=#413 id=413 data-nosnippet>413</a>        <span class="kw-2">&amp;</span>iov,
-<a href=#414 id=414 data-nosnippet>414</a>        <span class="kw-2">&amp;</span>[ControlMessage::ScmCreds],
-<a href=#415 id=415 data-nosnippet>415</a>        MsgFlags::empty(),
-<a href=#416 id=416 data-nosnippet>416</a>        <span class="prelude-val">None</span>,
-<a href=#417 id=417 data-nosnippet>417</a>    )
-<a href=#418 id=418 data-nosnippet>418</a>    .map_err(|e| e.into())
-<a href=#419 id=419 data-nosnippet>419</a>}</code></pre></div></section></main></body></html>
+<a href=#375 id=375 data-nosnippet>375</a>        <span class="attr">#[cfg(target_os = <span class="string">"linux"</span>)]
+<a href=#376 id=376 data-nosnippet>376</a>        </span>{
+<a href=#377 id=377 data-nosnippet>377</a>            <span class="kw">use </span>nix::{errno::Errno, sys::socket::sockopt::PeerPidfd};
+<a href=#378 id=378 data-nosnippet>378</a>            <span class="kw">use </span>zvariant::OwnedFd;
+<a href=#379 id=379 data-nosnippet>379</a>
+<a href=#380 id=380 data-nosnippet>380</a>            <span class="kw">match </span>getsockopt(<span class="kw-2">&amp;</span>fd, PeerPidfd) {
+<a href=#381 id=381 data-nosnippet>381</a>                <span class="prelude-val">Err</span>(Errno::ENOPROTOOPT) =&gt; (),
+<a href=#382 id=382 data-nosnippet>382</a>                <span class="prelude-val">Ok</span>(pidfd) =&gt; creds = creds.set_process_fd(OwnedFd::from(pidfd)),
+<a href=#383 id=383 data-nosnippet>383</a>                <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e.into()),
+<a href=#384 id=384 data-nosnippet>384</a>            };
+<a href=#385 id=385 data-nosnippet>385</a>        }
+<a href=#386 id=386 data-nosnippet>386</a>    }
+<a href=#387 id=387 data-nosnippet>387</a>
+<a href=#388 id=388 data-nosnippet>388</a>    <span class="attr">#[cfg(any(
+<a href=#389 id=389 data-nosnippet>389</a>        target_os = <span class="string">"macos"</span>,
+<a href=#390 id=390 data-nosnippet>390</a>        target_os = <span class="string">"ios"</span>,
+<a href=#391 id=391 data-nosnippet>391</a>        target_os = <span class="string">"freebsd"</span>,
+<a href=#392 id=392 data-nosnippet>392</a>        target_os = <span class="string">"dragonfly"</span>,
+<a href=#393 id=393 data-nosnippet>393</a>        target_os = <span class="string">"openbsd"</span>,
+<a href=#394 id=394 data-nosnippet>394</a>        target_os = <span class="string">"netbsd"
+<a href=#395 id=395 data-nosnippet>395</a>    </span>))]
+<a href=#396 id=396 data-nosnippet>396</a>    </span>{
+<a href=#397 id=397 data-nosnippet>397</a>        <span class="kw">let </span>(uid, _gid) = nix::unistd::getpeereid(fd)<span class="question-mark">?</span>;
+<a href=#398 id=398 data-nosnippet>398</a>        creds = creds.set_unix_user_id(uid.as_raw())
+<a href=#399 id=399 data-nosnippet>399</a>
+<a href=#400 id=400 data-nosnippet>400</a>        <span class="comment">// FIXME: Handle pid fetching too
+<a href=#401 id=401 data-nosnippet>401</a>    </span>}
+<a href=#402 id=402 data-nosnippet>402</a>
+<a href=#403 id=403 data-nosnippet>403</a>    <span class="prelude-val">Ok</span>(creds)
+<a href=#404 id=404 data-nosnippet>404</a>}
+<a href=#405 id=405 data-nosnippet>405</a>
+<a href=#406 id=406 data-nosnippet>406</a><span class="comment">// Send 0 byte as a separate SCM_CREDS message.
+<a href=#407 id=407 data-nosnippet>407</a></span><span class="attr">#[cfg(any(target_os = <span class="string">"freebsd"</span>, target_os = <span class="string">"dragonfly"</span>))]
+<a href=#408 id=408 data-nosnippet>408</a></span><span class="kw">async fn </span>send_zero_byte(fd: <span class="kw-2">&amp;</span><span class="kw">impl </span>AsRawFd) -&gt; io::Result&lt;usize&gt; {
+<a href=#409 id=409 data-nosnippet>409</a>    <span class="kw">let </span>fd = fd.as_raw_fd();
+<a href=#410 id=410 data-nosnippet>410</a>    <span class="kw">crate</span>::Task::spawn_blocking(<span class="kw">move </span>|| send_zero_byte_blocking(fd), <span class="string">"send zero byte"</span>).<span class="kw">await
+<a href=#411 id=411 data-nosnippet>411</a></span>}
+<a href=#412 id=412 data-nosnippet>412</a>
+<a href=#413 id=413 data-nosnippet>413</a><span class="attr">#[cfg(any(target_os = <span class="string">"freebsd"</span>, target_os = <span class="string">"dragonfly"</span>))]
+<a href=#414 id=414 data-nosnippet>414</a></span><span class="kw">fn </span>send_zero_byte_blocking(fd: RawFd) -&gt; io::Result&lt;usize&gt; {
+<a href=#415 id=415 data-nosnippet>415</a>    <span class="kw">let </span>iov = [std::io::IoSlice::new(<span class="string">b"\0"</span>)];
+<a href=#416 id=416 data-nosnippet>416</a>    sendmsg::&lt;()&gt;(
+<a href=#417 id=417 data-nosnippet>417</a>        fd,
+<a href=#418 id=418 data-nosnippet>418</a>        <span class="kw-2">&amp;</span>iov,
+<a href=#419 id=419 data-nosnippet>419</a>        <span class="kw-2">&amp;</span>[ControlMessage::ScmCreds],
+<a href=#420 id=420 data-nosnippet>420</a>        MsgFlags::empty(),
+<a href=#421 id=421 data-nosnippet>421</a>        <span class="prelude-val">None</span>,
+<a href=#422 id=422 data-nosnippet>422</a>    )
+<a href=#423 id=423 data-nosnippet>423</a>    .map_err(|e| e.into())
+<a href=#424 id=424 data-nosnippet>424</a>}
+</code></pre></div></section></main></body></html>

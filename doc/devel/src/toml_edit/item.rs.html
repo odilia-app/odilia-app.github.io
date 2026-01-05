@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_edit-0.22.27/src/item.rs`."><title>item.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-aa0817cf.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="toml_edit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.90.0-nightly (adcb3d3b4 2025-07-31)" data-channel="nightly" data-search-js="search-fa3e91e5.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-68b7e25d.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-eebb9057.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-32bb7600.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">toml_edit/</div>item.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::str::FromStr;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_edit-0.23.10+spec-1.0.0/src/item.rs`."><title>item.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-2eb46af5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="toml_edit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0-nightly (e29fcf45e 2026-01-04)" data-channel="nightly" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">toml_edit/</div>item.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::str::FromStr;
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span>toml_datetime::Datetime;
 <a href=#4 id=4 data-nosnippet>4</a>
 <a href=#5 id=5 data-nosnippet>5</a><span class="kw">use </span><span class="kw">crate</span>::array_of_tables::ArrayOfTables;
 <a href=#6 id=6 data-nosnippet>6</a><span class="kw">use </span><span class="kw">crate</span>::table::TableLike;
-<a href=#7 id=7 data-nosnippet>7</a><span class="kw">use crate</span>::{Array, InlineTable, Table, Value};
+<a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span>crate::{Array, InlineTable, Table, Value};
 <a href=#8 id=8 data-nosnippet>8</a>
 <a href=#9 id=9 data-nosnippet>9</a><span class="doccomment">/// Type representing either a value, a table, an array of tables, or none.
 <a href=#10 id=10 data-nosnippet>10</a></span><span class="attr">#[derive(Debug, Default)]
@@ -23,7 +23,7 @@
 <a href=#23 id=23 data-nosnippet>23</a><span class="kw">impl </span>Item {
 <a href=#24 id=24 data-nosnippet>24</a>    <span class="doccomment">/// Sets `self` to the given item if `self` is none and
 <a href=#25 id=25 data-nosnippet>25</a>    /// returns a mutable reference to `self`.
-<a href=#26 id=26 data-nosnippet>26</a>    </span><span class="kw">pub fn </span>or_insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, item: Item) -&gt; <span class="kw-2">&amp;mut </span>Item {
+<a href=#26 id=26 data-nosnippet>26</a>    </span><span class="kw">pub fn </span>or_insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, item: <span class="self">Self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
 <a href=#27 id=27 data-nosnippet>27</a>        <span class="kw">if </span><span class="self">self</span>.is_none() {
 <a href=#28 id=28 data-nosnippet>28</a>            <span class="kw-2">*</span><span class="self">self </span>= item;
 <a href=#29 id=29 data-nosnippet>29</a>        }
@@ -37,10 +37,10 @@
 <a href=#37 id=37 data-nosnippet>37</a>    <span class="doccomment">/// Text description of value type
 <a href=#38 id=38 data-nosnippet>38</a>    </span><span class="kw">pub fn </span>type_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
 <a href=#39 id=39 data-nosnippet>39</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#40 id=40 data-nosnippet>40</a>            Item::None =&gt; <span class="string">"none"</span>,
-<a href=#41 id=41 data-nosnippet>41</a>            Item::Value(v) =&gt; v.type_name(),
-<a href=#42 id=42 data-nosnippet>42</a>            Item::Table(..) =&gt; <span class="string">"table"</span>,
-<a href=#43 id=43 data-nosnippet>43</a>            Item::ArrayOfTables(..) =&gt; <span class="string">"array of tables"</span>,
+<a href=#40 id=40 data-nosnippet>40</a>            <span class="self">Self</span>::None =&gt; <span class="string">"none"</span>,
+<a href=#41 id=41 data-nosnippet>41</a>            <span class="self">Self</span>::Value(v) =&gt; v.type_name(),
+<a href=#42 id=42 data-nosnippet>42</a>            <span class="self">Self</span>::Table(..) =&gt; <span class="string">"table"</span>,
+<a href=#43 id=43 data-nosnippet>43</a>            <span class="self">Self</span>::ArrayOfTables(..) =&gt; <span class="string">"array of tables"</span>,
 <a href=#44 id=44 data-nosnippet>44</a>        }
 <a href=#45 id=45 data-nosnippet>45</a>    }
 <a href=#46 id=46 data-nosnippet>46</a>
@@ -54,7 +54,7 @@
 <a href=#54 id=54 data-nosnippet>54</a>    ///   number.
 <a href=#55 id=55 data-nosnippet>55</a>    /// - The given key does not exist in the map
 <a href=#56 id=56 data-nosnippet>56</a>    ///   or the given index is not within the bounds of the array.
-<a href=#57 id=57 data-nosnippet>57</a>    </span><span class="kw">pub fn </span>get&lt;I: <span class="kw">crate</span>::index::Index&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, index: I) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Item&gt; {
+<a href=#57 id=57 data-nosnippet>57</a>    </span><span class="kw">pub fn </span>get&lt;I: <span class="kw">crate</span>::index::Index&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, index: I) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt; {
 <a href=#58 id=58 data-nosnippet>58</a>        index.index(<span class="self">self</span>)
 <a href=#59 id=59 data-nosnippet>59</a>    }
 <a href=#60 id=60 data-nosnippet>60</a>
@@ -68,14 +68,14 @@
 <a href=#68 id=68 data-nosnippet>68</a>    ///   number.
 <a href=#69 id=69 data-nosnippet>69</a>    /// - The given key does not exist in the map
 <a href=#70 id=70 data-nosnippet>70</a>    ///   or the given index is not within the bounds of the array.
-<a href=#71 id=71 data-nosnippet>71</a>    </span><span class="kw">pub fn </span>get_mut&lt;I: <span class="kw">crate</span>::index::Index&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: I) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>Item&gt; {
+<a href=#71 id=71 data-nosnippet>71</a>    </span><span class="kw">pub fn </span>get_mut&lt;I: <span class="kw">crate</span>::index::Index&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: I) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt; {
 <a href=#72 id=72 data-nosnippet>72</a>        index.index_mut(<span class="self">self</span>)
 <a href=#73 id=73 data-nosnippet>73</a>    }
 <a href=#74 id=74 data-nosnippet>74</a>
 <a href=#75 id=75 data-nosnippet>75</a>    <span class="doccomment">/// Casts `self` to [`Value`]
 <a href=#76 id=76 data-nosnippet>76</a>    </span><span class="kw">pub fn </span>as_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Value&gt; {
 <a href=#77 id=77 data-nosnippet>77</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#78 id=78 data-nosnippet>78</a>            Item::Value(<span class="kw-2">ref </span>v) =&gt; <span class="prelude-val">Some</span>(v),
+<a href=#78 id=78 data-nosnippet>78</a>            <span class="self">Self</span>::Value(<span class="kw-2">ref </span>v) =&gt; <span class="prelude-val">Some</span>(v),
 <a href=#79 id=79 data-nosnippet>79</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#80 id=80 data-nosnippet>80</a>        }
 <a href=#81 id=81 data-nosnippet>81</a>    }
@@ -88,21 +88,21 @@
 <a href=#88 id=88 data-nosnippet>88</a>    /// &lt;/div&gt;
 <a href=#89 id=89 data-nosnippet>89</a>    </span><span class="kw">pub fn </span>as_table(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Table&gt; {
 <a href=#90 id=90 data-nosnippet>90</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#91 id=91 data-nosnippet>91</a>            Item::Table(<span class="kw-2">ref </span>t) =&gt; <span class="prelude-val">Some</span>(t),
+<a href=#91 id=91 data-nosnippet>91</a>            <span class="self">Self</span>::Table(<span class="kw-2">ref </span>t) =&gt; <span class="prelude-val">Some</span>(t),
 <a href=#92 id=92 data-nosnippet>92</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#93 id=93 data-nosnippet>93</a>        }
 <a href=#94 id=94 data-nosnippet>94</a>    }
 <a href=#95 id=95 data-nosnippet>95</a>    <span class="doccomment">/// Casts `self` to [`ArrayOfTables`]
 <a href=#96 id=96 data-nosnippet>96</a>    </span><span class="kw">pub fn </span>as_array_of_tables(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ArrayOfTables&gt; {
 <a href=#97 id=97 data-nosnippet>97</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#98 id=98 data-nosnippet>98</a>            Item::ArrayOfTables(<span class="kw-2">ref </span>a) =&gt; <span class="prelude-val">Some</span>(a),
+<a href=#98 id=98 data-nosnippet>98</a>            <span class="self">Self</span>::ArrayOfTables(<span class="kw-2">ref </span>a) =&gt; <span class="prelude-val">Some</span>(a),
 <a href=#99 id=99 data-nosnippet>99</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#100 id=100 data-nosnippet>100</a>        }
 <a href=#101 id=101 data-nosnippet>101</a>    }
 <a href=#102 id=102 data-nosnippet>102</a>    <span class="doccomment">/// Casts `self` to mutable [`Value`].
 <a href=#103 id=103 data-nosnippet>103</a>    </span><span class="kw">pub fn </span>as_value_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>Value&gt; {
 <a href=#104 id=104 data-nosnippet>104</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#105 id=105 data-nosnippet>105</a>            Item::Value(<span class="kw-2">ref mut </span>v) =&gt; <span class="prelude-val">Some</span>(v),
+<a href=#105 id=105 data-nosnippet>105</a>            <span class="self">Self</span>::Value(<span class="kw-2">ref mut </span>v) =&gt; <span class="prelude-val">Some</span>(v),
 <a href=#106 id=106 data-nosnippet>106</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#107 id=107 data-nosnippet>107</a>        }
 <a href=#108 id=108 data-nosnippet>108</a>    }
@@ -115,27 +115,27 @@
 <a href=#115 id=115 data-nosnippet>115</a>    /// &lt;/div&gt;
 <a href=#116 id=116 data-nosnippet>116</a>    </span><span class="kw">pub fn </span>as_table_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>Table&gt; {
 <a href=#117 id=117 data-nosnippet>117</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#118 id=118 data-nosnippet>118</a>            Item::Table(<span class="kw-2">ref mut </span>t) =&gt; <span class="prelude-val">Some</span>(t),
+<a href=#118 id=118 data-nosnippet>118</a>            <span class="self">Self</span>::Table(<span class="kw-2">ref mut </span>t) =&gt; <span class="prelude-val">Some</span>(t),
 <a href=#119 id=119 data-nosnippet>119</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#120 id=120 data-nosnippet>120</a>        }
 <a href=#121 id=121 data-nosnippet>121</a>    }
 <a href=#122 id=122 data-nosnippet>122</a>    <span class="doccomment">/// Casts `self` to mutable [`ArrayOfTables`]
 <a href=#123 id=123 data-nosnippet>123</a>    </span><span class="kw">pub fn </span>as_array_of_tables_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>ArrayOfTables&gt; {
 <a href=#124 id=124 data-nosnippet>124</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#125 id=125 data-nosnippet>125</a>            Item::ArrayOfTables(<span class="kw-2">ref mut </span>a) =&gt; <span class="prelude-val">Some</span>(a),
+<a href=#125 id=125 data-nosnippet>125</a>            <span class="self">Self</span>::ArrayOfTables(<span class="kw-2">ref mut </span>a) =&gt; <span class="prelude-val">Some</span>(a),
 <a href=#126 id=126 data-nosnippet>126</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#127 id=127 data-nosnippet>127</a>        }
 <a href=#128 id=128 data-nosnippet>128</a>    }
 <a href=#129 id=129 data-nosnippet>129</a>    <span class="doccomment">/// Casts `self` to [`Value`]
 <a href=#130 id=130 data-nosnippet>130</a>    </span><span class="kw">pub fn </span>into_value(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Value, <span class="self">Self</span>&gt; {
 <a href=#131 id=131 data-nosnippet>131</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#132 id=132 data-nosnippet>132</a>            Item::None =&gt; <span class="prelude-val">Err</span>(<span class="self">self</span>),
-<a href=#133 id=133 data-nosnippet>133</a>            Item::Value(v) =&gt; <span class="prelude-val">Ok</span>(v),
-<a href=#134 id=134 data-nosnippet>134</a>            Item::Table(v) =&gt; {
+<a href=#132 id=132 data-nosnippet>132</a>            <span class="self">Self</span>::None =&gt; <span class="prelude-val">Err</span>(<span class="self">self</span>),
+<a href=#133 id=133 data-nosnippet>133</a>            <span class="self">Self</span>::Value(v) =&gt; <span class="prelude-val">Ok</span>(v),
+<a href=#134 id=134 data-nosnippet>134</a>            <span class="self">Self</span>::Table(v) =&gt; {
 <a href=#135 id=135 data-nosnippet>135</a>                <span class="kw">let </span>v = v.into_inline_table();
 <a href=#136 id=136 data-nosnippet>136</a>                <span class="prelude-val">Ok</span>(Value::InlineTable(v))
 <a href=#137 id=137 data-nosnippet>137</a>            }
-<a href=#138 id=138 data-nosnippet>138</a>            Item::ArrayOfTables(v) =&gt; {
+<a href=#138 id=138 data-nosnippet>138</a>            <span class="self">Self</span>::ArrayOfTables(v) =&gt; {
 <a href=#139 id=139 data-nosnippet>139</a>                <span class="kw">let </span>v = v.into_array();
 <a href=#140 id=140 data-nosnippet>140</a>                <span class="prelude-val">Ok</span>(Value::Array(v))
 <a href=#141 id=141 data-nosnippet>141</a>            }
@@ -144,7 +144,7 @@
 <a href=#144 id=144 data-nosnippet>144</a>    <span class="doccomment">/// In-place convert to a value
 <a href=#145 id=145 data-nosnippet>145</a>    </span><span class="kw">pub fn </span>make_value(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
 <a href=#146 id=146 data-nosnippet>146</a>        <span class="kw">let </span>other = std::mem::take(<span class="self">self</span>);
-<a href=#147 id=147 data-nosnippet>147</a>        <span class="kw">let </span>other = other.into_value().map(Item::Value).unwrap_or(Item::None);
+<a href=#147 id=147 data-nosnippet>147</a>        <span class="kw">let </span>other = other.into_value().map(Item::Value).unwrap_or(<span class="self">Self</span>::None);
 <a href=#148 id=148 data-nosnippet>148</a>        <span class="kw-2">*</span><span class="self">self </span>= other;
 <a href=#149 id=149 data-nosnippet>149</a>    }
 <a href=#150 id=150 data-nosnippet>150</a>    <span class="doccomment">/// Casts `self` to [`Table`]
@@ -156,18 +156,18 @@
 <a href=#156 id=156 data-nosnippet>156</a>    /// &lt;/div&gt;
 <a href=#157 id=157 data-nosnippet>157</a>    </span><span class="kw">pub fn </span>into_table(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Table, <span class="self">Self</span>&gt; {
 <a href=#158 id=158 data-nosnippet>158</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#159 id=159 data-nosnippet>159</a>            Item::Table(t) =&gt; <span class="prelude-val">Ok</span>(t),
-<a href=#160 id=160 data-nosnippet>160</a>            Item::Value(Value::InlineTable(t)) =&gt; <span class="prelude-val">Ok</span>(t.into_table()),
+<a href=#159 id=159 data-nosnippet>159</a>            <span class="self">Self</span>::Table(t) =&gt; <span class="prelude-val">Ok</span>(t),
+<a href=#160 id=160 data-nosnippet>160</a>            <span class="self">Self</span>::Value(Value::InlineTable(t)) =&gt; <span class="prelude-val">Ok</span>(t.into_table()),
 <a href=#161 id=161 data-nosnippet>161</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">self</span>),
 <a href=#162 id=162 data-nosnippet>162</a>        }
 <a href=#163 id=163 data-nosnippet>163</a>    }
 <a href=#164 id=164 data-nosnippet>164</a>    <span class="doccomment">/// Casts `self` to [`ArrayOfTables`]
 <a href=#165 id=165 data-nosnippet>165</a>    </span><span class="kw">pub fn </span>into_array_of_tables(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ArrayOfTables, <span class="self">Self</span>&gt; {
 <a href=#166 id=166 data-nosnippet>166</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#167 id=167 data-nosnippet>167</a>            Item::ArrayOfTables(a) =&gt; <span class="prelude-val">Ok</span>(a),
-<a href=#168 id=168 data-nosnippet>168</a>            Item::Value(Value::Array(a)) =&gt; {
+<a href=#167 id=167 data-nosnippet>167</a>            <span class="self">Self</span>::ArrayOfTables(a) =&gt; <span class="prelude-val">Ok</span>(a),
+<a href=#168 id=168 data-nosnippet>168</a>            <span class="self">Self</span>::Value(Value::Array(a)) =&gt; {
 <a href=#169 id=169 data-nosnippet>169</a>                <span class="kw">if </span>a.is_empty() {
-<a href=#170 id=170 data-nosnippet>170</a>                    <span class="prelude-val">Err</span>(Item::Value(Value::Array(a)))
+<a href=#170 id=170 data-nosnippet>170</a>                    <span class="prelude-val">Err</span>(<span class="self">Self</span>::Value(Value::Array(a)))
 <a href=#171 id=171 data-nosnippet>171</a>                } <span class="kw">else if </span>a.iter().all(|v| v.is_inline_table()) {
 <a href=#172 id=172 data-nosnippet>172</a>                    <span class="kw">let </span><span class="kw-2">mut </span>aot = ArrayOfTables::new();
 <a href=#173 id=173 data-nosnippet>173</a>                    aot.values = a.values;
@@ -176,7 +176,7 @@
 <a href=#176 id=176 data-nosnippet>176</a>                    }
 <a href=#177 id=177 data-nosnippet>177</a>                    <span class="prelude-val">Ok</span>(aot)
 <a href=#178 id=178 data-nosnippet>178</a>                } <span class="kw">else </span>{
-<a href=#179 id=179 data-nosnippet>179</a>                    <span class="prelude-val">Err</span>(Item::Value(Value::Array(a)))
+<a href=#179 id=179 data-nosnippet>179</a>                    <span class="prelude-val">Err</span>(<span class="self">Self</span>::Value(Value::Array(a)))
 <a href=#180 id=180 data-nosnippet>180</a>                }
 <a href=#181 id=181 data-nosnippet>181</a>            }
 <a href=#182 id=182 data-nosnippet>182</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="self">self</span>),
@@ -215,7 +215,7 @@
 <a href=#215 id=215 data-nosnippet>215</a>    }
 <a href=#216 id=216 data-nosnippet>216</a>    <span class="doccomment">/// Returns true if `self` is `None`.
 <a href=#217 id=217 data-nosnippet>217</a>    </span><span class="kw">pub fn </span>is_none(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-<a href=#218 id=218 data-nosnippet>218</a>        <span class="macro">matches!</span>(<span class="kw-2">*</span><span class="self">self</span>, Item::None)
+<a href=#218 id=218 data-nosnippet>218</a>        <span class="macro">matches!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="self">Self</span>::None)
 <a href=#219 id=219 data-nosnippet>219</a>    }
 <a href=#220 id=220 data-nosnippet>220</a>
 <a href=#221 id=221 data-nosnippet>221</a>    <span class="comment">// Duplicate Value downcasting API
@@ -310,8 +310,8 @@
 <a href=#310 id=310 data-nosnippet>310</a>    <span class="doccomment">/// Casts `self` to either a table or an inline table.
 <a href=#311 id=311 data-nosnippet>311</a>    </span><span class="kw">pub fn </span>as_table_like_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span><span class="kw">dyn </span>TableLike&gt; {
 <a href=#312 id=312 data-nosnippet>312</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#313 id=313 data-nosnippet>313</a>            Item::Table(t) =&gt; <span class="prelude-val">Some</span>(t <span class="kw">as </span><span class="kw-2">&amp;mut </span><span class="kw">dyn </span>TableLike),
-<a href=#314 id=314 data-nosnippet>314</a>            Item::Value(Value::InlineTable(t)) =&gt; <span class="prelude-val">Some</span>(t <span class="kw">as </span><span class="kw-2">&amp;mut </span><span class="kw">dyn </span>TableLike),
+<a href=#313 id=313 data-nosnippet>313</a>            <span class="self">Self</span>::Table(t) =&gt; <span class="prelude-val">Some</span>(t <span class="kw">as </span><span class="kw-2">&amp;mut </span><span class="kw">dyn </span>TableLike),
+<a href=#314 id=314 data-nosnippet>314</a>            <span class="self">Self</span>::Value(Value::InlineTable(t)) =&gt; <span class="prelude-val">Some</span>(t <span class="kw">as </span><span class="kw-2">&amp;mut </span><span class="kw">dyn </span>TableLike),
 <a href=#315 id=315 data-nosnippet>315</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
 <a href=#316 id=316 data-nosnippet>316</a>        }
 <a href=#317 id=317 data-nosnippet>317</a>    }
@@ -323,22 +323,22 @@
 <a href=#323 id=323 data-nosnippet>323</a>
 <a href=#324 id=324 data-nosnippet>324</a>    <span class="doccomment">/// The location within the original document
 <a href=#325 id=325 data-nosnippet>325</a>    ///
-<a href=#326 id=326 data-nosnippet>326</a>    /// This generally requires an [`ImDocument`][crate::ImDocument].
+<a href=#326 id=326 data-nosnippet>326</a>    /// This generally requires a [`Document`][crate::Document].
 <a href=#327 id=327 data-nosnippet>327</a>    </span><span class="kw">pub fn </span>span(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;std::ops::Range&lt;usize&gt;&gt; {
 <a href=#328 id=328 data-nosnippet>328</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#329 id=329 data-nosnippet>329</a>            Item::None =&gt; <span class="prelude-val">None</span>,
-<a href=#330 id=330 data-nosnippet>330</a>            Item::Value(v) =&gt; v.span(),
-<a href=#331 id=331 data-nosnippet>331</a>            Item::Table(v) =&gt; v.span(),
-<a href=#332 id=332 data-nosnippet>332</a>            Item::ArrayOfTables(v) =&gt; v.span(),
+<a href=#329 id=329 data-nosnippet>329</a>            <span class="self">Self</span>::None =&gt; <span class="prelude-val">None</span>,
+<a href=#330 id=330 data-nosnippet>330</a>            <span class="self">Self</span>::Value(v) =&gt; v.span(),
+<a href=#331 id=331 data-nosnippet>331</a>            <span class="self">Self</span>::Table(v) =&gt; v.span(),
+<a href=#332 id=332 data-nosnippet>332</a>            <span class="self">Self</span>::ArrayOfTables(v) =&gt; v.span(),
 <a href=#333 id=333 data-nosnippet>333</a>        }
 <a href=#334 id=334 data-nosnippet>334</a>    }
 <a href=#335 id=335 data-nosnippet>335</a>
 <a href=#336 id=336 data-nosnippet>336</a>    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>despan(<span class="kw-2">&amp;mut </span><span class="self">self</span>, input: <span class="kw-2">&amp;</span>str) {
 <a href=#337 id=337 data-nosnippet>337</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#338 id=338 data-nosnippet>338</a>            Item::None =&gt; {}
-<a href=#339 id=339 data-nosnippet>339</a>            Item::Value(v) =&gt; v.despan(input),
-<a href=#340 id=340 data-nosnippet>340</a>            Item::Table(v) =&gt; v.despan(input),
-<a href=#341 id=341 data-nosnippet>341</a>            Item::ArrayOfTables(v) =&gt; v.despan(input),
+<a href=#338 id=338 data-nosnippet>338</a>            <span class="self">Self</span>::None =&gt; {}
+<a href=#339 id=339 data-nosnippet>339</a>            <span class="self">Self</span>::Value(v) =&gt; v.despan(input),
+<a href=#340 id=340 data-nosnippet>340</a>            <span class="self">Self</span>::Table(v) =&gt; v.despan(input),
+<a href=#341 id=341 data-nosnippet>341</a>            <span class="self">Self</span>::ArrayOfTables(v) =&gt; v.despan(input),
 <a href=#342 id=342 data-nosnippet>342</a>        }
 <a href=#343 id=343 data-nosnippet>343</a>    }
 <a href=#344 id=344 data-nosnippet>344</a>}
@@ -347,10 +347,10 @@
 <a href=#347 id=347 data-nosnippet>347</a>    <span class="attr">#[inline(never)]
 <a href=#348 id=348 data-nosnippet>348</a>    </span><span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
 <a href=#349 id=349 data-nosnippet>349</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#350 id=350 data-nosnippet>350</a>            Item::None =&gt; Item::None,
-<a href=#351 id=351 data-nosnippet>351</a>            Item::Value(v) =&gt; Item::Value(v.clone()),
-<a href=#352 id=352 data-nosnippet>352</a>            Item::Table(v) =&gt; Item::Table(v.clone()),
-<a href=#353 id=353 data-nosnippet>353</a>            Item::ArrayOfTables(v) =&gt; Item::ArrayOfTables(v.clone()),
+<a href=#350 id=350 data-nosnippet>350</a>            <span class="self">Self</span>::None =&gt; <span class="self">Self</span>::None,
+<a href=#351 id=351 data-nosnippet>351</a>            <span class="self">Self</span>::Value(v) =&gt; <span class="self">Self</span>::Value(v.clone()),
+<a href=#352 id=352 data-nosnippet>352</a>            <span class="self">Self</span>::Table(v) =&gt; <span class="self">Self</span>::Table(v.clone()),
+<a href=#353 id=353 data-nosnippet>353</a>            <span class="self">Self</span>::ArrayOfTables(v) =&gt; <span class="self">Self</span>::ArrayOfTables(v.clone()),
 <a href=#354 id=354 data-nosnippet>354</a>        }
 <a href=#355 id=355 data-nosnippet>355</a>    }
 <a href=#356 id=356 data-nosnippet>356</a>}
@@ -362,31 +362,31 @@
 <a href=#362 id=362 data-nosnippet>362</a>    <span class="doccomment">/// Parses a value from a &amp;str
 <a href=#363 id=363 data-nosnippet>363</a>    </span><span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
 <a href=#364 id=364 data-nosnippet>364</a>        <span class="kw">let </span>value = s.parse::&lt;Value&gt;()<span class="question-mark">?</span>;
-<a href=#365 id=365 data-nosnippet>365</a>        <span class="prelude-val">Ok</span>(Item::Value(value))
+<a href=#365 id=365 data-nosnippet>365</a>        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Value(value))
 <a href=#366 id=366 data-nosnippet>366</a>    }
 <a href=#367 id=367 data-nosnippet>367</a>}
 <a href=#368 id=368 data-nosnippet>368</a>
-<a href=#369 id=369 data-nosnippet>369</a><span class="kw">impl</span>&lt;<span class="lifetime">'b</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'b </span>Item&gt; <span class="kw">for </span>Item {
-<a href=#370 id=370 data-nosnippet>370</a>    <span class="kw">fn </span>from(s: <span class="kw-2">&amp;</span><span class="lifetime">'b </span>Item) -&gt; <span class="self">Self </span>{
+<a href=#369 id=369 data-nosnippet>369</a><span class="kw">impl</span>&lt;<span class="lifetime">'b</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="self">Self</span>&gt; <span class="kw">for </span>Item {
+<a href=#370 id=370 data-nosnippet>370</a>    <span class="kw">fn </span>from(s: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="self">Self</span>) -&gt; <span class="self">Self </span>{
 <a href=#371 id=371 data-nosnippet>371</a>        s.clone()
 <a href=#372 id=372 data-nosnippet>372</a>    }
 <a href=#373 id=373 data-nosnippet>373</a>}
 <a href=#374 id=374 data-nosnippet>374</a>
 <a href=#375 id=375 data-nosnippet>375</a><span class="kw">impl </span>From&lt;Table&gt; <span class="kw">for </span>Item {
 <a href=#376 id=376 data-nosnippet>376</a>    <span class="kw">fn </span>from(s: Table) -&gt; <span class="self">Self </span>{
-<a href=#377 id=377 data-nosnippet>377</a>        Item::Table(s)
+<a href=#377 id=377 data-nosnippet>377</a>        <span class="self">Self</span>::Table(s)
 <a href=#378 id=378 data-nosnippet>378</a>    }
 <a href=#379 id=379 data-nosnippet>379</a>}
 <a href=#380 id=380 data-nosnippet>380</a>
 <a href=#381 id=381 data-nosnippet>381</a><span class="kw">impl </span>From&lt;ArrayOfTables&gt; <span class="kw">for </span>Item {
 <a href=#382 id=382 data-nosnippet>382</a>    <span class="kw">fn </span>from(s: ArrayOfTables) -&gt; <span class="self">Self </span>{
-<a href=#383 id=383 data-nosnippet>383</a>        Item::ArrayOfTables(s)
+<a href=#383 id=383 data-nosnippet>383</a>        <span class="self">Self</span>::ArrayOfTables(s)
 <a href=#384 id=384 data-nosnippet>384</a>    }
 <a href=#385 id=385 data-nosnippet>385</a>}
 <a href=#386 id=386 data-nosnippet>386</a>
 <a href=#387 id=387 data-nosnippet>387</a><span class="kw">impl</span>&lt;V: Into&lt;Value&gt;&gt; From&lt;V&gt; <span class="kw">for </span>Item {
 <a href=#388 id=388 data-nosnippet>388</a>    <span class="kw">fn </span>from(s: V) -&gt; <span class="self">Self </span>{
-<a href=#389 id=389 data-nosnippet>389</a>        Item::Value(s.into())
+<a href=#389 id=389 data-nosnippet>389</a>        <span class="self">Self</span>::Value(s.into())
 <a href=#390 id=390 data-nosnippet>390</a>    }
 <a href=#391 id=391 data-nosnippet>391</a>}
 <a href=#392 id=392 data-nosnippet>392</a>
@@ -394,10 +394,10 @@
 <a href=#394 id=394 data-nosnippet>394</a></span><span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Item {
 <a href=#395 id=395 data-nosnippet>395</a>    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
 <a href=#396 id=396 data-nosnippet>396</a>        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self </span>{
-<a href=#397 id=397 data-nosnippet>397</a>            Item::None =&gt; <span class="prelude-val">Ok</span>(()),
-<a href=#398 id=398 data-nosnippet>398</a>            Item::Value(v) =&gt; v.fmt(f),
-<a href=#399 id=399 data-nosnippet>399</a>            Item::Table(v) =&gt; v.fmt(f),
-<a href=#400 id=400 data-nosnippet>400</a>            Item::ArrayOfTables(v) =&gt; v.fmt(f),
+<a href=#397 id=397 data-nosnippet>397</a>            <span class="self">Self</span>::None =&gt; <span class="prelude-val">Ok</span>(()),
+<a href=#398 id=398 data-nosnippet>398</a>            <span class="self">Self</span>::Value(v) =&gt; v.fmt(f),
+<a href=#399 id=399 data-nosnippet>399</a>            <span class="self">Self</span>::Table(v) =&gt; v.fmt(f),
+<a href=#400 id=400 data-nosnippet>400</a>            <span class="self">Self</span>::ArrayOfTables(v) =&gt; v.fmt(f),
 <a href=#401 id=401 data-nosnippet>401</a>        }
 <a href=#402 id=402 data-nosnippet>402</a>    }
 <a href=#403 id=403 data-nosnippet>403</a>}
@@ -447,4 +447,5 @@
 <a href=#447 id=447 data-nosnippet>447</a>#[cfg(feature = <span class="string">"display"</span>)]
 <a href=#448 id=448 data-nosnippet>448</a></span><span class="kw">fn </span>string_roundtrip() {
 <a href=#449 id=449 data-nosnippet>449</a>    value(<span class="string">"hello"</span>).to_string().parse::&lt;Item&gt;().unwrap();
-<a href=#450 id=450 data-nosnippet>450</a>}</code></pre></div></section></main></body></html>
+<a href=#450 id=450 data-nosnippet>450</a>}
+</code></pre></div></section></main></body></html>

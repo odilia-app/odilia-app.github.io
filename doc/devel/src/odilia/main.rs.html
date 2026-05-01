@@ -305,30 +305,28 @@
 <a href=#305 id=305 data-nosnippet>305</a>	<span class="comment">// In order, do  a configuration file specified via cli, XDG_CONFIG_HOME, the usual location for system wide configuration(/etc/odilia/config.toml)
 <a href=#306 id=306 data-nosnippet>306</a>	// If XDG_CONFIG_HOME based configuration wasn't found, create one by combining default values with the system provided ones, if available, for the user to alter, for the next run of odilia
 <a href=#307 id=307 data-nosnippet>307</a>	//default configuration first, because that doesn't affect the priority outlined above
-<a href=#308 id=308 data-nosnippet>308</a>	</span><span class="kw">let </span>xdg_dirs = xdg::BaseDirectories::with_prefix(<span class="string">"odilia"</span>).expect(
-<a href=#309 id=309 data-nosnippet>309</a>		<span class="string">"unable to find the odilia config directory according to the xdg dirs specification"</span>,
-<a href=#310 id=310 data-nosnippet>310</a>	);
-<a href=#311 id=311 data-nosnippet>311</a>
-<a href=#312 id=312 data-nosnippet>312</a>	<span class="kw">let </span>config_path = xdg_dirs
-<a href=#313 id=313 data-nosnippet>313</a>		.place_config_file(<span class="string">"config.toml"</span>)
-<a href=#314 id=314 data-nosnippet>314</a>		.expect(<span class="string">"unable to place configuration file. Maybe your system is readonly?"</span>);
-<a href=#315 id=315 data-nosnippet>315</a>
-<a href=#316 id=316 data-nosnippet>316</a>	<span class="kw">let </span><span class="kw-2">mut </span>config = config::Config::builder()
-<a href=#317 id=317 data-nosnippet>317</a>		.add_source(config::Config::try_from(<span class="kw-2">&amp;</span>ApplicationConfig::default())<span class="question-mark">?</span>)
-<a href=#318 id=318 data-nosnippet>318</a>		<span class="comment">// env vars
-<a href=#319 id=319 data-nosnippet>319</a>		</span>.add_source(config::Environment::with_prefix(<span class="string">"ODILIA"</span>))
-<a href=#320 id=320 data-nosnippet>320</a>		<span class="comment">//next, the configuration system wide, in /etc/odilia/config.toml
-<a href=#321 id=321 data-nosnippet>321</a>		</span>.add_source(config::File::with_name(<span class="string">"/etc/odilia/config"</span>))
-<a href=#322 id=322 data-nosnippet>322</a>		<span class="comment">//finally, the xdg configuration
-<a href=#323 id=323 data-nosnippet>323</a>		</span>.add_source(config::File::with_name(
-<a href=#324 id=324 data-nosnippet>324</a>			config_path.to_str().expect(<span class="string">"Valid UTF-8 path"</span>),
-<a href=#325 id=325 data-nosnippet>325</a>		));
-<a href=#326 id=326 data-nosnippet>326</a>	<span class="kw">if let </span><span class="prelude-val">Some</span>(path) = cli_overide {
-<a href=#327 id=327 data-nosnippet>327</a>		<span class="comment">// if a path overide was given, use that
-<a href=#328 id=328 data-nosnippet>328</a>		</span>config = config.add_source(config::File::with_name(
-<a href=#329 id=329 data-nosnippet>329</a>			path.to_str().expect(<span class="string">"Valid UTF-8 path"</span>),
-<a href=#330 id=330 data-nosnippet>330</a>		));
-<a href=#331 id=331 data-nosnippet>331</a>	}
-<a href=#332 id=332 data-nosnippet>332</a>	<span class="prelude-val">Ok</span>(config.build()<span class="question-mark">?</span>.try_deserialize()<span class="question-mark">?</span>)
-<a href=#333 id=333 data-nosnippet>333</a>}
+<a href=#308 id=308 data-nosnippet>308</a>	</span><span class="kw">let </span>xdg_dirs = xdg::BaseDirectories::with_prefix(<span class="string">"odilia"</span>);
+<a href=#309 id=309 data-nosnippet>309</a>
+<a href=#310 id=310 data-nosnippet>310</a>	<span class="kw">let </span>config_path = xdg_dirs
+<a href=#311 id=311 data-nosnippet>311</a>		.place_config_file(<span class="string">"config.toml"</span>)
+<a href=#312 id=312 data-nosnippet>312</a>		.expect(<span class="string">"unable to place configuration file. Maybe your system is readonly?"</span>);
+<a href=#313 id=313 data-nosnippet>313</a>
+<a href=#314 id=314 data-nosnippet>314</a>	<span class="kw">let </span><span class="kw-2">mut </span>config = config::Config::builder()
+<a href=#315 id=315 data-nosnippet>315</a>		.add_source(config::Config::try_from(<span class="kw-2">&amp;</span>ApplicationConfig::default())<span class="question-mark">?</span>)
+<a href=#316 id=316 data-nosnippet>316</a>		<span class="comment">// env vars
+<a href=#317 id=317 data-nosnippet>317</a>		</span>.add_source(config::Environment::with_prefix(<span class="string">"ODILIA"</span>))
+<a href=#318 id=318 data-nosnippet>318</a>		<span class="comment">//next, the configuration system wide, in /etc/odilia/config.toml
+<a href=#319 id=319 data-nosnippet>319</a>		</span>.add_source(config::File::with_name(<span class="string">"/etc/odilia/config"</span>))
+<a href=#320 id=320 data-nosnippet>320</a>		<span class="comment">//finally, the xdg configuration
+<a href=#321 id=321 data-nosnippet>321</a>		</span>.add_source(config::File::with_name(
+<a href=#322 id=322 data-nosnippet>322</a>			config_path.to_str().expect(<span class="string">"Valid UTF-8 path"</span>),
+<a href=#323 id=323 data-nosnippet>323</a>		));
+<a href=#324 id=324 data-nosnippet>324</a>	<span class="kw">if let </span><span class="prelude-val">Some</span>(path) = cli_overide {
+<a href=#325 id=325 data-nosnippet>325</a>		<span class="comment">// if a path overide was given, use that
+<a href=#326 id=326 data-nosnippet>326</a>		</span>config = config.add_source(config::File::with_name(
+<a href=#327 id=327 data-nosnippet>327</a>			path.to_str().expect(<span class="string">"Valid UTF-8 path"</span>),
+<a href=#328 id=328 data-nosnippet>328</a>		));
+<a href=#329 id=329 data-nosnippet>329</a>	}
+<a href=#330 id=330 data-nosnippet>330</a>	<span class="prelude-val">Ok</span>(config.build()<span class="question-mark">?</span>.try_deserialize()<span class="question-mark">?</span>)
+<a href=#331 id=331 data-nosnippet>331</a>}
 </code></pre></div></section></main></body></html>

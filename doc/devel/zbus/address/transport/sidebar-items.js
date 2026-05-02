@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["TcpTransportFamily","Transport","UnixSocket"],"struct":["Tcp","Unix","Unixexec"]};
+window.SIDEBAR_ITEMS = {"enum":["TcpTransportFamily","Transport","UnixSocket"],"struct":["Ibus","Tcp","Unix","Unixexec"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["signal","socket","sysinfo","time","uio","utsname"]};
+window.SIDEBAR_ITEMS = {"mod":["signal","sysinfo","time","utsname"]};

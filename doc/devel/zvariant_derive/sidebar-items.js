@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"derive":["DeserializeDict","OwnedValue","SerializeDict","Type","Value"]};
+window.SIDEBAR_ITEMS = {"derive":["DeserializeDict","OwnedValue","SerializeDict","Type","Value"],"macro":["signature"]};

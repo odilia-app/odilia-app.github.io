@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cache/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.0-nightly (67bcaa9c4 2026-05-01)" data-channel="nightly" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-aa4d37ac.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">odilia_cache/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#![deny(
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `cache/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="odilia_cache" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.0-nightly (cb40c25f6 2026-05-04)" data-channel="nightly" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-aa4d37ac.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">odilia_cache/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#![deny(
 <a href=#2 id=2 data-nosnippet>2</a>	clippy::all,
 <a href=#3 id=3 data-nosnippet>3</a>	clippy::pedantic,
 <a href=#4 id=4 data-nosnippet>4</a>	clippy::cargo,
@@ -251,12 +251,12 @@
 <a href=#251 id=251 data-nosnippet>251</a>		<span class="kw-2">&amp;</span><span class="self">self</span>,
 <a href=#252 id=252 data-nosnippet>252</a>		key: <span class="kw-2">&amp;</span>CacheKey,
 <a href=#253 id=253 data-nosnippet>253</a>	) -&gt; <span class="kw">impl </span>Future&lt;Output = OdiliaResult&lt;CacheItem&gt;&gt; + Send;
-<a href=#254 id=254 data-nosnippet>254</a>	<span class="doccomment">/// Bulk query an application based on the [`CacheKey.sender`] field.
+<a href=#254 id=254 data-nosnippet>254</a>	<span class="doccomment">/// Bulk query an application based on the [`CacheKey.sender`](field@CacheKey::sender) field.
 <a href=#255 id=255 data-nosnippet>255</a>	</span><span class="kw">fn </span>lookup_bulk(
 <a href=#256 id=256 data-nosnippet>256</a>		<span class="kw-2">&amp;</span><span class="self">self</span>,
 <a href=#257 id=257 data-nosnippet>257</a>		key: <span class="kw-2">&amp;</span>CacheKey,
 <a href=#258 id=258 data-nosnippet>258</a>	) -&gt; <span class="kw">impl </span>Future&lt;Output = OdiliaResult&lt;Vec&lt;CacheItem&gt;&gt;&gt; + Send;
-<a href=#259 id=259 data-nosnippet>259</a>	<span class="doccomment">/// A seperate method from [`lookup_external`] for getting relation sets.
+<a href=#259 id=259 data-nosnippet>259</a>	<span class="doccomment">/// A seperate method from [`Self::lookup_external`] for getting relation sets.
 <a href=#260 id=260 data-nosnippet>260</a>	/// This is separate because it can have rather large results and should only be called when
 <a href=#261 id=261 data-nosnippet>261</a>	/// absolutely necessary.
 <a href=#262 id=262 data-nosnippet>262</a>	</span><span class="kw">fn </span>lookup_relations(
@@ -264,14 +264,14 @@
 <a href=#264 id=264 data-nosnippet>264</a>		key: <span class="kw-2">&amp;</span>CacheKey,
 <a href=#265 id=265 data-nosnippet>265</a>		ty: RelationType,
 <a href=#266 id=266 data-nosnippet>266</a>	) -&gt; <span class="kw">impl </span>Future&lt;Output = OdiliaResult&lt;Vec&lt;CacheKey&gt;&gt;&gt; + Send;
-<a href=#267 id=267 data-nosnippet>267</a>	<span class="doccomment">/// A separate method from [`lookup_external`] for converting an [`atspi::CacheItem`] into a
+<a href=#267 id=267 data-nosnippet>267</a>	<span class="doccomment">/// A separate method from [`Self::lookup_external`] for converting an [`atspi::CacheItem`] into a
 <a href=#268 id=268 data-nosnippet>268</a>	/// [`CacheItem`].
 <a href=#269 id=269 data-nosnippet>269</a>	/// This will call out to `DBus` for the remaining details.
 <a href=#270 id=270 data-nosnippet>270</a>	</span><span class="kw">fn </span>lookup_from_cache_item(
 <a href=#271 id=271 data-nosnippet>271</a>		<span class="kw-2">&amp;</span><span class="self">self</span>,
 <a href=#272 id=272 data-nosnippet>272</a>		cache_item: atspi::CacheItem,
 <a href=#273 id=273 data-nosnippet>273</a>	) -&gt; <span class="kw">impl </span>Future&lt;Output = OdiliaResult&lt;CacheItem&gt;&gt; + Send;
-<a href=#274 id=274 data-nosnippet>274</a>	<span class="doccomment">/// A separate method from [`lookup_external`] for converting an [`atspi::LegacyCacheItem`] into a
+<a href=#274 id=274 data-nosnippet>274</a>	<span class="doccomment">/// A separate method from [`Self::lookup_external`] for converting an [`atspi::LegacyCacheItem`] into a
 <a href=#275 id=275 data-nosnippet>275</a>	/// [`CacheItem`].
 <a href=#276 id=276 data-nosnippet>276</a>	/// This will call out to `DBus` for the remaining details.
 <a href=#277 id=277 data-nosnippet>277</a>	</span><span class="kw">fn </span>lookup_from_legacy_cache_item(
@@ -565,174 +565,177 @@
 <a href=#565 id=565 data-nosnippet>565</a>		<span class="prelude-val">Ok</span>(<span class="self">self</span>.add_all(found))
 <a href=#566 id=566 data-nosnippet>566</a>	}
 <a href=#567 id=567 data-nosnippet>567</a>
-<a href=#568 id=568 data-nosnippet>568</a>	<span class="doccomment">/// Modify the given item with closure [`F`] if it was already contained in the cache.
+<a href=#568 id=568 data-nosnippet>568</a>	<span class="doccomment">/// Modify the given item with closure `F` if it was already contained in the cache.
 <a href=#569 id=569 data-nosnippet>569</a>	/// Otherwise, fetch a new item over the [`CacheDriver`].
 <a href=#570 id=570 data-nosnippet>570</a>	///
 <a href=#571 id=571 data-nosnippet>571</a>	/// # Errors
 <a href=#572 id=572 data-nosnippet>572</a>	///
-<a href=#573 id=573 data-nosnippet>573</a>	/// See: [`get_or_create`]
-<a href=#574 id=574 data-nosnippet>574</a>	</span><span class="kw">pub async fn </span>modify_if_not_new&lt;F&gt;(
-<a href=#575 id=575 data-nosnippet>575</a>		<span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#576 id=576 data-nosnippet>576</a>		key: <span class="kw-2">&amp;</span>AccessiblePrimitive,
-<a href=#577 id=577 data-nosnippet>577</a>		f: F,
-<a href=#578 id=578 data-nosnippet>578</a>	) -&gt; OdiliaResult&lt;CacheItem&gt;
-<a href=#579 id=579 data-nosnippet>579</a>	<span class="kw">where
-<a href=#580 id=580 data-nosnippet>580</a>		</span>F: FnOnce(<span class="kw-2">&amp;mut </span>CacheItem),
-<a href=#581 id=581 data-nosnippet>581</a>	{
-<a href=#582 id=582 data-nosnippet>582</a>		<span class="comment">// if the item already exists in the cache, modify it
-<a href=#583 id=583 data-nosnippet>583</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.tree.get_mut(key) {
-<a href=#584 id=584 data-nosnippet>584</a>			f(cache_item);
-<a href=#585 id=585 data-nosnippet>585</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item.clone());
-<a href=#586 id=586 data-nosnippet>586</a>		}
-<a href=#587 id=587 data-nosnippet>587</a>		<span class="self">self</span>.get_or_create(key).<span class="kw">await
-<a href=#588 id=588 data-nosnippet>588</a>	</span>}
-<a href=#589 id=589 data-nosnippet>589</a>
-<a href=#590 id=590 data-nosnippet>590</a>	<span class="doccomment">/// Get a single item from the cache (note that this copies some integers to a new struct).
-<a href=#591 id=591 data-nosnippet>591</a>	/// If the `CacheItem` is not found, create one, add it to the cache, and return it.
-<a href=#592 id=592 data-nosnippet>592</a>	/// # Errors
-<a href=#593 id=593 data-nosnippet>593</a>	/// The function will return an error if:
-<a href=#594 id=594 data-nosnippet>594</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
-<a href=#595 id=595 data-nosnippet>595</a>	/// 2. The [`Self::add`] function fails.
-<a href=#596 id=596 data-nosnippet>596</a>	/// 3. The [`accessible_to_cache_item`] function fails.
-<a href=#597 id=597 data-nosnippet>597</a>	///
-<a href=#598 id=598 data-nosnippet>598</a>	/// # Panics
-<a href=#599 id=599 data-nosnippet>599</a>	///
-<a href=#600 id=600 data-nosnippet>600</a>	/// This function technically has a `.expect()` which could panic. But we gaurs against this.
-<a href=#601 id=601 data-nosnippet>601</a>	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>), skip(<span class="self">self</span>))]
-<a href=#602 id=602 data-nosnippet>602</a>	</span><span class="kw">async fn </span>get_or_create(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>AccessiblePrimitive) -&gt; OdiliaResult&lt;CacheItem&gt; {
-<a href=#603 id=603 data-nosnippet>603</a>		<span class="comment">// if the item already exists in the cache, return it
-<a href=#604 id=604 data-nosnippet>604</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.get(key) {
-<a href=#605 id=605 data-nosnippet>605</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
-<a href=#606 id=606 data-nosnippet>606</a>		}
-<a href=#607 id=607 data-nosnippet>607</a>		<span class="comment">// if the item's app has never had an item added to cache, bulk query it
-<a href=#608 id=608 data-nosnippet>608</a>		</span><span class="kw">if </span>!<span class="self">self</span>.tree.has_app(key) {
-<a href=#609 id=609 data-nosnippet>609</a>			<span class="kw">return </span><span class="self">self</span>.prefetch_app(key).<span class="kw">await</span>;
-<a href=#610 id=610 data-nosnippet>610</a>		}
-<a href=#611 id=611 data-nosnippet>611</a>		<span class="kw">let </span>cache_item = <span class="self">self</span>.driver.lookup_external(key).<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#612 id=612 data-nosnippet>612</a>		<span class="self">self</span>.tree.insert(key.clone(), cache_item.clone());
-<a href=#613 id=613 data-nosnippet>613</a>		<span class="prelude-val">Ok</span>(cache_item)
-<a href=#614 id=614 data-nosnippet>614</a>	}
-<a href=#615 id=615 data-nosnippet>615</a>
-<a href=#616 id=616 data-nosnippet>616</a>	<span class="doccomment">/// Same as [`get_or_create`] but starts with an initial [`atspi::CacheItem`].
-<a href=#617 id=617 data-nosnippet>617</a>	/// # Errors
-<a href=#618 id=618 data-nosnippet>618</a>	/// The function will return an error if:
-<a href=#619 id=619 data-nosnippet>619</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
-<a href=#620 id=620 data-nosnippet>620</a>	/// 2. The [`Self::add`] function fails.
-<a href=#621 id=621 data-nosnippet>621</a>	/// 3. The [`accessible_to_cache_item`] function fails.
-<a href=#622 id=622 data-nosnippet>622</a>	///
-<a href=#623 id=623 data-nosnippet>623</a>	/// # Panics
-<a href=#624 id=624 data-nosnippet>624</a>	///
-<a href=#625 id=625 data-nosnippet>625</a>	/// This function technically has a `.expect()` which could panic. But we gaurs against this.
-<a href=#626 id=626 data-nosnippet>626</a>	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>), skip(<span class="self">self</span>))]
-<a href=#627 id=627 data-nosnippet>627</a>	</span><span class="kw">async fn </span>get_or_create_from_cache_item(
-<a href=#628 id=628 data-nosnippet>628</a>		<span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#629 id=629 data-nosnippet>629</a>		ci: atspi::CacheItem,
-<a href=#630 id=630 data-nosnippet>630</a>	) -&gt; OdiliaResult&lt;CacheItem&gt; {
-<a href=#631 id=631 data-nosnippet>631</a>		<span class="kw">let </span>key = ci.object.clone().into();
-<a href=#632 id=632 data-nosnippet>632</a>		<span class="comment">// if the item already exists in the cache, return it
-<a href=#633 id=633 data-nosnippet>633</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.get(<span class="kw-2">&amp;</span>key) {
-<a href=#634 id=634 data-nosnippet>634</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
-<a href=#635 id=635 data-nosnippet>635</a>		}
-<a href=#636 id=636 data-nosnippet>636</a>		<span class="kw">let </span>cache_item = <span class="self">self</span>.driver.lookup_from_cache_item(ci).<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#637 id=637 data-nosnippet>637</a>		<span class="self">self</span>.tree.insert(key, cache_item.clone());
-<a href=#638 id=638 data-nosnippet>638</a>		<span class="prelude-val">Ok</span>(cache_item)
-<a href=#639 id=639 data-nosnippet>639</a>	}
-<a href=#640 id=640 data-nosnippet>640</a>
-<a href=#641 id=641 data-nosnippet>641</a>	<span class="doccomment">/// Same as [`get_or_create`] but starts with an initial [`atspi::LegacyCacheItem`].
-<a href=#642 id=642 data-nosnippet>642</a>	/// # Errors
-<a href=#643 id=643 data-nosnippet>643</a>	/// The function will return an error if:
-<a href=#644 id=644 data-nosnippet>644</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
-<a href=#645 id=645 data-nosnippet>645</a>	/// 2. The [`Self::add`] function fails.
-<a href=#646 id=646 data-nosnippet>646</a>	/// 3. The [`accessible_to_cache_item`] function fails.
-<a href=#647 id=647 data-nosnippet>647</a>	///
-<a href=#648 id=648 data-nosnippet>648</a>	/// # Panics
-<a href=#649 id=649 data-nosnippet>649</a>	///
-<a href=#650 id=650 data-nosnippet>650</a>	/// This function technically has a `.expect()` which could panic. But we gaurs against this.
-<a href=#651 id=651 data-nosnippet>651</a>	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>), skip(<span class="self">self</span>))]
-<a href=#652 id=652 data-nosnippet>652</a>	</span><span class="kw">async fn </span>get_or_create_from_legacy_cache_item(
-<a href=#653 id=653 data-nosnippet>653</a>		<span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#654 id=654 data-nosnippet>654</a>		ci: atspi::LegacyCacheItem,
-<a href=#655 id=655 data-nosnippet>655</a>	) -&gt; OdiliaResult&lt;CacheItem&gt; {
-<a href=#656 id=656 data-nosnippet>656</a>		<span class="kw">let </span>key = ci.object.clone().into();
-<a href=#657 id=657 data-nosnippet>657</a>		<span class="comment">// if the item already exists in the cache, return it
-<a href=#658 id=658 data-nosnippet>658</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.get(<span class="kw-2">&amp;</span>key) {
-<a href=#659 id=659 data-nosnippet>659</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
-<a href=#660 id=660 data-nosnippet>660</a>		}
-<a href=#661 id=661 data-nosnippet>661</a>		<span class="kw">let </span>cache_item = <span class="self">self</span>.driver.lookup_from_legacy_cache_item(ci).<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#662 id=662 data-nosnippet>662</a>		<span class="self">self</span>.tree.insert(key, cache_item.clone());
-<a href=#663 id=663 data-nosnippet>663</a>		<span class="prelude-val">Ok</span>(cache_item)
-<a href=#664 id=664 data-nosnippet>664</a>	}
-<a href=#665 id=665 data-nosnippet>665</a>
-<a href=#666 id=666 data-nosnippet>666</a>	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-<a href=#667 id=667 data-nosnippet>667</a>		<span class="self">self</span>.tree.<span class="number">0</span>.clear();
-<a href=#668 id=668 data-nosnippet>668</a>	}
-<a href=#669 id=669 data-nosnippet>669</a>}
-<a href=#670 id=670 data-nosnippet>670</a>
-<a href=#671 id=671 data-nosnippet>671</a><span class="doccomment">/// Convert an [`atspi::proxy::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
-<a href=#672 id=672 data-nosnippet>672</a>/// This runs a bunch of long-awaiting code and can take quite some time; use this sparingly.
-<a href=#673 id=673 data-nosnippet>673</a>/// This takes most properties and some function calls through the `AccessibleProxy` structure and generates a new `CacheItem`, which will be written to cache before being sent back.
-<a href=#674 id=674 data-nosnippet>674</a>///
-<a href=#675 id=675 data-nosnippet>675</a>/// # Errors
-<a href=#676 id=676 data-nosnippet>676</a>///
-<a href=#677 id=677 data-nosnippet>677</a>/// Will return an `Err(_)` variant when:
-<a href=#678 id=678 data-nosnippet>678</a>///
-<a href=#679 id=679 data-nosnippet>679</a>/// 1. The `cache` parameter does not reference an active cache once the `Weak` is upgraded to an `Option&lt;Arc&lt;_&gt;&gt;`.
-<a href=#680 id=680 data-nosnippet>680</a>/// 2. Any of the function calls on the `accessible` fail.
-<a href=#681 id=681 data-nosnippet>681</a>/// 3. Any `(String, OwnedObjectPath) -&gt; AccessiblePrimitive` conversions fail. This *should* never happen, but technically it is possible.
-<a href=#682 id=682 data-nosnippet>682</a></span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>))]
-<a href=#683 id=683 data-nosnippet>683</a></span><span class="kw">pub async fn </span>accessible_to_cache_item(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; OdiliaResult&lt;CacheItem&gt; {
-<a href=#684 id=684 data-nosnippet>684</a>	<span class="kw">let </span>props = (
-<a href=#685 id=685 data-nosnippet>685</a>		accessible.get_application(),
-<a href=#686 id=686 data-nosnippet>686</a>		accessible.parent(),
-<a href=#687 id=687 data-nosnippet>687</a>		accessible.get_index_in_parent(),
-<a href=#688 id=688 data-nosnippet>688</a>		accessible.child_count(),
-<a href=#689 id=689 data-nosnippet>689</a>		accessible.get_interfaces(),
-<a href=#690 id=690 data-nosnippet>690</a>		accessible.get_role(),
-<a href=#691 id=691 data-nosnippet>691</a>		accessible.get_state(),
-<a href=#692 id=692 data-nosnippet>692</a>		accessible.get_children(),
-<a href=#693 id=693 data-nosnippet>693</a>	)
-<a href=#694 id=694 data-nosnippet>694</a>		.try_join();
-<a href=#695 id=695 data-nosnippet>695</a>	<span class="kw">let </span>maps = (
-<a href=#696 id=696 data-nosnippet>696</a>		accessible
-<a href=#697 id=697 data-nosnippet>697</a>			.name()
-<a href=#698 id=698 data-nosnippet>698</a>			.map_ok(|s| <span class="kw">if </span>s.is_empty() { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(s) }),
+<a href=#573 id=573 data-nosnippet>573</a>	/// The function will return an error if:
+<a href=#574 id=574 data-nosnippet>574</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
+<a href=#575 id=575 data-nosnippet>575</a>	/// 2. The [`Self::add`] function fails.
+<a href=#576 id=576 data-nosnippet>576</a>	/// 3. The [`accessible_to_cache_item`] function fails.
+<a href=#577 id=577 data-nosnippet>577</a>	</span><span class="kw">pub async fn </span>modify_if_not_new&lt;F&gt;(
+<a href=#578 id=578 data-nosnippet>578</a>		<span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#579 id=579 data-nosnippet>579</a>		key: <span class="kw-2">&amp;</span>AccessiblePrimitive,
+<a href=#580 id=580 data-nosnippet>580</a>		f: F,
+<a href=#581 id=581 data-nosnippet>581</a>	) -&gt; OdiliaResult&lt;CacheItem&gt;
+<a href=#582 id=582 data-nosnippet>582</a>	<span class="kw">where
+<a href=#583 id=583 data-nosnippet>583</a>		</span>F: FnOnce(<span class="kw-2">&amp;mut </span>CacheItem),
+<a href=#584 id=584 data-nosnippet>584</a>	{
+<a href=#585 id=585 data-nosnippet>585</a>		<span class="comment">// if the item already exists in the cache, modify it
+<a href=#586 id=586 data-nosnippet>586</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.tree.get_mut(key) {
+<a href=#587 id=587 data-nosnippet>587</a>			f(cache_item);
+<a href=#588 id=588 data-nosnippet>588</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item.clone());
+<a href=#589 id=589 data-nosnippet>589</a>		}
+<a href=#590 id=590 data-nosnippet>590</a>		<span class="self">self</span>.get_or_create(key).<span class="kw">await
+<a href=#591 id=591 data-nosnippet>591</a>	</span>}
+<a href=#592 id=592 data-nosnippet>592</a>
+<a href=#593 id=593 data-nosnippet>593</a>	<span class="doccomment">/// Get a single item from the cache (note that this copies some integers to a new struct).
+<a href=#594 id=594 data-nosnippet>594</a>	/// If the `CacheItem` is not found, create one, add it to the cache, and return it.
+<a href=#595 id=595 data-nosnippet>595</a>	/// # Errors
+<a href=#596 id=596 data-nosnippet>596</a>	/// The function will return an error if:
+<a href=#597 id=597 data-nosnippet>597</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
+<a href=#598 id=598 data-nosnippet>598</a>	/// 2. The [`Self::add`] function fails.
+<a href=#599 id=599 data-nosnippet>599</a>	/// 3. The [`accessible_to_cache_item`] function fails.
+<a href=#600 id=600 data-nosnippet>600</a>	///
+<a href=#601 id=601 data-nosnippet>601</a>	/// # Panics
+<a href=#602 id=602 data-nosnippet>602</a>	///
+<a href=#603 id=603 data-nosnippet>603</a>	/// This function technically has a `.expect()` which could panic. But we gaurd against this.
+<a href=#604 id=604 data-nosnippet>604</a>	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>), skip(<span class="self">self</span>))]
+<a href=#605 id=605 data-nosnippet>605</a>	</span><span class="kw">async fn </span>get_or_create(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>AccessiblePrimitive) -&gt; OdiliaResult&lt;CacheItem&gt; {
+<a href=#606 id=606 data-nosnippet>606</a>		<span class="comment">// if the item already exists in the cache, return it
+<a href=#607 id=607 data-nosnippet>607</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.get(key) {
+<a href=#608 id=608 data-nosnippet>608</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
+<a href=#609 id=609 data-nosnippet>609</a>		}
+<a href=#610 id=610 data-nosnippet>610</a>		<span class="comment">// if the item's app has never had an item added to cache, bulk query it
+<a href=#611 id=611 data-nosnippet>611</a>		</span><span class="kw">if </span>!<span class="self">self</span>.tree.has_app(key) {
+<a href=#612 id=612 data-nosnippet>612</a>			<span class="kw">return </span><span class="self">self</span>.prefetch_app(key).<span class="kw">await</span>;
+<a href=#613 id=613 data-nosnippet>613</a>		}
+<a href=#614 id=614 data-nosnippet>614</a>		<span class="kw">let </span>cache_item = <span class="self">self</span>.driver.lookup_external(key).<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#615 id=615 data-nosnippet>615</a>		<span class="self">self</span>.tree.insert(key.clone(), cache_item.clone());
+<a href=#616 id=616 data-nosnippet>616</a>		<span class="prelude-val">Ok</span>(cache_item)
+<a href=#617 id=617 data-nosnippet>617</a>	}
+<a href=#618 id=618 data-nosnippet>618</a>
+<a href=#619 id=619 data-nosnippet>619</a>	<span class="doccomment">/// Same as [`Self::get_or_create`] but starts with an initial [`atspi::CacheItem`].
+<a href=#620 id=620 data-nosnippet>620</a>	/// # Errors
+<a href=#621 id=621 data-nosnippet>621</a>	/// The function will return an error if:
+<a href=#622 id=622 data-nosnippet>622</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
+<a href=#623 id=623 data-nosnippet>623</a>	/// 2. The [`Self::add`] function fails.
+<a href=#624 id=624 data-nosnippet>624</a>	/// 3. The [`accessible_to_cache_item`] function fails.
+<a href=#625 id=625 data-nosnippet>625</a>	///
+<a href=#626 id=626 data-nosnippet>626</a>	/// # Panics
+<a href=#627 id=627 data-nosnippet>627</a>	///
+<a href=#628 id=628 data-nosnippet>628</a>	/// This function technically has a `.expect()` which could panic. But we gaurs against this.
+<a href=#629 id=629 data-nosnippet>629</a>	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>), skip(<span class="self">self</span>))]
+<a href=#630 id=630 data-nosnippet>630</a>	</span><span class="kw">async fn </span>get_or_create_from_cache_item(
+<a href=#631 id=631 data-nosnippet>631</a>		<span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#632 id=632 data-nosnippet>632</a>		ci: atspi::CacheItem,
+<a href=#633 id=633 data-nosnippet>633</a>	) -&gt; OdiliaResult&lt;CacheItem&gt; {
+<a href=#634 id=634 data-nosnippet>634</a>		<span class="kw">let </span>key = ci.object.clone().into();
+<a href=#635 id=635 data-nosnippet>635</a>		<span class="comment">// if the item already exists in the cache, return it
+<a href=#636 id=636 data-nosnippet>636</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.get(<span class="kw-2">&amp;</span>key) {
+<a href=#637 id=637 data-nosnippet>637</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
+<a href=#638 id=638 data-nosnippet>638</a>		}
+<a href=#639 id=639 data-nosnippet>639</a>		<span class="kw">let </span>cache_item = <span class="self">self</span>.driver.lookup_from_cache_item(ci).<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#640 id=640 data-nosnippet>640</a>		<span class="self">self</span>.tree.insert(key, cache_item.clone());
+<a href=#641 id=641 data-nosnippet>641</a>		<span class="prelude-val">Ok</span>(cache_item)
+<a href=#642 id=642 data-nosnippet>642</a>	}
+<a href=#643 id=643 data-nosnippet>643</a>
+<a href=#644 id=644 data-nosnippet>644</a>	<span class="doccomment">/// Same as [`Self::get_or_create`] but starts with an initial [`atspi::LegacyCacheItem`].
+<a href=#645 id=645 data-nosnippet>645</a>	/// # Errors
+<a href=#646 id=646 data-nosnippet>646</a>	/// The function will return an error if:
+<a href=#647 id=647 data-nosnippet>647</a>	/// 1. The `accessible` can not be turned into an `AccessiblePrimitive`. This should never happen, but is technically possible.
+<a href=#648 id=648 data-nosnippet>648</a>	/// 2. The [`Self::add`] function fails.
+<a href=#649 id=649 data-nosnippet>649</a>	/// 3. The [`accessible_to_cache_item`] function fails.
+<a href=#650 id=650 data-nosnippet>650</a>	///
+<a href=#651 id=651 data-nosnippet>651</a>	/// # Panics
+<a href=#652 id=652 data-nosnippet>652</a>	///
+<a href=#653 id=653 data-nosnippet>653</a>	/// This function technically has a `.expect()` which could panic. But we gaurs against this.
+<a href=#654 id=654 data-nosnippet>654</a>	</span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>), skip(<span class="self">self</span>))]
+<a href=#655 id=655 data-nosnippet>655</a>	</span><span class="kw">async fn </span>get_or_create_from_legacy_cache_item(
+<a href=#656 id=656 data-nosnippet>656</a>		<span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#657 id=657 data-nosnippet>657</a>		ci: atspi::LegacyCacheItem,
+<a href=#658 id=658 data-nosnippet>658</a>	) -&gt; OdiliaResult&lt;CacheItem&gt; {
+<a href=#659 id=659 data-nosnippet>659</a>		<span class="kw">let </span>key = ci.object.clone().into();
+<a href=#660 id=660 data-nosnippet>660</a>		<span class="comment">// if the item already exists in the cache, return it
+<a href=#661 id=661 data-nosnippet>661</a>		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(cache_item) = <span class="self">self</span>.get(<span class="kw-2">&amp;</span>key) {
+<a href=#662 id=662 data-nosnippet>662</a>			<span class="kw">return </span><span class="prelude-val">Ok</span>(cache_item);
+<a href=#663 id=663 data-nosnippet>663</a>		}
+<a href=#664 id=664 data-nosnippet>664</a>		<span class="kw">let </span>cache_item = <span class="self">self</span>.driver.lookup_from_legacy_cache_item(ci).<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#665 id=665 data-nosnippet>665</a>		<span class="self">self</span>.tree.insert(key, cache_item.clone());
+<a href=#666 id=666 data-nosnippet>666</a>		<span class="prelude-val">Ok</span>(cache_item)
+<a href=#667 id=667 data-nosnippet>667</a>	}
+<a href=#668 id=668 data-nosnippet>668</a>
+<a href=#669 id=669 data-nosnippet>669</a>	<span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+<a href=#670 id=670 data-nosnippet>670</a>		<span class="self">self</span>.tree.<span class="number">0</span>.clear();
+<a href=#671 id=671 data-nosnippet>671</a>	}
+<a href=#672 id=672 data-nosnippet>672</a>}
+<a href=#673 id=673 data-nosnippet>673</a>
+<a href=#674 id=674 data-nosnippet>674</a><span class="doccomment">/// Convert an [`atspi::proxy::accessible::AccessibleProxy`] into a [`crate::CacheItem`].
+<a href=#675 id=675 data-nosnippet>675</a>/// This runs a bunch of long-awaiting code and can take quite some time; use this sparingly.
+<a href=#676 id=676 data-nosnippet>676</a>/// This takes most properties and some function calls through the `AccessibleProxy` structure and generates a new `CacheItem`, which will be written to cache before being sent back.
+<a href=#677 id=677 data-nosnippet>677</a>///
+<a href=#678 id=678 data-nosnippet>678</a>/// # Errors
+<a href=#679 id=679 data-nosnippet>679</a>///
+<a href=#680 id=680 data-nosnippet>680</a>/// Will return an `Err(_)` variant when:
+<a href=#681 id=681 data-nosnippet>681</a>///
+<a href=#682 id=682 data-nosnippet>682</a>/// 1. The `cache` parameter does not reference an active cache once the `Weak` is upgraded to an `Option&lt;Arc&lt;_&gt;&gt;`.
+<a href=#683 id=683 data-nosnippet>683</a>/// 2. Any of the function calls on the `accessible` fail.
+<a href=#684 id=684 data-nosnippet>684</a>/// 3. Any `(String, OwnedObjectPath) -&gt; AccessiblePrimitive` conversions fail. This *should* never happen, but technically it is possible.
+<a href=#685 id=685 data-nosnippet>685</a></span><span class="attr">#[tracing::instrument(level = <span class="string">"trace"</span>, ret, err(level = <span class="string">"warn"</span>))]
+<a href=#686 id=686 data-nosnippet>686</a></span><span class="kw">pub async fn </span>accessible_to_cache_item(accessible: <span class="kw-2">&amp;</span>AccessibleProxy&lt;<span class="lifetime">'_</span>&gt;) -&gt; OdiliaResult&lt;CacheItem&gt; {
+<a href=#687 id=687 data-nosnippet>687</a>	<span class="kw">let </span>props = (
+<a href=#688 id=688 data-nosnippet>688</a>		accessible.get_application(),
+<a href=#689 id=689 data-nosnippet>689</a>		accessible.parent(),
+<a href=#690 id=690 data-nosnippet>690</a>		accessible.get_index_in_parent(),
+<a href=#691 id=691 data-nosnippet>691</a>		accessible.child_count(),
+<a href=#692 id=692 data-nosnippet>692</a>		accessible.get_interfaces(),
+<a href=#693 id=693 data-nosnippet>693</a>		accessible.get_role(),
+<a href=#694 id=694 data-nosnippet>694</a>		accessible.get_state(),
+<a href=#695 id=695 data-nosnippet>695</a>		accessible.get_children(),
+<a href=#696 id=696 data-nosnippet>696</a>	)
+<a href=#697 id=697 data-nosnippet>697</a>		.try_join();
+<a href=#698 id=698 data-nosnippet>698</a>	<span class="kw">let </span>maps = (
 <a href=#699 id=699 data-nosnippet>699</a>		accessible
-<a href=#700 id=700 data-nosnippet>700</a>			.description()
+<a href=#700 id=700 data-nosnippet>700</a>			.name()
 <a href=#701 id=701 data-nosnippet>701</a>			.map_ok(|s| <span class="kw">if </span>s.is_empty() { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(s) }),
 <a href=#702 id=702 data-nosnippet>702</a>		accessible
-<a href=#703 id=703 data-nosnippet>703</a>			.help_text()
+<a href=#703 id=703 data-nosnippet>703</a>			.description()
 <a href=#704 id=704 data-nosnippet>704</a>			.map_ok(|s| <span class="kw">if </span>s.is_empty() { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(s) }),
 <a href=#705 id=705 data-nosnippet>705</a>		accessible
-<a href=#706 id=706 data-nosnippet>706</a>			.to_text()
-<a href=#707 id=707 data-nosnippet>707</a>			.and_then(|text_proxy| {
-<a href=#708 id=708 data-nosnippet>708</a>				text_proxy
-<a href=#709 id=709 data-nosnippet>709</a>					.get_all_text()
-<a href=#710 id=710 data-nosnippet>710</a>					.map_ok(|s| <span class="kw">if </span>s.is_empty() { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(s) })
-<a href=#711 id=711 data-nosnippet>711</a>			})
-<a href=#712 id=712 data-nosnippet>712</a>			.unwrap_or_else(|<span class="kw">_</span>| <span class="prelude-val">None</span>)
-<a href=#713 id=713 data-nosnippet>713</a>			.map(<span class="prelude-val">Ok</span>),
-<a href=#714 id=714 data-nosnippet>714</a>	)
-<a href=#715 id=715 data-nosnippet>715</a>		.try_join();
-<a href=#716 id=716 data-nosnippet>716</a>	<span class="kw">let </span>(
-<a href=#717 id=717 data-nosnippet>717</a>		(app, parent, index, children_num, interfaces, role, states, children),
-<a href=#718 id=718 data-nosnippet>718</a>		(name, description, help_text, text),
-<a href=#719 id=719 data-nosnippet>719</a>	) = (props, maps).try_join().<span class="kw">await</span><span class="question-mark">?</span>;
-<a href=#720 id=720 data-nosnippet>720</a>
-<a href=#721 id=721 data-nosnippet>721</a>	<span class="kw">let </span>ci = CacheItem {
-<a href=#722 id=722 data-nosnippet>722</a>		object: accessible.into(),
-<a href=#723 id=723 data-nosnippet>723</a>		app: app.into(),
-<a href=#724 id=724 data-nosnippet>724</a>		parent: parent.into(),
-<a href=#725 id=725 data-nosnippet>725</a>		index: index.try_into().ok(),
-<a href=#726 id=726 data-nosnippet>726</a>		children_num: children_num.try_into().ok(),
-<a href=#727 id=727 data-nosnippet>727</a>		interfaces,
-<a href=#728 id=728 data-nosnippet>728</a>		role,
-<a href=#729 id=729 data-nosnippet>729</a>		states,
-<a href=#730 id=730 data-nosnippet>730</a>		children: children.into_iter().map(Into::into).collect(),
-<a href=#731 id=731 data-nosnippet>731</a>		name,
-<a href=#732 id=732 data-nosnippet>732</a>		description,
-<a href=#733 id=733 data-nosnippet>733</a>		help_text,
-<a href=#734 id=734 data-nosnippet>734</a>		text,
-<a href=#735 id=735 data-nosnippet>735</a>	};
-<a href=#736 id=736 data-nosnippet>736</a>	<span class="prelude-val">Ok</span>(ci)
-<a href=#737 id=737 data-nosnippet>737</a>}
+<a href=#706 id=706 data-nosnippet>706</a>			.help_text()
+<a href=#707 id=707 data-nosnippet>707</a>			.map_ok(|s| <span class="kw">if </span>s.is_empty() { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(s) }),
+<a href=#708 id=708 data-nosnippet>708</a>		accessible
+<a href=#709 id=709 data-nosnippet>709</a>			.to_text()
+<a href=#710 id=710 data-nosnippet>710</a>			.and_then(|text_proxy| {
+<a href=#711 id=711 data-nosnippet>711</a>				text_proxy
+<a href=#712 id=712 data-nosnippet>712</a>					.get_all_text()
+<a href=#713 id=713 data-nosnippet>713</a>					.map_ok(|s| <span class="kw">if </span>s.is_empty() { <span class="prelude-val">None </span>} <span class="kw">else </span>{ <span class="prelude-val">Some</span>(s) })
+<a href=#714 id=714 data-nosnippet>714</a>			})
+<a href=#715 id=715 data-nosnippet>715</a>			.unwrap_or_else(|<span class="kw">_</span>| <span class="prelude-val">None</span>)
+<a href=#716 id=716 data-nosnippet>716</a>			.map(<span class="prelude-val">Ok</span>),
+<a href=#717 id=717 data-nosnippet>717</a>	)
+<a href=#718 id=718 data-nosnippet>718</a>		.try_join();
+<a href=#719 id=719 data-nosnippet>719</a>	<span class="kw">let </span>(
+<a href=#720 id=720 data-nosnippet>720</a>		(app, parent, index, children_num, interfaces, role, states, children),
+<a href=#721 id=721 data-nosnippet>721</a>		(name, description, help_text, text),
+<a href=#722 id=722 data-nosnippet>722</a>	) = (props, maps).try_join().<span class="kw">await</span><span class="question-mark">?</span>;
+<a href=#723 id=723 data-nosnippet>723</a>
+<a href=#724 id=724 data-nosnippet>724</a>	<span class="kw">let </span>ci = CacheItem {
+<a href=#725 id=725 data-nosnippet>725</a>		object: accessible.into(),
+<a href=#726 id=726 data-nosnippet>726</a>		app: app.into(),
+<a href=#727 id=727 data-nosnippet>727</a>		parent: parent.into(),
+<a href=#728 id=728 data-nosnippet>728</a>		index: index.try_into().ok(),
+<a href=#729 id=729 data-nosnippet>729</a>		children_num: children_num.try_into().ok(),
+<a href=#730 id=730 data-nosnippet>730</a>		interfaces,
+<a href=#731 id=731 data-nosnippet>731</a>		role,
+<a href=#732 id=732 data-nosnippet>732</a>		states,
+<a href=#733 id=733 data-nosnippet>733</a>		children: children.into_iter().map(Into::into).collect(),
+<a href=#734 id=734 data-nosnippet>734</a>		name,
+<a href=#735 id=735 data-nosnippet>735</a>		description,
+<a href=#736 id=736 data-nosnippet>736</a>		help_text,
+<a href=#737 id=737 data-nosnippet>737</a>		text,
+<a href=#738 id=738 data-nosnippet>738</a>	};
+<a href=#739 id=739 data-nosnippet>739</a>	<span class="prelude-val">Ok</span>(ci)
+<a href=#740 id=740 data-nosnippet>740</a>}
 </code></pre></div></section></main></body></html>

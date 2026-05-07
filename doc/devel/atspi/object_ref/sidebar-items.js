@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ObjectRef","ObjectRefBorrowed"]};
+window.SIDEBAR_ITEMS = {"enum":["ObjectRef"],"struct":["ObjectRefOwned"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["read_session_accessibility","set_session_accessibility"],"struct":["AccessibilityConnection"],"type":["AtspiResult"]};
+window.SIDEBAR_ITEMS = {"fn":["read_session_accessibility","set_session_accessibility"],"struct":["AccessibilityConnection","Peer"],"trait":["P2P"]};

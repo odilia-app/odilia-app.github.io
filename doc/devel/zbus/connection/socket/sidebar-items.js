@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Split"],"trait":["ReadHalf","Socket","WriteHalf"],"type":["BoxedSplit"]};
+window.SIDEBAR_ITEMS = {"mod":["channel"],"struct":["Split"],"trait":["ReadHalf","Socket","WriteHalf"],"type":["BoxedSplit"]};
